@@ -3,7 +3,36 @@
 	<id>com.github.amit9838.weather.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
-	<description>
-	  <p>No description</p>
-	</description>
+  <name>Weather</name>
+  <summary>Beautiful and lightweight weather app</summary>
+  <description>
+    <p>Current Weather conditions and forcasts.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Use dynamic gradient backgrounds based on current weather.</li>
+      <li>See forcasts in beautiful card view.</li>
+      <li>Search and add cities.</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">com.github.amit9838.weather.desktop</launchable>
+  <url type="homepage">https://github.com/amit9838/weather</url>
+  <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
+  <developer_name>Amit Chaudhary</developer_name>
+  <custom>
+    <value key="Purism::form_factor">workstation</value>
+  </custom>
+  <categories>
+    <category>Utility</category>
+  </categories>
+  <content_rating type="oars-1.1" />
+  <release version="0.1.0" date="2023-06-11">
+      <description>
+        <p>New features and updates</p>
+        <ul>
+            <li>Use dynamic gradient backgrounds based on current weather.</li>
+            <li>See forcasts in beautiful card view.</li>
+            <li>Search and add cities.</li>
+        </ul>
+      </description>
+  </release>
 </component>
