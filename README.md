@@ -1,3 +1,3 @@
 # weather
 
-A description of this project.
+Beautiful lightweight weather app.
