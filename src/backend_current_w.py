@@ -1,7 +1,5 @@
 import requests
 
-
-
 def fetch_weather(api_key, latitude, longitude):
     base_url = "http://api.openweathermap.org/data/2.5/weather"
     params = {
@@ -10,8 +8,6 @@ def fetch_weather(api_key, latitude, longitude):
         "appid": api_key,
         "units": "metric"  # You can change the units to "imperial" for Fahrenheit
     }
-
-
 
     try:
         response = requests.get(base_url, params=params)

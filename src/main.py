@@ -32,7 +32,7 @@ class WeatherApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
-        super().__init__(application_id='com.github.amit9838.weather',
+        super().__init__(application_id='io.github.amit9838.weather',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.main_window = None
