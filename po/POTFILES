@@ -1,0 +1,6 @@
+data/com.github.amit9838.desktop.in
+data/com.github.amit9838.appdata.xml.in
+data/com.github.amit9838.gschema.xml
+src/main.py
+src/window.py
+src/window.ui
