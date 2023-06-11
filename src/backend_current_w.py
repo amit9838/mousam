@@ -11,7 +11,6 @@ def fetch_weather(api_key, latitude, longitude):
         "units": "metric"  # You can change the units to "imperial" for Fahrenheit
     }
 
-    print(latitude,longitude)
 
 
     try:
