@@ -1,4 +1,4 @@
-application_id = 'com.github.amit9838.weather'
+application_id = 'io.github.amit9838.weather'
 
 scalable_dir = join_paths('hicolor', 'scalable', 'apps')
 install_data(

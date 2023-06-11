@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="weather">
-	<schema id="com.github.amit9838.weather" path="/com/github/amit9838/weather/">
+	<schema id="io.github.amit9838.weather" path="/io/github/amit9838/weather/">
     <key name="api-key" type="s">
       <default>"b93e61109a102e0424bb8b1b073c3b2c"</default>
       <summary>Default api</summary>

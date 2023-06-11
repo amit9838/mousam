@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>com.github.amit9838.weather.desktop</id>
+	<id>io.github.amit9838.weather.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
   <name>Weather</name>
@@ -14,7 +14,7 @@
       <li>Search and add cities.</li>
     </ul>
   </description>
-  <launchable type="desktop-id">com.github.amit9838.weather.desktop</launchable>
+  <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
   <url type="homepage">https://github.com/amit9838/weather</url>
   <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
   <developer_name>Amit Chaudhary</developer_name>

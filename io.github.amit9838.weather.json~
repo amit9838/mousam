@@ -1,7 +1,7 @@
 {
-    "app-id" : "com.github.amit9838.weather",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "44",
+    "app-id" : "io.github.amit9838.weather",
+    "runtime" : "org.fedoraproject.Platform",
+    "runtime-version" : "f38",
     "sdk" : "org.gnome.Sdk",
     "command" : "weather",
     "finish-args" : [
@@ -31,8 +31,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "tag"  : "0.1.0",
-                    "commit" : "354c722d90b171eb2a6da8670a40f9ca531d7d80",
+                    "tag" : "v0.1.0",
+                    "commit" : "9d5966c6642c7af5c9e63282cb9ab4b301c51056",
                     "url" : "https://github.com/amit9838/weather.git"
                 }
             ]

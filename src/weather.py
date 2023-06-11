@@ -12,7 +12,7 @@ from .ui_forecast_w  import forecast_weather
 from .backend_current_w import fetch_weather
 from .backend_forecast_w import fetch_forecast
 
-settings = Gio.Settings.new("com.github.amit9838.weather")
+settings = Gio.Settings.new("io.github.amit9838.weather")
 selected_city = int(str(settings.get_value('selected-city')))
 api_key = str(settings.get_value('api-key'))
 added_cities = list(settings.get_value('added-cities'))
@@ -109,7 +109,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         main_box.append(footer_box)
 
     def refresh_weather(self,widget):
-        settings = Gio.Settings.new("com.github.amit9838.weather")
+        settings = Gio.Settings.new("io.github.amit9838.weather")
         updated_at = str(settings.get_value('updated-at'))
 
 
@@ -139,7 +139,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.fetch_weather_data()
 
     def fetch_weather_data(self):
-        settings = Gio.Settings.new("com.github.amit9838.weather")
+        settings = Gio.Settings.new("io.github.amit9838.weather")
         selected_city = int(str(settings.get_value('selected-city')))
         added_cities = list(settings.get_value('added-cities'))
         cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]

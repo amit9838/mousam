@@ -9,7 +9,7 @@ from .backend_current_w import fetch_city_info
 def AboutWindow(self, action,*args):
         dialog = Adw.AboutWindow()
         dialog.set_application_name("Weather")
-        dialog.set_application_icon("com.github.amit9838.weather")
+        dialog.set_application_icon("io.github.amit9838.weather")
         dialog.set_version("1.0")
         dialog.set_developer_name("Amit Chaudhary")
         dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
@@ -30,7 +30,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.set_default_size(600, 500)
 
                 global selected_city,settings,added_cities,cities
-                settings = Gio.Settings.new("com.github.amit9838.weather")
+                settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')

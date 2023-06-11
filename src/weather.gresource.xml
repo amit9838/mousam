@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/github/amit9838/weather">
+  <gresource prefix="/io/github/amit9838/weather">
     <file>css/style.css</file>
   </gresource>
 </gresources>

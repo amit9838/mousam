@@ -14,7 +14,7 @@ from .ui_forecast_w  import forecast_weather
 def current_weather(main_window,upper_row,middle_row,data):
     global g_upper_row,g_middle_row,g_main_window,selected_city,settings,added_cities,cities,use_gradient
 
-    settings = Gio.Settings.new("com.github.amit9838.weather")
+    settings = Gio.Settings.new("io.github.amit9838.weather")
     selected_city = int(str(settings.get_value('selected-city')))
     added_cities = list(settings.get_value('added-cities'))
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
