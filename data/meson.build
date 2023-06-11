@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-        input: 'com.github.amit9838.desktop.in',
-       output: 'com.github.amit9838.desktop',
+        input: 'com.github.amit9838.weather.desktop.in',
+       output: 'com.github.amit9838.weather.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,
@@ -13,8 +13,8 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: 'com.github.amit9838.appdata.xml.in',
-       output: 'com.github.amit9838.appdata.xml',
+        input: 'com.github.amit9838.weather.appdata.xml.in',
+       output: 'com.github.amit9838.weather.appdata.xml',
        po_dir: '../po',
       install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
@@ -25,7 +25,7 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-install_data('com.github.amit9838.gschema.xml',
+install_data('com.github.amit9838.weather.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 

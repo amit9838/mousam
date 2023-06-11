@@ -1,6 +1,5 @@
-data/com.github.amit9838.desktop.in
-data/com.github.amit9838.appdata.xml.in
-data/com.github.amit9838.gschema.xml
+data/com.github.amit9838.weather.desktop.in
+data/com.github.amit9838.weather.appdata.xml.in
+data/com.github.amit9838.weather.gschema.xml
 src/main.py
 src/window.py
-src/window.ui

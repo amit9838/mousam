@@ -12,13 +12,11 @@ from .ui_forecast_w  import forecast_weather
 from .backend_current_w import fetch_weather
 from .backend_forecast_w import fetch_forecast
 
-settings = Gio.Settings.new("com.github.amit9838")
+settings = Gio.Settings.new("com.github.amit9838.weather")
 selected_city = int(str(settings.get_value('selected-city')))
-
 api_key = str(settings.get_value('api-key'))
 added_cities = list(settings.get_value('added-cities'))
 cities = [x.split(',')[0] for x in added_cities]
-
 
 # @Gtk.Template(resource_path='/com/github/amit9838/window.ui')
 class WeatherWindow(Gtk.ApplicationWindow):
@@ -34,6 +32,11 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.set_title("Weather")
 
         self.main_window = application = self
+
+        # Initial checks
+        if len(added_cities) == 0:
+            settings.reset('added-cities')
+            settings.reset('selected-city')
 
         #  Adding a button into header
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -106,7 +109,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         main_box.append(footer_box)
 
     def refresh_weather(self,widget):
-        settings = Gio.Settings.new("com.github.amit9838")
+        settings = Gio.Settings.new("com.github.amit9838.weather")
         updated_at = str(settings.get_value('updated-at'))
 
 
@@ -136,7 +139,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.fetch_weather_data()
 
     def fetch_weather_data(self):
-        settings = Gio.Settings.new("com.github.amit9838")
+        settings = Gio.Settings.new("com.github.amit9838.weather")
         selected_city = int(str(settings.get_value('selected-city')))
         added_cities = list(settings.get_value('added-cities'))
         cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
@@ -178,6 +181,3 @@ class WeatherWindow(Gtk.ApplicationWindow):
     def show_preferences(self, action, param):
         adw_preferences_window = WeatherPreferences(application)
         adw_preferences_window.show()
-        
-
-        
