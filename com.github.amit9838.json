@@ -31,7 +31,7 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "file:///home/amit/Projects"
+                    "url" : "https://github.com/amit9838/weather.git"
                 }
             ]
         }
