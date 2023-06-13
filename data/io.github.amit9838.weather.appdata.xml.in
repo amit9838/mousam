@@ -16,19 +16,19 @@
   </description>
     <screenshots>
       <screenshot type="default">
-          <image>https://github.com/amit9838/weather/blob/master/screenshots/ss1-overcast_clouds_day.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-overcast_clouds_day.png</image>
       </screenshot>
       <screenshot>
-          <image>https://github.com/amit9838/weather/blob/master/screenshots/ss2-haze_night.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-haze_night.png</image>
       </screenshot>
       <screenshot>
-          <image>https://github.com/amit9838/weather/blob/master/screenshots/ss3-clear_sky_night.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky_night.png</image>
       </screenshot>
         <screenshot>
-          <image>https://github.com/amit9838/weather/blob/master/screenshots/ss4-dark_mode.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-dark_mode.png</image>
       </screenshot>
         <screenshot>
-          <image>https://github.com/amit9838/weather/blob/master/screenshots/ss4-light_mode.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png</image>
       </screenshot>
   </screenshots>
   <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
