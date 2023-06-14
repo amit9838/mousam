@@ -8,7 +8,7 @@
     </key>
     <key name="added-cities" type="as">
       <default>['Delhi,IN,28.6517178,77.2219388']</default>
-      <summary>List of cities and their co-ordinates.</summary>
+      <summary>List of cities and their coordinates.</summary>
       <description>Stores locations added by user in json stringified string format in string</description>
     </key>
 	  <key name="selected-city" type="i">
