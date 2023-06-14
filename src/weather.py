@@ -92,7 +92,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", AboutWindow)
         self.add_action(action)
-        menu.append("About", "win.about")
+        menu.append(_("About Weather"), "win.about")
 
         self.fetch_weather_data()
 
