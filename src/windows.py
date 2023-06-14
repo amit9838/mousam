@@ -13,7 +13,7 @@ def AboutWindow(self, action,*args):
         dialog.set_version("1.0")
         dialog.set_developer_name("Amit Chaudhary")
         dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
-        dialog.set_comments("Beautiful and light weight weather app build using Gtk and python.")
+        dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and python."))
         dialog.set_website("https://github.com/amit9838/weather")
         dialog.set_issue_url("https://github.com/amit9838/weather/issues")
         # dialog.add_credit_section("Contributors", ["name url"])
@@ -37,7 +37,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 cities = [x.split(',')[0] for x in added_cities]
 
                 appearance_page = Adw.PreferencesPage();
-                appearance_page.set_title("Appearance")
+                appearance_page.set_title(_("Appearance"))
                 appearance_page.set_icon_name('applications-graphics-symbolic')
                 self.add(appearance_page);
 
@@ -47,8 +47,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
-                gradient_row.set_title("Use Dynamic Background")
-                gradient_row.set_subtitle("Background Changes based on weather conditions (Reastart required)")
+                gradient_row.set_title(_("Use Dynamic Background"))
+                gradient_row.set_subtitle(_("Background Changes based on weather conditions (Reastart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 self.gradient_switch = Gtk.Switch()
@@ -59,18 +59,18 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.appearance_grp.add(gradient_row)
 
                 location_page = Adw.PreferencesPage()
-                location_page.set_title("Locations")
+                location_page.set_title(_("Locations"))
                 location_page.set_icon_name('mark-location-symbolic')
 
                 self.add(location_page);
                 self.location_grp = Adw.PreferencesGroup()
-                self.location_grp.set_title("Locations")
+                self.location_grp.set_title(_("Locations"))
                 location_page.add(self.location_grp);
 
                 add_loc_btn = Gtk.Button()
                 add_loc_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER,spacing=4)
                 # Create a label
-                label = Gtk.Label(label="Add")
+                label = Gtk.Label(label=_("Add"))
                 add_loc_btn_box.append(label)
                 # Create an icon
                 add_icon = Gtk.Image.new_from_icon_name("list-add-symbolic")
@@ -93,7 +93,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 for city in added_cities:
                         button = Gtk.Button()
                         button.set_icon_name("edit-delete-symbolic")
-                        button.set_tooltip_text("Remove location")
+                        button.set_tooltip_text(_("Remove location"))
                         button.set_has_frame(False)
                         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                         if added_cities[selected_city] == city:
@@ -117,7 +117,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
                 self._dialog.set_search_enabled(False)
-                self._dialog.set_title(title='Add new location')
+                self._dialog.set_title(title=_('Add new location'))
                 self._dialog.set_transient_for(self)
                 self._dialog.set_default_size(300, 500)
 
@@ -133,11 +133,11 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self._dialog.group.add(search_box)
 
                 self.search_entry = Gtk.Entry()
-                self.search_entry.set_placeholder_text("Search for a city")
+                self.search_entry.set_placeholder_text(_("Search for a city"))
                 self.search_entry.set_hexpand(True)
                 search_box.append(self.search_entry)
 
-                button = Gtk.Button(label="Search")
+                button = Gtk.Button(label=_("Search"))
                 search_box.append(button)
 
                 self._dialog.serach_res_grp = Adw.PreferencesGroup()

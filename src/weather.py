@@ -85,7 +85,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         action = Gio.SimpleAction.new("preferences", None)
         action.connect("activate", self.show_preferences)
         self.add_action(action)
-        menu.append("Preferences", "win.preferences")
+        menu.append(_("Preferences"), "win.preferences")
 
         # menu.append("Help", "help")
 
@@ -157,7 +157,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
             error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
             error_box.set_margin_top(50)
-            label = Gtk.Label(label = "Failed to load Weather Data")
+            label = Gtk.Label(label = _("Failed to load Weather Data"))
             label.set_css_classes(['error_label'])
 
             icon = Gtk.Image()
