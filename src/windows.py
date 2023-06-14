@@ -17,7 +17,7 @@ def AboutWindow(self, action,*args):
         dialog.set_website("https://github.com/amit9838/weather")
         dialog.set_issue_url("https://github.com/amit9838/weather/issues")
         # dialog.add_credit_section("Contributors", ["name url"])
-        dialog.set_copyright("© 2023 developer")
+        dialog.set_copyright(_("Copyright © 2023 Weather Developers"))
         dialog.set_developers(["Amit Chaudhary"])
         # Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
         dialog.set_translator_credits(_("translator_credits"))
