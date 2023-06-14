@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Weather
 Exec=weather
+Comment=Beautiful and lightweight weather app
 Icon=io.github.amit9838.weather
 Terminal=false
 Type=Application
