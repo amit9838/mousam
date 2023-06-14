@@ -1,0 +1,168 @@
+# Turkish translation for io.github.amit9838.weather.
+# Copyright (C) 2023 io.github.amit9838.weather's COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.amit9838.weather package.
+#
+# Sabri Ünal <libreajans@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-14 17:17+0300\n"
+"PO-Revision-Date: 2023-06-14 17:17+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: data/io.github.amit9838.weather.desktop.in:3
+#: data/io.github.amit9838.weather.appdata.xml.in:6
+msgid "Weather"
+msgstr "Hava Durumu"
+
+#: data/io.github.amit9838.weather.desktop.in:5
+#: data/io.github.amit9838.weather.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Güzel ve hafif hava durumu uygulaması"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Mevcut Hava durumu ve tahminleri."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:10
+msgid "Features:"
+msgstr "Özellikler:"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:12
+#: data/io.github.amit9838.weather.appdata.xml.in:50
+msgid "Use dynamic gradient backgrounds based on current weather."
+msgstr "Mevcut hava durumuna göre dinamik renk geçişli arka planlar kullan."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:13
+#: data/io.github.amit9838.weather.appdata.xml.in:51
+msgid "See forcasts in beautiful card view."
+msgstr "Hava tahminlerini güzel bir kart görünümünde görün."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:14
+#: data/io.github.amit9838.weather.appdata.xml.in:52
+msgid "Search and add cities."
+msgstr "Şehir arayın ve ve ekleyin."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:37
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:48
+msgid "New features and updates"
+msgstr "Yeni özellikler ve güncellemeler"
+
+#: data/io.github.amit9838.weather.gschema.xml:6
+#: data/io.github.amit9838.weather.gschema.xml:7
+msgid "Default api"
+msgstr "Öntanımlı API"
+
+#: data/io.github.amit9838.weather.gschema.xml:11
+msgid "List of cities and their coordinates."
+msgstr "Şehir listesi ve koordinatları"
+
+#: data/io.github.amit9838.weather.gschema.xml:12
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Kullanıcı tarafından eklenen konumları json metin alanı betin biçimindeki "
+"dizgede saklar"
+
+#: data/io.github.amit9838.weather.gschema.xml:16
+msgid "Selected city"
+msgstr "Seçili şehir"
+
+#: data/io.github.amit9838.weather.gschema.xml:17
+msgid "Selected city name"
+msgstr "Seçili şehir adı"
+
+#: data/io.github.amit9838.weather.gschema.xml:21
+msgid "Use Gradient Background"
+msgstr "Arka Plan Renk Geçişi Kullan"
+
+#: data/io.github.amit9838.weather.gschema.xml:22
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Hava durumuna karşılık gelen ana pencerede renk geçili arka plan uygula"
+
+#: data/io.github.amit9838.weather.gschema.xml:26
+msgid "Last Updated"
+msgstr "Son Güncellenme"
+
+#: data/io.github.amit9838.weather.gschema.xml:27
+msgid "last updated time"
+msgstr "son güncellenme tarihi"
+
+#: src/weather.py:90
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: src/weather.py:97
+msgid "About Weather"
+msgstr "Hava Durumu Hakkında"
+
+#: src/weather.py:162
+msgid "Failed to load Weather Data"
+msgstr "Hava Durumu Verisi yüklenemedi"
+
+#: src/windows.py:18
+msgid "Beautiful and light weight weather app build using Gtk and python."
+msgstr "Gtk ve python kullanagüzel ve hafif bir hava durumu uygulaması."
+
+#. dialog.add_credit_section("Contributors", ["name url"])
+#: src/windows.py:22
+msgid "Copyright © 2023 Weather Developers"
+msgstr "Telif Hakkı © 2023 Hava Durumu Geliştiricileri"
+
+#. Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
+#: src/windows.py:25
+msgid "translator_credits"
+msgstr "Sabri Ünal <libreajans@gmail.com>"
+
+#: src/windows.py:43
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: src/windows.py:53
+msgid "Use Dynamic Background"
+msgstr "Dinamik Arka Plan Kullan"
+
+#: src/windows.py:54
+msgid "Background Changes based on weather conditions (Reastart required)"
+msgstr ""
+"Hava koşullarına bağlı olarak Arka Plan Değişiklikleri (Yeniden başlatma "
+"gerekir"
+
+#: src/windows.py:65 src/windows.py:70
+msgid "Locations"
+msgstr "Konumlar"
+
+#. Create a label
+#: src/windows.py:76
+msgid "Add"
+msgstr "Ekle"
+
+#: src/windows.py:99
+msgid "Remove location"
+msgstr "Konum kaldır"
+
+#: src/windows.py:123
+msgid "Add new location"
+msgstr "Yeni konum ekle"
+
+#: src/windows.py:139
+msgid "Search for a city"
+msgstr "Şehir ara"
+
+#: src/windows.py:143
+msgid "Search"
+msgstr "Ara"
