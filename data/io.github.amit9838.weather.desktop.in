@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=weather
+Name=Weather
 Exec=weather
 Icon=io.github.amit9838.weather
 Terminal=false
