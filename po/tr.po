@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-14 17:17+0300\n"
-"PO-Revision-Date: 2023-06-14 17:17+0300\n"
+"POT-Creation-Date: 2023-06-16 00:35+0300\n"
+"PO-Revision-Date: 2023-06-16 00:35+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -20,7 +20,8 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: data/io.github.amit9838.weather.desktop.in:3
-#: data/io.github.amit9838.weather.appdata.xml.in:6
+#: data/io.github.amit9838.weather.appdata.xml.in:6 src/weather.py:32
+#: src/windows.py:11
 msgid "Weather"
 msgstr "Hava Durumu"
 
@@ -102,67 +103,204 @@ msgstr "Son Güncellenme"
 msgid "last updated time"
 msgstr "son güncellenme tarihi"
 
-#: src/weather.py:90
+#: src/weather.py:70
+msgid "Refresh"
+msgstr "Yenile"
+
+#: src/weather.py:89
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: src/weather.py:97
+#: src/weather.py:96
 msgid "About Weather"
 msgstr "Hava Durumu Hakkında"
 
-#: src/weather.py:162
+#: src/weather.py:161
 msgid "Failed to load Weather Data"
 msgstr "Hava Durumu Verisi yüklenemedi"
 
-#: src/windows.py:18
+#: src/windows.py:16
 msgid "Beautiful and light weight weather app build using Gtk and python."
 msgstr "Gtk ve python kullanagüzel ve hafif bir hava durumu uygulaması."
 
 #. dialog.add_credit_section("Contributors", ["name url"])
-#: src/windows.py:22
+#: src/windows.py:20
 msgid "Copyright © 2023 Weather Developers"
 msgstr "Telif Hakkı © 2023 Hava Durumu Geliştiricileri"
 
 #. Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
-#: src/windows.py:25
+#: src/windows.py:23
 msgid "translator_credits"
 msgstr "Sabri Ünal <libreajans@gmail.com>"
 
-#: src/windows.py:43
+#: src/windows.py:41
 msgid "Appearance"
 msgstr "Görünüm"
 
-#: src/windows.py:53
+#: src/windows.py:51
 msgid "Use Dynamic Background"
 msgstr "Dinamik Arka Plan Kullan"
 
-#: src/windows.py:54
+#: src/windows.py:52
 msgid "Background Changes based on weather conditions (Reastart required)"
 msgstr ""
 "Hava koşullarına bağlı olarak Arka Plan Değişiklikleri (Yeniden başlatma "
 "gerekir"
 
-#: src/windows.py:65 src/windows.py:70
+#: src/windows.py:63 src/windows.py:68
 msgid "Locations"
 msgstr "Konumlar"
 
 #. Create a label
-#: src/windows.py:76
+#: src/windows.py:74
 msgid "Add"
 msgstr "Ekle"
 
-#: src/windows.py:99
+#: src/windows.py:97
 msgid "Remove location"
 msgstr "Konum kaldır"
 
-#: src/windows.py:123
-msgid "Add new location"
-msgstr "Yeni konum ekle"
+#: src/windows.py:121
+msgid "Add New Location"
+msgstr "Yeni Konum Ekle"
 
-#: src/windows.py:139
+#: src/windows.py:137
 msgid "Search for a city"
 msgstr "Şehir ara"
 
-#: src/windows.py:143
+#: src/windows.py:141
 msgid "Search"
 msgstr "Ara"
+
+#. Note: Do not translate strings in the { } brackets
+#: src/ui_current_w.py:88
+#, python-brace-format
+msgid "Feels like {0:.0f}°C"
+msgstr "Hissedilen: {0:.0f}°C"
+
+#: src/ui_current_w.py:134
+msgid "km"
+msgstr "km"
+
+#: src/ui_current_w.py:134
+msgid "m"
+msgstr "m"
+
+#: src/ui_current_w.py:136
+msgid "Rain"
+msgstr "Yağmur"
+
+#: src/ui_current_w.py:136 src/ui_current_w.py:137 src/ui_forecast_w.py:92
+#, python-brace-format
+msgid "{0}%"
+msgstr "%{0}"
+
+#: src/ui_current_w.py:137
+msgid "Humidity"
+msgstr "Nem"
+
+#: src/ui_current_w.py:138
+msgid "Pressure"
+msgstr "Basınç"
+
+#: src/ui_current_w.py:138
+#, python-brace-format
+msgid "{0} mmHg"
+msgstr "{0} mmHg"
+
+#: src/ui_current_w.py:139
+msgid "Wind speed"
+msgstr "Rüzgar hızı"
+
+#: src/ui_current_w.py:139
+#, python-brace-format
+msgid "{0} km/h {1}"
+msgstr "{0} km/s {1}"
+
+#. weather_data.append([_("Wind speed"), f"{data['wind']['speed']}km/h {wind_dir(data['wind']['deg'])}"])
+#: src/ui_current_w.py:141
+msgid "Visibility"
+msgstr "Görünürlük"
+
+#: src/ui_current_w.py:201
+msgid "N"
+msgstr "Kuzey"
+
+#: src/ui_current_w.py:201
+msgid "NNE"
+msgstr "Kuzey, Kuzey Doğu"
+
+#: src/ui_current_w.py:201
+msgid "NE"
+msgstr "Kuzey Doğu"
+
+#: src/ui_current_w.py:202
+msgid "ENE"
+msgstr "Doğu, Kuzey Doğu"
+
+#: src/ui_current_w.py:202
+msgid "E"
+msgstr "Doğu"
+
+#: src/ui_current_w.py:202
+msgid "ESE"
+msgstr "Doğu, Güney Doğu"
+
+#: src/ui_current_w.py:203
+msgid "SE"
+msgstr "Güney Doğu"
+
+#: src/ui_current_w.py:203
+msgid "SSE"
+msgstr "Güne, Güney Doğu"
+
+#: src/ui_current_w.py:203
+msgid "S"
+msgstr "Güney"
+
+#: src/ui_current_w.py:203
+msgid "SSW"
+msgstr "Güney, Güney Batı"
+
+#: src/ui_current_w.py:203
+msgid "SW"
+msgstr "Güney Batı"
+
+#: src/ui_current_w.py:204
+msgid "WSW"
+msgstr "Batı, Güney Batı"
+
+#: src/ui_current_w.py:204
+msgid "W"
+msgstr "Batı"
+
+#: src/ui_current_w.py:204
+msgid "WNW"
+msgstr "Batı, Kuzey Batı"
+
+#: src/ui_current_w.py:205
+msgid "NW"
+msgstr "Kuzey Batı"
+
+#: src/ui_current_w.py:205
+msgid "NNW"
+msgstr "Kuzey, Kuzey Batı"
+
+#: src/ui_forecast_w.py:56
+msgid "AM"
+msgstr "ÖÖ"
+
+#: src/ui_forecast_w.py:59
+msgid "PM"
+msgstr "ÖS"
+
+#: src/ui_forecast_w.py:106
+#, python-brace-format
+msgid "{0} km/h"
+msgstr "{0} km/s"
+
+#: src/ui_forecast_w.py:110
+#, python-brace-format
+#| msgid "{0:.0f}°"
+msgid "{0:.0f}°C"
+msgstr "{0:.0f}°C"
