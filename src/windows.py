@@ -118,7 +118,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
                 self._dialog.set_search_enabled(False)
-                self._dialog.set_title(title=_('Add new location'))
+                self._dialog.set_title(title=_('Add New Location'))
                 self._dialog.set_transient_for(self)
                 self._dialog.set_default_size(300, 500)
 
