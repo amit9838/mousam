@@ -1,0 +1,171 @@
+# Russian translation for io.github.amit9838.weather.
+# Copyright (C) 2023 io.github.amit9838.weather's COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.amit9838.weather package.
+#
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-14 17:17+0300\n"
+"PO-Revision-Date: 2023-06-15 12:00+0300\n"
+"Last-Translator: Сергей Ворон <voron@duck.com>\n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.1\n"
+
+#: data/io.github.amit9838.weather.desktop.in:3
+#: data/io.github.amit9838.weather.appdata.xml.in:6
+msgid "Weather"
+msgstr "Погода"
+
+#: data/io.github.amit9838.weather.desktop.in:5
+#: data/io.github.amit9838.weather.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Красивое и легкое приложение погоды"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Текущие условия погоды и прогнозы."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:10
+msgid "Features:"
+msgstr "Возможности:"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:12
+#: data/io.github.amit9838.weather.appdata.xml.in:50
+msgid "Use dynamic gradient backgrounds based on current weather."
+msgstr "Динамические градиентные фоны в зависимости от текущей погоды."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:13
+#: data/io.github.amit9838.weather.appdata.xml.in:51
+msgid "See forcasts in beautiful card view."
+msgstr "Прогноз погоды в красивом карточном представлении."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:14
+#: data/io.github.amit9838.weather.appdata.xml.in:52
+msgid "Search and add cities."
+msgstr "Поиск и добавление городов."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:37
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:48
+msgid "New features and updates"
+msgstr "Новые функции и обновления"
+
+#: data/io.github.amit9838.weather.gschema.xml:6
+#: data/io.github.amit9838.weather.gschema.xml:7
+msgid "Default api"
+msgstr "API по умолчанию"
+
+#: data/io.github.amit9838.weather.gschema.xml:11
+msgid "List of cities and their coordinates."
+msgstr "Список городов и их координаты."
+
+#: data/io.github.amit9838.weather.gschema.xml:12
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Сохраняет местоположения, добавленные пользователем, в строковом формате "
+"json"
+
+#: data/io.github.amit9838.weather.gschema.xml:16
+msgid "Selected city"
+msgstr "Выбранный город"
+
+#: data/io.github.amit9838.weather.gschema.xml:17
+msgid "Selected city name"
+msgstr "Название выбранного города"
+
+#: data/io.github.amit9838.weather.gschema.xml:21
+msgid "Use Gradient Background"
+msgstr "Использовать градиентный фон"
+
+#: data/io.github.amit9838.weather.gschema.xml:22
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Применяет градиентный фон к главному окну в соответствии с погодными "
+"условиями"
+
+#: data/io.github.amit9838.weather.gschema.xml:26
+msgid "Last Updated"
+msgstr "Последнее обновление"
+
+#: data/io.github.amit9838.weather.gschema.xml:27
+msgid "last updated time"
+msgstr "время последнего обновления"
+
+#: src/weather.py:90
+msgid "Preferences"
+msgstr "Настройки"
+
+#: src/weather.py:97
+msgid "About Weather"
+msgstr "О программе"
+
+#: src/weather.py:162
+msgid "Failed to load Weather Data"
+msgstr "Не удалось загрузить данные о погоде"
+
+#: src/windows.py:18
+msgid "Beautiful and light weight weather app build using Gtk and python."
+msgstr ""
+"Красивое и легкое приложение погоды, построенное с использованием Gtk и "
+"python."
+
+#. dialog.add_credit_section("Contributors", ["name url"])
+#: src/windows.py:22
+msgid "Copyright © 2023 Weather Developers"
+msgstr "Авторские права © 2023 Разработчики"
+
+#. Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
+#: src/windows.py:25
+msgid "translator_credits"
+msgstr "Сергей Ворон <voron@duck.com>"
+
+#: src/windows.py:43
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: src/windows.py:53
+msgid "Use Dynamic Background"
+msgstr "Использовать динамический фон"
+
+#: src/windows.py:54
+msgid "Background Changes based on weather conditions (Reastart required)"
+msgstr ""
+"Изменение фона в зависимости от погодных условий (требуется перезапуск)"
+
+#: src/windows.py:65 src/windows.py:70
+msgid "Locations"
+msgstr "Местоположение"
+
+#. Create a label
+#: src/windows.py:76
+msgid "Add"
+msgstr "Добавить"
+
+#: src/windows.py:99
+msgid "Remove location"
+msgstr "Удалить местоположение"
+
+#: src/windows.py:123
+msgid "Add new location"
+msgstr "Добавить новое местоположение"
+
+#: src/windows.py:139
+msgid "Search for a city"
+msgstr "Поиск города"
+
+#: src/windows.py:143
+msgid "Search"
+msgstr "Искать"
