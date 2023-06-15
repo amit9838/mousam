@@ -84,7 +84,7 @@ def current_weather(main_window,upper_row,middle_row,data):
     temp_label.set_css_classes(['temp_label'])
     temp_box_l.append(temp_label)
 
-    feels_like_label = Gtk.Label(label=f"Feels like {data['main']['feels_like']:.0f}°C")
+    feels_like_label = Gtk.Label(label=_("Feels like {0:.0f}°C").format(data['main']['feels_like']))
     feels_like_label.set_margin_start(5)
     feels_like_label.set_halign(Gtk.Align.START)
     temp_box_l.append(feels_like_label)
@@ -130,13 +130,13 @@ def current_weather(main_window,upper_row,middle_row,data):
     sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
     sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
     visibility = data['visibility']//1000 if data['visibility'] > 1000 else data['visibility']
-    vis_dist_unit = "km" if data['visibility'] > 1000 else "m"
+    vis_dist_unit = _("km") if data['visibility'] > 1000 else _("m")
     
-    weather_data.append(["Rain",f"{data['clouds']['all']}%"])
-    weather_data.append(["Humidity", f"{data['main']['humidity']}%"])
-    weather_data.append(["Pressure",f"{data['main']['pressure']} mmHg"])
-    weather_data.append(["Wind speed",f"{data['wind']['speed']}km/h {wind_dir(data['wind']['deg'])}"])
-    weather_data.append(["Visibility", f"{visibility} {vis_dist_unit}"])
+    weather_data.append([_("Rain"), _("{0}%").format(data['clouds']['all'])])
+    weather_data.append([_("Humidity"), _("{0}%").format(data['main']['humidity'])])
+    weather_data.append([_("Pressure"), _("{0} mmHg").format(data['main']['pressure'])])
+    weather_data.append([_("Wind speed"), _("{0} km/h {1}").format(data['wind']['speed'], wind_dir(data['wind']['deg']))])
+    weather_data.append([_("Visibility"), f"{visibility} {vis_dist_unit}"])
     # weather_data.append(["Sunrise", f"{sunrise_time.hour}:{sunrise_time.minute} AM"])
     # weather_data.append(["Sunset", f"{sunset_time.hour-12}:{sunset_time.minute} PM"])
 
@@ -196,8 +196,8 @@ def on_city_combo_changed(combo):
 # converts wind degrees to direction 
 def wind_dir(angle):
         directions = [
-            "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-            "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
+            _("N"), _("NNE"), _("NE"), _("ENE"), _("E"), _("ESE"), _("SE"), _("SSE"),
+            _("S"), _("SSW"), _("SW"), _("WSW"), _("W"), _("WNW"), _("NW"), _("NNW"),
         ]
         index = round(angle / (360.0 / len(directions))) % len(directions)
         return directions[index]
