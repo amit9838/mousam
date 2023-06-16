@@ -6,6 +6,7 @@ from gi.repository import Gtk, Adw,Gio,GLib
 from .constants import API_KEY
 from .backend_current_w import fetch_city_info
 
+
 def AboutWindow(self, action,*args):
         dialog = Adw.AboutWindow()
         dialog.set_application_name(_("Weather"))
@@ -30,21 +31,24 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.set_transient_for(parent)
                 self.set_default_size(600, 500)
 
-                global selected_city,settings,added_cities,cities
+                global selected_city,settings,added_cities,cities,using_custom_api,isValid_custom_api,custom_api_key
                 settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
+                custom_api_key = str(settings.get_value('custom-api-key'))
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')
+                isValid_custom_api = settings.get_boolean('isvalid-custom-api-key')
+                using_custom_api = settings.get_boolean('using-custom-api-key')
                 cities = [x.split(',')[0] for x in added_cities]
 
-                appearance_page = Adw.PreferencesPage();
+                appearance_page = Adw.PreferencesPage()
                 appearance_page.set_title(_("Appearance"))
                 appearance_page.set_icon_name('applications-graphics-symbolic')
-                self.add(appearance_page);
+                self.add(appearance_page)
 
 
-                self.appearance_grp = Adw.PreferencesGroup();
-                appearance_page.add(self.appearance_grp);
+                self.appearance_grp = Adw.PreferencesGroup()
+                appearance_page.add(self.appearance_grp)
 
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
@@ -59,14 +63,16 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 gradient_row.add_suffix(self.g_switch_box)
                 self.appearance_grp.add(gradient_row)
 
+
+
                 location_page = Adw.PreferencesPage()
                 location_page.set_title(_("Locations"))
                 location_page.set_icon_name('mark-location-symbolic')
 
-                self.add(location_page);
+                self.add(location_page)
                 self.location_grp = Adw.PreferencesGroup()
                 self.location_grp.set_title(_("Locations"))
-                location_page.add(self.location_grp);
+                location_page.add(self.location_grp)
 
                 add_loc_btn = Gtk.Button()
                 add_loc_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER,spacing=4)
@@ -84,6 +90,60 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 self.location_rows = []
                 self.refresh_cities_list(added_cities)
+
+
+                misc_page = Adw.PreferencesPage()
+                self.add(misc_page)
+                misc_page.set_title(_("Misc"))
+                misc_page.set_icon_name('application-x-addon-symbolic')
+                misc_grp = Adw.PreferencesGroup()
+                # misc_grp.set_title(_("Misc"))
+                misc_page.add(misc_grp)
+
+                custom_api_row =  Adw.ActionRow.new()
+                custom_api_row.set_activatable(True)
+                custom_api_row.set_title(_("API Key"))
+
+                        
+
+                api_key_entry_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+                api_key_entry = Gtk.Entry()
+                api_key_entry_box.append(api_key_entry)
+
+                set_key_btn = Gtk.Button(label = "Set")
+                set_key_btn.set_margin_start(5)
+
+                api_key_entry_box.append(set_key_btn)                
+                api_key_entry.set_placeholder_text(_("Enter your api-key"))
+                api_key_entry.set_text(custom_api_key)
+                if isValid_custom_api and len(custom_api_key)>2:
+                        custom_api_row.set_subtitle(_("Active"))
+                        api_key_entry.set_css_classes(['success'])
+                        
+                elif len(custom_api_key)==2:
+                        api_key_entry.set_text("")
+                        api_key_entry.set_css_classes(['opaque'])
+                else:
+                        custom_api_row.set_subtitle(_("Invalid Key"))
+                        api_key_entry.set_css_classes(['error'])
+                        
+                api_key_entry.set_hexpand(True)
+                set_key_btn.connect('clicked',self.save_api_key,api_key_entry)
+                custom_api_row.add_suffix(api_key_entry_box)
+
+                custom_api_expander_row = Adw.ExpanderRow.new()
+                custom_api_expander_row.set_activatable(True)
+                custom_api_expander_row.set_title(_("Use Custom API KEY"))
+                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here"))
+                custom_api_expander_row.add_row(custom_api_row)
+                misc_grp.add(custom_api_expander_row)
+
+
+        def save_api_key(self,widget,target):
+                print(target.get_text())
+                settings.set_value("custom-api-key",GLib.Variant("s",target.get_text()))
+                settings.set_value("using-custom-api-key",GLib.Variant("b",True))
+
 
 
         def refresh_cities_list(self,data):
@@ -192,7 +252,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 if len(title) > 2:
                         title = title.split(',')
                         title = f"{title[0]},{title[2]}"
-                        print(title)
                 loc_city = f"{title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
                         added_cities.append(loc_city)

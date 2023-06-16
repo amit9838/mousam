@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="weather">
 	<schema id="io.github.amit9838.weather" path="/io/github/amit9838/weather/">
+
     <key name="api-key" type="s">
       <default>"b93e61109a102e0424bb8b1b073c3b2c"</default>
       <summary>Default api</summary>
       <description>Default api</description>
     </key>
+    <key name="custom-api-key" type="s">
+      <default>""</default>
+      <summary>Custom api</summary>
+      <description>Custom api</description>
+    </key>
+	  <key name="using-custom-api-key" type="b">
+      <default>false</default>
+      <summary>Using Custom api Key</summary>
+      <description>True if custom api key is being used.</description>
+    </key>
+	  <key name="isvalid-custom-api-key" type="b">
+      <default>false</default>
+      <summary>Is custom api key valid</summary>
+      <description>True if custom api key is being used is valid.</description>
+    </key>
+
     <key name="added-cities" type="as">
       <default>['Delhi,IN,28.6517178,77.2219388']</default>
       <summary>List of cities and their coordinates.</summary>
@@ -28,3 +45,4 @@
     </key>
 	</schema>
 </schemalist>
+
