@@ -161,7 +161,13 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 for i,loc in enumerate(city_data):
                         res_row =  Adw.ActionRow.new()
                         res_row.set_activatable(True)
-                        title = f"{loc['name']},{loc['country']}"
+
+                        title = None
+                        if loc.get('state'):
+                                title = f"{loc.get('name')},{loc.get('state')},{loc.get('country')}"
+                        else:
+                                title = f"{loc.get('name')},{loc.get('country')}"
+
                         res_row.set_title(title)
                         res_row.connect("activated", self.add_city)
                         res_row.set_subtitle(f"{loc['lat']},{loc['lon']}")
@@ -170,7 +176,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
 
         def add_city(self,widget):
-                loc_city = f"{widget.get_title()},{widget.get_subtitle()}"
+                title = widget.get_title()
+                if len(title) > 2:
+                        title = title.split(',')
+                        title = f"{title[0]},{title[2]}"
+                        print(title)
+                loc_city = f"{title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
                         added_cities.append(loc_city)
                         settings.set_value("added-cities",GLib.Variant("as",added_cities))

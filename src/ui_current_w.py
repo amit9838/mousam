@@ -33,15 +33,11 @@ def current_weather(main_window,upper_row,middle_row,data):
     condition_grid.set_halign(Gtk.Align.CENTER)
     condition_grid.set_margin_top(10)
     condition_grid.set_hexpand(True)
-
     upper_row.append(condition_grid)
 
     left_section = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-    # left_section.set_margin_start(10)
     left_section.set_size_request(500,100)
-
     condition_grid.attach(left_section, 0, 1, 1, 1)
-
 
     # Main info box, contains weather icon, temp info
     info_box_main = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
@@ -70,7 +66,6 @@ def current_weather(main_window,upper_row,middle_row,data):
     condition_label.set_halign(Gtk.Align.START)
     condition_label.set_css_classes(['condition_label'])
     cond_box.append(condition_label)
-
 
     # Temp box contains temp,feels like, min-max temp
     temp_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -103,7 +98,6 @@ def current_weather(main_window,upper_row,middle_row,data):
 
     right_section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     right_section.set_size_request(300,100)
-    # right_section.set_margin_end(20)
 
     right_section.set_css_classes(['right_section'])
 
@@ -113,7 +107,6 @@ def current_weather(main_window,upper_row,middle_row,data):
     list_store = Gtk.ListStore(str)
     for city in cities:
         list_store.append([city])
-
 
     combo_box = Gtk.ComboBox.new_with_model(list_store)
     combo_box.connect("changed", on_city_combo_changed)
