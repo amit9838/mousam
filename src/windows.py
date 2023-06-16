@@ -134,11 +134,15 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self._dialog.group.add(search_box)
 
                 self.search_entry = Gtk.Entry()
+
+                self.search_entry.set_icon_from_icon_name(Gtk.EntryIconPosition(1),'edit-clear-symbolic')
                 self.search_entry.set_placeholder_text(_("Search for a city"))
                 self.search_entry.set_hexpand(True)
+                self.search_entry.connect('icon-press',self.clear_search_box)
                 search_box.append(self.search_entry)
 
                 button = Gtk.Button(label=_("Search"))
+                button.set_icon_name('system-search-symbolic')
                 search_box.append(button)
 
                 self._dialog.serach_res_grp = Adw.PreferencesGroup()
@@ -150,6 +154,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 self._dialog.show()
 
+        def clear_search_box(self,widget,pos):
+                self.search_entry.set_text("")
+
         def find_city(self,widget):
                 text = self.search_entry.get_text()
                 city_data = fetch_city_info(API_KEY,text)
@@ -158,22 +165,27 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         for action_row in self._dialog.search_results:
                                 self._dialog.serach_res_grp.remove(action_row)
 
-                for i,loc in enumerate(city_data):
+                if city_data:
+                        for i,loc in enumerate(city_data):
+                                res_row =  Adw.ActionRow.new()
+                                res_row.set_activatable(True)
+
+                                title = None
+                                if loc.get('state'):
+                                        title = f"{loc.get('name')},{loc.get('state')},{loc.get('country')}"
+                                else:
+                                        title = f"{loc.get('name')},{loc.get('country')}"
+
+                                res_row.set_title(title)
+                                res_row.connect("activated", self.add_city)
+                                res_row.set_subtitle(f"{loc['lat']},{loc['lon']}")
+                                self._dialog.search_results.append(res_row)
+                                self._dialog.serach_res_grp.add(res_row)
+                else:
                         res_row =  Adw.ActionRow.new()
-                        res_row.set_activatable(True)
-
-                        title = None
-                        if loc.get('state'):
-                                title = f"{loc.get('name')},{loc.get('state')},{loc.get('country')}"
-                        else:
-                                title = f"{loc.get('name')},{loc.get('country')}"
-
-                        res_row.set_title(title)
-                        res_row.connect("activated", self.add_city)
-                        res_row.set_subtitle(f"{loc['lat']},{loc['lon']}")
+                        res_row.set_title("No results found !")
                         self._dialog.search_results.append(res_row)
-                        self._dialog.serach_res_grp.add(res_row);
-
+                        self._dialog.serach_res_grp.add(res_row)
 
         def add_city(self,widget):
                 title = widget.get_title()
