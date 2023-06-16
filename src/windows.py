@@ -35,6 +35,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
                 custom_api_key = str(settings.get_value('custom-api-key'))
+                custom_api_key = custom_api_key if len(custom_api_key)==2 else custom_api_key[1:-1]
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')
                 isValid_custom_api = settings.get_boolean('isvalid-custom-api-key')
@@ -134,7 +135,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 custom_api_expander_row = Adw.ExpanderRow.new()
                 custom_api_expander_row.set_activatable(True)
                 custom_api_expander_row.set_title(_("Use Custom API KEY"))
-                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here"))
+                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here(Restart Required)"))
                 custom_api_expander_row.add_row(custom_api_row)
                 misc_grp.add(custom_api_expander_row)
 

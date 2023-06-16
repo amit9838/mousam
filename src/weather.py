@@ -18,7 +18,6 @@ api_key = str(settings.get_value('api-key'))
 added_cities = list(settings.get_value('added-cities'))
 cities = [x.split(',')[0] for x in added_cities]
 
-# @Gtk.Template(resource_path='/com/github/amit9838/window.ui')
 class WeatherWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'WeatherWindow'
 
@@ -110,9 +109,11 @@ class WeatherWindow(Gtk.ApplicationWindow):
         main_box.append(footer_box)
 
     def refresh_weather(self,widget):
+        if len(added_cities) == 0:
+            settings.reset('added-cities')
+            settings.reset('selected-city')
         settings = Gio.Settings.new("io.github.amit9838.weather")
         updated_at = str(settings.get_value('updated-at'))
-
 
         date_time = datetime.datetime.now()
         d_t = updated_at.split(" ")
@@ -120,7 +121,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
         # Time
         tm = d_t[1]
         t_arr = tm.split(":")
-
         t_min = int(t_arr[1])
         
         # Ignore fetching weather within 1 min

@@ -6,17 +6,15 @@ settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = str(settings.get_value("custom-api-key"))
 
 using_custom_api_key = settings.get_boolean("using-custom-api-key")
-print(using_custom_api_key)
+
 if using_custom_api_key and len(API_KEY)==34 and fetch_city_info(API_KEY[1:-1],'delhi'):
         API_KEY = API_KEY[1:-1]
         settings.set_value("using-custom-api-key",GLib.Variant("b",True))
         settings.set_value("isvalid-custom-api-key",GLib.Variant("b",True))
-        print(using_custom_api_key)
         print("Using Custom api")
 
 else:
-        api_key = str(settings.get_value('api-key'))
-        API_KEY = api_key[1:-1]
+        API_KEY = str(settings.get_value('api-key'))[1:-1]
         settings.set_value("using-custom-api-key",GLib.Variant("b",False))
         settings.set_value("isvalid-custom-api-key",GLib.Variant("b",False))
         print("Using Default api")
