@@ -8,7 +8,7 @@ from .backend_current_w import fetch_city_info
 
 def AboutWindow(self, action,*args):
         dialog = Adw.AboutWindow()
-        dialog.set_application_name("Weather")
+        dialog.set_application_name(_("Weather"))
         dialog.set_application_icon("io.github.amit9838.weather")
         dialog.set_version("1.0")
         dialog.set_developer_name("Amit Chaudhary")
@@ -118,7 +118,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
                 self._dialog.set_search_enabled(False)
-                self._dialog.set_title(title=_('Add new location'))
+                self._dialog.set_title(title=_('Add New Location'))
                 self._dialog.set_transient_for(self)
                 self._dialog.set_default_size(300, 500)
 

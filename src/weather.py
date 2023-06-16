@@ -29,7 +29,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         global application
         self.set_default_size(800, 400)
-        self.set_title("Weather")
+        self.set_title(_("Weather"))
 
         self.main_window = application = self
 
@@ -67,6 +67,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.open_button = Gtk.Button(label="refresh")
         self.header.pack_start(self.open_button)
         self.open_button.set_icon_name("view-refresh-symbolic")
+        self.open_button.set_tooltip_text(_("Refresh"))
         self.open_button.connect('clicked',self.refresh_weather)
 
 
