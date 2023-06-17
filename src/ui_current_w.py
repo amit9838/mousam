@@ -4,7 +4,6 @@ import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib, Adw
-# from backend.curr_weather import fetch_weather
 
 from .constants import icons,API_KEY,bg_css
 from .backend_current_w import fetch_weather,fetch_city_info
@@ -78,7 +77,7 @@ def current_weather(main_window,upper_row,middle_row,data):
     temp_label.set_css_classes(['temp_label'])
     temp_box_l.append(temp_label)
 
-    feels_like_label = Gtk.Label(label=_("Feels like {0:.0f}°C").format(data['main']['feels_like']))
+    feels_like_label = Gtk.Label(label=_("Feels like {0:.1f}°C").format(data['main']['feels_like']))
     feels_like_label.set_margin_start(5)
     feels_like_label.set_halign(Gtk.Align.START)
     temp_box_l.append(feels_like_label)
@@ -123,11 +122,12 @@ def current_weather(main_window,upper_row,middle_row,data):
     # sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
     visibility = data['visibility']//1000 if data['visibility'] > 1000 else data['visibility']
     vis_dist_unit = _("km") if data['visibility'] > 1000 else _("m")
-    
-    weather_data.append([_("Rain"), _("{0}%").format(data['clouds']['all'])])
+    pop = int(data.get('pop')*100) if data.get('pop') else 0
+
+    weather_data.append([_("Rain"), _("{0}%").format(pop)])
     weather_data.append([_("Humidity"), _("{0}%").format(data['main']['humidity'])])
-    weather_data.append([_("Pressure"), _("{0} mmHg").format(data['main']['pressure'])])
-    weather_data.append([_("Wind speed"), _("{0} km/h {1}").format(data['wind']['speed'], wind_dir(data['wind']['deg']))])
+    weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
+    weather_data.append([_("Wind speed"), _("{0} m/s {1}").format(data['wind']['speed'], wind_dir(data['wind']['deg']))])
     weather_data.append([_("Visibility"), f"{visibility} {vis_dist_unit}"])
     # weather_data.append(["Sunrise", f"{sunrise_time.hour}:{sunrise_time.minute} AM"])
     # weather_data.append(["Sunset", f"{sunset_time.hour-12}:{sunset_time.minute} PM"])

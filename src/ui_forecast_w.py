@@ -89,7 +89,9 @@ def forecast_weather(middle_row,f_data):
             rain_icon.set_pixel_size(16)
             rain_icon.set_margin_end(5)
             prec_box.append(rain_icon)
-            prec_label = Gtk.Label(label=_("{0}%").format(data['clouds']['all']))
+
+            pop = int(data.get('pop')*100) if data.get('pop') else 0
+            prec_label = Gtk.Label(label=_("{0}%").format(pop))
             prec_box.append(prec_label)
             grid.attach(prec_box, 0, 0, 1, 1)
 
@@ -103,11 +105,11 @@ def forecast_weather(middle_row,f_data):
             wind_box.append(wind_icon)
 
 
-            wind_label = Gtk.Label(label=_("{0} km/h").format(data['wind']['speed']))
+            wind_label = Gtk.Label(label=_("{0} m/s").format(data['wind']['speed']))
             wind_box.append(wind_label)
             grid.attach(wind_box, 0, 1, 1, 1)
 
-            temp_label = Gtk.Label(label=_("{0:.0f}°C").format(data['main']['temp']))
+            temp_label = Gtk.Label(label=_("{0:.0f}°").format(data['main']['temp']))
             temp_label.set_css_classes(['forecast_temp_label'])
             temp_label.set_margin_top(10)
             forecast_content.append(temp_label)

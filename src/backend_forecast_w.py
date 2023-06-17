@@ -1,5 +1,4 @@
 import requests
-import json
 
 def fetch_forecast(api_key,latitude, longitude, days=1):
     base_url = "http://api.openweathermap.org/data/2.5/forecast"

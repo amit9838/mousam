@@ -2,22 +2,21 @@ from gi.repository import Gio,GLib
 from .backend_current_w import fetch_city_info
 
 settings = Gio.Settings.new("io.github.amit9838.weather")
-
 API_KEY = str(settings.get_value("personal-api-key"))
-
 using_personal_api_key = settings.get_boolean("using-personal-api-key")
 
-if using_personal_api_key and len(API_KEY)==34 and fetch_city_info(API_KEY[1:-1],'delhi'):
+# Validating personal api key
+if using_personal_api_key == True and len(API_KEY) == 34 and fetch_city_info(API_KEY[1:-1],'delhi'):
         API_KEY = API_KEY[1:-1]
         settings.set_value("using-personal-api-key",GLib.Variant("b",True))
         settings.set_value("isvalid-personal-api-key",GLib.Variant("b",True))
-        print("Using personal api")
+        print("Using Personal api key")
 
 else:
         API_KEY = str(settings.get_value('api-key'))[1:-1]
         settings.set_value("using-personal-api-key",GLib.Variant("b",False))
         settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))
-        print("Using Default api")
+        print("Using Default api key")
 
 
 
@@ -63,22 +62,25 @@ bg_css ={'01d':"clear_sky",
         '50n':"fog_night",
         }
 
+# Day ----------------------
 # 01d: Clear sky (day)
-# 01n: Clear sky (night)
 # 02d: Few clouds (day)
-# 02n: Few clouds (night)
 # 03d: Scattered clouds (day)
-# 03n: Scattered clouds (night)
 # 04d: Broken clouds (day)
-# 04n: Broken clouds (night)
 # 09d: Shower rain (day)
-# 09n: Shower rain (night)
 # 10d: Rain (day)
-# 10n: Rain (night)
 # 11d: Thunderstorm (day)
-# 11n: Thunderstorm (night)
 # 13d: Snow (day)
-# 13n: Snow (night)
 # 50d: Mist (day)
+
+# Night ----------------------
+# 01n: Clear sky (night)  
+# 02n: Few clouds (night)
+# 03n: Scattered clouds (night)
+# 04n: Broken clouds (night)
+# 09n: Shower rain (night)
+# 10n: Rain (night)
+# 11n: Thunderstorm (night)
+# 13n: Snow (night)
 # 50n: Mist (night)
 
