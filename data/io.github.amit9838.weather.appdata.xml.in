@@ -9,9 +9,9 @@
     <p>Current Weather conditions and forcasts.</p>
     <p>Features:</p>
     <ul>
-      <li>Use dynamic gradient backgrounds based on current weather.</li>
+      <li>Use dynamic gradient backgrounds based on current weather conditions.</li>
       <li>See forcasts in beautiful card view.</li>
-      <li>Search and add cities.</li>
+      <li>Use Personal API Key</li>
     </ul>
   </description>
     <screenshots>
@@ -43,6 +43,19 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+        <release version="0.2.0" date="2023-06-17">
+        <description>
+          <p>What's New</p>
+          <ul>
+              <li>Option:Use Custom api-key.</li>
+              <li>UI Improvements.</li>
+              <li>Show states in search results.</li>
+              <li>Various bug fixes.</li>
+              <li>Add Turkish translation. Thanks to Sabri Ünal.</li>
+              <li>Add Russian translation. Thanks to Сергей Ворон.</li>
+          </ul>
+        </description>
+        </release>
     <release version="0.1.0" date="2023-06-11">
         <description>
           <p>New features and updates</p>
