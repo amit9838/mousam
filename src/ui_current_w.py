@@ -3,7 +3,7 @@ import json
 import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk,Gio,GLib
+from gi.repository import Gtk,Gio,GLib, Adw
 # from backend.curr_weather import fetch_weather
 
 from .constants import icons,API_KEY,bg_css
@@ -19,7 +19,6 @@ def current_weather(main_window,upper_row,middle_row,data):
     added_cities = list(settings.get_value('added-cities'))
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
     settings.set_value("updated-at",GLib.Variant("s",str(datetime.datetime.now())))
-
 
     g_upper_row = upper_row
     g_middle_row = middle_row
@@ -183,7 +182,6 @@ def on_city_combo_changed(combo):
                 if m is not None:
                     g_middle_row.remove(m)
                 forecast_weather(g_middle_row,f_data)
-
 
 
 # converts wind degrees to direction 

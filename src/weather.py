@@ -2,7 +2,7 @@ import gi
 import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw,Gdk,Gio
+from gi.repository import Gtk, Adw,Gdk,Gio,GLib
 
 from .constants import API_KEY
 from .windows import AboutWindow,WeatherPreferences
@@ -37,7 +37,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('added-cities')
             settings.reset('selected-city')
 
-        #  Adding a button into header
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
 
         main_grid = Gtk.Grid()
@@ -59,7 +58,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         main_box.set_hexpand(True)
         main_box.set_vexpand(True)
 
-        #  Adding a button into header
+        #  Adding refresh button into header
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class='flat')
         self.set_titlebar(self.header)
@@ -94,38 +93,39 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.add_action(action)
         menu.append(_("About Weather"), "win.about")
 
+        # Initial Fetch -------------------------
         self.fetch_weather_data()
 
+        # Footer Section -------------------------
         footer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         footer_box.set_halign(Gtk.Align.CENTER)
         footer_box.set_size_request(800,10)
         footer_box.set_margin_bottom(0)
-
-
-        # updated_at_label = Gtk.Label(label="Weather data from OpenWeather.com")
-        # updated_at_label.set_halign(Gtk.Align.START)
-        # updated_at_label.set_css_classes(['updated_at'])
-        # footer_box.append(updated_at_label)
         main_box.append(footer_box)
 
     def refresh_weather(self,widget):
         if len(added_cities) == 0:
+            settings = Gio.Settings.new("io.github.amit9838.weather")
             settings.reset('added-cities')
             settings.reset('selected-city')
+            
+        # Ignore refreshing weather within 3 second
         settings = Gio.Settings.new("io.github.amit9838.weather")
         updated_at = str(settings.get_value('updated-at'))
-
-        date_time = datetime.datetime.now()
-        d_t = updated_at.split(" ")
+        d_t = updated_at[1:-1].split(" ")
 
         # Time
         tm = d_t[1]
         t_arr = tm.split(":")
-        t_min = int(t_arr[1])
+        t_sec = float(t_arr[2])
         
-        # Ignore fetching weather within 1 min
-        if datetime.datetime.now().minute - t_min < 1:
+        if datetime.datetime.now().second - t_sec < 3:
+            print("skip")
             return
+        
+        print("refresh")
+        date_time = datetime.datetime.now()
+        settings.set_value("updated-at",GLib.Variant("s",str(date_time)))
 
         upper_child = self.upper_row.get_first_child()
         if upper_child is not None:
@@ -135,8 +135,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
         if middle_child is not None:
             self.middle_row.remove(middle_child)
             
-
-        self.set_css_classes(['main_window'])
         self.fetch_weather_data()
 
     def fetch_weather_data(self):

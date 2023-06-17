@@ -13,7 +13,6 @@ def fetch_weather(api_key, latitude, longitude):
         response = requests.get(base_url, params=params)
         response.raise_for_status()  # Raise an exception if request was unsuccessful
         weather_data = response.json()
-        # print(weather_data)
         return weather_data
 
     except requests.exceptions.RequestException as e:

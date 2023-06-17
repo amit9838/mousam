@@ -42,11 +42,37 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 using_custom_api = settings.get_boolean('using-custom-api-key')
                 cities = [x.split(',')[0] for x in added_cities]
 
+        #  Location Page  --------------------------------------------------
+                location_page = Adw.PreferencesPage()
+                location_page.set_title(_("Locations"))
+                location_page.set_icon_name('mark-location-symbolic')
+                self.add(location_page)
+
+                self.location_grp = Adw.PreferencesGroup()
+                self.location_grp.set_title(_("Locations"))
+                location_page.add(self.location_grp)
+
+                add_loc_btn = Gtk.Button()
+                add_loc_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER,spacing=4)
+                # Create a label
+                label = Gtk.Label(label=_("Add"))
+                add_loc_btn_box.append(label)
+                # Create an icon
+                add_icon = Gtk.Image.new_from_icon_name("list-add-symbolic")
+                add_icon.set_pixel_size(14)
+                add_loc_btn_box.append(add_icon)
+                add_loc_btn.set_child(add_loc_btn_box)
+                add_loc_btn.connect('clicked',self.add_location_dialog)
+                self.location_grp.set_header_suffix(add_loc_btn)
+
+                self.location_rows = []
+                self.refresh_cities_list(added_cities)
+
+        #  Appearance Page  --------------------------------------------------s
                 appearance_page = Adw.PreferencesPage()
                 appearance_page.set_title(_("Appearance"))
                 appearance_page.set_icon_name('applications-graphics-symbolic')
                 self.add(appearance_page)
-
 
                 self.appearance_grp = Adw.PreferencesGroup()
                 appearance_page.add(self.appearance_grp)
@@ -65,53 +91,27 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.appearance_grp.add(gradient_row)
 
 
-
-                location_page = Adw.PreferencesPage()
-                location_page.set_title(_("Locations"))
-                location_page.set_icon_name('mark-location-symbolic')
-
-                self.add(location_page)
-                self.location_grp = Adw.PreferencesGroup()
-                self.location_grp.set_title(_("Locations"))
-                location_page.add(self.location_grp)
-
-                add_loc_btn = Gtk.Button()
-                add_loc_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER,spacing=4)
-                # Create a label
-                label = Gtk.Label(label=_("Add"))
-                add_loc_btn_box.append(label)
-                # Create an icon
-                add_icon = Gtk.Image.new_from_icon_name("list-add-symbolic")
-                add_icon.set_pixel_size(14)
-                add_loc_btn_box.append(add_icon)
-                add_loc_btn.set_child(add_loc_btn_box)
-                add_loc_btn.connect('clicked',self.add_location_dialog)
-
-                self.location_grp.set_header_suffix(add_loc_btn)
-
-                self.location_rows = []
-                self.refresh_cities_list(added_cities)
-
-
+        #  Misc Page  --------------------------------------------------
                 misc_page = Adw.PreferencesPage()
                 self.add(misc_page)
+
                 misc_page.set_title(_("Misc"))
                 misc_page.set_icon_name('application-x-addon-symbolic')
                 misc_grp = Adw.PreferencesGroup()
-                # misc_grp.set_title(_("Misc"))
                 misc_page.add(misc_grp)
 
                 custom_api_row =  Adw.ActionRow.new()
                 custom_api_row.set_activatable(True)
                 custom_api_row.set_title(_("API Key"))
 
-                        
-
                 api_key_entry_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 api_key_entry = Gtk.Entry()
                 api_key_entry_box.append(api_key_entry)
 
-                set_key_btn = Gtk.Button(label = "Set")
+                set_key_btn = Gtk.Button()
+                set_key_btn.set_icon_name("emblem-ok-symbolic")
+                set_key_btn.set_tooltip_text(_("Save"))
+                set_key_btn.set_css_classes(['circular'])
                 set_key_btn.set_margin_start(5)
 
                 api_key_entry_box.append(set_key_btn)                
@@ -135,26 +135,24 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 custom_api_expander_row = Adw.ExpanderRow.new()
                 custom_api_expander_row.set_activatable(True)
                 custom_api_expander_row.set_title(_("Use Custom API KEY"))
-                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here(Restart Required)"))
+                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here (Restart Required)"))
                 custom_api_expander_row.add_row(custom_api_row)
                 misc_grp.add(custom_api_expander_row)
 
 
-        def save_api_key(self,widget,target):
-                print(target.get_text())
-                settings.set_value("custom-api-key",GLib.Variant("s",target.get_text()))
-                settings.set_value("using-custom-api-key",GLib.Variant("b",True))
-
-
-
+        # Location page methods ------------------------------------------
         def refresh_cities_list(self,data):
                 if len(self.location_rows)>0:
                         for action_row in self.location_rows:
-                                self.location_grp.remove(action_row)
+                                try:
+                                        self.location_grp.remove(action_row)
+                                except:
+                                        pass
 
                 for city in added_cities:
                         button = Gtk.Button()
                         button.set_icon_name("edit-delete-symbolic")
+                        button.set_css_classes(['circular'])
                         button.set_tooltip_text(_("Remove location"))
                         button.set_has_frame(False)
                         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
@@ -173,7 +171,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         location_row.set_subtitle(f"{city.split(',')[-2]},{city.split(',')[-1]}")
                         location_row.add_suffix(box)
                         self.location_rows.append(location_row)
-                        self.location_grp.add(location_row);
+                        self.location_grp.add(location_row)
                         button.connect("clicked", self.remove_city,location_row)
 
         def add_location_dialog(self,parent):
@@ -204,6 +202,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 button = Gtk.Button(label=_("Search"))
                 button.set_icon_name('system-search-symbolic')
+                button.set_tooltip_text(_("Search"))
                 search_box.append(button)
 
                 self._dialog.serach_res_grp = Adw.PreferencesGroup()
@@ -213,6 +212,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 button.connect("clicked", self.find_city)
                 self._dialog.search_results = []
 
+                
                 self._dialog.show()
 
         def clear_search_box(self,widget,pos):
@@ -244,7 +244,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                                 self._dialog.serach_res_grp.add(res_row)
                 else:
                         res_row =  Adw.ActionRow.new()
-                        res_row.set_title("No results found !")
+                        res_row.set_title(_("No results found !"))
                         self._dialog.search_results.append(res_row)
                         self._dialog.serach_res_grp.add(res_row)
 
@@ -255,7 +255,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         title = f"{title[0]},{title[2]}"
                 loc_city = f"{title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
+
                         added_cities.append(loc_city)
+
                         settings.set_value("added-cities",GLib.Variant("as",added_cities))
                         self.refresh_cities_list(added_cities)
                         self.parent.fetch_weather_data()
@@ -274,16 +276,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.refresh_cities_list(added_cities)
                 self.parent.fetch_weather_data()
 
-
+        # Apprearance page methods --------------------------
         def use_gradient_bg(self,widget,state):
                 settings.set_value("use-gradient-bg",GLib.Variant("b",state))
 
 
-# data = [{'name': 'Delhi',
-#          'local_names': {'ko': '델리', 'he': 'דלהי', 'fa': 'دهلی', 'pa': 'ਦਿੱਲੀ', 'kn': 'ದೆಹಲಿ', 'el': 'Δελχί', 'en': 'Delhi', 'ta': 'தில்லி', 'hi': 'दिल्ली', 'th': 'เดลี', 'bn': 'দিল্লি', 'fr': 'Delhi', 'ja': 'デリー', 'ru': 'Дели', 'ur': 'دہلی', 'uk': 'Делі', 'de': 'Delhi', 'cs': 'Dillí', 'oc': 'Delhi', 'eo': 'Delhio', 'es': 'Delhi', 'ms': 'Delhi', 'ml': 'ഡെൽഹി', 'pt': 'Deli', 'te': 'ఢిల్లీ', 'ku': 'Delhî', 'ne': 'दिल्ली', 'ar': 'دلهي', 'my': 'ဒေလီမြို့', 'zh': '德里', 'lv': 'Deli'},
-#          'lat': 28.6517178, 'lon': 77.2219388, 'country': 'IN', 'state': 'Delhi'},
-
-#          {'name': 'Del', 'lat': 7.8280947, 'lon': 35.8220579, 'country': 'ET'},
-#          {'name': 'Del', 'lat': 45.7692659, 'lon': 7.5569758, 'country': 'IT', 'state': 'Aosta Valley'},
-#          {'name': 'Del', 'lat': 43.1167167, 'lon': -8.4662065, 'country': 'ES', 'state': 'Galicia'},
-#          {'name': 'Del', 'lat': 46.6390735, 'lon': 9.567217, 'country': 'CH', 'state': 'Grisons'}]
+        # Misc page methods ----------------------------------
+        def save_api_key(self,widget,target):
+                settings.set_value("custom-api-key",GLib.Variant("s",target.get_text()))
+                settings.set_value("using-custom-api-key",GLib.Variant("b",True))
