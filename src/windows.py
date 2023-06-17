@@ -31,15 +31,15 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.set_transient_for(parent)
                 self.set_default_size(600, 500)
 
-                global selected_city,settings,added_cities,cities,using_custom_api,isValid_custom_api,custom_api_key
+                global selected_city,settings,added_cities,cities,using_personal_api,isValid_personal_api,personal_api_key
                 settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
-                custom_api_key = str(settings.get_value('custom-api-key'))
-                custom_api_key = custom_api_key if len(custom_api_key)==2 else custom_api_key[1:-1]
+                personal_api_key = str(settings.get_value('personal-api-key'))
+                personal_api_key = personal_api_key if len(personal_api_key)==2 else personal_api_key[1:-1]
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')
-                isValid_custom_api = settings.get_boolean('isvalid-custom-api-key')
-                using_custom_api = settings.get_boolean('using-custom-api-key')
+                isValid_personal_api = settings.get_boolean('isvalid-personal-api-key')
+                using_personal_api = settings.get_boolean('using-personal-api-key')
                 cities = [x.split(',')[0] for x in added_cities]
 
         #  Location Page  --------------------------------------------------
@@ -80,7 +80,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
                 gradient_row.set_title(_("Use Dynamic Background"))
-                gradient_row.set_subtitle(_("Background Changes based on weather conditions (Reastart required)"))
+                gradient_row.set_subtitle(_("Background changes based on current weather conditions (Reastart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 self.gradient_switch = Gtk.Switch()
@@ -100,9 +100,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 misc_grp = Adw.PreferencesGroup()
                 misc_page.add(misc_grp)
 
-                custom_api_row =  Adw.ActionRow.new()
-                custom_api_row.set_activatable(True)
-                custom_api_row.set_title(_("API Key"))
+                personal_api_row =  Adw.ActionRow.new()
+                personal_api_row.set_activatable(True)
+                personal_api_row.set_title(_("API Key"))
 
                 api_key_entry_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 api_key_entry = Gtk.Entry()
@@ -116,28 +116,28 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 api_key_entry_box.append(set_key_btn)                
                 api_key_entry.set_placeholder_text(_("Enter your api-key"))
-                api_key_entry.set_text(custom_api_key)
-                if isValid_custom_api and len(custom_api_key)>2:
-                        custom_api_row.set_subtitle(_("Active"))
+                api_key_entry.set_text(personal_api_key)
+                if isValid_personal_api and len(personal_api_key)>2:
+                        personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
                         
-                elif len(custom_api_key)==2:
+                elif len(personal_api_key)==2:
                         api_key_entry.set_text("")
                         api_key_entry.set_css_classes(['opaque'])
                 else:
-                        custom_api_row.set_subtitle(_("Invalid Key"))
+                        personal_api_row.set_subtitle(_("Invalid Key"))
                         api_key_entry.set_css_classes(['error'])
                         
                 api_key_entry.set_hexpand(True)
                 set_key_btn.connect('clicked',self.save_api_key,api_key_entry)
-                custom_api_row.add_suffix(api_key_entry_box)
+                personal_api_row.add_suffix(api_key_entry_box)
 
-                custom_api_expander_row = Adw.ExpanderRow.new()
-                custom_api_expander_row.set_activatable(True)
-                custom_api_expander_row.set_title(_("Use Custom API KEY"))
-                custom_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste here (Restart Required)"))
-                custom_api_expander_row.add_row(custom_api_row)
-                misc_grp.add(custom_api_expander_row)
+                personal_api_expander_row = Adw.ExpanderRow.new()
+                personal_api_expander_row.set_activatable(True)
+                personal_api_expander_row.set_title(_("Use Personal API Key"))
+                personal_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste it here (Restart Required)"))
+                personal_api_expander_row.add_row(personal_api_row)
+                misc_grp.add(personal_api_expander_row)
 
 
         # Location page methods ------------------------------------------
@@ -283,5 +283,5 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         # Misc page methods ----------------------------------
         def save_api_key(self,widget,target):
-                settings.set_value("custom-api-key",GLib.Variant("s",target.get_text()))
-                settings.set_value("using-custom-api-key",GLib.Variant("b",True))
+                settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
+                settings.set_value("using-personal-api-key",GLib.Variant("b",True))
