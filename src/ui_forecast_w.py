@@ -18,7 +18,7 @@ def forecast_weather(middle_row,f_data):
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)  # Enable automatic scrolling
         scrolled_window.set_min_content_height(190)
         scrolled_window.set_margin_bottom(5)
-        scrolled_window.set_margin_top(5)
+        scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
         scrolled_window.set_halign(Gtk.Align.CENTER)
         scrolled_container.append(scrolled_window)
@@ -62,6 +62,8 @@ def forecast_weather(middle_row,f_data):
 
 
             forecast_time = Gtk.Label(label=f"{time}")
+            forecast_time.set_css_classes(['secondary-lighter'])
+
             forecast_time.set_halign(Gtk.Align.CENTER)
             forecast_content.append(forecast_time)
             forecast_item.append(forecast_content)
@@ -86,12 +88,14 @@ def forecast_weather(middle_row,f_data):
             prec_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             rain_icon = Gtk.Image()
             rain_icon.set_from_icon_name("weather-showers-scattered-symbolic")  # Set the icon name and size
+            rain_icon.set_css_classes(['secondary'])
             rain_icon.set_pixel_size(16)
             rain_icon.set_margin_end(5)
             prec_box.append(rain_icon)
 
             pop = int(data.get('pop')*100) if data.get('pop') else 0
             prec_label = Gtk.Label(label=_("{0}%").format(pop))
+            prec_label.set_css_classes(['secondary-light'])
             prec_box.append(prec_label)
             grid.attach(prec_box, 0, 0, 1, 1)
 
@@ -101,11 +105,13 @@ def forecast_weather(middle_row,f_data):
             wind_icon.set_from_icon_name("weather-windy-symbolic")  # Set the icon name and size
             # icon.set_hexpand(True)
             wind_icon.set_pixel_size(16)
+            wind_icon.set_css_classes(['secondary'])
             wind_icon.set_margin_end(5)
             wind_box.append(wind_icon)
 
 
-            wind_label = Gtk.Label(label=_("{0} m/s").format(data['wind']['speed']))
+            wind_label = Gtk.Label(label=_("{0:.1f} km/h").format(data['wind']['speed']*1.609344))
+            wind_label.set_css_classes(['secondary-light'])
             wind_box.append(wind_label)
             grid.attach(wind_box, 0, 1, 1, 1)
 
