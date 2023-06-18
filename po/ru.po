@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+# Russian translation for Weather.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Сергей Ворон <voron@duck.com>, 2023.
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-17 21:35+0300\n"
-"PO-Revision-Date: 2023-06-17 22:19+0300\n"
+"POT-Creation-Date: 2023-06-18 10:57+0300\n"
+"PO-Revision-Date: 2023-06-18 11:17+0300\n"
 "Last-Translator: Сергей Ворон <voron@duck.com>\n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -41,11 +41,11 @@ msgid "Use dynamic gradient backgrounds based on current weather conditions."
 msgstr "Используйте динамические градиентные фоны в зависимости от текущей погоды."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:13
-#: data/io.github.amit9838.weather.appdata.xml.in:64
+#: data/io.github.amit9838.weather.appdata.xml.in:74
 msgid "See forcasts in beautiful card view."
 msgstr "Прогноз погоды в красивом карточном представлении."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:14 src/windows.py:137
+#: data/io.github.amit9838.weather.appdata.xml.in:14
 msgid "Use Personal API Key"
 msgstr "Использовать личный API-ключ"
 
@@ -53,43 +53,56 @@ msgstr "Использовать личный API-ключ"
 msgid "Amit Chaudhary"
 msgstr "Amit Chaudhary"
 
-#: data/io.github.amit9838.weather.appdata.xml.in:48
-msgid "What's New"
-msgstr "Что нового"
+#: data/io.github.amit9838.weather.appdata.xml.in:49
+msgid "Use full country name."
+msgstr "Используются полные названия страны."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:50
-msgid "Option:Use Custom api-key."
-msgstr "Опция: Используйте пользовательский API-ключ."
+msgid "Fix units."
+msgstr "Исправлены единицы измерения."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:51
+#: data/io.github.amit9838.weather.appdata.xml.in:61
 msgid "UI Improvements."
 msgstr "Улучшения пользовательского интерфейса."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:52
+msgid "Minor bug fixes."
+msgstr "Мелкие исправления."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:58
+msgid "What's New"
+msgstr "Что нового"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:60
+msgid "Option:Use Custom api-key."
+msgstr "Опция: Используйте пользовательский API-ключ."
+
+#: data/io.github.amit9838.weather.appdata.xml.in:62
 msgid "Show states in search results."
 msgstr "Показывать состояния в результатах поиска."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:53
+#: data/io.github.amit9838.weather.appdata.xml.in:63
 msgid "Various bug fixes."
 msgstr "Различные исправления ошибок."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:54
+#: data/io.github.amit9838.weather.appdata.xml.in:64
 msgid "Add Turkish translation. Thanks to Sabri Ünal."
 msgstr "Добавлен Турецкий перевод. Спасибо Sabri Ünal."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:55
+#: data/io.github.amit9838.weather.appdata.xml.in:65
 msgid "Add Russian translation. Thanks to Сергей Ворон."
 msgstr "Добавлен Русский перевод. Спасибо Сергей Ворон."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:61
+#: data/io.github.amit9838.weather.appdata.xml.in:71
 msgid "New features and updates"
 msgstr "Новые функции и обновления"
 
-#: data/io.github.amit9838.weather.appdata.xml.in:63
+#: data/io.github.amit9838.weather.appdata.xml.in:73
 msgid "Use dynamic gradient backgrounds based on current weather."
 msgstr "Используйте динамические градиентные фоны в зависимости от текущей погоды."
 
-#: data/io.github.amit9838.weather.appdata.xml.in:65
+#: data/io.github.amit9838.weather.appdata.xml.in:75
 msgid "Search and add cities."
 msgstr "Поиск и добавление городов."
 
@@ -100,7 +113,7 @@ msgstr "API по умолчанию"
 
 #: data/io.github.amit9838.weather.gschema.xml:12
 msgid "personal api"
-msgstr "личный api"
+msgstr "персональный api"
 
 #: data/io.github.amit9838.weather.gschema.xml:16
 msgid "Using personal api Key"
@@ -214,48 +227,61 @@ msgstr "Сохранить"
 msgid "Enter your api-key"
 msgstr "Введите свой API-ключ"
 
-#: src/windows.py:121
+#: src/windows.py:122
 msgid "Active"
 msgstr "Активный"
 
-#: src/windows.py:128
+#: src/windows.py:124
+msgid "(Active)"
+msgstr "(Активный)"
+
+#: src/windows.py:130
+msgid "(Invalid Key)"
+msgstr "(Неправильный ключ)"
+
+#: src/windows.py:131
 msgid "Invalid Key"
 msgstr "Неправильный ключ"
 
-#: src/windows.py:138
+#: src/windows.py:140
+#, python-brace-format
+msgid "Use Personal API Key {0}"
+msgstr "Используется персональный API-ключа {0}"
+
+#: src/windows.py:141
 msgid "Generate api key from openweathermap.org and paste it here (Restart Required)"
 msgstr "Создайте ключ API с сайта openweathermap.org и вставьте его сюда (требуется перезапуск)"
 
-#: src/windows.py:156
+#: src/windows.py:159
 msgid "Remove location"
 msgstr "Удалить местоположение"
 
-#: src/windows.py:180
+#: src/windows.py:183
 msgid "Add New Location"
 msgstr "Добавить новое местоположение"
 
-#: src/windows.py:198
+#: src/windows.py:201
 msgid "Search for a city"
 msgstr "Поиск города"
 
-#: src/windows.py:203 src/windows.py:205
+#: src/windows.py:206 src/windows.py:208
 msgid "Search"
 msgstr "Искать"
 
-#: src/windows.py:247
+#: src/windows.py:253
 msgid "No results found !"
 msgstr "Ничего не найдено!"
 
-#: src/ui_current_w.py:81
+#: src/ui_current_w.py:80
 #, python-brace-format
-msgid "Feels like {0:.0f}°C"
-msgstr "Ощущается как {0:.0f}°C"
+msgid "Feels like {0:.1f}°C"
+msgstr "Ощущается как {0:.1f}°C"
 
-#: src/ui_current_w.py:125
+#: src/ui_current_w.py:124
 msgid "km"
 msgstr "км"
 
-#: src/ui_current_w.py:125
+#: src/ui_current_w.py:124
 msgid "m"
 msgstr "м"
 
@@ -263,7 +289,7 @@ msgstr "м"
 msgid "Rain"
 msgstr "Дождь"
 
-#: src/ui_current_w.py:127 src/ui_current_w.py:128 src/ui_forecast_w.py:92
+#: src/ui_current_w.py:127 src/ui_current_w.py:128 src/ui_forecast_w.py:97
 #, python-brace-format
 msgid "{0}%"
 msgstr "{0}%"
@@ -278,8 +304,8 @@ msgstr "Давление"
 
 #: src/ui_current_w.py:129
 #, python-brace-format
-msgid "{0} mmHg"
-msgstr "{0} мм рт.ст."
+msgid "{0} hPa"
+msgstr "{0} гПа"
 
 #: src/ui_current_w.py:130
 msgid "Wind speed"
@@ -287,8 +313,8 @@ msgstr "Скорость ветра"
 
 #: src/ui_current_w.py:130
 #, python-brace-format
-msgid "{0} km/h {1}"
-msgstr "{0} км/ч {1}"
+msgid "{0:.1f} km/h {1}"
+msgstr "{0:.1f} км/ч {1}"
 
 #: src/ui_current_w.py:131
 msgid "Visibility"
@@ -366,12 +392,12 @@ msgstr "AM"
 msgid "PM"
 msgstr "PM"
 
-#: src/ui_forecast_w.py:106
+#: src/ui_forecast_w.py:113
 #, python-brace-format
-msgid "{0} km/h"
-msgstr "{0} км/ч"
+msgid "{0:.1f} km/h"
+msgstr "{0:.1f} км/ч"
 
-#: src/ui_forecast_w.py:110
+#: src/ui_forecast_w.py:118
 #, python-brace-format
-msgid "{0:.0f}°C"
-msgstr "{0:.0f}°C"
+msgid "{0:.0f}°"
+msgstr "{0:.0f}°"
