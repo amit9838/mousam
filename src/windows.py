@@ -256,7 +256,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         def add_city(self,widget):
                 title = widget.get_title()
-                if len(title) > 2:
+                if len(title.split(',')) > 2:
                         title = title.split(',')
                         title = f"{title[0]},{title[2]}"
                 loc_city = f"{title},{widget.get_subtitle()}"
