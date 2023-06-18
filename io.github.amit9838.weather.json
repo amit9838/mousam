@@ -32,7 +32,7 @@
                 {
                     "type" : "git",
                     "tag" : "v0.2.0",
-                    "commit" : "e0b104c95094ed4bc06aea38a14865c0fdcb41a2",
+                    "commit" : "a0c0430ff3aa1f17c3c59aaa286b6f81f5522fe8",
                     "url" : "https://github.com/amit9838/weather.git"
                 }
             ]
