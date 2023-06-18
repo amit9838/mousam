@@ -33,12 +33,20 @@ css = """
     font-weight:500;
 }
 
+.bolder{
+    font-weight:500;
+}
+
 .secondary{
     opacity:.6;
 }
 
 .secondary-light{
-    opacity:.8;
+    opacity:.85;
+}
+
+.secondary-lighter{
+    opacity:.95;
 }
 
 .error_label {
