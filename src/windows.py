@@ -3,7 +3,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
-from .constants import API_KEY
+from .constants import API_KEY,COUNTRY_CODES
 from .backend_current_w import fetch_city_info
 
 
@@ -232,10 +232,13 @@ class WeatherPreferences(Adw.PreferencesWindow):
                                 res_row.set_activatable(True)
 
                                 title = None
+                                country = COUNTRY_CODES.get(loc.get('country'))
+                                country_mod = country[0:15]+"..." if len(country) > 15 else country
                                 if loc.get('state'):
-                                        title = f"{loc.get('name')},{loc.get('state')},{loc.get('country')}"
+                                        
+                                        title = f"{loc.get('name')},{loc.get('state')},{country_mod}"
                                 else:
-                                        title = f"{loc.get('name')},{loc.get('country')}"
+                                        title = f"{loc.get('name')},{country_mod}"
 
                                 res_row.set_title(title)
                                 res_row.connect("activated", self.add_city)
