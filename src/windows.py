@@ -117,14 +117,17 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 api_key_entry_box.append(set_key_btn)                
                 api_key_entry.set_placeholder_text(_("Enter your api-key"))
                 api_key_entry.set_text(personal_api_key)
+                personal_key_status = ""
                 if isValid_personal_api and len(personal_api_key)>2:
                         personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
+                        personal_key_status = _("(Active)")
                         
                 elif len(personal_api_key)==2:
                         api_key_entry.set_text("")
                         api_key_entry.set_css_classes(['opaque'])
                 else:
+                        personal_key_status = _("(Invalid Key)")
                         personal_api_row.set_subtitle(_("Invalid Key"))
                         api_key_entry.set_css_classes(['error'])
                         
@@ -134,7 +137,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 personal_api_expander_row = Adw.ExpanderRow.new()
                 personal_api_expander_row.set_activatable(True)
-                personal_api_expander_row.set_title(_("Use Personal API Key"))
+                personal_api_expander_row.set_title(_("Use Personal API Key {0}".format(personal_key_status)))
                 personal_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste it here (Restart Required)"))
                 personal_api_expander_row.add_row(personal_api_row)
                 misc_grp.add(personal_api_expander_row)
