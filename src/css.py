@@ -66,7 +66,7 @@ css = """
 
 
 .main_window{
-    border-radius:13px;
+    border-radius:15px;
     border : 1px solid rgba(100, 100, 100,.3);
 }
 
