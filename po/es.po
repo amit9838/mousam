@@ -1,7 +1,7 @@
-# Russian translation for Weather.
-# Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the the io.github.amit9838.weather package.
-# Сергей Ворон <voron@duck.com>, 2023.
+# Spanish translation for Weather.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Radical4ever, 2023.
 #
 msgid ""
 msgstr ""
@@ -9,9 +9,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-18 10:57+0300\n"
 "PO-Revision-Date: 2023-06-18 11:17+0300\n"
-"Last-Translator: Сергей Ворон <voron@duck.com>\n"
+"Last-Translator: Radical4ever\n"
 "Language-Team: \n"
-"Language: ru_RU\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,33 +21,33 @@ msgstr ""
 #: data/io.github.amit9838.weather.appdata.xml.in:6 src/weather.py:31
 #: src/windows.py:12
 msgid "Weather"
-msgstr "Погода"
+msgstr "Clima"
 
 #: data/io.github.amit9838.weather.desktop.in:5
 #: data/io.github.amit9838.weather.appdata.xml.in:7
 msgid "Beautiful and lightweight weather app"
-msgstr "Красивое и легкое приложение погоды"
+msgstr "Hermosa y ligera app de clima"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:9
 msgid "Current Weather conditions and forcasts."
-msgstr "Текущие условия погоды и прогнозы."
+msgstr "Condiciones actuales del clima y prevision"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:10
 msgid "Features:"
-msgstr "Функции:"
+msgstr "Novedades:"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:12
 msgid "Use dynamic gradient backgrounds based on current weather conditions."
-msgstr "Используйте динамические градиентные фоны в зависимости от текущей погоды."
+msgstr "Usar fondo gradiente dinamico en base a la condicion actual del clima."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:13
 #: data/io.github.amit9838.weather.appdata.xml.in:74
 msgid "See forcasts in beautiful card view."
-msgstr "Прогноз погоды в красивом карточном представлении."
+msgstr "Mira el clima en una hermosa vista de tarjeta."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:14
 msgid "Use Personal API Key"
-msgstr "Использовать личный API-ключ"
+msgstr "Usar clave personal API"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:37
 msgid "Amit Chaudhary"
@@ -55,16 +55,16 @@ msgstr "Amit Chaudhary"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:49
 msgid "Use full country name."
-msgstr "Используются полные названия страны."
+msgstr "Usar nombre completo de la ciudad."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:50
 msgid "Fix units."
-msgstr "Исправлены единицы измерения."
+msgstr "Unidades Fijas."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:51
 #: data/io.github.amit9838.weather.appdata.xml.in:61
 msgid "UI Improvements."
-msgstr "Улучшения пользовательского интерфейса."
+msgstr "Mejoras en la IU."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:52
 msgid "Minor bug fixes."
@@ -72,222 +72,221 @@ msgstr "Мелкие исправления."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:58
 msgid "What's New"
-msgstr "Что нового"
+msgstr "Que hay de nuevo"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:60
 msgid "Option:Use Custom api-key."
-msgstr "Опция: Используйте пользовательский API-ключ."
+msgstr "Opcion: Usar clave api personalizada."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:62
 msgid "Show states in search results."
-msgstr "Показывать состояния в результатах поиска."
+msgstr "Mostrar los estados en los resultados de busqueda."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:63
 msgid "Various bug fixes."
-msgstr "Различные исправления ошибок."
+msgstr "Varias correciones de errores."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:64
 msgid "Add Turkish translation. Thanks to Sabri Ünal."
-msgstr "Добавлен Турецкий перевод. Спасибо Sabri Ünal."
+msgstr "Añadir traducciones turcas. Gracias a Sabri Ünal."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:65
 msgid "Add Russian translation. Thanks to Сергей Ворон."
-msgstr "Добавлен Русский перевод. Спасибо Сергей Ворон."
+msgstr "Añadir traducciones rusas. Gracias a Сергей Ворон."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:71
 msgid "New features and updates"
-msgstr "Новые функции и обновления"
+msgstr "Nuevas novedades y actualizaciones"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:73
 msgid "Use dynamic gradient backgrounds based on current weather."
-msgstr "Используйте динамические градиентные фоны в зависимости от текущей погоды."
+msgstr "Usar fondo gradiente dinamico en base a la condicion actual del clima."
 
 #: data/io.github.amit9838.weather.appdata.xml.in:75
 msgid "Search and add cities."
-msgstr "Поиск и добавление городов."
+msgstr "Buscar y añadir ciudades."
 
 #: data/io.github.amit9838.weather.gschema.xml:7
 #: data/io.github.amit9838.weather.gschema.xml:8
 msgid "Default api"
-msgstr "API по умолчанию"
+msgstr "API por defecto"
 
 #: data/io.github.amit9838.weather.gschema.xml:12
 msgid "personal api"
-msgstr "персональный api"
+msgstr "api personal"
 
 #: data/io.github.amit9838.weather.gschema.xml:16
 msgid "Using personal api Key"
-msgstr "Использование персонального API-ключа"
+msgstr "Usando clave personal api"
 
 #: data/io.github.amit9838.weather.gschema.xml:17
 msgid "True if personal api key is being used."
-msgstr "Истинно, если используется персональный API-ключ."
+msgstr "Verdadero si la clave api personal usada es valida."
 
 #: data/io.github.amit9838.weather.gschema.xml:21
 msgid "Is personal api key valid"
-msgstr "Действителен ли персональный API-ключ"
+msgstr "es la clave api personal valida"
 
 #: data/io.github.amit9838.weather.gschema.xml:22
 msgid "True if personal api key is being used is valid."
-msgstr "Истинно, если используется персональный API-ключ."
+msgstr "Verdadero si la clave api personal usada es valida."
 
 #: data/io.github.amit9838.weather.gschema.xml:27
 msgid "List of cities and their coordinates."
-msgstr "Список городов и их координаты."
+msgstr "Lista de ciudades y sus coordenadas."
 
 #: data/io.github.amit9838.weather.gschema.xml:28
 msgid "Stores locations added by user in json stringified string format in string"
-msgstr "Сохраняет местоположения, добавленные пользователем, в строковом формате json"
+msgstr "Localizaciones agregadas por el usuario en una archivo json en cadena"
 
 #: data/io.github.amit9838.weather.gschema.xml:32
 msgid "Selected city"
-msgstr "Выбранный город"
+msgstr "seleccionar ciudad"
 
 #: data/io.github.amit9838.weather.gschema.xml:33
 msgid "Selected city name"
-msgstr "Название выбранного города"
+msgstr "Seleccionar nombre de ciudad"
 
 #: data/io.github.amit9838.weather.gschema.xml:37
 msgid "Use Gradient Background"
-msgstr "Использовать градиентный фон"
+msgstr "Usar Fondo Gradiente"
 
 #: data/io.github.amit9838.weather.gschema.xml:38
 msgid "Apply gradient background on main window corresponding to weather condition"
-msgstr "Применяет градиентный фон к главному окну в соответствии с погодными условиями"
+msgstr "Aplicar fondo en gradiente en la ventana principal correspondiente a las condiciones del clima"
 
 #: data/io.github.amit9838.weather.gschema.xml:42
 msgid "Last Updated"
-msgstr "Последнее обновление"
+msgstr "Ultima vez actualizado"
 
 #: data/io.github.amit9838.weather.gschema.xml:43
 msgid "last updated time"
-msgstr "время последнего обновления"
+msgstr "Ultimo tiempo actualizado"
 
 #: src/weather.py:68
 msgid "Refresh"
-msgstr "Обновить"
+msgstr "Refrescar"
 
 #: src/weather.py:87
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Preferencias"
 
 #: src/weather.py:94
 msgid "About Weather"
-msgstr "О Погоде"
+msgstr "Acerca de"
 
 #: src/weather.py:159
 msgid "Failed to load Weather Data"
-msgstr "Не удалось загрузить данные о погоде"
+msgstr "Fallo al cargar los datos del clima"
 
 #: src/windows.py:17
 msgid "Beautiful and light weight weather app build using Gtk and python."
-msgstr "Красивое и легкое приложение погоды, построенное с использованием Gtk и python."
+msgstr "Hermosa y ligera app de clima escrita en Gtk y python"
 
 #: src/windows.py:21
 msgid "Copyright © 2023 Weather Developers"
-msgstr "Авторские права © 2023 Разработчики"
+msgstr "Derechos de autor © 2023 desarrolladores de Weather"
 
 #: src/windows.py:24
 msgid "translator_credits"
-msgstr "Сергей Ворон <voron@duck.com>"
+msgstr "Radical4ever"
 
 #: src/windows.py:47 src/windows.py:52
 msgid "Locations"
-msgstr "Местоположение"
+msgstr "Localizaciones"
 
 #: src/windows.py:58
 msgid "Add"
-msgstr "Добавить"
+msgstr "Añadir"
 
 #: src/windows.py:73
 msgid "Appearance"
-msgstr "Внешний вид"
+msgstr "Apariencia"
 
 #: src/windows.py:82
 msgid "Use Dynamic Background"
-msgstr "Использовать динамический фон"
+msgstr "Usar fondo dinamico"
 
 #: src/windows.py:83
 msgid "Background changes based on current weather conditions (Reastart required)"
-msgstr "Изменение фона в зависимости от погодных условий (требуется перезапуск)"
+msgstr "El fondo cambia en base a la condicion actual del clima (Requiere reinicio)"
 
 #: src/windows.py:98
 msgid "Misc"
-msgstr "Прочее"
+msgstr "Miscelaneo"
 
 #: src/windows.py:105
 msgid "API Key"
-msgstr "API-ключ"
+msgstr "Clave API"
 
 #: src/windows.py:113
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Guardar"
 
 #: src/windows.py:118
 msgid "Enter your api-key"
-msgstr "Введите свой API-ключ"
+msgstr "Inserta tu clave api"
 
 #: src/windows.py:122
 msgid "Active"
-msgstr "Активный"
+msgstr "Activa"
 
 #: src/windows.py:124
 msgid "(Active)"
-msgstr "(Активный)"
+msgstr "(Activa)"
 
 #: src/windows.py:130
 msgid "(Invalid Key)"
-msgstr "(Неправильный ключ)"
+msgstr "(Clave Invalida)"
 
 #: src/windows.py:131
 msgid "Invalid Key"
-msgstr "Неправильный ключ"
+msgstr "Clave Invalida"
 
 #: src/windows.py:140
 #, python-brace-format
 msgid "Use Personal API Key {0}"
-msgstr "Используется персональный API-ключа {0}"
+msgstr "Usar clave personal de API {0}"
 
 #: src/windows.py:141
 msgid "Generate api key from openweathermap.org and paste it here (Restart Required)"
-msgstr "Создайте ключ API с сайта openweathermap.org и вставьте его сюда (требуется перезапуск)"
+msgstr "Genera una clave api de openweathermap.org y pegala aqui (Reinicio Requerido) "
 
 #: src/windows.py:159
 msgid "Remove location"
-msgstr "Удалить местоположение"
+msgstr "Eliminar localizacion"
 
 #: src/windows.py:183
 msgid "Add New Location"
-msgstr "Добавить новое местоположение"
+msgstr "Añadir nueva localizacion"
 
 #: src/windows.py:201
 msgid "Search for a city"
-msgstr "Поиск города"
+msgstr "Buscar una ciudad"
 
 #: src/windows.py:206 src/windows.py:208
 msgid "Search"
-msgstr "Искать"
+msgstr "Buscar"
 
 #: src/windows.py:253
 msgid "No results found !"
-msgstr "Ничего не найдено!"
+msgstr "No hay resultados!"
 
 #: src/ui_current_w.py:80
 #, python-brace-format
 msgid "Feels like {0:.1f}°C"
-msgstr "Ощущается как {0:.1f}°C"
+msgstr "Se siente como {0:.1f}°C"
 
 #: src/ui_current_w.py:124
 msgid "km"
-msgstr "км"
-
+msgstr "km"
 #: src/ui_current_w.py:124
 msgid "m"
-msgstr "м"
+msgstr "m"
 
 #: src/ui_current_w.py:127
 msgid "Rain"
-msgstr "Дождь"
+msgstr "Lluvia"
 
 #: src/ui_current_w.py:127 src/ui_current_w.py:128 src/ui_forecast_w.py:97
 #, python-brace-format
@@ -296,93 +295,93 @@ msgstr "{0}%"
 
 #: src/ui_current_w.py:128
 msgid "Humidity"
-msgstr "Влажность"
+msgstr "Humedad"
 
 #: src/ui_current_w.py:129
 msgid "Pressure"
-msgstr "Давление"
+msgstr "Presion"
 
 #: src/ui_current_w.py:129
 #, python-brace-format
 msgid "{0} hPa"
-msgstr "{0} гПа"
+msgstr "{0} hPa"
 
 #: src/ui_current_w.py:130
 msgid "Wind speed"
-msgstr "Скорость ветра"
+msgstr "Velocidad del viento"
 
 #: src/ui_current_w.py:130
 #, python-brace-format
 msgid "{0:.1f} km/h {1}"
-msgstr "{0:.1f} км/ч {1}"
+msgstr "{0:.1f} km/h {1}"
 
 #: src/ui_current_w.py:131
 msgid "Visibility"
-msgstr "Видимость"
+msgstr "Visibilidad"
 
 #: src/ui_current_w.py:190
 msgid "N"
-msgstr "С"
+msgstr "N"
 
 #: src/ui_current_w.py:190
 msgid "NNE"
-msgstr "С-СВ"
+msgstr "N-NE"
 
 #: src/ui_current_w.py:190
 msgid "NE"
-msgstr "СВ"
+msgstr "NE"
 
 #: src/ui_current_w.py:190
 msgid "ENE"
-msgstr "В-СВ"
+msgstr "E-NE"
 
 #: src/ui_current_w.py:190
 msgid "E"
-msgstr "В"
+msgstr "E"
 
 #: src/ui_current_w.py:190
 msgid "ESE"
-msgstr "В-ЮВ"
+msgstr "E-SE"
 
 #: src/ui_current_w.py:190
 msgid "SE"
-msgstr "ЮВ"
+msgstr "SE"
 
 #: src/ui_current_w.py:190
 msgid "SSE"
-msgstr "Ю-ЮВ"
+msgstr "S-SE"
 
 #: src/ui_current_w.py:191
 msgid "S"
-msgstr "Ю"
+msgstr "S"
 
 #: src/ui_current_w.py:191
 msgid "SSW"
-msgstr "Ю-ЮЗ"
+msgstr "S-SO"
 
 #: src/ui_current_w.py:191
 msgid "SW"
-msgstr "ЮЗ"
+msgstr "SO"
 
 #: src/ui_current_w.py:191
 msgid "WSW"
-msgstr "З-ЮЗ"
+msgstr "O-SO"
 
 #: src/ui_current_w.py:191
 msgid "W"
-msgstr "З"
+msgstr "O"
 
 #: src/ui_current_w.py:191
 msgid "WNW"
-msgstr "З-СЗ"
+msgstr "O-NO"
 
 #: src/ui_current_w.py:191
 msgid "NW"
-msgstr "СЗ"
+msgstr "NO"
 
 #: src/ui_current_w.py:191
 msgid "NNW"
-msgstr "С-СЗ"
+msgstr "N-NO"
 
 #: src/ui_forecast_w.py:56
 msgid "AM"
@@ -395,7 +394,7 @@ msgstr "PM"
 #: src/ui_forecast_w.py:113
 #, python-brace-format
 msgid "{0:.1f} km/h"
-msgstr "{0:.1f} км/ч"
+msgstr "{0:.1f} km/h"
 
 #: src/ui_forecast_w.py:118
 #, python-brace-format
