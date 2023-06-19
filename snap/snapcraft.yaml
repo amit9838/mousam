@@ -8,7 +8,7 @@ parts:
   mousam:
     # See 'snapcraft plugins'
     plugin: meson
-    source:
+    source: https://github.com/amit9838/weather.git
     source-tag: 'v0.2.1'
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-pull: |
@@ -16,8 +16,10 @@ parts:
       patch -p1 < $CRAFT_PROJECT_DIR/snap/mousam.patch
       pip install --prefix=$CRAFT_PART_INSTALL/usr requests==2.30.0
     override-build: |
-      crafctl default
+      craftctl default
+      chmod +x $CRAFT_PART_INSTALL/snap/mousam/current/usr/bin/weather
       sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/mousam/current/usr/bin/weather
       mkdir -p $CRAFT_PART_INSTALL/meta/gui
       cp -r $CRAFT_PART_INSTALL/snap/mousam/current/usr/share/icons $CRAFT_PART_INSTALL/meta/gui/
       for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
@@ -41,6 +43,8 @@ apps:
   mousam:
     command: usr/bin/weather
     common-id: io.github.amit9838.weather
+    desktop: usr/share/applications/io.github.amit9838.weather.desktop
+    extensions: [ gnome ]
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
     plugs:
