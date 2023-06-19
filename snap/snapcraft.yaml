@@ -1,0 +1,49 @@
+name: mousam # you probably want to 'snapcraft register <name>'
+base: core22 # the base snap is the execution environment for this snap
+adopt-info: mousam
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+parts:
+  mousam:
+    # See 'snapcraft plugins'
+    plugin: meson
+    source:
+    source-tag: 'v0.2.1'
+    meson-parameters: [ --prefix=/snap/mousam/current/usr ]
+    override-pull: |
+      craftctl default
+      patch -p1 < $CRAFT_PROJECT_DIR/snap/mousam.patch
+      pip install --prefix=$CRAFT_PART_INSTALL/usr requests==2.30.0
+    override-build: |
+      crafctl default
+      sed -e '1c#!/usr/bin/python3' -i $CRAFT_PART_INSTALL/usr/local/bin/*
+      mkdir -p $CRAFT_PART_INSTALL/meta/gui
+      cp -r $CRAFT_PART_INSTALL/snap/mousam/current/usr/share/icons $CRAFT_PART_INSTALL/meta/gui/
+      for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
+        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
+      done
+    parse-info: [ usr/share/appdata/io.github.amit9838.weather.appdata.xml ]
+    organize:
+      snap/mousam/current: .
+      usr/local: usr
+      usr/lib/python3: usr/lib/python3.10
+    prime:
+      - -snap/mousam
+
+slots:
+  mousam:
+    interface: dbus
+    bus: session
+    name: io.github.amit9838.weather
+
+apps:
+  mousam:
+    command: usr/bin/weather
+    common-id: io.github.amit9838.weather
+    environment:
+      PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
+    plugs:
+      - network
+      - network-status
+      - network-bind
