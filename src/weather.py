@@ -38,6 +38,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('selected-city')
 
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.toast_overlay = Adw.ToastOverlay.new()
+        self.set_child(self.toast_overlay)
+        self.toast_overlay.set_child(main_box)
 
         main_grid = Gtk.Grid()
         main_grid.set_hexpand(True)
@@ -53,7 +56,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.middle_row.set_size_request(800,200)
         main_grid.attach(self.middle_row,0,1,1,1)
 
-        self.set_child(main_box)
+        #self.set_child(main_box)
 
         main_box.set_hexpand(True)
         main_box.set_vexpand(True)
@@ -101,7 +104,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         footer_box.set_halign(Gtk.Align.CENTER)
         footer_box.set_size_request(800,10)
         footer_box.set_margin_bottom(0)
-        main_box.append(footer_box)
+        #main_box.append(footer_box)
 
     def refresh_weather(self,widget):
         if len(added_cities) == 0:
@@ -121,12 +124,14 @@ class WeatherWindow(Gtk.ApplicationWindow):
         
         if datetime.datetime.now().second - t_sec < 3:
             print("skip")
+            refresh_toast = Adw.Toast.new(_("Refresh within 3 seconds is ignored!"))
+            refresh_toast.set_priority(Adw.ToastPriority(1))
+            self.toast_overlay.add_toast(refresh_toast)
             return
         
         print("refresh")
         date_time = datetime.datetime.now()
         settings.set_value("updated-at",GLib.Variant("s",str(date_time)))
-
         upper_child = self.upper_row.get_first_child()
         if upper_child is not None:
             self.upper_row.remove(upper_child)
@@ -136,6 +141,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
             self.middle_row.remove(middle_child)
             
         self.fetch_weather_data()
+        refresh_toast = Adw.Toast.new(_("Refreshing..."))
+        refresh_toast.set_priority(Adw.ToastPriority(1))
+        self.toast_overlay.add_toast(refresh_toast)
 
     def fetch_weather_data(self):
         settings = Gio.Settings.new("io.github.amit9838.weather")

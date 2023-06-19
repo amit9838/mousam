@@ -261,12 +261,16 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         title = f"{title[0]},{title[2]}"
                 loc_city = f"{title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
-
                         added_cities.append(loc_city)
-
                         settings.set_value("added-cities",GLib.Variant("as",added_cities))
                         self.refresh_cities_list(added_cities)
                         self.parent.fetch_weather_data()
+                        loc_add_toast = Adw.Toast.new(_("Added - {0}".format(title)))
+                        self._dialog.add_toast(loc_add_toast)
+                else:
+                        loc_add_toast = Adw.Toast.new(_("City already added!"))
+                        self._dialog.add_toast(loc_add_toast)
+
 
         def remove_city(self,btn,widget):
                 global selected_city
@@ -279,8 +283,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         selected_city = 0
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
+                loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 self.refresh_cities_list(added_cities)
                 self.parent.fetch_weather_data()
+                self.add_toast(loc_remove_toast)
 
         # Apprearance page methods --------------------------
         def use_gradient_bg(self,widget,state):
@@ -291,3 +297,5 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def save_api_key(self,widget,target):
                 settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
                 settings.set_value("using-personal-api-key",GLib.Variant("b",True))
+                loc_add_toast = Adw.Toast.new(_("Saved Successfully"))
+                self.add_toast(loc_add_toast)
