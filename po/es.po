@@ -1,5 +1,5 @@
 # Spanish translation for Weather.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Radical4ever, 2023.
 #
