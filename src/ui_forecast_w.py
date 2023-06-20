@@ -58,8 +58,8 @@ def forecast_weather(middle_row,f_data):
                 hr = date_time.hour - 12
                 tpe = _("PM")
 
-            time = f"{hr}:{date_time.minute} {tpe}"
-
+            minute = str(date_time.minute)+'0'  if date_time.minute==0 else date_time.minute
+            time = f"{hr}:{minute} {tpe}"
 
             forecast_time = Gtk.Label(label=f"{time}")
             forecast_time.set_css_classes(['secondary-lighter'])
