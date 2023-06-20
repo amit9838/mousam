@@ -99,7 +99,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         footer_box.set_margin_bottom(0)
         main_box.append(footer_box)
 
-    def refresh_weather(self,widget):
+    def refresh_weather(self,widget,ignore=True):
         if len(added_cities) == 0:
             settings = Gio.Settings.new("io.github.amit9838.weather")
             settings.reset('added-cities')
@@ -115,7 +115,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         t_arr = tm.split(":")
         t_sec = float(t_arr[2])
         
-        if datetime.datetime.now().second - t_sec < 3:
+        if ignore == True and datetime.datetime.now().second - t_sec < 3:
             print("skip")
             refresh_toast = Adw.Toast.new(_("Refresh within 3 seconds is ignored!"))
             refresh_toast.set_priority(Adw.ToastPriority(1))

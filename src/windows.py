@@ -162,20 +162,37 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         if added_cities[selected_city] == city:
                                 check_icon = Gtk.Image()
                                 check_icon.set_from_icon_name("emblem-ok-symbolic")  # Set the icon name and size
-                                # icon.set_hexpand(True)
                                 check_icon.set_pixel_size(18)
                                 check_icon.set_margin_end(15)
                                 box.append(check_icon)
                         box.append(button)
-
                         location_row =  Adw.ActionRow.new()
                         location_row.set_activatable(True)
                         location_row.set_title(f"{city.split(',')[0]},{city.split(',')[1]}")
                         location_row.set_subtitle(f"{city.split(',')[-2]},{city.split(',')[-1]}")
                         location_row.add_suffix(box)
+                        location_row.connect("activated", self.select_location)
                         self.location_rows.append(location_row)
                         self.location_grp.add(location_row)
                         button.connect("clicked", self.remove_city,location_row)
+
+        def select_location(self,widget):
+                global selected_city
+                s_city = added_cities[selected_city]
+
+                title = widget.get_title()
+                if len(title.split(',')) > 2:
+                        title = title.split(',')
+                        title = f"{title[0]},{title[2]}"
+                loc_city = f"{title},{widget.get_subtitle()}"
+                if s_city != loc_city:
+                        selected_city = added_cities.index(loc_city) # Update selected_city
+                        settings.set_value("selected-city",GLib.Variant("i",selected_city))
+                        self.refresh_cities_list(added_cities)
+                        self.parent.refresh_weather(self.parent,ignore=False)
+                        loc_change_toast = Adw.Toast.new(_("Selected - {}".format(title)))
+                        self.add_toast(loc_change_toast)
+
 
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
