@@ -14,9 +14,9 @@ from .backend_forecast_w import fetch_forecast
 
 settings = Gio.Settings.new("io.github.amit9838.weather")
 selected_city = int(str(settings.get_value('selected-city')))
-api_key = str(settings.get_value('api-key'))
 added_cities = list(settings.get_value('added-cities'))
 cities = [x.split(',')[0] for x in added_cities]
+updated_at = str(settings.get_value('updated-at'))[1:-1]
 
 class WeatherWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'WeatherWindow'
@@ -100,31 +100,27 @@ class WeatherWindow(Gtk.ApplicationWindow):
         main_box.append(footer_box)
 
     def refresh_weather(self,widget,ignore=True):
+        global settings,updated_at
         if len(added_cities) == 0:
-            settings = Gio.Settings.new("io.github.amit9838.weather")
             settings.reset('added-cities')
             settings.reset('selected-city')
             
         # Ignore refreshing weather within 3 second
-        settings = Gio.Settings.new("io.github.amit9838.weather")
-        updated_at = str(settings.get_value('updated-at'))
-        d_t = updated_at[1:-1].split(" ")
-
+        d_t = updated_at.split(" ")
         # Time
         tm = d_t[1]
         t_arr = tm.split(":")
         t_sec = float(t_arr[2])
         
-        if ignore == True and datetime.datetime.now().second - t_sec < 3:
-            print("skip")
+        if ignore and abs(datetime.datetime.now().second - t_sec) < 3:
             refresh_toast = Adw.Toast.new(_("Refresh within 3 seconds is ignored!"))
             refresh_toast.set_priority(Adw.ToastPriority(1))
             self.toast_overlay.add_toast(refresh_toast)
             return
 
-        print("refresh")
         date_time = datetime.datetime.now()
-        settings.set_value("updated-at",GLib.Variant("s",str(date_time)))
+        updated_at = str(date_time)
+        settings.set_value("updated-at",GLib.Variant("s",updated_at))
         upper_child = self.upper_row.get_first_child()
         if upper_child is not None:
             self.upper_row.remove(upper_child)
@@ -134,15 +130,15 @@ class WeatherWindow(Gtk.ApplicationWindow):
             self.middle_row.remove(middle_child)
             
         self.fetch_weather_data()
-        refresh_toast = Adw.Toast.new(_("Refreshing..."))
-        refresh_toast.set_priority(Adw.ToastPriority(1))
-        self.toast_overlay.add_toast(refresh_toast)
+        if ignore:
+            refresh_toast = Adw.Toast.new(_("Refreshing..."))
+            refresh_toast.set_priority(Adw.ToastPriority(1))
+            self.toast_overlay.add_toast(refresh_toast)
 
     def fetch_weather_data(self):
         settings = Gio.Settings.new("io.github.amit9838.weather")
         selected_city = int(str(settings.get_value('selected-city')))
         added_cities = list(settings.get_value('added-cities'))
-        cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
         city_loc = added_cities[selected_city]
         city_loc = city_loc.split(',')
         latitude = (city_loc[-2])

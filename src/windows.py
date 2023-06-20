@@ -147,10 +147,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def refresh_cities_list(self,data):
                 if len(self.location_rows)>0:
                         for action_row in self.location_rows:
-                                try:
-                                        self.location_grp.remove(action_row)
-                                except:
-                                        pass
+                                self.location_grp.remove(action_row)
+                        self.location_rows.clear()
 
                 for city in added_cities:
                         button = Gtk.Button()
@@ -171,12 +169,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         location_row.set_title(f"{city.split(',')[0]},{city.split(',')[1]}")
                         location_row.set_subtitle(f"{city.split(',')[-2]},{city.split(',')[-1]}")
                         location_row.add_suffix(box)
-                        location_row.connect("activated", self.select_location)
+                        location_row.connect("activated", self.switch_location)
                         self.location_rows.append(location_row)
                         self.location_grp.add(location_row)
                         button.connect("clicked", self.remove_city,location_row)
 
-        def select_location(self,widget):
+        def switch_location(self,widget):
                 global selected_city
                 s_city = added_cities[selected_city]
 
@@ -190,8 +188,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self.refresh_cities_list(added_cities)
                         self.parent.refresh_weather(self.parent,ignore=False)
-                        loc_change_toast = Adw.Toast.new(_("Selected - {}".format(title)))
-                        self.add_toast(loc_change_toast)
+                        loc_switch_toast = Adw.Toast.new(_("Selected - {}".format(title)))
+                        loc_switch_toast.set_priority(Adw.ToastPriority(1))
+                        self.add_toast(loc_switch_toast)
 
 
         def add_location_dialog(self,parent):
@@ -245,6 +244,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 if len(self._dialog.search_results)>0:
                         for action_row in self._dialog.search_results:
                                 self._dialog.serach_res_grp.remove(action_row)
+                        self._dialog.search_results.clear()
 
                 if city_data:
                         for i,loc in enumerate(city_data):
