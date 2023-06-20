@@ -1,0 +1,35 @@
+diff -Naur a/data/io.github.amit9838.weather.appdata.xml.in b/data/io.github.amit9838.weather.appdata.xml.in
+--- a/data/io.github.amit9838.weather.appdata.xml.in	2023-06-19 22:13:45.234534666 +0530
++++ b/data/io.github.amit9838.weather.appdata.xml.in	2023-06-19 22:15:07.461584463 +0530
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <component type="desktop">
+ 	<id>io.github.amit9838.weather.desktop</id>
++	<icon type="stock">snap.mousam.io.github.amit9838.weather</icon>
+ 	<metadata_license>CC0-1.0</metadata_license>
+ 	<project_license>GPL-3.0-or-later</project_license>
+   <name>Weather</name>
+diff -Naur a/data/io.github.amit9838.weather.desktop.in b/data/io.github.amit9838.weather.desktop.in
+--- a/data/io.github.amit9838.weather.desktop.in	2023-06-19 22:13:01.219050342 +0530
++++ b/data/io.github.amit9838.weather.desktop.in	2023-06-19 22:15:19.641445043 +0530
+@@ -2,7 +2,7 @@
+ Name=Weather
+ Exec=weather
+ Comment=Beautiful and lightweight weather app
+-Icon=io.github.amit9838.weather
++Icon=snap.mousam.io.github.amit9838.weather
+ Terminal=false
+ Type=Application
+ Categories=GTK;
+diff -Naur a/meson.build b/meson.build
+--- a/meson.build	2023-06-19 22:13:51.994455924 +0530
++++ b/meson.build	2023-06-19 22:14:33.133979185 +0530
+@@ -16,7 +16,7 @@
+ 
+ 
+ 
+-install_subdir('data/weather_icons', install_dir: '/app/share/icons/hicolor/scalable')
++install_subdir('data/weather_icons', install_dir: '/snap/mousam/current/usr/share/icons/hicolor/scalable')
+ 
+ gnome.post_install(
+      glib_compile_schemas: true,
