@@ -11,7 +11,6 @@ from .constants import icons
 def forecast_weather(middle_row,f_data):
 
         scrolled_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        scrolled_container.set_name("forecast_row")
         scrolled_container.set_size_request(800,200)
 
         scrolled_window = Gtk.ScrolledWindow()

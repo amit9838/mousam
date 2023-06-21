@@ -66,12 +66,11 @@ css = """
 
 
 .main_window{
-    border-radius:15px;
+    border-radius:13px;
     border : 1px solid rgba(100, 100, 100,.3);
 }
 
 .clear_sky, .few_clouds {
-
     background: linear-gradient(127deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 134, 218), 0) 100%),
     linear-gradient(217deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 174, 258), 1) 100%),
     linear-gradient(136deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 174, 258), 1) 100%);

@@ -26,10 +26,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         global application
         self.set_default_size(800, 400)
-        
-        # self.set_title(_("Weather"))
         self.set_app_title(title="Weather")
-
         self.main_window = application = self
 
         # Initial checks
