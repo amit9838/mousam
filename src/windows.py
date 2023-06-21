@@ -187,7 +187,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         selected_city = added_cities.index(loc_city) # Update selected_city
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self.refresh_cities_list(added_cities)
-                        self.parent.refresh_weather(self.parent,ignore=False)
+                        GLib.idle_add(self.parent.refresh_weather,self.parent,False)
                         loc_switch_toast = Adw.Toast.new(_("Selected - {}".format(title)))
                         loc_switch_toast.set_priority(Adw.ToastPriority(1))
                         self.add_toast(loc_switch_toast)
