@@ -26,7 +26,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         global application
         self.set_default_size(800, 400)
-        self.set_title(_("Weather"))
+        
+        # self.set_title(_("Weather"))
+        self.set_app_title(title="Weather")
 
         self.main_window = application = self
 
@@ -60,11 +62,11 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class='flat')
         self.set_titlebar(self.header)
-        self.open_button = Gtk.Button(label="refresh")
-        self.header.pack_start(self.open_button)
-        self.open_button.set_icon_name("view-refresh-symbolic")
-        self.open_button.set_tooltip_text(_("Refresh"))
-        self.open_button.connect('clicked',self.refresh_weather)
+        self.refresh_button = Gtk.Button(label="refresh")
+        self.header.pack_start(self.refresh_button)
+        self.refresh_button.set_icon_name("view-refresh-symbolic")
+        self.refresh_button.set_tooltip_text(_("Refresh"))
+        self.refresh_button.connect('clicked',self.refresh_weather)
 
         # Create a popover
         menu = Gio.Menu.new()
@@ -99,6 +101,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
         footer_box.set_margin_bottom(0)
         main_box.append(footer_box)
 
+    def set_app_title(self,title = "Wather"):
+            self.set_title(title)
+
     def refresh_weather(self,widget,ignore=True):
         global settings,updated_at
         if len(added_cities) == 0:
@@ -129,12 +134,13 @@ class WeatherWindow(Gtk.ApplicationWindow):
         if middle_child is not None:
             self.middle_row.remove(middle_child)
             
-        self.fetch_weather_data()
-        if ignore:
-            refresh_toast = Adw.Toast.new(_("Refreshing..."))
-            refresh_toast.set_priority(Adw.ToastPriority(1))
-            self.toast_overlay.add_toast(refresh_toast)
 
+        self.fetch_weather_data()
+        refresh_toast = Adw.Toast.new(_("Refreshing..."))
+        refresh_toast.set_priority(Adw.ToastPriority(1))
+        self.toast_overlay.add_toast(refresh_toast)
+        
+        
     def fetch_weather_data(self):
         settings = Gio.Settings.new("io.github.amit9838.weather")
         selected_city = int(str(settings.get_value('selected-city')))

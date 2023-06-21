@@ -107,7 +107,7 @@ def current_weather(main_window,upper_row,middle_row,data):
         list_store.append([city])
 
     combo_box = Gtk.ComboBox.new_with_model(list_store)
-    combo_box.connect("changed", on_city_combo_changed)
+    combo_box.connect("changed", switch_location)
     combo_box.set_model(list_store)
     renderer_text = Gtk.CellRendererText()
     combo_box.pack_start(renderer_text, True)
@@ -149,40 +149,22 @@ def current_weather(main_window,upper_row,middle_row,data):
     right_section.append(label_grid)
     condition_grid.attach(right_section, 1, 1, 1, 1)
 
-application = None
 def on_city_combo_changed(combo):
-    global cities,selected_city, g_upper_row,g_middle_row,g_main_window
+    global cities,selected_city,g_main_window
     tree_iter = combo.get_active_iter()
     s_city = cities[selected_city]
 
     if tree_iter is not None:
-        # global selected_city
         model = combo.get_model()
         city = model[tree_iter][0]
         if s_city != city:
             selected_city = cities.index(city)
             settings.set_value("selected-city",GLib.Variant("i",selected_city))
+            g_main_window.refresh_weather(g_main_window,ignore=False)
 
-            cit = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
-            city_loc = added_cities[cit.index(city)]
-            city_loc = city_loc.split(',')
-            lat = float(city_loc[-2])
-            lon = float(city_loc[-1])
 
-            # Fetch Weather data
-            w_data = fetch_weather(API_KEY,lat,lon)
-            f_data = fetch_forecast(API_KEY, lat, lon)
-
-            # repaint upper and middle rows if successfully fetched
-            if w_data is not None:
-                f = g_upper_row.get_first_child()
-                m = g_middle_row.get_first_child()
-                g_upper_row.remove(f)
-                current_weather(g_main_window,g_upper_row,g_middle_row,w_data)
-                if m is not None:
-                    g_middle_row.remove(m)
-                forecast_weather(g_middle_row,f_data)
-
+def switch_location(combo):
+    GLib.idle_add(on_city_combo_changed,combo)
 
 # converts wind degrees to direction 
 def wind_dir(angle):

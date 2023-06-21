@@ -283,9 +283,11 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         self.refresh_cities_list(added_cities)
                         self.parent.fetch_weather_data()
                         loc_add_toast = Adw.Toast.new(_("Added - {0}".format(title)))
+                        loc_add_toast.set_priority(Adw.ToastPriority(1))
                         self._dialog.add_toast(loc_add_toast)
                 else:
                         loc_add_toast = Adw.Toast.new(_("City already added!"))
+                        loc_add_toast.set_priority(Adw.ToastPriority(1))
                         self._dialog.add_toast(loc_add_toast)
 
 
@@ -300,9 +302,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         selected_city = 0
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
-                loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 self.refresh_cities_list(added_cities)
                 self.parent.fetch_weather_data()
+                loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
+                loc_remove_toast.set_priority(Adw.ToastPriority(1))
                 self.add_toast(loc_remove_toast)
 
         # Apprearance page methods --------------------------
