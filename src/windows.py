@@ -228,14 +228,16 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self._dialog.serach_res_grp.set_hexpand(True)
                 self._dialog.group.add(self._dialog.serach_res_grp)
 
-                button.connect("clicked", self.find_city)
+                button.connect("clicked", self.find_caller)
                 self._dialog.search_results = []
 
-                
                 self._dialog.show()
 
         def clear_search_box(self,widget,pos):
                 self.search_entry.set_text("")
+
+        def find_caller(self,widget):
+                self.find_city(widget)
 
         def find_city(self,widget):
                 text = self.search_entry.get_text()
