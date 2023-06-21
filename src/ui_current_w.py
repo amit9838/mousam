@@ -5,13 +5,10 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib, Adw
 
-from .constants import icons,API_KEY,bg_css
-from .backend_current_w import fetch_weather,fetch_city_info
-from .backend_forecast_w import fetch_forecast
-from .ui_forecast_w  import forecast_weather
+from .constants import icons,bg_css
 
-def current_weather(main_window,upper_row,middle_row,data):
-    global g_upper_row,g_middle_row,g_main_window,selected_city,settings,added_cities,cities,use_gradient
+def current_weather(main_window,upper_row,data):
+    global g_main_window,selected_city,settings,added_cities,cities,use_gradient
 
     settings = Gio.Settings.new("io.github.amit9838.weather")
     selected_city = int(str(settings.get_value('selected-city')))
@@ -19,8 +16,6 @@ def current_weather(main_window,upper_row,middle_row,data):
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
     settings.set_value("updated-at",GLib.Variant("s",str(datetime.datetime.now())))
 
-    g_upper_row = upper_row
-    g_middle_row = middle_row
     g_main_window = main_window
     use_gradient = settings.get_boolean('use-gradient-bg')
 

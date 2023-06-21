@@ -37,26 +37,26 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('added-cities')
             settings.reset('selected-city')
 
-        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        main_box.set_hexpand(True)
-        main_box.set_vexpand(True)
         self.toast_overlay = Adw.ToastOverlay.new()
         self.set_child(self.toast_overlay)
-        self.toast_overlay.set_child(main_box)
 
-        main_grid = Gtk.Grid()
-        main_grid.set_hexpand(True)
-        main_box.append(main_grid)
+        self.main_stack = Gtk.Stack.new()
+        self.toast_overlay.set_child(self.main_stack)
+
+        self.main_grid = Gtk.Grid()
+        self.main_grid.set_hexpand(True)
+        # main_box.append(main_grid)
+        self.main_stack.add_child(self.main_grid)
         
         self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
         self.upper_row.set_hexpand(True)
         self.upper_row.set_size_request(800,160)
-        main_grid.attach(self.upper_row,0,0,1,1)
+        self.main_grid.attach(self.upper_row,0,0,1,1)
 
         self.middle_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
         self.middle_row.set_hexpand(True)
         self.middle_row.set_size_request(800,200)
-        main_grid.attach(self.middle_row,0,1,1,1)
+        self.main_grid.attach(self.middle_row,0,1,1,1)
 
         #  Adding refresh button into header
         self.header = Adw.HeaderBar()
@@ -95,17 +95,18 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.fetch_weather_data()
 
         # Footer Section -------------------------
-        footer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        footer_box.set_halign(Gtk.Align.CENTER)
-        footer_box.set_size_request(800,10)
-        footer_box.set_margin_bottom(0)
-        main_box.append(footer_box)
+        # footer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        # footer_box.set_halign(Gtk.Align.CENTER)
+        # footer_box.set_size_request(800,10)
+        # footer_box.set_margin_bottom(0)
+        # self.main_stack.add(footer_box)
 
     def set_app_title(self,title = "Wather"):
             self.set_title(title)
 
     def refresh_weather(self,widget,ignore=True):
         global settings,updated_at
+
         if len(added_cities) == 0:
             settings.reset('added-cities')
             settings.reset('selected-city')
@@ -133,12 +134,12 @@ class WeatherWindow(Gtk.ApplicationWindow):
         middle_child = self.middle_row.get_first_child()
         if middle_child is not None:
             self.middle_row.remove(middle_child)
-            
 
         self.fetch_weather_data()
-        refresh_toast = Adw.Toast.new(_("Refreshing..."))
-        refresh_toast.set_priority(Adw.ToastPriority(1))
-        self.toast_overlay.add_toast(refresh_toast)
+        if ignore:
+            refresh_toast = Adw.Toast.new(_("Refreshing..."))
+            refresh_toast.set_priority(Adw.ToastPriority(1))
+            self.toast_overlay.add_toast(refresh_toast)
         
         
     def fetch_weather_data(self):
@@ -153,9 +154,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
         w_data = fetch_weather(API_KEY,latitude,longitude)
         f_data = fetch_forecast(API_KEY,latitude,longitude)
         
-        if w_data is  None and f_data is  None:
+        if w_data is None and f_data is  None:
             error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
-            error_box.set_margin_top(50)
+            error_box.set_margin_bottom(100)
             label = Gtk.Label(label = _("Failed to load Weather Data"))
             label.set_css_classes(['error_label'])
 
@@ -165,15 +166,18 @@ class WeatherWindow(Gtk.ApplicationWindow):
             icon.set_margin_end(10)
             error_box.append(icon)
             error_box.append(label)
-            self.upper_row.append(error_box)
+            self.main_stack.add_child(error_box)
+            self.main_stack.set_visible_child(error_box)
+
         else:
             print("Plot data...")
+            self.main_stack.set_visible_child(self.main_grid)
             upper_child = self.upper_row.get_first_child()
             middle_child = self.middle_row.get_first_child()
             if upper_child is not None and middle_child is not None:
                 self.upper_row.remove(upper_child)
                 self.middle_row.remove(middle_child)
-            current_weather(self.main_window,self.upper_row,self.middle_row,w_data)
+            current_weather(self.main_window,self.upper_row,w_data)
             forecast_weather(self.middle_row,f_data)
 
     def show_preferences(self, action, param):

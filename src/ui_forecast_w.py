@@ -17,7 +17,7 @@ def forecast_weather(middle_row,f_data):
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)  # Enable automatic scrolling
         scrolled_window.set_min_content_height(190)
-        scrolled_window.set_margin_bottom(5)
+        scrolled_window.set_margin_bottom(8)
         scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
         scrolled_window.set_halign(Gtk.Align.CENTER)

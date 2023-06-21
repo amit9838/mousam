@@ -38,7 +38,7 @@ css = """
 }
 
 .secondary{
-    opacity:.6;
+    opacity:.65;
 }
 
 .secondary-light{
@@ -72,9 +72,9 @@ css = """
 
 .clear_sky, .few_clouds {
 
-    background: linear-gradient(127deg, alpha(rgb(197, 198, 189), 1), alpha(rgb(0, 134, 218), 0) 100%),
-    linear-gradient(217deg, alpha(rgb(197, 198, 189), 1), alpha(rgb(0, 134, 218), 1) 100%),
-    linear-gradient(336deg, alpha(rgb(197, 198, 189), 1), alpha(rgb(0, 134, 218), 1) 100%);
+    background: linear-gradient(127deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 134, 218), 0) 100%),
+    linear-gradient(217deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 174, 258), 1) 100%),
+    linear-gradient(136deg, alpha(rgb(187, 188, 179), 1), alpha(rgb(0, 174, 258), 1) 100%);
 
 } .overcast, .showers_scattered{
 
@@ -101,20 +101,18 @@ css = """
     linear-gradient(336deg, alpha(rgb(126, 126, 126), 1), alpha(rgba(92,92,92,1), 1) 100%);
 
 } .fog{
-
-    background: linear-gradient(127deg, alpha(rgb(126, 126, 126), 1), alpha(rgb(126, 126, 126), 1) 100%),
-    linear-gradient(217deg, alpha(rgb(126, 126, 126), 1), alpha(rgb(126, 126, 126), 1) 100%),
-    linear-gradient(336deg, alpha(rgb(126, 126, 126), 1), alpha(rgb(126, 126, 126), 1) 100%);
-
+    background: linear-gradient(49deg, transparent 0%, rgba(212,195,156,0.43) 100%) 68% 73%/194% 147%,
+            linear-gradient(137deg, #9cafb0 0%, #c4c3be 70%, #c5c8b5 100%) 72% 55%/174% 123%;
 }
 
 /* ------------- night --------------- */
 
-.clear_sky_night, .few_clouds_night{
-
+.clear_sky_night{
     background: linear-gradient(127deg, alpha(rgb(45, 48, 72), 1), alpha(rgb(23, 27, 60), 0) 100%),
     linear-gradient(217deg, alpha(rgb(45, 48, 72), 1), alpha(rgb(23, 27, 60), 1) 100%);
-
+}
+.few_clouds_night{
+    background: linear-gradient(to right bottom, #777777, #69696c, #5b5c62, #4d5057, #3e444d, #353c47, #2b3440, #222d3a, #1c2735, #172130, #121b2b, #0e1526);
 } .overcast_night, .showers_scattered_night {
 
     background: linear-gradient(127deg, alpha(rgb(27, 29, 40), 1), alpha(rgb(23, 27, 60), 0) 100%),
