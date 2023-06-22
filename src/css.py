@@ -64,6 +64,10 @@ css = """
         background-color:rgba(100, 100, 100, 0.1);
     }
 
+.btn_sm{
+    font-size:14px;
+    padding:0px 14px;
+}
 
 .main_window{
     border-radius:13px;

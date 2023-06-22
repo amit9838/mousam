@@ -2,18 +2,75 @@ import gi
 import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk,Gio
+from gi.repository import Gtk,Gio,GLib
 
-# from backend.curr_weather import fetch_weather
-from .constants import icons
+from .constants import icons,API_KEY
 from .units import measurement_type, measurements,get_measurement_type
+from .backend_forecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
-        measurement_type = get_measurement_type()
-        
-        scrolled_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        scrolled_container.set_size_request(800,200)
 
+        forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        forecast_container.set_size_request(800,230)
+        middle_row.append(forecast_container)
+
+        forecast_stack = Gtk.Stack.new()
+        forecast_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        style_buttons_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        style_buttons_box.add_css_class('linked')
+        style_buttons_box.set_margin_start(8)
+        style_buttons_box.set_valign(Gtk.Align.CENTER)
+        
+        today_btn = Gtk.ToggleButton.new_with_label('Today')
+        today_btn.set_css_classes(['pill','btn_sm'])
+        today_btn.do_clicked(today_btn)
+        today_btn.connect('clicked',show_todays_forecast,None,forecast_stack)
+        style_buttons_box.append(today_btn)
+
+        tomorrow_btn = Gtk.ToggleButton.new_with_label('Tomorrow')
+        tomorrow_btn.set_css_classes(['pill','btn_sm'])
+        tomorrow_btn.set_group(today_btn)
+        tomorrow_btn.connect('clicked',show_tomorrows_forecast,None,forecast_stack)
+        style_buttons_box.append(tomorrow_btn)
+
+        plot_forecast_data(forecast_stack,f_data,'today')
+
+        container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        container_loader.set_margin_top(80)
+        loader = Gtk.Spinner()
+        loader.set_css_classes(['loader'])
+        loader.start()
+        container_loader.append(loader)
+        forecast_stack.add_named(container_loader,"loader")
+
+def show_todays_forecast(self,widget,stack):
+    stack.set_visible_child_name('today')
+
+def show_tomorrows_forecast(self,widget,stack):
+    if stack.get_child_by_name("tomorrow"):
+        stack.set_visible_child_name("tomorrow")
+        return
+    
+    settings = Gio.Settings.new("io.github.amit9838.weather")
+    selected_city = int(str(settings.get_value('selected-city')))
+    added_cities = list(settings.get_value('added-cities'))
+    city_loc = added_cities[selected_city]
+    city_loc = city_loc.split(',')
+    latitude = (city_loc[-2])
+    longitude = (city_loc[-1])
+    GLib.idle_add(fetch_and_plot,stack,latitude,longitude)
+    stack.set_visible_child_name('loader')
+
+def fetch_and_plot(stack,latitude,longitude):
+    f_data = fetch_forecast(API_KEY,latitude,longitude,2)
+    f_data_new = extract_forecast_data(f_data.get('list'),"tomorrow")
+    plot_forecast_data(stack,f_data_new,"tomorrow")
+
+def plot_forecast_data(stack,f_data,page_name):
+        if stack.get_child_by_name(page_name):
+            stack.set_visible_child_name(page_name)
+            return
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER) 
         scrolled_window.set_min_content_height(190)
@@ -21,19 +78,15 @@ def forecast_weather(middle_row,f_data):
         scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
         scrolled_window.set_halign(Gtk.Align.CENTER)
-        scrolled_container.append(scrolled_window)
+        stack.add_named(scrolled_window,page_name)
+        stack.set_visible_child_name(page_name)
         scrolled_window.set_size_request(800,190)
-        middle_row.append(scrolled_container)
 
         forecast_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         forecast_box.set_css_classes(['forecast_box'])
-
         scrolled_window.set_child(forecast_box)
 
-        # f_data = [{'dt': 1685491200, 'main': {'temp': 24.2, 'feels_like': 24.76, 'temp_min': 24.2, 'temp_max': 26.51, 'pressure': 1007, 'sea_level': 1007, 'grnd_level': 982, 'humidity': 80, 'temp_kf': -2.31}, 'weather': [{'id': 803, 'main': 'Clouds', 'description': 'broken clouds', 'icon': '04d'}], 'clouds': {'all': 61}, 'wind': {'speed': 3.41, 'deg': 274, 'gust': 4.37}, 'visibility': 10000, 'pop': 0.62, 'sys': {'pod': 'd'}, 'dt_txt': '2023-05-31 00:00:00'},
-        #         {'dt': 1685566800, 'main': {'temp': 29.55, 'feels_like': 29.18, 'temp_min': 29.55, 'temp_max': 29.55, 'pressure': 1005, 'sea_level': 1005, 'grnd_level': 981, 'humidity': 40, 'temp_kf': 0}, 'weather': [{'id': 800, 'main': 'Clear', 'description': 'clear sky', 'icon': '01n'}], 'clouds': {'all': 0}, 'wind': {'speed': 4.36, 'deg': 345, 'gust': 7.02}, 'visibility': 10000, 'pop': 0, 'sys': {'pod': 'n'}, 'dt_txt': '2023-05-31 21:00:00'}]
-
-        for data in f_data.get('list'):
+        for data in f_data:
             forecast_item = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             forecast_item.set_margin_start(2)
             forecast_item.set_margin_end(2)
@@ -47,9 +100,7 @@ def forecast_weather(middle_row,f_data):
             forecast_content.set_margin_bottom(10)
             forecast_content.set_margin_start(10)
             forecast_content.set_margin_end(10)
-            # forecast_content.set_vexpand(True)
 
-            # date_time = data.get('dt_txt')
             date_time = datetime.datetime.fromtimestamp(data['dt'])
 
             hr = date_time.hour

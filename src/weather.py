@@ -150,6 +150,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
       
         w_data = fetch_weather(API_KEY,latitude,longitude)
         f_data = fetch_forecast(API_KEY,latitude,longitude)
+        # print(f_data)
         
         if w_data is None and f_data is  None:
             error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
@@ -175,7 +176,13 @@ class WeatherWindow(Gtk.ApplicationWindow):
                 self.upper_row.remove(upper_child)
                 self.middle_row.remove(middle_child)
             current_weather(self.main_window,self.upper_row,w_data)
-            forecast_weather(self.middle_row,f_data)
+            # forecast_weather(self.middle_row,f_data)
+            f_data = f_data.get('list')
+            self.plot_forecast(self.middle_row,f_data)
+
+    def plot_forecast(self,widget,f_data):
+            forecast_weather(widget,f_data)
+
 
     def show_preferences(self, action, param):
         adw_preferences_window = WeatherPreferences(application)
