@@ -34,6 +34,9 @@ def forecast_weather(middle_row,f_data):
         tomorrow_btn.connect('clicked',show_tomorrows_forecast,None,forecast_stack)
         style_buttons_box.append(tomorrow_btn)
 
+        forecast_container.append(style_buttons_box)
+        forecast_container.append(forecast_stack)
+
         plot_forecast_data(forecast_stack,f_data,'today')
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -52,6 +55,7 @@ def show_tomorrows_forecast(self,widget,stack):
         stack.set_visible_child_name("tomorrow")
         return
     
+    stack.set_visible_child_name('loader')
     settings = Gio.Settings.new("io.github.amit9838.weather")
     selected_city = int(str(settings.get_value('selected-city')))
     added_cities = list(settings.get_value('added-cities'))
@@ -60,7 +64,6 @@ def show_tomorrows_forecast(self,widget,stack):
     latitude = (city_loc[-2])
     longitude = (city_loc[-1])
     GLib.idle_add(fetch_and_plot,stack,latitude,longitude)
-    stack.set_visible_child_name('loader')
 
 def fetch_and_plot(stack,latitude,longitude):
     f_data = fetch_forecast(API_KEY,latitude,longitude,2)
@@ -100,7 +103,6 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_content.set_margin_bottom(10)
             forecast_content.set_margin_start(10)
             forecast_content.set_margin_end(10)
-
             date_time = datetime.datetime.fromtimestamp(data['dt'])
 
             hr = date_time.hour
@@ -123,12 +125,10 @@ def plot_forecast_data(stack,f_data,page_name):
 
             forecast_icon = Gtk.Image()
             forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))
-            # icon.set_hexpand(True)
             forecast_icon.set_pixel_size(36)
             forecast_icon.set_margin_top(15)
             forecast_icon.set_margin_bottom(10)
             forecast_content.append(forecast_icon)
-
 
             grid = Gtk.Grid()
             grid.set_row_spacing(5)
@@ -150,15 +150,12 @@ def plot_forecast_data(stack,f_data,page_name):
             grid.attach(prec_box, 0, 0, 1, 1)
 
             wind_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-            # weather-windy-symbolic
             wind_icon = Gtk.Image()
             wind_icon.set_from_icon_name("weather-windy-symbolic")
-            # icon.set_hexpand(True)
             wind_icon.set_pixel_size(16)
             wind_icon.set_css_classes(['secondary'])
             wind_icon.set_margin_end(5)
             wind_box.append(wind_icon)
-
 
             wind_label = Gtk.Label(label=_("{0:.1f} {1}").format(data['wind']['speed']*measurements[measurement_type]['speed_mul'],measurements[measurement_type]['speed_unit']))
             wind_label.set_css_classes(['secondary-light'])
