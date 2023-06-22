@@ -43,6 +43,21 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="0.3.0" date="2023-06-22">
+      <description>
+        <ul>
+            <li>Show today and tomorrow forecasts</li>
+            <li>Option:Use Imerial, Metric systems</li>
+            <li>Now switch location smoothly</li>
+            <li>Show notification (toast) on various events</li>
+            <li>UI Improvements</li>
+            <li>Minor bug fixes</li>
+            <li>Add Spanish translation, Thanks to Radical4ever</li>
+            <li>Update russian translation</li>
+            <li>Snap version is also available on snap-store, thanks to Soumyadeep Ghosh</li>
+        </ul>
+      </description>
+      </release>
     <release version="0.2.1" date="2023-06-18">
         <description>
           <ul>
