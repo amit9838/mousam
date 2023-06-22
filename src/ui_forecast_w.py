@@ -6,15 +6,16 @@ from gi.repository import Gtk,Gio
 
 # from backend.curr_weather import fetch_weather
 from .constants import icons
-
+from .units import measurement_type, measurements,get_measurement_type
 
 def forecast_weather(middle_row,f_data):
-
+        measurement_type = get_measurement_type()
+        
         scrolled_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         scrolled_container.set_size_request(800,200)
 
         scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)  # Enable automatic scrolling
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER) 
         scrolled_window.set_min_content_height(190)
         scrolled_window.set_margin_bottom(8)
         scrolled_window.set_margin_top(8)
@@ -70,7 +71,7 @@ def forecast_weather(middle_row,f_data):
 
 
             forecast_icon = Gtk.Image()
-            forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))  # Set the icon name and size
+            forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))
             # icon.set_hexpand(True)
             forecast_icon.set_pixel_size(36)
             forecast_icon.set_margin_top(15)
@@ -86,8 +87,7 @@ def forecast_weather(middle_row,f_data):
 
             prec_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             rain_icon = Gtk.Image()
-            rain_icon.set_from_icon_name("weather-showers-scattered-symbolic")  # Set the icon name and size
-            rain_icon.set_css_classes(['secondary'])
+            rain_icon.set_from_icon_name("weather-showers-scattered-symbolic")
             rain_icon.set_pixel_size(16)
             rain_icon.set_margin_end(5)
             prec_box.append(rain_icon)
@@ -101,7 +101,7 @@ def forecast_weather(middle_row,f_data):
             wind_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             # weather-windy-symbolic
             wind_icon = Gtk.Image()
-            wind_icon.set_from_icon_name("weather-windy-symbolic")  # Set the icon name and size
+            wind_icon.set_from_icon_name("weather-windy-symbolic")
             # icon.set_hexpand(True)
             wind_icon.set_pixel_size(16)
             wind_icon.set_css_classes(['secondary'])
@@ -109,7 +109,7 @@ def forecast_weather(middle_row,f_data):
             wind_box.append(wind_icon)
 
 
-            wind_label = Gtk.Label(label=_("{0:.1f} km/h").format(data['wind']['speed']*1.609344))
+            wind_label = Gtk.Label(label=_("{0:.1f} {1}").format(data['wind']['speed']*measurements[measurement_type]['speed_mul'],measurements[measurement_type]['speed_unit']))
             wind_label.set_css_classes(['secondary-light'])
             wind_box.append(wind_label)
             grid.attach(wind_box, 0, 1, 1, 1)

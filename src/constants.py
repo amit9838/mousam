@@ -5,7 +5,7 @@ settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = str(settings.get_value("personal-api-key"))
 using_personal_api_key = settings.get_boolean("using-personal-api-key")
 
-# Validating personal api key
+# Check weather to personal api is valid if it was enabled
 if using_personal_api_key == True and len(API_KEY) == 34 and fetch_city_info(API_KEY[1:-1],'delhi'):
         API_KEY = API_KEY[1:-1]
         settings.set_value("using-personal-api-key",GLib.Variant("b",True))
@@ -17,6 +17,7 @@ else:
         settings.set_value("using-personal-api-key",GLib.Variant("b",False))
         settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))
         print("Using Default api key")
+
 
 
 

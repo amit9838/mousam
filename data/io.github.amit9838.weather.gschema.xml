@@ -37,10 +37,15 @@
       <summary>Use Gradient Background</summary>
       <description>Apply gradient background on main window corresponding to weather condition</description>
     </key>
-      <key name="updated-at" type="s">
+    <key name="updated-at" type="s">
       <default>"2023-06-10 01:01:18.716371"</default>
       <summary>Last Updated </summary>
       <description>last updated time</description>
+    </key>
+    <key name="measure-type" type="s">
+      <default>"metric"</default>
+      <summary>Mesaurement sysytem to use - metric,imperial</summary>
+      <description>metric(km, °C), imperial(mile, °F)</description>
     </key>
 	</schema>
 </schemalist>

@@ -1,12 +1,15 @@
 import requests
+from .units import get_measurement_type
+
 
 def fetch_weather(api_key, latitude, longitude):
+    measurement_type = get_measurement_type()
     base_url = "http://api.openweathermap.org/data/2.5/weather"
     params = {
         "lat": latitude,
         "lon": longitude,
         "appid": api_key,
-        "units": "metric"  # You can change the units to "imperial" for Fahrenheit
+        "units": measurement_type  # You can change the units to "imperial" for Fahrenheit
     }
 
     try:

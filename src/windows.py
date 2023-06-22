@@ -4,6 +4,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
 from .constants import API_KEY,COUNTRY_CODES
+from .units import measurement_type,get_measurement_type
 from .backend_current_w import fetch_city_info
 
 
@@ -89,6 +90,40 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.g_switch_box.append(self.gradient_switch)
                 gradient_row.add_suffix(self.g_switch_box)
                 self.appearance_grp.add(gradient_row)
+
+
+
+                self.measurement_group = Adw.PreferencesGroup.new()
+                self.measurement_group.set_margin_top(20)
+                self.measurement_group.set_title(_('Units &amp; Measurements'))
+                self.appearance_grp.add(self.measurement_group)
+
+                self.metric_unit = Adw.ActionRow.new()
+                self.metric_unit.set_title(_('°C'))
+                self.metric_unit.set_subtitle(_("Use METRIC system with units like °C, km/h, kilometer"))
+                self.metric_check_btn = Gtk.CheckButton.new()
+                self.metric_unit.add_prefix(self.metric_check_btn)
+                self.metric_unit.set_activatable_widget(self.metric_check_btn)
+                self.metric_unit.connect("activated", self.change_unit,'metric')
+                self.measurement_group.add(self.metric_unit)
+                
+                self.imperial_unit = Adw.ActionRow.new()
+                self.imperial_unit.set_title(_('°F'))
+                self.imperial_unit.set_subtitle(_("Use IMPERIAL system with units like °F, mph, mile"))
+                self.imperial_check_btn = Gtk.CheckButton.new()
+                self.imperial_unit.add_prefix(self.imperial_check_btn)
+                self.imperial_check_btn.set_group(self.metric_check_btn)
+                self.imperial_unit.set_activatable_widget(self.imperial_check_btn)
+                self.imperial_unit.connect("activated", self.change_unit,'imperial')
+                self.measurement_group.add(self.imperial_unit)
+                
+
+                if measurement_type == 'metric':
+                        GLib.idle_add(self.metric_unit.activate)
+                        
+                else:
+                        GLib.idle_add(self.imperial_unit.activate)
+
 
 
         #  Misc Page  --------------------------------------------------
@@ -228,7 +263,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self._dialog.serach_res_grp.set_hexpand(True)
                 self._dialog.group.add(self._dialog.serach_res_grp)
 
-                button.connect("clicked", self.find_caller)
+                button.connect("clicked", self.find_city_caller)
                 self._dialog.search_results = []
 
                 self._dialog.show()
@@ -236,7 +271,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def clear_search_box(self,widget,pos):
                 self.search_entry.set_text("")
 
-        def find_caller(self,widget):
+        def find_city_caller(self,widget):
                 self.find_city(widget)
 
         def find_city(self,widget):
@@ -309,10 +344,19 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 loc_remove_toast.set_priority(Adw.ToastPriority(1))
                 self.add_toast(loc_remove_toast)
-
+        
         # Apprearance page methods --------------------------
         def use_gradient_bg(self,widget,state):
                 settings.set_value("use-gradient-bg",GLib.Variant("b",state))
+
+
+        def change_unit(self,widget,value):
+                global measurement_type
+                if measurement_type != value:
+                        settings.set_value("measure-type",GLib.Variant("s",value))
+                        GLib.idle_add(self.parent.refresh_weather,self.parent,False)
+                        measurement_type = get_measurement_type()
+
 
 
         # Misc page methods ----------------------------------

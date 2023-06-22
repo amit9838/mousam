@@ -37,6 +37,7 @@ weather_sources = [
   'backend_current_w.py',
   'backend_forecast_w.py',
   'constants.py',
+  'units.py',
   'css.py',
 ]
 

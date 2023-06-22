@@ -3,9 +3,10 @@ import json
 import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk,Gio,GLib, Adw
+from gi.repository import Gtk,Gio,GLib
 
 from .constants import icons,bg_css
+from .units import  measurements,get_measurement_type
 
 def current_weather(main_window,upper_row,data):
     global g_main_window,selected_city,settings,added_cities,cities,use_gradient
@@ -15,6 +16,7 @@ def current_weather(main_window,upper_row,data):
     added_cities = list(settings.get_value('added-cities'))
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
     settings.set_value("updated-at",GLib.Variant("s",str(datetime.datetime.now())))
+    measurement_type = get_measurement_type()
 
     g_main_window = main_window
     use_gradient = settings.get_boolean('use-gradient-bg')
@@ -67,12 +69,14 @@ def current_weather(main_window,upper_row,data):
     temp_box_l = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     temp_box.append(temp_box_l)
 
-    temp_label = Gtk.Label(label=f"{data['main']['temp']:.0f}°C")
+    temp_label = Gtk.Label(label=f"{data['main']['temp']:.0f}\
+                           {measurements[measurement_type]['temp_unit']}")
     temp_label.set_halign(Gtk.Align.START)
     temp_label.set_css_classes(['temp_label'])
     temp_box_l.append(temp_label)
 
-    feels_like_label = Gtk.Label(label=_("Feels like {0:.1f}°C").format(data['main']['feels_like']))
+    feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}\
+                                         {measurements[measurement_type]['temp_unit']}"))
     feels_like_label.set_margin_start(5)
     feels_like_label.set_halign(Gtk.Align.START)
     temp_box_l.append(feels_like_label)
@@ -115,15 +119,19 @@ def current_weather(main_window,upper_row,data):
 
     # sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
     # sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
-    visibility = data['visibility']//1000 if data['visibility'] > 1000 else data['visibility']
-    vis_dist_unit = _("km") if data['visibility'] > 1000 else _("m")
+    # visibility = data['visibility']//1000 if data['visibility'] > 1000 else data['visibility']
+    # vis_dist_unit = _("km") if data['visibility'] > 1000 else _("m")
     pop = int(data.get('pop')*100) if data.get('pop') else 0
 
     weather_data.append([_("Rain"), _("{0}%").format(pop)])
     weather_data.append([_("Humidity"), _("{0}%").format(data['main']['humidity'])])
     weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
-    weather_data.append([_("Wind speed"), _("{0:.1f} km/h {1}").format(data['wind']['speed']*1.609344, wind_dir(data['wind']['deg']))])
-    weather_data.append([_("Visibility"), f"{visibility} {vis_dist_unit}"])
+    weather_data.append([_("Wind speed"), _("{0:.1f} {1} {2}")\
+                         .format(data['wind']['speed']*measurements[measurement_type]['speed_mul']\
+                                ,measurements[measurement_type]['speed_unit'],\
+                                wind_dir(data['wind']['deg']))])
+    weather_data.append([_("Visibility"), f"{data['visibility']*measurements[measurement_type]['dist_mul']:.1f}\
+                         {measurements[measurement_type]['dist_unit']}"])
     # weather_data.append(["Sunrise", f"{sunrise_time.hour}:{sunrise_time.minute} AM"])
     # weather_data.append(["Sunset", f"{sunset_time.hour-12}:{sunset_time.minute} PM"])
 
