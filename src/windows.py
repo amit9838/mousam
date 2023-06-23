@@ -4,7 +4,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
 from .constants import API_KEY,COUNTRY_CODES
-from .units import measurement_type,get_measurement_type
+from .units import get_measurement_type
 from .backend_current_w import fetch_city_info
 
 
@@ -32,7 +32,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.set_transient_for(parent)
                 self.set_default_size(600, 500)
 
-                global selected_city,settings,added_cities,cities,using_personal_api,isValid_personal_api,personal_api_key
+                global selected_city,settings,added_cities,cities,using_personal_api,isValid_personal_api,personal_api_key,measurement_type
                 settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
                 personal_api_key = str(settings.get_value('personal-api-key'))
@@ -42,6 +42,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 isValid_personal_api = settings.get_boolean('isvalid-personal-api-key')
                 using_personal_api = settings.get_boolean('using-personal-api-key')
                 cities = [x.split(',')[0] for x in added_cities]
+                measurement_type = get_measurement_type()
 
         #  Location Page  --------------------------------------------------
                 location_page = Adw.PreferencesPage()

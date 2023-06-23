@@ -3,8 +3,6 @@ from gi.repository import Gio,GLib
 def get_measurement_type():
         settings = Gio.Settings.new("io.github.amit9838.weather")
         return str(settings.get_value("measure-type"))[1:-1]
-    
-measurement_type = get_measurement_type()
 
 # Units and measurements
 measurements = {

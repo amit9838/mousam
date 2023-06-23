@@ -5,7 +5,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
 
 from .constants import icons,API_KEY
-from .units import measurement_type, measurements,get_measurement_type
+from .units import  measurements,get_measurement_type
 from .backend_forecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
@@ -74,6 +74,7 @@ def plot_forecast_data(stack,f_data,page_name):
         if stack.get_child_by_name(page_name):
             stack.set_visible_child_name(page_name)
             return
+        measurement_type = get_measurement_type()
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER) 
         scrolled_window.set_min_content_height(190)
