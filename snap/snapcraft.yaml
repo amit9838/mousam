@@ -6,7 +6,7 @@ confinement: strict # use 'strict' once you have the right plugs and slots
 architectures:
   - build-on: amd64
   - build-on: arm64
-  - build-on: amrhf
+  - build-on: armhf
 parts:
   mousam:
     # See 'snapcraft plugins'
