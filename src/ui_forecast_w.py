@@ -10,7 +10,7 @@ from .backend_forecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
 
-        forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,halign = Gtk.Align.CENTER)
         forecast_container.set_size_request(800,230)
         middle_row.append(forecast_container)
 
