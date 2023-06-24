@@ -117,9 +117,7 @@ def current_weather(main_window,upper_row,data):
 
     # sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
     # sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
-    pop = int(data.get('pop')*100) if data.get('pop') else 0
 
-    weather_data.append([_("Rain"), _("{0}%").format(pop)])
     weather_data.append([_("Humidity"), _("{0}%").format(data['main']['humidity'])])
     weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
     weather_data.append([_("Wind speed"), _("{0:.1f} {1} {2}").format(data['wind']['speed']*measurements[measurement_type]['speed_mul'],measurements[measurement_type]['speed_unit'],wind_dir(data['wind']['deg']))])
