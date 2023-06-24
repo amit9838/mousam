@@ -8,42 +8,38 @@ css = """
         font-size: 48px;
         font-weight: bold;
     }
+
 .f_box {
         background-color:rgba(255, 255, 255, 0.08);
         border-radius: 5px;
         border : 1px solid rgba(150, 150, 150,.2);
-
     }
+
 .forecast_box {
         border-radius: 5px;
     }
 
 
-.f-s {
+.f-sm {
         font-size: 14px;
-        font-weight: bold;
     }
 .f-m {
         font-size: 16px;
-        font-weight: bold;
     }
 
-.f-l {
+.f-lg {
         font-size: 18px;
-        font-weight: bold;
     }
-
-.city_label {
-    font-size: 18px;
-    font-weight: bold;
-}
+.f-lg2 {
+        font-size: 20px;
+    }
 
 .bold{
     font-weight:500;
 }
 
 .bolder{
-    font-weight:700;
+    font-weight:600;
 }
 
 .secondary{

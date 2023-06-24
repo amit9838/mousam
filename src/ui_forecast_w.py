@@ -22,19 +22,19 @@ def forecast_weather(middle_row,f_data):
         style_buttons_box.set_margin_start(8)
         style_buttons_box.set_valign(Gtk.Align.CENTER)
         
-        today_btn = Gtk.ToggleButton.new_with_label('Today')
+        today_btn = Gtk.ToggleButton.new_with_label(_('Today'))
         today_btn.set_css_classes(['pill','btn_sm'])
         today_btn.do_clicked(today_btn)
         today_btn.connect('clicked',show_todays_forecast,None,forecast_stack)
         style_buttons_box.append(today_btn)
 
-        tomorrow_btn = Gtk.ToggleButton.new_with_label('Tomorrow')
+        tomorrow_btn = Gtk.ToggleButton.new_with_label(_('Tomorrow'))
         tomorrow_btn.set_css_classes(['pill','btn_sm'])
         tomorrow_btn.set_group(today_btn)
         tomorrow_btn.connect('clicked',show_tomorrows_forecast,None,forecast_stack)
         style_buttons_box.append(tomorrow_btn)
         
-        five_d = Gtk.ToggleButton.new_with_label('5 Days')
+        five_d = Gtk.ToggleButton.new_with_label(_('5 Days'))
         five_d.set_css_classes(['pill','btn_sm'])
         five_d.set_group(today_btn)
         five_d.connect('clicked',show_five_d_forecast,None,forecast_stack)
@@ -72,22 +72,9 @@ def show_five_d_forecast(self,widget,stack):
     latitude,longitude = get_selected_city_cord()
     GLib.idle_add(fetch_and_plot,stack,latitude,longitude,5,"five_d")
 
-
-def get_selected_city_cord():
-    settings = Gio.Settings.new("io.github.amit9838.weather")
-    selected_city = int(str(settings.get_value('selected-city')))
-    added_cities = list(settings.get_value('added-cities'))
-    city_loc = added_cities[selected_city]
-    city_loc = city_loc.split(',')
-    latitude = (city_loc[-2])
-    longitude = (city_loc[-1])
-    return latitude,longitude
-
 def fetch_and_plot(stack,latitude,longitude,days=1,d_type='tomorrow'):
     f_data = fetch_forecast(API_KEY,latitude,longitude,days)
     f_data_new = extract_forecast_data(f_data.get('list'),d_type)
-    # stack.set_visible_child_name('loader')
-    # print(f_data_new) 
     plot_forecast_data(stack,f_data_new,d_type)
 
 def plot_forecast_data(stack,f_data,page_name):
@@ -135,9 +122,9 @@ def plot_forecast_data(stack,f_data,page_name):
                 d_t = date_time.strftime("%A")
                 t_css =  "bold"
                 if date_time.date().day == datetime.today().date().day:
-                      d_t = 'Today'
+                      d_t = _('Today')
                 elif date_time.date().day == (datetime.today()+timedelta(days=1)).date().day:
-                      d_t = 'Tomorrow'
+                      d_t = _('Tomorrow')
             else:
                 hr = date_time.hour
                 tpe = _("AM")
@@ -159,7 +146,6 @@ def plot_forecast_data(stack,f_data,page_name):
 
             forecast_icon = Gtk.Image()
             forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))
-            # forecast_icon.set_margin_top(15)
             forecast_icon.set_margin_bottom(10)
 
             if page_name == 'five_d':
@@ -169,17 +155,18 @@ def plot_forecast_data(stack,f_data,page_name):
                 grid.set_margin_top(20)
                 forecast_content.append(grid)
 
-                forecast_icon.set_pixel_size(40)
+                forecast_icon.set_pixel_size(44)
                 temp_icon_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
                 temp_icon_box.set_halign(Gtk.Align.CENTER)
 
                 min_temp = Gtk.Label(label=f"{data['main']['temp_min']:.0f}°")
-                min_temp.set_css_classes(['bolder','secondary-light','f-m'])
+                min_temp.set_css_classes(['bolder','secondary-lighter','f-m'])
+                min_temp.set_margin_top(4)
                 min_temp.set_halign(Gtk.Align.CENTER)
                 temp_icon_box.append(min_temp)
                 
                 max_temp = Gtk.Label(label=f"{data['main']['temp_max']:.0f}°")
-                max_temp.set_css_classes(['bold','secondary-light','f-s'])
+                max_temp.set_css_classes(['bold','secondary-lighter','f-sm'])
                 max_temp.set_margin_top(3)
                 max_temp.set_halign(Gtk.Align.CENTER)
                 temp_icon_box.append(max_temp)
@@ -192,17 +179,14 @@ def plot_forecast_data(stack,f_data,page_name):
                 forecast_icon.set_pixel_size(36)
                 forecast_content.append(forecast_icon)
 
-
-
             grid = Gtk.Grid()
             grid.set_row_spacing(5)
             grid.set_column_spacing(10)
             forecast_content.append(grid)
+            grid.set_margin_top(20)
+
             if page_name == 'five_d':
-                grid.set_margin_top(10) 
-            else:
-                grid.set_margin_top(20)
-                
+                grid.set_margin_top(15)
 
             prec_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             rain_icon = Gtk.Image()
@@ -231,6 +215,21 @@ def plot_forecast_data(stack,f_data,page_name):
             grid.attach(wind_box, 0, 1, 1, 1)
 
             temp_label = Gtk.Label(label=_("{0:.0f}°").format(data['main']['temp']))
-            temp_label.set_css_classes(['f-l'])
-            temp_label.set_margin_top(10)
+            temp_label.set_css_classes(['f-lg','bolder'])
+            temp_label.set_margin_top(20)
+            if page_name == 'five_d':
+                temp_label.set_css_classes(['f-lg2','bolder'])
+                temp_label.set_margin_top(12)
             forecast_content.append(temp_label)
+
+
+
+def get_selected_city_cord():
+    settings = Gio.Settings.new("io.github.amit9838.weather")
+    selected_city = int(str(settings.get_value('selected-city')))
+    added_cities = list(settings.get_value('added-cities'))
+    city_loc = added_cities[selected_city]
+    city_loc = city_loc.split(',')
+    latitude = (city_loc[-2])
+    longitude = (city_loc[-1])
+    return latitude,longitude

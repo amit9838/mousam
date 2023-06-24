@@ -30,7 +30,6 @@ def extract_forecast_data(data,type='today'):
     date_today = datetime.now().date().day
 
     if type == 'today':
-        date_today = datetime.now().date().day
         data_n = [x for x in data if datetime.fromtimestamp(x['dt']).date().day==date_today]
 
     elif type == 'tomorrow':
