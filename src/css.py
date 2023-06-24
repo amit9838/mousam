@@ -19,7 +19,16 @@ css = """
     }
 
 
-.forecast_temp_label {
+.f-s {
+        font-size: 14px;
+        font-weight: bold;
+    }
+.f-m {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+.f-l {
         font-size: 18px;
         font-weight: bold;
     }
@@ -34,7 +43,7 @@ css = """
 }
 
 .bolder{
-    font-weight:500;
+    font-weight:700;
 }
 
 .secondary{
@@ -66,7 +75,7 @@ css = """
 
 .btn_sm{
     font-size:14px;
-    padding:0px 14px;
+    padding:0px 12px;
 }
 
 .main_window{

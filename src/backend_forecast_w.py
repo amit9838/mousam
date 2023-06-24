@@ -27,6 +27,8 @@ def fetch_forecast(api_key,latitude, longitude, days=1):
 
 def extract_forecast_data(data,type='today'):
     data_n = None
+    date_today = datetime.now().date().day
+
     if type == 'today':
         date_today = datetime.now().date().day
         data_n = [x for x in data if datetime.fromtimestamp(x['dt']).date().day==date_today]
@@ -36,4 +38,65 @@ def extract_forecast_data(data,type='today'):
         date_tomorrow = date_tomorrow.date().day
         data_n = [x for x in data if datetime.fromtimestamp(x['dt']).date().day==date_tomorrow]
 
+    elif type == "five_d":
+        # print("five d")
+        data_forecast = []
+        dt = data[0]['dt']
+        temp_avg = {'sum':0,'cnt':0}
+        temp_min = 10000
+        temp_max = -10000
+        pop_max = -5
+        pressure_max = -5
+        main_icon = {}
+        wiwnd_s = {'sum':0,'cnt':0}
+        for i in data:
+            if datetime.fromtimestamp(i['dt']).date().day != date_today:
+                date_today = datetime.fromtimestamp(i['dt']).date().day
+                if  len(main_icon) == 0:
+                    main_icon['04d'] = 1
+                data_n = {
+                    'dt' : dt,
+                    'main':{
+                        'temp' : round(temp_avg['sum']/temp_avg['cnt'],3),
+                        'temp_min' : temp_min,
+                        'temp_max' : temp_max,
+                        'pressure_max' : pressure_max,
+                        
+                    },
+                    'pop' : pop_max,
+                    'weather':[
+                        {
+                        'icon':max(main_icon, key=main_icon.get),
+                        }],
+                    'wind':{
+                        "speed":round(wiwnd_s['sum']/wiwnd_s['cnt'],3)
+                    }
+                }
+                # print(main_icon)
+                data_forecast.append(data_n)
+                temp_avg = {'sum':0,'cnt':0}
+                temp_min = 10000
+                temp_max = -10000
+                pop_max = -5
+                pressure_max = -5
+                main_icon.clear()
+                wiwnd_s = {'sum':0,'cnt':0}
+
+            else:
+                dt = i['dt']
+                temp_avg['sum'] += i['main']['temp']    
+                temp_avg['cnt'] += 1
+                wiwnd_s['sum'] += i['wind']['speed']
+                wiwnd_s['cnt'] += 1
+                temp_min = min(temp_min,i['main']['temp_min'])
+                temp_max = max(temp_max,i['main']['temp_max'])
+                pressure_max = max(pressure_max,i['main']['pressure'])
+                pop_max = max(pop_max,i['pop'])
+
+                if i['weather'][0]['icon'][2]!='n':
+                    if i['weather'][0]['icon'] in main_icon:
+                        main_icon[i['weather'][0]['icon']] += 1
+                    else:
+                        main_icon[i['weather'][0]['icon']] = 1
+        data_n = data_forecast
     return data_n

@@ -117,8 +117,6 @@ def current_weather(main_window,upper_row,data):
 
     # sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
     # sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
-    # visibility = data['visibility']//1000 if data['visibility'] > 1000 else data['visibility']
-    # vis_dist_unit = _("km") if data['visibility'] > 1000 else _("m")
     pop = int(data.get('pop')*100) if data.get('pop') else 0
 
     weather_data.append([_("Rain"), _("{0}%").format(pop)])
