@@ -12,7 +12,7 @@ parts:
     # See 'snapcraft plugins'
     plugin: meson
     source: https://github.com/amit9838/weather.git
-    source-tag: 'v0.3.0'
+    source-tag: 'v0.4.0'
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-pull: |
       craftctl default

@@ -9,9 +9,10 @@
     <p>Current Weather conditions and forcasts.</p>
     <p>Features:</p>
     <ul>
-      <li>Use dynamic gradient backgrounds based on current weather conditions.</li>
-      <li>See forcasts in beautiful card view.</li>
-      <li>Use Personal API Key</li>
+      <li>See weather with dynamically changing gradient-based background according current weather conditions</li>
+      <li>See today, tomorrow and 5-day forcasts</li>
+      <li>See conditions in metric or imperial systems</li>
+      <li>Option to use Personal API Key</li>
     </ul>
   </description>
     <screenshots>
@@ -43,6 +44,17 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="0.4.0" date="2023-06-25">
+      <description>
+        <ul>
+            <li>Adds 5 days forecast</li>
+            <li>Adds rain summary (rain quantity)</li>
+            <li>Fixes unit switching in forecast section</li>
+            <li>UI Improvements</li>
+            <li>Minor bug fixes</li>
+        </ul>
+      </description>
+      </release>
       <release version="0.3.0" date="2023-06-22">
       <description>
         <ul>
