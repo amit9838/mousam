@@ -155,17 +155,17 @@ def plot_forecast_data(stack,f_data,page_name):
                 grid.set_margin_top(20)
                 forecast_content.append(grid)
 
-                forecast_icon.set_pixel_size(44)
+                forecast_icon.set_pixel_size(42)
                 temp_icon_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
                 temp_icon_box.set_halign(Gtk.Align.CENTER)
 
-                min_temp = Gtk.Label(label=f"{data['main']['temp_min']:.0f}°")
+                min_temp = Gtk.Label(label=f"{data['main']['temp_max']:.0f}°")
                 min_temp.set_css_classes(['bolder','secondary-lighter','f-m'])
                 min_temp.set_margin_top(4)
                 min_temp.set_halign(Gtk.Align.CENTER)
                 temp_icon_box.append(min_temp)
                 
-                max_temp = Gtk.Label(label=f"{data['main']['temp_max']:.0f}°")
+                max_temp = Gtk.Label(label=f"{data['main']['temp_min']:.0f}°")
                 max_temp.set_css_classes(['bold','secondary-lighter','f-sm'])
                 max_temp.set_margin_top(3)
                 max_temp.set_halign(Gtk.Align.CENTER)

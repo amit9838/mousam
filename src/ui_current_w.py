@@ -145,16 +145,8 @@ def current_weather(main_window,upper_row,data):
         if rain.get('1h'):
             text = _("rain in next 1 hour")
             rain_summary = f"<b>{data['rain']['1h']}mm</b> {text}"
-        elif rain.get('3h'):
-            text = _("rain in next 3 hours")
-            rain_summary = f"{data['rain']['3h']}mm {text}"
-        elif rain.get('1h') and rain.get('3h'):
-            text1 = _("rain in next 1 hour, overall")
-            text2 = _("rain in 3 hours")
-            rain_summary = f"{data['rain']['1h']}mm {text1} {data['rain']['3h']}mm {text2}"
-
     else:
-        rain_summary = f"No rain for next 3 hours"
+        rain_summary = _("No rain for next 1 hour")
 
     rain_summ_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign = Gtk.Align.START)
     rain_summ_box.set_size_request(100,20)
