@@ -138,8 +138,44 @@ def current_weather(main_window,upper_row,data):
         label_grid.attach(key_label,0,i,1,1)
         label_grid.attach(disc_label,1,i,1,1)
 
+
+    rain_summary = ""
+    if data.get('rain'):
+        rain = data.get('rain')
+        if rain.get('1h'):
+            text = _("rain in next 1 hour")
+            rain_summary = f"<b>{data['rain']['1h']}mm</b> {text}"
+        elif rain.get('3h'):
+            text = _("rain in next 3 hours")
+            rain_summary = f"{data['rain']['3h']}mm {text}"
+        elif rain.get('1h') and rain.get('3h'):
+            text1 = _("rain in next 1 hour, overall")
+            text2 = _("rain in 3 hours")
+            rain_summary = f"{data['rain']['1h']}mm {text1} {data['rain']['3h']}mm {text2}"
+
+    else:
+        rain_summary = f"No rain for next 3 hours"
+
+    rain_summ_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign = Gtk.Align.START)
+    rain_summ_box.set_size_request(100,20)
+
+    rain_summ_box.set_margin_top(10)
+    rain_summ_box.set_css_classes(['rain_summ_box','secondary-light'])
+
+    rain_summ_label = Gtk.Label.new()
+    rain_summ_label.props.wrap = True
+    rain_summ_label.props.use_markup = True
+    rain_summ_label.set_markup (rain_summary)
+    if data.get('rain'):
+        rain_icon = Gtk.Image()
+        rain_icon.set_from_icon_name('weather-showers-scattered-symbolic')  # Set the icon name and size
+        rain_icon.set_pixel_size(18)
+        rain_icon.set_margin_end(6)
+        rain_summ_box.append(rain_icon)
+    rain_summ_box.append(rain_summ_label)
     right_section.append(box_city)
     right_section.append(label_grid)
+    right_section.append(rain_summ_box)
     condition_grid.attach(right_section, 1, 1, 1, 1)
 
 def on_city_combo_changed(combo):

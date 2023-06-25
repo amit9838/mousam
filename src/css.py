@@ -15,6 +15,13 @@ css = """
         border : 1px solid rgba(150, 150, 150,.2);
     }
 
+.rain_summ_box {
+        background-color:rgba(255, 255, 255, 0.06);
+        padding:2px 8px;
+        border-radius: 5px;
+        font-size:14px;
+}
+
 .forecast_box {
         border-radius: 5px;
     }
