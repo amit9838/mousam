@@ -19,8 +19,6 @@ else:
         print("Using Default api key")
 
 
-
-
 icons = {'01d':"weather-clear-symbolic",
          '02d':"weather-few-clouds-symbolic",
          '03d':"weather-few-clouds-symbolic",

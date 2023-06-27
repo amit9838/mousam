@@ -8,6 +8,7 @@ from .constants import API_KEY
 from .windows import AboutWindow,WeatherPreferences
 from .ui_current_w import current_weather
 from .ui_forecast_w  import forecast_weather 
+from .utils import *
 
 from .backend_current_w import fetch_weather
 from .backend_forecast_w import fetch_forecast
@@ -175,14 +176,28 @@ class WeatherWindow(Gtk.ApplicationWindow):
             if upper_child is not None and middle_child is not None:
                 self.upper_row.remove(upper_child)
                 self.middle_row.remove(middle_child)
-            current_weather(self.main_window,self.upper_row,w_data)
-            # forecast_weather(self.middle_row,f_data)
             f_data = f_data.get('list')
+            set_weather_data(w_data,f_data) # Save weather data as cache
+            self.plot_current(self.upper_row,w_data)
             self.plot_forecast(self.middle_row,f_data)
 
+    def plot_current(self,widget,w_data):
+        current_weather(self.main_window,widget,w_data)
+         
     def plot_forecast(self,widget,f_data):
-            forecast_weather(widget,f_data)
+        forecast_weather(widget,f_data)
 
+
+    def refresh_main_ui(self):
+        upper_child = self.upper_row.get_first_child()
+        middle_child = self.middle_row.get_first_child()
+        if upper_child is not None and middle_child is not None:
+            self.upper_row.remove(upper_child)
+            self.middle_row.remove(middle_child)
+        w_data, f_data = get_weather_data()
+        self.plot_current(self.upper_row,w_data)
+        
+        self.plot_forecast(self.middle_row,f_data)
 
     def show_preferences(self, action, param):
         adw_preferences_window = WeatherPreferences(application)

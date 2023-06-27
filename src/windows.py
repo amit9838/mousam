@@ -12,7 +12,7 @@ def AboutWindow(self, action,*args):
         dialog = Adw.AboutWindow()
         dialog.set_application_name(_("Weather"))
         dialog.set_application_icon("io.github.amit9838.weather")
-        dialog.set_version("0.3.0")
+        dialog.set_version("0.4.0")
         dialog.set_developer_name("Amit Chaudhary")
         dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
         dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and python"))
@@ -56,10 +56,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 add_loc_btn = Gtk.Button()
                 add_loc_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER,spacing=4)
-                # Create a label
                 label = Gtk.Label(label=_("Add"))
                 add_loc_btn_box.append(label)
-                # Create an icon
+
                 add_icon = Gtk.Image.new_from_icon_name("list-add-symbolic")
                 add_icon.set_pixel_size(14)
                 add_loc_btn_box.append(add_icon)
@@ -92,8 +91,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 gradient_row.add_suffix(self.g_switch_box)
                 self.appearance_grp.add(gradient_row)
 
-
-
                 self.measurement_group = Adw.PreferencesGroup.new()
                 self.measurement_group.set_margin_top(20)
                 self.measurement_group.set_title(_('Units &amp; Measurements'))
@@ -117,15 +114,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.imperial_unit.set_activatable_widget(self.imperial_check_btn)
                 self.imperial_unit.connect("activated", self.change_unit,'imperial')
                 self.measurement_group.add(self.imperial_unit)
-                
-
-                if measurement_type == 'metric':
-                        GLib.idle_add(self.metric_unit.activate)
-                        
-                else:
-                        GLib.idle_add(self.imperial_unit.activate)
-
-
+                GLib.idle_add(self.metric_unit.activate) if measurement_type == 'metric' else  GLib.idle_add(self.imperial_unit.activate)
 
         #  Misc Page  --------------------------------------------------
                 misc_page = Adw.PreferencesPage()
@@ -158,7 +147,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
                         personal_key_status = _("(Active)")
-                        
                 elif len(personal_api_key)==2:
                         api_key_entry.set_text("")
                         api_key_entry.set_css_classes(['opaque'])
@@ -177,7 +165,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 personal_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste it here (Restart Required)"))
                 personal_api_expander_row.add_row(personal_api_row)
                 misc_grp.add(personal_api_expander_row)
-
 
         # Location page methods ------------------------------------------
         def refresh_cities_list(self,data):
@@ -213,7 +200,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def switch_location(self,widget):
                 global selected_city
                 s_city = added_cities[selected_city]
-
                 title = widget.get_title()
                 if len(title.split(',')) > 2:
                         title = title.split(',')
@@ -227,7 +213,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         loc_switch_toast = Adw.Toast.new(_("Selected - {}".format(title)))
                         loc_switch_toast.set_priority(Adw.ToastPriority(1))
                         self.add_toast(loc_switch_toast)
-
 
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
@@ -266,7 +251,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 button.connect("clicked", self.find_city_caller)
                 self._dialog.search_results = []
-
                 self._dialog.show()
 
         def clear_search_box(self,widget,pos):
@@ -293,7 +277,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                                 country = COUNTRY_CODES.get(loc.get('country'))
                                 country_mod = country[0:15]+"..." if len(country) > 15 else country
                                 if loc.get('state'):
-                                        
                                         title = f"{loc.get('name')},{loc.get('state')},{country_mod}"
                                 else:
                                         title = f"{loc.get('name')},{country_mod}"
@@ -319,7 +302,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         added_cities.append(loc_city)
                         settings.set_value("added-cities",GLib.Variant("as",added_cities))
                         self.refresh_cities_list(added_cities)
-                        self.parent.fetch_weather_data()
+                        #self.parent.fetch_weather_data()
+                        self.parent.refresh_main_ui()
                         loc_add_toast = Adw.Toast.new(_("Added - {0}".format(title)))
                         loc_add_toast.set_priority(Adw.ToastPriority(1))
                         self._dialog.add_toast(loc_add_toast)
@@ -328,9 +312,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         loc_add_toast.set_priority(Adw.ToastPriority(1))
                         self._dialog.add_toast(loc_add_toast)
 
-
         def remove_city(self,btn,widget):
                 global selected_city
+                prev_selected_city = selected_city
                 city = f"{widget.get_title()},{widget.get_subtitle()}"
                 s_city = added_cities[selected_city]
                 added_cities.remove(city)
@@ -341,7 +325,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
                 self.refresh_cities_list(added_cities)
-                self.parent.fetch_weather_data()
+                self.parent.refresh_weather(self.parent) if prev_selected_city != selected_city else self.parent.refresh_main_ui()
                 loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 loc_remove_toast.set_priority(Adw.ToastPriority(1))
                 self.add_toast(loc_remove_toast)
@@ -350,15 +334,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def use_gradient_bg(self,widget,state):
                 settings.set_value("use-gradient-bg",GLib.Variant("b",state))
 
-
         def change_unit(self,widget,value):
                 global measurement_type
                 if measurement_type != value:
                         settings.set_value("measure-type",GLib.Variant("s",value))
                         GLib.idle_add(self.parent.refresh_weather,self.parent,False)
                         measurement_type = get_measurement_type()
-
-
 
         # Misc page methods ----------------------------------
         def save_api_key(self,widget,target):
