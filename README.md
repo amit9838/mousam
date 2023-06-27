@@ -1,18 +1,63 @@
-# weather
+<div align="center">
+<img src="https://github.com/amit9838/weather/blob/master/data/icons/hicolor/scalable/apps/io.github.amit9838.weather.png?raw=true" width="80">
+<h1>Weather</h1>
+<p>Beautiful lightweight weather app.</p>
+<img src="https://img.shields.io/github/v/release/amit9838/weather?style=flat&label=Latest+Release&color=%234a92ff">
+</div>
+<div align="center">
+<img src="https://github.com/amit9838/weather/blob/master/screenshots/ss2-haze_night.png?raw=true#gh-dark-mode-only">
+<img src="https://github.com/amit9838/weather/blob/master/screenshots/ss1-overcast_clouds_day.png?raw=true#gh-light-mode-only">
+</div>
 
-Beautiful lightweight weather app.
-
+## Features
+* See weather with dynamically changing gradient-based background according current weather conditions
+* See today, tomorrow and 5-day forcasts
+* See conditions in metric or imperial systems
+* Option to use Personal API Key
 
 ## Installation
 
-Flatpak:
+### **Flatpak:**
 
+<a href='https://flathub.org/apps/org.gimp.GIMP'><img width='240' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
+* Or you can use the terminal:
 ```
-flatpak install io.github.amit9838.weather
+flatpak install flathub io.github.amit9838.weather
 ```
 
-Snap(Unofficial):
+### Snap (Unofficial):
 
 ```
 sudo snap install mousam
 ```
+
+## Build
+### Dependances
+* python3-requests
+* build-essential
+* meson
+  
+### Build
+```
+meson build
+ninja -C build
+```
+
+### Install
+```
+sudo ninja -C build install
+```
+### Run
+```
+weather
+```
+
+## Thanks to:
+* [@amit9838](https://github.com/amit9838)
+* [@sabriunal](https://github.com/sabriunal)
+* [@soumyaDghosh](https://github.com/soumyaDghosh)
+* [@vorons](https://github.com/vorons)
+* [@GabsEdits](https://github.com/GabsEdits)
+
+Total contributors: 5
