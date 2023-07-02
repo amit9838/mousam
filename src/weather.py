@@ -89,7 +89,26 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.add_action(action)
         menu.append(_("About Weather"), "win.about")
 
+        error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
+        error_box.set_margin_bottom(100)
+        self.error_label = Gtk.Label.new()
+        self.error_label.set_label("Failed to load Weather Data")
+        self.error_label.set_css_classes(['error_label'])
+
+        icon = Gtk.Image()
+        icon.set_from_icon_name("network-error-symbolic")  # Set the icon name and size
+        icon.set_pixel_size(36)
+        icon.set_margin_end(10)
+        error_box.append(icon)
+        error_box.append(self.error_label)
+        self.main_stack.add_named(error_box,'error_box')
+
         # Initial Fetch -------------------------
+        has_internet, response_text = check_internet_connection()
+        if has_internet == False:
+            self.error_label.set_label(response_text)
+            self.main_stack.set_visible_child_name("error_box")
+
         self.fetch_weather_data()
 
         # Footer Section -------------------------
@@ -154,19 +173,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         # print(f_data)
         
         if w_data is None and f_data is  None:
-            error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
-            error_box.set_margin_bottom(100)
-            label = Gtk.Label(label = _("Failed to load Weather Data"))
-            label.set_css_classes(['error_label'])
-
-            icon = Gtk.Image()
-            icon.set_from_icon_name("network-error-symbolic")  # Set the icon name and size
-            icon.set_pixel_size(36)
-            icon.set_margin_end(10)
-            error_box.append(icon)
-            error_box.append(label)
-            self.main_stack.add_child(error_box)
-            self.main_stack.set_visible_child(error_box)
+            self.main_stack.set_visible_child_name("error_box")
 
         else:
             print("Plot data...")

@@ -26,7 +26,7 @@ def check_internet_connection():
         print("Internet connection is not available.")
         print(str(e))
         response_text = "No internet connection!"
-        has_active_internet = True
+        has_active_internet = False
         return has_active_internet, response_text
     except requests.Timeout:
         print("Request timed out.")
