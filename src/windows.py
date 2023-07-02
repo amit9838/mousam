@@ -325,12 +325,19 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
                 self.refresh_cities_list(added_cities)
-                self.parent.refresh_weather(self.parent) if prev_selected_city != selected_city else self.parent.refresh_main_ui()
+                if prev_selected_city != selected_city:
+                    self.parent.refresh_weather(self.parent)
+                else:
+                    added_cities_t = list(settings.get_value('added-cities'))
+                    if s_city != added_cities_t[selected_city]:
+                        self.parent.refresh_weather(self.parent)
+                    else:
+                        self.parent.refresh_main_ui()
                 loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 loc_remove_toast.set_priority(Adw.ToastPriority(1))
                 self.add_toast(loc_remove_toast)
         
-        # Apprearance page methods --------------------------
+        # Apprearance page methods ---------------------------
         def use_gradient_bg(self,widget,state):
                 settings.set_value("use-gradient-bg",GLib.Variant("b",state))
 
