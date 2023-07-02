@@ -47,7 +47,7 @@ def extract_forecast_data(data,type='today'):
         pop_max = -5
         pressure_max = -5
         main_icon = {}
-        wiwnd_s = {'sum':0,'cnt':0}
+        wind_s = -10000
         for i in data:
             if datetime.fromtimestamp(i['dt']).date().day != date_today:
                 date_today = datetime.fromtimestamp(i['dt']).date().day
@@ -68,7 +68,7 @@ def extract_forecast_data(data,type='today'):
                         'icon':max(main_icon, key=main_icon.get),
                         }],
                     'wind':{
-                        "speed":round(wiwnd_s['sum']/wiwnd_s['cnt'],3)
+                        "speed":wind_s
                     }
                 }
                 # print(main_icon)
@@ -79,14 +79,13 @@ def extract_forecast_data(data,type='today'):
                 pop_max = -5
                 pressure_max = -5
                 main_icon.clear()
-                wiwnd_s = {'sum':0,'cnt':0}
+                wind_s = -10000
 
             else:
                 dt = i['dt']
                 temp_avg['sum'] += i['main']['temp']    
                 temp_avg['cnt'] += 1
-                wiwnd_s['sum'] += i['wind']['speed']
-                wiwnd_s['cnt'] += 1
+                wind_s = max(i['wind']['speed'],wind_s)
                 temp_min = min(temp_min,i['main']['temp_min'])
                 temp_max = max(temp_max,i['main']['temp_max'])
                 pressure_max = max(pressure_max,i['main']['pressure'])
