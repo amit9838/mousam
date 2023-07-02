@@ -123,7 +123,12 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
     def refresh_weather(self,widget,ignore=True):
         global settings,updated_at
-
+        has_internet, response_text = check_internet_connection()
+        if has_internet == False:
+            no_internet = Adw.Toast.new(_("No internet!"))
+            no_internet.set_priority(Adw.ToastPriority(1))
+            self.toast_overlay.add_toast(no_internet)
+            return
         if len(added_cities) == 0:
             settings.reset('added-cities')
             settings.reset('selected-city')
