@@ -6,6 +6,7 @@ from gi.repository import Gtk,Gio,GLib
 
 from .constants import icons,API_KEY
 from .units import  measurements,get_measurement_type
+from .utils import get_selected_city_cord
 from .backend_forecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
@@ -221,15 +222,3 @@ def plot_forecast_data(stack,f_data,page_name):
                 temp_label.set_css_classes(['f-lg2','bolder'])
                 temp_label.set_margin_top(12)
             forecast_content.append(temp_label)
-
-
-
-def get_selected_city_cord():
-    settings = Gio.Settings.new("io.github.amit9838.weather")
-    selected_city = int(str(settings.get_value('selected-city')))
-    added_cities = list(settings.get_value('added-cities'))
-    city_loc = added_cities[selected_city]
-    city_loc = city_loc.split(',')
-    latitude = (city_loc[-2])
-    longitude = (city_loc[-1])
-    return latitude,longitude

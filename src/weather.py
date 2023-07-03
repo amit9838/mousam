@@ -43,7 +43,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
-        # main_box.append(main_grid)
         self.main_stack.add_child(self.main_grid)
         
         self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
@@ -111,13 +110,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         self.fetch_weather_data()
 
-        # Footer Section -------------------------
-        # footer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        # footer_box.set_halign(Gtk.Align.CENTER)
-        # footer_box.set_size_request(800,10)
-        # footer_box.set_margin_bottom(0)
-        # self.main_stack.add(footer_box)
-
     def set_app_title(self,title = "Wather"):
             self.set_title(title)
 
@@ -162,24 +154,14 @@ class WeatherWindow(Gtk.ApplicationWindow):
             refresh_toast = Adw.Toast.new(_("Refreshing..."))
             refresh_toast.set_priority(Adw.ToastPriority(1))
             self.toast_overlay.add_toast(refresh_toast)
-        
-        
+
     def fetch_weather_data(self):
-        settings = Gio.Settings.new("io.github.amit9838.weather")
-        selected_city = int(str(settings.get_value('selected-city')))
-        added_cities = list(settings.get_value('added-cities'))
-        city_loc = added_cities[selected_city]
-        city_loc = city_loc.split(',')
-        latitude = (city_loc[-2])
-        longitude = (city_loc[-1])
-      
+        latitude,longitude = get_selected_city_cord()
         w_data = fetch_weather(API_KEY,latitude,longitude)
         f_data = fetch_forecast(API_KEY,latitude,longitude)
-        # print(f_data)
         
         if w_data is None and f_data is  None:
             self.main_stack.set_visible_child_name("error_box")
-
         else:
             print("Plot data...")
             self.main_stack.set_visible_child(self.main_grid)
@@ -208,7 +190,6 @@ class WeatherWindow(Gtk.ApplicationWindow):
             self.middle_row.remove(middle_child)
         w_data, f_data = get_weather_data()
         self.plot_current(self.upper_row,w_data)
-        
         self.plot_forecast(self.middle_row,f_data)
 
     def show_preferences(self, action, param):

@@ -1,4 +1,6 @@
 import requests
+from gi.repository import Gtk, Adw,Gdk,Gio,GLib
+
 current_weather_data = None
 forecast_weather_data = None
 
@@ -29,3 +31,13 @@ def check_internet_connection():
     except requests.Timeout:
         response_text = _("Request timeout!")
         return has_active_internet, response_text
+
+def get_selected_city_cord():
+    settings = Gio.Settings.new("io.github.amit9838.weather")
+    selected_city = int(str(settings.get_value('selected-city')))
+    added_cities = list(settings.get_value('added-cities'))
+    city_loc = added_cities[selected_city]
+    city_loc = city_loc.split(',')
+    latitude = (city_loc[-2])
+    longitude = (city_loc[-1])
+    return latitude,longitude
