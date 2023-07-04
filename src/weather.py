@@ -117,9 +117,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         global settings,updated_at
         has_internet, response_text = check_internet_connection()
         if has_internet == False:
-            no_internet = Adw.Toast.new(_("No internet!"))
-            no_internet.set_priority(Adw.ToastPriority(1))
-            self.toast_overlay.add_toast(no_internet)
+            self.toast_overlay.add_toast(create_toast(_("No internet!"),1))
             return
         if len(added_cities) == 0:
             settings.reset('added-cities')
@@ -132,10 +130,8 @@ class WeatherWindow(Gtk.ApplicationWindow):
         t_arr = tm.split(":")
         t_sec = float(t_arr[2])
         
-        if ignore and abs(datetime.datetime.now().second - t_sec) < 3:
-            refresh_toast = Adw.Toast.new(_("Refresh within 3 seconds is ignored!"))
-            refresh_toast.set_priority(Adw.ToastPriority(1))
-            self.toast_overlay.add_toast(refresh_toast)
+        if ignore and abs(datetime.datetime.now().second - t_sec) < 5:
+            self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
             return
 
         date_time = datetime.datetime.now()
@@ -151,9 +147,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         self.fetch_weather_data()
         if ignore:
-            refresh_toast = Adw.Toast.new(_("Refreshing..."))
-            refresh_toast.set_priority(Adw.ToastPriority(1))
-            self.toast_overlay.add_toast(refresh_toast)
+            self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
 
     def fetch_weather_data(self):
         latitude,longitude = get_selected_city_cord()

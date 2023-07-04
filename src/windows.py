@@ -6,6 +6,7 @@ from gi.repository import Gtk, Adw,Gio,GLib
 from .constants import API_KEY,COUNTRY_CODES
 from .units import get_measurement_type
 from .backend_current_w import fetch_city_info
+from .utils import create_toast
 
 
 def AboutWindow(self, action,*args):
@@ -210,9 +211,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self.refresh_cities_list(added_cities)
                         GLib.idle_add(self.parent.refresh_weather,self.parent,False)
-                        loc_switch_toast = Adw.Toast.new(_("Selected - {}".format(title)))
-                        loc_switch_toast.set_priority(Adw.ToastPriority(1))
-                        self.add_toast(loc_switch_toast)
+                        self.add_toast(create_toast(_("Selected - {}".format(title)),1))
 
         def add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
@@ -299,18 +298,13 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         title = f"{title[0]},{title[2]}"
                 loc_city = f"{title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
-                        added_cities.append(loc_city)
-                        settings.set_value("added-cities",GLib.Variant("as",added_cities))
-                        self.refresh_cities_list(added_cities)
-                        #self.parent.fetch_weather_data()
-                        self.parent.refresh_main_ui()
-                        loc_add_toast = Adw.Toast.new(_("Added - {0}".format(title)))
-                        loc_add_toast.set_priority(Adw.ToastPriority(1))
-                        self._dialog.add_toast(loc_add_toast)
+                    added_cities.append(loc_city)
+                    settings.set_value("added-cities",GLib.Variant("as",added_cities))
+                    self.refresh_cities_list(added_cities)
+                    self.parent.refresh_main_ui()
+                    self._dialog.add_toast(create_toast(_("Added - {0}".format(title)),1))
                 else:
-                        loc_add_toast = Adw.Toast.new(_("City already added!"))
-                        loc_add_toast.set_priority(Adw.ToastPriority(1))
-                        self._dialog.add_toast(loc_add_toast)
+                    self._dialog.add_toast(create_toast(_("City already added!"),1))
 
         def remove_city(self,btn,widget):
                 global selected_city
@@ -328,10 +322,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
                     self.parent.refresh_weather(self.parent)
                 else:
                     self.parent.refresh_main_ui()
-                loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
-                loc_remove_toast.set_priority(Adw.ToastPriority(1))
-                self.add_toast(loc_remove_toast)
-        
+                self.add_toast(create_toast(_("Removed - {0}".format(widget.get_title())),1))
+
         # Apprearance page methods ---------------------------
         def use_gradient_bg(self,widget,state):
                 settings.set_value("use-gradient-bg",GLib.Variant("b",state))
@@ -347,5 +339,4 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def save_api_key(self,widget,target):
                 settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
                 settings.set_value("using-personal-api-key",GLib.Variant("b",True))
-                loc_add_toast = Adw.Toast.new(_("Saved Successfully"))
-                self.add_toast(loc_add_toast)
+                self._dialog.add_toast(create_toast(_("Saved Successfully")))

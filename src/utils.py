@@ -41,3 +41,8 @@ def get_selected_city_cord():
     latitude = (city_loc[-2])
     longitude = (city_loc[-1])
     return latitude,longitude
+
+def create_toast(text,priority=0):
+        toast = Adw.Toast.new(text)
+        toast.set_priority(Adw.ToastPriority(priority))
+        return toast
