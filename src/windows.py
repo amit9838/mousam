@@ -314,7 +314,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         def remove_city(self,btn,widget):
                 global selected_city
-                prev_selected_city = selected_city
                 city = f"{widget.get_title()},{widget.get_subtitle()}"
                 s_city = added_cities[selected_city]
                 added_cities.remove(city)
@@ -325,14 +324,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
                 self.refresh_cities_list(added_cities)
-                if prev_selected_city != selected_city:
+                if s_city == city:  # fetch weather only if selected_city was removed
                     self.parent.refresh_weather(self.parent)
                 else:
-                    added_cities_t = list(settings.get_value('added-cities'))
-                    if s_city != added_cities_t[selected_city]:
-                        self.parent.refresh_weather(self.parent)
-                    else:
-                        self.parent.refresh_main_ui()
+                    self.parent.refresh_main_ui()
                 loc_remove_toast = Adw.Toast.new(_("Removed - {0}".format(widget.get_title())))
                 loc_remove_toast.set_priority(Adw.ToastPriority(1))
                 self.add_toast(loc_remove_toast)
