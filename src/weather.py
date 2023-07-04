@@ -2,7 +2,7 @@ import gi
 import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw,Gdk,Gio,GLib
+from gi.repository import Gtk,Adw,Gio,GLib
 
 from .constants import API_KEY
 from .windows import AboutWindow,WeatherPreferences

@@ -1,5 +1,5 @@
 import requests
-from gi.repository import Gtk, Adw,Gdk,Gio,GLib
+from gi.repository import Adw,Gio
 
 current_weather_data = None
 forecast_weather_data = None
