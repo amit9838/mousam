@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime, timedelta, timezone
 from gi.repository import Adw,Gio
 
 current_weather_data = None
@@ -43,6 +44,10 @@ def get_selected_city_cord():
     return latitude,longitude
 
 def create_toast(text,priority=0):
-        toast = Adw.Toast.new(text)
-        toast.set_priority(Adw.ToastPriority(priority))
-        return toast
+    toast = Adw.Toast.new(text)
+    toast.set_priority(Adw.ToastPriority(priority))
+    return toast
+
+def convert_to_local_time(timestamp, timezone_stamp):
+    hour_offset_from_utc = (timezone_stamp)/3600
+    return datetime.fromtimestamp(timestamp,tz=timezone.utc) + timedelta(hours=hour_offset_from_utc)

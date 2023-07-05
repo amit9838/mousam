@@ -1,5 +1,5 @@
 import gi
-import datetime
+from datetime import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Adw,Gio,GLib
@@ -130,11 +130,11 @@ class WeatherWindow(Gtk.ApplicationWindow):
         t_arr = tm.split(":")
         t_sec = float(t_arr[2])
         
-        if ignore and abs(datetime.datetime.now().second - t_sec) < 5:
+        if ignore and abs(datetime.now().second - t_sec) < 5:
             self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
             return
 
-        date_time = datetime.datetime.now()
+        date_time = datetime.now()
         updated_at = str(date_time)
         settings.set_value("updated-at",GLib.Variant("s",updated_at))
         upper_child = self.upper_row.get_first_child()

@@ -339,4 +339,4 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def save_api_key(self,widget,target):
                 settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
                 settings.set_value("using-personal-api-key",GLib.Variant("b",True))
-                self._dialog.add_toast(create_toast(_("Saved Successfully")))
+                self.add_toast(create_toast(_("Saved Successfully"),1))

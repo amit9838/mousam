@@ -27,8 +27,14 @@ css = """
     }
 
 
+.f-xsm {
+        font-size: 13px;
+    }
 .f-sm {
         font-size: 14px;
+    }
+.f-msm {
+        font-size: 15px;
     }
 .f-m {
         font-size: 16px;
@@ -159,3 +165,4 @@ css = """
 """
 
 # Thanks to https://github.com/SalaniLeo for this beautiful gradients collection
+

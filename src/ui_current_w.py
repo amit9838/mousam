@@ -1,11 +1,12 @@
 import gi
-import datetime
+from datetime import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
 
 from .constants import icons,bg_css
 from .units import  measurements,get_measurement_type
+from .utils import convert_to_local_time
 
 def current_weather(main_window,upper_row,data):
     global g_main_window,selected_city,settings,added_cities,cities,use_gradient
@@ -14,7 +15,7 @@ def current_weather(main_window,upper_row,data):
     selected_city = int(str(settings.get_value('selected-city')))
     added_cities = list(settings.get_value('added-cities'))
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
-    settings.set_value("updated-at",GLib.Variant("s",str(datetime.datetime.now())))
+    settings.set_value("updated-at",GLib.Variant("s",str(datetime.now())))
     measurement_type = get_measurement_type()
 
     g_main_window = main_window
@@ -77,7 +78,7 @@ def current_weather(main_window,upper_row,data):
     feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}{measurements[measurement_type]['temp_unit']}"))
     feels_like_label.set_halign(Gtk.Align.START)
     feels_like_label.set_margin_start(5)
-    feels_like_label.set_css_classes(['secondary-lighter','f-sm'])
+    feels_like_label.set_css_classes(['secondary-light','f-msm'])
     temp_box_l.append(feels_like_label)
 
     temp_box_r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -86,10 +87,11 @@ def current_weather(main_window,upper_row,data):
 
     temp_max_label = Gtk.Label(label = f"↑ {data['main']['temp_max']:.1f}°")
     temp_min_label = Gtk.Label(label = f"↓ {data['main']['temp_min']:.1f}°")
-    temp_max_label.set_css_classes(['secondary-light'])
-    temp_min_label.set_css_classes(['secondary-light'])
+    temp_max_label.set_css_classes(['secondary-light','bold'])
+    temp_min_label.set_css_classes(['secondary-light','f-xsm'])
+    temp_min_label.set_halign(Gtk.Align.START)
     temp_max_label.set_margin_top(10)
-    temp_max_label.set_margin_bottom(30)
+    temp_max_label.set_margin_bottom(4)
     temp_box_r.append(temp_max_label)
     temp_box_r.append(temp_min_label)
 
@@ -125,11 +127,8 @@ def current_weather(main_window,upper_row,data):
 
     weather_data = []
 
-    sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
-    sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
-    print(sunrise_time)
-    print(sunset_time)
-    print(data)
+    sunrise_time = convert_to_local_time(data['sys']['sunrise'],data['timezone'] )
+    sunset_time = convert_to_local_time(data['sys']['sunset'],data['timezone'] )
 
     sunrise_label = Gtk.Label(label=f"{sunrise_time.hour}:{sunrise_time.minute} AM")
     sunrise_label.set_margin_end(20)
@@ -158,8 +157,6 @@ def current_weather(main_window,upper_row,data):
     weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
     weather_data.append([_("Wind speed"), _("{0:.1f} {1} {2}").format(data['wind']['speed']*measurements[measurement_type]['speed_mul'],measurements[measurement_type]['speed_unit'],wind_dir(data['wind']['deg']))])
     weather_data.append([_("Visibility"), f"{data['visibility']*measurements[measurement_type]['dist_mul']:.1f} {measurements[measurement_type]['dist_unit']}"])
-    # weather_data.append(["Sunrise", f"{sunrise_time.hour}:{sunrise_time.minute} AM"])
-    # weather_data.append(["Sunset", f"{sunset_time.hour-12}:{sunset_time.minute} PM"])
 
     label_grid = Gtk.Grid()
     label_grid.set_row_spacing(2)
