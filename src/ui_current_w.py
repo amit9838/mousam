@@ -34,8 +34,9 @@ def current_weather(main_window,upper_row,data):
     condition_grid.attach(left_section, 0, 1, 1, 1)
 
     # Main info box, contains weather icon, temp info
-    info_box_main = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+    info_box_main = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.START)
     info_box_main.set_margin_start(10)
+    info_box_main.set_margin_top(0)
     left_section.append(info_box_main)
 
     icon_box_main = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -74,8 +75,9 @@ def current_weather(main_window,upper_row,data):
     temp_box_l.append(temp_label)
 
     feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}{measurements[measurement_type]['temp_unit']}"))
-    feels_like_label.set_margin_start(5)
     feels_like_label.set_halign(Gtk.Align.START)
+    feels_like_label.set_margin_start(5)
+    feels_like_label.set_css_classes(['secondary-lighter','f-sm'])
     temp_box_l.append(feels_like_label)
 
     temp_box_r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -84,10 +86,19 @@ def current_weather(main_window,upper_row,data):
 
     temp_max_label = Gtk.Label(label = f"↑ {data['main']['temp_max']:.1f}°")
     temp_min_label = Gtk.Label(label = f"↓ {data['main']['temp_min']:.1f}°")
+    temp_max_label.set_css_classes(['secondary-light'])
+    temp_min_label.set_css_classes(['secondary-light'])
     temp_max_label.set_margin_top(10)
     temp_max_label.set_margin_bottom(30)
     temp_box_r.append(temp_max_label)
     temp_box_r.append(temp_min_label)
+
+    sun_grid = Gtk.Grid()
+    sun_grid.set_row_spacing(2)
+    sun_grid.set_column_spacing(0)
+    sun_grid.set_margin_start(5)
+    sun_grid.set_margin_top(5)
+    cond_box.append(sun_grid)
 
 
     right_section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
@@ -114,8 +125,34 @@ def current_weather(main_window,upper_row,data):
 
     weather_data = []
 
-    # sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
-    # sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
+    sunrise_time = datetime.datetime.fromtimestamp(data['sys']['sunrise'])
+    sunset_time = datetime.datetime.fromtimestamp(data['sys']['sunset'])
+    print(sunrise_time)
+    print(sunset_time)
+    print(data)
+
+    sunrise_label = Gtk.Label(label=f"{sunrise_time.hour}:{sunrise_time.minute} AM")
+    sunrise_label.set_margin_end(20)
+    sunrise_label.set_css_classes(['secondary','f-sm'])
+
+    sunrise_icon = Gtk.Image()
+    sunrise_icon.set_from_icon_name('daytime-sunrise-symbolic')  # Set the icon name and size
+    sunrise_icon.set_css_classes(['secondary-light'])
+    sunrise_icon.set_pixel_size(12)
+    sunrise_icon.set_margin_end(6)
+
+    sunset_label = Gtk.Label(label= f"{sunset_time.hour-12}:{sunset_time.minute} PM")
+    sunset_label.set_css_classes(['secondary','f-sm'])
+    sunset_icon = Gtk.Image()
+    sunset_icon.set_css_classes(['secondary-light'])
+    sunset_icon.set_from_icon_name('daytime-sunset-symbolic')  # Set the icon name and size
+    sunset_icon.set_pixel_size(12)
+    sunset_icon.set_margin_end(5)
+
+    sun_grid.attach(sunrise_icon,0,0,1,1)
+    sun_grid.attach(sunrise_label,1,0,1,1)
+    sun_grid.attach(sunset_icon,2,0,1,1)
+    sun_grid.attach(sunset_label,3,0,1,1)
 
     weather_data.append([_("Humidity"), _("{0}%").format(data['main']['humidity'])])
     weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
