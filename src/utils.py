@@ -15,7 +15,7 @@ def set_weather_data(current,forecast):
 
 def check_internet_connection():
     url = "http://www.google.com"
-    timeout = 10  # Set the timeout value in seconds
+    timeout = 5  # Set the timeout value in seconds
     response_text = ""
     has_active_internet = False
     try:

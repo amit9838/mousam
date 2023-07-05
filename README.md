@@ -10,7 +10,7 @@
 </div>
 
 ## Features
-* See weather with dynamically changing gradient-based background according current weather conditions
+* See weather with dynamically changing gradient-based background according to current weather conditions
 * See today, tomorrow and 5-day forcasts
 * See conditions in metric or imperial systems
 * Option to use Personal API Key

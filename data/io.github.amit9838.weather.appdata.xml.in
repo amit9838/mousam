@@ -44,6 +44,17 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="0.5.0" date="2023-07-05">
+      <description>
+        <ul>
+            <li>Adds sunset/sunrise info</li>
+            <li>Add and remove city more quickly</li>
+            <li>Better error screens like - No internet!</li>
+            <li>UI Improvements</li>
+            <li>Various bug fixes</li>
+        </ul>
+      </description>
+      </release>
     <release version="0.4.0" date="2023-06-25">
       <description>
         <ul>
