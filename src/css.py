@@ -17,7 +17,7 @@ css = """
 
 .rain_summ_box {
         background-color:rgba(255, 255, 255, 0.06);
-        padding:2px 8px;
+        padding:2px 10px;
         border-radius: 5px;
         font-size:14px;
 }

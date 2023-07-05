@@ -164,6 +164,8 @@ def current_weather(main_window,upper_row,data):
     label_grid = Gtk.Grid()
     label_grid.set_row_spacing(2)
     label_grid.set_column_spacing(10)
+    label_grid.set_margin_start(10)
+
     for i,disc in enumerate(weather_data):
         key_label = Gtk.Label(label=disc[0])
         disc_label = Gtk.Label(label = disc[1])
