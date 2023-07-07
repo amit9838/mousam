@@ -1,11 +1,11 @@
 css = """
 .condition_label {
-        font-size: 20px;
+        font-size: 1.4rem;
         font-weight: bold;
         opacity:.8;
     }
 .temp_label {
-        font-size: 48px;
+        font-size: 3.4rem;
         font-weight: bold;
     }
 
@@ -19,7 +19,7 @@ css = """
         background-color:rgba(255, 255, 255, 0.06);
         padding:2px 10px;
         border-radius: 5px;
-        font-size:14px;
+        font-size:.95rem;
 }
 
 .forecast_box {
@@ -28,23 +28,23 @@ css = """
 
 
 .f-xsm {
-        font-size: 13px;
+        font-size: .85rem;
     }
 .f-sm {
-        font-size: 14px;
+        font-size: .9rem;
     }
 .f-msm {
-        font-size: 15px;
+        font-size: .95rem;
     }
 .f-m {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
 .f-lg {
-        font-size: 18px;
+        font-size: 1.2rem;
     }
 .f-lg2 {
-        font-size: 20px;
+        font-size: 1.35rem;
     }
 
 .bold{
@@ -68,7 +68,7 @@ css = """
 }
 
 .error_label {
-    font-size: 26px;
+    font-size: 1.8rem;
     font-weight: bold;
 }
 
@@ -83,8 +83,8 @@ css = """
     }
 
 .btn_sm{
-    font-size:14px;
-    padding:0px 12px;
+    font-size:.95rem;
+    padding:0.05rem .9rem;
 }
 
 .main_window{

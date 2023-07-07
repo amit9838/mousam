@@ -20,7 +20,7 @@ def forecast_weather(middle_row,f_data):
 
         style_buttons_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
         style_buttons_box.add_css_class('linked')
-        style_buttons_box.set_margin_start(8)
+        style_buttons_box.set_margin_start(2)
         style_buttons_box.set_valign(Gtk.Align.CENTER)
         
         today_btn = Gtk.ToggleButton.new_with_label(_('Today'))
