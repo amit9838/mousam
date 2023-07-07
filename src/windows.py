@@ -81,8 +81,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
-                gradient_row.set_title(_("Use Dynamic Background"))
-                gradient_row.set_subtitle(_("Background changes based on current weather conditions (Reastart required)"))
+                gradient_row.set_title(_("Dynamic Background"))
+                gradient_row.set_subtitle(_("Background changes based on current weather condition (Reastart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 self.gradient_switch = Gtk.Switch()
@@ -162,8 +162,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 personal_api_expander_row = Adw.ExpanderRow.new()
                 personal_api_expander_row.set_activatable(True)
-                personal_api_expander_row.set_title(_("Use Personal API Key {0}".format(personal_key_status)))
-                personal_api_expander_row.set_subtitle(_("Generate api key from openweathermap.org and paste it here (Restart Required)"))
+                personal_api_expander_row.set_title(_("Personal API Key {0}".format(personal_key_status)))
+                personal_api_expander_row.set_subtitle(_("Use your personal api key from openweathermap.org (Restart Required)"))
                 personal_api_expander_row.add_row(personal_api_row)
                 misc_grp.add(personal_api_expander_row)
 
