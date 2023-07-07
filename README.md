@@ -10,7 +10,7 @@
 </div>
 
 ## Features
-* See weather with dynamically changing gradient-based background according to current weather conditions
+* See weather with dynamically changing gradient-based background according to current weather condition
 * See today, tomorrow and 5-day forcasts
 * See conditions in metric or imperial systems
 * Option to use Personal API Key
@@ -57,11 +57,3 @@ sudo ninja -C build install
 weather
 ```
 
-## Thanks to:
-* [@amit9838](https://github.com/amit9838)
-* [@sabriunal](https://github.com/sabriunal)
-* [@soumyaDghosh](https://github.com/soumyaDghosh)
-* [@vorons](https://github.com/vorons)
-* [@GabsEdits](https://github.com/GabsEdits)
-
-Total contributors: 5
