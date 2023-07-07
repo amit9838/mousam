@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime, timedelta, timezone
 from gi.repository import Adw,Gio
+from gettext import gettext as _
 
 current_weather_data = None
 forecast_weather_data = None

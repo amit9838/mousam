@@ -3,6 +3,7 @@ from datetime import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
+from gettext import gettext as _
 
 from .constants import icons,bg_css
 from .units import  measurements,get_measurement_type
@@ -78,8 +79,8 @@ def current_weather(main_window,upper_row,data):
     feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}{measurements[measurement_type]['temp_unit']}"))
     feels_like_label.set_halign(Gtk.Align.START)
     feels_like_label.set_margin_start(5)
-    feels_like_label.set_css_classes(['secondary-light','f-msm'])
-    temp_box_l.append(feels_like_label)
+    feels_like_label.set_css_classes(['secondary-light','f-mlg'])
+    cond_box.append(feels_like_label)
 
     temp_box_r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     temp_box_r.set_margin_start(10)
@@ -91,6 +92,7 @@ def current_weather(main_window,upper_row,data):
     temp_min_label.set_css_classes(['secondary-light','f-xsm'])
     temp_min_label.set_halign(Gtk.Align.START)
     temp_max_label.set_margin_top(10)
+    temp_min_label.set_margin_start(1)
     temp_max_label.set_margin_bottom(4)
     temp_box_r.append(temp_max_label)
     temp_box_r.append(temp_min_label)
