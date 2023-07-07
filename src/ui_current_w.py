@@ -130,7 +130,8 @@ def current_weather(main_window,upper_row,data):
     sunrise_time = convert_to_local_time(data['sys']['sunrise'],data['timezone'] )
     sunset_time = convert_to_local_time(data['sys']['sunset'],data['timezone'] )
 
-    sunrise_label = Gtk.Label(label=f"{sunrise_time.hour}:{sunrise_time.minute} AM")
+    sunrise_time_minute = sunrise_time.minute if len(str(sunrise_time.minute))==2 else str(sunrise_time.minute)+"0"
+    sunrise_label = Gtk.Label(label=f"{sunrise_time.hour}:{sunrise_time_minute} AM")
     sunrise_label.set_margin_end(20)
     sunrise_label.set_css_classes(['secondary','f-sm'])
 
@@ -140,7 +141,8 @@ def current_weather(main_window,upper_row,data):
     sunrise_icon.set_pixel_size(12)
     sunrise_icon.set_margin_end(6)
 
-    sunset_label = Gtk.Label(label= f"{sunset_time.hour-12}:{sunset_time.minute} PM")
+    sunset_time_minute = sunset_time.minute if len(str(sunset_time.minute))==2 else str(sunset_time.minute)+"0"
+    sunset_label = Gtk.Label(label= f"{sunset_time.hour-12}:{sunset_time_minute} PM")
     sunset_label.set_css_classes(['secondary','f-sm'])
     sunset_icon = Gtk.Image()
     sunset_icon.set_css_classes(['secondary-light'])
