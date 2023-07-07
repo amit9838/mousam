@@ -78,7 +78,7 @@ def current_weather(main_window,upper_row,data):
     feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}{measurements[measurement_type]['temp_unit']}"))
     feels_like_label.set_halign(Gtk.Align.START)
     feels_like_label.set_margin_start(5)
-    feels_like_label.set_css_classes(['secondary-light','f-m'])
+    feels_like_label.set_css_classes(['secondary-light','f-msm'])
     temp_box_l.append(feels_like_label)
 
     temp_box_r = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)

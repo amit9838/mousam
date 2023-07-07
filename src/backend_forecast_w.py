@@ -47,12 +47,15 @@ def extract_forecast_data(data,type='today'):
         pop_max = -5
         pressure_max = -5
         main_icon = {}
+        main_condition = {}
         wind_s = -10000
         for i in data:
             if datetime.fromtimestamp(i['dt']).date().day != date_today:
                 date_today = datetime.fromtimestamp(i['dt']).date().day
                 if  len(main_icon) == 0:
                     main_icon['04d'] = 1
+                main_cnd = max(main_condition, key=main_condition.get)
+                main_cnd = main_cnd if len(main_cnd)<18 else main_cnd[0:16]+"..."
                 data_n = {
                     'dt' : dt,
                     'main':{
@@ -65,6 +68,7 @@ def extract_forecast_data(data,type='today'):
                     'pop' : pop_max,
                     'weather':[
                         {
+                        'main':main_cnd,
                         'icon':max(main_icon, key=main_icon.get),
                         }],
                     'wind':{
@@ -79,6 +83,7 @@ def extract_forecast_data(data,type='today'):
                 pop_max = -5
                 pressure_max = -5
                 main_icon.clear()
+                main_condition.clear()
                 wind_s = -10000
 
             else:
@@ -96,5 +101,11 @@ def extract_forecast_data(data,type='today'):
                         main_icon[i['weather'][0]['icon']] += 1
                     else:
                         main_icon[i['weather'][0]['icon']] = 1
+
+                if i['weather'][0]['description'] in main_condition:
+                    main_condition[i['weather'][0]['description']] +=1
+                else:
+                    main_condition[i['weather'][0]['description']] =1
+
         data_n = data_forecast
     return data_n

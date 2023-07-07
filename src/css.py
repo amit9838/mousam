@@ -39,6 +39,9 @@ css = """
 .f-m {
         font-size: 1rem;
     }
+.f-m {
+        font-size: 1.1rem;
+    }
 
 .f-lg {
         font-size: 1.2rem;

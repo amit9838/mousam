@@ -118,10 +118,8 @@ def plot_forecast_data(stack,f_data,page_name):
             date_time = datetime.fromtimestamp(data['dt'])
 
             d_t = ""
-            t_css = ""
             if page_name == 'five_d':
                 d_t = date_time.strftime("%A")
-                t_css =  "bold"
                 if date_time.date().day == datetime.today().date().day:
                       d_t = _('Today')
                 elif date_time.date().day == (datetime.today()+timedelta(days=1)).date().day:
@@ -137,8 +135,7 @@ def plot_forecast_data(stack,f_data,page_name):
                 d_t = f"{hr}:{minute} {tpe}"
 
             forecast_time = Gtk.Label(label=f"{d_t}")
-            forecast_time.set_css_classes([f'{t_css}','secondary-lighter'])
-
+            forecast_time.set_css_classes([f'secondary-lighter'])
             forecast_time.set_halign(Gtk.Align.CENTER)
             forecast_content.append(forecast_time)
             forecast_item.append(forecast_content)
@@ -150,10 +147,15 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_icon.set_margin_bottom(10)
 
             if page_name == 'five_d':
+                forecast_condition = Gtk.Label(label=data['weather'][0]['main'].capitalize())
+                forecast_condition.set_margin_top(4)
+                forecast_condition.set_css_classes(['secondary-lighter','f-mlg' ,'bold'])
+                forecast_content.append(forecast_condition)
+
                 grid = Gtk.Grid()
                 grid.set_row_spacing(5)
                 grid.set_column_spacing(30)
-                grid.set_margin_top(20)
+                grid.set_margin_top(8)
                 forecast_content.append(grid)
 
                 forecast_icon.set_pixel_size(42)
@@ -187,7 +189,7 @@ def plot_forecast_data(stack,f_data,page_name):
             grid.set_margin_top(20)
 
             if page_name == 'five_d':
-                grid.set_margin_top(15)
+                grid.set_margin_top(5)
 
             prec_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
             rain_icon = Gtk.Image()
