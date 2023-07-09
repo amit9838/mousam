@@ -1,5 +1,5 @@
 from gi.repository import Gio,GLib
-from .backend_current_w import fetch_city_info
+from .backendCurrent_w import fetch_city_info
 
 settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = str(settings.get_value("personal-api-key"))

@@ -8,7 +8,7 @@ from gettext import gettext as _
 from .constants import icons,API_KEY
 from .units import  measurements,get_measurement_type
 from .utils import get_selected_city_cord
-from .backend_forecast_w import fetch_forecast, extract_forecast_data
+from .backendForecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
 

@@ -5,14 +5,14 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk,Adw,Gio,GLib
 
 from .constants import API_KEY
-from .preferencesWindow import WeatherPreferences
-from .aboutWindow import AboutWindow
-from .ui_current_w import current_weather
-from .ui_forecast_w  import forecast_weather 
+from .windowPreferences import WeatherPreferences
+from .windowAbout import AboutWindow
+from .uiCurrent_w import current_weather
+from .uiForecast_w  import forecast_weather 
 from .utils import *
 
-from .backend_current_w import fetch_weather
-from .backend_forecast_w import fetch_forecast
+from .backendCurrent_w import fetch_weather
+from .backendForecast_w import fetch_forecast
 
 settings = Gio.Settings.new("io.github.amit9838.weather")
 selected_city = int(str(settings.get_value('selected-city')))
