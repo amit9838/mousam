@@ -190,9 +190,12 @@ def current_weather(main_window,upper_row,data):
             text = _("snow in next 1 hour")
             summary_text = f"<b>{data['snow']['1h']}mm</b> {text}"
     else:
-        if data['main']['temp'] < 0:
+        temp_main = data['main']['temp']
+        if measurement_type == 'imperial':
+            temp_main = (data['main']['temp']-32)*(5/9)
+        if temp_main <= 0:
             summary_text = _("No snow for atleast 1 hour")
-        elif data['main']['temp'] > 0 and data['main']['temp']<3:
+        elif temp_main > 0 and temp_main < 3:
             summary_text = _("No rain/snow for atleast 1 hour")
         else:
             summary_text = _("No rain for atleast 1 hour")
