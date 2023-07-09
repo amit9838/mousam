@@ -178,14 +178,24 @@ def current_weather(main_window,upper_row,data):
         label_grid.attach(disc_label,1,i,1,1)
 
 
-    rain_summary = ""
+    summary_text = ""
     if data.get('rain'):
         rain = data.get('rain')
         if rain.get('1h'):
             text = _("rain in next 1 hour")
-            rain_summary = f"<b>{data['rain']['1h']}mm</b> {text}"
+            summary_text = f"<b>{data['rain']['1h']}mm</b> {text}"
+    elif data.get('snow'):
+        snow = data.get('snow')
+        if snow.get('1h'):
+            text = _("snow in next 1 hour")
+            summary_text = f"<b>{data['snow']['1h']}mm</b> {text}"
     else:
-        rain_summary = _("No rain for next 1 hour")
+        if data['main']['temp'] < 0:
+            summary_text = _("No snow for atleast 1 hour")
+        elif data['main']['temp'] > 0 and data['main']['temp']<3:
+            summary_text = _("No rain/snow for atleast 1 hour")
+        else:
+            summary_text = _("No rain for atleast 1 hour")
 
     rain_summ_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign = Gtk.Align.START)
     rain_summ_box.set_size_request(100,20)
@@ -196,13 +206,18 @@ def current_weather(main_window,upper_row,data):
     rain_summ_label = Gtk.Label.new()
     rain_summ_label.props.wrap = True
     rain_summ_label.props.use_markup = True
-    rain_summ_label.set_markup (rain_summary)
+    rain_summ_label.set_markup (summary_text)
+
+    summ_icon = Gtk.Image()
+    summ_icon.set_pixel_size(18)
+    summ_icon.set_margin_end(6)
     if data.get('rain'):
-        rain_icon = Gtk.Image()
-        rain_icon.set_from_icon_name('weather-showers-scattered-symbolic')  # Set the icon name and size
-        rain_icon.set_pixel_size(18)
-        rain_icon.set_margin_end(6)
-        rain_summ_box.append(rain_icon)
+        summ_icon.set_from_icon_name('weather-showers-scattered-symbolic')  # Set the icon name and size
+        rain_summ_box.append(summ_icon)
+    elif data.get('snow'):
+        summ_icon.set_from_icon_name('weather-snow-symbolic')  # Set the icon name and size
+        rain_summ_box.append(summ_icon)
+        
     rain_summ_box.append(rain_summ_label)
     right_section.append(box_city)
     right_section.append(label_grid)
