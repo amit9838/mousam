@@ -5,7 +5,8 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk,Adw,Gio,GLib
 
 from .constants import API_KEY
-from .windows import AboutWindow,WeatherPreferences
+from .preferencesWindow import WeatherPreferences
+from .aboutWindow import AboutWindow
 from .ui_current_w import current_weather
 from .ui_forecast_w  import forecast_weather 
 from .utils import *

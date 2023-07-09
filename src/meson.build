@@ -31,7 +31,6 @@ weather_sources = [
   '__init__.py',
   'main.py',
   'weather.py',
-  'windows.py',
   'ui_current_w.py',
   'ui_forecast_w.py',
   'backend_current_w.py',
@@ -40,6 +39,8 @@ weather_sources = [
   'units.py',
   'utils.py',
   'css.py',
+  'aboutWindow.py',
+  'preferencesWindow.py',
 ]
 
 

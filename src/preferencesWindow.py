@@ -8,23 +8,6 @@ from .units import get_measurement_type
 from .backend_current_w import fetch_city_info
 from .utils import create_toast
 
-
-def AboutWindow(self, action,*args):
-        dialog = Adw.AboutWindow()
-        dialog.set_application_name(_("Weather"))
-        dialog.set_application_icon("io.github.amit9838.weather")
-        dialog.set_version("0.5.0")
-        dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
-        dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and python"))
-        dialog.set_website("https://github.com/amit9838/weather")
-        dialog.set_issue_url("https://github.com/amit9838/weather/issues")
-        # dialog.add_credit_section("Contributors", ["name url"])
-        dialog.set_copyright(_("Copyright © 2023 Weather Developers"))
-        dialog.set_developers(["Amit Chaudhary"])
-        # Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
-        dialog.set_translator_credits(_("translator_credits"))
-        dialog.show()
-
 class WeatherPreferences(Adw.PreferencesWindow):
         def __init__(self, parent,  **kwargs):
                 super().__init__(**kwargs)
