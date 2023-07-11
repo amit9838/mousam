@@ -7,7 +7,7 @@ from gettext import gettext as _
 
 from .constants import icons,API_KEY
 from .units import  measurements,get_measurement_type
-from .utils import get_selected_city_cord
+from .utils import get_selected_city_coords
 from .backendForecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
@@ -27,21 +27,21 @@ def forecast_weather(middle_row,f_data):
         today_btn = Gtk.ToggleButton.new_with_label(_('Today'))
         today_btn.set_css_classes(['pill','btn_sm'])
         today_btn.do_clicked(today_btn)
-        today_btn.connect('clicked',show_todays_forecast,None,forecast_stack)
-        style_buttons_box.append(today_btn)
+        today_btn.connect('clicked',_on_today_forecast_btn_clicked,None,forecast_stack)
 
         tomorrow_btn = Gtk.ToggleButton.new_with_label(_('Tomorrow'))
         tomorrow_btn.set_css_classes(['pill','btn_sm'])
         tomorrow_btn.set_group(today_btn)
-        tomorrow_btn.connect('clicked',show_tomorrows_forecast,None,forecast_stack)
-        style_buttons_box.append(tomorrow_btn)
+        tomorrow_btn.connect('clicked',_on_tomorrow_forecast_btn_clicked,None,forecast_stack)
         
         five_d = Gtk.ToggleButton.new_with_label(_('5 Days'))
         five_d.set_css_classes(['pill','btn_sm'])
         five_d.set_group(today_btn)
-        five_d.connect('clicked',show_five_d_forecast,None,forecast_stack)
-        style_buttons_box.append(five_d)
+        five_d.connect('clicked',_on_five_d_forecast_btn_clicked,None,forecast_stack)
 
+        style_buttons_box.append(today_btn)
+        style_buttons_box.append(tomorrow_btn)
+        style_buttons_box.append(five_d)
         forecast_container.append(style_buttons_box)
         forecast_container.append(forecast_stack)
 
@@ -55,23 +55,23 @@ def forecast_weather(middle_row,f_data):
         container_loader.append(loader)
         forecast_stack.add_named(container_loader,"loader")
 
-def show_todays_forecast(self,widget,stack):
+def _on_today_forecast_btn_clicked(self,widget,stack):
     stack.set_visible_child_name('today')
 
-def show_tomorrows_forecast(self,widget,stack):
+def _on_tomorrow_forecast_btn_clicked(self,widget,stack):
     if stack.get_child_by_name("tomorrow"):
         stack.set_visible_child_name("tomorrow")
         return
     stack.set_visible_child_name('loader')
-    latitude,longitude = get_selected_city_cord()
+    latitude,longitude = get_selected_city_coords()
     GLib.idle_add(fetch_and_plot,stack,latitude,longitude,2,'tomorrow')
 
-def show_five_d_forecast(self,widget,stack):
+def _on_five_d_forecast_btn_clicked(self,widget,stack):
     if stack.get_child_by_name("five_d"):
         stack.set_visible_child_name("five_d")
         return
     stack.set_visible_child_name('loader')
-    latitude,longitude = get_selected_city_cord()
+    latitude,longitude = get_selected_city_coords()
     GLib.idle_add(fetch_and_plot,stack,latitude,longitude,5,"five_d")
 
 def fetch_and_plot(stack,latitude,longitude,days=1,d_type='tomorrow'):
@@ -80,10 +80,8 @@ def fetch_and_plot(stack,latitude,longitude,days=1,d_type='tomorrow'):
     plot_forecast_data(stack,f_data_new,d_type)
 
 def plot_forecast_data(stack,f_data,page_name):
-        if stack.get_child_by_name(page_name):
-            stack.set_visible_child_name(page_name)
-            return
         measurement_type = get_measurement_type()
+        
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER) 
         scrolled_window.set_min_content_height(190)
@@ -91,9 +89,10 @@ def plot_forecast_data(stack,f_data,page_name):
         scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
         scrolled_window.set_halign(Gtk.Align.CENTER)
+        scrolled_window.set_size_request(800,190)
+
         stack.add_named(scrolled_window,page_name)
         stack.set_visible_child_name(page_name)
-        scrolled_window.set_size_request(800,190)
 
         forecast_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         forecast_box.set_css_classes(['forecast_box'])
@@ -142,7 +141,6 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_item.append(forecast_content)
             forecast_box.append(forecast_item)
 
-
             forecast_icon = Gtk.Image()
             forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))
             forecast_icon.set_margin_bottom(10)
@@ -150,7 +148,7 @@ def plot_forecast_data(stack,f_data,page_name):
             if page_name == 'five_d':
                 forecast_condition = Gtk.Label(label=data['weather'][0]['main'].capitalize())
                 forecast_condition.set_margin_top(4)
-                forecast_condition.set_css_classes(['secondary-lighter','f-mlg' ,'bold'])
+                forecast_condition.set_css_classes(['secondary-light','f-mlg' ,'bold'])
                 forecast_content.append(forecast_condition)
 
                 grid = Gtk.Grid()

@@ -7,7 +7,7 @@ from gettext import gettext as _
 
 from .constants import icons,bg_css
 from .units import  measurements,get_measurement_type
-from .utils import convert_to_local_time
+from .utils import convert_to_local_time,wind_dir
 
 def current_weather(main_window,upper_row,data):
     global g_main_window,selected_city,settings,added_cities,cities,use_gradient
@@ -104,7 +104,6 @@ def current_weather(main_window,upper_row,data):
     sun_grid.set_margin_top(5)
     cond_box.append(sun_grid)
 
-
     right_section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     right_section.set_size_request(300,100)
 
@@ -118,7 +117,7 @@ def current_weather(main_window,upper_row,data):
         list_store.append([city])
 
     combo_box = Gtk.ComboBox.new_with_model(list_store)
-    combo_box.connect("changed", switch_location)
+    combo_box.connect("changed", _on_location_combo_changed)
     combo_box.set_model(list_store)
     renderer_text = Gtk.CellRendererText()
     combo_box.pack_start(renderer_text, True)
@@ -177,16 +176,13 @@ def current_weather(main_window,upper_row,data):
         label_grid.attach(key_label,0,i,1,1)
         label_grid.attach(disc_label,1,i,1,1)
 
-
     summary_text = ""
     if data.get('rain'):
-        rain = data.get('rain')
-        if rain.get('1h'):
+        if data['rain'].get('1h'):
             text = _("rain in next 1 hour")
             summary_text = f"<b>{data['rain']['1h']}mm</b> {text}"
     elif data.get('snow'):
-        snow = data.get('snow')
-        if snow.get('1h'):
+        if data['snow'].get('1h'):
             text = _("snow in next 1 hour")
             summary_text = f"<b>{data['snow']['1h']}mm</b> {text}"
     else:
@@ -202,7 +198,6 @@ def current_weather(main_window,upper_row,data):
 
     rain_summ_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign = Gtk.Align.START)
     rain_summ_box.set_size_request(100,20)
-
     rain_summ_box.set_margin_top(10)
     rain_summ_box.set_css_classes(['rain_summ_box','secondary-light'])
 
@@ -227,29 +222,18 @@ def current_weather(main_window,upper_row,data):
     right_section.append(rain_summ_box)
     condition_grid.attach(right_section, 1, 1, 1, 1)
 
-def on_city_combo_changed(combo):
+def _on_location_combo_changed(combo):
+    GLib.idle_add(_on_switch_city,combo)
+
+def _on_switch_city(combo):
     global cities,selected_city,g_main_window
     tree_iter = combo.get_active_iter()
     s_city = cities[selected_city]
 
     if tree_iter is not None:
         model = combo.get_model()
-        city = model[tree_iter][0]
+        city = model[tree_iter][0]  # get selected city from combo
         if s_city != city:
             selected_city = cities.index(city)
             settings.set_value("selected-city",GLib.Variant("i",selected_city))
             g_main_window.refresh_weather(g_main_window,ignore=False)
-
-
-def switch_location(combo):
-    GLib.idle_add(on_city_combo_changed,combo)
-
-# converts wind degrees to direction 
-def wind_dir(angle):
-        directions = [
-            _("N"), _("NNE"), _("NE"), _("ENE"), _("E"), _("ESE"), _("SE"), _("SSE"),
-            _("S"), _("SSW"), _("SW"), _("WSW"), _("W"), _("WNW"), _("NW"), _("NNW"),
-        ]
-        index = round(angle / (360.0 / len(directions))) % len(directions)
-        return directions[index]
-

@@ -3,8 +3,8 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
-def AboutWindow(self, action,*args):
-        dialog = Adw.AboutWindow()
+def AboutWindow(parent,*args):
+        dialog = Adw.AboutWindow.new()
         dialog.set_application_name(_("Weather"))
         dialog.set_application_icon("io.github.amit9838.weather")
         dialog.set_version("0.5.0")
@@ -18,4 +18,5 @@ def AboutWindow(self, action,*args):
         dialog.set_developers(["Amit Chaudhary"])
         # Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
         dialog.set_translator_credits(_("translator_credits"))
-        dialog.show()
+        dialog.set_transient_for(parent)
+        dialog.present()

@@ -18,7 +18,7 @@ settings = Gio.Settings.new("io.github.amit9838.weather")
 selected_city = int(str(settings.get_value('selected-city')))
 added_cities = list(settings.get_value('added-cities'))
 cities = [x.split(',')[0] for x in added_cities]
-updated_at = str(settings.get_value('updated-at'))[1:-1]
+updated_at = settings.get_string('updated-at')
 
 class WeatherWindow(Gtk.ApplicationWindow):
     __gtype_name__ = 'WeatherWindow'
@@ -61,57 +61,59 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.header.add_css_class(css_class='flat')
         self.set_titlebar(self.header)
         self.refresh_button = Gtk.Button(label="refresh")
-        self.header.pack_start(self.refresh_button)
         self.refresh_button.set_icon_name("view-refresh-symbolic")
         self.refresh_button.set_tooltip_text(_("Refresh"))
         self.refresh_button.connect('clicked',self.refresh_weather)
+        self.header.pack_start(self.refresh_button)
 
         # Create a popover
         menu = Gio.Menu.new()
-        self.popover = Gtk.PopoverMenu()  # Create a new popover menu
+        self.popover = Gtk.PopoverMenu()
         self.popover.set_menu_model(menu)
 
         # Create a menu button
         self.hamburger = Gtk.MenuButton()
         self.hamburger.set_popover(self.popover)
-        self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
+        self.hamburger.set_icon_name("open-menu-symbolic")
         self.header.pack_end(self.hamburger)
 
         # Create a new action
         action = Gio.SimpleAction.new("preferences", None)
-        action.connect("activate", self.show_preferences)
+        action.connect("activate", self._on_preferences_clicked)
         self.add_action(action)
         menu.append(_("Preferences"), "win.preferences")
         #menu.append("Help", "help")
 
         action = Gio.SimpleAction.new("about", None)
-        action.connect("activate", AboutWindow)
+        action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Weather"), "win.about")
 
         error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
         error_box.set_margin_bottom(100)
+        self.main_stack.add_named(error_box,'error_box')
+
         self.error_label = Gtk.Label.new()
         self.error_label.set_label("Failed to load Weather Data")
         self.error_label.set_css_classes(['error_label'])
 
         icon = Gtk.Image()
-        icon.set_from_icon_name("network-error-symbolic")  # Set the icon name and size
+        icon.set_from_icon_name("network-error-symbolic") 
         icon.set_pixel_size(36)
         icon.set_margin_end(10)
+
         error_box.append(icon)
         error_box.append(self.error_label)
-        self.main_stack.add_named(error_box,'error_box')
 
         # Initial Fetch -------------------------
         has_internet, response_text = check_internet_connection()
         if has_internet == False:
             self.error_label.set_label(response_text)
             self.main_stack.set_visible_child_name("error_box")
+        else:
+            self.fetch_weather_data()
 
-        self.fetch_weather_data()
-
-    def set_app_title(self,title = "Wather"):
+    def set_app_title(self,title = "Weather"):
             self.set_title(title)
 
     def refresh_weather(self,widget,ignore=True):
@@ -120,14 +122,13 @@ class WeatherWindow(Gtk.ApplicationWindow):
         if has_internet == False:
             self.toast_overlay.add_toast(create_toast(_("No internet!"),1))
             return
-        if len(added_cities) == 0:
+        if len(added_cities) == 0:  # Reset city to default if all cities are removed
             settings.reset('added-cities')
             settings.reset('selected-city')
             
-        # Ignore refreshing weather within 3 second
+        # Ignore refreshing weather within 5 second
         d_t = updated_at.split(" ")
-        # Time
-        tm = d_t[1]
+        tm = d_t[1]   # Time
         t_arr = tm.split(":")
         t_sec = float(t_arr[2])
         
@@ -151,7 +152,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
 
     def fetch_weather_data(self):
-        latitude,longitude = get_selected_city_cord()
+        latitude,longitude = get_selected_city_coords()
         w_data = fetch_weather(API_KEY,latitude,longitude)
         f_data = fetch_forecast(API_KEY,latitude,longitude)
         
@@ -176,17 +177,19 @@ class WeatherWindow(Gtk.ApplicationWindow):
     def plot_forecast(self,widget,f_data):
         forecast_weather(widget,f_data)
 
-
-    def refresh_main_ui(self):
+    def refresh_main_ui(self):  # Repaint main UI with previously fetched data
         upper_child = self.upper_row.get_first_child()
         middle_child = self.middle_row.get_first_child()
-        if upper_child is not None and middle_child is not None:
+        if upper_child is not None and middle_child is not None:  # Remove UI items from upper and middle row if any
             self.upper_row.remove(upper_child)
             self.middle_row.remove(middle_child)
         w_data, f_data = get_weather_data()
         self.plot_current(self.upper_row,w_data)
         self.plot_forecast(self.middle_row,f_data)
 
-    def show_preferences(self, action, param):
+    def _on_about_clicked(self, widget, param):
+        AboutWindow(application)
+
+    def _on_preferences_clicked(self, widget, param):
         adw_preferences_window = WeatherPreferences(application)
         adw_preferences_window.show()

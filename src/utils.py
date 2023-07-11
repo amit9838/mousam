@@ -25,16 +25,16 @@ def check_internet_connection():
             has_active_internet = True
             return has_active_internet, response_text
 
+    except requests.Timeout:
+        response_text = _("Request timeout!")
+        return has_active_internet, response_text
     except requests.RequestException as e:
         print(str(e))
         response_text = _("No internet connection!")
         has_active_internet = False
         return has_active_internet, response_text
-    except requests.Timeout:
-        response_text = _("Request timeout!")
-        return has_active_internet, response_text
 
-def get_selected_city_cord():
+def get_selected_city_coords():
     settings = Gio.Settings.new("io.github.amit9838.weather")
     selected_city = int(str(settings.get_value('selected-city')))
     added_cities = list(settings.get_value('added-cities'))
@@ -52,3 +52,13 @@ def create_toast(text,priority=0):
 def convert_to_local_time(timestamp, timezone_stamp):
     hour_offset_from_utc = (timezone_stamp)/3600
     return datetime.fromtimestamp(timestamp,tz=timezone.utc) + timedelta(hours=hour_offset_from_utc)
+
+# converts wind degrees to direction 
+def wind_dir(angle):
+        directions = [
+            _("N"), _("NNE"), _("NE"), _("ENE"), _("E"), _("ESE"), _("SE"), _("SSE"),
+            _("S"), _("SSW"), _("SW"), _("WSW"), _("W"), _("WNW"), _("NW"), _("NNW"),
+        ]
+        index = round(angle / (360.0 / len(directions))) % len(directions)
+        return directions[index]
+
