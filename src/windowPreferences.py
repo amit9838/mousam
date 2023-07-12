@@ -2,6 +2,7 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
+from gettext import gettext as _
 
 from .constants import API_KEY,COUNTRY_CODES
 from .units import get_measurement_type

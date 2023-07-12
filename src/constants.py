@@ -5,19 +5,12 @@ settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = settings.get_string("personal-api-key")
 using_personal_api_key = settings.get_boolean("using-personal-api-key")
 
-# Check weather to personal api is valid if it was enabled
-if using_personal_api_key == True and len(API_KEY) == 32 and fetch_city_info(API_KEY,'delhi'):
-        API_KEY = API_KEY
-        settings.set_value("using-personal-api-key",GLib.Variant("b",True))
-        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",True))
-        print("Using Personal api key")
-
+# Check weather personal api is valid if it was enabled
+if len(API_KEY) == 32 and using_personal_api_key == True and fetch_city_info(API_KEY,'delhi'):
+        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",True))  # Using Personal api key
 else:
-        API_KEY = str(settings.get_string('api-key'))
-        settings.set_value("using-personal-api-key",GLib.Variant("b",False))
-        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))
-        print("Using Default api key")
-
+        API_KEY = settings.get_string('api-key')
+        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))  #Using Default api key
 
 icons = {'01d':"weather-clear-symbolic",
          '02d':"weather-few-clouds-symbolic",
@@ -60,29 +53,8 @@ bg_css ={'01d':"clear_sky",
         '13n':"snow_night",
         '50n':"fog_night",
         }
-
-# Day ----------------------
-# 01d: Clear sky (day)
-# 02d: Few clouds (day)
-# 03d: Scattered clouds (day)
-# 04d: Broken clouds (day)
-# 09d: Shower rain (day)
-# 10d: Rain (day)
-# 11d: Thunderstorm (day)
-# 13d: Snow (day)
-# 50d: Mist (day)
-
-# Night ----------------------
-# 01n: Clear sky (night)  
-# 02n: Few clouds (night)
-# 03n: Scattered clouds (night)
-# 04n: Broken clouds (night)
-# 09n: Shower rain (night)
-# 10n: Rain (night)
-# 11n: Thunderstorm (night)
-# 13n: Snow (night)
-# 50n: Mist (night)
-
+        # 01d ->  'd' indicates day
+        # 01n -> 'n' indicates night
 
 COUNTRY_CODES = {
     "AD": "Andorra",
