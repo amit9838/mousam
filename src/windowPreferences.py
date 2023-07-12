@@ -81,7 +81,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 self.metric_unit = Adw.ActionRow.new()
                 self.metric_unit.set_title(_('°C'))
-                self.metric_unit.set_subtitle(_("Use METRIC system with units like celcuis, km/h, kilometer"))
+                self.metric_unit.set_subtitle(_("METRIC system with units like celcuis, km/h, kilometer"))
                 self.metric_check_btn = Gtk.CheckButton.new()
                 self.metric_unit.add_prefix(self.metric_check_btn)
                 self.metric_unit.set_activatable_widget(self.metric_check_btn)
@@ -90,7 +90,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 
                 self.imperial_unit = Adw.ActionRow.new()
                 self.imperial_unit.set_title(_('°F'))
-                self.imperial_unit.set_subtitle(_("Use IMPERIAL system with units like fahrenheit, mph, mile"))
+                self.imperial_unit.set_subtitle(_("IMPERIAL system with units like fahrenheit, mph, mile"))
                 self.imperial_check_btn = Gtk.CheckButton.new()
                 self.imperial_unit.add_prefix(self.imperial_check_btn)
                 self.imperial_check_btn.set_group(self.metric_check_btn)
