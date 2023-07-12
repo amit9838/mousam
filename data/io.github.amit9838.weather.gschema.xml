@@ -11,10 +11,10 @@
       <default>""</default>
       <description>personal api</description>
     </key>
-	  <key name="using-personal-api-key" type="b">
+	  <key name="use-personal-api-key" type="b">
       <default>false</default>
-      <summary>Using personal api Key</summary>
-      <description>True if personal api key is being used.</description>
+      <summary>Use personal api Key</summary>
+      <description>Set whether to use personal api key</description>
     </key>
 	  <key name="isvalid-personal-api-key" type="b">
       <default>false</default>

@@ -16,14 +16,14 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.set_transient_for(parent)
                 self.set_default_size(600, 500)
 
-                global selected_city,settings,added_cities,cities,using_personal_api,isValid_personal_api,personal_api_key,measurement_type
+                global selected_city,settings,added_cities,cities,use_personal_api,isValid_personal_api,personal_api_key,measurement_type
                 settings = Gio.Settings.new("io.github.amit9838.weather")
                 selected_city = int(str(settings.get_value('selected-city')))
                 personal_api_key = settings.get_string('personal-api-key')
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')
                 isValid_personal_api = settings.get_boolean('isvalid-personal-api-key')
-                using_personal_api = settings.get_boolean('using-personal-api-key')
+                use_personal_api = settings.get_boolean('use-personal-api-key')
                 cities = [x.split(',')[0] for x in added_cities]
                 measurement_type = get_measurement_type()
 
@@ -109,7 +109,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 
                 use_personal_key_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 use_personal_key_switch = Gtk.Switch.new()
-                use_personal_key_switch.set_active(using_personal_api)
+                use_personal_key_switch.set_active(use_personal_api)
                 use_personal_key_switch_box.append(use_personal_key_switch)
 
                 personal_api_expander_row = Adw.ExpanderRow.new()
@@ -137,10 +137,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 api_key_entry_box.append(save_api_key_btn)                
                 api_key_entry.set_placeholder_text(_("Enter your api-key"))
                 api_key_entry.set_text(personal_api_key)
-                if using_personal_api and isValid_personal_api and len(personal_api_key)>2:
+                if use_personal_api and isValid_personal_api and len(personal_api_key)>2:
                         personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
-                elif len(personal_api_key)==0 or using_personal_api==False:
+                elif len(personal_api_key)==0 or use_personal_api==False:
                         api_key_entry.set_css_classes(['opaque'])
                 else:
                         personal_api_row.set_subtitle(_("Invalid Key"))
@@ -324,12 +324,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
         def _on_use_personal_api_key_toggled(self,widget,state,target):
                 if state==True:
                         target.set_enable_expansion(True)
-                        settings.set_value("using-personal-api-key",GLib.Variant("b",True))
+                        settings.set_value("use-personal-api-key",GLib.Variant("b",True))
                 else:
                         target.set_enable_expansion(False)
-                        settings.set_value("using-personal-api-key",GLib.Variant("b",False))
+                        settings.set_value("use-personal-api-key",GLib.Variant("b",False))
 
         def _save_api_key(self,widget,target):
                 settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
-                settings.set_value("using-personal-api-key",GLib.Variant("b",True))
+                settings.set_value("use-personal-api-key",GLib.Variant("b",True))
                 self.add_toast(create_toast(_("Saved Successfully"),1))
