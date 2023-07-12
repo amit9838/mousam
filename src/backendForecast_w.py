@@ -63,7 +63,6 @@ def extract_forecast_data(data,type='today'):
                         'temp_min' : temp_min,
                         'temp_max' : temp_max,
                         'pressure_max' : pressure_max,
-                        
                     },
                     'pop' : pop_max,
                     'weather':[

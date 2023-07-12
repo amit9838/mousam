@@ -188,10 +188,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 global selected_city
                 s_city = added_cities[selected_city]
                 title = widget.get_title()
-                if len(title.split(',')) > 2:
-                        title = title.split(',')
-                        title = f"{title[0]},{title[2]}"
-                loc_city = f"{title},{widget.get_subtitle()}"
+                split_title = title.split(',')
+                modify_title = lambda x: f"{x[0]},{x[2]}" if len(x) > 2 else title
+                loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
                 if s_city != loc_city:
                         selected_city = added_cities.index(loc_city) # Update selected_city
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
@@ -257,7 +256,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         for i,loc in enumerate(city_data):
                                 res_row =  Adw.ActionRow.new()
                                 res_row.set_activatable(True)
-
                                 title = None
                                 country = COUNTRY_CODES.get(loc.get('country'))
                                 country_mod = country[0:15]+"..." if len(country) > 15 else country
@@ -279,10 +277,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         def _add_city(self,widget):
                 title = widget.get_title()
-                if len(title.split(',')) > 2:
-                        title = title.split(',')
-                        title = f"{title[0]},{title[2]}"
-                loc_city = f"{title},{widget.get_subtitle()}"
+                split_title = title.split(',')
+                modify_title = lambda x: f"{x[0]},{x[2]}" if len(x) > 2 else title
+                loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
                     added_cities.append(loc_city)
                     settings.set_value("added-cities",GLib.Variant("as",added_cities))

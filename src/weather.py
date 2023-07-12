@@ -127,12 +127,9 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('selected-city')
             
         # Ignore refreshing weather within 5 second
-        d_t = updated_at.split(" ")
-        tm = d_t[1]   # Time
-        t_arr = tm.split(":")
-        t_sec = float(t_arr[2])
-        
-        if ignore and abs(datetime.now().second - t_sec) < 5:
+        extract_seconds = lambda x: float(x.split(" ")[1].split(":")[2])
+
+        if ignore and abs(datetime.now().second - extract_seconds(updated_at)) < 5:
             self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
             return
 
