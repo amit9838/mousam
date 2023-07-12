@@ -138,6 +138,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 api_key_entry.set_placeholder_text(_("Enter your api-key"))
                 api_key_entry.set_text(personal_api_key)
                 if use_personal_api and isValid_personal_api and len(personal_api_key)>2:
+                        personal_api_expander_row.set_expanded(True)
                         personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
                 elif len(personal_api_key)==0 or use_personal_api==False:
