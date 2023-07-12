@@ -50,7 +50,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.location_grp.set_header_suffix(add_loc_btn)
 
                 self.location_rows = []
-                self._refresh_cities_list(added_cities)
+                self._create_cities_list(added_cities)
 
         #  Appearance Page  --------------------------------------------------s
                 appearance_page = Adw.PreferencesPage()
@@ -101,56 +101,59 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         #  Misc Page  --------------------------------------------------
                 misc_page = Adw.PreferencesPage()
-                self.add(misc_page)
-
                 misc_page.set_title(_("Misc"))
                 misc_page.set_icon_name('application-x-addon-symbolic')
                 misc_grp = Adw.PreferencesGroup()
                 misc_page.add(misc_grp)
+                self.add(misc_page)
+                
+                use_personal_key_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+                use_personal_key_switch = Gtk.Switch.new()
+                use_personal_key_switch.set_active(using_personal_api)
+                use_personal_key_switch_box.append(use_personal_key_switch)
+
+                personal_api_expander_row = Adw.ExpanderRow.new()
+                personal_api_expander_row.set_title(_("Personal API Key"))
+                personal_api_expander_row.set_subtitle(_("Use your personal api key from openweathermap.org (Restart Required)"))
+                misc_grp.add(personal_api_expander_row)
+                personal_api_expander_row.add_action(use_personal_key_switch_box)
+                use_personal_key_switch.connect('state-set',self._on_use_personal_api_key_toggled,personal_api_expander_row)
 
                 personal_api_row =  Adw.ActionRow.new()
                 personal_api_row.set_activatable(True)
                 personal_api_row.set_title(_("API Key"))
+                personal_api_expander_row.connect('direction-changed',self._on_use_personal_api_key_toggled)
 
                 api_key_entry_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 api_key_entry = Gtk.Entry()
                 api_key_entry_box.append(api_key_entry)
 
-                set_key_btn = Gtk.Button()
-                set_key_btn.set_icon_name("emblem-ok-symbolic")
-                set_key_btn.set_tooltip_text(_("Save"))
-                set_key_btn.set_css_classes(['circular'])
-                set_key_btn.set_margin_start(5)
+                save_api_key_btn = Gtk.Button()
+                save_api_key_btn.set_icon_name("emblem-ok-symbolic")
+                save_api_key_btn.set_tooltip_text(_("Save"))
+                save_api_key_btn.set_css_classes(['circular'])
+                save_api_key_btn.set_margin_start(5)
 
-                api_key_entry_box.append(set_key_btn)                
+                api_key_entry_box.append(save_api_key_btn)                
                 api_key_entry.set_placeholder_text(_("Enter your api-key"))
                 api_key_entry.set_text(personal_api_key)
-                personal_key_status = ""
-                if isValid_personal_api and len(personal_api_key)>2:
+                if using_personal_api and isValid_personal_api and len(personal_api_key)>2:
                         personal_api_row.set_subtitle(_("Active"))
                         api_key_entry.set_css_classes(['success'])
-                        personal_key_status = _("(Active)")
-                elif len(personal_api_key)==0:
-                        api_key_entry.set_text("")
+                elif len(personal_api_key)==0 or using_personal_api==False:
                         api_key_entry.set_css_classes(['opaque'])
                 else:
-                        personal_key_status = _("(Invalid Key)")
                         personal_api_row.set_subtitle(_("Invalid Key"))
                         api_key_entry.set_css_classes(['error'])
                         
                 api_key_entry.set_hexpand(True)
-                set_key_btn.connect('clicked',self._save_api_key,api_key_entry)
+                save_api_key_btn.connect('clicked',self._save_api_key,api_key_entry)
                 personal_api_row.add_suffix(api_key_entry_box)
 
-                personal_api_expander_row = Adw.ExpanderRow.new()
-                personal_api_expander_row.set_activatable(True)
-                personal_api_expander_row.set_title(_("Personal API Key {0}".format(personal_key_status)))
-                personal_api_expander_row.set_subtitle(_("Use your personal api key from openweathermap.org (Restart Required)"))
                 personal_api_expander_row.add_row(personal_api_row)
-                misc_grp.add(personal_api_expander_row)
 
         # Location page methods ------------------------------------------
-        def _refresh_cities_list(self,data):
+        def _create_cities_list(self,data):
                 if len(self.location_rows)>0:
                         for action_row in self.location_rows:
                                 self.location_grp.remove(action_row)
@@ -191,7 +194,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 if s_city != loc_city:
                         selected_city = added_cities.index(loc_city) # Update selected_city
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
-                        self._refresh_cities_list(added_cities)
+                        self._create_cities_list(added_cities)
                         GLib.idle_add(self.parent.refresh_weather,self.parent,False)
                         self.add_toast(create_toast(_("Selected - {}".format(title)),1))
 
@@ -282,7 +285,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 if loc_city not in added_cities:
                     added_cities.append(loc_city)
                     settings.set_value("added-cities",GLib.Variant("as",added_cities))
-                    self._refresh_cities_list(added_cities)
+                    self._create_cities_list(added_cities)
                     self.parent.refresh_main_ui()
                     self._dialog.add_toast(create_toast(_("Added - {0}".format(title)),1))
                 else:
@@ -299,7 +302,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         selected_city = 0
                 settings.set_value("selected-city",GLib.Variant("i",selected_city))
                 settings.set_value("added-cities",GLib.Variant("as",added_cities))
-                self._refresh_cities_list(added_cities)
+                self._create_cities_list(added_cities)
                 if s_city == city:  # fetch weather only if selected_city was removed
                     self.parent.refresh_weather(self.parent)
                 else:
@@ -318,6 +321,14 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         measurement_type = get_measurement_type()
 
         # Misc page methods ----------------------------------
+        def _on_use_personal_api_key_toggled(self,widget,state,target):
+                if state==True:
+                        target.set_enable_expansion(True)
+                        settings.set_value("using-personal-api-key",GLib.Variant("b",True))
+                else:
+                        target.set_enable_expansion(False)
+                        settings.set_value("using-personal-api-key",GLib.Variant("b",False))
+
         def _save_api_key(self,widget,target):
                 settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
                 settings.set_value("using-personal-api-key",GLib.Variant("b",True))
