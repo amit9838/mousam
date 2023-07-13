@@ -18,7 +18,6 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     cities = [f"{x.split(',')[0]},{x.split(',')[1]}" for x in added_cities]
     settings.set_value("updated-at",GLib.Variant("s",str(datetime.now())))
     measurement_type = get_measurement_type()
-
     g_main_window = main_window
     use_gradient = settings.get_boolean('use-gradient-bg')
 
@@ -46,7 +45,7 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     info_box_main.append(icon_box_main)
 
     icon_main = Gtk.Image().new_from_icon_name(icons.get(data['weather'][0]['icon']))
-    icon_main.set_pixel_size(92)
+    icon_main.set_pixel_size(98)
     icon_box_main.append(icon_main)
     
     if use_gradient: 

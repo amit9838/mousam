@@ -1,11 +1,11 @@
 css = """
 .condition_label {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: bold;
         opacity:.8;
     }
 .temp_label {
-        font-size: 3.4rem;
+        font-size: 3.8rem;
         font-weight: bold;
     }
 
