@@ -7,7 +7,7 @@ from gi.repository import Gtk,Adw,Gio,GLib
 from .constants import API_KEY
 from .windowPreferences import WeatherPreferences
 from .windowAbout import AboutWindow
-from .uiCurrent_w import current_weather
+from .uiCurrent_w import current_weather,air_pollution
 from .uiForecast_w  import forecast_weather 
 from .utils import *
 
@@ -143,27 +143,28 @@ class WeatherWindow(Gtk.ApplicationWindow):
         latitude,longitude = get_selected_city_coords()
         w_data = fetch_weather(API_KEY,latitude,longitude)
         f_data = fetch_forecast(API_KEY,latitude,longitude)
-        
+        ap_data = air_pollution(API_KEY,latitude,longitude)
+
         if w_data is None and f_data is  None:
             self.main_stack.set_visible_child_name("error_box")
         else:
             self.main_stack.set_visible_child_name('main_grid')
             self.clear_main_ui_grid()
             f_data = f_data.get('list')
-            set_weather_data(w_data,f_data) # Save weather data as cache
-            self.plot_current(self.upper_row,w_data)
+            set_weather_data(w_data,ap_data,f_data) # Save weather data as cache
+            self.plot_current(self.upper_row,w_data,ap_data)
             self.plot_forecast(self.middle_row,f_data)
 
-    def plot_current(self,widget,w_data):
-        current_weather(self.main_window,widget,w_data)
+    def plot_current(self,widget,w_data,ap_data):
+        current_weather(self.main_window,widget,w_data,ap_data)
          
     def plot_forecast(self,widget,f_data):
         forecast_weather(widget,f_data)
 
     def refresh_main_ui(self):  # Repaint main UI with previously fetched data
         self.clear_main_ui_grid()
-        w_data, f_data = get_weather_data()
-        self.plot_current(self.upper_row,w_data)
+        w_data,ap_data, f_data = get_weather_data()
+        self.plot_current(self.upper_row,w_data,ap_data)
         self.plot_forecast(self.middle_row,f_data)
 
     def _on_about_clicked(self, widget, param):

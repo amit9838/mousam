@@ -4,14 +4,16 @@ from gi.repository import Adw,Gio
 from gettext import gettext as _
 
 current_weather_data = None
+air_pollution_data = None
 forecast_weather_data = None
 
 def get_weather_data():
-    return current_weather_data,forecast_weather_data
+    return current_weather_data,air_pollution_data,forecast_weather_data
 
-def set_weather_data(current,forecast):
-    global current_weather_data, forecast_weather_data
+def set_weather_data(current,air_pollution,forecast):
+    global current_weather_data, air_pollution_data,forecast_weather_data
     current_weather_data = current
+    air_pollution_data = air_pollution
     forecast_weather_data = forecast
 
 def check_internet_connection():

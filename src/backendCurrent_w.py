@@ -1,7 +1,6 @@
 import requests
 from .units import get_measurement_type
 
-
 def fetch_weather(api_key, latitude, longitude):
     measurement_type = get_measurement_type()
     base_url = "http://api.openweathermap.org/data/2.5/weather"
@@ -34,7 +33,6 @@ def fetch_weather(api_key, latitude, longitude):
 #         'timezone': 19800, 'id': 7279746, 'name': 'Noida', 'cod': 200}
 
 
-
 def fetch_city_info(api_key, city):
     base_url = "http://api.openweathermap.org/geo/1.0/direct"
     params = {
@@ -47,6 +45,26 @@ def fetch_city_info(api_key, city):
         response = requests.get(base_url, params=params)
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
         return response.json()
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+        return None
+
+
+
+def air_pollution(api_key, latitude, longitude):
+    base_url = "http://api.openweathermap.org/data/2.5/air_pollution"
+    params = {
+        "lat": latitude,
+        "lon": longitude,
+        "appid": api_key,
+    }
+
+    try:
+        response = requests.get(base_url, params=params)
+        response.raise_for_status()  # Raise an exception if request was unsuccessful
+        air_pollution_data = response.json()
+        return air_pollution_data
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")

@@ -12,6 +12,14 @@ else:
         API_KEY = settings.get_string('api-key')
         settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))  #Using Default api key
 
+air_quality_level = {
+    1:"Good",
+    2:"Fair",
+    3:"Moderate",
+    4:"Poor",
+    5:"Very Poor",
+}
+
 icons = {'01d':"weather-clear-symbolic",
          '02d':"weather-few-clouds-symbolic",
          '03d':"weather-few-clouds-symbolic",

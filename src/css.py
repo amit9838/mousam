@@ -84,10 +84,34 @@ css = """
 .grey_bg {
         background-color:rgba(100, 100, 100, 0.1);
     }
+.transparent {
+        background-color:rgba(100, 100, 100, 0);
+    }
 
 .btn_sm{
     font-size:.95rem;
     padding:0.05rem .9rem;
+}
+
+.btn_p0{
+    font-size:.9rem;
+    padding:0.05rem .1rem;
+}
+
+.image-button {
+    padding:0rem .1rem;
+    font-size:.9rem;
+}
+
+.arrow{
+    font-size:.7rem;
+}
+
+.border_top1{
+    border-top:1px solid grey;
+}
+.border_bottom1{
+    border-bottom:1px solid grey;
 }
 
 .main_window{

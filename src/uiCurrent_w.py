@@ -5,13 +5,13 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
 from gettext import gettext as _
 
-from .constants import icons,bg_css
+from .constants import icons,bg_css,air_quality_level
 from .units import  measurements,get_measurement_type
 from .utils import convert_to_local_time,wind_dir
+from .backendCurrent_w import air_pollution
 
-def current_weather(main_window,upper_row,data):
+def current_weather(main_window,upper_row,data,air_pollution_data):
     global g_main_window,selected_city,settings,added_cities,cities,use_gradient
-
     settings = Gio.Settings.new("io.github.amit9838.weather")
     selected_city = int(str(settings.get_value('selected-city')))
     added_cities = list(settings.get_value('added-cities'))
@@ -157,21 +157,29 @@ def current_weather(main_window,upper_row,data):
     weather_data.append([_("Pressure"), _("{0} hPa").format(data['main']['pressure'])])
     weather_data.append([_("Wind speed"), _("{0:.1f} {1} {2}").format(data['wind']['speed']*measurements[measurement_type]['speed_mul'],measurements[measurement_type]['speed_unit'],wind_dir(data['wind']['deg']))])
     weather_data.append([_("Visibility"), f"{data['visibility']*measurements[measurement_type]['dist_mul']:.1f} {measurements[measurement_type]['dist_unit']}"])
+    weather_data.append([_("Air Quality"), air_quality_level[air_pollution_data['list'][0]['main']['aqi']]])
 
     label_grid = Gtk.Grid()
     label_grid.set_row_spacing(2)
-    label_grid.set_column_spacing(10)
+    label_grid.set_column_spacing(2)
     label_grid.set_margin_start(10)
 
-    for i,disc in enumerate(weather_data):
-        key_label = Gtk.Label(label=disc[0])
-        disc_label = Gtk.Label(label = disc[1])
+    for i,desc in enumerate(weather_data):
+        key_label = Gtk.Label(label=desc[0])
+        key_label.set_margin_end(8)
+        desc_label = Gtk.Label(label = desc[1])
         key_label.set_halign(Gtk.Align.START)
-        disc_label.set_halign(Gtk.Align.START)
+        desc_label.set_halign(Gtk.Align.START)
         key_label.set_css_classes(['secondary'])
-        disc_label.set_css_classes(['bold','secondary-light'])
-        label_grid.attach(key_label,0,i,1,1)
-        label_grid.attach(disc_label,1,i,1,1)
+        desc_label.set_css_classes(['bold','secondary-light'])
+
+        if desc[0]==_('Air Quality'):
+            desc_box = _create_pollutents_popup(desc_label,air_pollution_data)
+            label_grid.attach(key_label,0,i,1,1)
+            label_grid.attach(desc_box,1,i,1,1)
+        else:
+            label_grid.attach(key_label,0,i,1,1)
+            label_grid.attach(desc_label,1,i,1,1)
 
     summary_text = ""
     if data.get('rain'):
@@ -234,3 +242,78 @@ def _on_switch_city(combo):
             selected_city = cities.index(city)
             settings.set_value("selected-city",GLib.Variant("i",selected_city))
             g_main_window.refresh_weather(g_main_window,ignore=False)
+
+
+def _create_pollutents_popup(desc_label,air_pollution_data):
+        desc_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        desc_box.append(desc_label)
+
+        gas_labels = [
+            'CO',
+            'NO',
+            'NO<sub>2</sub>',
+            'O<sub>3</sub>',
+            'SO<sub>2</sub>',
+            'PM<sub>2.5</sub>',
+            'PM<sub>10</sub>',
+            'NH<sub>3</sub>',
+        ]
+        popover = Gtk.Popover.new()
+        
+        popover_menu = Gtk.MenuButton()
+        popover_menu.set_popover(popover)
+        popover_menu.set_margin_start(6)
+        popover_menu.set_has_frame(False)
+
+        popover_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        popover_box.set_margin_top(10)
+        popover_box.set_margin_bottom(10)
+        popover_box.set_margin_start(10)
+        popover_box.set_margin_end(10)
+        popover.set_child(popover_box)
+
+        heading_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        heading_box.set_margin_bottom(10)
+        heading_box.set_hexpand(True)
+        heading_box.set_css_classes(['border_bottom1'])
+        air_pollution_val_list = list(air_pollution_data['list'][0]['components'].values())
+        pollution_heading = Gtk.Label(label="Air Pollutents",halign = Gtk.Align.START)
+        pollution_heading.set_css_classes(['f-lg'])
+        hint_url = 'https://www.who.int/teams/environment-climate-change-and-health/air-quality-and-health/health-impacts/types-of-pollutants'
+        pollution_hint = Gtk.LinkButton.new(hint_url)
+        pollution_hint.set_icon_name("dialog-question-symbolic")
+        pollution_hint.set_has_frame(False)
+
+        pollution_hint.set_margin_start(30)
+        pollution_hint.set_margin_bottom(2)
+
+        heading_box.append(pollution_heading)
+        heading_box.append(pollution_hint)
+        popover_box.append(heading_box)
+
+        popover_grid = Gtk.Grid()
+        popover_grid.set_row_spacing(2)
+        popover_grid.set_column_spacing(2)
+        popover_box.append(popover_grid)
+
+        for ind in range(len(gas_labels)):
+            gas_label = Gtk.Label(halign = Gtk.Align.START)
+            gas_label.set_css_classes(['secondary-light','f-mlg'])
+            gas_label.set_margin_end(50)
+            gas_label.props.use_markup = True
+            gas_label.set_markup(gas_labels[ind])
+            popover_grid.attach(gas_label,0,ind,1,1)
+            gas_label_desc = Gtk.Label(label=air_pollution_val_list[ind],halign = Gtk.Align.START)
+            gas_label_desc.set_css_classes(['secondary-light','f-mlg','bold'])
+            popover_grid.attach(gas_label_desc,1,ind,1,1)
+
+        pollution_note = Gtk.Label(halign = Gtk.Align.START)
+        pollution_note.set_margin_top(5)
+        pollution_note.props.wrap = True
+        pollution_note.props.use_markup = True
+        pollution_note.set_css_classes(['secondary','f-msm'])
+        pollution_note.set_markup('Concentration units in μg/m<sup>3</sup>')
+        popover_box.append(pollution_note)
+
+        desc_box.append(popover_menu)
+        return desc_box
