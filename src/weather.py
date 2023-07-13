@@ -44,7 +44,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
-        self.main_stack.add_child(self.main_grid)
+        self.main_stack.add_named(self.main_grid,'main_grid')
         
         self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
         self.upper_row.set_hexpand(True)
@@ -60,8 +60,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class='flat')
         self.set_titlebar(self.header)
-        self.refresh_button = Gtk.Button(label="refresh")
-        self.refresh_button.set_icon_name("view-refresh-symbolic")
+        self.refresh_button = Gtk.Button.new_from_icon_name("view-refresh-symbolic")
         self.refresh_button.set_tooltip_text(_("Refresh"))
         self.refresh_button.connect('clicked',self.refresh_weather)
         self.header.pack_start(self.refresh_button)
@@ -97,8 +96,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         self.error_label.set_label("Failed to load Weather Data")
         self.error_label.set_css_classes(['error_label'])
 
-        icon = Gtk.Image()
-        icon.set_from_icon_name("network-error-symbolic") 
+        icon = Gtk.Image.new_from_icon_name("network-error-symbolic")
         icon.set_pixel_size(36)
         icon.set_margin_end(10)
 
@@ -136,14 +134,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         date_time = datetime.now()
         updated_at = str(date_time)
         settings.set_value("updated-at",GLib.Variant("s",updated_at))
-        upper_child = self.upper_row.get_first_child()
-        if upper_child is not None:
-            self.upper_row.remove(upper_child)
-            
-        middle_child = self.middle_row.get_first_child()
-        if middle_child is not None:
-            self.middle_row.remove(middle_child)
-
+        self.clear_main_ui_grid()
         self.fetch_weather_data()
         if ignore:
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
@@ -156,13 +147,8 @@ class WeatherWindow(Gtk.ApplicationWindow):
         if w_data is None and f_data is  None:
             self.main_stack.set_visible_child_name("error_box")
         else:
-            print("Plot data...")
-            self.main_stack.set_visible_child(self.main_grid)
-            upper_child = self.upper_row.get_first_child()
-            middle_child = self.middle_row.get_first_child()
-            if upper_child is not None and middle_child is not None:
-                self.upper_row.remove(upper_child)
-                self.middle_row.remove(middle_child)
+            self.main_stack.set_visible_child_name('main_grid')
+            self.clear_main_ui_grid()
             f_data = f_data.get('list')
             set_weather_data(w_data,f_data) # Save weather data as cache
             self.plot_current(self.upper_row,w_data)
@@ -175,11 +161,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         forecast_weather(widget,f_data)
 
     def refresh_main_ui(self):  # Repaint main UI with previously fetched data
-        upper_child = self.upper_row.get_first_child()
-        middle_child = self.middle_row.get_first_child()
-        if upper_child is not None and middle_child is not None:  # Remove UI items from upper and middle row if any
-            self.upper_row.remove(upper_child)
-            self.middle_row.remove(middle_child)
+        self.clear_main_ui_grid()
         w_data, f_data = get_weather_data()
         self.plot_current(self.upper_row,w_data)
         self.plot_forecast(self.middle_row,f_data)
@@ -190,3 +172,10 @@ class WeatherWindow(Gtk.ApplicationWindow):
     def _on_preferences_clicked(self, widget, param):
         adw_preferences_window = WeatherPreferences(application)
         adw_preferences_window.show()
+
+    def clear_main_ui_grid(self):
+            upper_child = self.upper_row.get_first_child()
+            middle_child = self.middle_row.get_first_child()
+            if upper_child is not None and middle_child is not None:
+                self.upper_row.remove(upper_child)
+                self.middle_row.remove(middle_child)

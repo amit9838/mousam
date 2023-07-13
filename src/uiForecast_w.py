@@ -141,8 +141,7 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_item.append(forecast_content)
             forecast_box.append(forecast_item)
 
-            forecast_icon = Gtk.Image()
-            forecast_icon.set_from_icon_name(icons.get(data['weather'][0]['icon']))
+            forecast_icon = Gtk.Image.new_from_icon_name(icons.get(data['weather'][0]['icon']))
             forecast_icon.set_margin_bottom(10)
 
             if page_name == 'five_d':
@@ -191,8 +190,7 @@ def plot_forecast_data(stack,f_data,page_name):
                 grid.set_margin_top(5)
 
             prec_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-            rain_icon = Gtk.Image()
-            rain_icon.set_from_icon_name("weather-showers-scattered-symbolic")
+            rain_icon = Gtk.Image.new_from_icon_name("weather-showers-scattered-symbolic")
             rain_icon.set_pixel_size(16)
             rain_icon.set_margin_end(5)
             prec_box.append(rain_icon)
@@ -204,8 +202,7 @@ def plot_forecast_data(stack,f_data,page_name):
             grid.attach(prec_box, 0, 0, 1, 1)
 
             wind_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-            wind_icon = Gtk.Image()
-            wind_icon.set_from_icon_name("weather-windy-symbolic")
+            wind_icon = Gtk.Image.new_from_icon_name("weather-windy-symbolic")
             wind_icon.set_pixel_size(16)
             wind_icon.set_css_classes(['secondary'])
             wind_icon.set_margin_end(5)

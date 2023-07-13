@@ -45,8 +45,7 @@ def current_weather(main_window,upper_row,data):
     icon_box_main.set_size_request(92, 92)
     info_box_main.append(icon_box_main)
 
-    icon_main = Gtk.Image()
-    icon_main.set_from_icon_name(icons.get(data['weather'][0]['icon']))  # Set the icon name and size
+    icon_main = Gtk.Image().new_from_icon_name(icons.get(data['weather'][0]['icon']))
     icon_main.set_pixel_size(92)
     icon_box_main.append(icon_main)
     
@@ -136,8 +135,7 @@ def current_weather(main_window,upper_row,data):
     sunrise_label.set_margin_end(20)
     sunrise_label.set_css_classes(['secondary','f-sm'])
 
-    sunrise_icon = Gtk.Image()
-    sunrise_icon.set_from_icon_name('daytime-sunrise-symbolic')  # Set the icon name and size
+    sunrise_icon = Gtk.Image.new_from_icon_name('daytime-sunrise-symbolic')
     sunrise_icon.set_css_classes(['secondary-light'])
     sunrise_icon.set_pixel_size(12)
     sunrise_icon.set_margin_end(6)
@@ -145,9 +143,8 @@ def current_weather(main_window,upper_row,data):
     sunset_time_minute = sunset_time.minute if len(str(sunset_time.minute))==2 else str(sunset_time.minute)+"0"
     sunset_label = Gtk.Label(label= f"{sunset_time.hour-12}:{sunset_time_minute} PM")
     sunset_label.set_css_classes(['secondary','f-sm'])
-    sunset_icon = Gtk.Image()
+    sunset_icon = Gtk.Image.new_from_icon_name('daytime-sunset-symbolic')
     sunset_icon.set_css_classes(['secondary-light'])
-    sunset_icon.set_from_icon_name('daytime-sunset-symbolic')  # Set the icon name and size
     sunset_icon.set_pixel_size(12)
     sunset_icon.set_margin_end(5)
 
