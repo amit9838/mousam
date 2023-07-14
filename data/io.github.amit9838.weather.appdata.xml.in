@@ -44,6 +44,18 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="0.6.0" date="2023-07-14">
+      <description>
+        <ul>
+            <li>Adds air-pollution info</li>
+            <li>Adds Snowfall summary</li>
+            <li>Adds forecast text in 5-day forecast</li>
+            <li>Follow system font scaling</li>
+            <li>UI Improvements</li>
+            <li>Various bug fixes</li>
+        </ul>
+      </description>
+      </release>
       <release version="0.5.0" date="2023-07-05">
       <description>
         <ul>
