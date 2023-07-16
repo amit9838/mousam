@@ -37,7 +37,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('selected-city')
 
         self.toast_overlay = Adw.ToastOverlay.new()
-        self.clamp = Adw.Clamp(maximum_size=1000, tightening_threshold=900)
+        self.clamp = Adw.Clamp(maximum_size=1000, tightening_threshold=600)
         self.set_child(self.toast_overlay)
         self.toast_overlay.set_child(self.clamp)
 
