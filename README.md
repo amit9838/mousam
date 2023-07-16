@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/amit9838/weather/blob/master/data/icons/hicolor/scalable/apps/io.github.amit9838.weather.png?raw=true" width="80">
+<img src="https://github.com/amit9838/weather/blob/master/data/icons/hicolor/scalable/apps/io.github.amit9838.weather.svg?raw=true" width="80">
 <h1>Weather</h1>
 <p>Beautiful lightweight weather app.</p>
 <img src="https://img.shields.io/github/v/release/amit9838/weather?style=flat&label=Latest+Release&color=%234a92ff">
