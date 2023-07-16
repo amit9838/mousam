@@ -37,21 +37,23 @@ class WeatherWindow(Gtk.ApplicationWindow):
             settings.reset('selected-city')
 
         self.toast_overlay = Adw.ToastOverlay.new()
+        self.clamp = Adw.Clamp(maximum_size=1000, tightening_threshold=900)
         self.set_child(self.toast_overlay)
+        self.toast_overlay.set_child(self.clamp)
 
         self.main_stack = Gtk.Stack.new()
-        self.toast_overlay.set_child(self.main_stack)
+        self.clamp.set_child(self.main_stack)
 
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
         self.main_stack.add_named(self.main_grid,'main_grid')
         
-        self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
+        self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER, vexpand=True, halign=Gtk.Align.FILL)
         self.upper_row.set_hexpand(True)
         self.upper_row.set_size_request(800,160)
         self.main_grid.attach(self.upper_row,0,0,1,1)
 
-        self.middle_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER)
+        self.middle_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER, vexpand=True, halign=Gtk.Align.FILL)
         self.middle_row.set_hexpand(True)
         self.middle_row.set_size_request(800,200)
         self.main_grid.attach(self.middle_row,0,1,1,1)
