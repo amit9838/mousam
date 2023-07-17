@@ -12,14 +12,14 @@ from .backendForecast_w import fetch_forecast, extract_forecast_data
 
 def forecast_weather(middle_row,f_data):
 
-        forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,halign = Gtk.Align.CENTER)
+        forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,halign = Gtk.Align.FILL, margin_start=10, margin_end=10)
         forecast_container.set_size_request(800,230)
         middle_row.append(forecast_container)
 
         forecast_stack = Gtk.Stack.new()
         forecast_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
 
-        style_buttons_box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        style_buttons_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.START)
         style_buttons_box.add_css_class('linked')
         style_buttons_box.set_margin_start(2)
         style_buttons_box.set_valign(Gtk.Align.CENTER)
@@ -82,19 +82,18 @@ def fetch_and_plot(stack,latitude,longitude,days=1,d_type='tomorrow'):
 def plot_forecast_data(stack,f_data,page_name):
         measurement_type = get_measurement_type()
         
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER) 
+        scrolled_window = Gtk.ScrolledWindow(hexpand=True, halign=Gtk.Align.FILL)
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
         scrolled_window.set_min_content_height(190)
         scrolled_window.set_margin_bottom(8)
         scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
-        scrolled_window.set_halign(Gtk.Align.CENTER)
         scrolled_window.set_size_request(800,190)
 
         stack.add_named(scrolled_window,page_name)
         stack.set_visible_child_name(page_name)
 
-        forecast_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        forecast_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=True)
         forecast_box.set_css_classes(['forecast_box'])
         scrolled_window.set_child(forecast_box)
 

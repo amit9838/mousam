@@ -22,15 +22,13 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     use_gradient = settings.get_boolean('use-gradient-bg')
 
     # Add a grid in upper row to place left and right section
-    condition_grid = Gtk.Grid()
+    condition_grid = Gtk.Grid(hexpand=True, halign=Gtk.Align.FILL)
     condition_grid.set_row_spacing(10)
     condition_grid.set_column_spacing(10)
-    condition_grid.set_halign(Gtk.Align.CENTER)
     condition_grid.set_margin_top(10)
-    condition_grid.set_hexpand(True)
     upper_row.append(condition_grid)
 
-    left_section = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+    left_section = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=True, margin_start=20)
     left_section.set_size_request(500,100)
     condition_grid.attach(left_section, 0, 1, 1, 1)
 
@@ -102,7 +100,7 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     sun_grid.set_margin_top(5)
     cond_box.append(sun_grid)
 
-    right_section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    right_section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True, halign=Gtk.Align.FILL)
     right_section.set_size_request(300,100)
 
     right_section.set_css_classes(['right_section'])
