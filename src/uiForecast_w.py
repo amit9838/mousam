@@ -2,7 +2,7 @@ import gi
 from datetime import datetime, timedelta
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk,GLib
+from gi.repository import Gtk,GLib,Gio
 from gettext import gettext as _
 
 from .constants import icons,API_KEY
@@ -104,9 +104,9 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
             forecast_content.set_halign(Gtk.Align.CENTER)
             if page_name == 'five_d':
-                forecast_item.set_size_request(156,200)
+                forecast_item.set_size_request(180,200)
             else:
-                forecast_item.set_size_request(110,160)
+                forecast_item.set_size_request(130,160)
 
             forecast_item.set_css_classes(['f_box'])
             forecast_content.set_css_classes(['f_box_t'])
@@ -139,8 +139,10 @@ def plot_forecast_data(stack,f_data,page_name):
             forecast_content.append(forecast_time)
             forecast_item.append(forecast_content)
             forecast_box.append(forecast_item)
-
-            forecast_icon = Gtk.Image.new_from_icon_name(icons.get(data['weather'][0]['icon']))
+            
+            forecast_icon = Gio.Icon.new_for_string(icons.get(data['weather'][0]['icon']))
+            forecast_icon = Gtk.Image.new_from_gicon(forecast_icon)
+            # forecast_icon = Gtk.Image.new_from_icon_name(icons.get(data['weather'][0]['icon']))
             forecast_icon.set_margin_bottom(10)
 
             if page_name == 'five_d':
@@ -155,7 +157,7 @@ def plot_forecast_data(stack,f_data,page_name):
                 grid.set_margin_top(8)
                 forecast_content.append(grid)
 
-                forecast_icon.set_pixel_size(42)
+                forecast_icon.set_pixel_size(86)
                 temp_icon_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
                 temp_icon_box.set_halign(Gtk.Align.CENTER)
 
@@ -176,7 +178,7 @@ def plot_forecast_data(stack,f_data,page_name):
 
             else:
                 forecast_icon.set_margin_top(15)
-                forecast_icon.set_pixel_size(36)
+                forecast_icon.set_pixel_size(70)
                 forecast_content.append(forecast_icon)
 
             grid = Gtk.Grid()

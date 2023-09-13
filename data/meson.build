@@ -25,8 +25,9 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
+
 install_data('io.github.amit9838.weather.gschema.xml',
-  install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
+  install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas'),
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
