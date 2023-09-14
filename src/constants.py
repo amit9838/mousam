@@ -23,22 +23,22 @@ air_quality_level = {
 icon_loc = '/app/share/icons/hicolor/scalable/weather_icons/'
 
 icons = {'01d':icon_loc+"clear-day.svg",
-         '02d':icon_loc+"partly-cloudy-day.svg",
+         '02d':icon_loc+"overcast-day.svg",
          '03d':icon_loc+"cloudy.svg",
-         '04d':icon_loc+"cloudy.svg",
+         '04d':icon_loc+"overcast.svg",
          '09d':icon_loc+"partly-cloudy-day-rain.svg",
-         '10d':icon_loc+"partly-cloudy-day-rain.svg",
-         '11d':icon_loc+"thunderstorms-day-rain.svg",
+         '10d':icon_loc+"rain.svg",
+         '11d':icon_loc+"thunderstorms-overcast-rain.svg",
          '50d':icon_loc+"fog.svg",
          '13d':icon_loc+"snowflake.svg",
-        
+
          '01n':icon_loc+"clear-night.svg",
-         '02n':icon_loc+"partly-cloudy-night.svg",
+         '02n':icon_loc+"overcast-night.svg",
          '03n':icon_loc+"cloudy.svg",
-         '04n':icon_loc+"cloudy.svg",
-         '09n':icon_loc+"partly-cloudy-night-rain.svg",
-         '10n':icon_loc+"partly-cloudy-night-rain.svg",
-         '11n':icon_loc+"thunderstorms-night-rain.svg",
+         '04n':icon_loc+"overcast.svg",
+         '09n':icon_loc+"overcast-night-rain.svg",
+         '10n':icon_loc+"rain.svg",
+         '11n':icon_loc+"thunderstorms-overcast-rain.svg",
          '50n':icon_loc+"fog.svg",
          '13n':icon_loc+"snowflake.svg",
          }
