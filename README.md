@@ -26,7 +26,7 @@
 flatpak install flathub io.github.amit9838.weather
 ```
 
-### Snap (Unofficial):
+### **Snap:**
 
 <a href='https://snapcraft.io/mousam'><img width='240' alt='Download on SnapCraft' src='https://github.com/snapcore/snap-store-badges/blob/master/EN/%5BEN%5D-snap-store-black-uneditable.png?raw=true'/></a>
 
