@@ -208,7 +208,7 @@ msgid "Use Dynamic Background"
 msgstr "Usar fondo dinamico"
 
 #: src/windows.py:83
-msgid "Background changes based on current weather conditions (Reastart required)"
+msgid "Background changes based on current weather conditions (Restart required)"
 msgstr "El fondo cambia en base a la condicion actual del clima (Requiere reinicio)"
 
 #: src/windows.py:98

@@ -63,7 +63,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
                 gradient_row.set_title(_("Dynamic Background"))
-                gradient_row.set_subtitle(_("Background changes based on current weather condition (Reastart required)"))
+                gradient_row.set_subtitle(_("Background changes based on current weather condition (Restart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 self.gradient_switch = Gtk.Switch()

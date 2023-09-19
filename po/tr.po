@@ -142,7 +142,7 @@ msgid "Use Dynamic Background"
 msgstr "Dinamik Arka Plan Kullan"
 
 #: src/windows.py:52
-msgid "Background Changes based on weather conditions (Reastart required)"
+msgid "Background Changes based on weather conditions (Restart required)"
 msgstr ""
 "Hava koşullarına bağlı olarak Arka Plan Değişiklikleri (Yeniden başlatma "
 "gerekir"
