@@ -3,7 +3,6 @@ from datetime import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
-from gettext import gettext as _
 
 from .constants import icons,bg_css,air_quality_level
 from .units import  measurements,get_measurement_type
