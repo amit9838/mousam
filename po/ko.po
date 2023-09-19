@@ -1,0 +1,333 @@
+# Korean translation for Weather.
+# Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the the io.github.amit9838.weather package.
+# 동헌희<hunhee@kakao.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-19 16:45+0900\n"
+"PO-Revision-Date: 2023-09-19 17:00+0900\n"
+"Last-Translator: 동헌희 <hunhee@kakao.com>\n"
+"Language-Team: \n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: ../src/uiCurrent_w.py:75
+msgid "Feels like {0:.1f}{1}"
+msgstr "체감온도 {0:.1f}{1}"
+
+#: ../src/uiCurrent_w.py:153
+msgid "Humidity"
+msgstr "습도"
+
+#: ../src/uiCurrent_w.py:153 ../src/uiForecast_w.py:198
+#, python-brace-format
+msgid "{0}%"
+msgstr "{0}%"
+
+#: ../src/uiCurrent_w.py:154
+msgid "Pressure"
+msgstr "압력"
+
+#: ../src/uiCurrent_w.py:154
+#, python-brace-format
+msgid "{0} hPa"
+msgstr "{0} hPa"
+
+#: ../src/uiCurrent_w.py:155
+msgid "Wind speed"
+msgstr "풍속"
+
+#: ../src/uiCurrent_w.py:155
+#, python-brace-format
+msgid "{0:.1f} {1} {2}"
+msgstr "{0:.1f} {1} {2}"
+
+#: ../src/uiCurrent_w.py:156
+msgid "Visibility"
+msgstr "가시거리"
+
+#: ../src/uiCurrent_w.py:157 ../src/uiCurrent_w.py:173
+msgid "Air Quality"
+msgstr "공기질"
+
+#: ../src/uiCurrent_w.py:184
+msgid "rain in next 1 hour"
+msgstr "1시간 이내 비"
+
+#: ../src/uiCurrent_w.py:188
+msgid "snow in next 1 hour"
+msgstr "1시간 이내 눈"
+
+#: ../src/uiCurrent_w.py:195
+msgid "No snow for atleast 1 hour"
+msgstr "1시간 이내 눈 없음"
+
+#: ../src/uiCurrent_w.py:197
+msgid "No rain/snow for atleast 1 hour"
+msgstr "1시간 이내 비나 눈 없음"
+
+#: ../src/uiCurrent_w.py:199
+msgid "No rain for atleast 1 hour"
+msgstr "1시간 이내 비 없음"
+
+#: ../src/uiForecast_w.py:27 ../src/uiForecast_w.py:123
+msgid "Today"
+msgstr "오늘"
+
+#: ../src/uiForecast_w.py:32 ../src/uiForecast_w.py:125
+msgid "Tomorrow"
+msgstr "내일"
+
+#: ../src/uiForecast_w.py:37
+msgid "5 Days"
+msgstr "5일"
+
+#: ../src/uiForecast_w.py:128
+msgid "AM"
+msgstr "오전"
+
+#: ../src/uiForecast_w.py:131
+msgid "PM"
+msgstr "오후"
+
+#: ../src/uiForecast_w.py:210
+#, python-brace-format
+msgid "{0:.1f} {1}"
+msgstr "{0:.1f} {1}"
+
+#: ../src/uiForecast_w.py:215
+#, python-brace-format
+msgid "{0:.0f}°"
+msgstr "{0:.0f}°"
+
+#: ../src/utils.py:31
+msgid "Request timeout!"
+msgstr "요청시간 초과!"
+
+#: ../src/utils.py:35
+msgid "No internet connection!"
+msgstr "인터넷 연결 없음!"
+
+#: ../src/utils.py:58
+msgid "N"
+msgstr "북"
+
+#: ../src/utils.py:58
+msgid "NNE"
+msgstr "북북동"
+
+#: ../src/utils.py:58
+msgid "NE"
+msgstr "북동"
+
+#: ../src/utils.py:58
+msgid "ENE"
+msgstr "동북동"
+
+#: ../src/utils.py:58
+msgid "E"
+msgstr "동"
+
+#: ../src/utils.py:58
+msgid "ESE"
+msgstr "동남동"
+
+#: ../src/utils.py:58
+msgid "SE"
+msgstr "남동"
+
+#: ../src/utils.py:58
+msgid "SSE"
+msgstr "남남동"
+
+#: ../src/utils.py:59
+msgid "S"
+msgstr "남"
+
+#: ../src/utils.py:59
+msgid "SSW"
+msgstr "남남서"
+
+#: ../src/utils.py:59
+msgid "SW"
+msgstr "남서"
+
+#: ../src/utils.py:59
+msgid "WSW"
+msgstr "서남서"
+
+#: ../src/utils.py:59
+msgid "W"
+msgstr "서"
+
+#: ../src/utils.py:59
+msgid "WNW"
+msgstr "서북서"
+
+#: ../src/utils.py:59
+msgid "NW"
+msgstr "북서"
+
+#: ../src/utils.py:59
+msgid "NNW"
+msgstr "북북서"
+
+#: ../src/weather.py:66
+msgid "Refresh"
+msgstr "새로고침"
+
+#: ../src/weather.py:85
+msgid "Preferences"
+msgstr "설정"
+
+#: ../src/weather.py:91
+msgid "About Weather"
+msgstr "날씨에 대해"
+
+#: ../src/weather.py:123
+msgid "No internet!"
+msgstr "인터넷 연결 없음!"
+
+#: ../src/weather.py:133
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "5초 이내 새로고침 무시!"
+
+#: ../src/weather.py:142
+msgid "Refreshing..."
+msgstr "새로고침 중…"
+
+#: ../src/windowAbout.py:8
+msgid "Weather"
+msgstr "날씨"
+
+#: ../src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and python"
+msgstr "Gtk와 python으로 만들어진 아름답고 가벼운 날씨 앱"
+
+#: ../src/windowAbout.py:17
+msgid "Copyright © 2023 Weather Developers"
+msgstr "Copyright © 2023 Weather Developers"
+
+#: ../src/windowAbout.py:20
+msgid "translator_credits"
+msgstr ""
+
+#: ../src/windowPreferences.py:32 ../src/windowPreferences.py:37
+msgid "Locations"
+msgstr "위치"
+
+#: ../src/windowPreferences.py:42
+msgid "Add"
+msgstr "추가"
+
+#: ../src/windowPreferences.py:57
+msgid "Appearance"
+msgstr "모양"
+
+#: ../src/windowPreferences.py:66
+msgid "Dynamic Background"
+msgstr "동적 배경"
+
+#: ../src/windowPreferences.py:67
+msgid "Background changes based on current weather condition (Restart required)"
+msgstr "배경이 현재 날씨에 따라 바뀝니다 (재시작 팔요)"
+
+#: ../src/windowPreferences.py:79
+msgid "Units &amp; Measurements"
+msgstr "단위"
+
+#: ../src/windowPreferences.py:83
+msgid "°C"
+msgstr "°C"
+
+#: ../src/windowPreferences.py:84
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr "섭씨, km/h, 킬로미터 단위를 사용하는 미터법"
+
+#: ../src/windowPreferences.py:92
+msgid "°F"
+msgstr "°F"
+
+#: ../src/windowPreferences.py:93
+msgid "IMPERIAL system with units like fahrenheit, mph, mile"
+msgstr "화씨, mph, 마일 단위를 사용하는 야드파운드법"
+
+#: ../src/windowPreferences.py:104
+msgid "Misc"
+msgstr "기타"
+
+#: ../src/windowPreferences.py:116
+msgid "Personal API Key"
+msgstr "개인 API 키"
+
+#: ../src/windowPreferences.py:117
+msgid "Use your personal api key from openweathermap.org (Restart Required)"
+msgstr "openweathermap.org의 개인 API 키를 사용 (재시작 필요)"
+
+#: ../src/windowPreferences.py:124
+msgid "API Key"
+msgstr "API 키"
+
+#: ../src/windowPreferences.py:133
+msgid "Save"
+msgstr "저장"
+
+#: ../src/windowPreferences.py:138
+msgid "Enter your api-key"
+msgstr "api 키 입력"
+
+#: ../src/windowPreferences.py:142
+msgid "Active"
+msgstr "활성"
+
+#: ../src/windowPreferences.py:147
+msgid "Invalid Key"
+msgstr "유효하지 않은 키"
+
+#: ../src/windowPreferences.py:167
+msgid "Remove location"
+msgstr "위치 제거"
+
+#: ../src/windowPreferences.py:199
+msgid "Selected - {}"
+msgstr "{} 선택"
+
+#: ../src/windowPreferences.py:204
+msgid "Add New Location"
+msgstr "새로운 위치 추가"
+
+#: ../src/windowPreferences.py:222
+msgid "Search for a city"
+msgstr "도시 검색"
+
+#: ../src/windowPreferences.py:227 ../src/windowPreferences.py:229
+msgid "Search"
+msgstr "검색"
+
+#: ../src/windowPreferences.py:274
+msgid "No results found !"
+msgstr "결과가 없습니다!"
+
+#: ../src/windowPreferences.py:288
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "{0}추가"
+
+#: ../src/windowPreferences.py:290
+msgid "City already added!"
+msgstr "도시가 이미 추가되어있습니다!"
+
+#: ../src/windowPreferences.py:308
+#, python-brace-format
+msgid "Removed - {0}"
+msgstr "{0} 제거"
+
+#: ../src/windowPreferences.py:333
+msgid "Saved Successfully"
+msgstr "저장 성공"
