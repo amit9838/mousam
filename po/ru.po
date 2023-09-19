@@ -274,8 +274,8 @@ msgstr "Ничего не найдено!"
 
 #: src/ui_current_w.py:80
 #, python-brace-format
-msgid "Feels like {0:.1f}°C"
-msgstr "Ощущается как {0:.1f}°C"
+msgid "Feels like {0:.1f}{1}"
+msgstr "Ощущается как {0:.1f}{1}"
 
 #: src/ui_current_w.py:124
 msgid "km"

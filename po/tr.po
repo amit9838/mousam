@@ -175,8 +175,8 @@ msgstr "Ara"
 #. Note: Do not translate strings in the { } brackets
 #: src/ui_current_w.py:88
 #, python-brace-format
-msgid "Feels like {0:.0f}°C"
-msgstr "Hissedilen: {0:.0f}°C"
+msgid "Feels like {0:.1f}{1}"
+msgstr "Hissedilen: {0:.1f}{1}"
 
 #: src/ui_current_w.py:134
 msgid "km"
