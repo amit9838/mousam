@@ -195,7 +195,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self._create_cities_list(added_cities)
                         GLib.idle_add(self.parent.refresh_weather,self.parent,False)
-                        self.add_toast(create_toast(_("Selected - {}".format(title)),1))
+                        self.add_toast(create_toast(_("Selected - {}").format(title),1))
 
         def _add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
@@ -284,7 +284,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                     settings.set_value("added-cities",GLib.Variant("as",added_cities))
                     self._create_cities_list(added_cities)
                     self.parent.refresh_main_ui()
-                    self._dialog.add_toast(create_toast(_("Added - {0}".format(title)),1))
+                    self._dialog.add_toast(create_toast(_("Added - {0}").format(title),1))
                 else:
                     self._dialog.add_toast(create_toast(_("City already added!"),1))
 
