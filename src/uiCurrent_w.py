@@ -3,7 +3,6 @@ from datetime import datetime
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gio,GLib
-from gettext import gettext as _
 
 from .constants import icons,bg_css,air_quality_level
 from .units import  measurements,get_measurement_type
@@ -76,7 +75,7 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     temp_label.set_css_classes(['temp_label'])
     temp_box_l.append(temp_label)
 
-    feels_like_label = Gtk.Label(label=_(f"Feels like {data['main']['feels_like']:.1f}{measurements[measurement_type]['temp_unit']}"))
+    feels_like_label = Gtk.Label(label=_("Feels like {0:.1f}{1}").format(data['main']['feels_like'], measurements[measurement_type]['temp_unit']))
     feels_like_label.set_halign(Gtk.Align.START)
     feels_like_label.set_margin_start(5)
     feels_like_label.set_css_classes(['secondary-light','f-mlg'])

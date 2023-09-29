@@ -208,7 +208,7 @@ msgid "Use Dynamic Background"
 msgstr "Использовать динамический фон"
 
 #: src/windows.py:83
-msgid "Background changes based on current weather conditions (Reastart required)"
+msgid "Background changes based on current weather conditions (Restart required)"
 msgstr "Изменение фона в зависимости от погодных условий (требуется перезапуск)"
 
 #: src/windows.py:98
@@ -274,8 +274,8 @@ msgstr "Ничего не найдено!"
 
 #: src/ui_current_w.py:80
 #, python-brace-format
-msgid "Feels like {0:.1f}°C"
-msgstr "Ощущается как {0:.1f}°C"
+msgid "Feels like {0:.1f}{1}"
+msgstr "Ощущается как {0:.1f}{1}"
 
 #: src/ui_current_w.py:124
 msgid "km"

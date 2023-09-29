@@ -2,7 +2,6 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
-from gettext import gettext as _
 
 from .constants import API_KEY,COUNTRY_CODES
 from .units import get_measurement_type
@@ -64,7 +63,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 gradient_row =  Adw.ActionRow.new()
                 gradient_row.set_activatable(True)
                 gradient_row.set_title(_("Dynamic Background"))
-                gradient_row.set_subtitle(_("Background changes based on current weather condition (Reastart required)"))
+                gradient_row.set_subtitle(_("Background changes based on current weather condition (Restart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 self.gradient_switch = Gtk.Switch()
@@ -196,7 +195,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                         settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self._create_cities_list(added_cities)
                         GLib.idle_add(self.parent.refresh_weather,self.parent,False)
-                        self.add_toast(create_toast(_("Selected - {}".format(title)),1))
+                        self.add_toast(create_toast(_("Selected - {}").format(title),1))
 
         def _add_location_dialog(self,parent):
                 self._dialog = Adw.PreferencesWindow()
@@ -285,7 +284,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                     settings.set_value("added-cities",GLib.Variant("as",added_cities))
                     self._create_cities_list(added_cities)
                     self.parent.refresh_main_ui()
-                    self._dialog.add_toast(create_toast(_("Added - {0}".format(title)),1))
+                    self._dialog.add_toast(create_toast(_("Added - {0}").format(title),1))
                 else:
                     self._dialog.add_toast(create_toast(_("City already added!"),1))
 
