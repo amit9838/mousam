@@ -1,0 +1,459 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-09 12:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.amit9838.weather.desktop.in:3
+#: data/io.github.amit9838.weather.appdata.xml.in:6 src/weather.py:31
+#: src/weather.py:116 src/windowAbout.py:8
+msgid "Weather"
+msgstr ""
+
+#: data/io.github.amit9838.weather.desktop.in:5
+#: data/io.github.amit9838.weather.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:10
+msgid "Features:"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:12
+msgid ""
+"See weather with dynamically changing gradient-based background according "
+"current weather conditions"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:13
+msgid "See today, tomorrow and 5-day forcasts"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:14
+msgid "See conditions in metric or imperial systems"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:15
+msgid "Option to use Personal API Key"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:21
+msgid "Overcast day"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:25
+msgid "Haze night"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:29
+msgid "Clear sky night"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:33
+msgid "Dark mode"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:37
+msgid "Light mode"
+msgstr ""
+
+#: data/io.github.amit9838.weather.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:7
+#: data/io.github.amit9838.weather.gschema.xml:8
+msgid "Default api"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:12
+msgid "personal api"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:16
+msgid "Use personal api Key"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:17
+msgid "Set whether to use personal api key"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:21
+msgid "Is personal api key valid"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:22
+msgid "True if personal api key is being used is valid."
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:27
+msgid "List of cities and their coordinates."
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:28
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:32
+msgid "Selected city"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:33
+msgid "Selected city name"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:37
+msgid "Use Gradient Background"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:38
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:42
+msgid "Last Updated"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:43
+msgid "last updated time"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:47
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr ""
+
+#: data/io.github.amit9838.weather.gschema.xml:48
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr ""
+
+#: src/uiCurrent_w.py:74
+#, python-brace-format
+msgid "Feels like {0:.1f}{1}"
+msgstr ""
+
+#: src/uiCurrent_w.py:152
+msgid "Humidity"
+msgstr ""
+
+#: src/uiCurrent_w.py:152 src/uiForecast_w.py:197
+#, python-brace-format
+msgid "{0}%"
+msgstr ""
+
+#: src/uiCurrent_w.py:153
+msgid "Pressure"
+msgstr ""
+
+#: src/uiCurrent_w.py:153
+#, python-brace-format
+msgid "{0} hPa"
+msgstr ""
+
+#: src/uiCurrent_w.py:154
+msgid "Wind speed"
+msgstr ""
+
+#: src/uiCurrent_w.py:154
+#, python-brace-format
+msgid "{0:.1f} {1} {2}"
+msgstr ""
+
+#: src/uiCurrent_w.py:155
+msgid "Visibility"
+msgstr ""
+
+#: src/uiCurrent_w.py:156 src/uiCurrent_w.py:172
+msgid "Air Quality"
+msgstr ""
+
+#: src/uiCurrent_w.py:183
+msgid "rain in next 1 hour"
+msgstr ""
+
+#: src/uiCurrent_w.py:187
+msgid "snow in next 1 hour"
+msgstr ""
+
+#: src/uiCurrent_w.py:194
+msgid "No snow for atleast 1 hour"
+msgstr ""
+
+#: src/uiCurrent_w.py:196
+msgid "No rain/snow for atleast 1 hour"
+msgstr ""
+
+#: src/uiCurrent_w.py:198
+msgid "No rain for atleast 1 hour"
+msgstr ""
+
+#: src/uiForecast_w.py:26 src/uiForecast_w.py:122
+msgid "Today"
+msgstr ""
+
+#: src/uiForecast_w.py:31 src/uiForecast_w.py:124
+msgid "Tomorrow"
+msgstr ""
+
+#: src/uiForecast_w.py:36
+msgid "5 Days"
+msgstr ""
+
+#: src/uiForecast_w.py:127
+msgid "AM"
+msgstr ""
+
+#: src/uiForecast_w.py:130
+msgid "PM"
+msgstr ""
+
+#: src/uiForecast_w.py:209
+#, python-brace-format
+msgid "{0:.1f} {1}"
+msgstr ""
+
+#: src/uiForecast_w.py:214
+#, python-brace-format
+msgid "{0:.0f}°"
+msgstr ""
+
+#: src/utils.py:30
+msgid "Request timeout!"
+msgstr ""
+
+#: src/utils.py:34
+msgid "No internet connection!"
+msgstr ""
+
+#: src/utils.py:57
+msgid "N"
+msgstr ""
+
+#: src/utils.py:57
+msgid "NNE"
+msgstr ""
+
+#: src/utils.py:57
+msgid "NE"
+msgstr ""
+
+#: src/utils.py:57
+msgid "ENE"
+msgstr ""
+
+#: src/utils.py:57
+msgid "E"
+msgstr ""
+
+#: src/utils.py:57
+msgid "ESE"
+msgstr ""
+
+#: src/utils.py:57
+msgid "SE"
+msgstr ""
+
+#: src/utils.py:57
+msgid "SSE"
+msgstr ""
+
+#: src/utils.py:58
+msgid "S"
+msgstr ""
+
+#: src/utils.py:58
+msgid "SSW"
+msgstr ""
+
+#: src/utils.py:58
+msgid "SW"
+msgstr ""
+
+#: src/utils.py:58
+msgid "WSW"
+msgstr ""
+
+#: src/utils.py:58
+msgid "W"
+msgstr ""
+
+#: src/utils.py:58
+msgid "WNW"
+msgstr ""
+
+#: src/utils.py:58
+msgid "NW"
+msgstr ""
+
+#: src/utils.py:58
+msgid "NNW"
+msgstr ""
+
+#: src/weather.py:66
+msgid "Refresh"
+msgstr ""
+
+#: src/weather.py:85
+msgid "Preferences"
+msgstr ""
+
+#: src/weather.py:91
+msgid "About Weather"
+msgstr ""
+
+#: src/weather.py:123
+msgid "No internet!"
+msgstr ""
+
+#: src/weather.py:133
+msgid "Refresh within 5 seconds is ignored!"
+msgstr ""
+
+#: src/weather.py:142
+msgid "Refreshing..."
+msgstr ""
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and python"
+msgstr ""
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2023 Weather Developers"
+msgstr ""
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr ""
+
+#: src/windowPreferences.py:31 src/windowPreferences.py:36
+msgid "Locations"
+msgstr ""
+
+#: src/windowPreferences.py:41
+msgid "Add"
+msgstr ""
+
+#: src/windowPreferences.py:56
+msgid "Appearance"
+msgstr ""
+
+#: src/windowPreferences.py:65
+msgid "Dynamic Background"
+msgstr ""
+
+#: src/windowPreferences.py:66
+msgid ""
+"Background changes based on current weather condition (Restart required)"
+msgstr ""
+
+#: src/windowPreferences.py:78
+msgid "Units &amp; Measurements"
+msgstr ""
+
+#: src/windowPreferences.py:82
+msgid "°C"
+msgstr ""
+
+#: src/windowPreferences.py:83
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr ""
+
+#: src/windowPreferences.py:91
+msgid "°F"
+msgstr ""
+
+#: src/windowPreferences.py:92
+msgid "IMPERIAL system with units like fahrenheit, mph, mile"
+msgstr ""
+
+#: src/windowPreferences.py:103
+msgid "Misc"
+msgstr ""
+
+#: src/windowPreferences.py:115
+msgid "Personal API Key"
+msgstr ""
+
+#: src/windowPreferences.py:116
+msgid "Use your personal api key from openweathermap.org (Restart Required)"
+msgstr ""
+
+#: src/windowPreferences.py:123
+msgid "API Key"
+msgstr ""
+
+#: src/windowPreferences.py:132
+msgid "Save"
+msgstr ""
+
+#: src/windowPreferences.py:137
+msgid "Enter your api-key"
+msgstr ""
+
+#: src/windowPreferences.py:141
+msgid "Active"
+msgstr ""
+
+#: src/windowPreferences.py:146
+msgid "Invalid Key"
+msgstr ""
+
+#: src/windowPreferences.py:166
+msgid "Remove location"
+msgstr ""
+
+#: src/windowPreferences.py:198
+msgid "Selected - {}"
+msgstr ""
+
+#: src/windowPreferences.py:203
+msgid "Add New Location"
+msgstr ""
+
+#: src/windowPreferences.py:221
+msgid "Search for a city"
+msgstr ""
+
+#: src/windowPreferences.py:226 src/windowPreferences.py:228
+msgid "Search"
+msgstr ""
+
+#: src/windowPreferences.py:273
+msgid "No results found !"
+msgstr ""
+
+#: src/windowPreferences.py:287
+#, python-brace-format
+msgid "Added - {0}"
+msgstr ""
+
+#: src/windowPreferences.py:289
+msgid "City already added!"
+msgstr ""
+
+#: src/windowPreferences.py:307
+#, python-brace-format
+msgid "Removed - {0}"
+msgstr ""
+
+#: src/windowPreferences.py:332
+msgid "Saved Successfully"
+msgstr ""
