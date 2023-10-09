@@ -35,6 +35,8 @@
   <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
   <url type="homepage">https://github.com/amit9838/weather</url>
   <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
+  <url type="translate">https://github.com/amit9838/weather/tree/master/po</url>
+  <url type="vcs-browser">https://github.com/amit9838/weather</url>
   <developer_name>Amit Chaudhary</developer_name>
   <custom>
     <value key="Purism::form_factor">workstation</value>
