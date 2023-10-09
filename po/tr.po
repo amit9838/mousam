@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 00:35+0300\n"
-"PO-Revision-Date: 2023-06-16 00:35+0300\n"
+"POT-Creation-Date: 2023-10-09 12:07+0300\n"
+"PO-Revision-Date: 2023-10-09 12:18+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: data/io.github.amit9838.weather.desktop.in:3
-#: data/io.github.amit9838.weather.appdata.xml.in:6 src/weather.py:32
-#: src/windows.py:11
+#: data/io.github.amit9838.weather.appdata.xml.in:6 src/weather.py:116
+#: src/windowAbout.py:8
 msgid "Weather"
 msgstr "Hava Durumu"
 
@@ -39,268 +39,430 @@ msgid "Features:"
 msgstr "Özellikler:"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:12
-#: data/io.github.amit9838.weather.appdata.xml.in:50
-msgid "Use dynamic gradient backgrounds based on current weather."
-msgstr "Mevcut hava durumuna göre dinamik renk geçişli arka planlar kullan."
+msgid ""
+"See weather with dynamically changing gradient-based background according "
+"current weather conditions"
+msgstr ""
+"Mevcut hava durumuna göre dinamik renk geçişli arka planlar kullanımı"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:13
-#: data/io.github.amit9838.weather.appdata.xml.in:51
-msgid "See forcasts in beautiful card view."
-msgstr "Hava tahminlerini güzel bir kart görünümünde görün."
+msgid "See today, tomorrow and 5-day forcasts"
+msgstr "Bugün, yarın ve 5 günlük tahminleri görme imkanı"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:14
-#: data/io.github.amit9838.weather.appdata.xml.in:52
-msgid "Search and add cities."
-msgstr "Şehir arayın ve ve ekleyin."
+msgid "See conditions in metric or imperial systems"
+msgstr "Metrik veya İmperatorluk ölçüm sistemlerini kullanabilme"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:15
+msgid "Option to use Personal API Key"
+msgstr "Kişisel API Anahtarını kullanma seçeneği"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:21
+msgid "Overcast day"
+msgstr "Bulutlu gün"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:25
+msgid "Haze night"
+msgstr "Puslu gece"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:29
+msgid "Clear sky night"
+msgstr "Açık gökyüzü gecesi"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:33
+msgid "Dark mode"
+msgstr "Koyu kip"
 
 #: data/io.github.amit9838.weather.appdata.xml.in:37
+msgid "Light mode"
+msgstr "Açık kip"
+
+#: data/io.github.amit9838.weather.appdata.xml.in:45
 msgid "Amit Chaudhary"
 msgstr "Amit Chaudhary"
 
-#: data/io.github.amit9838.weather.appdata.xml.in:48
-msgid "New features and updates"
-msgstr "Yeni özellikler ve güncellemeler"
-
-#: data/io.github.amit9838.weather.gschema.xml:6
 #: data/io.github.amit9838.weather.gschema.xml:7
+#: data/io.github.amit9838.weather.gschema.xml:8
 msgid "Default api"
 msgstr "Öntanımlı API"
 
-#: data/io.github.amit9838.weather.gschema.xml:11
+#: data/io.github.amit9838.weather.gschema.xml:12
+msgid "personal api"
+msgstr "Kişisel API Anahtarı"
+
+#: data/io.github.amit9838.weather.gschema.xml:16
+msgid "Use personal api Key"
+msgstr "Kişisel API Anahtarını kullan"
+
+#: data/io.github.amit9838.weather.gschema.xml:17
+msgid "Set whether to use personal api key"
+msgstr "Kişisel API Anahtarının kullanılıp kullanılmayacağını ayarla"
+
+#: data/io.github.amit9838.weather.gschema.xml:21
+msgid "Is personal api key valid"
+msgstr "Kişisel API anahtarı geçerli mi"
+
+#: data/io.github.amit9838.weather.gschema.xml:22
+msgid "True if personal api key is being used is valid."
+msgstr "Kullanılan Kişisel API Anahtarı geçerliyse true."
+
+#: data/io.github.amit9838.weather.gschema.xml:27
 msgid "List of cities and their coordinates."
 msgstr "Şehir listesi ve koordinatları"
 
-#: data/io.github.amit9838.weather.gschema.xml:12
+#: data/io.github.amit9838.weather.gschema.xml:28
 msgid ""
 "Stores locations added by user in json stringified string format in string"
 msgstr ""
 "Kullanıcı tarafından eklenen konumları json metin alanı betin biçimindeki "
 "dizgede saklar"
 
-#: data/io.github.amit9838.weather.gschema.xml:16
+#: data/io.github.amit9838.weather.gschema.xml:32
 msgid "Selected city"
 msgstr "Seçili şehir"
 
-#: data/io.github.amit9838.weather.gschema.xml:17
+#: data/io.github.amit9838.weather.gschema.xml:33
 msgid "Selected city name"
 msgstr "Seçili şehir adı"
 
-#: data/io.github.amit9838.weather.gschema.xml:21
+#: data/io.github.amit9838.weather.gschema.xml:37
 msgid "Use Gradient Background"
 msgstr "Arka Plan Renk Geçişi Kullan"
 
-#: data/io.github.amit9838.weather.gschema.xml:22
+#: data/io.github.amit9838.weather.gschema.xml:38
 msgid ""
 "Apply gradient background on main window corresponding to weather condition"
 msgstr ""
 "Hava durumuna karşılık gelen ana pencerede renk geçili arka plan uygula"
 
-#: data/io.github.amit9838.weather.gschema.xml:26
+#: data/io.github.amit9838.weather.gschema.xml:42
 msgid "Last Updated"
 msgstr "Son Güncellenme"
 
-#: data/io.github.amit9838.weather.gschema.xml:27
+#: data/io.github.amit9838.weather.gschema.xml:43
 msgid "last updated time"
 msgstr "son güncellenme tarihi"
 
-#: src/weather.py:70
-msgid "Refresh"
-msgstr "Yenile"
+#: data/io.github.amit9838.weather.gschema.xml:47
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr "Kullanılacak ölçüm sistemi - metrik, imparatorluk"
 
-#: src/weather.py:89
-msgid "Preferences"
-msgstr "Tercihler"
+#: data/io.github.amit9838.weather.gschema.xml:48
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "metrik(km, °C), imparatorluk(mil, °F)"
 
-#: src/weather.py:96
-msgid "About Weather"
-msgstr "Hava Durumu Hakkında"
-
-#: src/weather.py:161
-msgid "Failed to load Weather Data"
-msgstr "Hava Durumu Verisi yüklenemedi"
-
-#: src/windows.py:16
-msgid "Beautiful and light weight weather app build using Gtk and python."
-msgstr "Gtk ve python kullanagüzel ve hafif bir hava durumu uygulaması."
-
-#. dialog.add_credit_section("Contributors", ["name url"])
-#: src/windows.py:20
-msgid "Copyright © 2023 Weather Developers"
-msgstr "Telif Hakkı © 2023 Hava Durumu Geliştiricileri"
-
-#. Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
-#: src/windows.py:23
-msgid "translator_credits"
-msgstr "Sabri Ünal <libreajans@gmail.com>"
-
-#: src/windows.py:41
-msgid "Appearance"
-msgstr "Görünüm"
-
-#: src/windows.py:51
-msgid "Use Dynamic Background"
-msgstr "Dinamik Arka Plan Kullan"
-
-#: src/windows.py:52
-msgid "Background Changes based on weather conditions (Restart required)"
-msgstr ""
-"Hava koşullarına bağlı olarak Arka Plan Değişiklikleri (Yeniden başlatma "
-"gerekir"
-
-#: src/windows.py:63 src/windows.py:68
-msgid "Locations"
-msgstr "Konumlar"
-
-#. Create a label
-#: src/windows.py:74
-msgid "Add"
-msgstr "Ekle"
-
-#: src/windows.py:97
-msgid "Remove location"
-msgstr "Konum kaldır"
-
-#: src/windows.py:121
-msgid "Add New Location"
-msgstr "Yeni Konum Ekle"
-
-#: src/windows.py:137
-msgid "Search for a city"
-msgstr "Şehir ara"
-
-#: src/windows.py:141
-msgid "Search"
-msgstr "Ara"
-
-#. Note: Do not translate strings in the { } brackets
-#: src/ui_current_w.py:88
+#: src/uiCurrent_w.py:74
 #, python-brace-format
 msgid "Feels like {0:.1f}{1}"
 msgstr "Hissedilen: {0:.1f}{1}"
 
-#: src/ui_current_w.py:134
-msgid "km"
-msgstr "km"
+#: src/uiCurrent_w.py:152
+msgid "Humidity"
+msgstr "Nem"
 
-#: src/ui_current_w.py:134
-msgid "m"
-msgstr "m"
-
-#: src/ui_current_w.py:136
-msgid "Rain"
-msgstr "Yağmur"
-
-#: src/ui_current_w.py:136 src/ui_current_w.py:137 src/ui_forecast_w.py:92
+#: src/uiCurrent_w.py:152 src/uiForecast_w.py:197
 #, python-brace-format
 msgid "{0}%"
 msgstr "%{0}"
 
-#: src/ui_current_w.py:137
-msgid "Humidity"
-msgstr "Nem"
-
-#: src/ui_current_w.py:138
+#: src/uiCurrent_w.py:153
 msgid "Pressure"
 msgstr "Basınç"
 
-#: src/ui_current_w.py:138
+#: src/uiCurrent_w.py:153
 #, python-brace-format
-msgid "{0} mmHg"
-msgstr "{0} mmHg"
+msgid "{0} hPa"
+msgstr "{0} hPa"
 
-#: src/ui_current_w.py:139
+#: src/uiCurrent_w.py:154
 msgid "Wind speed"
 msgstr "Rüzgar hızı"
 
-#: src/ui_current_w.py:139
+#: src/uiCurrent_w.py:154
 #, python-brace-format
-msgid "{0} km/h {1}"
-msgstr "{0} km/s {1}"
+msgid "{0:.1f} {1} {2}"
+msgstr "{0:.1f} {1} {2}"
 
-#. weather_data.append([_("Wind speed"), f"{data['wind']['speed']}km/h {wind_dir(data['wind']['deg'])}"])
-#: src/ui_current_w.py:141
+#: src/uiCurrent_w.py:155
 msgid "Visibility"
 msgstr "Görünürlük"
 
-#: src/ui_current_w.py:201
-msgid "N"
-msgstr "Kuzey"
+#: src/uiCurrent_w.py:156 src/uiCurrent_w.py:172
+msgid "Air Quality"
+msgstr "Hava Kalitesi"
 
-#: src/ui_current_w.py:201
-msgid "NNE"
-msgstr "Kuzey, Kuzey Doğu"
+#: src/uiCurrent_w.py:183
+msgid "rain in next 1 hour"
+msgstr "1 saat içinde yağmur"
 
-#: src/ui_current_w.py:201
-msgid "NE"
-msgstr "Kuzey Doğu"
+#: src/uiCurrent_w.py:187
+msgid "snow in next 1 hour"
+msgstr "1 saat içinde kar"
 
-#: src/ui_current_w.py:202
-msgid "ENE"
-msgstr "Doğu, Kuzey Doğu"
+#: src/uiCurrent_w.py:194
+msgid "No snow for atleast 1 hour"
+msgstr "En az 1 saat kar yok"
 
-#: src/ui_current_w.py:202
-msgid "E"
-msgstr "Doğu"
+#: src/uiCurrent_w.py:196
+msgid "No rain/snow for atleast 1 hour"
+msgstr "En az 1 saat yağmur/kar yok"
 
-#: src/ui_current_w.py:202
-msgid "ESE"
-msgstr "Doğu, Güney Doğu"
+#: src/uiCurrent_w.py:198
+msgid "No rain for atleast 1 hour"
+msgstr "En az 1 saat yağmur yok"
 
-#: src/ui_current_w.py:203
-msgid "SE"
-msgstr "Güney Doğu"
+#: src/uiForecast_w.py:26 src/uiForecast_w.py:122
+msgid "Today"
+msgstr "Bugün"
 
-#: src/ui_current_w.py:203
-msgid "SSE"
-msgstr "Güne, Güney Doğu"
+#: src/uiForecast_w.py:31 src/uiForecast_w.py:124
+msgid "Tomorrow"
+msgstr "Yarın"
 
-#: src/ui_current_w.py:203
-msgid "S"
-msgstr "Güney"
+#: src/uiForecast_w.py:36
+msgid "5 Days"
+msgstr "5 Gün"
 
-#: src/ui_current_w.py:203
-msgid "SSW"
-msgstr "Güney, Güney Batı"
-
-#: src/ui_current_w.py:203
-msgid "SW"
-msgstr "Güney Batı"
-
-#: src/ui_current_w.py:204
-msgid "WSW"
-msgstr "Batı, Güney Batı"
-
-#: src/ui_current_w.py:204
-msgid "W"
-msgstr "Batı"
-
-#: src/ui_current_w.py:204
-msgid "WNW"
-msgstr "Batı, Kuzey Batı"
-
-#: src/ui_current_w.py:205
-msgid "NW"
-msgstr "Kuzey Batı"
-
-#: src/ui_current_w.py:205
-msgid "NNW"
-msgstr "Kuzey, Kuzey Batı"
-
-#: src/ui_forecast_w.py:56
+#: src/uiForecast_w.py:127
 msgid "AM"
 msgstr "ÖÖ"
 
-#: src/ui_forecast_w.py:59
+#: src/uiForecast_w.py:130
 msgid "PM"
 msgstr "ÖS"
 
-#: src/ui_forecast_w.py:106
+#: src/uiForecast_w.py:209
 #, python-brace-format
-msgid "{0} km/h"
-msgstr "{0} km/s"
+msgid "{0:.1f} {1}"
+msgstr "{0:.1f} {1}"
 
-#: src/ui_forecast_w.py:110
+#: src/uiForecast_w.py:214
 #, python-brace-format
-#| msgid "{0:.0f}°"
-msgid "{0:.0f}°C"
-msgstr "{0:.0f}°C"
+msgid "{0:.0f}°"
+msgstr "{0:.0f}°"
+
+#: src/utils.py:30
+msgid "Request timeout!"
+msgstr "İstek zaman aşımına uğradı!"
+
+#: src/utils.py:34
+msgid "No internet connection!"
+msgstr "İnternet bağlantısı yok!"
+
+#: src/utils.py:57
+msgid "N"
+msgstr "Kuzey"
+
+#: src/utils.py:57
+msgid "NNE"
+msgstr "Kuzey, Kuzey Doğu"
+
+#: src/utils.py:57
+msgid "NE"
+msgstr "Kuzey Doğu"
+
+#: src/utils.py:57
+msgid "ENE"
+msgstr "Doğu, Kuzey Doğu"
+
+#: src/utils.py:57
+msgid "E"
+msgstr "Doğu"
+
+#: src/utils.py:57
+msgid "ESE"
+msgstr "Doğu, Güney Doğu"
+
+#: src/utils.py:57
+msgid "SE"
+msgstr "Güney Doğu"
+
+#: src/utils.py:57
+msgid "SSE"
+msgstr "Güne, Güney Doğu"
+
+#: src/utils.py:58
+msgid "S"
+msgstr "Güney"
+
+#: src/utils.py:58
+msgid "SSW"
+msgstr "Güney, Güney Batı"
+
+#: src/utils.py:58
+msgid "SW"
+msgstr "Güney Batı"
+
+#: src/utils.py:58
+msgid "WSW"
+msgstr "Batı, Güney Batı"
+
+#: src/utils.py:58
+msgid "W"
+msgstr "Batı"
+
+#: src/utils.py:58
+msgid "WNW"
+msgstr "Batı, Kuzey Batı"
+
+#: src/utils.py:58
+msgid "NW"
+msgstr "Kuzey Batı"
+
+#: src/utils.py:58
+msgid "NNW"
+msgstr "Kuzey, Kuzey Batı"
+
+#: src/weather.py:66
+msgid "Refresh"
+msgstr "Yenile"
+
+#: src/weather.py:85
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: src/weather.py:91
+msgid "About Weather"
+msgstr "Hava Durumu Hakkında"
+
+#: src/weather.py:123
+msgid "No internet!"
+msgstr "İnternet yok!"
+
+#: src/weather.py:133
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "5 saniye içinde yenileme yok sayılır!"
+
+#: src/weather.py:142
+msgid "Refreshing..."
+msgstr "Yenileniyor..."
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and python"
+msgstr "GTK ve Python kullanan güzel ve hafif bir hava durumu uygulaması"
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2023 Weather Developers"
+msgstr "Telif Hakkı © 2023 Hava Durumu Geliştiricileri"
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr "Sabri Ünal <libreajans@gmail.com>"
+
+#: src/windowPreferences.py:31 src/windowPreferences.py:36
+msgid "Locations"
+msgstr "Konumlar"
+
+#: src/windowPreferences.py:41
+msgid "Add"
+msgstr "Ekle"
+
+#: src/windowPreferences.py:56
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: src/windowPreferences.py:65
+msgid "Dynamic Background"
+msgstr "Dinamik Arka Plan"
+
+#: src/windowPreferences.py:66
+msgid ""
+"Background changes based on current weather condition (Restart required)"
+msgstr ""
+"Hava koşullarına bağlı olarak arka plan değişsin (Yeniden başlatma gerekir)"
+
+#: src/windowPreferences.py:78
+msgid "Units &amp; Measurements"
+msgstr "Birimler ve Ölçümler"
+
+#: src/windowPreferences.py:82
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:83
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr "Celcuis, km/h, kilometre gibi birimleri içeren METRİK sistem"
+
+#: src/windowPreferences.py:91
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:92
+msgid "IMPERIAL system with units like fahrenheit, mph, mile"
+msgstr "Fahrenheit, mph, mil gibi birimlere sahip İMPARATORLUK sistemi"
+
+#: src/windowPreferences.py:103
+msgid "Misc"
+msgstr "Çeşitli"
+
+#: src/windowPreferences.py:115
+msgid "Personal API Key"
+msgstr "Kişisel API Anahtarı"
+
+#: src/windowPreferences.py:116
+msgid "Use your personal api key from openweathermap.org (Restart Required)"
+msgstr ""
+"openweathermap.org'daki Kişisel API Anahtarınızı kullanın (Yeniden "
+"Başlatma Gereklidir)"
+
+#: src/windowPreferences.py:123
+msgid "API Key"
+msgstr "API Anahtarı"
+
+#: src/windowPreferences.py:132
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/windowPreferences.py:137
+msgid "Enter your api-key"
+msgstr "API anahtarınızı giriniz"
+
+#: src/windowPreferences.py:141
+msgid "Active"
+msgstr "Etkin"
+
+#: src/windowPreferences.py:146
+msgid "Invalid Key"
+msgstr "Geçersiz Anahtar"
+
+#: src/windowPreferences.py:166
+msgid "Remove location"
+msgstr "Konum kaldır"
+
+#: src/windowPreferences.py:198
+msgid "Selected - {}"
+msgstr "Seçili - {}"
+
+#: src/windowPreferences.py:203
+msgid "Add New Location"
+msgstr "Yeni Konum Ekle"
+
+#: src/windowPreferences.py:221
+msgid "Search for a city"
+msgstr "Şehir ara"
+
+#: src/windowPreferences.py:226 src/windowPreferences.py:228
+msgid "Search"
+msgstr "Ara"
+
+#: src/windowPreferences.py:273
+msgid "No results found !"
+msgstr "Sonuç bulunamadı."
+
+#: src/windowPreferences.py:287
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "Eklendi - {0}"
+
+#: src/windowPreferences.py:289
+msgid "City already added!"
+msgstr "Şehir zaten eklenmiş!"
+
+#: src/windowPreferences.py:307
+#, python-brace-format
+msgid "Removed - {0}"
+msgstr "Kaldırıldı - {0}"
+
+#: src/windowPreferences.py:332
+msgid "Saved Successfully"
+msgstr "Kaydedildi"
