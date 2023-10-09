@@ -1,8 +1,9 @@
 data/io.github.amit9838.weather.desktop.in
 data/io.github.amit9838.weather.appdata.xml.in
 data/io.github.amit9838.weather.gschema.xml
-src/main.py
+src/uiCurrent_w.py
+src/uiForecast_w.py
+src/utils.py
 src/weather.py
-src/windows.py
-src/ui_current_w.py
-src/ui_forecast_w.py
+src/windowAbout.py
+src/windowPreferences.py
