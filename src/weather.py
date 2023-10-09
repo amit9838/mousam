@@ -28,7 +28,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
 
         global application
         self.set_default_size(800, 400)
-        self.set_app_title(title="Weather")
+        self.set_app_title(title=_("Weather"))
         self.main_window = application = self
 
         # Initial checks
@@ -113,7 +113,7 @@ class WeatherWindow(Gtk.ApplicationWindow):
         else:
             self.fetch_weather_data()
 
-    def set_app_title(self,title = "Weather"):
+    def set_app_title(self,title = _("Weather")):
             self.set_title(title)
 
     def refresh_weather(self,widget,ignore=True):

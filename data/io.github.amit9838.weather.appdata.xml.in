@@ -18,23 +18,30 @@
     <screenshots>
       <screenshot type="default">
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-overcast_clouds_day.png</image>
+          <caption>Overcast day</caption>
       </screenshot>
       <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-haze_night.png</image>
+          <caption>Haze night</caption>
       </screenshot>
       <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky_night.png</image>
+          <caption>Clear sky night</caption>
       </screenshot>
         <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-dark_mode.png</image>
+          <caption>Dark mode</caption>
       </screenshot>
         <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png</image>
+          <caption>Light mode</caption>
       </screenshot>
   </screenshots>
   <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
   <url type="homepage">https://github.com/amit9838/weather</url>
   <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
+  <url type="translate">https://github.com/amit9838/weather/tree/master/po</url>
+  <url type="vcs-browser">https://github.com/amit9838/weather</url>
   <developer_name>Amit Chaudhary</developer_name>
   <custom>
     <value key="Purism::form_factor">workstation</value>
@@ -45,7 +52,7 @@
   <content_rating type="oars-1.1" />
   <releases>
       <release version="0.6.0" date="2023-07-14">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds air-pollution info</li>
             <li>Adds Snowfall summary</li>
@@ -57,7 +64,7 @@
       </description>
       </release>
       <release version="0.5.0" date="2023-07-05">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds sunset/sunrise info</li>
             <li>Add and remove city more quickly</li>
@@ -68,7 +75,7 @@
       </description>
       </release>
     <release version="0.4.0" date="2023-06-25">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds 5 days forecast</li>
             <li>Adds rain summary (rain quantity)</li>
@@ -79,7 +86,7 @@
       </description>
       </release>
       <release version="0.3.0" date="2023-06-22">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Show today and tomorrow forecasts</li>
             <li>Option:Use Imerial, Metric systems</li>
@@ -94,7 +101,7 @@
       </description>
       </release>
     <release version="0.2.1" date="2023-06-18">
-        <description>
+        <description translatable="no">
           <ul>
               <li>Use full country name.</li>
               <li>Fix units.</li>
@@ -104,7 +111,7 @@
         </description>
         </release>
         <release version="0.2.0" date="2023-06-17">
-        <description>
+        <description translatable="no">
           <p>What's New</p>
           <ul>
               <li>Option:Use Custom api-key.</li>
@@ -117,7 +124,7 @@
         </description>
         </release>
     <release version="0.1.0" date="2023-06-11">
-        <description>
+        <description translatable="no">
           <p>New features and updates</p>
           <ul>
               <li>Use dynamic gradient backgrounds based on current weather.</li>
