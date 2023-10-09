@@ -18,18 +18,23 @@
     <screenshots>
       <screenshot type="default">
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-overcast_clouds_day.png</image>
+          <caption>Overcast day</caption>
       </screenshot>
       <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-haze_night.png</image>
+          <caption>Haze night</caption>
       </screenshot>
       <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky_night.png</image>
+          <caption>Clear sky night</caption>
       </screenshot>
         <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-dark_mode.png</image>
+          <caption>Dark mode</caption>
       </screenshot>
         <screenshot>
           <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png</image>
+          <caption>Light mode</caption>
       </screenshot>
   </screenshots>
   <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
