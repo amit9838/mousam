@@ -52,7 +52,7 @@
   <content_rating type="oars-1.1" />
   <releases>
       <release version="0.6.0" date="2023-07-14">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds air-pollution info</li>
             <li>Adds Snowfall summary</li>
@@ -64,7 +64,7 @@
       </description>
       </release>
       <release version="0.5.0" date="2023-07-05">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds sunset/sunrise info</li>
             <li>Add and remove city more quickly</li>
@@ -75,7 +75,7 @@
       </description>
       </release>
     <release version="0.4.0" date="2023-06-25">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Adds 5 days forecast</li>
             <li>Adds rain summary (rain quantity)</li>
@@ -86,7 +86,7 @@
       </description>
       </release>
       <release version="0.3.0" date="2023-06-22">
-      <description>
+      <description translatable="no">
         <ul>
             <li>Show today and tomorrow forecasts</li>
             <li>Option:Use Imerial, Metric systems</li>
@@ -101,7 +101,7 @@
       </description>
       </release>
     <release version="0.2.1" date="2023-06-18">
-        <description>
+        <description translatable="no">
           <ul>
               <li>Use full country name.</li>
               <li>Fix units.</li>
@@ -111,7 +111,7 @@
         </description>
         </release>
         <release version="0.2.0" date="2023-06-17">
-        <description>
+        <description translatable="no">
           <p>What's New</p>
           <ul>
               <li>Option:Use Custom api-key.</li>
@@ -124,7 +124,7 @@
         </description>
         </release>
     <release version="0.1.0" date="2023-06-11">
-        <description>
+        <description translatable="no">
           <p>New features and updates</p>
           <ul>
               <li>Use dynamic gradient backgrounds based on current weather.</li>
