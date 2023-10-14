@@ -6,4 +6,5 @@ Icon=io.github.amit9838.weather
 Terminal=false
 Type=Application
 Categories=GTK;
+Keywords=Weather;Mousam;Rain;Cloud;Forecast;
 StartupNotify=true
