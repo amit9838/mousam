@@ -41,8 +41,12 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     icon_box_main.set_size_request(92, 92)
     info_box_main.append(icon_box_main)
 
-    icon_main = Gtk.Image().new_from_icon_name(icons.get(data['weather'][0]['icon']))
-    icon_main.set_pixel_size(98)
+
+
+    icon_main = Gio.Icon.new_for_string(icons.get(data['weather'][0]['icon']))
+    icon_main = Gtk.Image.new_from_gicon(icon_main)
+    # icon_main = Gtk.Image().new_from_icon_name(icons.get(data['weather'][0]['icon']))
+    icon_main.set_pixel_size(136)
     icon_box_main.append(icon_main)
     
     if use_gradient: 
@@ -140,6 +144,10 @@ def current_weather(main_window,upper_row,data,air_pollution_data):
     sunset_label = Gtk.Label(label= f"{sunset_time.hour-12}:{sunset_time_minute} PM")
     sunset_label.set_css_classes(['secondary','f-sm'])
     sunset_icon = Gtk.Image.new_from_icon_name('daytime-sunset-symbolic')
+    # icon_loc = '/app/share/icons/hicolor/scalable/weather_icons/'
+    # custom_icon = Gio.Icon.new_for_string(icon_loc + "dust.svg")
+    # sunset_icon = Gtk.Image.new_from_gicon(custom_icon)
+
     sunset_icon.set_css_classes(['secondary-light'])
     sunset_icon.set_pixel_size(12)
     sunset_icon.set_margin_end(5)

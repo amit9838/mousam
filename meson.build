@@ -15,7 +15,6 @@ subdir('po')
 
 
 
-
 install_subdir('data/weather_icons', install_dir: '/app/share/icons/hicolor/scalable')
 
 gnome.post_install(

@@ -182,3 +182,4 @@ class WeatherWindow(Gtk.ApplicationWindow):
             if upper_child is not None and middle_child is not None:
                 self.upper_row.remove(upper_child)
                 self.middle_row.remove(middle_child)
+

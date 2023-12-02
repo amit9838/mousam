@@ -1,4 +1,5 @@
 import requests
+import socket
 from datetime import datetime, timedelta, timezone
 from gi.repository import Adw,Gio
 
@@ -16,23 +17,13 @@ def set_weather_data(current,air_pollution,forecast):
     forecast_weather_data = forecast
 
 def check_internet_connection():
-    url = "http://www.google.com"
-    timeout = 5  # Set the timeout value in seconds
     response_text = ""
     has_active_internet = False
     try:
-        response = requests.get(url, timeout=timeout)
-        if response.status_code == 200:
-            has_active_internet = True
-            return has_active_internet, response_text
-
-    except requests.Timeout:
-        response_text = _("Request timeout!")
+        socket.create_connection(("1.1.1.1", 53), timeout=5)  # 53 is the DNS port
+        has_active_internet = True
         return has_active_internet, response_text
-    except requests.RequestException as e:
-        print(str(e))
-        response_text = _("No internet connection!")
-        has_active_internet = False
+    except OSError:
         return has_active_internet, response_text
 
 def get_selected_city_coords():
@@ -59,4 +50,3 @@ def wind_dir(angle):
         ]
         index = round(angle / (360.0 / len(directions))) % len(directions)
         return directions[index]
-
