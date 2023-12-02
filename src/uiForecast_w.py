@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
-from gi.repository import Gtk,GLib
+from gi.repository import Gtk,GLib,Gio
 
 from .constants import icons,API_KEY
 from .units import  measurements,get_measurement_type
