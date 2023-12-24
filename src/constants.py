@@ -1,16 +1,9 @@
 from gi.repository import Gio,GLib
-from .backendCurrent_w import fetch_city_info
 
 settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = settings.get_string("personal-api-key")
 use_personal_api_key = settings.get_boolean("use-personal-api-key")
 
-# Check weather personal api is valid if it was enabled
-if len(API_KEY) == 32 and use_personal_api_key == True and fetch_city_info(API_KEY,'delhi'):
-        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",True))  # Using Personal api key
-else:
-        API_KEY = settings.get_string('api-key')
-        settings.set_value("isvalid-personal-api-key",GLib.Variant("b",False))  #Using Default api key
 
 air_quality_level = {
     1:"Good",

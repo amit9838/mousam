@@ -5,7 +5,6 @@ from gi.repository import Gtk, Adw,Gio,GLib
 
 from .constants import API_KEY,COUNTRY_CODES
 from .units import get_measurement_type
-from .backendCurrent_w import fetch_city_info
 from .utils import create_toast
 
 class WeatherPreferences(Adw.PreferencesWindow):

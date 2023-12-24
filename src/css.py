@@ -1,122 +1,187 @@
 css = """
 .condition_label {
-        font-size: 1.6rem;
-        font-weight: bold;
-        opacity:.8;
-    }
-.temp_label {
-        font-size: 3.8rem;
-        font-weight: bold;
-    }
-
-.f_box {
-        background-color:rgba(255, 255, 255, 0.08);
-        border-radius: 5px;
-        border : 1px solid rgba(150, 150, 150,.2);
-    }
-
-.rain_summ_box {
-        background-color:rgba(255, 255, 255, 0.06);
-        padding:2px 10px;
-        border-radius: 5px;
-        font-size:.95rem;
+    font-size: 30px;
 }
-
-.forecast_box {
-        border-radius: 5px;
-    }
-
-
-.f-xsm {
-        font-size: .85rem;
-    }
-.f-sm {
-        font-size: .9rem;
-    }
-.f-msm {
-        font-size: .95rem;
-    }
-.f-m {
-        font-size: 1rem;
-    }
-.f-m {
-        font-size: 1.1rem;
-    }
-
-.f-lg {
-        font-size: 1.2rem;
-    }
-.f-lg2 {
-        font-size: 1.35rem;
-    }
-
-.bold{
-    font-weight:500;
+.main_temp_label {
+    font-size: 4rem;
 }
-
-.bolder{
-    font-weight:600;
-}
-
-.secondary{
-    opacity:.65;
-}
-
-.secondary-light{
-    opacity:.85;
-}
-
-.secondary-lighter{
-    opacity:.95;
-}
-
-.error_label {
-    font-size: 1.8rem;
-    font-weight: bold;
-}
-
-
-.updated_at{
-    font-size:.9rem;
-    opacity:.6;
-}
-
-.grey_bg {
-        background-color:rgba(100, 100, 100, 0.1);
-    }
-.transparent {
-        background-color:rgba(100, 100, 100, 0);
-    }
 
 .btn_sm{
     font-size:.95rem;
-    padding:0.05rem .9rem;
+    padding-top: .2rem;
+    padding-bottom: .2rem;
 }
 
-.btn_p0{
-    font-size:.9rem;
-    padding:0.05rem .1rem;
+
+.text-l1{
+    font-size: 4rem;
+}
+.text-l2{
+    font-size: 3.5rem;
+}
+.text-l3{
+    font-size: 3rem;
+}
+.text-l4{
+    font-size: 2.5rem;
+}
+.text-1{
+    font-size: 2rem;
+}
+.text-2a{
+    font-size: 1.8rem;
+}
+.text-2b{
+    font-size: 1.5rem;
+}
+.text-3{
+    font-size: 1.3rem;
+}
+.text-4{
+    font-size: 1.1rem;
+}
+.text-5{
+    font-size: 1.05rem;
+}
+.text-6{
+    font-size: .95rem;
+}
+.text-7{
+    font-size: 9rem;
+}
+.text-8{
+    font-size: .85rem;
+}
+.text-9{
+    font-size: .8rem;
 }
 
-.image-button {
-    padding:0rem .1rem;
-    font-size:.9rem;
+.title-xl{
+    font-size:76px;
+}
+.title-l{
+    font-size:42px;
+}
+.title-m{
+    font-size:22px;
+}
+.title-s{
+    font-size:18px;
 }
 
-.arrow{
-    font-size:.7rem;
+.light-1{
+    opacity: .95;
+}
+.light-2{
+    opacity: .9;
+}
+.light-3{
+    opacity: .8;
+}
+.light-4{
+    opacity: .75;
+}
+.light-5{
+    opacity: .7;
+}
+.light-6{
+    opacity: .6;
 }
 
-.border_top1{
-    border-top:1px solid grey;
+
+.bold-1{
+    font-weight: 700;
 }
-.border_bottom1{
-    border-bottom:1px solid grey;
+.bold-2{
+    font-weight: 600;
+}
+.bold-3{
+    font-weight: 500;
+}
+
+
+.dark{
+    color:#141414;
 }
 
 .main_window{
     border-radius:13px;
     border : 1px solid rgba(100, 100, 100,.3);
+}
+
+
+.overcast, .showers_scattered{
+    background: linear-gradient(127deg, rgba(155, 155, 155, 1), rgba(0, 134, 215, 0) 100%),
+                linear-gradient(217deg, rgba(155, 155, 155, 1), rgba(0, 134, 215, 1) 100%),
+                linear-gradient(336deg, rgba(155, 155, 155, 1), rgba(0, 134, 218, 1) 100%);
+}
+
+.gradient-bg{
+    background:linear-gradient(0deg, rgba(237,237,237,1) 0%, rgb(203, 221, 225) 100%);
+}
+
+.bg-white{
+    background-color: rgb(240, 240, 240);
+}
+
+.custom_card{
+    padding:.5rem 1rem;
+}
+
+.bar_container{
+    border-radius: 1rem;
+    background-color: rgb(240, 240, 240);
+
+}
+
+.custom_card_forecast_item{
+    padding:1.1rem 2rem;
+    border-radius: .5rem;
+}
+
+.bg_light_grey{
+    background-color: #9a9a9a13;
+}
+
+
+
+
+
+.body{
+    padding:20px;
+
+}
+/* .card{
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:16px;
+    padding-bottom:16px;
+} */
+
+
+.card_info{
+    background-color: #F6635C;
+}
+.bold{
+    font-weight:600;
+}
+.title-xl{
+    font-size:76px;
+}
+.title-m{
+    font-size:22px;
+}
+.title-s{
+    font-size:18px;
+}
+.bg-green {
+    background-color: #00ff00; /* Replace with your desired color */
+}
+.bg-orange {
+    background-color: #F6635C; /* Replace with your desired color */
+}
+.bg-pink {
+    background-color: #FE7BE5; /* Replace with your desired color */
 }
 
 .clear_sky, .few_clouds {

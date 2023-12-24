@@ -24,7 +24,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio,Adw,Gdk
-from .weather import WeatherWindow
+from .weather import WeatherMainWindow
 from .css import css
 
 class WeatherApplication(Adw.Application):
@@ -45,7 +45,7 @@ class WeatherApplication(Adw.Application):
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         if not win:
-            win = WeatherWindow(application=self)
+            win = WeatherMainWindow(application=self)
         win.present()
 
     def create_action(self, name, callback, shortcuts=None):

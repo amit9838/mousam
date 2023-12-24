@@ -31,16 +31,32 @@ weather_sources = [
   '__init__.py',
   'main.py',
   'weather.py',
-  'uiCurrent_w.py',
-  'uiForecast_w.py',
-  'backendCurrent_w.py',
-  'backendForecast_w.py',
+  'weatherData.py',
+
+  'backendAirPollution.py',
+  'backendFindCity.py',
+  'backendWeather.py',
+
+  'frontendForecast.py',
+  'frontendCardAirPollution.py',
+  'frontendCardDayNight.py',
+  'frontendCardSquare.py',
+  'frontendCurrentCond.py',
+  'frontendHourlyDetails.py',
+
+  'frontendUiDrawBar.py',
+  'frontendUiDrawbarLine.py',
+  'frontendUiDrawDayNight.py',
+  'frontendUiDrawImageIcon.py',
+  'frontendUiDrawPollutionBar.py',
+
+  'application.css',
   'constants.py',
   'units.py',
   'utils.py',
   'css.py',
   'windowAbout.py',
-  'windowPreferences.py',
+  'windowPreferences.py'
 ]
 
 
