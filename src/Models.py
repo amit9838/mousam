@@ -1,0 +1,88 @@
+# Models for All weather data data
+
+
+# ================= Current Weather ===================
+class CurrentWeather:
+    total_instances = 0
+
+    def __init__(self, data) -> None:
+        # Dynamically create fields based on the data dictionary
+        for field, values in data.get("current").items():
+            setattr(
+                self,
+                field,
+                {"unit": data.get("current_units").get(field), "data": values},
+            )
+
+        CurrentWeather.total_instances += 1
+
+    # ------ Print data ------=
+    def print_data(self):
+        from pprint import pprint
+
+        pprint(self.__dict__)
+
+    # ------ Update weather data ------
+    def update_weather_data(self, field, new_data):
+        if hasattr(self, field):
+            getattr(self, field)["data"] = new_data
+        else:
+            print(f"Field '{field}' not found in WeatherData.")
+
+
+# ================= Hourly Weather ===================
+class HourlyWeather:
+    total_instances = 0
+
+    def __init__(self, data) -> None:
+        # Dynamically create fields based on the data dictionary
+        for field, values in data.get("hourly").items():
+            setattr(
+                self,
+                field,
+                {"unit": data.get("hourly_units").get(field), "data": values},
+            )
+
+        HourlyWeather.total_instances += 1
+
+    # ------ Print data ------=
+    def print_data(self):
+        from pprint import pprint
+
+        pprint(self.__dict__)
+
+    # ------ Update weather data ------
+    def update_weather_data(self, field, new_data):
+        if hasattr(self, field):
+            getattr(self, field)["data"] = new_data
+        else:
+            print(f"Field '{field}' not found in WeatherData.")
+
+
+# ================= Hourly Weather ===================
+class DailyWeather:
+    total_instances = 0
+
+    def __init__(self, data) -> None:
+        # Dynamically create fields based on the data dictionary
+        for field, values in data.get("daily").items():
+            setattr(
+                self,
+                field,
+                {"unit": data.get("daily_units").get(field), "data": values},
+            )
+
+        DailyWeather.total_instances += 1
+
+    # ------ Print data ------=
+    def print_data(self):
+        from pprint import pprint
+
+        pprint(self.__dict__)
+
+    # ------ Update weather data ------
+    def update_weather_data(self, field, new_data):
+        if hasattr(self, field):
+            getattr(self, field)["data"] = new_data
+        else:
+            print(f"Field '{field}' not found in WeatherData.")
