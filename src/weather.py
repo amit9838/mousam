@@ -101,89 +101,69 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.main_stack.set_transition_duration(duration=100)
         self.main_stack.add_named(container_loader,'loader')
-        self.main_stack.set_visible_child_name('loader')
+        # self.main_stack.set_visible_child_name('loader')
         
         GLib.idle_add(self.draw_ui)
+        # self.load_ui()
 
+    def load_loader(self):
+        pass
+
+    def load_ui(self):
+        GLib.idle_add(self.draw_ui)
 
     def draw_ui(self):
         # Initial fetch ----------------------------------------------
         cw_data = fetch_current_weather()
         hf_data = fetch_hourly_forecast()
         df_data = fetch_daily_forecast()
-        air_poll = fetch_current_air_pollution()
+        air_poll =fetch_current_air_pollution()
+
 
         # Main grid
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
         self.main_grid.set_vexpand(True)
-        self.main_stack.add_named(self.main_grid, "main_grid")
+        self.main_stack.add_named(self.main_grid,'main_grid')
 
         # self.set_css_classes(['main_window','gradient-bg','dark'])
 
         current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=40)
-        self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
+        self.main_grid.attach(current_container_clamp,0,0,3,1)
         current_container_clamp.set_child(CurrentCondition())
-        self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
+        self.main_grid.attach(HourlyDetails(),0,1,2,1)
 
         hourly_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
         hourly_container_clamp.set_child(Forecast())
-        self.main_grid.attach(hourly_container_clamp, 2, 1, 1, 4)
+        self.main_grid.attach(hourly_container_clamp,2,1,1,4)
         # self.main_grid.attach(Forecast(),2,1,1,1)
 
         widget_grid = Gtk.Grid()
-        self.main_grid.attach(widget_grid, 1, 2, 1, 1)
+        self.main_grid.attach(widget_grid,1,2,1,1)
 
         # container_clamp = Adw.Clamp(maximum_size=350, tightening_threshold=10,margin_top=10)
         # widget_grid.attach(container_clamp,0,0,1,1)
         # card_obj = CardSquare("Wind",28,"km/h","Moderate","From","Northwest")
         # container_clamp.set_child(card_obj.card)
 
-        card_obj = CardSquare(
-            "Wind",
-            cw_data["current"]["windspeed_10m"],
-            "km/h",
-            "Moderate",
-            "From",
-            "Northwest",
-            "N",
-        )
-        widget_grid.attach(card_obj.card, 0, 0, 1, 1)
+        card_obj = CardSquare("Wind",cw_data.windspeed_10m.get("data"),"km/h","Moderate","From","Northwest","N")
+        widget_grid.attach(card_obj.card,0,0,1,1)
 
-        card_obj = CardSquare(
-            "Humidity",
-            88,
-            "%",
-            "High",
-            "Dew Point",
-            "23°C",
-            text_up="100",
-            text_low="0",
-        )
-        widget_grid.attach(card_obj.card, 1, 0, 1, 1)
+        card_obj = CardSquare("Humidity",88,"%","High","Dew Point","23°C",text_up="100",text_low="0")
+        widget_grid.attach(card_obj.card,1,0,1,1)
 
-        card_obj = CardSquare(
-            "Pressure",
-            cw_data["current"]["surface_pressure"],
-            cw_data["current_units"]["surface_pressure"],
-            "Normal",
-            text_up="High",
-            text_low="Low",
-        )
-        widget_grid.attach(card_obj.card, 0, 1, 1, 1)
+        card_obj = CardSquare("Pressure",cw_data.surface_pressure.get("data"),cw_data.surface_pressure.get("unit"),"Normal",text_up="High",text_low="Low")
+        widget_grid.attach(card_obj.card,0,1,1,1)
 
-        card_obj = CardSquare(
-            "UV Index", cw_data["uv_index"], "", "High", text_up="High", text_low="Low"
-        )
-        widget_grid.attach(card_obj.card, 1, 1, 1, 1)
+        card_obj = CardSquare("UV Index",cw_data.uv_index.get("data"),"","High",text_up="High",text_low="Low")
+        widget_grid.attach(card_obj.card,1,1,1,1)
 
         card_obj = CardRectangle()
-        widget_grid.attach(card_obj.card, 2, 0, 2, 1)
+        widget_grid.attach(card_obj.card,2,0,2,1)
 
         card_obj = CardDayNight()
-        widget_grid.attach(card_obj.card, 2, 1, 2, 1)
-        self.main_stack.set_visible_child_name("main_grid")
-
+        widget_grid.attach(card_obj.card,2,1,2,1)
+        self.main_stack.set_visible_child_name('main_grid')
 
     def _on_about_clicked(self, widget, param):
         AboutWindow(application)

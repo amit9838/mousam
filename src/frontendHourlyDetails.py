@@ -124,13 +124,13 @@ class HourlyDetails(Gtk.Grid):
 
         if page_name == "hourly":
             desc_label.set_text("Day Max")
-            val_label.set_text(str(max(daily_data["daily"]["temperature_2m_max"])))
+            val_label.set_text(str(max(daily_data.temperature_2m_max.get("data"))))
             unit_label.set_text("")
 
         if page_name == "prec":
             desc_label.set_text("Day High")
             val_label.set_text(
-                str(max(daily_data["daily"]["precipitation_probability_max"]))
+                str(max(daily_data.precipitation_probability_max.get("data")))
             )
             unit_label.set_text("cm")
 
@@ -172,16 +172,16 @@ class HourlyDetails(Gtk.Grid):
             graphic_box.append(label_bottom)
 
             if page_name == "wind":
-                label_top.set_text(str(hourly_data["hourly"]["windspeed_10m"][i]))
+                label_top.set_text(str(hourly_data.windspeed_10m.get("data")[i]))
                 label_top.set_margin_top(5)
-                tm = datetime.datetime.fromtimestamp(hourly_data["hourly"]["time"][i])
+                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
                 label_bottom.set_margin_top(5)
 
                 img = DrawImage(
                     image_path,
-                    hourly_data["hourly"]["wind_direction_10m"][i] + 180,
+                    hourly_data.wind_direction_10m.get("data")[i] + 180,
                     width,
                     height,
                 )
@@ -189,16 +189,16 @@ class HourlyDetails(Gtk.Grid):
                 icon_box.append(img.img_box)
 
             elif page_name == "hourly":
-                label_top.set_text(str(hourly_data["hourly"]["temperature_2m"][i]))
+                label_top.set_text(str(hourly_data.temperature_2m.get("data")[i]))
                 label_top.set_margin_top(5)
-                tm = datetime.datetime.fromtimestamp(hourly_data["hourly"]["time"][i])
+                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_margin_top(5)
                 label_bottom.set_text(tm)
 
                 img = DrawImage(
                     image_path,
-                    hourly_data["hourly"]["wind_direction_10m"][i],
+                    hourly_data.wind_direction_10m.get("data")[i],
                     width,
                     height,
                 )
@@ -206,7 +206,7 @@ class HourlyDetails(Gtk.Grid):
                 icon_box.append(img.img_box)
 
             elif page_name == "prec":
-                tm = datetime.datetime.fromtimestamp(hourly_data["hourly"]["time"][i])
+                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
                 label_bottom.set_margin_top(5)
@@ -219,3 +219,4 @@ class HourlyDetails(Gtk.Grid):
                 # print(i,"-> ",random_number)
                 bar_obj = DrawBar(random_number)
                 icon_box.append(bar_obj.dw)
+

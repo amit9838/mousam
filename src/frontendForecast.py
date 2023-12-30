@@ -11,6 +11,7 @@ from .frontendUiDrawImageIcon import DrawImage
 image_path = "/home/amit/Drive-D/weather/src/frontend/ui/arrowA.png"  # Replace with the path to your image file
 angle = 120
 
+
 class Forecast(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -96,12 +97,12 @@ class Forecast(Gtk.Grid):
         forecast_container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, margin_top=0,margin_bottom=0)
         scrolled_window.set_child(forecast_container)
 
-        date_time = [d_t for d_t in hourly_data['hourly']['time'] if int(datetime.fromtimestamp(d_t).strftime(r"%d")) == datetime.today().date().day]
+        date_time = [d_t for d_t in hourly_data.time.get("data") if int(datetime.fromtimestamp(d_t).strftime(r"%d")) == datetime.today().date().day]
 
         items = date_time
 
         if page_name == 'weekly':
-            items = daily_data['daily']['time']
+            items = daily_data.time.get("data")
 
         for i,item in enumerate(items):
             
@@ -126,16 +127,14 @@ class Forecast(Gtk.Grid):
             label_day_time.set_css_classes(['text-3'])
             forecast_item_grid.attach(label_day_time,0,0,1,1)
 
-
-            icon_main = Gio.Icon.new_for_string(icons['01d'])
-            icon_main = Gtk.Image.new_from_gicon(icon_main)
-            icon_main.set_pixel_size(36)
-            forecast_item_grid.attach(icon_main,1,0,1,1)
+            # icon = Gtk.Label(label="☁︎")
+            icon = DrawImage(image_path,0,26,26)
+            forecast_item_grid.attach(icon.img_box,1,0,1,1)
             
             # Max temp label ======
-            temp_max_label = hourly_data['hourly']['temperature_2m'][i]
+            temp_max_label = hourly_data.temperature_2m.get("data")[i]
             if page_name == 'weekly':
-                temp_max_label = daily_data['daily']['temperature_2m_max'][i]
+                temp_max_label = daily_data.temperature_2m_max.get("data")[i]
             
             temp_max = Gtk.Label(label=f"{temp_max_label:.0f} / ")
             temp_max.set_margin_start(10)
@@ -143,9 +142,9 @@ class Forecast(Gtk.Grid):
             forecast_item_grid.attach(temp_max,2,0,1,1)
             
             #Min temp label ======
-            temp_min_label = hourly_data['hourly']['temperature_2m'][i]
+            temp_min_label = hourly_data.temperature_2m.get("data")[i]
             if page_name == 'weekly':
-                temp_min_label = daily_data['daily']['temperature_2m_min'][i]
+                temp_min_label = daily_data.temperature_2m_min.get("data")[i]
 
             temp_min = Gtk.Label(label=f"{temp_min_label:.0f}")
             temp_min.set_css_classes(['light-4'])

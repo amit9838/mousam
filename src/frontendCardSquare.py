@@ -11,7 +11,6 @@ from .frontendUiDrawBar import *
 image_path = "/home/amit/Drive-D/weather/src/frontend/ui/arrowA.png"  # Replace with the path to your image file
 angle = 120
 
-
 class CardSquare:
     def __init__(
         self,
@@ -38,7 +37,7 @@ class CardSquare:
         self.curr_w = current_weather_data
         if self.title.lower() == "wind":
             self.sub_desc = self._get_wind_dir(
-                self.curr_w["current"]["winddirection_10m"]
+                self.curr_w.winddirection_10m.get("data")
             )
 
         self.card = None
@@ -126,15 +125,15 @@ class CardSquare:
         card_icon.attach(icon_upper_text, 0, 0, 1, 1)
 
         if self.title.lower() == "wind":
-            print(self.curr_w["current"]["winddirection_10m"])
+            print(self.curr_w.winddirection_10m.get("data"))
             obj = DrawImage(
-                image_path, self.curr_w["current"]["winddirection_10m"] + 180, 45, 45
+                image_path, self.curr_w.winddirection_10m.get("data") + 180, 45, 45
             )
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
 
         elif self.title.lower() == "humidity":
             level_obj = DrawLevelBar(
-                self.curr_w["current"]["relativehumidity_2m"] / 100,
+                self.curr_w.relativehumidity_2m.get("data") / 100,
                 rounded_cap=True,
                 rgb_color=[0.588, 0.937, 1],
             )
@@ -142,13 +141,13 @@ class CardSquare:
 
         elif self.title.lower() == "pressure":
             level_obj = DrawLevelBar(
-                self.curr_w["current"]["surface_pressure"] / 1080, rounded_cap=True
+                self.curr_w.surface_pressure.get("data") / 1080, rounded_cap=True
             )
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
         elif self.title.lower() == "uv index":
             level_obj = DrawLevelBar(
-                self.curr_w["uv_index"] / 12,
+                self.curr_w.uv_index.get("data") / 12,
                 rounded_cap=True,
                 rgb_color=[0.408, 0.494, 1.000],
             )
@@ -179,3 +178,4 @@ class CardSquare:
         angle = angle % 360
         index = round(angle / 45) % 8
         return directions[index]
+

@@ -21,7 +21,7 @@ class CurrentCondition(Gtk.Grid):
         cond_label.set_css_classes(['text-1','light-4','bold-2'])
         box_left.append(cond_label)
 
-        main_temp_label = Gtk.Label(label = "{0:.0f}°C".format(data['current']['temperature_2m']),halign=Gtk.Align.START)
+        main_temp_label = Gtk.Label(label = "{0:.0f}°C".format(data.temperature_2m.get("data")),halign=Gtk.Align.START)
         main_temp_label.set_css_classes(['main_temp_label','bold-1'])
         box_left.append(main_temp_label)
 
@@ -34,7 +34,7 @@ class CurrentCondition(Gtk.Grid):
         
         feels_like_label = Gtk.Label(halign=Gtk.Align.END,margin_bottom=5)
         # feels_like_label.use_markup(True)
-        markup_text = "Feels Like • <b>{0}°C</b>".format(data['current']['apparent_temperature'])
+        markup_text = "Feels Like • <b>{0}°C</b>".format(data.apparent_temperature.get("data"))
         feels_like_label.set_markup(markup_text)
         feels_like_label.set_css_classes(['text-4','bold-3'])
         box_right.append(feels_like_label)

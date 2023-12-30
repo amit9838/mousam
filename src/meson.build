@@ -32,6 +32,7 @@ weather_sources = [
   'main.py',
   'weather.py',
   'weatherData.py',
+  'Models.py',
 
   'backendAirPollution.py',
   'backendFindCity.py',

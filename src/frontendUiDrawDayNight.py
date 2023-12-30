@@ -6,6 +6,7 @@ from gi.repository import Gtk
 import cairo
 from datetime import datetime
 
+
 class DrawDayNight():
     def __init__(self,angle,width,height):
         
@@ -64,17 +65,17 @@ class DrawDayNight():
         context.stroke()
 
         # Horizon text
-        context.select_font_face("Sans-Sirf", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+
+        context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         context.set_font_size(15)
         context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
-
         now = datetime.now()
-        formatted_date_time = now.strftime("%H:%M")
+        formatted_date_time = now.strftime("%I:%M %p")
         text = formatted_date_time
 
         # Calculate the position for text placement
-        text_x = center_x - 17
-        text_y = center_y - 10
+        text_x = center_x - 35
+        text_y = center_y - 8
 
         # Move the text cursor to the calculated position
         context.move_to(text_x, text_y)
@@ -151,3 +152,4 @@ class DrawDayNight():
         gap_length = 5
         context.set_dash([dash_length, gap_length])
         context.stroke()
+
