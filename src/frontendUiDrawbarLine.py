@@ -23,7 +23,7 @@ class DrawBar:
         if self.value == 0:
             return
         
-        x_offset = 30
+        x_offset = 25
         y_offset=10
 
         self.value = self.value

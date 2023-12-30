@@ -1,15 +1,16 @@
+from gi.repository import Gtk, Gio
 import gi
 import random
 import datetime
+from gettext import gettext as _
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
-from gettext import gettext as _
-from .frontendUiDrawImageIcon import DrawImage
-from .frontendUiDrawbarLine import DrawBar
 
-image_path = "/home/amit/Drive-D/weather/src/frontend/ui/arrowA.png"  # Replace with the path to your image file
+from .frontendUiDrawbarLine import DrawBar
+from .frontendUiDrawImageIcon import DrawImage
+from .constants import icons, icon_loc
+icon_loc += "arrow.svg"
 
 
 class HourlyDetails(Gtk.Grid):
@@ -23,12 +24,17 @@ class HourlyDetails(Gtk.Grid):
         self.daily_forecast = None
 
     def paint_ui(self):
+
+        # Hourly Stack
         self.hourly_stack = Gtk.Stack.new()
-        self.hourly_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.hourly_stack.set_transition_type(
+            Gtk.StackTransitionType.CROSSFADE)
         self.attach(self.hourly_stack, 0, 1, 1, 1)
 
+        # Tab Box
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=True)
         self.attach(tab_box, 0, 0, 1, 1)
+        
         style_buttons_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.START
         )
@@ -81,7 +87,6 @@ class HourlyDetails(Gtk.Grid):
             self.hourly_stack.set_visible_child_name(page_name)
             return
         self.page_stacks("prec")
-        # self.show_loader()
 
     def show_loader(self):
         page_name = "loader"
@@ -102,8 +107,6 @@ class HourlyDetails(Gtk.Grid):
         from .weatherData import daily_forecast_data as daily_data
         from .weatherData import hourly_forecast_data as hourly_data
 
-        # self.daily_forecast = d
-        # print("adding page",page_name)
         page_grid = Gtk.Grid()
         self.hourly_stack.add_named(page_grid, page_name)
         self.hourly_stack.set_visible_child_name(page_name)
@@ -122,11 +125,13 @@ class HourlyDetails(Gtk.Grid):
         unit_label.set_css_classes(["text-5", "light-2", "bold-3"])
         info_grid.attach(unit_label, 2, 2, 1, 1)
 
+        # Hourly Page
         if page_name == "hourly":
             desc_label.set_text("Day Max")
-            val_label.set_text(str(max(daily_data.temperature_2m_max.get("data"))))
+            val_label.set_text(str(max(daily_data.temperature_2m_max.get("data")))+"°")
             unit_label.set_text("")
 
+        # Precipitation page
         if page_name == "prec":
             desc_label.set_text("Day High")
             val_label.set_text(
@@ -134,15 +139,13 @@ class HourlyDetails(Gtk.Grid):
             )
             unit_label.set_text("cm")
 
-        width, height = 35, 35
-
-        scrolled_window = Gtk.ScrolledWindow(hexpand=True, halign=Gtk.Align.FILL)
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
-        # scrolled_window.set_min_content_height(200)
+        scrolled_window = Gtk.ScrolledWindow(
+            hexpand=True, halign=Gtk.Align.FILL)
+        scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
         scrolled_window.set_margin_bottom(0)
         scrolled_window.set_margin_top(2)
         scrolled_window.set_kinetic_scrolling(True)
-        # scrolled_window.set_size_request(800,190)
         page_grid.attach(scrolled_window, 0, 2, 1, 1)
 
         graphic_container = Gtk.Box(
@@ -153,14 +156,13 @@ class HourlyDetails(Gtk.Grid):
         )
         scrolled_window.set_child(graphic_container)
 
-
         for i in range(24):
             graphic_box = Gtk.Box(
                 orientation=Gtk.Orientation.VERTICAL, margin_start=10, margin_end=10
             )
             graphic_container.append(graphic_box)
 
-            icon_box = Gtk.Box()
+            icon_box = Gtk.Box(halign=Gtk.Align.CENTER)
             graphic_box.append(icon_box)
 
             label_top = Gtk.Label(label="")
@@ -172,41 +174,41 @@ class HourlyDetails(Gtk.Grid):
             graphic_box.append(label_bottom)
 
             if page_name == "wind":
-                label_top.set_text(str(hourly_data.windspeed_10m.get("data")[i]))
+                label_top.set_text(
+                    str(hourly_data.windspeed_10m.get("data")[i]))
                 label_top.set_margin_top(5)
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+                tm = datetime.datetime.fromtimestamp(
+                    hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
-                label_bottom.set_margin_top(5)
+                label_bottom.set_margin_top(10)
 
-                img = DrawImage(
-                    image_path,
-                    hourly_data.wind_direction_10m.get("data")[i] + 180,
-                    width,
-                    height,
-                )
+                img = DrawImage(icon_loc,hourly_data.wind_direction_10m.get("data")[i] + 180,30,30,)
+
                 icon_box.set_margin_top(10)
                 icon_box.append(img.img_box)
 
             elif page_name == "hourly":
-                label_top.set_text(str(hourly_data.temperature_2m.get("data")[i]))
+                label_top.set_text(str(hourly_data.temperature_2m.get("data")[i])+"°")
                 label_top.set_margin_top(5)
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+                tm = datetime.datetime.fromtimestamp(
+                    hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_margin_top(5)
                 label_bottom.set_text(tm)
 
-                img = DrawImage(
-                    image_path,
-                    hourly_data.wind_direction_10m.get("data")[i],
-                    width,
-                    height,
-                )
-                icon_box.set_margin_top(10)
-                icon_box.append(img.img_box)
+                weather_code = hourly_data.weathercode.get("data")[i]
+
+                icon_main = Gio.Icon.new_for_string(icons[str(weather_code)])
+                icon_main = Gtk.Image.new_from_gicon(icon_main)
+                icon_main.set_hexpand(True)
+                icon_main.set_pixel_size(50)
+                icon_box.set_margin_bottom(10)
+                icon_box.append(icon_main)
 
             elif page_name == "prec":
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+                tm = datetime.datetime.fromtimestamp(
+                    hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
                 label_bottom.set_margin_top(5)
@@ -216,7 +218,5 @@ class HourlyDetails(Gtk.Grid):
 
                 label_top.set_text(str(random_number))
                 label_top.set_margin_top(5)
-                # print(i,"-> ",random_number)
                 bar_obj = DrawBar(random_number)
                 icon_box.append(bar_obj.dw)
-

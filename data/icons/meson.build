@@ -46,6 +46,7 @@ install_data(
 	join_paths(scalable_dir2, 'thunderstorms-overcast-rain.svg'),
 	join_paths(scalable_dir2, 'umbrella.svg'),
 	join_paths(scalable_dir2, 'wind.svg'),
+	join_paths(scalable_dir2, 'arrow.svg'),
 
 	install_dir: join_paths(get_option('datadir'), 'icons', scalable_dir2),
 

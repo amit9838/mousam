@@ -9,9 +9,6 @@ import time
 
 from .frontendUiDrawDayNight import *
 
-image_path = "/home/amit/Drive-D/Code/Gnome/weather/src/frontend/ui/arrowA.png"  # Replace with the path to your image file
-angle = 120
-
 
 class CardDayNight:
     def __init__(self):

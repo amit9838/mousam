@@ -3,13 +3,16 @@ from datetime import datetime
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
+from .constants import icons
 from .frontendUiDrawImageIcon import *
 from .frontendUiDrawBar import *
 
-image_path = "/home/amit/Drive-D/weather/src/frontend/ui/arrowA.png"  # Replace with the path to your image file
-angle = 120
+  # Replace with the path to your image file
+
+from .constants import icon_loc
+icon_loc += "arrow.svg"
 
 class CardSquare:
     def __init__(
@@ -125,10 +128,13 @@ class CardSquare:
         card_icon.attach(icon_upper_text, 0, 0, 1, 1)
 
         if self.title.lower() == "wind":
-            print(self.curr_w.winddirection_10m.get("data"))
+            # print(self.curr_w.winddirection_10m.get("data"))
             obj = DrawImage(
-                image_path, self.curr_w.winddirection_10m.get("data") + 180, 45, 45
+                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 45, 45
             )
+            # icon_main = Gio.Icon.new_for_string(icons[str("arrow")])
+            # icon_main = Gtk.Image.new_from_gicon(icon_main)
+            # icon_main.set_pixel_size(40)
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
 
         elif self.title.lower() == "humidity":
