@@ -5,13 +5,13 @@
             <stop offset="0.45" stop-color="#f3f7fe"/>
             <stop offset="1" stop-color="#deeafb"/>
         </linearGradient>
-        <linearGradient id="b" x1="1391.92" y1="-1146.86" x2="1401.38" y2="-1122.22" gradientTransform="translate(-1193.48 1353.56) rotate(-9)" gradientUnits="userSpaceOnUse">
+        <linearGradient id="b" x1="1381.32" y1="-1144.67" x2="1399.47" y2="-1097.39" gradientTransform="translate(-1189.41 1353.24) rotate(-9)" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#0b65ed"/>
             <stop offset="0.45" stop-color="#0a5ad4"/>
             <stop offset="1" stop-color="#0950bc"/>
         </linearGradient>
-        <linearGradient id="c" x1="1434.72" y1="-1059.09" x2="1444.18" y2="-1034.44" xlink:href="#b"/>
-        <linearGradient id="d" x1="1497.85" y1="-1099.71" x2="1507.31" y2="-1075.07" xlink:href="#b"/>
+        <linearGradient id="c" x1="1428.42" y1="-1084.66" x2="1446.57" y2="-1037.37" gradientTransform="translate(-1189.32 1354.33) rotate(-9)" xlink:href="#b"/>
+        <linearGradient id="d" x1="1489.3" y1="-1111.57" x2="1507.45" y2="-1064.28" gradientTransform="translate(-1189.24 1355.43) rotate(-9)" xlink:href="#b"/>
         <linearGradient id="e" x1="78" y1="63.35" x2="118" y2="132.65" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#fbbf24"/>
             <stop offset="0.45" stop-color="#fbbf24"/>
@@ -28,12 +28,12 @@
             <use width="196" height="196" xlink:href="#g"/>
             <use width="350" height="222" transform="translate(13 36)" xlink:href="#h"/>
         </symbol>
-        <symbol id="i" viewBox="0 0 129 109">
-            <path d="M8.5,28.5a8,8,0,0,1-8-8V8.5a8,8,0,0,1,16,0v12A8,8,0,0,1,8.5,28.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#b)"/>
-            <path d="M64.5,108.5a8,8,0,0,1-8-8v-12a8,8,0,0,1,16,0v12A8,8,0,0,1,64.5,108.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#c)"/>
-            <path d="M120.5,58.5a8,8,0,0,1-8-8v-12a8,8,0,0,1,16,0v12A8,8,0,0,1,120.5,58.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#d)"/>
+        <symbol id="i" viewBox="0 0 129 110">
+            <path d="M8.5,56.5a8,8,0,0,1-8-8V8.5a8,8,0,0,1,16,0v40A8,8,0,0,1,8.5,56.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#b)"/>
+            <path d="M64.5,109.5a8,8,0,0,1-8-8v-40a8,8,0,0,1,16,0v40A8,8,0,0,1,64.5,109.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#c)"/>
+            <path d="M120.5,74.5a8,8,0,0,1-8-8v-40a8,8,0,0,1,16,0v40A8,8,0,0,1,120.5,74.5Z" stroke="#0a5ad4" stroke-miterlimit="10" fill="url(#d)"/>
         </symbol>
     </defs>
     <use width="363" height="258" transform="translate(68 109)" xlink:href="#f"/>
-    <use width="129" height="109" transform="translate(191.5 347.5)" xlink:href="#i"/>
+    <use width="129" height="110" transform="translate(191.5 343.5)" xlink:href="#i"/>
 </svg>
