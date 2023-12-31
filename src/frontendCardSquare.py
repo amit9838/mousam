@@ -1,25 +1,25 @@
+from .constants import icon_loc
+from .frontendUiDrawBar import *
+from .frontendUiDrawImageIcon import *
+from .constants import icons
+from gi.repository import Gtk
 import gi
 from datetime import datetime
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Gio
 
-from .constants import icons
-from .frontendUiDrawImageIcon import *
-from .frontendUiDrawBar import *
+# Replace with the path to your image file
 
-  # Replace with the path to your image file
-
-from .constants import icon_loc
 icon_loc += "arrow.svg"
+
 
 class CardSquare:
     def __init__(
         self,
         title,
         main_val,
-        main_val_unit = "",
+        main_val_unit="",
         desc="",
         sub_desc_heading="",
         sub_desc="",
@@ -109,7 +109,7 @@ class CardSquare:
         sub_desc.set_halign(Gtk.Align.START)
         card_info.attach(sub_desc, 0, 6, 4, 1)
 
-        card_icon = Gtk.Grid()
+        card_icon = Gtk.Grid(halign=Gtk.Align.END)
         card_icon.set_row_spacing(0)
         card_icon.set_column_spacing(5)
         card_icon.set_margin_top(15)
@@ -129,8 +129,7 @@ class CardSquare:
 
         if self.title.lower() == "wind":
             obj = DrawImage(
-                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 45, 45
-            )
+                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 40, 40)
 
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
 
@@ -181,4 +180,3 @@ class CardSquare:
         angle = angle % 360
         index = round(angle / 45) % 8
         return directions[index]
-

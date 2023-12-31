@@ -114,7 +114,7 @@ def classify_humidity_level(uv_index):
     elif uv_index <= 80:
         return "Moderate"
     else:
-        return "Extreme"
+        return "High"
     
 
 def classify_presssure_level(pressure):

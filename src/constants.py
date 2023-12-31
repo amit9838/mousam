@@ -86,8 +86,39 @@ bg_css = {
     "13n": "snow_night",
     "50n": "fog_night",
 }
-# 01d ->  'd' indicates day
-# 01n -> 'n' indicates night
+# 1 ->   indicates day
+# 1n ->  indicates night
+
+conditon = {
+     "0": "Clear sky",
+     "1": "Few Clouds",
+     "2": "Partly Cloudy",
+     "3": "Overcast",
+    "45": "Fog",
+    "48": "Rime Fog",
+    "51": "Light Drizzle",
+    "53": "Moderate Drizzle",
+    "55": "Heavy Intensity Drizzle ",
+    "56": "Light Freezing Drizzle",
+    "57": "Heavy Freezing Drizzle",
+    "61": "Light Rain",
+    "63": "Moderate Rain",
+    "65": "Heavy Rain",
+    "66": "Light Freezing Rain",
+    "67": "Heavy Freezing Rain",
+    "71": "Light Snow Fall",
+    "73": "Moderate Snow Fall",
+    "75": "Heavy Snow Fall	",
+    "77": "Snow grains",
+    "80": "Light Rain Showers",
+    "81": "Moderate Rain Showers",
+    "82": "Heavy Rain Showers",
+    "85": "Light Snow Showers",
+    "86": "Heavy Snow Showers ",
+    "95": "Thunderstorm",
+    "96": "Thunderstorm with Hail",
+}
+
 
 COUNTRY_CODES = {
     "AD": "Andorra",

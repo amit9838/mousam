@@ -28,7 +28,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         global application
         self.main_window = application = self
 
-        self.set_default_size(1220, 840)
+        self.set_default_size(1220, 830)
         self.set_title("")
 
         #  Adding a button into header
@@ -69,7 +69,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.set_child(self.toast_overlay)
 
         # Main _clamp
-        self.clamp = Adw.Clamp(maximum_size=1600, tightening_threshold=100)
+        self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
         self.toast_overlay.set_child(self.clamp)
 
         # main stack
@@ -113,7 +113,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.add_named(self.main_grid, "main_grid")
 
         # -------- Current condition Card ---------
-        current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=40)
+        current_container_clamp = Adw.Clamp(maximum_size=1300, tightening_threshold=40)
         self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
         current_container_clamp.set_child(CurrentCondition())
         self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)

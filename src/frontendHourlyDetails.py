@@ -44,7 +44,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Temperature Button -------------
         temp_btn = Gtk.ToggleButton.new_with_label(_("Hourly"))
-        temp_btn.set_css_classes(["pilal", "btn_sm"])
+        temp_btn.set_css_classes(["pill", "btn_sm"])
         temp_btn.do_clicked(temp_btn)
         style_buttons_box.append(temp_btn)
         temp_btn.connect("clicked", self._on_hourly_btn_clicked)
@@ -58,7 +58,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Precipitation Button -------------
         prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
-        prec_btn.set_css_classes(["pilla", "btn_sm"])
+        prec_btn.set_css_classes(["pill", "btn_sm"])
         prec_btn.set_group(temp_btn)
         style_buttons_box.append(prec_btn)
         prec_btn.connect("clicked", self._on_prec_btn_clicked)
@@ -176,12 +176,12 @@ class HourlyDetails(Gtk.Grid):
             if page_name == "wind":
                 label_top.set_text(
                     str(hourly_data.windspeed_10m.get("data")[i]))
-                label_top.set_margin_top(5)
+                label_top.set_margin_top(15)
                 tm = datetime.datetime.fromtimestamp(
                     hourly_data.time.get("data")[i])
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
-                label_bottom.set_margin_top(10)
+                label_bottom.set_margin_top(5)
 
                 img = DrawImage(icon_loc,hourly_data.wind_direction_10m.get("data")[i] + 180,30,30,)
 

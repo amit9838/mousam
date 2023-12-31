@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
-from gi.repository import Gtk, Gio
-from .frontendUiDrawImageIcon import DrawImage
+from gi.repository import Gtk
 from .constants import icons
 from gettext import gettext as _
 import gi
@@ -12,8 +11,6 @@ class Forecast(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_hexpand(True)
-        # self.set_margin_start(10)
-        # self.set_size_request(350, 300)
 
         self.set_margin_top(20)
         self.set_margin_bottom(5)
@@ -35,13 +32,13 @@ class Forecast(Gtk.Grid):
         style_buttons_box.set_valign(Gtk.Align.CENTER)
 
         tomorrow_btn = Gtk.ToggleButton.new_with_label(_('Tomorrow'))
-        tomorrow_btn.set_css_classes(['pilal', 'btn_sm'])
+        tomorrow_btn.set_css_classes(['pill', 'btn_sm'])
         tomorrow_btn.do_clicked(tomorrow_btn)
         style_buttons_box.append(tomorrow_btn)
         tomorrow_btn.connect('clicked', self._on_tomorrow_forecast_btn_clicked)
 
         weekly_btn = Gtk.ToggleButton.new_with_label(_('Weekly'))
-        weekly_btn.set_css_classes(['pilla', 'btn_sm'])
+        weekly_btn.set_css_classes(['pill', 'btn_sm'])
         weekly_btn.set_group(tomorrow_btn)
         style_buttons_box.append(weekly_btn)
         weekly_btn.connect('clicked', self._on_weekly_btn_forecast_btn_clicked)
@@ -141,7 +138,7 @@ class Forecast(Gtk.Grid):
 
             icon_main = Gtk.Image().new_from_file(condition_icon)
             icon_main.set_hexpand(True)
-            icon_main.set_pixel_size(36)
+            icon_main.set_pixel_size(32)
             forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
 
             # Temp label grid

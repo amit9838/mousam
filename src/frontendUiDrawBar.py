@@ -18,6 +18,7 @@ class DrawLevelBar:
     ):
         self.dw = Gtk.DrawingArea()
         self.dw.set_size_request(width, height)
+        self.dw.set_margin_end(10)
         self.dw.set_draw_func(self.draw, None)
         self.rounded_cap = rounded_cap
         self.line_w = line_w

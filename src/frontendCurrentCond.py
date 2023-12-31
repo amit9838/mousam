@@ -1,5 +1,5 @@
-from gi.repository import Gtk, Gio
-from .constants import icons
+from gi.repository import Gtk
+from .constants import icons, conditon
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -31,13 +31,13 @@ class CurrentCondition(Gtk.Grid):
 
         icon_main = Gtk.Image().new_from_file(condition_icon)
         icon_main.set_hexpand(True)
-        icon_main.set_pixel_size(140)
+        icon_main.set_pixel_size(110)
         condition_grid.attach(icon_main, 0, 0, 1, 2)
 
         # Condition label
         cond_label = Gtk.Label(
-            label="Clear Sky", halign=Gtk.Align.START, valign=Gtk.Align.END)
-        cond_label.set_css_classes(['text-1', 'light-4', 'bold-2'])
+            label=conditon[str(data.weathercode.get('data'))], halign=Gtk.Align.START, valign=Gtk.Align.END)
+        cond_label.set_css_classes(['text-2a', 'light-4', 'bold-2'])
         condition_grid.attach(cond_label, 1, 0, 1, 1)
 
         # Condition temperature
