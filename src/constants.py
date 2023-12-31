@@ -4,15 +4,6 @@ settings = Gio.Settings.new("io.github.amit9838.weather")
 API_KEY = settings.get_string("personal-api-key")
 use_personal_api_key = settings.get_boolean("use-personal-api-key")
 
-
-air_quality_level = {
-    1: "Good",
-    2: "Fair",
-    3: "Moderate",
-    4: "Poor",
-    5: "Very Poor",
-}
-
 icon_loc = "/app/share/icons/hicolor/scalable/weather_icons/"
 
 icons = {

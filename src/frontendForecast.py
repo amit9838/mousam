@@ -99,7 +99,7 @@ class Forecast(Gtk.Grid):
 
         # Get Tomorrow's data from hourly forecast
         tomorrow_date_time_list = [d_t for d_t in hourly_data.time.get("data") if int(
-            datetime.fromtimestamp(d_t).strftime(r"%d")) == datetime.today().date().day+1]
+            datetime.fromtimestamp(d_t).strftime(r"%d")) == (datetime.today() + timedelta(days=1)).date().day]
         items = tomorrow_date_time_list
 
         # Get weekly date_time list from daily_data
@@ -133,8 +133,13 @@ class Forecast(Gtk.Grid):
             label_day_time.set_css_classes(['text-4', 'bold-2'])
             forecast_item_grid.attach(label_day_time, 0, 0, 1, 1)
 
-            #  Condition Icon
-            icon_main = Gio.Icon.new_for_string(icons[str(weather_code)])
+            # Condition Icon
+            # if it is night
+            condition_icon = icons[str(weather_code)]
+            if hourly_data.is_day.get("data")[i] == 0:
+                    condition_icon = icons[str(weather_code)+'n'] 
+
+            icon_main = Gio.Icon.new_for_string(condition_icon)
             icon_main = Gtk.Image.new_from_gicon(icon_main)
             icon_main.set_hexpand(True)
             icon_main.set_pixel_size(50)

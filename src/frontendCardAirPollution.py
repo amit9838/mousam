@@ -8,7 +8,7 @@ from .frontendUiDrawImageIcon import DrawImage
 from .frontendUiDrawPollutionBar import PollutionBar
 
 
-class CardRectangle:
+class CardAirPollution:
     def __init__(self):
         from .weatherData import air_apllution_data
 

@@ -198,8 +198,13 @@ class HourlyDetails(Gtk.Grid):
                 label_bottom.set_text(tm)
 
                 weather_code = hourly_data.weathercode.get("data")[i]
+                condition_icon = icons[str(weather_code)]
 
-                icon_main = Gio.Icon.new_for_string(icons[str(weather_code)])
+                # if it is night
+                if hourly_data.is_day.get("data")[i] == 0:
+                    condition_icon = icons[str(weather_code)+'n'] 
+
+                icon_main = Gio.Icon.new_for_string(condition_icon)
                 icon_main = Gtk.Image.new_from_gicon(icon_main)
                 icon_main.set_hexpand(True)
                 icon_main.set_pixel_size(50)

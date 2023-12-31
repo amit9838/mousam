@@ -12,21 +12,13 @@ from .frontendHourlyDetails import HourlyDetails
 from .frontendForecast import Forecast
 from .frontendCardSquare import CardSquare
 from .frontendCardDayNight import CardDayNight
-from .frontendCardAirPollution import *
+from .frontendCardAirPollution import CardAirPollution
 from .weatherData import (
     fetch_current_weather,
     fetch_hourly_forecast,
     fetch_daily_forecast,
     fetch_current_air_pollution,
 )
-
-
-# global css_provider
-# css_provider = Gtk.CssProvider()
-# css_provider.load_from_path("application.css")
-# Gtk.StyleContext.add_provider_for_display(
-#     Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-# )
 
 
 class WeatherMainWindow(Gtk.ApplicationWindow):
@@ -47,8 +39,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.header.pack_start(self.open_button)
         self.open_button.set_icon_name("view-refresh-symbolic")
 
-
-        # Create Menu -----------------------------
+        # Create Menu
         menu = Gio.Menu.new()
         self.popover = Gtk.PopoverMenu()  # Create a new popover menu
         self.popover.set_menu_model(menu)
@@ -59,19 +50,19 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
         self.header.pack_end(self.hamburger)
 
-
-        # Create a new action
+        # Add preferences option
         action = Gio.SimpleAction.new("preferences", None)
         action.connect("activate", self._on_preferences_clicked)
         self.add_action(action)
         menu.append(_("Preferences"), "win.preferences")
-        #menu.append("Help", "help")
 
+        # menu.append("Help", "help")
+
+        # Add about option
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Weather"), "win.about")
-
 
         # Toast overlay
         self.toast_overlay = Adw.ToastOverlay.new()
@@ -83,88 +74,115 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         # main stack
         self.main_stack = Gtk.Stack.new()
+        self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.main_stack.set_transition_duration(duration=100)
         self.clamp.set_child(self.main_stack)
 
+        # Start Loader and call paint UI
         self.show_loader()
 
     def show_loader(self):
+        # Loader container
         container_loader = Gtk.Box()
         container_loader.set_margin_top(200)
         container_loader.set_margin_bottom(300)
 
+        # Create loader
         loader = Gtk.Label(label=f"Loading…")
-        loader.set_css_classes(['text-1','bold-2'])
-
+        loader.set_css_classes(["text-1", "bold-2"])
         loader.set_hexpand(True)
         loader.set_vexpand(True)
         container_loader.append(loader)
-        self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
-        self.main_stack.set_transition_duration(duration=100)
-        self.main_stack.add_named(container_loader,'loader')
-        # self.main_stack.set_visible_child_name('loader')
-        
-        GLib.idle_add(self.draw_ui)
-        # self.load_ui()
+        self.main_stack.add_named(container_loader, "loader")
+        self.main_stack.set_visible_child_name("loader")
 
-    def load_loader(self):
-        pass
-
-    def load_ui(self):
+        # Initiate UI loading weather data and drawing UI
         GLib.idle_add(self.draw_ui)
 
     def draw_ui(self):
-        # Initial fetch ----------------------------------------------
+        # Initial fetch on app launch
         cw_data = fetch_current_weather()
         hf_data = fetch_hourly_forecast()
         df_data = fetch_daily_forecast()
-        air_poll =fetch_current_air_pollution()
+        air_poll = fetch_current_air_pollution()
 
-
-        # Main grid
+        # ------- Main grid ---------
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
         self.main_grid.set_vexpand(True)
-        self.main_stack.add_named(self.main_grid,'main_grid')
+        self.main_stack.add_named(self.main_grid, "main_grid")
 
-        # self.set_css_classes(['main_window','gradient-bg','dark'])
-
+        # -------- Current condition Card ---------
         current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=40)
-        self.main_grid.attach(current_container_clamp,0,0,3,1)
+        self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
         current_container_clamp.set_child(CurrentCondition())
-        self.main_grid.attach(HourlyDetails(),0,1,2,1)
+        self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
 
-        hourly_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
-        hourly_container_clamp.set_child(Forecast())
-        self.main_grid.attach(hourly_container_clamp,2,1,1,4)
-        # self.main_grid.attach(Forecast(),2,1,1,1)
+        # --------- Forecast card ----------
+        forecast_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
+        forecast_container_clamp.set_child(Forecast())
+        self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 4)
 
+        # ========= Card widget grid ==========
         widget_grid = Gtk.Grid()
-        self.main_grid.attach(widget_grid,1,2,1,1)
+        self.main_grid.attach(widget_grid, 1, 2, 1, 1)
 
-        # container_clamp = Adw.Clamp(maximum_size=350, tightening_threshold=10,margin_top=10)
-        # widget_grid.attach(container_clamp,0,0,1,1)
-        # card_obj = CardSquare("Wind",28,"km/h","Moderate","From","Northwest")
-        # container_clamp.set_child(card_obj.card)
+        # ------- Wind card ----------
+        card_obj = CardSquare(
+            title="Wind",
+            main_val=cw_data.windspeed_10m.get("data"),
+            main_val_unit=cw_data.windspeed_10m.get("unit"),
+            desc=cw_data.windspeed_10m.get("level_str"),
+            sub_desc_heading="From",
+            sub_desc="Northwest",
+            text_up="N",
+        )
+        widget_grid.attach(card_obj.card, 0, 0, 1, 1)
 
-        card_obj = CardSquare("Wind",cw_data.windspeed_10m.get("data"),"km/h","Moderate","From","Northwest","N")
-        widget_grid.attach(card_obj.card,0,0,1,1)
+        # -------- Humidity card  ---------
+        card_obj = CardSquare(
+            title="Humidity",
+            main_val=cw_data.relativehumidity_2m.get("data"),
+            main_val_unit="%",
+            desc=cw_data.relativehumidity_2m.get("level_str"),
+            sub_desc_heading="Dew Point",
+            sub_desc="23°C",
+            text_up="100",
+            text_low="0",
+        )
+        widget_grid.attach(card_obj.card, 1, 0, 1, 1)
 
-        card_obj = CardSquare("Humidity",88,"%","High","Dew Point","23°C",text_up="100",text_low="0")
-        widget_grid.attach(card_obj.card,1,0,1,1)
+        # ------- Pressure card -----------
+        card_obj = CardSquare(
+            title="Pressure",
+            main_val=cw_data.surface_pressure.get("data"),
+            main_val_unit=cw_data.surface_pressure.get("unit"),
+            desc=cw_data.surface_pressure.get("level_str"),
+            text_up="High",
+            text_low="Low",
+        )
+        widget_grid.attach(card_obj.card, 0, 1, 1, 1)
 
-        card_obj = CardSquare("Pressure",cw_data.surface_pressure.get("data"),cw_data.surface_pressure.get("unit"),"Normal",text_up="High",text_low="Low")
-        widget_grid.attach(card_obj.card,0,1,1,1)
+        # -------- UV Index card ---------
+        card_obj = CardSquare(
+            title="UV Index",
+            main_val=cw_data.uv_index.get("data"),
+            desc=cw_data.uv_index.get("level_str"),
+            text_up="High",
+            text_low="Low",
+        )
+        widget_grid.attach(card_obj.card, 1, 1, 1, 1)
 
-        card_obj = CardSquare("UV Index",cw_data.uv_index.get("data"),"","High",text_up="High",text_low="Low")
-        widget_grid.attach(card_obj.card,1,1,1,1)
+        # -------- Card Rectangle ---------
+        card_obj = CardAirPollution()
+        widget_grid.attach(card_obj.card, 2, 0, 2, 1)
 
-        card_obj = CardRectangle()
-        widget_grid.attach(card_obj.card,2,0,2,1)
-
+        # -------- Card Day/Night --------
         card_obj = CardDayNight()
-        widget_grid.attach(card_obj.card,2,1,2,1)
-        self.main_stack.set_visible_child_name('main_grid')
+        widget_grid.attach(card_obj.card, 2, 1, 2, 1)
+        self.main_stack.set_visible_child_name("main_grid")
 
+    # ============= Menu buttom methods ==============
     def _on_about_clicked(self, widget, param):
         AboutWindow(application)
 

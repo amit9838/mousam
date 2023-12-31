@@ -19,7 +19,7 @@ class CardSquare:
         self,
         title,
         main_val,
-        main_val_unit,
+        main_val_unit = "",
         desc="",
         sub_desc_heading="",
         sub_desc="",
@@ -128,13 +128,10 @@ class CardSquare:
         card_icon.attach(icon_upper_text, 0, 0, 1, 1)
 
         if self.title.lower() == "wind":
-            # print(self.curr_w.winddirection_10m.get("data"))
             obj = DrawImage(
                 icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 45, 45
             )
-            # icon_main = Gio.Icon.new_for_string(icons[str("arrow")])
-            # icon_main = Gtk.Image.new_from_gicon(icon_main)
-            # icon_main.set_pixel_size(40)
+
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
 
         elif self.title.lower() == "humidity":
@@ -147,7 +144,7 @@ class CardSquare:
 
         elif self.title.lower() == "pressure":
             level_obj = DrawLevelBar(
-                self.curr_w.surface_pressure.get("data") / 1080, rounded_cap=True
+                (self.curr_w.surface_pressure.get("data")-872) / (1080-872), rounded_cap=True
             )
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
