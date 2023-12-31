@@ -50,7 +50,7 @@ class CardDayNight:
         return sunrise, sunset, degree
 
     def create_card(self):
-        card = Gtk.Grid(margin_top=10, margin_start=5, margin_bottom=5)
+        card = Gtk.Grid(margin_top=10, margin_start=5, margin_bottom=0)
         self.card = card
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)

@@ -86,7 +86,7 @@ class Forecast(Gtk.Grid):
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(
             Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_size_request(350, 560)
+        scrolled_window.set_size_request(300, 550)
         scrolled_window.set_margin_bottom(8)
         scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
@@ -139,10 +139,9 @@ class Forecast(Gtk.Grid):
             if hourly_data.is_day.get("data")[i] == 0:
                     condition_icon = icons[str(weather_code)+'n'] 
 
-            icon_main = Gio.Icon.new_for_string(condition_icon)
-            icon_main = Gtk.Image.new_from_gicon(icon_main)
+            icon_main = Gtk.Image().new_from_file(condition_icon)
             icon_main.set_hexpand(True)
-            icon_main.set_pixel_size(50)
+            icon_main.set_pixel_size(36)
             forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
 
             # Temp label grid
