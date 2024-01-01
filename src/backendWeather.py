@@ -2,7 +2,8 @@ from typing import List
 import requests
 import datetime
 
-lat,lon = 28.65195,77.23149
+# lat,lon = 28.65195,77.23149
+lat,lon = 52.52,13.41
 
 base_url = "https://api.open-meteo.com/v1/forecast"
 
@@ -74,6 +75,7 @@ class Weather():
             'dewpoint_2m',
             'apparent_temperature',
             'weathercode',
+            'precipitation',
             'surface_pressure',
             'visibility',
             'windspeed_10m',
@@ -120,7 +122,7 @@ class Weather():
             "sunrise",
             "sunset",
             "uv_index_max",
-            "precipitation_probability_max",
+            "precipitation_sum",
             "windspeed_10m_max",
         ]
 

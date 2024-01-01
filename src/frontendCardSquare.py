@@ -9,8 +9,6 @@ from datetime import datetime
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-# Replace with the path to your image file
-
 icon_loc += "arrow.svg"
 
 
@@ -39,9 +37,7 @@ class CardSquare:
 
         self.curr_w = current_weather_data
         if self.title.lower() == "wind":
-            self.sub_desc = self._get_wind_dir(
-                self.curr_w.winddirection_10m.get("data")
-            )
+            self.sub_desc = self._get_wind_dir(self.curr_w.winddirection_10m.get("data"))
 
         self.card = None
         self.create_card()
@@ -90,7 +86,6 @@ class CardSquare:
         desc = Gtk.Label(label=self.desc)
         desc.set_css_classes(["text-5", "light-2", "bold-2"])
         desc.set_wrap(True)
-        # desc.set_vexpand(True)
         desc.set_margin_start(0)
         desc.set_halign(Gtk.Align.START)
         desc.set_valign(Gtk.Align.START)
@@ -113,7 +108,6 @@ class CardSquare:
         card_icon.set_row_spacing(0)
         card_icon.set_column_spacing(5)
         card_icon.set_margin_top(15)
-        # card_icon.set_size_request(100, 100)
         card_icon.set_css_classes(["view", "card_infao"])
         card.attach(card_icon, 1, 2, 2, 1)
 

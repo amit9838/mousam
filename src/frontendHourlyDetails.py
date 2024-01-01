@@ -117,34 +117,30 @@ class HourlyDetails(Gtk.Grid):
             unit_label.set_text("")
 
         # Precipitation page
+        max_prec = max(hourly_data.precipitation.get("data"))
         if page_name == "prec":
             desc_label.set_text("Day High")
-            val_label.set_text(
-                str(max(daily_data.precipitation_probability_max.get("data")))
-            )
-            unit_label.set_text("cm")
+            val_label.set_text(f"{max_prec:.2f}")
+            unit_label.set_text(hourly_data.precipitation.get('unit'))
 
-        scrolled_window = Gtk.ScrolledWindow(
-            hexpand=True, halign=Gtk.Align.FILL)
-        scrolled_window.set_policy(
-            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
+
+        scrolled_window = Gtk.ScrolledWindow(hexpand=True, halign=Gtk.Align.FILL)
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
         scrolled_window.set_margin_bottom(0)
         scrolled_window.set_margin_top(2)
         scrolled_window.set_kinetic_scrolling(True)
         page_grid.attach(scrolled_window, 0, 2, 1, 1)
 
         graphic_container = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            halign=Gtk.Align.START,
-            margin_top=5,
-            margin_bottom=0,
-        )
+                orientation=Gtk.Orientation.HORIZONTAL,
+                halign=Gtk.Align.START,
+                margin_top=5,
+                margin_bottom=0,
+            )
         scrolled_window.set_child(graphic_container)
 
         for i in range(24):
-            graphic_box = Gtk.Box(
-                orientation=Gtk.Orientation.VERTICAL, margin_start=10, margin_end=10
-            )
+            graphic_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, margin_start=5, margin_end=5)
             graphic_container.append(graphic_box)
 
             icon_box = Gtk.Box(halign=Gtk.Align.CENTER)
@@ -201,11 +197,7 @@ class HourlyDetails(Gtk.Grid):
                 tm = tm.strftime("%I:%M %p")
                 label_bottom.set_text(tm)
                 label_bottom.set_margin_top(5)
-
-                random_number = random.random()
-                random_number = int(random_number * 10) / 10
-
-                label_top.set_text(str(random_number))
+                label_top.set_text("{:.2f}".format(hourly_data.precipitation.get("data")[i]/max_prec))
                 label_top.set_margin_top(5)
-                bar_obj = DrawBar(random_number)
+                bar_obj = DrawBar(hourly_data.precipitation.get("data")[i])
                 icon_box.append(bar_obj.dw)
