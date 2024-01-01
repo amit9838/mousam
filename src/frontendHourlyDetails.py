@@ -64,31 +64,18 @@ class HourlyDetails(Gtk.Grid):
         prec_btn.connect("clicked", self._on_btn_clicked,"prec")
 
         tab_box.append(style_buttons_box)
-        self.page_stacks("hourly")
+        self.create_stack_page("hourly")
 
     def _on_btn_clicked(self, widget, page_name):
         if self.hourly_stack.get_child_by_name(page_name):
             self.hourly_stack.set_visible_child_name(page_name)
             return
-        self.show_loader()
-        self.page_stacks(page_name)
 
-    def show_loader(self):
-        page_name = "loader"
-        if self.hourly_stack.get_child_by_name(page_name):
-            self.hourly_stack.set_visible_child_name(page_name)
-            return
-        container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        container_loader.set_margin_top(80)
-        loader = Gtk.Spinner()
-        loader.set_css_classes(["loader"])
-        loader.start()
-        container_loader.append(loader)
-        self.hourly_stack.add_named(container_loader, "loader")
-        self.hourly_stack.set_visible_child_name(page_name)
+        self.create_stack_page(page_name)
+
 
     # ---------- Create page stack --------------
-    def page_stacks(self, page_name):
+    def create_stack_page(self, page_name):
         from .weatherData import daily_forecast_data as daily_data
         from .weatherData import hourly_forecast_data as hourly_data
 

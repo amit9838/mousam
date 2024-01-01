@@ -13,7 +13,7 @@ class DrawImage():
         self.height = height
 
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(self.width+15 ,self.height+15)
+        self.drawing_area.set_size_request(self.width+15 ,self.height+10)
         self.drawing_area.set_css_classes(['drawing-padding'])
         self.drawing_area.set_draw_func(self.on_draw, None)
 
