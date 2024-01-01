@@ -113,7 +113,10 @@ class DrawDayNight():
         # Choose sun color
         if sun_angle>=180 and sun_angle<=360:
             yellow = abs(1.2-(1-(sun_angle-170)/90))
-            green = abs(1-(1.8-(sun_angle-180)/90))
+            if sun_angle > 270:
+                upper_limit = abs(1.2-(1-(360-170)/90))
+                lower_limit = abs(1.2-(1-(180-170)/90))
+                yellow = upper_limit - yellow + lower_limit
             context.set_source_rgba(1, yellow, 0, 1.5)  # Red
         else:
             context.set_source_rgba(.9, 0.9, 0.9, 1.0)  # Red

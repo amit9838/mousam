@@ -1,7 +1,7 @@
 {
     "app-id" : "io.github.amit9838.weather",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "44",
+    "runtime-version" : "45",
     "sdk" : "org.gnome.Sdk",
     "command" : "weather",
     "finish-args" : [

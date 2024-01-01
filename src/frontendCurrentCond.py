@@ -9,6 +9,7 @@ class CurrentCondition(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_hexpand(True)
+        # self.set_halign(Gtk.Align.FILL)
         # self.set_css_classes(['cond_grid'])
         self.paint_ui()
 

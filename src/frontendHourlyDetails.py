@@ -1,4 +1,4 @@
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk
 import gi
 import random
 import datetime
@@ -47,46 +47,31 @@ class HourlyDetails(Gtk.Grid):
         temp_btn.set_css_classes(["pill", "btn_sm"])
         temp_btn.do_clicked(temp_btn)
         style_buttons_box.append(temp_btn)
-        temp_btn.connect("clicked", self._on_hourly_btn_clicked)
+        temp_btn.connect("clicked",self._on_btn_clicked,"hourly")
 
         # Wind Button -------------
         wind_btn = Gtk.ToggleButton.new_with_label(_("Wind"))
         wind_btn.set_css_classes(["pill", "btn_sm"])
         wind_btn.set_group(temp_btn)
         style_buttons_box.append(wind_btn)
-        wind_btn.connect("clicked", self._on_wind_btn_clicked)
+        wind_btn.connect("clicked",self._on_btn_clicked,"wind" )
 
         # Precipitation Button -------------
         prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
         prec_btn.set_css_classes(["pill", "btn_sm"])
         prec_btn.set_group(temp_btn)
         style_buttons_box.append(prec_btn)
-        prec_btn.connect("clicked", self._on_prec_btn_clicked)
-        # prec_btn.connect('clicked',_on_prec_btn_forecast_btn_clicked,None,forecast_stack)
+        prec_btn.connect("clicked", self._on_btn_clicked,"prec")
 
         tab_box.append(style_buttons_box)
         self.page_stacks("hourly")
 
-    def _on_hourly_btn_clicked(self, widget):
-        page_name = "hourly"
+    def _on_btn_clicked(self, widget, page_name):
         if self.hourly_stack.get_child_by_name(page_name):
             self.hourly_stack.set_visible_child_name(page_name)
             return
-        self.page_stacks("hourly")
-
-    def _on_wind_btn_clicked(self, widget):
-        page_name = "wind"
-        if self.hourly_stack.get_child_by_name(page_name):
-            self.hourly_stack.set_visible_child_name(page_name)
-            return
-        self.page_stacks("wind")
-
-    def _on_prec_btn_clicked(self, widget):
-        page_name = "prec"
-        if self.hourly_stack.get_child_by_name(page_name):
-            self.hourly_stack.set_visible_child_name(page_name)
-            return
-        self.page_stacks("prec")
+        self.show_loader()
+        self.page_stacks(page_name)
 
     def show_loader(self):
         page_name = "loader"
