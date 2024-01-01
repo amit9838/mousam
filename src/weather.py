@@ -2,11 +2,12 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gdk, Gio, GLib
+from gi.repository import Gtk, Adw, Gio, GLib
 
 # module import
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
+from .windowLocations import WeatherLocations
 from .frontendCurrentCond import CurrentCondition
 from .frontendHourlyDetails import HourlyDetails
 from .frontendForecast import Forecast
@@ -27,7 +28,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         global application
         self.main_window = application = self
-
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
         self.set_default_size(1220, 830)
         self.set_title("")
 
@@ -50,6 +51,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
         self.header.pack_end(self.hamburger)
 
+        # Add preferences option
+        action = Gio.SimpleAction.new("locations", None)
+        action.connect("activate", self._on_locations_clicked)
+        self.add_action(action)
+        menu.append(_("Locations"), "win.locations")
+        
         # Add preferences option
         action = Gio.SimpleAction.new("preferences", None)
         action.connect("activate", self._on_preferences_clicked)
@@ -183,9 +190,13 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.set_visible_child_name("main_grid")
 
     # ============= Menu buttom methods ==============
-    def _on_about_clicked(self, widget, param):
+    def _on_about_clicked(self, *args, **kwargs ):
         AboutWindow(application)
 
-    def _on_preferences_clicked(self, widget, param):
+    def _on_preferences_clicked(self,  *args, **kwargs):
         adw_preferences_window = WeatherPreferences(application)
+        adw_preferences_window.show()
+
+    def _on_locations_clicked(self, *args, **kwargs):
+        adw_preferences_window = WeatherLocations(application)
         adw_preferences_window.show()

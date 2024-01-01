@@ -57,7 +57,8 @@ weather_sources = [
   'utils.py',
   'css.py',
   'windowAbout.py',
-  'windowPreferences.py'
+  'windowPreferences.py',
+  'windowLocations.py'
 ]
 
 

@@ -1,4 +1,5 @@
 import requests
+from Models import Location
 
 def find_city(city, count=3):
     base_url = "https://geocoding-api.open-meteo.com/v1/search"
@@ -15,6 +16,7 @@ def find_city(city, count=3):
         cities_res = response.json()
         cities = cities_res.get('results')
         # print(cities)
+        cities_list = []
         for city in cities:
             data = {
                 "name": city.get('name'),
@@ -24,11 +26,15 @@ def find_city(city, count=3):
                 "latitude": city.get('latitude'),
                 "longitude": city.get('longitude')
             }
-            # print(data)
-            return data
+
+            cities_list.append(Location(data))
+        return cities_list
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
 
-# Specify the number of days for which you want to retrieve the forecast (default: 3)
-forecast_days = 1
+
+# UI
+# Name - state - Country
+# Delhi, Delhi, India [name=state]
+# Basti, Uttar Pradesh, India

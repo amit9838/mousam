@@ -1,4 +1,4 @@
-from gi.repository import Gtk
+from gi.repository import Gtk,Gio
 from .constants import icons, conditon
 import gi
 gi.require_version('Gtk', '4.0')
@@ -52,7 +52,12 @@ class CurrentCondition(Gtk.Grid):
             orientation=Gtk.Orientation.VERTICAL, margin_top=30, margin_end=5)
         self.attach(box_right, 1, 0, 1, 1)
 
-        loc_label = Gtk.Label(label="Delhi,India",
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        self.added_cities = self.settings.get_strv("added-cities")
+        self.selected_city = self.settings.get_int("selected-city")
+        city = self.added_cities[self.selected_city].split(",")
+        current_loc = f"{city[0]}, {city[1]}"
+        loc_label = Gtk.Label(label=current_loc,
                               halign=Gtk.Align.END, margin_bottom=20)
         loc_label.set_css_classes(['text-2b', 'bold-2'])
         box_right.append(loc_label)

@@ -21,7 +21,7 @@ class CurrentWeather:
 
         pprint(self.__dict__)
 
-    def update_weather_data(self, field, new_data):
+    def update_data(self, field, new_data):
         if hasattr(self, field):
             getattr(self, field)["data"] = new_data
         else:
@@ -47,7 +47,7 @@ class HourlyWeather:
 
         pprint(self.__dict__)
 
-    def update_weather_data(self, field, new_data):
+    def update_data(self, field, new_data):
         if hasattr(self, field):
             getattr(self, field)["data"] = new_data
         else:
@@ -73,7 +73,29 @@ class DailyWeather:
 
         pprint(self.__dict__)
 
-    def update_weather_data(self, field, new_data):
+    def update_data(self, field, new_data):
+        if hasattr(self, field):
+            getattr(self, field)["data"] = new_data
+        else:
+            print(f"Field '{field}' not found in WeatherData.")
+
+
+class Location:
+    total_instances = 0
+
+    def __init__(self, data) -> None:
+        # Dynamically create fields based on the data dictionary
+        for field, values in data.items():
+            setattr(self,field,values)
+
+        DailyWeather.total_instances += 1
+
+    def print_data(self):
+        from pprint import pprint
+
+        pprint(self.__dict__)
+
+    def update_data(self, field, new_data):
         if hasattr(self, field):
             getattr(self, field)["data"] = new_data
         else:
