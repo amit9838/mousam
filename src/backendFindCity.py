@@ -1,5 +1,5 @@
 import requests
-from Models import Location
+from .Models import Location
 
 def find_city(city, count=3):
     base_url = "https://geocoding-api.open-meteo.com/v1/search"

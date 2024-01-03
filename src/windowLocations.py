@@ -3,30 +3,24 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
-from .constants import API_KEY,COUNTRY_CODES
-from .units import get_measurement_type
 from .utils import create_toast
+from .backendFindCity import find_city
 
 class WeatherLocations(Adw.PreferencesWindow):
-        def __init__(self, parent,  **kwargs):
+        def __init__(self, application,  **kwargs):
                 super().__init__(**kwargs)
-                self.parent = parent
+                self.application = application
                 self.set_title(_("Locations"))
-                self.set_transient_for(parent)
+                self.set_transient_for(application)
                 self.set_default_size(600, 500)
 
-                global selected_city,settings,added_cities,cities,use_personal_api,isValid_personal_api,personal_api_key,measurement_type
-                settings = Gio.Settings.new("io.github.amit9838.weather")
-                selected_city = int(str(settings.get_value('selected-city')))
-                personal_api_key = settings.get_string('personal-api-key')
-                added_cities = list(settings.get_value('added-cities'))
-                use_gradient = settings.get_boolean('use-gradient-bg')
-                isValid_personal_api = settings.get_boolean('isvalid-personal-api-key')
-                use_personal_api = settings.get_boolean('use-personal-api-key')
+                global selected_city,added_cities,cities
+                self.settings = application.settings
+                selected_city = int(str(self.settings.get_value('selected-city')))
+                added_cities = list(self.settings.get_strv('added-cities'))
                 cities = [x.split(',')[0] for x in added_cities]
-                measurement_type = get_measurement_type()
 
-        #  Location Page  --------------------------------------------------
+                #  Location Page  --------------------------------------------------
                 location_page = Adw.PreferencesPage()
                 self.add(location_page)
 
@@ -90,12 +84,12 @@ class WeatherLocations(Adw.PreferencesWindow):
                 loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
                 if s_city != loc_city:
                         selected_city = added_cities.index(loc_city) # Update selected_city
-                        settings.set_value("selected-city",GLib.Variant("i",selected_city))
+                        self.settings.set_value("selected-city",GLib.Variant("i",selected_city))
                         self._create_cities_list(added_cities)
-                        GLib.idle_add(self.parent.refresh_weather,self.parent,False)
+                        GLib.idle_add(self.application.refresh_weather,self.application,False)
                         self.add_toast(create_toast(_("Selected - {}").format(title),1))
 
-        def _add_location_dialog(self,parent):
+        def _add_location_dialog(self,application):
                 self._dialog = Adw.PreferencesWindow()
                 self._dialog.set_search_enabled(False)
                 self._dialog.set_title(title=_('Add New Location'))
@@ -142,9 +136,8 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         def _find_city(self,widget):
                 text = self.search_entry.get_text()
-                # city_data = fetch_city_info(API_KEY,text)
-                city_data = None
-   
+                city_data = find_city(text,5)
+
                 if len(self._dialog.search_results)>0:
                         for action_row in self._dialog.search_results:
                                 self._dialog.serach_res_grp.remove(action_row)
@@ -154,17 +147,13 @@ class WeatherLocations(Adw.PreferencesWindow):
                         for i,loc in enumerate(city_data):
                                 res_row =  Adw.ActionRow.new()
                                 res_row.set_activatable(True)
-                                title = None
-                                country = COUNTRY_CODES.get(loc.get('country'))
-                                country_mod = country[0:15]+"..." if len(country) > 15 else country
-                                if loc.get('state'):
-                                        title = f"{loc.get('name')},{loc.get('state')},{country_mod}"
-                                else:
-                                        title = f"{loc.get('name')},{country_mod}"
-
+                                title_arr = [loc.name,loc.state,loc.country]
+                                title_arr = [x for x in title_arr if x is not None]
+                                title = ",".join(title_arr)
+                                
                                 res_row.set_title(title)
                                 res_row.connect("activated", self._add_city)
-                                res_row.set_subtitle(f"{loc['lat']},{loc['lon']}")
+                                res_row.set_subtitle(f"{loc.latitude},{loc.longitude}")
                                 self._dialog.search_results.append(res_row)
                                 self._dialog.serach_res_grp.add(res_row)
                 else:
@@ -180,9 +169,9 @@ class WeatherLocations(Adw.PreferencesWindow):
                 loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
                     added_cities.append(loc_city)
-                    settings.set_value("added-cities",GLib.Variant("as",added_cities))
+                    self.settings.set_value("added-cities",GLib.Variant("as",added_cities))
                     self._create_cities_list(added_cities)
-                    self.parent.refresh_main_ui()
+                    self.application.refresh_main_ui()
                     self._dialog.add_toast(create_toast(_("Added - {0}").format(title),1))
                 else:
                     self._dialog.add_toast(create_toast(_("City already added!"),1))
@@ -196,36 +185,11 @@ class WeatherLocations(Adw.PreferencesWindow):
                         selected_city = added_cities.index(s_city)
                 except:
                         selected_city = 0
-                settings.set_value("selected-city",GLib.Variant("i",selected_city))
-                settings.set_value("added-cities",GLib.Variant("as",added_cities))
+                self.settings.set_value("selected-city",GLib.Variant("i",selected_city))
+                self.settings.set_value("added-cities",GLib.Variant("as",added_cities))
                 self._create_cities_list(added_cities)
                 if s_city == city:  # fetch weather only if selected_city was removed
-                    self.parent.refresh_weather(self.parent)
+                    self.application.refresh_weather(self.application)
                 else:
-                    self.parent.refresh_main_ui()
+                    self.application.refresh_main_ui()
                 self.add_toast(create_toast(_("Removed - {0}".format(widget.get_title())),1))
-
-        # Apprearance page methods ---------------------------
-        def _use_gradient_bg(self,widget,state):
-                settings.set_value("use-gradient-bg",GLib.Variant("b",state))
-
-        def _change_unit(self,widget,value):
-                global measurement_type
-                if measurement_type != value:
-                        settings.set_value("measure-type",GLib.Variant("s",value))
-                        GLib.idle_add(self.parent.refresh_weather,self.parent,False)
-                        measurement_type = get_measurement_type()
-
-        # Misc page methods ----------------------------------
-        def _on_use_personal_api_key_toggled(self,widget,state,target):
-                if state==True:
-                        target.set_enable_expansion(True)
-                        settings.set_value("use-personal-api-key",GLib.Variant("b",True))
-                else:
-                        target.set_enable_expansion(False)
-                        settings.set_value("use-personal-api-key",GLib.Variant("b",False))
-
-        def _save_api_key(self,widget,target):
-                settings.set_value("personal-api-key",GLib.Variant("s",target.get_text()))
-                settings.set_value("use-personal-api-key",GLib.Variant("b",True))
-                self.add_toast(create_toast(_("Saved Successfully"),1))
