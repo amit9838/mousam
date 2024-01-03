@@ -32,7 +32,7 @@ class CurrentCondition(Gtk.Grid):
 
         icon_main = Gtk.Image().new_from_file(condition_icon)
         icon_main.set_hexpand(True)
-        icon_main.set_pixel_size(110)
+        icon_main.set_pixel_size(130)
         condition_grid.attach(icon_main, 0, 0, 1, 2)
 
         # Condition label

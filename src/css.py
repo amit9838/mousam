@@ -7,8 +7,8 @@ css = """
 }
 
 .btn_sm{
-    font-size:.95rem;
-    padding: .15rem 1.2rem;
+    font-size:1rem;
+    padding:0.2rem .9rem;
 }
 
 
@@ -134,8 +134,8 @@ css = """
 }
 
 .custom_card_forecast_item{
-    padding: .7rem 1.5rem;
-    border-radius: .5rem;
+    padding: .15rem 1.5rem;
+    border-radius: .7rem;
 }
 
 .bg_light_grey{

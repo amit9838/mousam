@@ -10,8 +10,6 @@ gi.require_version('Adw', '1')
 class Forecast(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_hexpand(True)
-
         self.set_margin_top(20)
         self.set_margin_bottom(5)
         self.set_margin_start(10)
@@ -22,7 +20,7 @@ class Forecast(Gtk.Grid):
     def paint_ui(self):
 
         # ======== Tab Box ==========
-        tab_box = Gtk.Box(orientation=Gtk .Orientation.VERTICAL,
+        tab_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
                           hexpand=True, halign=Gtk.Align.CENTER)
         self.attach(tab_box, 0, 0, 1, 1)
 
@@ -73,8 +71,7 @@ class Forecast(Gtk.Grid):
         from .weatherData import hourly_forecast_data as hourly_data
 
         # Create box and add it stack
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                      margin_top=0, margin_bottom=0)
+        box = Gtk.Box(margin_top=0, margin_bottom=0)
         self.forecast_stack.add_named(box, page_name)
         self.forecast_stack.set_visible_child_name(page_name)
         print("adding page", page_name)
@@ -106,7 +103,7 @@ class Forecast(Gtk.Grid):
         # Add weather items in the stack-box
         for i, item in enumerate(items):
             
-            forecast_item_grid = Gtk.Grid(hexpand=True,margin_top=5)
+            forecast_item_grid = Gtk.Grid(hexpand=True,margin_top=6)
             forecast_item_grid.set_css_classes(
                 ['bg_light_grey', 'custom_card_forecast_item'])
 
@@ -137,8 +134,10 @@ class Forecast(Gtk.Grid):
                     condition_icon = icons[str(weather_code)+'n'] 
 
             icon_main = Gtk.Image().new_from_file(condition_icon)
+            icon_main.set_halign(Gtk.Align.END)
             icon_main.set_hexpand(True)
-            icon_main.set_pixel_size(32)
+            icon_main.set_pixel_size(50)
+            icon_main.set_margin_end(60)
             forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
 
             # Temp label grid

@@ -4,7 +4,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk,Gdk,GdkPixbuf
 
-class DrawImage():
+class DrawImage:
     def __init__(self,path,angle,width,height):
         
         self.image_path = path  # Replace with the path to your image file

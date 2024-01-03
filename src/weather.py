@@ -120,7 +120,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.add_named(self.main_grid, "main_grid")
 
         # -------- Current condition Card ---------
-        current_container_clamp = Adw.Clamp(maximum_size=1300, tightening_threshold=40)
+        current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=200)
         self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
         current_container_clamp.set_child(CurrentCondition())
         self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
@@ -128,7 +128,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # --------- Forecast card ----------
         forecast_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
         forecast_container_clamp.set_child(Forecast())
-        self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 4)
+        self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 2)
 
         # ========= Card widget grid ==========
         widget_grid = Gtk.Grid()

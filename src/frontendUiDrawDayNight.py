@@ -7,7 +7,7 @@ import cairo
 from datetime import datetime
 
 
-class DrawDayNight():
+class DrawDayNight:
     def __init__(self,angle,width,height):
         
         self.angle_degrees = angle  # Specify the rotation angle in degrees
