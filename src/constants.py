@@ -95,7 +95,7 @@ conditon = {
      "2": "Partly Cloudy",
      "3": "Overcast",
     "45": "Fog",
-    "48": "Rime Fog",
+    "48": "Mist",
     "51": "Light Drizzle",
     "53": "Moderate Drizzle",
     "55": "Heavy Intensity Drizzle ",
