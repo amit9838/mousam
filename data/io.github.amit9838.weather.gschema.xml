@@ -27,10 +27,10 @@
       <summary>List of cities and their coordinates.</summary>
       <description>Stores locations added by user in json stringified string format in string</description>
     </key>
-	  <key name="selected-city" type="i">
-      <default>0</default>
+	  <key name="selected-city" type="s">
+      <default>"28.6517178,77.2219388"</default>
       <summary>Selected city</summary>
-      <description>Selected city name</description>
+      <description>Selected city cords</description>
     </key>
 	  <key name="use-gradient-bg" type="b">
       <default>true</default>

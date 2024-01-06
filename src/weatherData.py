@@ -3,6 +3,13 @@ from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .Models import *
 
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gio
+
+
 current_weather_data = None
 hourly_forecast_data = None
 daily_forecast_data = None
@@ -10,11 +17,22 @@ air_apllution_data = None
 
 from pprint import pprint
 
+lat,lon = 52.52,13.41
+
+
+def get_cords():
+    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+    selected_city_index = int(str(settings.get_value('selected-city')))
+    added_cities = list(settings.get_strv('added-cities'))
+    cities = [x.split(',')[0] for x in added_cities]
+
+
+
 def fetch_current_weather():
     global current_weather_data
     # Get current weather data from api
     obj = Weather()
-    current_weather_data = obj._get_current_weather()
+    current_weather_data = obj._get_current_weather(lat,lon)
 
     # create object of current weather data
     current_weather_data = CurrentWeather(current_weather_data)
@@ -30,7 +48,7 @@ def fetch_hourly_forecast():
     global hourly_forecast_data
     # Get current weather data from api
     obj = Weather()
-    hourly_forecast_data = obj._get_hourly_forecast()
+    hourly_forecast_data = obj._get_hourly_forecast(lat,lon)
     # create object of hourly forecast data
     hourly_forecast_data = HourlyWeather(hourly_forecast_data)
     set_uv_index()
@@ -42,7 +60,7 @@ def fetch_daily_forecast():
 
     # Get current weather data from api
     obj = Weather()
-    daily_forecast_data = obj._get_daily_forecast()
+    daily_forecast_data = obj._get_daily_forecast(lat,lon)
 
     # create object of daily forecast data
     daily_forecast_data = DailyWeather(daily_forecast_data)

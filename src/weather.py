@@ -31,7 +31,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
         self.set_default_size(1220, 830)
         self.set_title("")
-
         #  Adding a button into header
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class="flat")

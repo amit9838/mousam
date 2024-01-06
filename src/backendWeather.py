@@ -3,7 +3,7 @@ import requests
 import datetime
 
 # lat,lon = 28.65195,77.23149
-lat,lon = 52.52,13.41
+# lat,lon = 52.52,13.41
 
 base_url = "https://api.open-meteo.com/v1/forecast"
 
@@ -31,7 +31,7 @@ class Weather():
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
-    def _get_current_weather(self):
+    def _get_current_weather(self,lat,lon):
         current_args = [
             "temperature_2m",
             "relativehumidity_2m",
@@ -68,7 +68,7 @@ class Weather():
             print(f"Error: {e}")
 
 
-    def _get_hourly_forecast(self):
+    def _get_hourly_forecast(self,lat,lon):
         hourly_args = [
             'temperature_2m',
             'relativehumidity_2m',
@@ -114,7 +114,7 @@ class Weather():
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
-    def _get_daily_forecast(self):
+    def _get_daily_forecast(self,lat,lon):
         daily_args = [
             "weathercode",
             "temperature_2m_max",

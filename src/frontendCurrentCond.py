@@ -54,9 +54,17 @@ class CurrentCondition(Gtk.Grid):
 
         self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
         self.added_cities = self.settings.get_strv("added-cities")
-        self.selected_city = self.settings.get_int("selected-city")
-        city = self.added_cities[self.selected_city].split(",")
-        current_loc = f"{city[0]}, {city[1]}"
+        self.selected_city = self.settings.get_string("selected-city")
+
+        self.selected_city_index = list(map(lambda city: self.selected_city in city,self.added_cities)).index(True)
+
+        city_arr = self.added_cities[self.selected_city_index].split(",")
+
+        # Delete lat,lon from the array
+        del city_arr[-1]
+        del city_arr[-1]
+
+        current_loc = ",".join(city_arr)
         loc_label = Gtk.Label(label=current_loc,
                               halign=Gtk.Align.END, margin_bottom=20)
         loc_label.set_css_classes(['text-2b', 'bold-2'])
