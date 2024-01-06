@@ -77,16 +77,16 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         def switch_location(self,widget):
                 global selected_city
-                s_city = added_cities[selected_city]
+                s_city = added_cities[selected_city].split(',')
+                already_selected_cord = f"{s_city[-2]},{s_city[-1]}" #get lat,lon of the selected city
                 title = widget.get_title()
-                split_title = title.split(',')
-                modify_title = lambda x: f"{x[0]},{x[2]}" if len(x) > 2 else title
-                loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
-                if s_city != loc_city:
-                        selected_city = added_cities.index(loc_city) # Update selected_city
-                        self.settings.set_value("selected-city",GLib.Variant("i",selected_city))
+                select_cord = f"{widget.get_subtitle()}"
+                if already_selected_cord != select_cord:
+                        selected_index = list(map(lambda city: select_cord in city,added_cities)).index(True)
+                        selected_city = selected_index
+                        self.settings.set_value("selected-city",GLib.Variant("i",selected_index))
                         self._create_cities_list(added_cities)
-                        GLib.idle_add(self.application.refresh_weather,self.application,False)
+                        # GLib.idle_add(self.application.refresh_weather,self.application,False)
                         self.add_toast(create_toast(_("Selected - {}").format(title),1))
 
         def _add_location_dialog(self,application):
@@ -164,14 +164,19 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         def _add_city(self,widget):
                 title = widget.get_title()
-                split_title = title.split(',')
-                modify_title = lambda x: f"{x[0]},{x[2]}" if len(x) > 2 else title
-                loc_city = f"{modify_title(split_title)},{widget.get_subtitle()}"
+                title_arr = title.split(',')
+                modified_title = title_arr[0]
+                if len(title_arr)>2:
+                        modified_title = f"{title_arr[0]},{title_arr[2]}"
+                elif len(title_arr)>1:
+                        modified_title = f"{title_arr[0]},{title_arr[1]}"
+
+                loc_city = f"{modified_title},{widget.get_subtitle()}"
                 if loc_city not in added_cities:
                     added_cities.append(loc_city)
                     self.settings.set_value("added-cities",GLib.Variant("as",added_cities))
                     self._create_cities_list(added_cities)
-                    self.application.refresh_main_ui()
+                #     self.application.refresh_main_ui()
                     self._dialog.add_toast(create_toast(_("Added - {0}").format(title),1))
                 else:
                     self._dialog.add_toast(create_toast(_("City already added!"),1))
@@ -191,5 +196,6 @@ class WeatherLocations(Adw.PreferencesWindow):
                 if s_city == city:  # fetch weather only if selected_city was removed
                     self.application.refresh_weather(self.application)
                 else:
-                    self.application.refresh_main_ui()
+                        pass
+                #     self.application.refresh_main_ui()
                 self.add_toast(create_toast(_("Removed - {0}".format(widget.get_title())),1))
