@@ -1,6 +1,5 @@
 import requests
 
-lat, lon = 28.65195, 77.23149
 
 base_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
 
@@ -22,7 +21,7 @@ class AirPollution:
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
-    def _get_current_air_pollution(self):
+    def _get_current_air_pollution(self,lat,lon):
         current_args = [
             "european_aqi",
             "us_aqi",

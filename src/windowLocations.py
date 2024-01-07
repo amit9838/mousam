@@ -96,8 +96,8 @@ class WeatherLocations(Adw.PreferencesWindow):
                         selected_city = select_cord
                         self.settings.set_value("selected-city",GLib.Variant("s",selected_city))
                         self._create_cities_list(added_cities)
-                        # GLib.idle_add(self.application.refresh_weather,self.application,False)
                         self.add_toast(create_toast(_("Selected - {}").format(title),1))
+                        GLib.idle_add(self.application.get_weather,reload_type="switch", title = title)
 
         # ========== Add Location ===========
         def _add_location_dialog(self,application):
@@ -226,6 +226,8 @@ class WeatherLocations(Adw.PreferencesWindow):
                         first_city = added_cities[0].split(",")
                         selected_city = f"{first_city[-2]},{first_city[-1]}"
                         self.settings.set_value("selected-city",GLib.Variant("s",selected_city))
+                        GLib.idle_add(self.application.get_weather,reload_type="switch", title = widget.get_title())
+
                                 
                 self.settings.set_value("added-cities",GLib.Variant("as",added_cities))
                 self._create_cities_list(added_cities)

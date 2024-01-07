@@ -74,7 +74,6 @@ class Forecast(Gtk.Grid):
         box = Gtk.Box(margin_top=0, margin_bottom=0)
         self.forecast_stack.add_named(box, page_name)
         self.forecast_stack.set_visible_child_name(page_name)
-        print("adding page", page_name)
 
         # Create scrolled window , add it to stack-box
         scrolled_window = Gtk.ScrolledWindow()

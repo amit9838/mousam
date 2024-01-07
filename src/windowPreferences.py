@@ -16,7 +16,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 global selected_city,settings,added_cities,cities,use_personal_api,isValid_personal_api,personal_api_key,measurement_type
                 settings = Gio.Settings.new("io.github.amit9838.weather")
-                selected_city = int(str(settings.get_value('selected-city')))
+                selected_city = settings.get_string('selected-city')
                 personal_api_key = settings.get_string('personal-api-key')
                 added_cities = list(settings.get_value('added-cities'))
                 use_gradient = settings.get_boolean('use-gradient-bg')

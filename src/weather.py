@@ -3,8 +3,10 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GLib
+from datetime import datetime
 
 # module import
+from .utils import create_toast
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
 from .windowLocations import WeatherLocations
@@ -21,6 +23,8 @@ from .weatherData import (
     fetch_current_air_pollution,
 )
 
+global updated_at
+updated_at = str(datetime.now())
 
 class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
@@ -35,9 +39,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class="flat")
         self.set_titlebar(self.header)
-        self.open_button = Gtk.Button(label="Open")
-        self.header.pack_start(self.open_button)
-        self.open_button.set_icon_name("view-refresh-symbolic")
+
+        # Add refresh button to header
+        self.refresh_button = Gtk.Button(label="Open")
+        self.header.pack_start(self.refresh_button)
+        self.refresh_button.set_icon_name("view-refresh-symbolic")
+        self.refresh_button.connect('clicked',self._refresh_weather)
 
         # Create Menu
         menu = Gio.Menu.new()
@@ -87,6 +94,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Start Loader and call paint UI
         self.show_loader()
 
+    # =========== Create Loader =============
     def show_loader(self):
         # Loader container
         container_loader = Gtk.Box()
@@ -103,14 +111,27 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.set_visible_child_name("loader")
 
         # Initiate UI loading weather data and drawing UI
-        GLib.idle_add(self.draw_ui)
+        GLib.idle_add(self.get_weather)
 
-    def draw_ui(self):
-        # Initial fetch on app launch
+
+    # ===========  Load weather data and create UI ============
+    def get_weather(self,reload_type=None,title = ""):
+    
+        # Check if no city is added
+        added_cities = self.settings.get_strv('added-cities')
+
+        if len(added_cities) == 0:  # Reset city to default if all cities are removed
+            self.settings.reset('added-cities')
+            self.settings.reset('selected-city')
+        
         cw_data = fetch_current_weather()
         hf_data = fetch_hourly_forecast()
         df_data = fetch_daily_forecast()
         air_poll = fetch_current_air_pollution()
+
+        child = self.main_stack.get_child_by_name('main_grid')
+        if child is not None:
+            self.main_stack.remove(child)
 
         # ------- Main grid ---------
         self.main_grid = Gtk.Grid()
@@ -186,7 +207,29 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # -------- Card Day/Night --------
         card_obj = CardDayNight()
         widget_grid.attach(card_obj.card, 2, 1, 2, 1)
+
         self.main_stack.set_visible_child_name("main_grid")
+
+        if reload_type == 'switch':
+            self.toast_overlay.add_toast(create_toast(("Switched to {}".format(title)),1))
+        elif reload_type == "refresh":
+            self.toast_overlay.add_toast(create_toast(("Refreshed Successfully"),1))
+
+
+    # ============= Refresh buttom methods ==============
+    def _refresh_weather(self,widget):
+        global updated_at      
+        # Ignore refreshing weather within 5 second
+        extract_seconds = lambda x: float(x.split(" ")[1].split(":")[2])
+
+        if abs(datetime.now().second - extract_seconds(updated_at)) < 5:
+            self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
+
+        else:
+            updated_at = str(datetime.now())
+            self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
+            GLib.idle_add(self.get_weather,reload_type="refresh")
+
 
     # ============= Menu buttom methods ==============
     def _on_about_clicked(self, *args, **kwargs ):

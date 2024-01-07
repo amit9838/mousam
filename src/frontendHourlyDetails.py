@@ -105,6 +105,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Precipitation page
         max_prec = max(hourly_data.precipitation.get("data"))
+        max_prec = max(max_prec,1)
         if page_name == "prec":
             desc_label.set_text("Day High")
             val_label.set_text(f"{max_prec:.2f}")

@@ -17,6 +17,8 @@ def find_city(city, count=3):
         cities = cities_res.get('results')
         # print(cities)
         cities_list = []
+        if cities == None:
+            return cities_list
         for city in cities:
             data = {
                 "name": city.get('name'),

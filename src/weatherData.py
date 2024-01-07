@@ -15,24 +15,17 @@ hourly_forecast_data = None
 daily_forecast_data = None
 air_apllution_data = None
 
-from pprint import pprint
-
-lat,lon = 52.52,13.41
-
 
 def get_cords():
     settings = Gio.Settings(schema_id="io.github.amit9838.weather")
-    selected_city_index = int(str(settings.get_value('selected-city')))
-    added_cities = list(settings.get_strv('added-cities'))
-    cities = [x.split(',')[0] for x in added_cities]
-
-
+    selected_city_ = settings.get_string('selected-city')   
+    return [float(x) for x in selected_city_.split(",")]
 
 def fetch_current_weather():
     global current_weather_data
     # Get current weather data from api
     obj = Weather()
-    current_weather_data = obj._get_current_weather(lat,lon)
+    current_weather_data = obj._get_current_weather(*get_cords())
 
     # create object of current weather data
     current_weather_data = CurrentWeather(current_weather_data)
@@ -48,7 +41,7 @@ def fetch_hourly_forecast():
     global hourly_forecast_data
     # Get current weather data from api
     obj = Weather()
-    hourly_forecast_data = obj._get_hourly_forecast(lat,lon)
+    hourly_forecast_data = obj._get_hourly_forecast(*get_cords())
     # create object of hourly forecast data
     hourly_forecast_data = HourlyWeather(hourly_forecast_data)
     set_uv_index()
@@ -60,7 +53,7 @@ def fetch_daily_forecast():
 
     # Get current weather data from api
     obj = Weather()
-    daily_forecast_data = obj._get_daily_forecast(lat,lon)
+    daily_forecast_data = obj._get_daily_forecast(*get_cords())
 
     # create object of daily forecast data
     daily_forecast_data = DailyWeather(daily_forecast_data)
@@ -70,7 +63,7 @@ def fetch_daily_forecast():
 def fetch_current_air_pollution():
     global air_apllution_data
     obj = AirPollution()
-    air_apllution_data = obj._get_current_air_pollution()
+    air_apllution_data = obj._get_current_air_pollution(*get_cords())
     if air_apllution_data is not None:
         air_apllution_data["level"] = classify_aqi(air_apllution_data["current"]["us_aqi"])
     return air_apllution_data

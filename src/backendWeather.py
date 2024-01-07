@@ -2,8 +2,6 @@ from typing import List
 import requests
 import datetime
 
-# lat,lon = 28.65195,77.23149
-# lat,lon = 52.52,13.41
 
 base_url = "https://api.open-meteo.com/v1/forecast"
 
