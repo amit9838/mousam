@@ -1,10 +1,8 @@
+from gi.repository import Gtk
+import gi
 from .constants import icon_loc
 from .frontendUiDrawBar import *
 from .frontendUiDrawImageIcon import *
-from .constants import icons
-from gi.repository import Gtk
-import gi
-from datetime import datetime
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -37,16 +35,22 @@ class CardSquare:
 
         self.curr_w = current_weather_data
         if self.title.lower() == "wind":
-            self.sub_desc = self._get_wind_dir(self.curr_w.winddirection_10m.get("data"))
+            self.sub_desc = self._get_wind_dir(
+                self.curr_w.winddirection_10m.get("data")
+            )
 
         self.card = None
         self.create_card()
 
     def create_card(self):
-        card = Gtk.Grid(margin_top=10, margin_start=5, margin_end=5)
+        card = Gtk.Grid(
+            margin_top=10,
+            margin_start=5,
+            margin_end=5,
+            row_spacing=5,
+            column_spacing=25,
+        )
         card.halign = Gtk.Align.FILL
-        card.set_row_spacing(5)
-        card.set_column_spacing(25)
         card.set_size_request(200, 150)
         card.set_css_classes(["view", "card", "custom_card"])
         self.card = card
@@ -59,17 +63,16 @@ class CardSquare:
         card.attach(title, 0, 0, 1, 2)
 
         # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid()
-        card_info.set_row_spacing(0)
-        card_info.set_margin_top(15)
-        card_info.set_column_spacing(5)
+        card_info = Gtk.Grid(margin_top=15, row_spacing=0, column_spacing=15)
+
         card_info.set_css_classes(["view"])
         card.attach(card_info, 0, 2, 1, 2)
 
         # Main value (like windspeed = 32km/h)
+        self.main_val = int(self.main_val) if self.title == 'Pressure' else self.main_val
         main_val = Gtk.Label(label=self.main_val)
         main_val.set_css_classes(["text-1", "bold"])
-        main_val.set_halign(Gtk.Align.START)
+        main_val.set_halign(Gtk.Align.END)
         card_info.attach(main_val, 0, 1, 3, 3)
 
         # Unit if the main value
@@ -94,19 +97,15 @@ class CardSquare:
         # Sub description heading
         sub_desc_heading = Gtk.Label(label=self.sub_desc_heading)
         sub_desc_heading.set_css_classes(["text-4", "light-1"])
-        sub_desc_heading.set_margin_start(0)
         sub_desc_heading.set_halign(Gtk.Align.START)
         card_info.attach(sub_desc_heading, 0, 5, 4, 1)
 
         sub_desc = Gtk.Label(label=self.sub_desc)
         sub_desc.set_css_classes(["text-4", "bold-2"])
-        sub_desc.set_margin_start(0)
         sub_desc.set_halign(Gtk.Align.START)
         card_info.attach(sub_desc, 0, 6, 4, 1)
 
         card_icon = Gtk.Grid(halign=Gtk.Align.END)
-        card_icon.set_row_spacing(0)
-        card_icon.set_column_spacing(5)
         card_icon.set_margin_top(15)
         card_icon.set_css_classes(["view", "card_infao"])
         card.attach(card_icon, 1, 2, 2, 1)
@@ -123,7 +122,8 @@ class CardSquare:
 
         if self.title.lower() == "wind":
             obj = DrawImage(
-                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 40, 40)
+                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 35, 35
+            )
 
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
 
@@ -137,7 +137,8 @@ class CardSquare:
 
         elif self.title.lower() == "pressure":
             level_obj = DrawLevelBar(
-                (self.curr_w.surface_pressure.get("data")-872) / (1080-872), rounded_cap=True
+                (self.curr_w.surface_pressure.get("data") - 872) / (1080 - 872),
+                rounded_cap=True,
             )
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
@@ -150,7 +151,6 @@ class CardSquare:
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
         icon_bottom_text = Gtk.Label(label=self.text_low)
-        icon_upper_text = Gtk.Label(label=self.text_up)
         if self.title.lower() == "wind":
             icon_bottom_text.set_css_classes(["text-4", "bold"])
         else:

@@ -3,7 +3,7 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GLib
-from datetime import datetime
+import time
 
 # module import
 from .utils import create_toast
@@ -24,7 +24,7 @@ from .weatherData import (
 )
 
 global updated_at
-updated_at = str(datetime.now())
+updated_at = time.time()
 
 class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
@@ -220,13 +220,13 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     def _refresh_weather(self,widget):
         global updated_at      
         # Ignore refreshing weather within 5 second
-        extract_seconds = lambda x: float(x.split(" ")[1].split(":")[2])
 
-        if abs(datetime.now().second - extract_seconds(updated_at)) < 5:
+        if time.time() - updated_at < 5:
+            updated_at = time.time()
             self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
 
         else:
-            updated_at = str(datetime.now())
+            updated_at = time.time()
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
             GLib.idle_add(self.get_weather,reload_type="refresh")
 

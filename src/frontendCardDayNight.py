@@ -1,13 +1,11 @@
+from datetime import datetime
+import time
 import gi
+from gi.repository import Gtk
+from .frontendUiDrawDayNight import *
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk
-
-from datetime import datetime
-import time
-
-from .frontendUiDrawDayNight import *
 
 
 class CardDayNight:

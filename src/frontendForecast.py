@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
-from gi.repository import Gtk
-from .constants import icons
-from gettext import gettext as _
 import gi
+from gi.repository import Gtk
+from gettext import gettext as _
+from .constants import icons
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
@@ -76,12 +77,10 @@ class Forecast(Gtk.Grid):
         self.forecast_stack.set_visible_child_name(page_name)
 
         # Create scrolled window , add it to stack-box
-        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window = Gtk.ScrolledWindow(margin_top=8,margin_bottom=8)
         scrolled_window.set_policy(
             Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_size_request(300, 550)
-        scrolled_window.set_margin_bottom(8)
-        scrolled_window.set_margin_top(8)
         scrolled_window.set_kinetic_scrolling(True)
         box.append(scrolled_window)
 
@@ -148,8 +147,7 @@ class Forecast(Gtk.Grid):
             if page_name == 'weekly':
                 temp_max_text = daily_data.temperature_2m_max.get("data")[i]
 
-            temp_max = Gtk.Label(label=f"{temp_max_text:.0f}° ")
-            temp_max.set_margin_start(10)
+            temp_max = Gtk.Label(label=f"{temp_max_text:.0f}° ", margin_start=10,)
             temp_max.set_css_classes(['text-3', 'bold-2'])
             temp_label_grid.attach(temp_max, 0, 0, 1, 1)
 
@@ -158,7 +156,6 @@ class Forecast(Gtk.Grid):
             if page_name == 'weekly':
                 temp_min_text = daily_data.temperature_2m_min.get("data")[i]
 
-            temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°")
+            temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°", margin_top=5)
             temp_min.set_css_classes(['light-4'])
-            temp_min.set_margin_top(5)
             temp_label_grid.attach(temp_min, 0, 1, 1, 1)

@@ -116,9 +116,8 @@ class WeatherLocations(Adw.PreferencesWindow):
                 self._dialog.page.add(self._dialog.group)
                 
                 # Create search box
-                search_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER, spacing = 6)
+                search_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER, spacing = 6, margin_bottom=10,)
                 search_box.set_hexpand(True)
-                search_box.set_margin_bottom(10)
                 self._dialog.group.add(search_box)
 
                 self.search_entry = Gtk.Entry()
