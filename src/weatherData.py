@@ -1,14 +1,13 @@
+import time
 from datetime import datetime
+import gi
+from gi.repository import Gio
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .Models import *
 
-import gi
-
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gio
-
 
 current_weather_data = None
 hourly_forecast_data = None
@@ -18,8 +17,9 @@ air_apllution_data = None
 
 def get_cords():
     settings = Gio.Settings(schema_id="io.github.amit9838.weather")
-    selected_city_ = settings.get_string('selected-city')   
+    selected_city_ = settings.get_string("selected-city")
     return [float(x) for x in selected_city_.split(",")]
+
 
 def fetch_current_weather():
     global current_weather_data
@@ -31,11 +31,18 @@ def fetch_current_weather():
     current_weather_data = CurrentWeather(current_weather_data)
 
     # Add level strings for diffrent attributes
-    current_weather_data.relativehumidity_2m["level_str"] = classify_humidity_level(current_weather_data.relativehumidity_2m.get("data"))
-    current_weather_data.windspeed_10m["level_str"] = classify_wind_speed_level(current_weather_data.windspeed_10m.get("data"))
-    current_weather_data.surface_pressure["level_str"] = classify_presssure_level(current_weather_data.surface_pressure.get("data"))
+    current_weather_data.relativehumidity_2m["level_str"] = classify_humidity_level(
+        current_weather_data.relativehumidity_2m.get("data")
+    )
+    current_weather_data.windspeed_10m["level_str"] = classify_wind_speed_level(
+        current_weather_data.windspeed_10m.get("data")
+    )
+    current_weather_data.surface_pressure["level_str"] = classify_presssure_level(
+        current_weather_data.surface_pressure.get("data")
+    )
 
     return current_weather_data
+
 
 def fetch_hourly_forecast():
     global hourly_forecast_data
@@ -43,10 +50,23 @@ def fetch_hourly_forecast():
     obj = Weather()
     hourly_forecast_data = obj._get_hourly_forecast(*get_cords())
     # create object of hourly forecast data
+    # print(hourly_forecast_data.get("hourly").items())
     hourly_forecast_data = HourlyWeather(hourly_forecast_data)
-    set_uv_index()
+    current_weather_data.uv_index = {
+        "data": hourly_forecast_data.uv_index["data"][0],
+        "level_str": classify_uv_index(hourly_forecast_data.uv_index["data"][0]),
+    }
+    current_weather_data.dewpoint_2m = {
+        "unit": hourly_forecast_data.dewpoint_2m["unit"],
+        "data": hourly_forecast_data.dewpoint_2m["data"][0],
+    }
+    current_weather_data.visibility = {
+        "unit": hourly_forecast_data.visibility["unit"],
+        "data": hourly_forecast_data.visibility["data"][0],
+    }
 
     return hourly_forecast_data
+
 
 def fetch_daily_forecast():
     global daily_forecast_data
@@ -60,12 +80,15 @@ def fetch_daily_forecast():
 
     return daily_forecast_data
 
+
 def fetch_current_air_pollution():
     global air_apllution_data
     obj = AirPollution()
     air_apllution_data = obj._get_current_air_pollution(*get_cords())
     if air_apllution_data is not None:
-        air_apllution_data["level"] = classify_aqi(air_apllution_data["current"]["us_aqi"])
+        air_apllution_data["level"] = classify_aqi(
+            air_apllution_data["current"]["us_aqi"]
+        )
     return air_apllution_data
 
 
@@ -84,27 +107,10 @@ def classify_aqi(aqi_value):
         return "Severe"
     else:
         return "Hazardous"
-    
-    
-def set_uv_index():
-    date_time = [d_t for d_t in hourly_forecast_data.time["data"] if (int(datetime.fromtimestamp(d_t).strftime(r"%d")) == datetime.today().date().day)]
-    date_time = [d_t for d_t in date_time if int(datetime.fromtimestamp(d_t).strftime(r"%H")) == datetime.now().hour]
-    date_time = date_time[0]
-    
-    uv_index = 0
-    for i,item in enumerate(hourly_forecast_data.time["data"]):
-        if item == date_time:
-            uv_index = {
-                        "data": hourly_forecast_data.uv_index["data"][i],
-                        "level_str": classify_uv_index(hourly_forecast_data.uv_index["data"][i])
-                        }
-            
-            
-    current_weather_data.uv_index = uv_index
-    return uv_index
 
 
 # ========= Classify diffrent attributes of current weather ==========
+
 
 def classify_uv_index(uv_index):
     if uv_index <= 2:
@@ -126,7 +132,7 @@ def classify_humidity_level(uv_index):
         return "Moderate"
     else:
         return "High"
-    
+
 
 def classify_presssure_level(pressure):
     if pressure < 940:
@@ -135,7 +141,7 @@ def classify_presssure_level(pressure):
         return "Normal"
     else:
         return "High"
-    
+
 
 def classify_wind_speed_level(wind_speed):
     if wind_speed <= 1:

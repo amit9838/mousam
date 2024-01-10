@@ -78,7 +78,7 @@ class Weather():
             'visibility',
             'windspeed_10m',
             'wind_direction_10m',
-            'uv_index'  ,
+            'uv_index',
             'is_day'
         ]
 

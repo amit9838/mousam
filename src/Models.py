@@ -1,5 +1,5 @@
 # Models for All weather data data
-
+import time
 
 
 class CurrentWeather:
@@ -33,11 +33,19 @@ class HourlyWeather:
 
     def __init__(self, data) -> None:
         # Dynamically create fields based on the data dictionary
-        for field, values in data.get("hourly").items():
+        hourly_data = data.get("hourly")
+        nearest_current_time_idx = 0
+        for i in range(len(hourly_data.get('time'))):
+            if (abs(time.time()-hourly_data.get('time')[i])//60)<30:
+                nearest_current_time_idx = i
+                break
+
+        for field, values in hourly_data.items():
+
             setattr(
                 self,
                 field,
-                {"unit": data.get("hourly_units").get(field), "data": values},
+                {"unit": data.get("hourly_units").get(field), "data": values[nearest_current_time_idx:]},
             )
 
         HourlyWeather.total_instances += 1
@@ -86,7 +94,7 @@ class Location:
     def __init__(self, data) -> None:
         # Dynamically create fields based on the data dictionary
         for field, values in data.items():
-            setattr(self,field,values)
+            setattr(self, field, values)
 
         DailyWeather.total_instances += 1
 

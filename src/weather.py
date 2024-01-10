@@ -172,8 +172,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val=cw_data.relativehumidity_2m.get("data"),
             main_val_unit="%",
             desc=cw_data.relativehumidity_2m.get("level_str"),
-            sub_desc_heading="Dew Point",
-            sub_desc="23°C",
+            sub_desc_heading="Dewpoint",
+            sub_desc="{0} {1}".format(cw_data.dewpoint_2m.get('data'),cw_data.dewpoint_2m.get('unit')),
             text_up="100",
             text_low="0",
         )
