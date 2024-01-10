@@ -1,4 +1,5 @@
 import datetime
+import time
 import gi
 from gettext import gettext as _
 from gi.repository import Gtk
@@ -104,8 +105,7 @@ class HourlyDetails(Gtk.Grid):
             unit_label.set_text("")
 
         # Precipitation page
-        max_prec = max(hourly_data.precipitation.get("data"))
-        max_prec = max(max_prec, 1)
+        max_prec = max(hourly_data.precipitation.get("data")[:24])
         if page_name == "prec":
             desc_label.set_text("Day High")
             val_label.set_text(f"{max_prec:.2f}")
@@ -126,6 +126,12 @@ class HourlyDetails(Gtk.Grid):
         )
         scrolled_window.set_child(graphic_container)
 
+        nearest_current_time_idx = 0
+        for i in range(len(hourly_data.time.get("data"))):
+            if (abs(time.time() - hourly_data.time.get("data")[i]) // 60) < 30:
+                nearest_current_time_idx = i
+                break
+
         for i in range(24):
             graphic_box = Gtk.Box(
                 orientation=Gtk.Orientation.VERTICAL, margin_start=5, margin_end=5
@@ -139,15 +145,17 @@ class HourlyDetails(Gtk.Grid):
             label_top.set_css_classes(["text-4", "bold-2", "light-3"])
             graphic_box.append(label_top)
 
-
             label_bottom = Gtk.Label(label="")
             label_bottom.set_css_classes(["text-6", "bold-2", "light-6"])
-            tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+            tm = datetime.datetime.fromtimestamp(
+                hourly_data.time.get("data")[i]
+            )
             tm = tm.strftime("%I:%M %p")
             label_bottom.set_text(tm)
 
-            if i is 0:
+            if i == nearest_current_time_idx:
                 label_bottom.set_text("Now")
+                label_bottom.set_css_classes(["bold-1"])
 
             graphic_box.append(label_bottom)
 
@@ -183,9 +191,16 @@ class HourlyDetails(Gtk.Grid):
                 icon_box.append(icon_main)
 
             elif page_name == "prec":
-                bar_obj = DrawBar(hourly_data.precipitation.get("data")[i])
+                bar_obj = None
+                if max_prec == 0:
+                     bar_obj = DrawBar(0)
+                else:
+                    bar_obj = DrawBar(hourly_data.precipitation.get("data")[i]//max_prec)
                 icon_box.append(bar_obj.dw)
-                label_top.set_text(
-                    "{:.2f}".format(hourly_data.precipitation.get("data")[i] / max_prec)
-                )
+                prec = hourly_data.precipitation.get("data")[i]
+                if prec > 0:
+                    label_top.set_text("{:.1f}".format(prec))
+                else:
+                    label_top.set_text("0")
+
                 label_top.set_margin_top(0)

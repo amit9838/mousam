@@ -12,7 +12,6 @@ class CardAirPollution:
         from .weatherData import air_apllution_data
 
         self.poll_data = air_apllution_data
-
         self.card = None
         self.create_card()
 

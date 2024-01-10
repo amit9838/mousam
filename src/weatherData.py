@@ -51,14 +51,23 @@ def fetch_hourly_forecast():
     hourly_forecast_data = obj._get_hourly_forecast(*get_cords())
     # create object of hourly forecast data
     # print(hourly_forecast_data.get("hourly").items())
+    nearest_current_time_idx = 0
+    for i in range(len(hourly_forecast_data.get("hourly").get("time"))):
+        if (abs(time.time() - hourly_forecast_data.get("hourly").get("time")[i]) // 60) < 30:
+            nearest_current_time_idx = i
+            break
+
     hourly_forecast_data = HourlyWeather(hourly_forecast_data)
+
     current_weather_data.uv_index = {
-        "data": hourly_forecast_data.uv_index["data"][0],
-        "level_str": classify_uv_index(hourly_forecast_data.uv_index["data"][0]),
+        "data": hourly_forecast_data.uv_index["data"][nearest_current_time_idx],
+        "level_str": classify_uv_index(
+            hourly_forecast_data.uv_index["data"][nearest_current_time_idx]
+        ),
     }
     current_weather_data.dewpoint_2m = {
         "unit": hourly_forecast_data.dewpoint_2m["unit"],
-        "data": hourly_forecast_data.dewpoint_2m["data"][0],
+        "data": hourly_forecast_data.dewpoint_2m["data"][nearest_current_time_idx],
     }
     current_weather_data.visibility = transform_visibility_data(
         hourly_forecast_data.visibility["unit"],
