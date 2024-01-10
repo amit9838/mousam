@@ -139,17 +139,21 @@ class HourlyDetails(Gtk.Grid):
             label_top.set_css_classes(["text-4", "bold-2", "light-3"])
             graphic_box.append(label_top)
 
+
             label_bottom = Gtk.Label(label="")
             label_bottom.set_css_classes(["text-6", "bold-2", "light-6"])
+            tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+            tm = tm.strftime("%I:%M %p")
+            label_bottom.set_text(tm)
+
+            if i is 0:
+                label_bottom.set_text("Now")
+
             graphic_box.append(label_bottom)
 
             if page_name == "wind":
                 label_top.set_text(str(hourly_data.windspeed_10m.get("data")[i]))
                 label_top.set_margin_top(10)
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
-                tm = tm.strftime("%I:%M %p")
-                label_bottom.set_text(tm)
-                label_bottom.set_margin_top(5)
 
                 img = DrawImage(
                     icon_loc,
@@ -164,10 +168,6 @@ class HourlyDetails(Gtk.Grid):
             elif page_name == "hourly":
                 label_top.set_text(str(hourly_data.temperature_2m.get("data")[i]) + "°")
                 label_top.set_margin_top(5)
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
-                tm = tm.strftime("%I:%M %p")
-                label_bottom.set_margin_top(5)
-                label_bottom.set_text(tm)
 
                 weather_code = hourly_data.weathercode.get("data")[i]
                 condition_icon = icons[str(weather_code)]
@@ -189,7 +189,3 @@ class HourlyDetails(Gtk.Grid):
                     "{:.2f}".format(hourly_data.precipitation.get("data")[i] / max_prec)
                 )
                 label_top.set_margin_top(0)
-                tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
-                tm = tm.strftime("%I:%M %p")
-                label_bottom.set_margin_top(5)
-                label_bottom.set_text(tm)

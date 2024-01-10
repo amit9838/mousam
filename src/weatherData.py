@@ -60,10 +60,10 @@ def fetch_hourly_forecast():
         "unit": hourly_forecast_data.dewpoint_2m["unit"],
         "data": hourly_forecast_data.dewpoint_2m["data"][0],
     }
-    current_weather_data.visibility = {
-        "unit": hourly_forecast_data.visibility["unit"],
-        "data": hourly_forecast_data.visibility["data"][0],
-    }
+    current_weather_data.visibility = transform_visibility_data(
+        hourly_forecast_data.visibility["unit"],
+        hourly_forecast_data.visibility["data"][0],
+    )
 
     return hourly_forecast_data
 
@@ -154,3 +154,11 @@ def classify_wind_speed_level(wind_speed):
         return "Strong"
     else:
         return "Extreme"
+
+
+def transform_visibility_data(unit, data):
+    if unit.lower() == "m":
+        data /= 1000
+        unit = "Km"
+
+    return {"unit": unit, "data": data}

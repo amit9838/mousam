@@ -64,27 +64,28 @@ class DrawDayNight:
         context.line_to(center_x,center_y+outer_radius)
         context.stroke()
 
+
+        # Clock
+        # context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        # context.set_font_size(13)
+        # context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
+        # now = datetime.now()
+        # formatted_date_time = now.strftime("%I:%M %p")
+        # text = formatted_date_time
+
+        # # Calculate the position for text placement
+        # text_x = center_x - 30
+        # text_y = center_y + 15
+
+        # # Move the text cursor to the calculated position
+        # context.move_to(text_x, text_y)
+
+        # # Display the text along the circular path
+        # context.show_text(text)
+
+        context.set_font_size(13)
+
         # Horizon text
-
-        context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
-        context.set_font_size(13)
-        context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
-        now = datetime.now()
-        formatted_date_time = now.strftime("%I:%M %p")
-        text = formatted_date_time
-
-        # Calculate the position for text placement
-        text_x = center_x - 30
-        text_y = center_y + 15
-
-        # Move the text cursor to the calculated position
-        context.move_to(text_x, text_y)
-
-        # Display the text along the circular path
-        context.show_text(text)
-
-        context.set_font_size(13)
-
         text = "Horizon"
         # Calculate the position for text placement
         text_x = center_x + outer_radius*1.3
