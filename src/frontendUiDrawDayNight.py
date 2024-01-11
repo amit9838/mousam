@@ -5,7 +5,10 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk
 import cairo
 from datetime import datetime
+import time
+from .utils import get_cords, get_offset_by_cord,get_my_tz_offset
 
+my_tz_offset = get_my_tz_offset()
 
 class DrawDayNight:
     def __init__(self,angle,width,height):
@@ -66,22 +69,25 @@ class DrawDayNight:
 
 
         # Clock
-        # context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
-        # context.set_font_size(13)
-        # context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
-        # now = datetime.now()
-        # formatted_date_time = now.strftime("%I:%M %p")
-        # text = formatted_date_time
+        context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
+        context.set_font_size(13)
+        context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
 
-        # # Calculate the position for text placement
-        # text_x = center_x - 30
-        # text_y = center_y + 15
+        tz_offset_from_curr_tz = get_offset_by_cord(*get_cords())
 
-        # # Move the text cursor to the calculated position
-        # context.move_to(text_x, text_y)
+        now = time.time() - my_tz_offset + tz_offset_from_curr_tz
+        formatted_date_time = datetime.fromtimestamp(now).strftime("%I:%M %p")
+        text = formatted_date_time
 
-        # # Display the text along the circular path
-        # context.show_text(text)
+        # Calculate the position for text placement
+        text_x = center_x - 30
+        text_y = center_y + 15
+
+        # Move the text cursor to the calculated position
+        context.move_to(text_x, text_y)
+
+        # Display the text along the circular path
+        context.show_text(text)
 
         context.set_font_size(13)
 

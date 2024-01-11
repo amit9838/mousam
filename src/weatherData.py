@@ -5,6 +5,7 @@ from gi.repository import Gio
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .Models import *
+from .utils import get_cords
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -14,11 +15,6 @@ hourly_forecast_data = None
 daily_forecast_data = None
 air_apllution_data = None
 
-
-def get_cords():
-    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
-    selected_city_ = settings.get_string("selected-city")
-    return [float(x) for x in selected_city_.split(",")]
 
 
 def fetch_current_weather():
