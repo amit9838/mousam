@@ -63,7 +63,7 @@ class CardSquare:
         card.attach(title, 0, 0, 1, 2)
 
         # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid(margin_top=15, row_spacing=0, column_spacing=15)
+        card_info = Gtk.Grid(margin_top=15, row_spacing=0, column_spacing=5)
 
         card_info.set_css_classes(["view"])
         card.attach(card_info, 0, 2, 1, 2)

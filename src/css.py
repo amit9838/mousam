@@ -36,6 +36,9 @@ css = """
 .text-3{
     font-size: 1.3rem;
 }
+.text-3a{
+    font-size: 1.2rem;
+}
 .text-4{
     font-size: 1.1rem;
 }
@@ -138,6 +141,11 @@ css = """
     border-radius: .7rem;
 }
 
+.custom_card_hourly{
+    border-radius: .5rem;
+    padding: .5rem .7rem;
+    background-color: rgba(100, 100, 100, .06);
+}
 .bg_light_grey{
     background-color: #9a9a9a13;
 }

@@ -1,9 +1,9 @@
 import datetime
+import random
 import time
 import gi
 from gettext import gettext as _
 from gi.repository import Gtk
-
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
@@ -82,7 +82,7 @@ class HourlyDetails(Gtk.Grid):
         self.hourly_stack.add_named(page_grid, page_name)
         self.hourly_stack.set_visible_child_name(page_name)
 
-        info_grid = Gtk.Grid(margin_start=20, margin_top=15)
+        info_grid = Gtk.Grid(margin_start=20, margin_top=10)
         page_grid.attach(info_grid, 0, 1, 1, 1)
 
         desc_label = Gtk.Label(label="Day High", halign=Gtk.Align.START)
@@ -120,10 +120,11 @@ class HourlyDetails(Gtk.Grid):
 
         graphic_container = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            halign=Gtk.Align.START,
-            margin_top=5,
+            halign=Gtk.Align.FILL,
+            margin_top=0,
             margin_bottom=0,
         )
+
         scrolled_window.set_child(graphic_container)
 
         nearest_current_time_idx = 0
@@ -132,36 +133,68 @@ class HourlyDetails(Gtk.Grid):
                 nearest_current_time_idx = i
                 break
 
+        if page_name == "prec":
+            total_sum = sum(hourly_data.precipitation.get("data")[:24])
+            if total_sum == 0:
+                graphic_box = Gtk.Box(
+                    orientation=Gtk.Orientation.VERTICAL,
+                    margin_start=3,
+                    margin_end=3,
+                    halign=Gtk.Align.FILL,
+                    hexpand=True,
+                )
+
+                no_prec_labels = [
+                    "No precipitation today !",
+                    "No precipitation expected today!",
+                    "Anticipate a precipitation-free day !",
+                    "No raindrops, only dreams falling from the sky today !",
+                    "Enjoy a rain-free day today!",
+                    "Umbrella status: resting. No precipitation in sight !",
+                    "No rain in sight today!"
+
+
+                ]
+                no_prec_label = Gtk.Label(label=no_prec_labels[random.randint(0,len(no_prec_labels)-1)])
+                no_prec_label.set_css_classes(["text-3a", "bold-3", "light-2"])
+                no_prec_label.set_halign(Gtk.Align.CENTER)
+                no_prec_label.set_margin_top(40)
+                no_prec_label.set_margin_bottom(40)
+                graphic_box.set_css_classes(["custom_card_hourly"])
+                graphic_box.append(no_prec_label)
+                graphic_container.append(graphic_box)
+                return
+
         for i in range(24):
             graphic_box = Gtk.Box(
-                orientation=Gtk.Orientation.VERTICAL, margin_start=5, margin_end=5
+                orientation=Gtk.Orientation.VERTICAL, margin_start=4, margin_end=4
             )
+            graphic_box.set_css_classes(["custom_card_hourly"])
+
             graphic_container.append(graphic_box)
+
+            label_timestamp = Gtk.Label(label="")
+            label_timestamp.set_css_classes(["text-6", "bold-2", "light-6"])
+            tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+            tm = tm.strftime("%I:%M %p")
+            label_timestamp.set_text(tm)
+
+            if i == nearest_current_time_idx:
+                label_timestamp.set_text("Now")
+                label_timestamp.set_css_classes(["bold-1"])
+
+            graphic_box.append(label_timestamp)
 
             icon_box = Gtk.Box(halign=Gtk.Align.CENTER)
             graphic_box.append(icon_box)
 
-            label_top = Gtk.Label(label="")
-            label_top.set_css_classes(["text-4", "bold-2", "light-3"])
-            graphic_box.append(label_top)
-
-            label_bottom = Gtk.Label(label="")
-            label_bottom.set_css_classes(["text-6", "bold-2", "light-6"])
-            tm = datetime.datetime.fromtimestamp(
-                hourly_data.time.get("data")[i]
-            )
-            tm = tm.strftime("%I:%M %p")
-            label_bottom.set_text(tm)
-
-            if i == nearest_current_time_idx:
-                label_bottom.set_text("Now")
-                label_bottom.set_css_classes(["bold-1"])
-
-            graphic_box.append(label_bottom)
+            label_val = Gtk.Label(label="")
+            label_val.set_css_classes(["text-4", "bold-2", "light-3"])
+            graphic_box.append(label_val)
 
             if page_name == "wind":
-                label_top.set_text(str(hourly_data.windspeed_10m.get("data")[i]))
-                label_top.set_margin_top(10)
+                label_val.set_text(str(hourly_data.windspeed_10m.get("data")[i]))
+                label_val.set_margin_top(10)
 
                 img = DrawImage(
                     icon_loc,
@@ -174,8 +207,10 @@ class HourlyDetails(Gtk.Grid):
                 icon_box.append(img.img_box)
 
             elif page_name == "hourly":
-                label_top.set_text(str(hourly_data.temperature_2m.get("data")[i]) + "°")
-                label_top.set_margin_top(5)
+                label_val.set_text(
+                    str(hourly_data.temperature_2m.get("data")[i]) + "°"
+                )
+                label_timestamp.set_margin_bottom(5)
 
                 weather_code = hourly_data.weathercode.get("data")[i]
                 condition_icon = icons[str(weather_code)]
@@ -193,14 +228,16 @@ class HourlyDetails(Gtk.Grid):
             elif page_name == "prec":
                 bar_obj = None
                 if max_prec == 0:
-                     bar_obj = DrawBar(0)
+                    bar_obj = DrawBar(0)
                 else:
-                    bar_obj = DrawBar(hourly_data.precipitation.get("data")[i]//max_prec)
+                    bar_obj = DrawBar(
+                        hourly_data.precipitation.get("data")[i] / max_prec
+                    )
                 icon_box.append(bar_obj.dw)
                 prec = hourly_data.precipitation.get("data")[i]
                 if prec > 0:
-                    label_top.set_text("{:.1f}".format(prec))
+                    label_val.set_text("{:.1f}".format(prec))
                 else:
-                    label_top.set_text("0")
+                    label_val.set_text("0")
 
-                label_top.set_margin_top(0)
+                label_val.set_margin_top(0)

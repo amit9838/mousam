@@ -51,18 +51,19 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.popover = Gtk.PopoverMenu()  # Create a new popover menu
         self.popover.set_menu_model(menu)
 
+
         # Create a menu button
         self.hamburger = Gtk.MenuButton()
         self.hamburger.set_popover(self.popover)
         self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
         self.header.pack_end(self.hamburger)
+       
+        # Create a menu button
+        self.location_button = Gtk.Button(label="Open")
+        self.header.pack_end(self.location_button)
+        self.location_button.set_icon_name("find-location-symbolic")
+        self.location_button.connect('clicked',self._on_locations_clicked)
 
-        # Add preferences option
-        action = Gio.SimpleAction.new("locations", None)
-        action.connect("activate", self._on_locations_clicked)
-        self.add_action(action)
-        menu.append(_("Locations"), "win.locations")
-        
         # Add preferences option
         action = Gio.SimpleAction.new("preferences", None)
         action.connect("activate", self._on_preferences_clicked)
@@ -183,8 +184,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         card_obj = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.get("data"),
-            main_val_unit=cw_data.surface_pressure.get("unit"),
-            desc=cw_data.surface_pressure.get("level_str"),
+            main_val_unit="",
+            desc=cw_data.surface_pressure.get("unit"),
+            sub_desc_heading=cw_data.surface_pressure.get("level_str"),
             text_up="High",
             text_low="Low",
         )
