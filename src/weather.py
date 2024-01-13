@@ -1,9 +1,10 @@
 import gi
+import time
+import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GLib
-import time
 
 # module import
 from .utils import create_toast
@@ -33,7 +34,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         global application
         self.main_window = application = self
         self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
-        self.set_default_size(1220, 830)
+        self.set_default_size(1220, 860)
         self.set_title("")
         #  Adding a button into header
         self.header = Adw.HeaderBar()
@@ -93,31 +94,70 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.clamp.set_child(self.main_stack)
 
         # Start Loader and call paint UI
-        self.show_loader()
+        # Initiate UI loading weather data and drawing UI
+        thread = threading.Thread(target=self._load_weather_data,name="load_data")
+        thread.start()
 
     # =========== Create Loader =============
     def show_loader(self):
         # Loader container
-        container_loader = Gtk.Box()
+        child = self.main_stack.get_child_by_name('main_grid')
+        if child is not None:
+                self.main_stack.set_visible_child_name("loader")
+                return
+
+        container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container_loader.set_margin_top(200)
         container_loader.set_margin_bottom(300)
 
         # Create loader
-        loader = Gtk.Label(label=f"Loading…")
-        loader.set_css_classes(["text-1", "bold-2"])
+        loader = Gtk.Spinner()
+        loader.set_margin_top(50)
+        loader.set_margin_bottom(50)
+        loader.set_css_classes(['loader'])
+        container_loader.append(loader)
+
+
+        loader_label = Gtk.Label(label=f"Getting Weather Data")
+        loader_label.set_css_classes(["text-1", "bold-2"])
+        container_loader.append(loader_label)
+
+        loader.start()
+        # loader = Gtk.Label(label=f"Loading…")
+        # loader.set_css_classes(["text-1", "bold-2"])
         loader.set_hexpand(True)
         loader.set_vexpand(True)
-        container_loader.append(loader)
         self.main_stack.add_named(container_loader, "loader")
         self.main_stack.set_visible_child_name("loader")
 
-        # Initiate UI loading weather data and drawing UI
-        GLib.idle_add(self.get_weather)
 
+
+
+
+    def _load_weather_data(self):
+        self.show_loader()
+        cwd = threading.Thread(target=fetch_current_weather,name="fetch_current_weather")
+        cwd.start()
+        cwd.join()
+
+        hfd = threading.Thread(target=fetch_hourly_forecast,name="fetch_hourly_forecast")
+        hfd.start()
+
+        dfd = threading.Thread(target=fetch_daily_forecast,name="fetch_daily_forecast")
+        dfd.start()
+
+        apd = threading.Thread(target=fetch_current_air_pollution,name="fetch_current_air_pollution")
+        apd.start()
+        
+        apd.join()
+        hfd.join()
+        dfd.join()
+        self.get_weather()
+        
 
     # ===========  Load weather data and create UI ============
     def get_weather(self,reload_type=None,title = ""):
-    
+        from .weatherData import current_weather_data as cw_data
         # Check if no city is added
         added_cities = self.settings.get_strv('added-cities')
 
@@ -125,10 +165,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.settings.reset('added-cities')
             self.settings.reset('selected-city')
         
-        cw_data = fetch_current_weather()
-        hf_data = fetch_hourly_forecast()
-        df_data = fetch_daily_forecast()
-        air_poll = fetch_current_air_pollution()
+
 
         child = self.main_stack.get_child_by_name('main_grid')
         if child is not None:
@@ -230,7 +267,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         else:
             updated_at = time.time()
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
-            GLib.idle_add(self.get_weather,reload_type="refresh")
+            thread = threading.Thread(target=self._load_weather_data,name="load_data")
+            thread.start()
+
 
 
     # ============= Menu buttom methods ==============

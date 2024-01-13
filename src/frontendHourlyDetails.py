@@ -148,7 +148,6 @@ class HourlyDetails(Gtk.Grid):
                     "No precipitation today !",
                     "No precipitation expected today!",
                     "Anticipate a precipitation-free day !",
-                    "No raindrops, only dreams falling from the sky today !",
                     "Enjoy a rain-free day today!",
                     "Umbrella status: resting. No precipitation in sight !",
                     "No rain in sight today!"
@@ -182,6 +181,8 @@ class HourlyDetails(Gtk.Grid):
             if i == nearest_current_time_idx:
                 label_timestamp.set_text("Now")
                 label_timestamp.set_css_classes(["bold-1"])
+                graphic_box.set_css_classes(["custom_card_hourly","custom_card_hourly_now"])
+
 
             graphic_box.append(label_timestamp)
 

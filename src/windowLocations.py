@@ -1,3 +1,4 @@
+import threading
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -97,7 +98,8 @@ class WeatherLocations(Adw.PreferencesWindow):
                         self.settings.set_value("selected-city",GLib.Variant("s",selected_city))
                         self._create_cities_list(added_cities)
                         self.add_toast(create_toast(_("Selected - {}").format(title),1))
-                        GLib.idle_add(self.application.get_weather,reload_type="switch", title = title)
+                        thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
+                        thread.start()
 
         # ========== Add Location ===========
         def _add_location_dialog(self,application):

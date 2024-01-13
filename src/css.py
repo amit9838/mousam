@@ -143,8 +143,16 @@ css = """
 
 .custom_card_hourly{
     border-radius: .5rem;
-    padding: .5rem .7rem;
+    padding: .7rem .7rem;
+    margin-top: .3rem;
     background-color: rgba(100, 100, 100, .06);
+}
+
+.custom_card_hourly_now{
+    padding: .7rem 1.2rem;
+    margin-top: 0rem;
+    background-color: rgba(100, 100, 100, .15);
+
 }
 .bg_light_grey{
     background-color: #9a9a9a13;
