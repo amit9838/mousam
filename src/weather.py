@@ -7,7 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio, GLib
 
 # module import
-from .utils import create_toast
+from .utils import create_toast,check_internet_connection
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
 from .windowLocations import WeatherLocations
@@ -101,7 +101,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     # =========== Create Loader =============
     def show_loader(self):
         # Loader container
-        child = self.main_stack.get_child_by_name('main_grid')
+        child = self.main_stack.get_child_by_name('loader')
         if child is not None:
                 self.main_stack.set_visible_child_name("loader")
                 return
@@ -131,7 +131,40 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.set_visible_child_name("loader")
 
 
+    # =========== Show No Internet =============
+    def show_no_internet(self):
+        # Loader container
+        child = self.main_stack.get_child_by_name('no_internet')
+        self.toast_overlay.add_toast(create_toast(_("No Internet"),1))
+        if child is not None:
+                self.main_stack.set_visible_child_name("no_internet")
+                return
+
+        no_internet = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
+        no_internet.set_margin_bottom(100)
+
+        self.error_label = Gtk.Label.new()
+        self.error_label.set_label("Failed to load Weather Data")
+        self.error_label.set_css_classes(["text-1", "bold-2"])
+
+        icon = Gtk.Image.new_from_icon_name("network-error-symbolic")
+        icon.set_pixel_size(54)
+        icon.set_margin_end(20)
+
+        no_internet.append(icon)
+        no_internet.append(self.error_label)
+
+        self.main_stack.add_named(no_internet,'no_internet')
+        self.main_stack.set_visible_child_name("no_internet")
+
+    # =========== Load Weather data using threads =============
     def _load_weather_data(self):
+        
+        has_internet = check_internet_connection()
+        if not has_internet:
+            self.show_no_internet()
+            return
+        
         self.show_loader()
         
         # cwd : current_weather_data

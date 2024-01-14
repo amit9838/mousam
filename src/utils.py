@@ -18,14 +18,13 @@ def set_weather_data(current,air_pollution,forecast):
     forecast_weather_data = forecast
 
 def check_internet_connection():
-    response_text = ""
     has_active_internet = False
     try:
         socket.create_connection(("1.1.1.1", 53), timeout=5)  # 53 is the DNS port
         has_active_internet = True
-        return has_active_internet, response_text
+        return has_active_internet
     except OSError:
-        return has_active_internet, response_text
+        return has_active_internet
 
 def get_selected_city_coords():
     settings = Gio.Settings.new("io.github.amit9838.weather")
