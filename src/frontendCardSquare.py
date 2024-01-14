@@ -1,13 +1,11 @@
 from gi.repository import Gtk
 import gi
-from .constants import icon_loc
+from .constants import icons
 from .frontendUiDrawBar import *
 from .frontendUiDrawImageIcon import *
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-
-icon_loc += "arrow.svg"
 
 
 class CardSquare:
@@ -122,7 +120,7 @@ class CardSquare:
 
         if self.title.lower() == "wind":
             obj = DrawImage(
-                icon_loc, self.curr_w.winddirection_10m.get("data") + 180, 35, 35
+                icons['arrow'], self.curr_w.winddirection_10m.get("data") + 180, 35, 35
             )
 
             card_icon.attach(obj.img_box, 0, 1, 1, 1)
