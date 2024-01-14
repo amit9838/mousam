@@ -58,7 +58,7 @@ def get_cords():
     return [float(x) for x in selected_city_.split(",")]
 
 
-def get_my_tz_offset():
+def get_my_tz_offset_from_utc():
     try:
         offset = datetime.utcnow() - datetime.now()
         # Convert the offset to seconds
@@ -69,7 +69,7 @@ def get_my_tz_offset():
         return f"Error: {str(e)}"
 
 
-def get_offset_by_cord(lat,lon):
+def get_tz_offset_by_cord(lat,lon):
     url = f"https://api.geotimezone.com/public/timezone?latitude={lat}&longitude={lon}"
 
     res = requests.get(url)

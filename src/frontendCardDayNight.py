@@ -3,12 +3,12 @@ import time
 import gi
 from gi.repository import Gtk
 from .frontendUiDrawDayNight import *
-from .utils import get_offset_by_cord, get_cords, get_my_tz_offset
+from .utils import get_tz_offset_by_cord, get_cords, get_my_tz_offset_from_utc
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-my_tz_offset = get_my_tz_offset()
+my_tz_offset = get_my_tz_offset_from_utc()
 
 class CardDayNight:
     def __init__(self):
@@ -22,7 +22,7 @@ class CardDayNight:
 
     def get_sunset_sunrise_degree(self):
         from .weatherData import daily_forecast_data as daily_data
-        tz_offset_from_curr_tz = get_offset_by_cord(*get_cords())
+        tz_offset_from_curr_tz = get_tz_offset_by_cord(*get_cords())
         
         sunrise_t, sunset_t = 0, 0
         for i, data in enumerate(daily_data.time.get("data")):
@@ -32,7 +32,6 @@ class CardDayNight:
                 sunset_t = daily_data.sunset.get("data")[i]
                 break
 
-        #https://timezonefinder.michelfe.it/api_guide
 
         sunrise = datetime.fromtimestamp(sunrise_t + my_tz_offset + tz_offset_from_curr_tz).strftime("%I:%M %p")
         sunset = datetime.fromtimestamp(sunset_t + my_tz_offset + tz_offset_from_curr_tz).strftime("%I:%M %p")
