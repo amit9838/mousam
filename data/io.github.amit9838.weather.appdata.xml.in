@@ -43,6 +43,11 @@
   <url type="translate">https://github.com/amit9838/weather/tree/master/po</url>
   <url type="vcs-browser">https://github.com/amit9838/weather</url>
   <developer_name>Amit Chaudhary</developer_name>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
   <custom>
     <value key="Purism::form_factor">workstation</value>
   </custom>

@@ -1,2 +1,4 @@
 .flatpak-builder
+.vscode
 build
+__pycache__

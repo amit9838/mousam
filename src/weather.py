@@ -1,185 +1,337 @@
 import gi
-from datetime import datetime
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
-from gi.repository import Gtk,Adw,Gio,GLib
+import time
+import threading
 
-from .constants import API_KEY
-from .windowPreferences import WeatherPreferences
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, Gio, GLib
+
+# module import
+from .utils import create_toast,check_internet_connection
 from .windowAbout import AboutWindow
-from .uiCurrent_w import current_weather,air_pollution
-from .uiForecast_w  import forecast_weather 
-from .utils import *
+from .windowPreferences import WeatherPreferences
+from .windowLocations import WeatherLocations
+from .frontendCurrentCond import CurrentCondition
+from .frontendHourlyDetails import HourlyDetails
+from .frontendForecast import Forecast
+from .frontendCardSquare import CardSquare
+from .frontendCardDayNight import CardDayNight
+from .frontendCardAirPollution import CardAirPollution
+from .weatherData import (
+    fetch_current_weather,
+    fetch_hourly_forecast,
+    fetch_daily_forecast,
+    fetch_current_air_pollution,
+)
 
-from .backendCurrent_w import fetch_weather
-from .backendForecast_w import fetch_forecast
+global updated_at
+updated_at = time.time()
 
-settings = Gio.Settings.new("io.github.amit9838.weather")
-selected_city = int(str(settings.get_value('selected-city')))
-added_cities = list(settings.get_value('added-cities'))
-cities = [x.split(',')[0] for x in added_cities]
-updated_at = settings.get_string('updated-at')
-
-class WeatherWindow(Gtk.ApplicationWindow):
-    __gtype_name__ = 'WeatherWindow'
-
+class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         global application
-        self.set_default_size(800, 400)
-        self.set_app_title(title=_("Weather"))
         self.main_window = application = self
-
-        # Initial checks
-        if len(added_cities) == 0:
-            settings.reset('added-cities')
-            settings.reset('selected-city')
-
-        self.toast_overlay = Adw.ToastOverlay.new()
-        self.clamp = Adw.Clamp(maximum_size=1000, tightening_threshold=600)
-        self.set_child(self.toast_overlay)
-        self.toast_overlay.set_child(self.clamp)
-
-        self.main_stack = Gtk.Stack.new()
-        self.clamp.set_child(self.main_stack)
-
-        self.main_grid = Gtk.Grid()
-        self.main_grid.set_hexpand(True)
-        self.main_stack.add_named(self.main_grid,'main_grid')
-        
-        self.upper_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER, vexpand=True, halign=Gtk.Align.FILL)
-        self.upper_row.set_hexpand(True)
-        self.upper_row.set_size_request(800,160)
-        self.main_grid.attach(self.upper_row,0,0,1,1)
-
-        self.middle_row = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,valign=Gtk.Align.CENTER, vexpand=True, halign=Gtk.Align.FILL)
-        self.middle_row.set_hexpand(True)
-        self.middle_row.set_size_request(800,200)
-        self.main_grid.attach(self.middle_row,0,1,1,1)
-
-        #  Adding refresh button into header
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        self.set_default_size(1220, 860)
+        self.set_title("")
+        #  Adding a button into header
         self.header = Adw.HeaderBar()
-        self.header.add_css_class(css_class='flat')
+        self.header.add_css_class(css_class="flat")
         self.set_titlebar(self.header)
-        self.refresh_button = Gtk.Button.new_from_icon_name("view-refresh-symbolic")
-        self.refresh_button.set_tooltip_text(_("Refresh"))
-        self.refresh_button.connect('clicked',self.refresh_weather)
-        self.header.pack_start(self.refresh_button)
 
-        # Create a popover
+        # Add refresh button to header
+        self.refresh_button = Gtk.Button(label="Open")
+        self.header.pack_start(self.refresh_button)
+        self.refresh_button.set_icon_name("view-refresh-symbolic")
+        self.refresh_button.connect('clicked',self._refresh_weather)
+
+        # Create Menu
         menu = Gio.Menu.new()
-        self.popover = Gtk.PopoverMenu()
+        self.popover = Gtk.PopoverMenu()  # Create a new popover menu
         self.popover.set_menu_model(menu)
+
 
         # Create a menu button
         self.hamburger = Gtk.MenuButton()
         self.hamburger.set_popover(self.popover)
-        self.hamburger.set_icon_name("open-menu-symbolic")
+        self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
         self.header.pack_end(self.hamburger)
+       
+        # Create a menu button
+        self.location_button = Gtk.Button(label="Open")
+        self.header.pack_end(self.location_button)
+        self.location_button.set_icon_name("find-location-symbolic")
+        self.location_button.connect('clicked',self._on_locations_clicked)
 
-        # Create a new action
+        # Add preferences option
         action = Gio.SimpleAction.new("preferences", None)
         action.connect("activate", self._on_preferences_clicked)
         self.add_action(action)
         menu.append(_("Preferences"), "win.preferences")
-        #menu.append("Help", "help")
 
+        # menu.append("Help", "help")
+
+        # Add about option
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Weather"), "win.about")
 
-        error_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
-        error_box.set_margin_bottom(100)
-        self.main_stack.add_named(error_box,'error_box')
+        # Toast overlay
+        self.toast_overlay = Adw.ToastOverlay.new()
+        self.set_child(self.toast_overlay)
+
+        # Main _clamp
+        self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
+        self.toast_overlay.set_child(self.clamp)
+
+        # main stack
+        self.main_stack = Gtk.Stack.new()
+        self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        self.main_stack.set_transition_duration(duration=100)
+        self.clamp.set_child(self.main_stack)
+
+        # Start Loader and call paint UI
+        # Initiate UI loading weather data and drawing UI
+        thread = threading.Thread(target=self._load_weather_data,name="load_data")
+        thread.start()
+
+    # =========== Create Loader =============
+    def show_loader(self):
+        # Loader container
+        child = self.main_stack.get_child_by_name('loader')
+        if child is not None:
+                self.main_stack.set_visible_child_name("loader")
+                return
+
+        container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        container_loader.set_margin_top(200)
+        container_loader.set_margin_bottom(300)
+
+        # Create loader
+        loader = Gtk.Spinner()
+        loader.set_margin_top(50)
+        loader.set_margin_bottom(50)
+        loader.set_css_classes(['loader'])
+        container_loader.append(loader)
+
+
+        loader_label = Gtk.Label(label=f"Getting Weather Data")
+        loader_label.set_css_classes(["text-1", "bold-2"])
+        container_loader.append(loader_label)
+
+        loader.start()
+        # loader = Gtk.Label(label=f"Loading…")
+        # loader.set_css_classes(["text-1", "bold-2"])
+        loader.set_hexpand(True)
+        loader.set_vexpand(True)
+        self.main_stack.add_named(container_loader, "loader")
+        self.main_stack.set_visible_child_name("loader")
+
+
+    # =========== Show No Internet =============
+    def show_error(self,type:str="no_internet",desc : str = ""):
+        # Loader container
+        message = "No Internet"
+        icon = "network-error-symbolic"
+        desc = ""
+        if type == "api_error":
+            message = "Could not fetch data from API"
+            desc = desc
+            icon = "computer-fail-symbolic"
+            
+
+        child = self.main_stack.get_child_by_name('error_box')
+        self.toast_overlay.add_toast(create_toast(message,1))
+        if child is not None:
+                self.main_stack.set_visible_child_name("error_box")
+                return
+
+        error_box = Gtk.Grid(halign=Gtk.Align.CENTER)
+        error_box.set_margin_top(300)
+
+        icon = Gtk.Image.new_from_icon_name(icon)
+        icon.set_pixel_size(54)
+        icon.set_margin_end(20)
+        error_box.attach(icon,0,0,1,1)
 
         self.error_label = Gtk.Label.new()
-        self.error_label.set_label("Failed to load Weather Data")
-        self.error_label.set_css_classes(['error_label'])
+        self.error_label.set_label(message)
+        self.error_label.set_css_classes(["text-1", "bold-2"])
+        error_box.attach(self.error_label,1,0,1,1)
+       
+        self.error_desc = Gtk.Label.new()
+        self.error_desc.set_label(desc)
+        self.error_desc.set_css_classes(["text-4", "bold-4",'light-3'])
+        error_box.attach(self.error_desc,1,1,1,1)
 
-        icon = Gtk.Image.new_from_icon_name("network-error-symbolic")
-        icon.set_pixel_size(36)
-        icon.set_margin_end(10)
+        self.main_stack.add_named(error_box,'error_box')
+        self.main_stack.set_visible_child_name("error_box")
 
-        error_box.append(icon)
-        error_box.append(self.error_label)
+    # =========== Load Weather data using threads =============
+    def _load_weather_data(self):
 
-        # Initial Fetch -------------------------
-        has_internet, response_text = check_internet_connection()
-        if has_internet == False:
-            self.error_label.set_label(response_text)
-            self.main_stack.set_visible_child_name("error_box")
-        else:
-            self.fetch_weather_data()
-
-    def set_app_title(self,title = _("Weather")):
-            self.set_title(title)
-
-    def refresh_weather(self,widget,ignore=True):
-        global settings,updated_at
-        has_internet, response_text = check_internet_connection()
-        if has_internet == False:
-            self.toast_overlay.add_toast(create_toast(_("No internet!"),1))
+        has_internet = check_internet_connection()
+        if not has_internet:
+            self.show_error()
             return
-        if len(added_cities) == 0:  # Reset city to default if all cities are removed
-            settings.reset('added-cities')
-            settings.reset('selected-city')
+        
+        self.show_loader()
+        
+        # cwd : current_weather_data
+        # cwt : current_weather_thread
+        try:
+            cwd = threading.Thread(target=fetch_current_weather,name="cwt")
+            cwd.start()
+            cwd.join()
+
+            hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
+            hfd.start()
+
+            dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
+            dfd.start()
+
+            apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
+            apd.start()
             
-        # Ignore refreshing weather within 5 second
-        extract_seconds = lambda x: float(x.split(" ")[1].split(":")[2])
+            apd.join()
+            hfd.join()
+            dfd.join()
+            self.get_weather()
 
-        if ignore and abs(datetime.now().second - extract_seconds(updated_at)) < 5:
-            self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
+        except Exception as e:
+            self.show_error(type="api_error",desc="Contact Developer")
+            print((str(e)))
             return
+        
 
-        date_time = datetime.now()
-        updated_at = str(date_time)
-        settings.set_value("updated-at",GLib.Variant("s",updated_at))
-        self.clear_main_ui_grid()
-        self.fetch_weather_data()
-        if ignore:
-            self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
+    # ===========  Load weather data and create UI ============
+    def get_weather(self,reload_type=None,title = ""):
+        from .weatherData import current_weather_data as cw_data
+        # Check if no city is added
+        added_cities = self.settings.get_strv('added-cities')
 
-    def fetch_weather_data(self):
-        latitude,longitude = get_selected_city_coords()
-        w_data = fetch_weather(API_KEY,latitude,longitude)
-        f_data = fetch_forecast(API_KEY,latitude,longitude)
-        ap_data = air_pollution(API_KEY,latitude,longitude)
+        if len(added_cities) == 0:  # Reset city to default if all cities are removed
+            self.settings.reset('added-cities')
+            self.settings.reset('selected-city')
+        
 
-        if w_data is None and f_data is  None:
-            self.main_stack.set_visible_child_name("error_box")
+
+        child = self.main_stack.get_child_by_name('main_grid')
+        if child is not None:
+            self.main_stack.remove(child)
+
+        # ------- Main grid ---------
+        self.main_grid = Gtk.Grid()
+        self.main_grid.set_hexpand(True)
+        self.main_grid.set_vexpand(True)
+        self.main_stack.add_named(self.main_grid, "main_grid")
+
+        # -------- Current condition Card ---------
+        current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=200)
+        self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
+        current_container_clamp.set_child(CurrentCondition())
+        self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
+
+        # --------- Forecast card ----------
+        forecast_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
+        forecast_container_clamp.set_child(Forecast())
+        self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 2)
+
+        # ========= Card widget grid ==========
+        widget_grid = Gtk.Grid()
+        self.main_grid.attach(widget_grid, 1, 2, 1, 1)
+
+        # ------- Wind card ----------
+        card_obj = CardSquare(
+            title="Wind",
+            main_val=cw_data.windspeed_10m.get("data"),
+            main_val_unit=cw_data.windspeed_10m.get("unit"),
+            desc=cw_data.windspeed_10m.get("level_str"),
+            sub_desc_heading="From",
+            sub_desc="Northwest",
+            text_up="N",
+        )
+        widget_grid.attach(card_obj.card, 0, 0, 1, 1)
+
+        # -------- Humidity card  ---------
+        card_obj = CardSquare(
+            title="Humidity",
+            main_val=cw_data.relativehumidity_2m.get("data"),
+            main_val_unit="%",
+            desc=cw_data.relativehumidity_2m.get("level_str"),
+            sub_desc_heading="Dewpoint",
+            sub_desc="{0} {1}".format(cw_data.dewpoint_2m.get('data'),cw_data.dewpoint_2m.get('unit')),
+            text_up="100",
+            text_low="0",
+        )
+        widget_grid.attach(card_obj.card, 1, 0, 1, 1)
+
+        # ------- Pressure card -----------
+        card_obj = CardSquare(
+            title="Pressure",
+            main_val=cw_data.surface_pressure.get("data"),
+            main_val_unit="",
+            desc=cw_data.surface_pressure.get("unit"),
+            sub_desc_heading=cw_data.surface_pressure.get("level_str"),
+            text_up="High",
+            text_low="Low",
+        )
+        widget_grid.attach(card_obj.card, 0, 1, 1, 1)
+
+        # -------- UV Index card ---------
+        card_obj = CardSquare(
+            title="UV Index",
+            main_val=cw_data.uv_index.get("data"),
+            desc=cw_data.uv_index.get("level_str"),
+            text_up="High",
+            text_low="Low",
+        )
+        widget_grid.attach(card_obj.card, 1, 1, 1, 1)
+
+        # -------- Card Rectangle ---------
+        card_obj = CardAirPollution()
+        widget_grid.attach(card_obj.card, 2, 0, 2, 1)
+
+        # -------- Card Day/Night --------
+        card_obj = CardDayNight()
+        widget_grid.attach(card_obj.card, 2, 1, 2, 1)
+
+        self.main_stack.set_visible_child_name("main_grid")
+
+        if reload_type == 'switch':
+            self.toast_overlay.add_toast(create_toast(("Switched to {}".format(title)),1))
+        elif reload_type == "refresh":
+            self.toast_overlay.add_toast(create_toast(("Refreshed Successfully"),1))
+
+
+    # ============= Refresh buttom methods ==============
+    def _refresh_weather(self,widget):
+        global updated_at      
+        # Ignore refreshing weather within 5 second
+
+        if time.time() - updated_at < 5:
+            updated_at = time.time()
+            self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
+
         else:
-            self.main_stack.set_visible_child_name('main_grid')
-            self.clear_main_ui_grid()
-            f_data = f_data.get('list')
-            set_weather_data(w_data,ap_data,f_data) # Save weather data as cache
-            self.plot_current(self.upper_row,w_data,ap_data)
-            self.plot_forecast(self.middle_row,f_data)
+            updated_at = time.time()
+            self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
+            thread = threading.Thread(target=self._load_weather_data,name="load_data")
+            thread.start()
 
-    def plot_current(self,widget,w_data,ap_data):
-        current_weather(self.main_window,widget,w_data,ap_data)
-         
-    def plot_forecast(self,widget,f_data):
-        forecast_weather(widget,f_data)
 
-    def refresh_main_ui(self):  # Repaint main UI with previously fetched data
-        self.clear_main_ui_grid()
-        w_data,ap_data, f_data = get_weather_data()
-        self.plot_current(self.upper_row,w_data,ap_data)
-        self.plot_forecast(self.middle_row,f_data)
 
-    def _on_about_clicked(self, widget, param):
+    # ============= Menu buttom methods ==============
+    def _on_about_clicked(self, *args, **kwargs ):
         AboutWindow(application)
 
-    def _on_preferences_clicked(self, widget, param):
+    def _on_preferences_clicked(self,  *args, **kwargs):
         adw_preferences_window = WeatherPreferences(application)
         adw_preferences_window.show()
 
-    def clear_main_ui_grid(self):
-            upper_child = self.upper_row.get_first_child()
-            middle_child = self.middle_row.get_first_child()
-            if upper_child is not None and middle_child is not None:
-                self.upper_row.remove(upper_child)
-                self.middle_row.remove(middle_child)
-
+    def _on_locations_clicked(self, *args, **kwargs):
+        adw_preferences_window = WeatherLocations(application)
+        adw_preferences_window.show()

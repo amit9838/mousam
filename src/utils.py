@@ -1,5 +1,6 @@
 import requests
 import socket
+import json
 from datetime import datetime, timedelta, timezone
 from gi.repository import Adw,Gio
 
@@ -17,14 +18,13 @@ def set_weather_data(current,air_pollution,forecast):
     forecast_weather_data = forecast
 
 def check_internet_connection():
-    response_text = ""
     has_active_internet = False
     try:
         socket.create_connection(("1.1.1.1", 53), timeout=5)  # 53 is the DNS port
         has_active_internet = True
-        return has_active_internet, response_text
+        return has_active_internet
     except OSError:
-        return has_active_internet, response_text
+        return has_active_internet
 
 def get_selected_city_coords():
     settings = Gio.Settings.new("io.github.amit9838.weather")
@@ -50,3 +50,46 @@ def wind_dir(angle):
         ]
         index = round(angle / (360.0 / len(directions))) % len(directions)
         return directions[index]
+
+def get_cords():
+    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+    selected_city_ = settings.get_string("selected-city")
+    return [float(x) for x in selected_city_.split(",")]
+
+
+def get_my_tz_offset_from_utc():
+    try:
+        offset = datetime.utcnow() - datetime.now()
+        # Convert the offset to seconds
+        offset_seconds = int(offset.total_seconds())
+
+        return offset_seconds
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def get_tz_offset_by_cord(lat,lon):
+    url = f"https://api.geotimezone.com/public/timezone?latitude={lat}&longitude={lon}"
+
+    res = requests.get(url)
+    if res.status_code != 200:
+        return 0
+    
+    res = json.loads(res.text)
+    if res.get("offset") is None:
+        return 0
+    
+    offset_arr = res.get("offset")[3:].split(":")
+    offset_arr = [int(x) for x in offset_arr]
+    epoch_hr = abs(offset_arr[0])*3600
+    epoch_s = 0
+    
+    if len(offset_arr) > 1:
+        epoch_s = offset_arr[1]*60
+        
+    epoch_offset = epoch_hr+epoch_s
+
+    if offset_arr[0] < 0:
+        epoch_offset *= -1
+    
+    return epoch_offset
