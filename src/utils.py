@@ -60,15 +60,7 @@ def get_cords():
 
 def get_my_tz_offset():
     try:
-        # Get the current time in UTC
-        utc_now = datetime.utcnow()
-
-        # Get the local time
-        local_now = datetime.now()
-
-        # Calculate the time difference between local time and UTC
-        offset = local_now - utc_now
-
+        offset = datetime.utcnow() - datetime.now()
         # Convert the offset to seconds
         offset_seconds = int(offset.total_seconds())
 

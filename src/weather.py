@@ -90,7 +90,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # main stack
         self.main_stack = Gtk.Stack.new()
         self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
-        self.main_stack.set_transition_duration(duration=100)
+        self.main_stack.set_transition_duration(duration=200)
         self.clamp.set_child(self.main_stack)
 
         # Start Loader and call paint UI

@@ -75,7 +75,7 @@ class DrawDayNight:
 
         tz_offset_from_curr_tz = get_offset_by_cord(*get_cords())
 
-        now = time.time() - my_tz_offset + tz_offset_from_curr_tz
+        now = time.time() + my_tz_offset + tz_offset_from_curr_tz
         formatted_date_time = datetime.fromtimestamp(now).strftime("%I:%M %p")
         text = formatted_date_time
 

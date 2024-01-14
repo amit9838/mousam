@@ -26,21 +26,28 @@ class CardDayNight:
         
         sunrise_t, sunset_t = 0, 0
         for i, data in enumerate(daily_data.time.get("data")):
-            date_ = int(datetime.fromtimestamp(data- my_tz_offset + tz_offset_from_curr_tz + (24*3600)).strftime(r"%d"))
+            date_ = int(datetime.fromtimestamp(data + my_tz_offset +  tz_offset_from_curr_tz).strftime(r"%d"))
             if date_ == datetime.today().date().day:
-                sunrise_t = daily_data.sunrise.get("data")[i] - my_tz_offset + tz_offset_from_curr_tz - (24*3600)
-                sunset_t = daily_data.sunset.get("data")[i] - my_tz_offset + tz_offset_from_curr_tz - (24*3600)
+                sunrise_t = daily_data.sunrise.get("data")[i]
+                sunset_t = daily_data.sunset.get("data")[i]
                 break
 
         #https://timezonefinder.michelfe.it/api_guide
 
-        sunrise = datetime.fromtimestamp(sunrise_t).strftime("%I:%M %p")
-        sunset = datetime.fromtimestamp(sunset_t).strftime("%I:%M %p")
+        sunrise = datetime.fromtimestamp(sunrise_t + my_tz_offset + tz_offset_from_curr_tz).strftime("%I:%M %p")
+        sunset = datetime.fromtimestamp(sunset_t + my_tz_offset + tz_offset_from_curr_tz).strftime("%I:%M %p")
 
         # Caclulate Sun rotation
-        current_time = int(time.time() - my_tz_offset + tz_offset_from_curr_tz)
-        degree = 0
+        current_time = datetime.fromtimestamp(time.time() + my_tz_offset + tz_offset_from_curr_tz) 
+        current_time = current_time.hour +  current_time.minute/60
 
+        sunrise_t = datetime.fromtimestamp(sunrise_t + my_tz_offset + tz_offset_from_curr_tz)
+        sunrise_t = sunrise_t.hour +  sunrise_t.minute/60
+        
+        sunset_t = datetime.fromtimestamp(sunset_t + my_tz_offset + tz_offset_from_curr_tz)
+        sunset_t = sunset_t.hour +  sunset_t.minute/60
+
+        degree = 0
         # For Day
         if current_time < sunset_t:
             degree = ((current_time - sunrise_t) / (sunset_t - sunrise_t)) * 180
@@ -48,8 +55,7 @@ class CardDayNight:
 
         # For Night
         else:
-            current_time -= (24*3600)
-            degree = ((current_time - sunset_t) / (86400-(sunset_t-sunrise_t))) * 180
+            degree = ((current_time - sunset_t) / (24-(sunset_t-sunrise_t))) * 180
             degree = degree
 
         return sunrise, sunset, degree
