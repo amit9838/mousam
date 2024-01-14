@@ -131,22 +131,22 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.set_visible_child_name("loader")
 
 
-
-
-
     def _load_weather_data(self):
         self.show_loader()
-        cwd = threading.Thread(target=fetch_current_weather,name="fetch_current_weather")
+        
+        # cwd : current_weather_data
+        # cwt : current_weather_thread
+        cwd = threading.Thread(target=fetch_current_weather,name="cwt")
         cwd.start()
         cwd.join()
 
-        hfd = threading.Thread(target=fetch_hourly_forecast,name="fetch_hourly_forecast")
+        hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
         hfd.start()
 
-        dfd = threading.Thread(target=fetch_daily_forecast,name="fetch_daily_forecast")
+        dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
         dfd.start()
 
-        apd = threading.Thread(target=fetch_current_air_pollution,name="fetch_current_air_pollution")
+        apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
         apd.start()
         
         apd.join()
