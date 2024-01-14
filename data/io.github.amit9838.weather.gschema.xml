@@ -2,26 +2,6 @@
 <schemalist gettext-domain="weather">
 	<schema id="io.github.amit9838.weather" path="/io/github/amit9838/weather/">
 
-    <key name="api-key" type="s">
-      <default>"b93e61109a102e0424bb8b1b073c3b2c"</default>
-      <summary>Default api</summary>
-      <description>Default api</description>
-    </key>
-    <key name="personal-api-key" type="s">
-      <default>""</default>
-      <description>personal api</description>
-    </key>
-	  <key name="use-personal-api-key" type="b">
-      <default>false</default>
-      <summary>Use personal api Key</summary>
-      <description>Set whether to use personal api key</description>
-    </key>
-	  <key name="isvalid-personal-api-key" type="b">
-      <default>false</default>
-      <summary>Is personal api key valid</summary>
-      <description>True if personal api key is being used is valid.</description>
-    </key>
-
     <key name="added-cities" type="as">
       <default>['Delhi,India,28.6517178,77.2219388']</default>
       <summary>List of cities and their coordinates.</summary>
@@ -37,11 +17,7 @@
       <summary>Use Gradient Background</summary>
       <description>Apply gradient background on main window corresponding to weather condition</description>
     </key>
-    <key name="updated-at" type="s">
-      <default>"2023-06-10 01:01:18.716371"</default>
-      <summary>Last Updated </summary>
-      <description>last updated time</description>
-    </key>
+
     <key name="measure-type" type="s">
       <default>"metric"</default>
       <summary>Mesaurement sysytem to use - metric,imperial</summary>

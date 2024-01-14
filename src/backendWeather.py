@@ -2,6 +2,9 @@ from typing import List
 import requests
 import datetime
 
+from gi.repository import Gio
+
+
 
 base_url = "https://api.open-meteo.com/v1/forecast"
 
@@ -9,6 +12,13 @@ class Weather():
     """
     See Documentation at: https://open-meteo.com/en/docs
     """
+    def __init__(self) -> None:
+        global settings,measurement_type,temperature_unit,wind_speed_unit
+        settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        measurement_type = settings.get_string('measure-type')
+        if measurement_type == "imperial":
+            temperature_unit = "fahrenheit"
+            wind_speed_unit = "mph"
     # Current Weather =============================================
     @staticmethod
     def current_weather(latitude: float, longitude: float, **kwargs):
@@ -19,6 +29,9 @@ class Weather():
         if 'current' in kwargs:
             current_fields = ",".join(kwargs.get('current'))
             url = url+f"&current={current_fields}"
+        
+        if measurement_type == "imperial":
+            url += f"&temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}"
 
         try:
             url = url+f"&timeformat=unixtime"
@@ -55,6 +68,9 @@ class Weather():
         if 'hourly' in kwargs:
             hourly_fields = ",".join(kwargs.get('hourly'))
             url = url+f"&hourly={hourly_fields}"
+        
+        if measurement_type == "imperial":
+            url += f"&temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}"
 
         try:
             url = url+f"&timeformat=unixtime"
@@ -102,6 +118,9 @@ class Weather():
 
         if 'end_date' in kwargs:
             url = url+f"&end_date={kwargs.get('end_date')}"
+
+        if measurement_type == "imperial":
+            url += f"&temperature_unit={temperature_unit}&wind_speed_unit={wind_speed_unit}"
 
         try:
             url = url+f"&timeformat=unixtime"

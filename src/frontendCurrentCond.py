@@ -92,7 +92,7 @@ class CurrentCondition(Gtk.Grid):
         box_right.append(feels_like_label)
 
         visibility_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
-        markup_text = "Visibility • <b> {0} {1}</b>".format(
+        markup_text = "Visibility • <b> {0:.1f} {1}</b>".format(
             data.visibility.get("data"), data.visibility.get("unit")
         )
         visibility_label.set_markup(markup_text)

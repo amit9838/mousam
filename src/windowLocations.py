@@ -108,7 +108,6 @@ class WeatherLocations(Adw.PreferencesWindow):
                         if time.time() - updated_at < 2:
                                 updated_at = time.time()
                                 self.add_toast(create_toast(_("Switch city within 2 seconds is ignored!"),1))
-
                         else:
                                 updated_at = time.time()
                                 self.add_toast(create_toast(_("Selected - {}").format(title),1))

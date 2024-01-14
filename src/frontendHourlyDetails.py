@@ -89,10 +89,10 @@ class HourlyDetails(Gtk.Grid):
         desc_label.set_css_classes(["text-4", "light-2", "bold-2"])
         info_grid.attach(desc_label, 0, 0, 3, 1)
 
-        val_label = Gtk.Label(label="18", halign=Gtk.Align.START)
+        val_label = Gtk.Label(label=str(max(hourly_data.windspeed_10m.get("data")[:24])), halign=Gtk.Align.START)
         val_label.set_css_classes(["text-l4", "light-3", "bold-1"])
         info_grid.attach(val_label, 0, 1, 2, 2)
-        unit_label = Gtk.Label(label="km/h")
+        unit_label = Gtk.Label(label=hourly_data.windspeed_10m.get("unit"))
         unit_label.set_css_classes(["text-5", "light-2", "bold-3"])
         info_grid.attach(unit_label, 2, 2, 1, 1)
 
@@ -100,7 +100,7 @@ class HourlyDetails(Gtk.Grid):
         if page_name == "hourly":
             desc_label.set_text("Day Max")
             val_label.set_text(
-                str(max(daily_data.temperature_2m_max.get("data"))) + "°"
+                str(max(hourly_data.temperature_2m.get("data"))) + "°"
             )
             unit_label.set_text("")
 

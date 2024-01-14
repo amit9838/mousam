@@ -1,5 +1,4 @@
 import time
-from datetime import datetime
 import gi
 from gi.repository import Gio
 from .backendWeather import Weather
@@ -162,8 +161,16 @@ def classify_wind_speed_level(wind_speed):
 
 
 def transform_visibility_data(unit, data):
+    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+    measurement_type = settings.get_string('measure-type')
+    dist_unit = "km"
+    dist = data/1000
+    if measurement_type == "imperial":
+        dist_unit = "miles"
+        dist = data/1609.34
+
     if unit.lower() == "m":
-        data /= 1000
-        unit = "Km"
+        data=dist
+        unit = dist_unit
 
     return {"unit": unit, "data": data}
