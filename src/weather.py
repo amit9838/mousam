@@ -132,60 +132,79 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
 
     # =========== Show No Internet =============
-    def show_no_internet(self):
+    def show_error(self,type:str="no_internet",desc : str = ""):
         # Loader container
-        child = self.main_stack.get_child_by_name('no_internet')
-        self.toast_overlay.add_toast(create_toast(_("No Internet"),1))
+        message = "No Internet"
+        icon = "network-error-symbolic"
+        desc = ""
+        if type == "api_error":
+            message = "Could not fetch data from API"
+            desc = desc
+            icon = "computer-fail-symbolic"
+            
+
+        child = self.main_stack.get_child_by_name('error_box')
+        self.toast_overlay.add_toast(create_toast(message,1))
         if child is not None:
-                self.main_stack.set_visible_child_name("no_internet")
+                self.main_stack.set_visible_child_name("error_box")
                 return
 
-        no_internet = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
-        no_internet.set_margin_bottom(100)
+        error_box = Gtk.Grid(halign=Gtk.Align.CENTER)
+        error_box.set_margin_top(300)
 
-        self.error_label = Gtk.Label.new()
-        self.error_label.set_label("Failed to load Weather Data")
-        self.error_label.set_css_classes(["text-1", "bold-2"])
-
-        icon = Gtk.Image.new_from_icon_name("network-error-symbolic")
+        icon = Gtk.Image.new_from_icon_name(icon)
         icon.set_pixel_size(54)
         icon.set_margin_end(20)
+        error_box.attach(icon,0,0,1,1)
 
-        no_internet.append(icon)
-        no_internet.append(self.error_label)
+        self.error_label = Gtk.Label.new()
+        self.error_label.set_label(message)
+        self.error_label.set_css_classes(["text-1", "bold-2"])
+        error_box.attach(self.error_label,1,0,1,1)
+       
+        self.error_desc = Gtk.Label.new()
+        self.error_desc.set_label(desc)
+        self.error_desc.set_css_classes(["text-4", "bold-4",'light-3'])
+        error_box.attach(self.error_desc,1,1,1,1)
 
-        self.main_stack.add_named(no_internet,'no_internet')
-        self.main_stack.set_visible_child_name("no_internet")
+        self.main_stack.add_named(error_box,'error_box')
+        self.main_stack.set_visible_child_name("error_box")
 
     # =========== Load Weather data using threads =============
     def _load_weather_data(self):
-        
+
         has_internet = check_internet_connection()
         if not has_internet:
-            self.show_no_internet()
+            self.show_error()
             return
         
         self.show_loader()
         
         # cwd : current_weather_data
         # cwt : current_weather_thread
-        cwd = threading.Thread(target=fetch_current_weather,name="cwt")
-        cwd.start()
-        cwd.join()
+        try:
+            cwd = threading.Thread(target=fetch_current_weather,name="cwt")
+            cwd.start()
+            cwd.join()
 
-        hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
-        hfd.start()
+            hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
+            hfd.start()
 
-        dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
-        dfd.start()
+            dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
+            dfd.start()
 
-        apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
-        apd.start()
-        
-        apd.join()
-        hfd.join()
-        dfd.join()
-        self.get_weather()
+            apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
+            apd.start()
+            
+            apd.join()
+            hfd.join()
+            dfd.join()
+            self.get_weather()
+
+        except Exception as e:
+            self.show_error(type="api_error",desc="Contact Developer")
+            print(e)
+            return
         
 
     # ===========  Load weather data and create UI ============

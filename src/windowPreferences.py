@@ -25,6 +25,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 selected_city = self.settings.get_string('selected-city')
                 added_cities = list(self.settings.get_strv('added-cities'))
                 # use_gradient = self.settings.get_boolean('use-gradient-bg')
+                should_launch_maximized = self.settings.get_boolean('launch-maximized')
                 cities = [x.split(',')[0] for x in added_cities]
                 measurement_type = get_measurement_type()
 
@@ -45,7 +46,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
                 # self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
                 # self.gradient_switch = Gtk.Switch()
-                # self.gradient_switch.set_active(use_gradient)
+                # self.gradient_switch.set_active(True)
                 # self.gradient_switch.connect("state-set",self._use_gradient_bg)
                 # self.g_switch_box.append(self.gradient_switch)
                 # gradient_row.add_suffix(self.g_switch_box)
@@ -67,7 +68,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 
                 self.imperial_unit = Adw.ActionRow.new()
                 self.imperial_unit.set_title(_('°F'))
-                self.imperial_unit.set_subtitle(_("IMPERIAL system with units like fahrenheit, mph, mile"))
+                self.imperial_unit.set_subtitle(_("IMPERIAL system with units like fahrenheit, mph, miles"))
                 self.imperial_check_btn = Gtk.CheckButton.new()
                 self.imperial_unit.add_prefix(self.imperial_check_btn)
                 self.imperial_check_btn.set_group(self.metric_check_btn)
@@ -76,10 +77,26 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.measurement_group.add(self.imperial_unit)
                 GLib.idle_add(self.metric_unit.activate) if measurement_type == 'metric' else  GLib.idle_add(self.imperial_unit.activate)
 
+                launch_maximized =  Adw.ActionRow.new()
+                launch_maximized.set_activatable(True)
+                launch_maximized.set_title(_("Launch Maximized"))
+                launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Restart required)"))
+
+                self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+                self.launch_max_switch = Gtk.Switch()
+                self.launch_max_switch.set_active(should_launch_maximized)
+                self.launch_max_switch.connect("state-set",self._on_click_launch_maximixed)
+                self.g_switch_box.append(self.launch_max_switch)
+                launch_maximized.add_suffix(self.g_switch_box)
+                self.appearance_grp.add(launch_maximized)
+
        
         # =============== Appearance Methods  ===============
         def _use_gradient_bg(self,widget,state):
                 self.settings.set_value("use-gradient-bg",GLib.Variant("b",state))
+       
+        def _on_click_launch_maximixed(self,widget,state):
+                self.settings.set_value("launch-maximized",GLib.Variant("b",state))
 
         def _change_unit(self,widget,value):
                 global measurement_type

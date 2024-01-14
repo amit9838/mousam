@@ -34,18 +34,24 @@ class WeatherApplication(Adw.Application):
         super().__init__(application_id='io.github.amit9838.weather',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
         self.main_window = None
 
     def do_activate(self):
         win = self.props.active_window
-
         global css_provider
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(css,len(css))
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
+        launch_maximized = self.settings.get_boolean("launch-maximized")
+
         if not win:
             win = WeatherMainWindow(application=self)
+
+        if launch_maximized:
+            win.maximize()
+    
         win.present()
 
     def create_action(self, name, callback, shortcuts=None):

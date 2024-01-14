@@ -18,6 +18,11 @@
       <description>Apply gradient background on main window corresponding to weather condition</description>
     </key>
 
+	  <key name="launch-maximized" type="b">
+      <default>true</default>
+      <summary>Launch the app in maximized mode.</summary>
+    </key>
+
     <key name="measure-type" type="s">
       <default>"metric"</default>
       <summary>Mesaurement sysytem to use - metric,imperial</summary>
