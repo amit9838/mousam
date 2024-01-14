@@ -5,15 +5,15 @@
 <img src="https://img.shields.io/github/v/release/amit9838/weather?style=flat&label=Latest+Release&color=%234a92ff">
 </div>
 <div align="center">
-<img src="https://github.com/amit9838/weather/blob/master/screenshots/ss2-haze_night.png?raw=true#gh-dark-mode-only">
-<img src="https://github.com/amit9838/weather/blob/master/screenshots/ss1-overcast_clouds_day.png?raw=true#gh-light-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-thunderstorm.png?raw=true#gh-dark-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only">
 </div>
 
 ## Features
-* See weather with dynamically changing gradient-based background according to current weather condition
-* See today, tomorrow and 5-day forcasts
+* Displays real-time temperature, humidity, and wind speed,UV index,pressure and more
+* Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours
+* Also shows tomorrow and 7-day forcasts
 * See conditions in metric or imperial systems
-* Option to use Personal API Key
 
 ## Installation
 

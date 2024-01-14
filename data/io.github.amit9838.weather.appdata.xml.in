@@ -9,27 +9,27 @@
     <p>Current Weather conditions and forcasts.</p>
     <p>Features:</p>
     <ul>
-      <li>See weather with dynamically changing gradient-based background according current weather conditions</li>
-      <li>See today, tomorrow and 5-day forcasts</li>
+      <li>Displays real-time temperature, humidity, and wind speed,UV index,pressure and more</li>
+      <li>Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours</li>
+      <li>Also provides tomorrow and 7-day forcasts</li>
       <li>See conditions in metric or imperial systems</li>
-      <li>Option to use Personal API Key</li>
     </ul>
   </description>
     <screenshots>
       <screenshot type="default">
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-overcast_clouds_day.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss5-overcast.png</image>
           <caption>Overcast day</caption>
       </screenshot>
       <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-haze_night.png</image>
-          <caption>Haze night</caption>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky-imperial.png</image>
+          <caption>Clear Sky - imperial</caption>
       </screenshot>
       <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky_night.png</image>
-          <caption>Clear sky night</caption>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-thunderstorm.png</image>
+          <caption>Thunderstorm</caption>
       </screenshot>
         <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-dark_mode.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-dark_mode.png</image>
           <caption>Dark mode</caption>
       </screenshot>
         <screenshot>
@@ -44,7 +44,6 @@
   <url type="vcs-browser">https://github.com/amit9838/weather</url>
   <developer_name>Amit Chaudhary</developer_name>
   <recommends>
-    <control>keyboard</control>
     <control>pointing</control>
     <control>touch</control>
   </recommends>
@@ -56,6 +55,30 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="1.0.0" date="2024-01-14">
+      <description translatable="no">
+      <p>What's New</p>
+        <ul>
+            <li>Introducing a new design with an entirely new app experience.</li>
+            <li>The new design follows a card design pattern, highlighting important data utilizing graphs and bars.</li>
+            <li>A new backend that is more optimized and offers a better user experience.</li>
+            <li>A new set of icons shipped with the app covers a wide range of conditions and is independent of system icons.</li>
+            <li>Now, weather better scales with various screen sizes (desktop).</li>
+            <li>Covers more cities and locations.</li>
+            <li>The sunrise and sunset current time of the selected location is shown in the local time zone of the selected location.</li>
+            <li>Various bug fixes</li>
+        </ul>
+      <p>Thanks to</p>
+        <ul>
+            <li>@sabriunal: for bug fixes and translation-related changes.</li>
+            <li>@soumyaDghosh: for bug fixes related to snap.</li>
+            <li>@Nokse22: for fixes and creating new icons.</li>
+            <li>@hui1601: for fixing translation-related bugs.</li>
+            <li>@suryansh076: for helping with the new design.</li>
+            <li>And thanks to the folks who reported bugs on GitHub.</li>
+        </ul>
+      </description>
+      </release>
       <release version="0.6.0" date="2023-07-14">
       <description translatable="no">
         <ul>
