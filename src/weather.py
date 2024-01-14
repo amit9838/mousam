@@ -203,7 +203,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         except Exception as e:
             self.show_error(type="api_error",desc="Contact Developer")
-            print(e)
+            print((str(e)))
             return
         
 

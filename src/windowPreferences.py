@@ -39,6 +39,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.appearance_grp = Adw.PreferencesGroup()
                 appearance_page.add(self.appearance_grp)
 
+                # Dynamic Background 
                 # gradient_row =  Adw.ActionRow.new()
                 # gradient_row.set_activatable(True)
                 # gradient_row.set_title(_("Dynamic Background"))
@@ -52,6 +53,21 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 # gradient_row.add_suffix(self.g_switch_box)
                 # self.appearance_grp.add(gradient_row)
 
+                #  Launch the app in maximize mode
+                launch_maximized =  Adw.ActionRow.new()
+                launch_maximized.set_activatable(True)
+                launch_maximized.set_title(_("Open Maximized"))
+                launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Restart required)"))
+
+                self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+                self.launch_max_switch = Gtk.Switch()
+                self.launch_max_switch.set_active(should_launch_maximized)
+                self.launch_max_switch.connect("state-set",self._on_click_launch_maximixed)
+                self.g_switch_box.append(self.launch_max_switch)
+                launch_maximized.add_suffix(self.g_switch_box)
+                self.appearance_grp.add(launch_maximized)
+
+                #  Units and measurement
                 self.measurement_group = Adw.PreferencesGroup.new()
                 self.measurement_group.set_margin_top(20)
                 self.measurement_group.set_title(_('Units &amp; Measurements'))
@@ -76,19 +92,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.imperial_unit.connect("activated", self._change_unit,'imperial')
                 self.measurement_group.add(self.imperial_unit)
                 GLib.idle_add(self.metric_unit.activate) if measurement_type == 'metric' else  GLib.idle_add(self.imperial_unit.activate)
-
-                launch_maximized =  Adw.ActionRow.new()
-                launch_maximized.set_activatable(True)
-                launch_maximized.set_title(_("Launch Maximized"))
-                launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Restart required)"))
-
-                self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
-                self.launch_max_switch = Gtk.Switch()
-                self.launch_max_switch.set_active(should_launch_maximized)
-                self.launch_max_switch.connect("state-set",self._on_click_launch_maximixed)
-                self.g_switch_box.append(self.launch_max_switch)
-                launch_maximized.add_suffix(self.g_switch_box)
-                self.appearance_grp.add(launch_maximized)
 
        
         # =============== Appearance Methods  ===============

@@ -26,6 +26,7 @@ icons = {
     "82": icon_loc + "thunderstorms-rain.svg",
     "85": icon_loc + "snow.svg",
     "86": icon_loc + "snowflake.svg",
+    "95": icon_loc + "thunderstorms-rain.svg",
     "96": icon_loc + "thunderstorms-day-overcast-snow.svg",
     "99": icon_loc + "snowflake.svg",
     
@@ -54,6 +55,7 @@ icons = {
     "82n": icon_loc + "thunderstorms-rain.svg",
     "85n": icon_loc + "snow.svg",
     "86n": icon_loc + "snowflake.svg",
+    "95n": icon_loc + "thunderstorms-rain.svg",
     "96n": icon_loc + "thunderstorms-night-overcast-snow.svg",
     "99n": icon_loc + "snowflake.svg",
     "arrow": icon_loc + "arrow.svg",

@@ -40,6 +40,7 @@ install_data(
     join_paths(scalable_dir, 'thunderstorms-rain.svg'),
     join_paths(scalable_dir, 'partly-cloudy-day-rain.svg'),
     join_paths(scalable_dir, 'partly-cloudy-night-rain.svg'),
+    join_paths(scalable_dir, 'thunderstorms.svg'),
     join_paths(scalable_dir, 'thunderstorms-day-rain.svg'),
     join_paths(scalable_dir, 'thunderstorms-night-rain.svg'),
     join_paths(scalable_dir, 'thunderstorms-overcast-rain.svg'),
