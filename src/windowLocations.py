@@ -1,11 +1,16 @@
 import threading
+import time
 import gi
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw,Gio,GLib
 
 from .utils import create_toast
 from .backendFindCity import find_city
+
+global updated_at
+updated_at = time.time()
 
 class WeatherLocations(Adw.PreferencesWindow):
         def __init__(self, application,  **kwargs):
@@ -97,9 +102,18 @@ class WeatherLocations(Adw.PreferencesWindow):
                         selected_city = select_cord
                         self.settings.set_value("selected-city",GLib.Variant("s",selected_city))
                         self._create_cities_list(added_cities)
-                        self.add_toast(create_toast(_("Selected - {}").format(title),1))
-                        thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
-                        thread.start()
+                        global updated_at      
+                        # Ignore refreshing weather within 5 second
+
+                        if time.time() - updated_at < 2:
+                                updated_at = time.time()
+                                self.add_toast(create_toast(_("Switch city within 2 seconds is ignored!"),1))
+
+                        else:
+                                updated_at = time.time()
+                                self.add_toast(create_toast(_("Selected - {}").format(title),1))
+                                thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
+                                thread.start()
 
         # ========== Add Location ===========
         def _add_location_dialog(self,application):
@@ -227,7 +241,8 @@ class WeatherLocations(Adw.PreferencesWindow):
                         first_city = added_cities[0].split(",")
                         selected_city = f"{first_city[-2]},{first_city[-1]}"
                         self.settings.set_value("selected-city",GLib.Variant("s",selected_city))
-                        GLib.idle_add(self.application.get_weather,reload_type="switch", title = widget.get_title())
+                        thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
+                        thread.start()
 
                                 
                 self.settings.set_value("added-cities",GLib.Variant("as",added_cities))
