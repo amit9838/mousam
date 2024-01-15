@@ -42,14 +42,6 @@ def convert_to_local_time(timestamp, timezone_stamp):
     hour_offset_from_utc = (timezone_stamp)/3600
     return datetime.fromtimestamp(timestamp,tz=timezone.utc) + timedelta(hours=hour_offset_from_utc)
 
-# converts wind degrees to direction 
-def wind_dir(angle):
-        directions = [
-            _("N"), _("NNE"), _("NE"), _("ENE"), _("E"), _("ESE"), _("SE"), _("SSE"),
-            _("S"), _("SSW"), _("SW"), _("WSW"), _("W"), _("WNW"), _("NW"), _("NNW"),
-        ]
-        index = round(angle / (360.0 / len(directions))) % len(directions)
-        return directions[index]
 
 def get_cords():
     settings = Gio.Settings(schema_id="io.github.amit9838.weather")
