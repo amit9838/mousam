@@ -1,4 +1,5 @@
-icon_loc = "/app/share/icons/hicolor/scalable/weather_icons/"
+import os
+icon_loc = "/app/share/icons/hicolor/scalable/weather_icons/" if not os.getenv('SNAP') else f"{os.getenv('SNAP')}/usr/share/icons/hicolor/scalable/weather_icons/"
 
 icons = {
     "0": icon_loc + "clear-day.svg",
