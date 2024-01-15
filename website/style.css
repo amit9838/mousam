@@ -143,7 +143,12 @@ code{
     background-color: #232323;
     padding: .3rem .6rem;
     border-radius: .2rem;
+    margin: 0 .5rem;
 
+}
+
+a:link{
+    text-decoration: none;
 }
 
 footer {
