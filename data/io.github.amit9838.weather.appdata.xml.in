@@ -38,7 +38,7 @@
       </screenshot>
   </screenshots>
   <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
-  <url type="homepage">https://github.com/amit9838/weather</url>
+  <url type="homepage">https://amit9838.github.io/weather/</url>
   <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
   <url type="translate">https://github.com/amit9838/weather/tree/master/po</url>
   <url type="vcs-browser">https://github.com/amit9838/weather</url>
@@ -55,6 +55,15 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.0.1" date="2024-01-16">
+      <description translatable="no">
+      <p>Bug fixes</p>
+        <ul>
+            <li>Fix bug where some locations dosen't provide valid co-ordinates</li>
+            <li>Add website in about section </li>
+        </ul>
+      </description>
+      </release>
       <release version="1.0.0" date="2024-01-14">
       <description translatable="no">
       <p>What's New</p>
