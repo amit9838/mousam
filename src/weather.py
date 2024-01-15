@@ -182,29 +182,23 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         
         # cwd : current_weather_data
         # cwt : current_weather_thread
-        try:
-            cwd = threading.Thread(target=fetch_current_weather,name="cwt")
-            cwd.start()
-            cwd.join()
+        cwd = threading.Thread(target=fetch_current_weather,name="cwt")
+        cwd.start()
+        cwd.join()
 
-            hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
-            hfd.start()
+        hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
+        hfd.start()
 
-            dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
-            dfd.start()
+        dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
+        dfd.start()
 
-            apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
-            apd.start()
-            
-            apd.join()
-            hfd.join()
-            dfd.join()
-            self.get_weather()
-
-        except Exception as e:
-            self.show_error(type="api_error",desc="Contact Developer")
-            print((str(e)))
-            return
+        apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
+        apd.start()
+        
+        apd.join()
+        hfd.join()
+        dfd.join()
+        self.get_weather()
         
 
     # ===========  Load weather data and create UI ============
