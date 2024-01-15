@@ -96,6 +96,9 @@ class WeatherLocations(Adw.PreferencesWindow):
                 global selected_city
                 title = widget.get_title()
                 select_cord = f"{widget.get_subtitle()}"
+                
+                if len(select_cord.split(",")) < 2:
+                        return
 
                 # Switch if location is not already selected
                 if selected_city != select_cord:
@@ -185,6 +188,13 @@ class WeatherLocations(Adw.PreferencesWindow):
                                 title_arr = [x for x in title_arr if x is not None]
                                 title = ",".join(title_arr)
                                 res_row.set_title(title)
+
+                                # Skip plotting the location in the search results if it has invalid cords
+                                if loc.latitude is None or loc.longitude is  None:
+                                        continue
+                                if loc.latitude == "" or loc.longitude == "":
+                                        continue
+
                                 res_row.set_subtitle(f"{loc.latitude},{loc.longitude}")
                                 res_row.connect("activated", self._add_city)
                                 self._dialog.search_results.append(res_row)

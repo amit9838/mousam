@@ -15,7 +15,6 @@ def find_city(city, count=3):
         response.raise_for_status()  # Raise an exception if the request was unsuccessful
         cities_res = response.json()
         cities = cities_res.get('results')
-        # print(cities)
         cities_list = []
         if cities == None:
             return cities_list
@@ -35,8 +34,3 @@ def find_city(city, count=3):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
 
-
-# UI
-# Name - state - Country
-# Delhi, Delhi, India [name=state]
-# Basti, Uttar Pradesh, India
