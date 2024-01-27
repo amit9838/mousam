@@ -151,8 +151,6 @@ class HourlyDetails(Gtk.Grid):
                     "Enjoy a rain-free day today!",
                     "Umbrella status: resting. No precipitation in sight !",
                     "No rain in sight today!"
-
-
                 ]
                 no_prec_label = Gtk.Label(label=no_prec_labels[random.randint(0,len(no_prec_labels)-1)])
                 no_prec_label.set_css_classes(["text-3a", "bold-3", "light-2"])
