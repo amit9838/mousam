@@ -28,7 +28,6 @@ configure_file(
 
 
 weather_sources = [
-  '__init__.py',
   'main.py',
   'weather.py',
   'weatherData.py',

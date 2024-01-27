@@ -4,7 +4,7 @@ import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GLib
+from gi.repository import Gtk, Adw, Gio
 
 # module import
 from .utils import create_toast,check_internet_connection
@@ -123,8 +123,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         container_loader.append(loader_label)
 
         loader.start()
-        # loader = Gtk.Label(label=f"Loading…")
-        # loader.set_css_classes(["text-1", "bold-2"])
         loader.set_hexpand(True)
         loader.set_vexpand(True)
         self.main_stack.add_named(container_loader, "loader")
@@ -211,8 +209,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.settings.reset('added-cities')
             self.settings.reset('selected-city')
         
-
-
         child = self.main_stack.get_child_by_name('main_grid')
         if child is not None:
             self.main_stack.remove(child)
@@ -315,7 +311,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
             thread = threading.Thread(target=self._load_weather_data,name="load_data")
             thread.start()
-
 
 
     # ============= Menu buttom methods ==============
