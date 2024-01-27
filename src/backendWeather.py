@@ -87,6 +87,7 @@ class Weather:
             "apparent_temperature",
             "weathercode",
             "precipitation",
+            "precipitation_probability",
             "surface_pressure",
             "visibility",
             "windspeed_10m",

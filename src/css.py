@@ -137,7 +137,7 @@ css = """
 }
 
 .custom_card_forecast_item{
-    padding: .15rem 1.5rem;
+    padding: 0.15rem 1.5rem;
     border-radius: .7rem;
 }
 
