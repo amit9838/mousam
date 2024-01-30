@@ -1,7 +1,22 @@
 <div align="center">
 <img src="data/icons/hicolor/scalable/apps/io.github.amit9838.weather.svg?raw=true" width="120">
 <h1>Weather</h1>
-<p>Beautiful lightweight weather app.</p>
+
+<p>Beautiful lightweight weather app based on Python and Gtk</p>
+
+<div align="center">
+ <h2>Support</h2>
+I hope you ❤️ the weather app, if you think it is worth supporting you can do so using below methods
+
+<a href="https://www.buymeacoffee.com/ami9838" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
+</div>
+<div align="center">
+<a href="https://opencollective.com/weather"><img src="https://opencollective.com/spotube/donate/button.png?color=blue" alt="Donate to our Open Collective" height="45"></a>
+</div>
+
+---
+
 <img src="https://img.shields.io/github/v/release/amit9838/weather?style=flat&label=Latest+Release&color=%234a92ff">
 </div>
 <div align="center">
