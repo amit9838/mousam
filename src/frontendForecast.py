@@ -89,6 +89,7 @@ class Forecast(Gtk.Grid):
             orientation=Gtk.Orientation.VERTICAL, margin_top=0, margin_bottom=0)
         scrolled_window.set_child(forecast_container)
 
+
         # Get Tomorrow's data from hourly forecast
         tomorrow_date_time_list = [d_t for d_t in hourly_data.time.get("data") if int(
             datetime.fromtimestamp(d_t).strftime(r"%d")) == (datetime.today() + timedelta(days=1)).date().day]
@@ -135,12 +136,41 @@ class Forecast(Gtk.Grid):
             icon_main.set_halign(Gtk.Align.END)
             icon_main.set_hexpand(True)
             icon_main.set_pixel_size(50)
-            icon_main.set_margin_end(60)
+            icon_main.set_margin_end(30)
             forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
+
+            forecast_cond_grid = Gtk.Grid(valign=Gtk.Align.CENTER,margin_end = 20)
+            forecast_item_grid.attach(forecast_cond_grid, 2, 0, 1, 1)
+            
+            # prec probability
+            if page_name == 'tomorrow':
+                prec_probability = hourly_data.precipitation_probability.get("data")[i]
+                wind_probability = hourly_data.windspeed_10m.get("data")[i]
+            
+          
+                drop_icon = Gtk.Image().new_from_file(icons["raindrop"])
+                drop_icon.set_pixel_size(25)
+                drop_icon.set_halign(Gtk.Align.START)
+                forecast_cond_grid.attach(drop_icon, 0, 0, 1, 1)
+
+                prec_probability_label = Gtk.Label(label=f" {prec_probability}%", margin_top=5)
+                prec_probability_label.set_halign(Gtk.Align.START)
+                forecast_cond_grid.attach(prec_probability_label, 1, 0, 1, 1)
+                
+                # Wind speed probability
+                wind_icon = Gtk.Image().new_from_file(icons["wind"])
+                wind_icon.set_pixel_size(25)
+                wind_icon.set_halign(Gtk.Align.START)
+                forecast_cond_grid.attach(wind_icon, 0, 1, 1, 1)
+                speed_unit= hourly_data.windspeed_10m.get("unit")
+                wind_probability_label = Gtk.Label(label=f" {wind_probability} {speed_unit}", margin_top=5)
+                forecast_cond_grid.attach(wind_probability_label, 1, 1, 1, 1)
+
 
             # Temp label grid
             temp_label_grid = Gtk.Grid(valign=Gtk.Align.CENTER)
-            forecast_item_grid.attach(temp_label_grid, 2, 0, 1, 1)
+            forecast_item_grid.attach(temp_label_grid, 3, 0, 1, 1)
+            
             
             # Max temp label ======
             temp_max_text = hourly_data.temperature_2m.get("data")[i]
@@ -149,7 +179,7 @@ class Forecast(Gtk.Grid):
 
             temp_max = Gtk.Label(label=f"{temp_max_text:.0f}° ", margin_start=10,)
             temp_max.set_css_classes(['text-3', 'bold-2'])
-            temp_label_grid.attach(temp_max, 0, 0, 1, 1)
+            temp_label_grid.attach(temp_max, 1, 0, 1, 1)
 
             # Min temp label ======
             temp_min_text = hourly_data.temperature_2m.get("data")[i]
@@ -158,4 +188,4 @@ class Forecast(Gtk.Grid):
 
             temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°", margin_top=5)
             temp_min.set_css_classes(['light-4'])
-            temp_label_grid.attach(temp_min, 0, 1, 1, 1)
+            temp_label_grid.attach(temp_min, 1, 1, 1, 1)

@@ -63,7 +63,11 @@ icons = {
     "95n": icon_loc + "thunderstorms-rain.svg",
     "96n": icon_loc + "thunderstorms-night-overcast-snow.svg",
     "99n": icon_loc + "snowflake.svg",
+
     "arrow": icon_loc + "arrow.svg",
+    "raindrop": icon_loc + "raindrop.svg",
+    "raindrops": icon_loc + "raindrops.svg",
+    "wind": icon_loc + "wind.svg",
 }
 
 bg_css = {

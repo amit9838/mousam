@@ -1,6 +1,4 @@
 # Models for All weather data data
-import time
-
 
 class CurrentWeather:
     total_instances = 0

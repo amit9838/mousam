@@ -21,7 +21,7 @@ class AirPollution:
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
-    def _get_current_air_pollution(self,lat,lon):
+    def _get_current_air_pollution(self, lat, lon):
         current_args = [
             "european_aqi",
             "us_aqi",

@@ -4,7 +4,7 @@ import threading
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GLib
+from gi.repository import Gtk, Adw, Gio
 
 # module import
 from .utils import create_toast,check_internet_connection
@@ -107,26 +107,27 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 return
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        container_loader.set_margin_top(200)
+        container_loader.set_margin_top(250)
         container_loader.set_margin_bottom(300)
+
 
         # Create loader
         loader = Gtk.Spinner()
         loader.set_margin_top(50)
         loader.set_margin_bottom(50)
+        loader.set_size_request(120, 120)
+
         loader.set_css_classes(['loader'])
         container_loader.append(loader)
 
 
         loader_label = Gtk.Label(label=f"Getting Weather Data")
-        loader_label.set_css_classes(["text-1", "bold-2"])
+        loader_label.set_css_classes(["text-2a", "bold-2"])
         container_loader.append(loader_label)
 
         loader.start()
-        # loader = Gtk.Label(label=f"Loading…")
-        # loader.set_css_classes(["text-1", "bold-2"])
-        loader.set_hexpand(True)
-        loader.set_vexpand(True)
+        # loader.set_hexpand(True)
+        # loader.set_vexpand(True)
         self.main_stack.add_named(container_loader, "loader")
         self.main_stack.set_visible_child_name("loader")
 
@@ -211,8 +212,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.settings.reset('added-cities')
             self.settings.reset('selected-city')
         
-
-
         child = self.main_stack.get_child_by_name('main_grid')
         if child is not None:
             self.main_stack.remove(child)
@@ -315,7 +314,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
             thread = threading.Thread(target=self._load_weather_data,name="load_data")
             thread.start()
-
 
 
     # ============= Menu buttom methods ==============

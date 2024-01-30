@@ -5,7 +5,7 @@ from gi.repository import Gtk, Adw
 
 def AboutWindow(parent,*args):
         dialog = Adw.AboutWindow.new()
-        dialog.set_application_name(_("Weather"))
+        dialog.set_application_name("Weather")
         dialog.set_application_icon("io.github.amit9838.weather")
         dialog.set_version("1.0.1")
         dialog.set_developer_name("Amit Chaudhary")
@@ -14,7 +14,7 @@ def AboutWindow(parent,*args):
         dialog.set_website("https://amit9838.github.io/weather/")
         dialog.set_issue_url("https://github.com/amit9838/weather/issues")
         # dialog.add_credit_section("Contributors", ["name url"])
-        dialog.set_copyright(_("Copyright © 2023 Weather Developers"))
+        dialog.set_copyright(_("Copyright © 2024 Weather Developers"))
         dialog.set_developers(["Amit Chaudhary"])
         # Translators: Please enter your credits here. (format: "Name https://example.com" or "Name <email@example.com>", no quotes)
         dialog.set_translator_credits(_("translator_credits"))
