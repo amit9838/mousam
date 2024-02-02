@@ -12,7 +12,7 @@ gnome.compile_resources('weather',
 python = import('python')
 
 conf = configuration_data()
-conf.set('PYTHON', python.find_installation('python3').path())
+conf.set('PYTHON', python.find_installation('python3').full_path())
 conf.set('VERSION', meson.project_version())
 conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
@@ -25,7 +25,6 @@ configure_file(
   install_dir: get_option('bindir'),
   install_mode: 'r-xr--r--'
 )
-
 
 weather_sources = [
   'main.py',
@@ -60,6 +59,15 @@ weather_sources = [
   'windowLocations.py'
 ]
 
-
-
 install_data(weather_sources, install_dir: moduledir)
+
+icon_conf = configuration_data()
+icon_conf.set('icon_location', get_option('prefix'))
+
+configure_file(
+  input: 'constants.py',
+  output: 'constants.py',
+  configuration: icon_conf,
+  install: true,
+  install_dir: moduledir
+)
