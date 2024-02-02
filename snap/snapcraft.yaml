@@ -1,6 +1,4 @@
 name: mousam
-summary: Weather for Linux
-version: git
 adopt-info: mousam
 
 grade: stable
@@ -15,7 +13,8 @@ architectures:
 parts:
   mousam:
     source: https://github.com/amit9838/weather.git
-    source-branch: master
+    source-depth: 1
+    #source-tag: used when there will be a new release with these fixes
     plugin: meson
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-pull: |
@@ -50,5 +49,3 @@ apps:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
     plugs:
       - network
-      - network-status
-      - network-bind
