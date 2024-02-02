@@ -30,10 +30,8 @@
             "buildsystem" : "meson",
             "sources" : [
                 {
-                    "type" : "git",
-                    "tag" : "v1.0.1",
-                    "commit" : "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",
-                    "url" : "https://github.com/amit9838/weather.git"
+                    "type" : "dir",
+                    "path" :  ".."
                 }
             ]
         }
