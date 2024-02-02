@@ -1,17 +1,21 @@
 name: mousam
-base: core22
 adopt-info: mousam
+
 grade: stable
 confinement: strict
+
+base: core22
 architectures:
   - build-on: amd64
   - build-on: arm64
   - build-on: armhf
+
 parts:
   mousam:
-    plugin: meson
     source: https://github.com/amit9838/weather.git
-    #source-tag: 'v1.0.0'
+    source-depth: 1
+    #source-tag: used when there will be a new release with these fixes
+    plugin: meson
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-pull: |
       craftctl default
@@ -45,5 +49,3 @@ apps:
       PYTHONPATH: $SNAP/usr/lib/python3.10/dist-packages:$PYTHONPATH
     plugs:
       - network
-      - network-status
-      - network-bind
