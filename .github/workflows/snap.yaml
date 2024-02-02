@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "perm-fix" ]
   pull_request:
     branches: [ "master" ]
     types: [ "review_requested", "ready_for_review" ]
