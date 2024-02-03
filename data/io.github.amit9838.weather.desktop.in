@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=Weather
+Name=Mousam
 Exec=weather
 Comment=Beautiful and lightweight weather app
 Icon=io.github.amit9838.weather
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=Application;Utility;GTK;
 Keywords=Weather;Mousam;Rain;Cloud;Forecast;
 StartupNotify=true

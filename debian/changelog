@@ -1,0 +1,302 @@
+mousam (1.0.1) jammy; urgency=medium
+
+  [ সৌম্যদীপ ঘোষ ]
+  * release snap
+
+  [ Amit Chaudhary ]
+  * update arrow icon path
+
+  [ সৌম্যদীপ ঘোষ ]
+  * test the latest commit
+
+  [ soumyadghosh ]
+  * snap: remove hardcoded paths for snap
+
+  [ Amit Chaudhary ]
+  * Create static.yml
+  * add website
+  * fix website speling
+  * add elements to website
+  * fix overflow:scroll
+  * don't save locations with invalid cords
+  * fix some styling and update features on website
+  * release v1.0.1
+  * release v1.0.1
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:30:43 +0530
+
+mousam (1.0.0) jammy; urgency=medium
+
+  [ Nokse ]
+  * made the app more adaptive
+
+  [ Nokse22 ]
+  * Update weather.py
+
+  [ Nokse ]
+  * new icon using svg
+
+  [ Nokse22 ]
+  * Update README.md
+  * Update README.md
+  * Update README.md
+
+  [ Amit Chaudhary ]
+  * various changes add new icons refactor check internet few fixes
+  * update icons paths
+
+  [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
+  * Remove the unofficial mark from Snap
+
+  [ hui1601 ]
+  * fix gettext not works https://stackoverflow.com/a/46395016
+  * Fix typo(Reastart)
+  * Fix string formatting not works in i18n texts
+  * Fix Feels like Translation
+  * Add Korean Translation
+
+  [ Sabri Ünal ]
+  * data: add translate and vcs-browser url types
+  * data: validate appdata
+  * data: Mark release descriptions as untranslatable
+  * po: update the POTFILES
+  * app: mark the application name translatable
+  * po: order LINGUAS entries
+  * po: Create a POT file
+  * Update Turkish translation
+
+  [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
+  * added some more keywords, so that it's easily search in the app grid
+
+  [ Amit Chaudhary ]
+  * fix Gio import in forecast
+  * introduce new design with new backend
+  * Create Models for consistency,scalibility
+  * use models for better consistency
+  * use dynamic icons, fix styling
+  * various changes show dynamic level_string in all cards show icon in current condition section fix tomorrow's forecast also show night icons fix some bugs
+  * add more icons
+  * better icon rendering
+  * use dynamic condition string for current weather,fix some ui styling
+  * simplify stack switching btn in hourly forecast
+  * use dynamic value for precipitation
+  * remove .vscode file
+  * remove loader from hourly stack
+  * add locations window
+  * some ui tweakx
+  * add search city functionality
+  * replace 'rime fog' for with 'mist'
+  * add,remove switch locations from settings
+  * use cords for selected city, add relevent comments
+  * location related changes use location details from db ability to switch from location window refresh weather using refresh arrow show no results in search city if nothing foumd fix bugs
+  * some fixes fix precipitation bar overflow fix spacing in square card fix spacing in arrow icon use epoch timestamp in refresh logic some code cleanup
+  * show hourly data from curr_time, show dewpoint, add relevent data from hourly to current_w, fix uv inxex calc
+  * add now label on current time in hourly forecast, add more info in curr_weather section
+  * some minor fixes include full day data in hourly forecast fix precipitation bar and value
+  * show local time in sunset,sunrise and clock
+  * ui related changes move location button in the header use cards in hourly forecast section show text-msg only if no precipitation today organize elements in pressure card reorganize elements in forecast card show random messages for no prec in hourly forecast section
+  * use threading for better app launch, refresh,switch-loc, highlight now card in hourly
+  * fix sun rotation
+  * rename tz functions
+  * prevent instant location switching
+  * rename threads
+  * add switch units from settings
+  * check internet connectivity before api call
+  * option to launch in maximized state,better error handling
+  * add recommends in app data
+  * add screenshots, fix some bugs
+  * release v1.0.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:29:01 +0530
+
+mousam (0.6.0) jammy; urgency=medium
+
+  [ Amit Chaudhary ]
+  * fix readme
+  * remove verbs from action-row titles
+  * follow system font scaling
+  * fix leading zero in minute
+  * show condition-text in 5 day forecast
+  * some ui tweaks
+  * convert backgrounds to valid css
+  * split windows.py file
+  * follow camel case file naming
+  * new: show summary for snowfall
+  * convert F to C for summary
+  * various fixes, code cleanup
+  * don't unset use_personal_api if no internet
+  * refactor use_personal_api_key preferences
+  * rename schema key for api key
+  * set_expanded if using personal api key
+  * clean code
+  * remove use keyword from unit row
+  * some more code cleanup
+  * feat: add air pollution info
+  * scale up left section in condition box
+  * update screenshots
+  * release v0.6.0
+  * release v0.6.0
+  * update release tag
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:26:56 +0530
+
+mousam (0.5.0) jammy; urgency=medium
+
+  [ Gabriel C ]
+  * Full Markdown revamp
+  * Added Snap & Flatpak Link
+
+  [ Amit Chaudhary ]
+  * remove unnecessary calls when adding, removing cities
+  * add,remove city more quickly
+  * use highest wind speed throughout for forecast
+  * add function to check internet connection
+  * check for internet connectivity on launch
+  * skip refreshing if no internet
+  * make strings translatable, remove print lines
+  * create utility for get cords,clean code
+  * simplify city removal refresh condition
+  * add utility for toasts
+  * remove unused imports
+  * add sunrise,sunset
+  * fix some css
+  * convert sunset,sunrise time to local
+  * update screenshots
+  * release v0.5.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:25:25 +0530
+
+mousam (0.4.0) jammy; urgency=medium
+
+  [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
+  * upd: `v0.3.0`
+
+  [ Amit Chaudhary ]
+  * fix: not changing wind speed on changing unit (restart was required)
+
+  [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
+  * specify the architectures that can be built on
+  * fix typo
+
+  [ Amit Chaudhary ]
+  * fix:align forecast switcher on full screen
+  * feat:add 5 day forecast
+  * clean code, ui_improvement, make strings translasalable
+  * clean code, ui_improvement, make strings translatable
+  * feat:Show rain summary
+  * remove unnecessary code
+  * update screenshot
+  * release v0.4.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:23:53 +0530
+
+mousam (0.3.0) jammy; urgency=medium
+
+  [ Сергей Ворон ]
+  * Update Russian translation
+  * Update ru.po
+
+  [ Amit Chaudhary ]
+  * add spanish translation
+  * update copyright info
+  * show toast on events like- refresh, add/remove city,save
+  * clean code
+
+  [ soumyadghosh ]
+  * added snap manifest build files
+  * fixed some typos
+
+  [ Amit Chaudhary ]
+  * switch location from preferences
+  * clean code, better performance
+  * fix time in forecast card
+
+  [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
+  * add installation methods
+
+  [ Amit Chaudhary ]
+  * Switch location asynchronously
+  * fetch city async
+  * Bug fixes,  multiple  improvements #15
+  * use smaller border for window
+  * switch loc in prefs win with async
+  * feat: option to use metric or imperial system #14
+  * fix spacing
+  * use full form - celsius, fahrenheit
+  * feat: option for, today, tomorrow, forecasts  #11
+  * clean code
+  * update screenshots
+  * release v0.3.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:22:24 +0530
+
+mousam (0.2.1) jammy; urgency=medium
+
+  [ Amit Chaudhary ]
+  * fix some wrong units
+  * fix some units and css styling
+  * use full country name
+  * show personal api key status in row-title
+  * update screenshots
+  * release v0.2.1
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:21:27 +0530
+
+mousam (0.2.0) jammy; urgency=medium
+
+  [ Sabri Ünal ]
+  * Fix a Typo
+  * i18n: Mark some strings translatable
+  * UI: Use Application Name in the menu
+  * Add translator-credits
+  * Fix copyright information
+  * Update the POTFILE
+  * data: Use Sentence case for the application name
+  * data: Add comment for the application in .desktop file
+  * Add Turkish translation
+
+  [ Сергей Ворон ]
+  * Update LINGUAS
+  * Create ru.po
+
+  [ Sabri Ünal ]
+  * UI: Mark some strings translatable
+  * app: hide unused variables
+  * UI: Make the app title translatable
+  * UI: Add a tooltip to the refresh button
+  * UI: Use Header Capitalization
+  * Update Turkish translation
+
+  [ Amit Chaudhary ]
+  * include states in search result
+  * city search ui refactor
+  * use custom api key
+  * remove quotes from custom api
+  * clean code
+  * release v0.2.0
+  * fix typo, change:custom to personal api key
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:20:22 +0530
+
+mousam (0.1.0) jammy; urgency=medium
+
+  [ Amit Chaudhary ]
+  * add gitignore
+  * initial commit
+  * update menifest
+  * add repo links
+  * change app_id,handle empty cities list
+  * update metadata
+  * release v0.1.0
+  * update menifest
+  * change app id
+  * fix wrong app id
+  * fix target commit
+  * Delete io.github.amit9838.weather.json~
+  * Delete com.github.amit9838.json~
+  * fix release tag
+  * add screenshots
+  * link scrreenshots
+  * user raw links
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:08:43 +0530
