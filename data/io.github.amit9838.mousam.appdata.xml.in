@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-	<id>io.github.amit9838.weather.desktop</id>
+	<id>io.github.amit9838.mousam.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
   <name>Weather</name>
-  <summary>Beautiful and lightweight weather app</summary>
+  <summary>Beautiful and lightweight mousam app</summary>
   <description>
     <p>Current Weather conditions and forcasts.</p>
     <p>Features:</p>

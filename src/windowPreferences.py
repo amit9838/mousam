@@ -4,7 +4,7 @@ import threading
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw,Gio,GLib
+from gi.repository import Gtk, Adw,GLib
 
 from .units import get_measurement_type
 from .utils import create_toast
@@ -56,7 +56,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 #  Launch the app in maximize mode
                 launch_maximized =  Adw.ActionRow.new()
                 launch_maximized.set_activatable(True)
-                launch_maximized.set_title(_("Open Maximized"))
+                launch_maximized.set_title(_("Launch Maximized"))
                 launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Restart required)"))
 
                 self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)

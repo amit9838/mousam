@@ -1,9 +1,9 @@
 pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())
-moduledir = join_paths(pkgdatadir, 'weather')
+moduledir = join_paths(pkgdatadir, 'mousam')
 gnome = import('gnome')
 
-gnome.compile_resources('weather',
-  'weather.gresource.xml',
+gnome.compile_resources('mousam',
+  'mousam.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -18,8 +18,8 @@ conf.set('localedir', join_paths(get_option('prefix'), get_option('localedir')))
 conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
-  input: 'weather.in',
-  output: 'weather',
+  input: 'mousam.in',
+  output: 'mousam',
   configuration: conf,
   install: true,
   install_dir: get_option('bindir'),
@@ -28,7 +28,7 @@ configure_file(
 
 weather_sources = [
   'main.py',
-  'weather.py',
+  'mousam.py',
   'weatherData.py',
   'Models.py',
 

@@ -1,4 +1,4 @@
-application_id = 'io.github.amit9838.weather'
+application_id = 'io.github.amit9838.mousam'
 
 scalable_dir = join_paths('hicolor', 'scalable', 'apps')
 

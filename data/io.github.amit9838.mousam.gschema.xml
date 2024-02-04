@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="weather">
-	<schema id="io.github.amit9838.weather" path="/io/github/amit9838/weather/">
+<schemalist gettext-domain="mousam">
+	<schema id="io.github.amit9838.mousam" path="/io/github/amit9838/mousam/">
 
     <key name="added-cities" type="as">
       <default>['Delhi,India,28.6517178,77.2219388']</default>
@@ -19,7 +19,7 @@
     </key>
 
 	  <key name="launch-maximized" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Launch the app in maximized mode.</summary>
     </key>
 

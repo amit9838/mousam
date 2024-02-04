@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Mousam
-Exec=weather
-Comment=Beautiful and lightweight weather app
-Icon=io.github.amit9838.weather
+Exec=mousam
+Comment=Beautiful and lightweight mousam app
+Icon=io.github.amit9838.mousam
 Terminal=false
 Type=Application
 Categories=Application;Utility;GTK;

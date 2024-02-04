@@ -20,7 +20,7 @@ def check_internet_connection():
 
 
 def get_selected_city_coords():
-    settings = Gio.Settings.new("io.github.amit9838.weather")
+    settings = Gio.Settings.new("io.github.amit9838.mousam")
     selected_city = int(str(settings.get_value("selected-city")))
     added_cities = list(settings.get_value("added-cities"))
     city_loc = added_cities[selected_city].split(",")
@@ -41,7 +41,7 @@ def convert_to_local_time(timestamp, timezone_stamp):
 
 
 def get_cords():
-    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+    settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
     selected_city_ = settings.get_string("selected-city")
     return [float(x) for x in selected_city_.split(",")]
 

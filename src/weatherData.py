@@ -161,7 +161,7 @@ def classify_wind_speed_level(wind_speed):
 
 
 def transform_visibility_data(unit, data):
-    settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+    settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
     measurement_type = settings.get_string('measure-type')
     dist_unit = "km"
     dist = data/1000

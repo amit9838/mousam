@@ -24,17 +24,17 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 
 from gi.repository import Gtk, Gio,Adw,Gdk
-from .weather import WeatherMainWindow
+from .mousam import WeatherMainWindow
 from .css import css
 
 class WeatherApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
-        super().__init__(application_id='io.github.amit9838.weather',
+        super().__init__(application_id='io.github.amit9838.mousam',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.main_window = None
 
     def do_activate(self):

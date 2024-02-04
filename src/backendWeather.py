@@ -14,7 +14,7 @@ class Weather:
 
     def __init__(self) -> None:
         global settings, measurement_type, temperature_unit, wind_speed_unit
-        settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         measurement_type = settings.get_string("measure-type")
         if measurement_type == "imperial":
             temperature_unit = "fahrenheit"
