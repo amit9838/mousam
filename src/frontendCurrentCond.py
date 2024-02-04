@@ -64,7 +64,7 @@ class CurrentCondition(Gtk.Grid):
         )
         self.attach(box_right, 1, 0, 1, 1)
 
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.added_cities = self.settings.get_strv("added-cities")
         self.selected_city = self.settings.get_string("selected-city")
 

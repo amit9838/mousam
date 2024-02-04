@@ -6,7 +6,7 @@ from gi.repository import Gtk, Adw
 def AboutWindow(parent,*args):
         dialog = Adw.AboutWindow.new()
         dialog.set_application_name("Weather")
-        dialog.set_application_icon("io.github.amit9838.weather")
+        dialog.set_application_icon("io.github.amit9838.mousam")
         dialog.set_version("1.0.1")
         dialog.set_developer_name("Amit Chaudhary")
         dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))

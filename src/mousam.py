@@ -33,7 +33,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         global application
         self.main_window = application = self
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.weather")
+        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.set_default_size(1220, 860)
         self.set_title("")
         #  Adding a button into header

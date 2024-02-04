@@ -31,16 +31,16 @@ localedir = '@localedir@'
 
 sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-locale.bindtextdomain('weather', localedir)
-locale.textdomain('weather')
-gettext.install('weather', localedir)
+locale.bindtextdomain('mousam', localedir)
+locale.textdomain('mousam')
+gettext.install('mousam', localedir)
 
 if __name__ == '__main__':
     import gi
 
     from gi.repository import Gio
-    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'weather.gresource'))
+    resource = Gio.Resource.load(os.path.join(pkgdatadir, 'mousam.gresource'))
     resource._register()
 
-    from weather import main
+    from mousam import main
     sys.exit(main.main(VERSION))

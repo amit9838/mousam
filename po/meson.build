@@ -1,1 +1,1 @@
-i18n.gettext('weather', preset: 'glib')
+i18n.gettext('mousam', preset: 'glib')
