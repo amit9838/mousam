@@ -23,10 +23,10 @@ configure_file(
   configuration: conf,
   install: true,
   install_dir: get_option('bindir'),
-  install_mode: 'r-xr--r--'
+  install_mode: 'r-xr-xr--'
 )
 
-weather_sources = [
+mousam_sources = [
   'main.py',
   'mousam.py',
   'weatherData.py',
@@ -59,7 +59,7 @@ weather_sources = [
   'windowLocations.py'
 ]
 
-install_data(weather_sources, install_dir: moduledir)
+install_data(mousam_sources, install_dir: moduledir)
 
 icon_conf = configuration_data()
 icon_conf.set('icon_location', get_option('prefix'))

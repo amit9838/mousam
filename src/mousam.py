@@ -77,7 +77,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
-        menu.append(_("About Weather"), "win.about")
+        menu.append(_("About Mousam"), "win.about")
 
         # Toast overlay
         self.toast_overlay = Adw.ToastOverlay.new()

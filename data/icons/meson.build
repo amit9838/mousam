@@ -7,7 +7,7 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'icons', scalable_dir),
 )
 
-scalable_dir = join_paths('hicolor','scalable', 'weather_icons')
+scalable_dir = join_paths('hicolor','scalable', 'mousam_icons')
 
 install_data(
 	  join_paths(scalable_dir, 'arrow.svg'),

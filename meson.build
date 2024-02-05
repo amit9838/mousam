@@ -7,15 +7,11 @@ project('mousam',
 i18n = import('i18n')
 gnome = import('gnome')
 
-
-
 subdir('data')
 subdir('src')
 subdir('po')
 
-
-
-install_subdir('data/weather_icons', install_dir: get_option('datadir') / 'icons/hicolor/scalable')
+install_subdir('data/mousam_icons', install_dir: get_option('datadir') / 'icons/hicolor/scalable')
 
 gnome.post_install(
      glib_compile_schemas: true,
