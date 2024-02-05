@@ -25,8 +25,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6.3
         with:
-          bundle: io.github.amit9838.weather.flatpak
-          manifest-path: io.github.amit9838.weather.json
+          bundle: io.github.amit9838.mousam.flatpak
+          manifest-path: io.github.amit9838.mousam.json
           cache-key: flatpak-builder-${{ github.sha }}
           arch: ${{ matrix.arch }}
           restore-cache: true

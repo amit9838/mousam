@@ -1,0 +1,2 @@
+#!/bin/bash
+xgettext --keyword=_ --keyword=N_ --output=po/mousam.pot -f po/POTFILES
