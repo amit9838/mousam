@@ -1,4 +1,4 @@
-# Models for All weather data data
+# Models for All weather data
 
 class CurrentWeather:
     total_instances = 0

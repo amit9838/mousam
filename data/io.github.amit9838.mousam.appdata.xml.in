@@ -17,31 +17,31 @@
   </description>
     <screenshots>
       <screenshot type="default">
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss5-overcast.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png</image>
           <caption>Overcast day</caption>
       </screenshot>
       <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss3-clear_sky-imperial.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3-clear_sky-imperial.png</image>
           <caption>Clear Sky - imperial</caption>
       </screenshot>
       <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-thunderstorm.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2-thunderstorm.png</image>
           <caption>Thunderstorm</caption>
       </screenshot>
         <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss1-dark_mode.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png</image>
           <caption>Dark mode</caption>
       </screenshot>
         <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png</image>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png</image>
           <caption>Light mode</caption>
       </screenshot>
   </screenshots>
-  <launchable type="desktop-id">io.github.amit9838.weather.desktop</launchable>
-  <url type="homepage">https://amit9838.github.io/weather/</url>
-  <url type="bugtracker">https://github.com/amit9838/weather/issues</url>
-  <url type="translate">https://github.com/amit9838/weather/tree/master/po</url>
-  <url type="vcs-browser">https://github.com/amit9838/weather</url>
+  <launchable type="desktop-id">io.github.amit9838.mousam.desktop</launchable>
+  <url type="homepage">https://amit9838.github.io/mousam/</url>
+  <url type="bugtracker">https://github.com/amit9838/mousam/issues</url>
+  <url type="translate">https://github.com/amit9838/mousam/tree/master/po</url>
+  <url type="vcs-browser">https://github.com/amit9838/mousam</url>
   <developer_name>Amit Chaudhary</developer_name>
   <recommends>
     <control>pointing</control>
@@ -72,7 +72,7 @@
             <li>The new design follows a card design pattern, highlighting important data utilizing graphs and bars.</li>
             <li>A new backend that is more optimized and offers a better user experience.</li>
             <li>A new set of icons shipped with the app covers a wide range of conditions and is independent of system icons.</li>
-            <li>Now, weather better scales with various screen sizes (desktop).</li>
+            <li>Now, mousam better scales with various screen sizes (desktop).</li>
             <li>Covers more cities and locations.</li>
             <li>The sunrise and sunset current time of the selected location is shown in the local time zone of the selected location.</li>
             <li>Various bug fixes</li>

@@ -1,7 +1,7 @@
 import os
 
 
-icon_loc = "@icon_location@/share/icons/hicolor/scalable/weather_icons/"
+icon_loc = "@icon_location@/share/icons/hicolor/scalable/mousam_icons/"
 
 icons = {
     "0": icon_loc + "clear-day.svg",

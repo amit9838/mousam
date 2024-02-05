@@ -1,6 +1,6 @@
 <div align="center">
-<img src="data/icons/hicolor/scalable/apps/io.github.amit9838.weather.svg?raw=true" width="120">
-<h1>Weather</h1>
+<img src="data/icons/hicolor/scalable/apps/io.github.amit9838.mousam.svg?raw=true" width="120">
+<h1>Mousam</h1>
 
 <p>Beautiful lightweight weather app based on Python and Gtk</p>
 
@@ -17,11 +17,11 @@ I hope you ❤️ the weather app, if you think it is worth supporting you can d
 
 ---
 
-<img src="https://img.shields.io/github/v/release/amit9838/weather?style=flat&label=Latest+Release&color=%234a92ff">
+<img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff">
 </div>
 <div align="center">
-<img src="https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss2-thunderstorm.png?raw=true#gh-dark-mode-only">
-<img src="https://raw.githubusercontent.com/amit9838/weather/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2-thunderstorm.png?raw=true#gh-dark-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only">
 </div>
 
 ## Features
@@ -34,11 +34,11 @@ I hope you ❤️ the weather app, if you think it is worth supporting you can d
 
 ### **Flatpak:**
 
-<a href='https://flathub.org/apps/io.github.amit9838.weather'><img width='240' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
+<a href='https://flathub.org/apps/io.github.amit9838.mousam'><img width='240' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
 * Or you can use the terminal:
 ```
-flatpak install flathub io.github.amit9838.weather
+flatpak install flathub io.github.amit9838.mousam
 ```
 
 ### **Snap:**
@@ -59,16 +59,16 @@ sudo snap install mousam
   
 ### Build
 ```
-meson build
-ninja -C build
+rm -rf builddir
+meson setup -Dprefix=$HOME/.local builddir
+meson compile -C builddir --verbose
 ```
 
 ### Install
 ```
-sudo ninja -C build install
+meson install -C builddir
 ```
 ### Run
 ```
-weather
+mousam
 ```
-

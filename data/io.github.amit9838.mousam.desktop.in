@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Mousam
 Exec=mousam
-Comment=Beautiful and lightweight mousam app
+Comment=Beautiful and lightweight weather app
 Icon=io.github.amit9838.mousam
 Terminal=false
 Type=Application

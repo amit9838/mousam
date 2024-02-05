@@ -1,0 +1,272 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-03 21:54+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+msgid "Mousam"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Weather"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, and wind speed,UV index,pressure "
+"and more"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Overcast day"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Clear Sky - imperial"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29
+msgid "Thunderstorm"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:33
+msgid "Dark mode"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:37
+msgid "Light mode"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:23
+msgid "Launch the app in maximized mode."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:28
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:29
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr ""
+
+#: src/frontendForecast.py:33 src/frontendForecast.py:122
+msgid "Tomorrow"
+msgstr ""
+
+#: src/frontendForecast.py:39
+msgid "Weekly"
+msgstr ""
+
+#: src/frontendForecast.py:120
+msgid "Today"
+msgstr ""
+
+#: src/frontendHourlyDetails.py:46
+msgid "Hourly"
+msgstr ""
+
+#: src/frontendHourlyDetails.py:53
+msgid "Wind"
+msgstr ""
+
+#: src/frontendHourlyDetails.py:60
+msgid "Precipitation"
+msgstr ""
+
+#: src/mousam.py:72
+msgid "Preferences"
+msgstr ""
+
+#: src/mousam.py:80
+msgid "About Mousam"
+msgstr ""
+
+#: src/mousam.py:310
+msgid "Refresh within 5 seconds is ignored!"
+msgstr ""
+
+#: src/mousam.py:314
+msgid "Refreshing..."
+msgstr ""
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and python"
+msgstr ""
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2024 Mousam Developers"
+msgstr ""
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr ""
+
+#: src/windowLocations.py:19 src/windowLocations.py:35
+msgid "Locations"
+msgstr ""
+
+#: src/windowLocations.py:41
+msgid "Add"
+msgstr ""
+
+#: src/windowLocations.py:66
+msgid "Remove location"
+msgstr ""
+
+#: src/windowLocations.py:113
+msgid "Switch city within 2 seconds is ignored!"
+msgstr ""
+
+#: src/windowLocations.py:116
+msgid "Selected - {}"
+msgstr ""
+
+#: src/windowLocations.py:126
+msgid "Add New Location"
+msgstr ""
+
+#: src/windowLocations.py:143
+msgid "Search for a city"
+msgstr ""
+
+#: src/windowLocations.py:149 src/windowLocations.py:151
+msgid "Search"
+msgstr ""
+
+#: src/windowLocations.py:206
+msgid "No results found !"
+msgstr ""
+
+#: src/windowLocations.py:230
+#, python-brace-format
+msgid "Added - {0}"
+msgstr ""
+
+#: src/windowLocations.py:232
+msgid "Location already added!"
+msgstr ""
+
+#: src/windowLocations.py:241
+msgid "Add more locations to delete!"
+msgstr ""
+
+#: src/windowLocations.py:265
+#, python-brace-format
+msgid "Deleted - {0}"
+msgstr ""
+
+#: src/windowPreferences.py:35
+msgid "Appearance"
+msgstr ""
+
+#: src/windowPreferences.py:59
+msgid "Open Maximized"
+msgstr ""
+
+#: src/windowPreferences.py:60
+msgid "Launch the weather app in maximized mode (Restart required)"
+msgstr ""
+
+#: src/windowPreferences.py:73
+msgid "Units &amp; Measurements"
+msgstr ""
+
+#: src/windowPreferences.py:77
+msgid "°C"
+msgstr ""
+
+#: src/windowPreferences.py:78
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr ""
+
+#: src/windowPreferences.py:86
+msgid "°F"
+msgstr ""
+
+#: src/windowPreferences.py:87
+msgid "IMPERIAL system with units like fahrenheit, mph, miles"
+msgstr ""
+
+#: src/windowPreferences.py:116
+msgid "Switching within 2 seconds is ignored!"
+msgstr ""
+
+#: src/windowPreferences.py:119
+msgid "Switched to - {}"
+msgstr ""
