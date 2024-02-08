@@ -1,3 +1,50 @@
+mousam (1.0.2) stable; urgency=medium
+
+  [ Himadri Sekhar Basu ]
+  * Fix packaging (#58)
+  * Fix snap packaging
+    - Fixed missing artifacts in snap version
+    - Use meson version >=0.61 for compatibility
+      in ubuntu 22.04 (current version 0.61.2)
+    - Update project version to 1.0.1
+  * fixes as needed
+  * remove the conditions based on packaging format
+    ---------
+    Co-authored-by: সৌম্যদীপ ঘোষ <72045785+soumyaDghosh@users.noreply.github.com>
+
+  [ soumyadghosh ]
+  * added workflows to test the latest commit
+  * fix the flatpak manifest
+
+  [ সৌম্যদীপ ঘোষ ]
+  * fix typo
+
+  [ Amit Chaudhary ]
+  * change app_id from io.github.amit9838.weather to io.github.amit9838.mousam
+  * use old name for project config file
+
+  [ Himadri Sekhar Basu ]
+  * Rename package an repo to mousam
+    - Rename app name to mousam
+    - Rename app id to io.github.amit9838.mousam
+  * Fix no icon in debian packaging and lintian
+    - Fix lintian copyright error
+    - Update icon cache in d/postinst
+      and d/postrm
+    - Fixed #56 with #62
+  * Update meson build and translation scripts
+    - Concise the meson build script for icons
+    - Fix install mode for the mousam binary
+    - Replace deprecated meson function
+      install_subdir with install_emptydir
+    - Update flatpak builder workflow
+    - Closed #57 with #65
+
+  [ Amit Chaudhary ]
+  * releasev1.0.2
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Thu, 08 Feb 2024 18:03:01 +0530
+
 mousam (1.0.1) jammy; urgency=medium
 
   [ সৌম্যদীপ ঘোষ ]
