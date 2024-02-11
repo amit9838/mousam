@@ -89,10 +89,6 @@ def fetch_current_air_pollution():
     global air_apllution_data
     obj = AirPollution()
     air_apllution_data = obj._get_current_air_pollution(*get_cords())
-    if air_apllution_data is not None:
-        air_apllution_data["level"] = classify_aqi(
-            air_apllution_data["current"]["us_aqi"]
-        )
     return air_apllution_data
 
 
