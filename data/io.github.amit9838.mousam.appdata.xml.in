@@ -4,7 +4,7 @@
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
   <name>Mousam</name>
-  <summary>Beautiful and lightweight mousam app</summary>
+  <summary>Beautiful and lightweight weather app</summary>
   <description>
     <p>Current Weather conditions and forcasts.</p>
     <p>Features:</p>
@@ -57,131 +57,131 @@
   <releases>
     <release version="1.0.2" date="2024-02-8">
       <description translatable="no">
-      <p>Bug fixes</p>
+        <p>Bug fixes</p>
         <ul>
-            <li>Bug fixes related to build</li>
+          <li>Bug fixes related to build</li>
         </ul>
         <p>Thanks to</p>
         <ul>
-            <li>@hsbasu: multiple improvents related to build.</li>
-            <li>@soumyaDghosh: for bug fixes related to snap.</li>
+          <li>@hsbasu: multiple improvents related to build.</li>
+          <li>@soumyaDghosh: for bug fixes related to snap.</li>
         </ul>
       </description>
-      </release>
+    </release>
     <release version="1.0.1" date="2024-01-16">
       <description translatable="no">
-      <p>Bug fixes</p>
+        <p>Bug fixes</p>
         <ul>
-            <li>Fix bug where some locations dosen't provide valid co-ordinates</li>
-            <li>Add website in about section </li>
+          <li>Fix bug where some locations dosen't provide valid co-ordinates</li>
+          <li>Add website in about section </li>
         </ul>
       </description>
-      </release>
-      <release version="1.0.0" date="2024-01-14">
+    </release>
+    <release version="1.0.0" date="2024-01-14">
       <description translatable="no">
-      <p>What's New</p>
+        <p>What's New</p>
         <ul>
-            <li>Introducing a new design with an entirely new app experience.</li>
-            <li>The new design follows a card design pattern, highlighting important data utilizing graphs and bars.</li>
-            <li>A new backend that is more optimized and offers a better user experience.</li>
-            <li>A new set of icons shipped with the app covers a wide range of conditions and is independent of system icons.</li>
-            <li>Now, mousam better scales with various screen sizes (desktop).</li>
-            <li>Covers more cities and locations.</li>
-            <li>The sunrise and sunset current time of the selected location is shown in the local time zone of the selected location.</li>
-            <li>Various bug fixes</li>
+          <li>Introducing a new design with an entirely new app experience.</li>
+          <li>The new design follows a card design pattern, highlighting important data utilizing graphs and bars.</li>
+          <li>A new backend that is more optimized and offers a better user experience.</li>
+          <li>A new set of icons shipped with the app covers a wide range of conditions and is independent of system icons.</li>
+          <li>Now, mousam better scales with various screen sizes (desktop).</li>
+          <li>Covers more cities and locations.</li>
+          <li>The sunrise and sunset current time of the selected location is shown in the local time zone of the selected location.</li>
+          <li>Various bug fixes</li>
         </ul>
-      <p>Thanks to</p>
+        <p>Thanks to</p>
         <ul>
-            <li>@sabriunal: for bug fixes and translation-related changes.</li>
-            <li>@soumyaDghosh: for bug fixes related to snap.</li>
-            <li>@Nokse22: for fixes and creating new icons.</li>
-            <li>@hui1601: for fixing translation-related bugs.</li>
-            <li>@suryansh076: for helping with the new design.</li>
-            <li>And thanks to the folks who reported bugs on GitHub.</li>
-        </ul>
-      </description>
-      </release>
-      <release version="0.6.0" date="2023-07-14">
-      <description translatable="no">
-        <ul>
-            <li>Adds air-pollution info</li>
-            <li>Adds Snowfall summary</li>
-            <li>Adds forecast text in 5-day forecast</li>
-            <li>Follow system font scaling</li>
-            <li>UI Improvements</li>
-            <li>Various bug fixes</li>
+          <li>@sabriunal: for bug fixes and translation-related changes.</li>
+          <li>@soumyaDghosh: for bug fixes related to snap.</li>
+          <li>@Nokse22: for fixes and creating new icons.</li>
+          <li>@hui1601: for fixing translation-related bugs.</li>
+          <li>@suryansh076: for helping with the new design.</li>
+          <li>And thanks to the folks who reported bugs on GitHub.</li>
         </ul>
       </description>
-      </release>
-      <release version="0.5.0" date="2023-07-05">
+    </release>
+    <release version="0.6.0" date="2023-07-14">
       <description translatable="no">
         <ul>
-            <li>Adds sunset/sunrise info</li>
-            <li>Add and remove city more quickly</li>
-            <li>Better error screens like - No internet!</li>
-            <li>UI Improvements</li>
-            <li>Various bug fixes</li>
+          <li>Adds air-pollution info</li>
+          <li>Adds Snowfall summary</li>
+          <li>Adds forecast text in 5-day forecast</li>
+          <li>Follow system font scaling</li>
+          <li>UI Improvements</li>
+          <li>Various bug fixes</li>
         </ul>
       </description>
-      </release>
+    </release>
+    <release version="0.5.0" date="2023-07-05">
+      <description translatable="no">
+        <ul>
+          <li>Adds sunset/sunrise info</li>
+          <li>Add and remove city more quickly</li>
+          <li>Better error screens like - No internet!</li>
+          <li>UI Improvements</li>
+          <li>Various bug fixes</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.4.0" date="2023-06-25">
       <description translatable="no">
         <ul>
-            <li>Adds 5 days forecast</li>
-            <li>Adds rain summary (rain quantity)</li>
-            <li>Fixes unit switching in forecast section</li>
-            <li>UI Improvements</li>
-            <li>Minor bug fixes</li>
+          <li>Adds 5 days forecast</li>
+          <li>Adds rain summary (rain quantity)</li>
+          <li>Fixes unit switching in forecast section</li>
+          <li>UI Improvements</li>
+          <li>Minor bug fixes</li>
         </ul>
       </description>
-      </release>
-      <release version="0.3.0" date="2023-06-22">
+    </release>
+    <release version="0.3.0" date="2023-06-22">
       <description translatable="no">
         <ul>
-            <li>Show today and tomorrow forecasts</li>
-            <li>Option:Use Imerial, Metric systems</li>
-            <li>Now switch location smoothly</li>
-            <li>Show notification (toast) on various events</li>
-            <li>UI Improvements</li>
-            <li>Minor bug fixes</li>
-            <li>Add Spanish translation, Thanks to Radical4ever</li>
-            <li>Update russian translation</li>
-            <li>Snap version is also available on snap-store, thanks to Soumyadeep Ghosh</li>
+          <li>Show today and tomorrow forecasts</li>
+          <li>Option:Use Imerial, Metric systems</li>
+          <li>Now switch location smoothly</li>
+          <li>Show notification (toast) on various events</li>
+          <li>UI Improvements</li>
+          <li>Minor bug fixes</li>
+          <li>Add Spanish translation, Thanks to Radical4ever</li>
+          <li>Update russian translation</li>
+          <li>Snap version is also available on snap-store, thanks to Soumyadeep Ghosh</li>
         </ul>
       </description>
-      </release>
+    </release>
     <release version="0.2.1" date="2023-06-18">
-        <description translatable="no">
-          <ul>
-              <li>Use full country name.</li>
-              <li>Fix units.</li>
-              <li>UI Improvements.</li>
-              <li>Minor bug fixes.</li>
-          </ul>
-        </description>
-        </release>
-        <release version="0.2.0" date="2023-06-17">
-        <description translatable="no">
-          <p>What's New</p>
-          <ul>
-              <li>Option:Use Custom api-key.</li>
-              <li>UI Improvements.</li>
-              <li>Show states in search results.</li>
-              <li>Various bug fixes.</li>
-              <li>Add Turkish translation. Thanks to Sabri Ünal.</li>
-              <li>Add Russian translation. Thanks to Сергей Ворон.</li>
-          </ul>
-        </description>
-        </release>
+      <description translatable="no">
+        <ul>
+          <li>Use full country name.</li>
+          <li>Fix units.</li>
+          <li>UI Improvements.</li>
+          <li>Minor bug fixes.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.2.0" date="2023-06-17">
+      <description translatable="no">
+        <p>What's New</p>
+        <ul>
+          <li>Option:Use Custom api-key.</li>
+          <li>UI Improvements.</li>
+          <li>Show states in search results.</li>
+          <li>Various bug fixes.</li>
+          <li>Add Turkish translation. Thanks to Sabri Ünal.</li>
+          <li>Add Russian translation. Thanks to Сергей Ворон.</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.1.0" date="2023-06-11">
-        <description translatable="no">
-          <p>New features and updates</p>
-          <ul>
-              <li>Use dynamic gradient backgrounds based on current weather.</li>
-              <li>See forcasts in beautiful card view.</li>
-              <li>Search and add cities.</li>
-          </ul>
-        </description>
+      <description translatable="no">
+        <p>New features and updates</p>
+        <ul>
+          <li>Use dynamic gradient backgrounds based on current weather.</li>
+          <li>See forcasts in beautiful card view.</li>
+          <li>Search and add cities.</li>
+        </ul>
+      </description>
     </release>
   </releases>
 </component>
