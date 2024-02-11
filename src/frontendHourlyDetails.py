@@ -3,7 +3,8 @@ import random
 import time
 import gi
 from gettext import gettext as _
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
+
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
@@ -89,7 +90,10 @@ class HourlyDetails(Gtk.Grid):
         desc_label.set_css_classes(["text-4", "light-2", "bold-2"])
         info_grid.attach(desc_label, 0, 0, 3, 1)
 
-        val_label = Gtk.Label(label=str(max(hourly_data.windspeed_10m.get("data")[:24])), halign=Gtk.Align.START)
+        val_label = Gtk.Label(
+            label=str(max(hourly_data.windspeed_10m.get("data")[:24])),
+            halign=Gtk.Align.START,
+        )
         val_label.set_css_classes(["text-l4", "light-3", "bold-1"])
         info_grid.attach(val_label, 0, 1, 2, 2)
         unit_label = Gtk.Label(label=hourly_data.windspeed_10m.get("unit"))
@@ -99,17 +103,23 @@ class HourlyDetails(Gtk.Grid):
         # Hourly Page
         if page_name == "hourly":
             desc_label.set_text("Day Max")
-            val_label.set_text(
-                str(max(hourly_data.temperature_2m.get("data"))) + "°"
-            )
+            val_label.set_text(str(max(hourly_data.temperature_2m.get("data"))) + "°")
             unit_label.set_text("")
 
         # Precipitation page
+        settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
+        measurement_type = settings.get_string("measure-type")
+
         max_prec = max(hourly_data.precipitation.get("data")[:24])
+        unit = hourly_data.precipitation.get("unit")
+        if measurement_type == "imperial":
+            max_prec = max_prec / 25.4
+            unit = "inch"
+
         if page_name == "prec":
             desc_label.set_text("Day High")
             val_label.set_text(f"{max_prec:.2f}")
-            unit_label.set_text(hourly_data.precipitation.get("unit"))
+            unit_label.set_text(unit)
 
         scrolled_window = Gtk.ScrolledWindow(
             hexpand=True, halign=Gtk.Align.FILL, margin_top=2
@@ -150,9 +160,11 @@ class HourlyDetails(Gtk.Grid):
                     "Anticipate a precipitation-free day !",
                     "Enjoy a rain-free day today!",
                     "Umbrella status: resting. No precipitation in sight !",
-                    "No rain in sight today!"
+                    "No rain in sight today!",
                 ]
-                no_prec_label = Gtk.Label(label=no_prec_labels[random.randint(0,len(no_prec_labels)-1)])
+                no_prec_label = Gtk.Label(
+                    label=no_prec_labels[random.randint(0, len(no_prec_labels) - 1)]
+                )
                 no_prec_label.set_css_classes(["text-3a", "bold-3", "light-2"])
                 no_prec_label.set_halign(Gtk.Align.CENTER)
                 no_prec_label.set_margin_top(40)
@@ -179,8 +191,9 @@ class HourlyDetails(Gtk.Grid):
             if i == nearest_current_time_idx:
                 label_timestamp.set_text("Now")
                 label_timestamp.set_css_classes(["bold-1"])
-                graphic_box.set_css_classes(["custom_card_hourly","custom_card_hourly_now"])
-
+                graphic_box.set_css_classes(
+                    ["custom_card_hourly", "custom_card_hourly_now"]
+                )
 
             graphic_box.append(label_timestamp)
 
@@ -206,9 +219,7 @@ class HourlyDetails(Gtk.Grid):
                 icon_box.append(img.img_box)
 
             elif page_name == "hourly":
-                label_val.set_text(
-                    str(hourly_data.temperature_2m.get("data")[i]) + "°"
-                )
+                label_val.set_text(str(hourly_data.temperature_2m.get("data")[i]) + "°")
                 label_timestamp.set_margin_bottom(5)
 
                 weather_code = hourly_data.weathercode.get("data")[i]
@@ -226,16 +237,18 @@ class HourlyDetails(Gtk.Grid):
 
             elif page_name == "prec":
                 bar_obj = None
+                prec = hourly_data.precipitation.get("data")[i]
+                if measurement_type == "imperial":
+                    prec = hourly_data.precipitation.get("data")[i] / 25.4
                 if max_prec == 0:
                     bar_obj = DrawBar(0)
                 else:
-                    bar_obj = DrawBar(
-                        hourly_data.precipitation.get("data")[i] / max_prec
-                    )
+                    bar_obj = DrawBar(prec / max_prec)
                 icon_box.append(bar_obj.dw)
-                prec = hourly_data.precipitation.get("data")[i]
                 if prec > 0:
-                    label_val.set_text("{:.1f}".format(prec))
+                    label_val.set_text("{:.2f}".format(prec))
+                    if prec < 0.01:
+                        label_val.set_text("{:.1f}+".format(prec))
                 else:
                     label_val.set_text("0")
 
