@@ -15,7 +15,6 @@ daily_forecast_data = None
 air_apllution_data = None
 
 
-
 def fetch_current_weather():
     global current_weather_data
     # Get current weather data from api
@@ -48,7 +47,9 @@ def fetch_hourly_forecast():
     # print(hourly_forecast_data.get("hourly").items())
     nearest_current_time_idx = 0
     for i in range(len(hourly_forecast_data.get("hourly").get("time"))):
-        if (abs(time.time() - hourly_forecast_data.get("hourly").get("time")[i]) // 60) < 30:
+        if (
+            abs(time.time() - hourly_forecast_data.get("hourly").get("time")[i]) // 60
+        ) < 30:
             nearest_current_time_idx = i
             break
 
@@ -66,7 +67,7 @@ def fetch_hourly_forecast():
     }
     current_weather_data.visibility = transform_visibility_data(
         hourly_forecast_data.visibility["unit"],
-        hourly_forecast_data.visibility["data"][0],
+        hourly_forecast_data.visibility["data"][nearest_current_time_idx],
     )
 
     return hourly_forecast_data
@@ -158,15 +159,15 @@ def classify_wind_speed_level(wind_speed):
 
 def transform_visibility_data(unit, data):
     settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-    measurement_type = settings.get_string('measure-type')
+    measurement_type = settings.get_string("measure-type")
     dist_unit = "km"
-    dist = data/1000
+    dist = data / 1000
     if measurement_type == "imperial":
         dist_unit = "miles"
-        dist = data/1609.34
+        dist = data / 1609.34
 
     if unit.lower() == "m":
-        data=dist
+        data = dist
         unit = dist_unit
 
     return {"unit": unit, "data": data}

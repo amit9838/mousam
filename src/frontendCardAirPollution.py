@@ -10,7 +10,7 @@ from .frontendUiDrawPollutionBar import PollutionBar
 
 class CardAirPollution:
     def __init__(self):
-        from .weatherData import air_apllution_data,classify_aqi
+        from .weatherData import air_apllution_data, classify_aqi
 
         self.air_apllution_data = air_apllution_data
         self.classify_aqi = classify_aqi
@@ -18,9 +18,10 @@ class CardAirPollution:
         self.create_card()
 
     def _get_nearest_time_index(self):
-        for i in range(len(self.air_apllution_data['hourly']['time'])):
+
+        for i in range(len(self.air_apllution_data["hourly"]["time"])):
             if (
-                abs(time.time() - self.air_apllution_data['hourly']['time'][i]) // 60
+                abs(time.time() - self.air_apllution_data["hourly"]["time"][i]) // 60
             ) < 30:
                 nearest_current_time_idx = i
                 break
@@ -51,13 +52,15 @@ class CardAirPollution:
         info_box.set_margin_start(10)
         info_box.set_margin_top(30)
 
-        main_val = Gtk.Label(label=self.air_apllution_data['hourly']['us_aqi'][idx])
+        main_val = Gtk.Label(label=self.air_apllution_data["hourly"]["us_aqi"][idx])
         main_val.set_css_classes(["text-l3", "bold"])
         main_val.set_halign(Gtk.Align.START)
         main_val.set_margin_end(10)
         info_box.append(main_val)
 
-        desc = Gtk.Label(label=self.classify_aqi(self.air_apllution_data['hourly']['us_aqi'][idx]))
+        desc = Gtk.Label(
+            label=self.classify_aqi(self.air_apllution_data["hourly"]["us_aqi"][idx])
+        )
         desc.set_css_classes(["text-3", "light-2", "bold-2"])
         desc.set_margin_bottom(10)
         desc.set_valign(Gtk.Align.END)
@@ -65,9 +68,9 @@ class CardAirPollution:
         info_box.append(desc)
 
         # Pollution bar
-        aqi = self.air_apllution_data['hourly']['us_aqi'][idx]
-        bar_level = aqi/600
-        
+        aqi = self.air_apllution_data["hourly"]["us_aqi"][idx]
+        bar_level = aqi / 600
+
         pollution_bar = PollutionBar(bar_level)
         # pollution_bar.set_margin_top()
         card.attach(pollution_bar, 0, 4, 4, 1)
