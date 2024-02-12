@@ -5,7 +5,8 @@
 <p>Beautiful lightweight weather app based on Python and Gtk</p>
 
 
-<img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff">
+<a href = "https://github.com/amit9838/mousam/releases"><img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff"></a>
+<a href = "https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
 </div>
 <div align="center">
 <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2-thunderstorm.png?raw=true#gh-dark-mode-only">
