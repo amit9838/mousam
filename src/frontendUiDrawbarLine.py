@@ -8,7 +8,7 @@ import cairo
 
 class DrawBar:
     def __init__(self,value, rgb_color=[0.38, 0.7, 1]):
-        
+
         self.ht = 45
         self.dw = Gtk.DrawingArea()
         self.dw.set_size_request(50, self.ht+20)
@@ -16,13 +16,11 @@ class DrawBar:
         self.value = self.ht*value
         self.rgb = rgb_color
 
-
-        
     def draw(self, area, ctx, h, w, data):
 
         if self.value == 0:
             return
-        
+
         x_offset = 25
         y_offset=10
 
@@ -35,5 +33,3 @@ class DrawBar:
         ctx.move_to(x, y2)
         ctx.rel_line_to(0, self.ht-y2+y_offset)
         ctx.stroke()
-
-

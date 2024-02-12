@@ -31,10 +31,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        global application
-        self.main_window = application = self
+        self.main_window = self
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        self.set_default_size(1220, 860)
+        self.set_default_size(1220, 800)
         self.set_title("")
         #  Adding a button into header
         self.header = Adw.HeaderBar()
@@ -58,7 +57,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.hamburger.set_popover(self.popover)
         self.hamburger.set_icon_name("open-menu-symbolic")  # Give it a nice icon
         self.header.pack_end(self.hamburger)
-       
+
         # Create a menu button
         self.location_button = Gtk.Button(label="Open")
         self.header.pack_end(self.location_button)
@@ -110,7 +109,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         container_loader.set_margin_top(250)
         container_loader.set_margin_bottom(300)
 
-
         # Create loader
         loader = Gtk.Spinner()
         loader.set_margin_top(50)
@@ -120,20 +118,17 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         loader.set_css_classes(['loader'])
         container_loader.append(loader)
 
-
         loader_label = Gtk.Label(label=f"Getting Weather Data")
         loader_label.set_css_classes(["text-2a", "bold-2"])
         container_loader.append(loader_label)
 
         loader.start()
-        # loader.set_hexpand(True)
-        # loader.set_vexpand(True)
         self.main_stack.add_named(container_loader, "loader")
         self.main_stack.set_visible_child_name("loader")
 
 
     # =========== Show No Internet =============
-    def show_error(self,type:str="no_internet",desc : str = ""):
+    def show_error(self, type: str = "no_internet", desc: str = ""):
         # Loader container
         message = "No Internet"
         icon = "network-error-symbolic"
@@ -142,13 +137,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             message = "Could not fetch data from API"
             desc = desc
             icon = "computer-fail-symbolic"
-            
 
         child = self.main_stack.get_child_by_name('error_box')
         self.toast_overlay.add_toast(create_toast(message,1))
         if child is not None:
-                self.main_stack.set_visible_child_name("error_box")
-                return
+            self.main_stack.set_visible_child_name("error_box")
+            return
 
         error_box = Gtk.Grid(halign=Gtk.Align.CENTER)
         error_box.set_margin_top(300)
@@ -162,7 +156,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.error_label.set_label(message)
         self.error_label.set_css_classes(["text-1", "bold-2"])
         error_box.attach(self.error_label,1,0,1,1)
-       
+
         self.error_desc = Gtk.Label.new()
         self.error_desc.set_label(desc)
         self.error_desc.set_css_classes(["text-4", "bold-4",'light-3'])
@@ -178,9 +172,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         if not has_internet:
             self.show_error()
             return
-        
+
         self.show_loader()
-        
+
         # cwd : current_weather_data
         # cwt : current_weather_thread
         cwd = threading.Thread(target=fetch_current_weather,name="cwt")
@@ -195,12 +189,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
         apd.start()
-        
+
         apd.join()
         hfd.join()
         dfd.join()
         self.get_weather()
-        
+
 
     # ===========  Load weather data and create UI ============
     def get_weather(self,reload_type=None,title = ""):
@@ -211,7 +205,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         if len(added_cities) == 0:  # Reset city to default if all cities are removed
             self.settings.reset('added-cities')
             self.settings.reset('selected-city')
-        
+
         child = self.main_stack.get_child_by_name('main_grid')
         if child is not None:
             self.main_stack.remove(child)
@@ -302,7 +296,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
     # ============= Refresh buttom methods ==============
     def _refresh_weather(self,widget):
-        global updated_at      
+        global updated_at
         # Ignore refreshing weather within 5 second
 
         if time.time() - updated_at < 5:
@@ -318,12 +312,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
     # ============= Menu buttom methods ==============
     def _on_about_clicked(self, *args, **kwargs ):
-        AboutWindow(application)
+        AboutWindow(self.main_window)
 
     def _on_preferences_clicked(self,  *args, **kwargs):
-        adw_preferences_window = WeatherPreferences(application)
+        adw_preferences_window = WeatherPreferences(self.main_window)
         adw_preferences_window.show()
 
     def _on_locations_clicked(self, *args, **kwargs):
-        adw_preferences_window = WeatherLocations(application)
+        adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()

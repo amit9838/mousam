@@ -23,7 +23,7 @@ class CardDayNight:
     def get_sunset_sunrise_degree(self):
         from .weatherData import daily_forecast_data as daily_data
         tz_offset_from_curr_tz = get_tz_offset_by_cord(*get_cords())
-        
+
         sunrise_t, sunset_t = 0, 0
         for i, data in enumerate(daily_data.time.get("data")):
             date_ = int(datetime.fromtimestamp(data + my_tz_offset +  tz_offset_from_curr_tz).strftime(r"%d"))
@@ -42,7 +42,7 @@ class CardDayNight:
 
         sunrise_t = datetime.fromtimestamp(sunrise_t + my_tz_offset + tz_offset_from_curr_tz)
         sunrise_t = sunrise_t.hour +  sunrise_t.minute/60
-        
+
         sunset_t = datetime.fromtimestamp(sunset_t + my_tz_offset + tz_offset_from_curr_tz)
         sunset_t = sunset_t.hour +  sunset_t.minute/60
 
