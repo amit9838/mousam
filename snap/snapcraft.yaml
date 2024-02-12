@@ -22,7 +22,6 @@ parts:
       pip install --prefix=$CRAFT_PART_INSTALL/usr requests==2.30.0
     override-build: |
       craftctl default
-      chmod +x $CRAFT_PART_INSTALL/snap/mousam/current/usr/bin/mousam
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/mousam/current/usr/bin/mousam
     parse-info: [ usr/share/appdata/io.github.amit9838.mousam.appdata.xml ]
     organize:
