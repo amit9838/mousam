@@ -1,6 +1,17 @@
 mousam (1.0.2) stable; urgency=medium
 
+  [ Amit Chaudhary ]
+  * some code cleanup
+  * use fixed size loader
+  * add prec_prob and wind speed in tomorrow forecast
+  * add donation info
+
   [ Himadri Sekhar Basu ]
+  * Prepare debian packaging for mousam
+    - Rename desktop file name to Mousam
+    - Add utility as category to desktop
+    - Add debian packaging related files
+      to debian directory
   * Fix packaging (#58)
   * Fix snap packaging
     - Fixed missing artifacts in snap version
@@ -24,7 +35,7 @@ mousam (1.0.2) stable; urgency=medium
   * use old name for project config file
 
   [ Himadri Sekhar Basu ]
-  * Rename package an repo to mousam
+  * Rename package and repo to mousam
     - Rename app name to mousam
     - Rename app id to io.github.amit9838.mousam
   * Fix no icon in debian packaging and lintian
@@ -43,7 +54,7 @@ mousam (1.0.2) stable; urgency=medium
   [ Amit Chaudhary ]
   * releasev1.0.2
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Thu, 08 Feb 2024 18:03:01 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:19:01 +0530
 
 mousam (1.0.1) jammy; urgency=medium
 
@@ -70,7 +81,7 @@ mousam (1.0.1) jammy; urgency=medium
   * release v1.0.1
   * release v1.0.1
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:30:43 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:16:13 +0530
 
 mousam (1.0.0) jammy; urgency=medium
 
@@ -97,19 +108,33 @@ mousam (1.0.0) jammy; urgency=medium
 
   [ hui1601 ]
   * fix gettext not works https://stackoverflow.com/a/46395016
-  * Fix typo(Reastart)
+  * Fix typo(Restart)
   * Fix string formatting not works in i18n texts
   * Fix Feels like Translation
   * Add Korean Translation
 
   [ Sabri Ünal ]
-  * data: add translate and vcs-browser url types
-  * data: validate appdata
-  * data: Mark release descriptions as untranslatable
+  * data: add translate and vcs-browser url types.
+    More information: https://www.freedesktop.org/software/appstream/docs/chap-Metadata.html#tag-url
+  * data: validate appdata.
+    Validated with the following command:
+    appstreamcli validate --pedantic data/io.github.amit9838.weather.appdata.xml.in
+  * data: Mark release descriptions as untranslatable.
+    GNOME automatically excludes release descriptions on
+    Damned Lies (GNOME Translation Platform). It's a good
+    practice to follow the GNOME way.
+    This can streamline the translation process, allowing translators
+    to focus their efforts on more critical and user-facing aspects
+    of the application.
   * po: update the POTFILES
+    - Add missing files.
+    - Remove untranslatable files.
   * app: mark the application name translatable
-  * po: order LINGUAS entries
-  * po: Create a POT file
+  * po: order LINGUAS entries.
+    Order language entries alphabetically.
+  * po: Create a POT file.
+    May help translators. Created with the following command:
+    xgettext --files-from=po/POTFILES --output=po/Weather.pot --from-code=UTF-8
   * Update Turkish translation
 
   [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
@@ -154,12 +179,14 @@ mousam (1.0.0) jammy; urgency=medium
   * add screenshots, fix some bugs
   * release v1.0.0
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:29:01 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:13:05 +0530
 
 mousam (0.6.0) jammy; urgency=medium
 
   [ Amit Chaudhary ]
   * fix readme
+    - fix typo
+    - Remove contributors list (reason: already shown by github)
   * remove verbs from action-row titles
   * follow system font scaling
   * fix leading zero in minute
@@ -171,6 +198,13 @@ mousam (0.6.0) jammy; urgency=medium
   * new: show summary for snowfall
   * convert F to C for summary
   * various fixes, code cleanup
+    make non-exportable methods  private
+    use get_string to get strings from settings
+    use better named functions
+    remove unused code
+    ignore fetch weather if no internet
+    stick about_window with main_window
+    move wind_dir to utils
   * don't unset use_personal_api if no internet
   * refactor use_personal_api_key preferences
   * rename schema key for api key
@@ -178,14 +212,19 @@ mousam (0.6.0) jammy; urgency=medium
   * clean code
   * remove use keyword from unit row
   * some more code cleanup
+    use 'new_from_icon_name' method to add images directly
+    create utility for clear_main_ui_grid
+    use named page for main page
   * feat: add air pollution info
+    air Quality
+    air pollutants
   * scale up left section in condition box
   * update screenshots
   * release v0.6.0
   * release v0.6.0
   * update release tag
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:26:56 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:09:26 +0530
 
 mousam (0.5.0) jammy; urgency=medium
 
@@ -196,7 +235,8 @@ mousam (0.5.0) jammy; urgency=medium
   [ Amit Chaudhary ]
   * remove unnecessary calls when adding, removing cities
   * add,remove city more quickly
-  * use highest wind speed throughout for forecast
+  * use highest wind speed throughout for forecast.
+    Use highest wind speed value of the day instead of average wind speed
   * add function to check internet connection
   * check for internet connectivity on launch
   * skip refreshing if no internet
@@ -211,7 +251,7 @@ mousam (0.5.0) jammy; urgency=medium
   * update screenshots
   * release v0.5.0
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:25:25 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:07:26 +0530
 
 mousam (0.4.0) jammy; urgency=medium
 
@@ -227,15 +267,16 @@ mousam (0.4.0) jammy; urgency=medium
 
   [ Amit Chaudhary ]
   * fix:align forecast switcher on full screen
-  * feat:add 5 day forecast
-  * clean code, ui_improvement, make strings translasalable
+  * feat:add 5 day forecast.
+    Option to see 5 day forecast
+  * clean code, ui_improvement, make strings translatable
   * clean code, ui_improvement, make strings translatable
   * feat:Show rain summary
   * remove unnecessary code
   * update screenshot
   * release v0.4.0
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:23:53 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:04:49 +0530
 
 mousam (0.3.0) jammy; urgency=medium
 
@@ -256,17 +297,28 @@ mousam (0.3.0) jammy; urgency=medium
   [ Amit Chaudhary ]
   * switch location from preferences
   * clean code, better performance
+    * Clean action rows from arr
+    *  Less db calls
+    * Remove unwanted lines
   * fix time in forecast card
+    show 3:00 AM not 3:0AM
 
   [ সৌম্যদীপ ঘোষ(सौम्यदीपः घोषः) ]
   * add installation methods
 
   [ Amit Chaudhary ]
-  * Switch location asynchronously
+  * Switch location asynchronously.
+    No more glitches while switching location.
+    Clean code.
+    Set priority for toasts
   * fetch city async
-  * Bug fixes,  multiple  improvements #15
+  * Bug fixes,  multiple  improvements #15.
+    Use stack in main window
+    Improve background gradients
+    clean code
   * use smaller border for window
-  * switch loc in prefs win with async
+  * switch loc in prefs win with async.
+    Use async to to switch location in preferences window
   * feat: option to use metric or imperial system #14
   * fix spacing
   * use full form - celsius, fahrenheit
@@ -275,7 +327,7 @@ mousam (0.3.0) jammy; urgency=medium
   * update screenshots
   * release v0.3.0
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:22:24 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 20:01:42 +0530
 
 mousam (0.2.1) jammy; urgency=medium
 
@@ -287,32 +339,46 @@ mousam (0.2.1) jammy; urgency=medium
   * update screenshots
   * release v0.2.1
 
- -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Fri, 02 Feb 2024 15:21:27 +0530
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sun, 11 Feb 2024 19:58:40 +0530
 
 mousam (0.2.0) jammy; urgency=medium
 
   [ Sabri Ünal ]
   * Fix a Typo
   * i18n: Mark some strings translatable
-  * UI: Use Application Name in the menu
-  * Add translator-credits
+  * UI: Use Application Name in the menu.
+    I know it's not a strict rule, but nearly all GNOME apps
+    use the "About" menu entry with the application name.
+    It's good to follow this convention.
+  * Add translator-credits.
+    Add translator-credits support.
+    More information: https://wiki.gnome.org/TranslationProject/DevGuidelines/Add%20translator%20credits
   * Fix copyright information
   * Update the POTFILE
+    - Fix incorrect files
+    - Add missing files
   * data: Use Sentence case for the application name
   * data: Add comment for the application in .desktop file
   * Add Turkish translation
 
   [ Сергей Ворон ]
-  * Update LINGUAS
-  * Create ru.po
+  * Update LINGUAS.
+    Added "ru"
+  * Create ru.po.
+    Added Russian translation
 
   [ Sabri Ünal ]
-  * UI: Mark some strings translatable
-  * app: hide unused variables
+  * UI: Mark some strings translatable.
+    Mostly for non-latin languages
+  * app: hide unused variables.
+    Small clean-up
   * UI: Make the app title translatable
   * UI: Add a tooltip to the refresh button
-  * UI: Use Header Capitalization
-  * Update Turkish translation
+  * UI: Use Header Capitalization.
+    Use Header Capitalization for the title
+    More information: https://developer.gnome.org/hig/guidelines/writing-style.html
+  * Update Turkish translation.
+    Related to !5
 
   [ Amit Chaudhary ]
   * include states in search result
