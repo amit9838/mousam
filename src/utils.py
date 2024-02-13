@@ -10,14 +10,44 @@ forecast_weather_data = None
 epoch_offset = None
 
 
-def check_internet_connection():
-    has_active_internet = False
+TIMEOUT = 5
+domains = {
+    "google": "http://www.google.com",
+    "wikipedia": "https://www.wikipedia.org/",
+    "baidu": "https://www.baidu.com/",  # Specifically for china
+}
+
+# Check internet connection using socket connecton
+def check_internet_socket():
     try:
-        socket.create_connection(("1.1.1.1", 53), timeout=5)  # 53 is the DNS port
-        has_active_internet = True
-        return has_active_internet
+        socket.create_connection(("1.1.1.1", 53), timeout=TIMEOUT)  # 53 is the DNS port
+        print("Internet conncetion confirmed through socket connection")
+        return True
     except OSError:
-        return has_active_internet
+        return False
+
+
+# Check Internet connection using requests
+def check_internet_domain(url):
+    try:
+        request = requests.get(url, timeout=TIMEOUT)
+        print("Internet conncetion confirmed through: ",url)
+        return True
+    except (requests.ConnectionError, requests.Timeout) as exception:
+        return False
+
+
+def check_internet_connection():
+    if (
+        check_internet_socket()
+        or check_internet_domain(domains["google"])
+        or check_internet_domain(domains["wikipedia"])
+        or check_internet_domain(domains["baidu"]) 
+    ):
+        return True
+    
+    print("No internet!")
+    return False
 
 
 def get_selected_city_coords():
