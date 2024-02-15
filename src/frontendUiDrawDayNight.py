@@ -67,7 +67,6 @@ class DrawDayNight:
         context.line_to(center_x,center_y+outer_radius)
         context.stroke()
 
-
         # Clock
         context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         context.set_font_size(13)
@@ -102,8 +101,6 @@ class DrawDayNight:
         # Display the text along the circular path
         context.show_text(text)
 
-
-
         text2 = "Midnight"
         # Calculate the position for text placement
         text_x = center_x - 30
@@ -113,9 +110,6 @@ class DrawDayNight:
 
         # Display the text along the circular path
         context.show_text(text2)
-
-
-
 
         # Choose sun color
         if sun_angle>=180 and sun_angle<=360:
@@ -162,4 +156,3 @@ class DrawDayNight:
         gap_length = 5
         context.set_dash([dash_length, gap_length])
         context.stroke()
-

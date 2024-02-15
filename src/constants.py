@@ -1,5 +1,3 @@
-import os
-
 
 icon_loc = "@icon_location@/share/icons/hicolor/scalable/mousam_icons/"
 

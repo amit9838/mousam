@@ -101,7 +101,7 @@ class Forecast(Gtk.Grid):
 
         # Add weather items in the stack-box
         for i, item in enumerate(items):
-            
+
             forecast_item_grid = Gtk.Grid(hexpand=True,margin_top=6)
             forecast_item_grid.set_css_classes(
                 ['bg_light_grey', 'custom_card_forecast_item'])
@@ -141,13 +141,12 @@ class Forecast(Gtk.Grid):
 
             forecast_cond_grid = Gtk.Grid(valign=Gtk.Align.CENTER,margin_end = 20)
             forecast_item_grid.attach(forecast_cond_grid, 2, 0, 1, 1)
-            
+
             # # prec probability
             # if page_name == 'tomorrow':
             #     prec_probability = hourly_data.precipitation_probability.get("data")[i]
             #     wind_probability = hourly_data.windspeed_10m.get("data")[i]
-            
-          
+
             #     drop_icon = Gtk.Image().new_from_file(icons["raindrop"])
             #     drop_icon.set_pixel_size(25)
             #     drop_icon.set_halign(Gtk.Align.START)
@@ -156,7 +155,7 @@ class Forecast(Gtk.Grid):
             #     prec_probability_label = Gtk.Label(label=f" {prec_probability}%", margin_top=5)
             #     prec_probability_label.set_halign(Gtk.Align.START)
             #     forecast_cond_grid.attach(prec_probability_label, 1, 0, 1, 1)
-                
+
             #     # Wind speed probability
             #     wind_icon = Gtk.Image().new_from_file(icons["wind"])
             #     wind_icon.set_pixel_size(25)
@@ -170,8 +169,7 @@ class Forecast(Gtk.Grid):
             # Temp label grid
             temp_label_grid = Gtk.Grid(valign=Gtk.Align.CENTER)
             forecast_item_grid.attach(temp_label_grid, 3, 0, 1, 1)
-            
-            
+
             # Max temp label ======
             temp_max_text = hourly_data.temperature_2m.get("data")[i]
             if page_name == 'weekly':

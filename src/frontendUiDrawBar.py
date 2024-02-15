@@ -35,7 +35,7 @@ class DrawLevelBar:
 
         filled = self.fill_fr
         # filled = 1-filled
-        
+
         lev = y1+(y2-y1)*filled
         ctx.set_source_rgba(*self.rgb, 0.4)
 

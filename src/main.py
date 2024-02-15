@@ -17,15 +17,15 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import os
 import sys
 import gi
 
-gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
+gi.require_version('Gtk', '4.0')
 
-from gi.repository import Gtk, Gio,Adw,Gdk
+from gi.repository import Gtk, Gio, Adw, Gdk
 from .mousam import WeatherMainWindow
-from .css import css
 
 class WeatherApplication(Adw.Application):
     """The main application singleton class."""
@@ -40,9 +40,13 @@ class WeatherApplication(Adw.Application):
     def do_activate(self):
         win = self.props.active_window
         global css_provider
+        CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
         css_provider = Gtk.CssProvider()
+        Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        with open(CSS_PATH+'style.css', 'r') as css_file:
+            css = bytes(css_file.read(), 'utf-8')
         css_provider.load_from_data(css,len(css))
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
 
         launch_maximized = self.settings.get_boolean("launch-maximized")
 
@@ -51,7 +55,7 @@ class WeatherApplication(Adw.Application):
 
         if launch_maximized:
             win.maximize()
-    
+
         win.present()
 
     def create_action(self, name, callback, shortcuts=None):

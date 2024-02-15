@@ -49,16 +49,16 @@ mousam_sources = [
   'frontendUiDrawImageIcon.py',
   'frontendUiDrawPollutionBar.py',
 
-  'application.css',
   'constants.py',
   'units.py',
   'utils.py',
-  'css.py',
   'windowAbout.py',
   'windowPreferences.py',
   'windowLocations.py'
 ]
 
+install_emptydir(moduledir / 'css')
+install_data('css/style.css',install_dir: join_paths(moduledir,'css'))
 install_data(mousam_sources, install_dir: moduledir)
 
 icon_conf = configuration_data()
