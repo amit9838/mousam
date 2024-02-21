@@ -2,7 +2,7 @@
     font-size: 30px;
 }
 .main_temp_label {
-    font-size: 4rem;
+    font-size: 3.7rem;
 }
 
 .btn_sm{
@@ -23,8 +23,18 @@
 .text-l4{
     font-size: 2.5rem;
 }
-.text-1{
+.text-l5{
+    font-size: 2.35rem;
+}
+.text-l6{
+    font-size: 2.2rem;
+}
+.text-l6{
     font-size: 2rem;
+}
+
+.text-1{
+    font-size: 2.2rem;
 }
 .text-2a{
     font-size: 1.8rem;
@@ -136,7 +146,7 @@
 }
 
 .custom_card_forecast_item{
-    padding: 0.15rem 1.5rem;
+    padding: 0.12rem 1.5rem;
     border-radius: .7rem;
 }
 

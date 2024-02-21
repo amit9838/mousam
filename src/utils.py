@@ -2,6 +2,7 @@ import requests
 import socket
 import json
 from datetime import datetime, timedelta, timezone
+import time
 from gi.repository import Adw, Gio
 
 current_weather_data = None
@@ -21,7 +22,7 @@ domains = {
 def check_internet_socket():
     try:
         socket.create_connection(("1.1.1.1", 53), timeout=TIMEOUT)  # 53 is the DNS port
-        print("Internet conncetion confirmed through socket connection")
+        print("Internet connection confirmed through socket connection")
         return True
     except OSError:
         return False
@@ -31,7 +32,7 @@ def check_internet_socket():
 def check_internet_domain(url):
     try:
         request = requests.get(url, timeout=TIMEOUT)
-        print("Internet conncetion confirmed through: ",url)
+        print("Internet connection confirmed through: ",url)
         return True
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
@@ -115,3 +116,7 @@ def get_tz_offset_by_cord(lat, lon):
             epoch_offset *= -1
 
     return epoch_offset
+
+
+def get_local_time():
+    return time.time() + get_my_tz_offset_from_utc() + get_tz_offset_by_cord(*get_cords())

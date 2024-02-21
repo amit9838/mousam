@@ -50,7 +50,7 @@ class CardAirPollution:
         )
         card.attach(info_box, 0, 2, 4, 2)
         info_box.set_margin_start(10)
-        info_box.set_margin_top(30)
+        info_box.set_margin_top(20)
 
         main_val = Gtk.Label(label=self.air_apllution_data["hourly"]["us_aqi"][idx])
         main_val.set_css_classes(["text-l3", "bold"])

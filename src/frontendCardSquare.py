@@ -61,7 +61,7 @@ class CardSquare:
         card.attach(title, 0, 0, 1, 2)
 
         # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid(margin_top=15, row_spacing=0, column_spacing=5)
+        card_info = Gtk.Grid(margin_top=5, row_spacing=0, column_spacing=0)
 
         card_info.set_css_classes(["view"])
         card.attach(card_info, 0, 2, 1, 2)
@@ -81,7 +81,7 @@ class CardSquare:
 
         # Short description
         desc_box = Gtk.Box()
-        desc_box.set_size_request(10, 40)
+        desc_box.set_size_request(10, 30)
         card_info.attach(desc_box, 0, 4, 6, 1)
 
         desc = Gtk.Label(label=self.desc)
@@ -104,7 +104,7 @@ class CardSquare:
         card_info.attach(sub_desc, 0, 6, 4, 1)
 
         card_icon = Gtk.Grid(halign=Gtk.Align.END)
-        card_icon.set_margin_top(15)
+        card_icon.set_margin_top(5)
         card_icon.set_css_classes(["view", "card_infao"])
         card.attach(card_icon, 1, 2, 2, 1)
 

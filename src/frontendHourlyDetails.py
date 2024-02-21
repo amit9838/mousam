@@ -45,21 +45,24 @@ class HourlyDetails(Gtk.Grid):
 
         # Temperature Button -------------
         temp_btn = Gtk.ToggleButton.new_with_label(_("Hourly"))
-        temp_btn.set_css_classes(["pill", "btn_sm"])
+        temp_btn.set_size_request(100,20)
+        temp_btn.set_css_classes(["btn_sm"])
         temp_btn.do_clicked(temp_btn)
         style_buttons_box.append(temp_btn)
         temp_btn.connect("clicked", self._on_btn_clicked, "hourly")
 
         # Wind Button -------------
         wind_btn = Gtk.ToggleButton.new_with_label(_("Wind"))
-        wind_btn.set_css_classes(["pill", "btn_sm"])
+        wind_btn.set_size_request(100,20)
+        wind_btn.set_css_classes(["btn_sm"])
         wind_btn.set_group(temp_btn)
         style_buttons_box.append(wind_btn)
         wind_btn.connect("clicked", self._on_btn_clicked, "wind")
 
         # Precipitation Button -------------
         prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
-        prec_btn.set_css_classes(["pill", "btn_sm"])
+        prec_btn.set_size_request(100,20)
+        prec_btn.set_css_classes(["btn_sm"])
         prec_btn.set_group(temp_btn)
         style_buttons_box.append(prec_btn)
         prec_btn.connect("clicked", self._on_btn_clicked, "prec")
@@ -94,7 +97,7 @@ class HourlyDetails(Gtk.Grid):
             label=str(max(hourly_data.windspeed_10m.get("data")[:24])),
             halign=Gtk.Align.START,
         )
-        val_label.set_css_classes(["text-l4", "light-3", "bold-1"])
+        val_label.set_css_classes(["text-l5", "light-3", "bold-1"])
         info_grid.attach(val_label, 0, 1, 2, 2)
         unit_label = Gtk.Label(label=hourly_data.windspeed_10m.get("unit"))
         unit_label.set_css_classes(["text-5", "light-2", "bold-3"])

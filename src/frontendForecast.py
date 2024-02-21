@@ -31,13 +31,15 @@ class Forecast(Gtk.Grid):
         style_buttons_box.set_valign(Gtk.Align.CENTER)
 
         tomorrow_btn = Gtk.ToggleButton.new_with_label(_('Tomorrow'))
-        tomorrow_btn.set_css_classes(['pill', 'btn_sm'])
+        tomorrow_btn.set_size_request(100,20)
+        tomorrow_btn.set_css_classes(['btn_sm'])
         tomorrow_btn.do_clicked(tomorrow_btn)
         style_buttons_box.append(tomorrow_btn)
         tomorrow_btn.connect('clicked', self._on_tomorrow_forecast_btn_clicked)
 
         weekly_btn = Gtk.ToggleButton.new_with_label(_('Weekly'))
-        weekly_btn.set_css_classes(['pill', 'btn_sm'])
+        weekly_btn.set_size_request(100,20)
+        weekly_btn.set_css_classes(['btn_sm'])
         weekly_btn.set_group(tomorrow_btn)
         style_buttons_box.append(weekly_btn)
         weekly_btn.connect('clicked', self._on_weekly_btn_forecast_btn_clicked)
@@ -80,7 +82,7 @@ class Forecast(Gtk.Grid):
         scrolled_window = Gtk.ScrolledWindow(margin_top=8,margin_bottom=8)
         scrolled_window.set_policy(
             Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_size_request(300, 550)
+        scrolled_window.set_size_request(300, 535)
         scrolled_window.set_kinetic_scrolling(True)
         box.append(scrolled_window)
 
@@ -122,9 +124,13 @@ class Forecast(Gtk.Grid):
                     d_t = _('Tomorrow')
 
             # Add d_t Label
+            label_box = Gtk.Box(margin_top=0, margin_bottom=0)
+            label_box.set_size_request(80, 20)
+            # label_box.set_css_classes(['card_info'])
             label_day_time = Gtk.Label(label=d_t, halign=Gtk.Align.START)
+            label_box.append(label_day_time)
             label_day_time.set_css_classes(['text-4', 'bold-2'])
-            forecast_item_grid.attach(label_day_time, 0, 0, 1, 1)
+            forecast_item_grid.attach(label_box, 0, 0, 1, 1)
 
             # Condition Icon
             # if it is night
@@ -133,10 +139,10 @@ class Forecast(Gtk.Grid):
                     condition_icon = icons[str(weather_code)+'n'] 
 
             icon_main = Gtk.Image().new_from_file(condition_icon)
-            icon_main.set_halign(Gtk.Align.END)
+            icon_main.set_halign(Gtk.Align.CENTER)
             icon_main.set_hexpand(True)
             icon_main.set_pixel_size(50)
-            icon_main.set_margin_end(30)
+            icon_main.set_margin_end(0)
             forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
 
             forecast_cond_grid = Gtk.Grid(valign=Gtk.Align.CENTER,margin_end = 20)

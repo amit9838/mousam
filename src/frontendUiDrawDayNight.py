@@ -6,9 +6,7 @@ from gi.repository import Gtk
 import cairo
 from datetime import datetime
 import time
-from .utils import get_cords, get_tz_offset_by_cord,get_my_tz_offset_from_utc
-
-my_tz_offset = get_my_tz_offset_from_utc()
+from .utils import get_local_time
 
 class DrawDayNight:
     def __init__(self,angle,width,height):
@@ -29,7 +27,7 @@ class DrawDayNight:
     def on_draw(self, widget, cr, width, height, data):
          # Create a Cairo surface
         context = cr
-        outer_radius = 50
+        outer_radius = 43
 
         num_rays = 8
         sun_angle = self.angle_degrees  #Degree
@@ -72,10 +70,7 @@ class DrawDayNight:
         context.set_font_size(13)
         context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
 
-        tz_offset_from_curr_tz = get_tz_offset_by_cord(*get_cords())
-
-        now = time.time() + my_tz_offset + tz_offset_from_curr_tz
-        formatted_date_time = datetime.fromtimestamp(now).strftime("%I:%M %p")
+        formatted_date_time = datetime.fromtimestamp(get_local_time()).strftime("%I:%M %p")
         text = formatted_date_time
 
         # Calculate the position for text placement

@@ -37,7 +37,7 @@ class CurrentCondition(Gtk.Grid):
 
         icon_main = Gtk.Image().new_from_file(condition_icon)
         icon_main.set_hexpand(True)
-        icon_main.set_pixel_size(130)
+        icon_main.set_pixel_size(110)
         condition_grid.attach(icon_main, 0, 0, 1, 2)
 
         # Condition label
@@ -60,7 +60,7 @@ class CurrentCondition(Gtk.Grid):
 
         # ========== right  section ==========
         box_right = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL, margin_top=30, margin_end=5
+            orientation=Gtk.Orientation.VERTICAL, margin_top=45, margin_end=5
         )
         self.attach(box_right, 1, 0, 1, 1)
 
