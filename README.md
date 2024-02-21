@@ -14,7 +14,7 @@
 </div>
 
 ## Features
-* Displays real-time temperature, humidity, and wind speed,UV index,pressure and more
+* Displays real-time temperature, humidity, wind speed, UV index, pressure and more
 * Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours
 * Also shows tomorrow and 7-day forcasts
 * See conditions in metric or imperial systems
@@ -39,6 +39,12 @@ flatpak install flathub io.github.amit9838.mousam
 ```
 sudo snap install mousam
 ```
+### **Debian** (Unofficial)
+<a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download on SnapCraft' src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg' style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
+
+Thanks to @hsbasu for maintaining Debian package
+
+[Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
 
 ## Build
 ### Dependances
@@ -62,10 +68,6 @@ meson install -C builddir
 mousam
 ```
 
-### **Debian** (Unofficial)
-Thanks to @hsbasu for maintaining Debian package
-
-[Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
 
 
 
@@ -78,5 +80,4 @@ I hope you ❤️ <b>Mousam</b>, if you think it is worth supporting you can do 
 </a>
 </div>
 <div align="center">
-<a href="https://opencollective.com/weather"><img src="https://opencollective.com/spotube/donate/button.png?color=blue" alt="Donate to our Open Collective" height="45"></a>
 </div>
