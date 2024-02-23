@@ -11,6 +11,7 @@ gi.require_version("Adw", "1")
 from .constants import icons, icon_loc
 from .frontendUiDrawImageIcon import DrawImage
 from .frontendUiDrawbarLine import DrawBar
+from .utils import is_dynamic_bg_enabled
 
 icon_loc += "arrow.svg"
 
@@ -20,6 +21,8 @@ class HourlyDetails(Gtk.Grid):
         super().__init__(*args, **kwargs)
         self.set_hexpand(True)
         self.set_css_classes(["view", "card", "custom_card"])
+        if is_dynamic_bg_enabled():
+            self.add_css_class("transparent_5")
         self.set_margin_top(20)
         self.set_margin_start(5)
         self.paint_ui()
@@ -181,7 +184,7 @@ class HourlyDetails(Gtk.Grid):
             graphic_box = Gtk.Box(
                 orientation=Gtk.Orientation.VERTICAL, margin_start=4, margin_end=4
             )
-            graphic_box.set_css_classes(["custom_card_hourly"])
+            graphic_box.set_css_classes(["custom_card_hourly", "bg_light_grey"])
 
             graphic_container.append(graphic_box)
 

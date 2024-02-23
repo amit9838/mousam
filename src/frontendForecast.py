@@ -3,6 +3,7 @@ import gi
 from gi.repository import Gtk
 from gettext import gettext as _
 from .constants import icons
+from .utils import is_dynamic_bg_enabled
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -16,6 +17,8 @@ class Forecast(Gtk.Grid):
         self.set_margin_start(10)
         self.set_margin_end(5)
         self.set_css_classes(['view', 'card', 'custom_card'])
+        if is_dynamic_bg_enabled():
+            self.add_css_class("transparent_5")
         self.paint_ui()
 
     def paint_ui(self):

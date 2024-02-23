@@ -40,18 +40,18 @@ class WeatherPreferences(Adw.PreferencesWindow):
         appearance_page.add(self.appearance_grp)
 
         # Dynamic Background 
-        # gradient_row =  Adw.ActionRow.new()
-        # gradient_row.set_activatable(True)
-        # gradient_row.set_title(_("Dynamic Background"))
-        # gradient_row.set_subtitle(_("Background changes based on current weather condition (Restart required)"))
+        gradient_row =  Adw.ActionRow.new()
+        gradient_row.set_activatable(True)
+        gradient_row.set_title(_("Dynamic Background"))
+        gradient_row.set_subtitle(_("Background changes based on current weather condition (Restart required)"))
 
-        # self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
-        # self.gradient_switch = Gtk.Switch()
-        # self.gradient_switch.set_active(True)
-        # self.gradient_switch.connect("state-set",self._use_gradient_bg)
-        # self.g_switch_box.append(self.gradient_switch)
-        # gradient_row.add_suffix(self.g_switch_box)
-        # self.appearance_grp.add(gradient_row)
+        self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.gradient_switch = Gtk.Switch()
+        self.gradient_switch.set_active(self.settings.get_boolean('use-gradient-bg'))
+        self.gradient_switch.connect("state-set",self._use_gradient_bg)
+        self.g_switch_box.append(self.gradient_switch)
+        gradient_row.add_suffix(self.g_switch_box)
+        self.appearance_grp.add(gradient_row)
 
         #  Launch the app in maximize mode
         launch_maximized =  Adw.ActionRow.new()

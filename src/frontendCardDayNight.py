@@ -3,7 +3,7 @@ import time
 import gi
 from gi.repository import Gtk
 from .frontendUiDrawDayNight import *
-from .utils import get_tz_offset_by_cord, get_cords, get_my_tz_offset_from_utc
+from .utils import get_tz_offset_by_cord, get_cords, get_my_tz_offset_from_utc, is_dynamic_bg_enabled
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -65,6 +65,9 @@ class CardDayNight:
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)
         card.set_css_classes(["view", "card", "custom_card"])
+        
+        if is_dynamic_bg_enabled():
+            card.add_css_class("transparent_5")
 
         # Main title of the card
         title = Gtk.Label(label="Sunrise & Sunset")
@@ -104,6 +107,7 @@ class CardDayNight:
 
         card_icon = Gtk.Grid()
         card_icon.set_css_classes(["view", "card_infao"])
+        card_icon.add_css_class("transparent_0")
         card.attach(card_icon, 1, 2, 2, 1)
 
         obj = DrawDayNight(self.degree, 200, 100)

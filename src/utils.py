@@ -9,7 +9,7 @@ current_weather_data = None
 air_pollution_data = None
 forecast_weather_data = None
 epoch_offset = None
-
+global_settings = Gio.Settings.new("io.github.amit9838.mousam")
 
 TIMEOUT = 5
 domains = {
@@ -57,6 +57,10 @@ def get_selected_city_coords():
     added_cities = list(settings.get_value("added-cities"))
     city_loc = added_cities[selected_city].split(",")
     return city_loc[-2], city_loc[-1]  # latitude,longitude
+
+def is_dynamic_bg_enabled():
+    global global_settings
+    return global_settings.get_boolean('use-gradient-bg')
 
 
 def create_toast(text, priority=0):

@@ -131,6 +131,28 @@
     background:linear-gradient(0deg, rgba(237,237,237,1) 0%, rgb(203, 221, 225) 100%);
 }
 
+.hide{
+    opacity: .2;
+}
+
+.transparent_0{
+    background:rgba(0, 0, 0, 0);
+    color:white;
+}
+
+.transparent_glass{
+    background:rgba(150, 150, 150, .2);
+}
+
+.border_col{
+    border: 1px solid rgba(200, 200, 200, .1);
+}
+
+.transparent_5{
+    background:rgba(0, 0, 0, .35);
+    color:white;
+}
+
 .bg-white{
     background-color: rgb(240, 240, 240);
 }
@@ -154,17 +176,16 @@
     border-radius: .5rem;
     padding: .7rem .7rem;
     margin-top: .3rem;
-    background-color: rgba(100, 100, 100, .06);
 }
 
 .custom_card_hourly_now{
     padding: .7rem 1.2rem;
     margin-top: 0rem;
-    background-color: rgba(100, 100, 100, .15);
+    background-color: rgba(196, 196, 196, 0.15);
 
 }
 .bg_light_grey{
-    background-color: #9a9a9a13;
+    background-color: rgba(224, 224, 224, 0.06);
 }
 
 

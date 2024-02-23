@@ -1,6 +1,7 @@
 from gi.repository import Gtk
 import gi
 from .constants import icons
+from .utils import is_dynamic_bg_enabled
 from .frontendUiDrawBar import *
 from .frontendUiDrawImageIcon import *
 
@@ -51,6 +52,9 @@ class CardSquare:
         card.halign = Gtk.Align.FILL
         card.set_size_request(200, 150)
         card.set_css_classes(["view", "card", "custom_card"])
+        
+        if is_dynamic_bg_enabled():
+            card.add_css_class("transparent_5")
         self.card = card
 
         # Main title of the card
@@ -62,8 +66,6 @@ class CardSquare:
 
         # Info Grid: It contains - Main value,units, short description, sub description
         card_info = Gtk.Grid(margin_top=5, row_spacing=0, column_spacing=0)
-
-        card_info.set_css_classes(["view"])
         card.attach(card_info, 0, 2, 1, 2)
 
         # Main value (like windspeed = 32km/h)
@@ -105,7 +107,6 @@ class CardSquare:
 
         card_icon = Gtk.Grid(halign=Gtk.Align.END)
         card_icon.set_margin_top(5)
-        card_icon.set_css_classes(["view", "card_infao"])
         card.attach(card_icon, 1, 2, 2, 1)
 
         icon_upper_text = Gtk.Label(label=self.text_up)

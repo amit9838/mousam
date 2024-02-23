@@ -8,6 +8,7 @@ from gi.repository import Gtk, Adw, Gio
 
 # module import
 from .utils import create_toast,check_internet_connection
+from .constants import bg_css
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
 from .windowLocations import WeatherLocations
@@ -38,6 +39,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         #  Adding a button into header
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class="flat")
+
         self.set_titlebar(self.header)
 
         # Add refresh button to header
@@ -199,6 +201,16 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     # ===========  Load weather data and create UI ============
     def get_weather(self,reload_type=None,title = ""):
         from .weatherData import current_weather_data as cw_data
+        
+        if self.settings.get_boolean('use-gradient-bg'):
+            dont_delete_classes = ['backgrounds','csd']
+            for cl in self.get_css_classes():
+                if cl not in dont_delete_classes:
+                    self.remove_css_class(cl)
+            weather_code = str(cw_data.weathercode.get("data"))
+            if cw_data.is_day.get("data") == 0:
+                weather_code += 'n'                
+            self.add_css_class(css_class = bg_css[weather_code])
         # Check if no city is added
         added_cities = self.settings.get_strv('added-cities')
 
@@ -211,6 +223,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.main_stack.remove(child)
 
         # ------- Main grid ---------
+        
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
         self.main_grid.set_vexpand(True)
