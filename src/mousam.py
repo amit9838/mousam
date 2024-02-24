@@ -211,6 +211,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             if cw_data.is_day.get("data") == 0:
                 weather_code += 'n'                
             self.add_css_class(css_class = bg_css[weather_code])
+            
         # Check if no city is added
         added_cities = self.settings.get_strv('added-cities')
 
