@@ -7,7 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio
 
 # module import
-from .utils import create_toast,check_internet_connection
+from .utils import create_toast, check_internet_connection
 from .constants import bg_css
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
@@ -28,6 +28,7 @@ from .weatherData import (
 global updated_at
 updated_at = time.time()
 
+
 class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -36,6 +37,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.set_default_size(1160, 760)
         self.set_title("")
+        self._use_dynamic_bg()
+
         #  Adding a button into header
         self.header = Adw.HeaderBar()
         self.header.add_css_class(css_class="flat")
@@ -46,13 +49,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.refresh_button = Gtk.Button(label="Open")
         self.header.pack_start(self.refresh_button)
         self.refresh_button.set_icon_name("view-refresh-symbolic")
-        self.refresh_button.connect('clicked',self._refresh_weather)
+        self.refresh_button.connect("clicked", self._refresh_weather)
 
         # Create Menu
         menu = Gio.Menu.new()
         self.popover = Gtk.PopoverMenu()  # Create a new popover menu
         self.popover.set_menu_model(menu)
-
 
         # Create a menu button
         self.hamburger = Gtk.MenuButton()
@@ -64,7 +66,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.location_button = Gtk.Button(label="Open")
         self.header.pack_end(self.location_button)
         self.location_button.set_icon_name("find-location-symbolic")
-        self.location_button.connect('clicked',self._on_locations_clicked)
+        self.location_button.connect("clicked", self._on_locations_clicked)
 
         # Add preferences option
         action = Gio.SimpleAction.new("preferences", None)
@@ -96,16 +98,16 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         # Start Loader and call paint UI
         # Initiate UI loading weather data and drawing UI
-        thread = threading.Thread(target=self._load_weather_data,name="load_data")
+        thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
 
     # =========== Create Loader =============
     def show_loader(self):
         # Loader container
-        child = self.main_stack.get_child_by_name('loader')
+        child = self.main_stack.get_child_by_name("loader")
         if child is not None:
-                self.main_stack.set_visible_child_name("loader")
-                return
+            self.main_stack.set_visible_child_name("loader")
+            return
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container_loader.set_margin_top(220)
@@ -117,7 +119,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         loader.set_margin_bottom(50)
         loader.set_size_request(120, 120)
 
-        loader.set_css_classes(['loader'])
+        loader.set_css_classes(["loader"])
         container_loader.append(loader)
 
         loader_label = Gtk.Label(label=f"Getting Weather Data")
@@ -127,7 +129,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         loader.start()
         self.main_stack.add_named(container_loader, "loader")
         self.main_stack.set_visible_child_name("loader")
-
 
     # =========== Show No Internet =============
     def show_error(self, type: str = "no_internet", desc: str = ""):
@@ -140,8 +141,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             desc = desc
             icon = "computer-fail-symbolic"
 
-        child = self.main_stack.get_child_by_name('error_box')
-        self.toast_overlay.add_toast(create_toast(message,1))
+        child = self.main_stack.get_child_by_name("error_box")
+        self.toast_overlay.add_toast(create_toast(message, 1))
         if child is not None:
             self.main_stack.set_visible_child_name("error_box")
             return
@@ -152,19 +153,19 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         icon = Gtk.Image.new_from_icon_name(icon)
         icon.set_pixel_size(54)
         icon.set_margin_end(20)
-        error_box.attach(icon,0,0,1,1)
+        error_box.attach(icon, 0, 0, 1, 1)
 
         self.error_label = Gtk.Label.new()
         self.error_label.set_label(message)
         self.error_label.set_css_classes(["text-1", "bold-2"])
-        error_box.attach(self.error_label,1,0,1,1)
+        error_box.attach(self.error_label, 1, 0, 1, 1)
 
         self.error_desc = Gtk.Label.new()
         self.error_desc.set_label(desc)
-        self.error_desc.set_css_classes(["text-4", "bold-4",'light-3'])
-        error_box.attach(self.error_desc,1,1,1,1)
+        self.error_desc.set_css_classes(["text-4", "bold-4", "light-3"])
+        error_box.attach(self.error_desc, 1, 1, 1, 1)
 
-        self.main_stack.add_named(error_box,'error_box')
+        self.main_stack.add_named(error_box, "error_box")
         self.main_stack.set_visible_child_name("error_box")
 
     # =========== Load Weather data using threads =============
@@ -179,17 +180,17 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         # cwd : current_weather_data
         # cwt : current_weather_thread
-        cwd = threading.Thread(target=fetch_current_weather,name="cwt")
+        cwd = threading.Thread(target=fetch_current_weather, name="cwt")
         cwd.start()
         cwd.join()
 
-        hfd = threading.Thread(target=fetch_hourly_forecast,name="hft")
+        hfd = threading.Thread(target=fetch_hourly_forecast, name="hft")
         hfd.start()
 
-        dfd = threading.Thread(target=fetch_daily_forecast,name="dft")
+        dfd = threading.Thread(target=fetch_daily_forecast, name="dft")
         dfd.start()
 
-        apd = threading.Thread(target=fetch_current_air_pollution,name="apt")
+        apd = threading.Thread(target=fetch_current_air_pollution, name="apt")
         apd.start()
 
         apd.join()
@@ -197,34 +198,27 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         dfd.join()
         self.get_weather()
 
-
     # ===========  Load weather data and create UI ============
-    def get_weather(self,reload_type=None,title = ""):
+    def get_weather(self, reload_type=None, title=""):
         from .weatherData import current_weather_data as cw_data
-        
-        if self.settings.get_boolean('use-gradient-bg'):
-            dont_delete_classes = ['backgrounds','csd']
-            for cl in self.get_css_classes():
-                if cl not in dont_delete_classes:
-                    self.remove_css_class(cl)
-            weather_code = str(cw_data.weathercode.get("data"))
-            if cw_data.is_day.get("data") == 0:
-                weather_code += 'n'                
-            self.add_css_class(css_class = bg_css[weather_code])
-            
+
+        self._use_dynamic_bg(
+            cw_data.weathercode.get("data"), cw_data.is_day.get("data")
+        )
+
         # Check if no city is added
-        added_cities = self.settings.get_strv('added-cities')
+        added_cities = self.settings.get_strv("added-cities")
 
         if len(added_cities) == 0:  # Reset city to default if all cities are removed
-            self.settings.reset('added-cities')
-            self.settings.reset('selected-city')
+            self.settings.reset("added-cities")
+            self.settings.reset("selected-city")
 
-        child = self.main_stack.get_child_by_name('main_grid')
+        child = self.main_stack.get_child_by_name("main_grid")
         if child is not None:
             self.main_stack.remove(child)
 
         # ------- Main grid ---------
-        
+
         self.main_grid = Gtk.Grid()
         self.main_grid.set_hexpand(True)
         self.main_grid.set_vexpand(True)
@@ -264,7 +258,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val_unit="%",
             desc=cw_data.relativehumidity_2m.get("level_str"),
             sub_desc_heading="Dewpoint",
-            sub_desc="{0} {1}".format(cw_data.dewpoint_2m.get('data'),cw_data.dewpoint_2m.get('unit')),
+            sub_desc="{0} {1}".format(
+                cw_data.dewpoint_2m.get("data"), cw_data.dewpoint_2m.get("unit")
+            ),
             text_up="100",
             text_low="0",
         )
@@ -302,33 +298,46 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         self.main_stack.set_visible_child_name("main_grid")
 
-        if reload_type == 'switch':
-            self.toast_overlay.add_toast(create_toast(("Switched to {}".format(title)),1))
+        if reload_type == "switch":
+            self.toast_overlay.add_toast(
+                create_toast(("Switched to {}".format(title)), 1)
+            )
         elif reload_type == "refresh":
-            self.toast_overlay.add_toast(create_toast(("Refreshed Successfully"),1))
-
+            self.toast_overlay.add_toast(create_toast(("Refreshed Successfully"), 1))
 
     # ============= Refresh buttom methods ==============
-    def _refresh_weather(self,widget):
+    def _refresh_weather(self, widget):
         global updated_at
         # Ignore refreshing weather within 5 second
 
         if time.time() - updated_at < 5:
             updated_at = time.time()
-            self.toast_overlay.add_toast(create_toast(_("Refresh within 5 seconds is ignored!"),1))
+            self.toast_overlay.add_toast(
+                create_toast(_("Refresh within 5 seconds is ignored!"), 1)
+            )
 
         else:
             updated_at = time.time()
-            self.toast_overlay.add_toast(create_toast(_("Refreshing..."),1))
-            thread = threading.Thread(target=self._load_weather_data,name="load_data")
+            self.toast_overlay.add_toast(create_toast(_("Refreshing..."), 1))
+            thread = threading.Thread(target=self._load_weather_data, name="load_data")
             thread.start()
 
+    def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1):
+        if self.settings.get_boolean("use-gradient-bg"):
+            dont_delete_classes = ["backgrounds", "csd"]
+            for cl in self.get_css_classes():
+                if cl not in dont_delete_classes:
+                    self.remove_css_class(cl)
+            weather_code = str(weather_code)
+            if is_day == 0:
+                weather_code += "n"
+            self.add_css_class(css_class=bg_css[weather_code])
 
-    # ============= Menu buttom methods ==============
-    def _on_about_clicked(self, *args, **kwargs ):
+    # ============= Menu button methods ==============
+    def _on_about_clicked(self, *args, **kwargs):
         AboutWindow(self.main_window)
 
-    def _on_preferences_clicked(self,  *args, **kwargs):
+    def _on_preferences_clicked(self, *args, **kwargs):
         adw_preferences_window = WeatherPreferences(self.main_window)
         adw_preferences_window.show()
 
