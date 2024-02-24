@@ -24,7 +24,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.settings = application.settings
         selected_city = self.settings.get_string('selected-city')
         added_cities = list(self.settings.get_strv('added-cities'))
-        # use_gradient = self.settings.get_boolean('use-gradient-bg')
         should_launch_maximized = self.settings.get_boolean('launch-maximized')
         cities = [x.split(',')[0] for x in added_cities]
         measurement_type = get_measurement_type()
@@ -57,7 +56,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         launch_maximized =  Adw.ActionRow.new()
         launch_maximized.set_activatable(True)
         launch_maximized.set_title(_("Launch Maximized"))
-        launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Restart required)"))
+        launch_maximized.set_subtitle(_("Launch the weather app in maximized mode (Refresh required)"))
 
         self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
         self.launch_max_switch = Gtk.Switch()
@@ -93,6 +92,22 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.measurement_group.add(self.imperial_unit)
         GLib.idle_add(self.metric_unit.activate) if measurement_type == 'metric' else  GLib.idle_add(self.imperial_unit.activate)
 
+        self.prec_unit_group = Adw.PreferencesGroup.new()
+        self.prec_unit_group.set_margin_top(20)
+        self.appearance_grp.add(self.prec_unit_group)
+        
+        self.prec_unit = Adw.ActionRow.new()
+        self.prec_unit.set_title(_('Show precipitation in inch'))
+        self.prec_unit.set_subtitle(_("This option better works during heavy preciptaion (Refresh required)"))
+        self.prec_unit_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.prec_unit.set_activatable(True)
+        self.use_inch_switch = Gtk.Switch()
+        self.use_inch_switch.set_active(self.settings.get_boolean('use-inch-for-prec'))
+        self.use_inch_switch.connect("state-set",self._use_inch_for_precipation)
+        self.prec_unit_switch_box.append(self.use_inch_switch)
+        self.prec_unit.add_suffix(self.prec_unit_switch_box)
+        self.prec_unit_group.add(self.prec_unit)
+        
     # =============== Appearance Methods  ===============
     def _use_gradient_bg(self,widget,state):
         self.settings.set_value("use-gradient-bg",GLib.Variant("b",state))
@@ -104,7 +119,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
         global measurement_type
         if measurement_type != value:
             self.settings.set_value("measure-type",GLib.Variant("s",value))
-            # GLib.idle_add(self.application.refresh_weather,self.application,False)
             measurement_type = get_measurement_type()
 
             # Ignore refreshing weather within 5 second
@@ -118,3 +132,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 self.add_toast(create_toast(_("Switched to - {}").format(value.capitalize()),1))
                 thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
                 thread.start()
+    
+    def _use_inch_for_precipation(self,widget,state):
+        self.settings.set_value("use-inch-for-prec",GLib.Variant("b",state))

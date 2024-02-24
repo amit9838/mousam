@@ -114,11 +114,11 @@ class HourlyDetails(Gtk.Grid):
 
         # Precipitation page
         settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        measurement_type = settings.get_string("measure-type")
+        use_inch_for_prec = settings.get_boolean("use-inch-for-prec")
 
         max_prec = max(hourly_data.precipitation.get("data")[:24])
         unit = hourly_data.precipitation.get("unit")
-        if measurement_type == "imperial":
+        if use_inch_for_prec:
             max_prec = max_prec / 25.4
             unit = "inch"
 
@@ -175,7 +175,7 @@ class HourlyDetails(Gtk.Grid):
                 no_prec_label.set_halign(Gtk.Align.CENTER)
                 no_prec_label.set_margin_top(40)
                 no_prec_label.set_margin_bottom(40)
-                graphic_box.set_css_classes(["custom_card_hourly"])
+                graphic_box.set_css_classes(["custom_card_hourly",'bg_light_grey'])
                 graphic_box.append(no_prec_label)
                 graphic_container.append(graphic_box)
                 return
@@ -244,7 +244,7 @@ class HourlyDetails(Gtk.Grid):
             elif page_name == "prec":
                 bar_obj = None
                 prec = hourly_data.precipitation.get("data")[i]
-                if measurement_type == "imperial":
+                if use_inch_for_prec:
                     prec = hourly_data.precipitation.get("data")[i] / 25.4
                 if max_prec == 0:
                     bar_obj = DrawBar(0)

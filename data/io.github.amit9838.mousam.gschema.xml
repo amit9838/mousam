@@ -18,6 +18,11 @@
       <description>Apply gradient background on main window corresponding to weather condition</description>
     </key>
 
+	  <key name="use-inch-for-prec" type="b">
+      <default>false</default>
+      <summary>Use Inch for precipitation</summary>
+    </key>
+
 	  <key name="launch-maximized" type="b">
       <default>false</default>
       <summary>Launch the app in maximized mode.</summary>

@@ -34,7 +34,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         self.main_window = self
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        self.set_default_size(1160, 750)
+        self.set_default_size(1160, 760)
         self.set_title("")
         #  Adding a button into header
         self.header = Adw.HeaderBar()
@@ -109,7 +109,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container_loader.set_margin_top(220)
-        container_loader.set_margin_bottom(290)
+        container_loader.set_margin_bottom(300)
 
         # Create loader
         loader = Gtk.Spinner()

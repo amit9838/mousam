@@ -2,7 +2,7 @@ icon_loc = "@icon_location@/share/icons/hicolor/scalable/mousam_icons/"
 
 icons = {
     "0": icon_loc + "clear-day.svg",
-    "1": icon_loc + "clear-day.svg",
+    "1": icon_loc + "overcast-day.svg",
     "2": icon_loc + "overcast-day.svg",
     "3": icon_loc + "overcast.svg",
     "51": icon_loc + "partly-cloudy-day-drizzle.svg",
@@ -31,7 +31,7 @@ icons = {
     "99": icon_loc + "snowflake.svg",
     
     "0n": icon_loc + "clear-night.svg",
-    "1n": icon_loc + "clear-night.svg",
+    "1n": icon_loc + "overcast-night.svg",
     "2n": icon_loc + "overcast-night.svg",
     "3n": icon_loc + "overcast.svg",
     "51n": icon_loc + "partly-cloudy-night-drizzle.svg",
