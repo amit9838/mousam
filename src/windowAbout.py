@@ -7,7 +7,7 @@ def AboutWindow(parent,*args):
     dialog = Adw.AboutWindow.new()
     dialog.set_application_name("Mousam")
     dialog.set_application_icon("io.github.amit9838.mousam")
-    dialog.set_version("1.0.2")
+    dialog.set_version("1.1.0")
     dialog.set_developer_name("Amit Chaudhary")
     dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
     dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and python"))

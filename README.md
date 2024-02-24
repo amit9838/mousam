@@ -68,8 +68,10 @@ meson install -C builddir
 mousam
 ```
 
+## Credits
+- Thanks to [Open Meteo](https://open-meteo.com/) from providing weather data for free of cost. 
 
-
+- Thanks to [@basmilius](https://github.com/basmilius) for making beautiful weather icons.
 
 <div align="center">
  <h2>Support</h2>
