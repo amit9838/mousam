@@ -91,10 +91,10 @@ class CurrentCondition(Gtk.Grid):
         feels_like_label.set_css_classes(["text-4", "bold-3"])
         box_right.append(feels_like_label)
 
-        visibility_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
-        markup_text = "Visibility • <b> {0:.1f} {1}</b>".format(
-            data.visibility.get("data"), data.visibility.get("unit")
-        )
-        visibility_label.set_markup(markup_text)
-        visibility_label.set_css_classes(["text-4", "bold-3"])
-        box_right.append(visibility_label)
+        # visibility_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
+        # markup_text = "Visibility • <b> {0:.1f} {1}</b>".format(
+        #     data.visibility.get("data"), data.visibility.get("unit")
+        # )
+        # visibility_label.set_markup(markup_text)
+        # visibility_label.set_css_classes(["text-4", "bold-3"])
+        # box_right.append(visibility_label)
