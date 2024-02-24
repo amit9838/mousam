@@ -9,7 +9,7 @@
 <a href = "https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
 </div>
 <div align="center">
-<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2-thunderstorm.png?raw=true#gh-dark-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only">
 <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only">
 </div>
 

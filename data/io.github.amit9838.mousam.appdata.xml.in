@@ -59,8 +59,8 @@
       <description translatable="no">
         <p>What's New</p>
         <ul>
-          <li>Dynamic background is back again, app background changes based on current weatehr condition.</li>
-          <li>Show rainfall in inches when using imperial units</li>
+          <li>Dynamic background is back again, app background changes based on current weather condition.</li>
+          <li>Option to see precipitation in inches.</li>
           <li>App is now slimmer </li>
         </ul>
         <p>Bug fixes</p>
