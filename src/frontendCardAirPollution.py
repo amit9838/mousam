@@ -45,6 +45,18 @@ class CardAirPollution:
         title.set_halign(Gtk.Align.START)
         title.set_css_classes(["text-4", "light-3", "bold"])
         card.attach(title, 0, 0, 4, 2)
+        
+        icon = Gtk.Image.new_from_icon_name("help-about-symbolic")
+        icon.set_pixel_size(16)
+        icon.set_halign(Gtk.Align.END)
+        icon.set_css_classes(["light-4"])
+        icon.set_tooltip_text('United States AQI standard')
+        # icon.set_margin_end(20)
+        # title = Gtk.Label(label="info")
+        # title.set_hexpand(True)
+        # title.set_halign(Gtk.Align.END)
+        # title.set_css_classes(["text-4", "light-3", "bolda"])
+        card.attach(icon, 3, 0, 4, 2)
 
         # Main value (like windspeed = 32km/h)
         info_box = Gtk.Box(
@@ -71,8 +83,8 @@ class CardAirPollution:
 
         # Pollution bar
         aqi = self.air_apllution_data["hourly"]["us_aqi"][idx]
-        bar_level = aqi / 600
 
-        pollution_bar = PollutionBar(bar_level)
+        bar_level = aqi / 350        
+        pollution_bar = PollutionBar(min(bar_level,.99))
         # pollution_bar.set_margin_top()
         card.attach(pollution_bar, 0, 4, 4, 1)

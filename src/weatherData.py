@@ -97,14 +97,12 @@ def classify_aqi(aqi_value):
     if aqi_value >= 0 and aqi_value <= 50:
         return "Good"
     elif aqi_value <= 100:
-        return "Satisfactory"
-    elif aqi_value <= 200:
         return "Moderate"
-    elif aqi_value <= 300:
+    elif aqi_value <= 150:
         return "Poor"
-    elif aqi_value <= 400:
-        return "Very Poor"
-    elif aqi_value <= 500:
+    elif aqi_value <= 200:
+        return "Unhealthy"
+    elif aqi_value <= 300:
         return "Severe"
     else:
         return "Hazardous"
