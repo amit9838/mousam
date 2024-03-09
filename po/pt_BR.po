@@ -1,0 +1,283 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Luiz Lima, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-03 21:54+0530\n"
+"PO-Revision-Date: 2024-03-08 23:42-0300\n"
+"Last-Translator: Luiz Lima\n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+msgid "Mousam"
+msgstr "Mousam"
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Belo e leve aplicativo de clima"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgstr "Clima;Mousam;Chuva;Nuvem;Previsao;"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Weather"
+msgstr "Clima"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Condições de clima atual e previsões."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Recursos:"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, and wind speed,UV index,pressure "
+"and more"
+msgstr ""
+"Exibe temperatura, umidade e velocidade do vento em tempo real, índice UV, "
+"pressão atmosférica e mais"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+"Utiliza representações gráficas, como temperatura, gráficos de "
+"precipitação e velocidade do vento com direção, para fornecer uma previsão "
+"a cada hora para as próximas 24 horas"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "Também fornece previsões para amanhã e 7 dias"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr "Ver previsões em sistema métrico ou imperial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Overcast day"
+msgstr "Coberto de nuvens"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Clear Sky - imperial"
+msgstr "Céu Limpo - imperial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29
+msgid "Thunderstorm"
+msgstr "Tempestade"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:33
+msgid "Dark mode"
+msgstr "Modo escuro"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:37
+msgid "Light mode"
+msgstr "Modo claro"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Lista de cidades e suas coordenadas."
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Armazena locais adicionados pelo usuário em um formato de string "
+"JSONificada em uma string"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Cidade selecionada"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Coordenadas da cidade selecionada"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Usar Fundo em Gradiente"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Aplicar gradiente de fundo na janela principal de acordo com a condição "
+"climática"
+
+#: data/io.github.amit9838.mousam.gschema.xml:23
+msgid "Launch the app in maximized mode."
+msgstr "Lançar o aplicativo em tela cheia."
+
+#: data/io.github.amit9838.mousam.gschema.xml:28
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr "Sistema de medias para utilizar - métrico,imperial"
+
+#: data/io.github.amit9838.mousam.gschema.xml:29
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "métrico(km, °C), imperial(milha, °F)"
+
+#: src/frontendForecast.py:33 src/frontendForecast.py:122
+msgid "Tomorrow"
+msgstr "Amanhã"
+
+#: src/frontendForecast.py:39
+msgid "Weekly"
+msgstr "Semanal"
+
+#: src/frontendForecast.py:120
+msgid "Today"
+msgstr "Hoje"
+
+#: src/frontendHourlyDetails.py:46
+msgid "Hourly"
+msgstr "Por Hora"
+
+#: src/frontendHourlyDetails.py:53
+msgid "Wind"
+msgstr "Vento"
+
+#: src/frontendHourlyDetails.py:60
+msgid "Precipitation"
+msgstr "Precipitação"
+
+#: src/mousam.py:72
+msgid "Preferences"
+msgstr "Preferências"
+
+#: src/mousam.py:80
+msgid "About Mousam"
+msgstr "Sobre Mousam"
+
+#: src/mousam.py:310
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "Recarregando dentro de 5 segundos é ignorado!"
+
+#: src/mousam.py:314
+msgid "Refreshing..."
+msgstr "Recarregando..."
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and python"
+msgstr "Belo e leve aplicativo de clima feito com Gtk e Python"
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Copyright © 2024 Mousam Developers"
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr "Luiz Lima"
+
+#: src/windowLocations.py:19 src/windowLocations.py:35
+msgid "Locations"
+msgstr "Localizações"
+
+#: src/windowLocations.py:41
+msgid "Add"
+msgstr "Adicionar"
+
+#: src/windowLocations.py:66
+msgid "Remove location"
+msgstr "Remover localização"
+
+#: src/windowLocations.py:113
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "Trocar cidade dentro de 2 segundos é ignorado!"
+
+#: src/windowLocations.py:116
+msgid "Selected - {}"
+msgstr "Selecionado - {}"
+
+#: src/windowLocations.py:126
+msgid "Add New Location"
+msgstr "Adicionar Nova Localização"
+
+#: src/windowLocations.py:143
+msgid "Search for a city"
+msgstr "Procurar por uma cidade"
+
+#: src/windowLocations.py:149 src/windowLocations.py:151
+msgid "Search"
+msgstr "Procurar"
+
+#: src/windowLocations.py:206
+msgid "No results found !"
+msgstr "Nenhum resultado encontrado !"
+
+#: src/windowLocations.py:230
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "Adicionado - {0}"
+
+#: src/windowLocations.py:232
+msgid "Location already added!"
+msgstr "Localização já adicionada!"
+
+#: src/windowLocations.py:241
+msgid "Add more locations to delete!"
+msgstr "Adicione mais localizações para poder apagar!"
+
+#: src/windowLocations.py:265
+#, python-brace-format
+msgid "Deleted - {0}"
+msgstr "Apagado - {0}"
+
+#: src/windowPreferences.py:35
+msgid "Appearance"
+msgstr "Aparência"
+
+#: src/windowPreferences.py:59
+msgid "Open Maximized"
+msgstr "Abrir em tela cheia"
+
+#: src/windowPreferences.py:60
+msgid "Launch the weather app in maximized mode (Restart required)"
+msgstr "Abrir o aplicativo de clima em tela cheia (Reiniciamento necessário)"
+
+#: src/windowPreferences.py:73
+msgid "Units &amp; Measurements"
+msgstr "Unidade de Medida &amp;"
+
+#: src/windowPreferences.py:77
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:78
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr "Sistema MÉTRICO com unidades como Celsius, km/h e quilômetro"
+
+#: src/windowPreferences.py:86
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:87
+msgid "IMPERIAL system with units like fahrenheit, mph, miles"
+msgstr ""
+"Sistema IMPERIAL com unidades como Fahrenheit, milhas por hora e milhas"
+
+#: src/windowPreferences.py:116
+msgid "Switching within 2 seconds is ignored!"
+msgstr "Trocando dentro de 2 segundos é ignorado!"
+
+#: src/windowPreferences.py:119
+msgid "Switched to - {}"
+msgstr "Trocou para - {}"
