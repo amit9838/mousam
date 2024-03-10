@@ -181,4 +181,4 @@ class CardSquare:
             "humidity":_("Humidity"),
             "uv index":_("UV Index"),
         }
-        return titles[title]
+        return titles[title.lower()]
