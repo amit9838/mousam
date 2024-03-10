@@ -1,3 +1,67 @@
+mousam (1.1.0) stable; urgency=medium
+
+  [ Himadri Sekhar Basu ]
+  * Update deb package version
+    - Read version from deb packaging for
+      meson build
+
+  [ সৌম্যদীপ ঘোষ ]
+  * fix the ending new line, breaking the app
+  * use number of version for now
+
+  [ Amit Chaudhary ]
+  * fix air pollution data
+  * format code
+  * use inch in prec when imperial
+
+  [ Himadri Sekhar Basu ]
+  * Fix tab spacing in metadata file (#71)
+  * Update snap and flatpak build workflows
+    - Developers can check and test snap
+      and flatpak builds before creating a PR
+
+  [ Amit Chaudhary ]
+  * Create FUNDING.yml
+
+  [ Himadri Sekhar Basu ]
+  * Use source from current branch (#74)
+    - Replace the source line in snapcraft.yaml
+      to test snap from the current branch
+  * Fix permission for executable binary (#75)
+    - Remove unnecessary line from snap
+      fixing the permission
+  * Update debian changelog file (#76)
+
+  [ Amit Chaudhary ]
+  * Update FUNDING.yml (#82)
+  * Update README.md (#83)
+  * Update ko-fi link (#85)
+  * add multiple fallbacks in check_internet_connection
+
+  [ Himadri Sekhar Basu ]
+  * Refactor code and fix binary permission (#77)
+    - Load css from css file instead of
+      hard-coding it as python. Provides
+      better readability in IDEs
+    - Remove eol spaces
+    - Fix inconsistent tab spacing
+    - Remove excutable permission from mousam.in,
+      meson makes it excutable during install for
+      all packaging methods
+
+  [ Amit Chaudhary ]
+  * make the ui slimmer make the cards smaller always align forecast item in center use fixed size tab buttons
+  * update website add readme
+  * add option to use dynamic background App background changes based on the current weather condition
+  * fix bugs related to dynamic bg
+  * hide visibility info
+  * improve aqi level
+  * make precipitation unit optional
+  * initialize app with gradient when dynamic bg enabled
+  * release_v1.1.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Sat, 24 Feb 2024 21:58:26 +0530
+
 mousam (1.0.2) stable; urgency=medium
 
   [ Amit Chaudhary ]
