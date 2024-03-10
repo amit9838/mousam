@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.1.0\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-10 14:30+0530\n"
+"POT-Creation-Date: 2024-03-10 23:18+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -287,13 +287,17 @@ msgstr ""
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:276 src/weatherData.py:120 src/weatherData.py:133
-#: src/weatherData.py:142
+#: src/mousam.py:260
+msgid "Dewpoint"
+msgstr ""
+
+#: src/mousam.py:276 src/mousam.py:286 src/weatherData.py:120
+#: src/weatherData.py:133 src/weatherData.py:142
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:277 src/weatherData.py:116 src/weatherData.py:129
-#: src/weatherData.py:138
+#: src/mousam.py:277 src/mousam.py:287 src/weatherData.py:116
+#: src/weatherData.py:129 src/weatherData.py:138
 msgid "Low"
 msgstr ""
 
