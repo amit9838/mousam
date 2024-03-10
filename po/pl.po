@@ -293,13 +293,17 @@ msgstr "Z"
 msgid "N"
 msgstr "N"
 
-#: src/mousam.py:276 src/weatherData.py:120 src/weatherData.py:133
-#: src/weatherData.py:142
+#: src/mousam.py:260
+msgid "Dewpoint"
+msgstr ""
+
+#: src/mousam.py:276 src/mousam.py:286 src/weatherData.py:120
+#: src/weatherData.py:133 src/weatherData.py:142
 msgid "High"
 msgstr "Max."
 
-#: src/mousam.py:277 src/weatherData.py:116 src/weatherData.py:129
-#: src/weatherData.py:138
+#: src/mousam.py:277 src/mousam.py:287 src/weatherData.py:116
+#: src/weatherData.py:129 src/weatherData.py:138
 msgid "Low"
 msgstr "Min."
 
