@@ -123,7 +123,7 @@ class HourlyDetails(Gtk.Grid):
             unit = "inch"
 
         if page_name == "prec":
-            desc_label.set_text("Day High")
+            desc_label.set_text(_("Day High"))
             val_label.set_text(f"{max_prec:.2f}")
             unit_label.set_text(unit)
 
@@ -161,12 +161,12 @@ class HourlyDetails(Gtk.Grid):
                 )
 
                 no_prec_labels = [
-                    "No precipitation today !",
-                    "No precipitation expected today!",
-                    "Anticipate a precipitation-free day !",
-                    "Enjoy a rain-free day today!",
-                    "Umbrella status: resting. No precipitation in sight !",
-                    "No rain in sight today!",
+                    _("No precipitation today !"),
+                    _("No precipitation expected today!"),
+                    _("Anticipate a precipitation-free day !"),
+                    _("Enjoy a rain-free day today!"),
+                    _("Umbrella status: resting. No precipitation in sight !"),
+                    _("No rain in sight today!"),
                 ]
                 no_prec_label = Gtk.Label(
                     label=no_prec_labels[random.randint(0, len(no_prec_labels) - 1)]
@@ -195,7 +195,7 @@ class HourlyDetails(Gtk.Grid):
             label_timestamp.set_text(tm)
 
             if i == nearest_current_time_idx:
-                label_timestamp.set_text("Now")
+                label_timestamp.set_text(_("Now"))
                 label_timestamp.set_css_classes(["bold-1"])
                 graphic_box.set_css_classes(
                     ["custom_card_hourly", "custom_card_hourly_now"]

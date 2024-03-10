@@ -86,7 +86,7 @@ class DrawDayNight:
         context.set_font_size(13)
 
         # Horizon text
-        text = "Horizon"
+        text = _("Horizon")
         # Calculate the position for text placement
         text_x = center_x + outer_radius*1.3
         text_y = center_y -10
@@ -96,7 +96,7 @@ class DrawDayNight:
         # Display the text along the circular path
         context.show_text(text)
 
-        text2 = "Midnight"
+        text2 = _("Midnight")
         # Calculate the position for text placement
         text_x = center_x - 30
         text_y = center_y + outer_radius*1.3

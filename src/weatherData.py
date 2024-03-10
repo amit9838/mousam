@@ -95,17 +95,17 @@ def fetch_current_air_pollution():
 
 def classify_aqi(aqi_value):
     if aqi_value >= 0 and aqi_value <= 50:
-        return "Good"
+        return _("Good")
     elif aqi_value <= 100:
-        return "Moderate"
+        return _("Moderate")
     elif aqi_value <= 150:
-        return "Poor"
+        return _("Poor")
     elif aqi_value <= 200:
-        return "Unhealthy"
+        return _("Unhealthy")
     elif aqi_value <= 300:
-        return "Severe"
+        return _("Severe")
     else:
-        return "Hazardous"
+        return _("Hazardous")
 
 
 # ========= Classify diffrent attributes of current weather ==========
@@ -113,55 +113,55 @@ def classify_aqi(aqi_value):
 
 def classify_uv_index(uv_index):
     if uv_index <= 2:
-        return "Low"
+        return _("Low")
     elif uv_index <= 5:
-        return "Moderate"
+        return _("Moderate")
     elif uv_index <= 7:
-        return "High"
+        return _("High")
     elif uv_index <= 10:
-        return "Very High"
+        return _("Very High")
     else:
-        return "Extreme"
+        return _("Extreme")
 
 
 def classify_humidity_level(uv_index):
     if uv_index < 50:
-        return "Low"
+        return _("Low")
     elif uv_index <= 80:
-        return "Moderate"
+        return _("Moderate")
     else:
-        return "High"
+        return _("High")
 
 
 def classify_presssure_level(pressure):
     if pressure < 940:
-        return "Low"
+        return _("Low")
     elif pressure <= 1010:
-        return "Normal"
+        return _("Normal")
     else:
-        return "High"
+        return _("High")
 
 
 def classify_wind_speed_level(wind_speed):
     if wind_speed <= 1:
-        return "Calm"
+        return _("Calm")
     elif wind_speed <= 25:
-        return "Light"
+        return _("Light")
     elif wind_speed <= 40:
-        return "Moderate"
+        return _("Moderate")
     elif wind_speed <= 60:
-        return "Strong"
+        return _("Strong")
     else:
-        return "Extreme"
+        return _("Extreme")
 
 
 def transform_visibility_data(unit, data):
     settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
     measurement_type = settings.get_string("measure-type")
-    dist_unit = "km"
+    dist_unit = _("km")
     dist = data / 1000
     if measurement_type == "imperial":
-        dist_unit = "miles"
+        dist_unit = _("miles")
         dist = data / 1609.34
 
     if unit.lower() == "m":

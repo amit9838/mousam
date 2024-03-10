@@ -70,7 +70,7 @@ class CardDayNight:
             card.add_css_class("transparent_5")
 
         # Main title of the card
-        title = Gtk.Label(label="Sunrise & Sunset")
+        title = Gtk.Label(label=_("Sunrise & Sunset"))
         title.set_hexpand(True)
         title.set_halign(Gtk.Align.START)
         title.set_css_classes(["text-4", "light-3", "bold"])
@@ -81,7 +81,7 @@ class CardDayNight:
         card_info.set_column_spacing(5)
         card.attach(card_info, 0, 2, 1, 2)
 
-        sun_rise_label = Gtk.Label(label="Sunrise")
+        sun_rise_label = Gtk.Label(label=_("Sunrise"))
         sun_rise_label.set_margin_top(5)
         sun_rise_label.set_halign(Gtk.Align.START)
 
@@ -94,7 +94,7 @@ class CardDayNight:
         sun_rise.set_halign(Gtk.Align.START)
         card_info.attach(sun_rise, 0, 2, 3, 3)
 
-        sun_set_label = Gtk.Label(label="Sunset")
+        sun_set_label = Gtk.Label(label=_("Sunset"))
         sun_set_label.set_halign(Gtk.Align.START)
         sun_set_label.set_margin_top(20)
         sun_set_label.set_css_classes(["text-4", "light-4"])

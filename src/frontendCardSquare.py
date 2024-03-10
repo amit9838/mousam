@@ -58,7 +58,7 @@ class CardSquare:
         self.card = card
 
         # Main title of the card
-        title = Gtk.Label(label=self.title)
+        title = Gtk.Label(label=self._get_translasable_title(self.title))
         title.set_hexpand(True)
         title.set_halign(Gtk.Align.START)
         title.set_css_classes(["text-4", "light-3", "bold"])
@@ -159,17 +159,26 @@ class CardSquare:
 
     def _get_wind_dir(self, angle):
         directions = [
-            "North",
-            "Northeast",
-            "East",
-            "Southeast",
-            "South",
-            "Southwest",
-            "West",
-            "Northwest",
-            "North",
+            _("North"),
+            _("Northeast"),
+            _("East"),
+            _("Southeast"),
+            _("South"),
+            _("Southwest"),
+            _("West"),
+            _("Northwest"),
+            _("North")
         ]
 
         angle = angle % 360
         index = round(angle / 45) % 8
         return directions[index]
+
+    def _get_translasable_title(self,title):
+        titles = {
+            "wind":_("Wind"),
+            "pressure":_("Pressure"),
+            "humidity":_("Humidity"),
+            "uv index":_("UV Index"),
+        }
+        return titles[title]

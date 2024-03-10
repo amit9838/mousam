@@ -122,7 +122,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         loader.set_css_classes(["loader"])
         container_loader.append(loader)
 
-        loader_label = Gtk.Label(label=f"Getting Weather Data")
+        loader_label = Gtk.Label(label=_("Getting Weather Data"))
         loader_label.set_css_classes(["text-2a", "bold-2"])
         container_loader.append(loader_label)
 
@@ -133,11 +133,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     # =========== Show No Internet =============
     def show_error(self, type: str = "no_internet", desc: str = ""):
         # Loader container
-        message = "No Internet"
+        message = _("No Internet")
         icon = "network-error-symbolic"
         desc = ""
         if type == "api_error":
-            message = "Could not fetch data from API"
+            message = _("Could not fetch data from API")
             desc = desc
             icon = "computer-fail-symbolic"
 
@@ -245,9 +245,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val=cw_data.windspeed_10m.get("data"),
             main_val_unit=cw_data.windspeed_10m.get("unit"),
             desc=cw_data.windspeed_10m.get("level_str"),
-            sub_desc_heading="From",
-            sub_desc="Northwest",
-            text_up="N",
+            sub_desc_heading=_("From"),
+            sub_desc=_("Northwest"),
+            text_up=_("N"),
         )
         widget_grid.attach(card_obj.card, 0, 0, 1, 1)
 
@@ -273,8 +273,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val_unit="",
             desc=cw_data.surface_pressure.get("unit"),
             sub_desc_heading=cw_data.surface_pressure.get("level_str"),
-            text_up="High",
-            text_low="Low",
+            text_up=_("High"),
+            text_low=_("Low"),
         )
         widget_grid.attach(card_obj.card, 0, 1, 1, 1)
 
@@ -300,10 +300,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         if reload_type == "switch":
             self.toast_overlay.add_toast(
-                create_toast(("Switched to {}".format(title)), 1)
+                create_toast(_("Switched to {}".format(title)), 1)
             )
         elif reload_type == "refresh":
-            self.toast_overlay.add_toast(create_toast(("Refreshed Successfully"), 1))
+            self.toast_overlay.add_toast(create_toast(_("Refreshed Successfully"), 1))
 
     # ============= Refresh buttom methods ==============
     def _refresh_weather(self, widget):

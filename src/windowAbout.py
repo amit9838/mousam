@@ -10,7 +10,7 @@ def AboutWindow(parent,*args):
     dialog.set_version("1.1.0")
     dialog.set_developer_name("Amit Chaudhary")
     dialog.set_license_type(Gtk.License(Gtk.License.GPL_3_0))
-    dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and python"))
+    dialog.set_comments(_("Beautiful and light weight weather app build using Gtk and Python"))
     dialog.set_website("https://amit9838.github.io/mousam/")
     dialog.set_issue_url("https://github.com/amit9838/mousam/issues")
     # dialog.add_credit_section("Contributors", ["name url"])

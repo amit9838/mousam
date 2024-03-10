@@ -40,7 +40,7 @@ class CardAirPollution:
             card.add_css_class("transparent_5")
 
         # Main title of the card
-        title = Gtk.Label(label="Air Pollution")
+        title = Gtk.Label(label=_("Air Pollution"))
         title.set_hexpand(True)
         title.set_halign(Gtk.Align.START)
         title.set_css_classes(["text-4", "light-3", "bold"])
@@ -50,7 +50,7 @@ class CardAirPollution:
         icon.set_pixel_size(16)
         icon.set_halign(Gtk.Align.END)
         icon.set_css_classes(["light-4"])
-        icon.set_tooltip_text('United States AQI standard')
+        icon.set_tooltip_text(_('United States AQI standard'))
         # icon.set_margin_end(20)
         # title = Gtk.Label(label="info")
         # title.set_hexpand(True)

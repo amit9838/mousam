@@ -84,7 +84,7 @@ class CurrentCondition(Gtk.Grid):
         box_right.append(loc_label)
 
         feels_like_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
-        markup_text = "Feels Like • <b> {0} {1}</b>".format(
+        markup_text = _("Feels Like • <b> {0} {1}</b>").format(
             data.apparent_temperature.get("data"), data.apparent_temperature.get("unit")
         )
         feels_like_label.set_markup(markup_text)
