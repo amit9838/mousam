@@ -257,7 +257,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val=cw_data.relativehumidity_2m.get("data"),
             main_val_unit="%",
             desc=cw_data.relativehumidity_2m.get("level_str"),
-            sub_desc_heading="Dewpoint",
+            sub_desc_heading=_("Dewpoint"),
             sub_desc="{0} {1}".format(
                 cw_data.dewpoint_2m.get("data"), cw_data.dewpoint_2m.get("unit")
             ),
@@ -283,8 +283,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             title="UV Index",
             main_val=cw_data.uv_index.get("data"),
             desc=cw_data.uv_index.get("level_str"),
-            text_up="High",
-            text_low="Low",
+            text_up=_("High"),
+            text_low=_("Low"),
         )
         widget_grid.attach(card_obj.card, 1, 1, 1, 1)
 
