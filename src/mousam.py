@@ -1,6 +1,7 @@
 import gi
 import time
 import threading
+import gettext
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -273,8 +274,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             main_val_unit="",
             desc=cw_data.surface_pressure.get("unit"),
             sub_desc_heading=cw_data.surface_pressure.get("level_str"),
-            text_up=_("High"),
-            text_low=_("Low"),
+            text_up=gettext.pgettext("pressure card", "High"),
+            text_low=gettext.pgettext("pressure card", "Low"),
         )
         widget_grid.attach(card_obj.card, 0, 1, 1, 1)
 
@@ -283,8 +284,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             title="UV Index",
             main_val=cw_data.uv_index.get("data"),
             desc=cw_data.uv_index.get("level_str"),
-            text_up=_("High"),
-            text_low=_("Low"),
+            text_up=gettext.pgettext("uvindex card","High"),
+            text_low=gettext.pgettext("uvindex card", "Low"),
         )
         widget_grid.attach(card_obj.card, 1, 1, 1, 1)
 

@@ -1,5 +1,7 @@
 import time
 import gi
+import gettext
+
 from gi.repository import Gio
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
@@ -113,33 +115,33 @@ def classify_aqi(aqi_value):
 
 def classify_uv_index(uv_index):
     if uv_index <= 2:
-        return _("Low")
+        return gettext.pgettext("uvindex", "Low")
     elif uv_index <= 5:
-        return _("Moderate")
+        return gettext.pgettext("uvindex", "Moderate")
     elif uv_index <= 7:
-        return _("High")
+        return gettext.pgettext("uvindex", "High")
     elif uv_index <= 10:
-        return _("Very High")
+        return gettext.pgettext("uvindex", "Very High")
     else:
-        return _("Extreme")
+        return gettext.pgettext("uvindex", "Extreme")
 
 
 def classify_humidity_level(uv_index):
     if uv_index < 50:
-        return _("Low")
+        return gettext.pgettext("humidity", "Low")
     elif uv_index <= 80:
-        return _("Moderate")
+        return gettext.pgettext("humidity", "Moderate")
     else:
-        return _("High")
+        return gettext.pgettext("humidity", "High")
 
 
 def classify_presssure_level(pressure):
     if pressure < 940:
-        return _("Low")
+        return gpettext.pgettext("pressure", "Low")
     elif pressure <= 1010:
-        return _("Normal")
+        return gettext.pgettext("pressure", "Normal")
     else:
-        return _("High")
+        return gettext.pgettext("pressure", "High")
 
 
 def classify_wind_speed_level(wind_speed):
@@ -148,11 +150,11 @@ def classify_wind_speed_level(wind_speed):
     elif wind_speed <= 25:
         return _("Light")
     elif wind_speed <= 40:
-        return _("Moderate")
+        return gettext.pgettext("wind", "Moderate")
     elif wind_speed <= 60:
         return _("Strong")
     else:
-        return _("Extreme")
+        return gettext.pgettext("wind", "Extreme")
 
 
 def transform_visibility_data(unit, data):
