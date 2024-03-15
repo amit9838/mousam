@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-10 23:18+0530\n"
+"POT-Creation-Date: 2024-03-15 15:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Clear Sky - imperial"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:29
+#: data/io.github.amit9838.mousam.appdata.xml.in:29 src/constants.py:157
 msgid "Thunderstorm"
 msgstr ""
 
@@ -126,6 +126,110 @@ msgstr ""
 msgid "metric(km, °C), imperial(mile, °F)"
 msgstr ""
 
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr ""
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr ""
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr ""
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr ""
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr ""
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr ""
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr ""
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr ""
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr ""
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr ""
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr ""
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr ""
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr ""
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr ""
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr ""
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr ""
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr ""
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr ""
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr ""
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr ""
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr ""
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr ""
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr ""
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr ""
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers "
+msgstr ""
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr ""
+
 #: src/frontendCardAirPollution.py:43
 msgid "Air Pollution"
 msgstr ""
@@ -174,7 +278,7 @@ msgstr ""
 msgid "West"
 msgstr ""
 
-#: src/frontendCardSquare.py:169 src/mousam.py:249
+#: src/frontendCardSquare.py:169 src/mousam.py:250
 msgid "Northwest"
 msgstr ""
 
@@ -219,7 +323,18 @@ msgstr ""
 msgid "Precipitation"
 msgstr ""
 
+#: src/frontendHourlyDetails.py:95
+msgctxt "wind"
+msgid "Day High"
+msgstr ""
+
+#: src/frontendHourlyDetails.py:111
+msgctxt "temperature"
+msgid "Day Max"
+msgstr ""
+
 #: src/frontendHourlyDetails.py:126
+msgctxt "precipitation"
 msgid "Day High"
 msgstr ""
 
@@ -259,118 +374,180 @@ msgstr ""
 msgid "Midnight"
 msgstr ""
 
-#: src/mousam.py:75
+#: src/mousam.py:76
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:83
+#: src/mousam.py:84
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:125
+#: src/mousam.py:126
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:136
+#: src/mousam.py:137
 msgid "No Internet"
 msgstr ""
 
-#: src/mousam.py:140
+#: src/mousam.py:141
 msgid "Could not fetch data from API"
 msgstr ""
 
-#: src/mousam.py:248
+#: src/mousam.py:249
 msgid "From"
 msgstr ""
 
-#: src/mousam.py:250
+#: src/mousam.py:251
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:260
+#: src/mousam.py:261
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:276 src/mousam.py:286 src/weatherData.py:120
-#: src/weatherData.py:133 src/weatherData.py:142
+#: src/mousam.py:277
+msgctxt "pressure card"
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:277 src/mousam.py:287 src/weatherData.py:116
-#: src/weatherData.py:129 src/weatherData.py:138
+#: src/mousam.py:278
+msgctxt "pressure card"
 msgid "Low"
 msgstr ""
 
-#: src/mousam.py:303
+#: src/mousam.py:287
+msgctxt "uvindex card"
+msgid "High"
+msgstr ""
+
+#: src/mousam.py:288
+msgctxt "uvindex card"
+msgid "Low"
+msgstr ""
+
+#: src/mousam.py:304
 msgid "Switched to {}"
 msgstr ""
 
-#: src/mousam.py:306
+#: src/mousam.py:307
 msgid "Refreshed Successfully"
 msgstr ""
 
-#: src/mousam.py:316
+#: src/mousam.py:317
 msgid "Refresh within 5 seconds is ignored!"
 msgstr ""
 
-#: src/mousam.py:321
+#: src/mousam.py:322
 msgid "Refreshing..."
 msgstr ""
 
-#: src/weatherData.py:98
+#: src/weatherData.py:100
 msgid "Good"
 msgstr ""
 
-#: src/weatherData.py:100 src/weatherData.py:118 src/weatherData.py:131
-#: src/weatherData.py:151
+#: src/weatherData.py:102
 msgid "Moderate"
 msgstr ""
 
-#: src/weatherData.py:102
+#: src/weatherData.py:104
 msgid "Poor"
 msgstr ""
 
-#: src/weatherData.py:104
+#: src/weatherData.py:106
 msgid "Unhealthy"
 msgstr ""
 
-#: src/weatherData.py:106
+#: src/weatherData.py:108
 msgid "Severe"
 msgstr ""
 
-#: src/weatherData.py:108
+#: src/weatherData.py:110
 msgid "Hazardous"
 msgstr ""
 
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr ""
+
 #: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "High"
+msgstr ""
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
 msgid "Very High"
 msgstr ""
 
-#: src/weatherData.py:124 src/weatherData.py:155
+#: src/weatherData.py:126
+msgctxt "uvindex"
 msgid "Extreme"
 msgstr ""
 
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "Moderate"
+msgstr ""
+
+#: src/weatherData.py:135
+msgctxt "humidity"
+msgid "High"
+msgstr ""
+
 #: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:142
+msgctxt "pressure"
 msgid "Normal"
 msgstr ""
 
-#: src/weatherData.py:147
-msgid "Calm"
+#: src/weatherData.py:144
+msgctxt "pressure"
+msgid "High"
 msgstr ""
 
 #: src/weatherData.py:149
+msgid "Calm"
+msgstr ""
+
+#: src/weatherData.py:151
 msgid "Light"
 msgstr ""
 
 #: src/weatherData.py:153
+msgctxt "wind"
+msgid "Moderate"
+msgstr ""
+
+#: src/weatherData.py:155
 msgid "Strong"
 msgstr ""
 
-#: src/weatherData.py:161
+#: src/weatherData.py:157
+msgctxt "wind"
+msgid "Extreme"
+msgstr ""
+
+#: src/weatherData.py:163
 msgid "km"
 msgstr ""
 
-#: src/weatherData.py:164
+#: src/weatherData.py:166
 msgid "miles"
 msgstr ""
 

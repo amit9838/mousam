@@ -33,6 +33,9 @@ sys.path.insert(1, pkgdatadir)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 locale.bindtextdomain('mousam', localedir)
 locale.textdomain('mousam')
+
+gettext.bindtextdomain('mousam', localedir)
+gettext.textdomain('mousam')
 gettext.install('mousam', localedir)
 
 if __name__ == '__main__':
