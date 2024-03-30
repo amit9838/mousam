@@ -137,7 +137,7 @@ def classify_humidity_level(uv_index):
 
 def classify_presssure_level(pressure):
     if pressure < 940:
-        return gpettext.pgettext("pressure", "Low")
+        return gettext.pgettext("pressure", "Low")
     elif pressure <= 1010:
         return gettext.pgettext("pressure", "Normal")
     else:

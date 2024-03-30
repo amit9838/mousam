@@ -42,7 +42,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         #  Adding a button into header
         self.header = Adw.HeaderBar()
-        self.header.add_css_class(css_class="flat")
+        self.header.set_css_classes(["flat"])
 
         self.set_titlebar(self.header)
 
