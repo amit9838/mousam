@@ -85,10 +85,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
 
         
+        # Toast overlay
         self.toast_overlay = Adw.ToastOverlay.new()
         self.set_child(self.toast_overlay)
 
-        # Toast overlay
+        # Scroll content on small screens
         self.scrolled_window = Gtk.ScrolledWindow()
         self.scrolled_window.set_policy(
             Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
