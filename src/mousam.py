@@ -36,7 +36,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         self.main_window = self
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        self.set_default_size(1160, 760)
+        self.set_default_size(1160, 818)
         self.set_title("")
         self._use_dynamic_bg()
 
@@ -83,13 +83,22 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.add_action(action)
         menu.append(_("About Mousam"), "win.about")
 
-        # Toast overlay
+
+        
         self.toast_overlay = Adw.ToastOverlay.new()
         self.set_child(self.toast_overlay)
 
+        # Toast overlay
+        self.scrolled_window = Gtk.ScrolledWindow()
+        self.scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.scrolled_window.set_kinetic_scrolling(True)
+        self.toast_overlay.set_child(self.scrolled_window)
+            
+        
         # Main _clamp
         self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
-        self.toast_overlay.set_child(self.clamp)
+        self.scrolled_window.set_child(self.clamp)
 
         # main stack
         self.main_stack = Gtk.Stack.new()
@@ -225,22 +234,22 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_grid.set_vexpand(True)
         self.main_stack.add_named(self.main_grid, "main_grid")
 
-        # -------- Current condition Card ---------
+        # -------- Card Current condition  ---------
         current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=200)
         self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
         current_container_clamp.set_child(CurrentCondition())
         self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
 
-        # --------- Forecast card ----------
+        # --------- Card Forecast ----------
         forecast_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
         forecast_container_clamp.set_child(Forecast())
         self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 2)
 
-        # ========= Card widget grid ==========
+        # ========= widget grid to hold Cards ==========
         widget_grid = Gtk.Grid()
         self.main_grid.attach(widget_grid, 1, 2, 1, 1)
 
-        # ------- Wind card ----------
+        # ------- Card Wind ----------
         card_obj = CardSquare(
             title="Wind",
             main_val=cw_data.windspeed_10m.get("data"),
@@ -252,7 +261,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 0, 0, 1, 1)
 
-        # -------- Humidity card  ---------
+        # -------- Card Humidity ---------
         card_obj = CardSquare(
             title="Humidity",
             main_val=cw_data.relativehumidity_2m.get("data"),
@@ -267,7 +276,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 1, 0, 1, 1)
 
-        # ------- Pressure card -----------
+        # ------- Card Pressure -----------
         card_obj = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.get("data"),
@@ -279,7 +288,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 0, 1, 1, 1)
 
-        # -------- UV Index card ---------
+        # -------- Card UV Index ---------
         card_obj = CardSquare(
             title="UV Index",
             main_val=cw_data.uv_index.get("data"),
@@ -289,7 +298,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 1, 1, 1, 1)
 
-        # -------- Card Rectangle ---------
+        # -------- Card Pollution ---------
         card_obj = CardAirPollution()
         widget_grid.attach(card_obj.card, 2, 0, 2, 1)
 
@@ -323,6 +332,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             thread = threading.Thread(target=self._load_weather_data, name="load_data")
             thread.start()
 
+    # ============= Dynamic Background methods ==============
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1):
         if self.settings.get_boolean("use-gradient-bg"):
             dont_delete_classes = ["backgrounds", "csd"]
