@@ -43,6 +43,9 @@
   <url type="translate">https://github.com/amit9838/mousam/tree/master/po</url>
   <url type="vcs-browser">https://github.com/amit9838/mousam</url>
   <developer_name>Amit Chaudhary</developer_name>
+  <developer id="io.github.amit9838">
+    <name translate="no">Amit Chaudhary</name>
+  </developer>
   <recommends>
     <control>pointing</control>
     <control>touch</control>
