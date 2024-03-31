@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import gi
 from gi.repository import Gtk
-from gettext import gettext as _
+from gettext import gettext as _, pgettext as C_
 from .constants import icons
 from .utils import is_dynamic_bg_enabled
 
