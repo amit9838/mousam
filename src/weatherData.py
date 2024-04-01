@@ -115,33 +115,33 @@ def classify_aqi(aqi_value):
 
 def classify_uv_index(uv_index):
     if uv_index <= 2:
-        return gettext.pgettext("uvindex", "Low")
+        return C_("uvindex", "Low")
     elif uv_index <= 5:
-        return gettext.pgettext("uvindex", "Moderate")
+        return C_("uvindex", "Moderate")
     elif uv_index <= 7:
-        return gettext.pgettext("uvindex", "High")
+        return C_("uvindex", "High")
     elif uv_index <= 10:
-        return gettext.pgettext("uvindex", "Very High")
+        return C_("uvindex", "Very High")
     else:
-        return gettext.pgettext("uvindex", "Extreme")
+        return C_("uvindex", "Extreme")
 
 
 def classify_humidity_level(uv_index):
     if uv_index < 50:
-        return gettext.pgettext("humidity", "Low")
+        return C_("humidity", "Low")
     elif uv_index <= 80:
-        return gettext.pgettext("humidity", "Moderate")
+        return C_("humidity", "Moderate")
     else:
-        return gettext.pgettext("humidity", "High")
+        return C_("humidity", "High")
 
 
 def classify_presssure_level(pressure):
     if pressure < 940:
-        return gpettext.pgettext("pressure", "Low")
+        return C_("pressure", "Low")
     elif pressure <= 1010:
-        return gettext.pgettext("pressure", "Normal")
+        return C_("pressure", "Normal")
     else:
-        return gettext.pgettext("pressure", "High")
+        return C_("pressure", "High")
 
 
 def classify_wind_speed_level(wind_speed):
@@ -150,11 +150,11 @@ def classify_wind_speed_level(wind_speed):
     elif wind_speed <= 25:
         return _("Light")
     elif wind_speed <= 40:
-        return gettext.pgettext("wind", "Moderate")
+        return C_("wind", "Moderate")
     elif wind_speed <= 60:
         return _("Strong")
     else:
-        return gettext.pgettext("wind", "Extreme")
+        return C_("wind", "Extreme")
 
 
 def transform_visibility_data(unit, data):

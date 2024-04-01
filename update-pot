@@ -1,2 +1,2 @@
 #!/bin/bash
-xgettext --keyword=_ --keyword=N_ --keyword=pgettext:1c,2 --output=po/mousam.pot -f po/POTFILES
+xgettext --keyword=_ --keyword=N_ --keyword=C_:1c,2 --output=po/mousam.pot -f po/POTFILES
