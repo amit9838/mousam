@@ -8,7 +8,7 @@ export default function Navbar() {
   const [showNav, setshowNav] = useState(false);
   return (
     <>
-      <nav className="p-6 grid gap-4 grid-cols-12 items-cente">
+      <nav className="p-6 grid gap-4 grid-cols-12 items-center">
         <div className="col-span-4 flex">
           <img src={logo} alt="logo" className="md:max-h-16 max-h-12" />
           <h1 className="my-auto md:text-[2.4rem] text-[1.6rem] mx-2 font-sans font-semibold">
