@@ -1,149 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/weather.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Reddit+Mono:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Reddit+Mono:wght@200..900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Carme&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="script.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mousam</title>
-</head>
-
-<body>
-    <div class="header">
-        <div class="header-left">
-            <img src="https://github.com/amit9838/mousam/blob/master/data/icons/hicolor/scalable/apps/io.github.amit9838.mousam.svg?raw=true"
-                width="70">
-            <h1 class="title">Mousam</h1>
-        </div>
-        <div class="header-right">
-            <nav>
-                <ul>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#installation">Download</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </nav>
-            <a href="https://github.com/amit9838/mousam" target="_blank">
-                <h2 class="github-btn">
-                    <i class="fa-brands fa-github"></i>
-                    Github
-                </h2>
-            </a>
-        </div>
-    </div>
-
-
-
-    <div class="slideshow-container">
-        <div class="mySlides fade">
-            <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only"
-                style="width:100%">
-        </div>
-      
-        <div class="mySlides fade">
-            <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only"
-                style="width:100%">
-        </div>
-
-        <div class="mySlides fade">
-            <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only"
-                style="width:100%">
-        </div>
-
-        <!-- Manual slideshow buttons -->
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-    </div>
-
-    <section id="features" class="features">
-
-        <div class="features-container">
-            <!-- <p>Beautiful lightweight weather app.</p> -->
-            <h2>Features</h2>
-            <ul>
-                <li>Displays real-time temperature, humidity, wind speed, UV index, pressure and more</li>
-                <li>Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with
-                    direction to provide an hourly forecast for the next 24 hours</li>
-                <li>Also shows tomorrow and 7-day forcasts</li>
-                <li>See conditions in metric or imperial systems</li>
-            </ul>
-        </div>
-    </section>
-
-
-    <section id="installation">
-
-        <h2>Installation</h2>
-        <a href="https://github.com/amit9838/mousam/releases"><img
-                src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff"></a>
-        <a href="https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions"
-                src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
-        <h3 class="subheading">Get it from flathub</h3>
-        <a href='https://flathub.org/apps/io.github.amit9838.mousam' target="_blank"><img width='240'
-                alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png' /></a>
-        <p>Or you can use the terminal:</p>
-        <pre>
-<code>flatpak install flathub</code>
-
-<code>flatpak install io.github.amit9838.mousam</code>
-        </pre>
-
-        <h3 class="subheading">Get it from Snapstore</h3>
-        <a href='https://snapcraft.io/mousam' target="_blank"><img width='240' alt='Download on SnapCraft'
-                src='https://github.com/snapcore/snap-store-badges/blob/master/EN/%5BEN%5D-snap-store-black-uneditable.png?raw=true' /></a>
-        <p>Or you can use the terminal:</p>
-        <pre><code>sudo snap install mousam</code></pre>
-
-        <h3 class="subheading">Install Debian Package (Unofficial)</h3>
-        <a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download on SnapCraft'
-                src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg'
-                style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
-
-        <p>Thanks to @hsbasu for maintaining Debian package</p>
-        <a href="https://github.com/amit9838/mousam/discussions/68">See Installation Instructions</a>
-    </section>
-
-    <section id="about" class="about">
-        <h2>About</h2>
-        <p>Beautiful and lightweight weather app build using Gtk4, Libadwaita and Python. </p>
-        <p>View all contributors on <a href="https://github.com/amit9838/mousam/graphs/contributors" target="_blank">
-                <i class="fa-brands fa-github"></i> GitHub</a></p>
-    </section>
-
-    <section class="donation">
-        <h2>Support</h2>
-        I hope you ❤️ <b>Mousam</b> , if you think it is worth supporting you can do so using below methods
-        <br>
-        <br>
-        <div align="center">
-            <a href="https://www.buymeacoffee.com/ami9838" target="_blank"><img
-                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-                    style="height: 60px !important;width: 217px !important;">
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Mousam App. All rights reserved.</p>
-    </footer>
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
-</body>
-
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
