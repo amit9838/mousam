@@ -7,6 +7,7 @@ from gi.repository import Gtk, Gio
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
+from gettext import gettext as _, pgettext as C_
 
 from .constants import icons, icon_loc
 from .frontendUiDrawImageIcon import DrawImage
