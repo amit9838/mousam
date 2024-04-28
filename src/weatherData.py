@@ -6,6 +6,7 @@ from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .Models import *
 from .utils import get_cords
+from gettext import gettext as _, pgettext as C_
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

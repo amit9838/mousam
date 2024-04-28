@@ -6,6 +6,8 @@ import gettext
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio
+from gettext import gettext as _, pgettext as C_
+
 
 # module import
 from .utils import create_toast, check_internet_connection
