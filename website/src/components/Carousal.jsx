@@ -50,20 +50,20 @@ const Carousel = () => {
         </div>
       </div>
 
-      <div className="py-2 px-10 w-full bg-[#15212b] text-neutral-400 flex items-center justify-center">
+      <div className="py-2 px-10 w-full bg-[#15212b] text-neutral-300 flex items-center justify-center">
         <div className="controllor w-full max-w-[41rem] flex items-center justify-between font-['ubuntu']">
           <div className="title"><h1>{images[currentIndex].title}</h1>
-          <p className="text-sm text-neutral-500">{images[currentIndex].lightingCondition}</p>
+          <p className="text-sm text-neutral-400">{images[currentIndex].lightingCondition}</p>
           </div>
           <div className="controls">
             <button
-              className="bg-slate-600 w-[3rem] h-[3rem] rounded-full mx-2 hover:bg-slate-500"
+              className="bg-gray-800 w-[3rem] h-[3rem] rounded-full mx-2 hover:bg-gray-700"
               onClick={goToPrevSlide}
             >
               <i className="fa-solid fa-angle-left"></i>
             </button>
             <button
-              className="bg-slate-600 w-[3rem] h-[3rem] rounded-full ml-2 hover:bg-slate-500"
+              className="bg-gray-800 w-[3rem] h-[3rem] rounded-full ml-2 hover:bg-gray-700"
               onClick={goToNextSlide}
             >
               <i className="fa-solid fa-angle-right"></i>
