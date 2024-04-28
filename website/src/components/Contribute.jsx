@@ -60,7 +60,7 @@ export default function Contribute() {
               </div>
               <a className=" " href={item.link}>
                 {item.text}
-                <i className="fa-solid fa-arrow-up-right-from-square mx-2 text-[.7rem] text-white"></i>
+                <i className="fa-solid fa-square-arrow-up-right mx-2 text-[.9rem] text-neutral-300"></i>
               </a>
             </div>
           ))}

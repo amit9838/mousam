@@ -2,10 +2,28 @@
 import { useState } from "react";
 import ImageSlide from "./ImageSlide";
 
+// const images = [
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
+// ];
+
 const images = [
-  "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
-  "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
-  "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
+  {
+    title: "Few Clouds",
+    lightingCondition: "Night",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
+  },
+  {
+    title: "Overcast",
+    lightingCondition: "Night",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
+  },
+  {
+    title: "Partly Cloud",
+    lightingCondition: "Day",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
+  },
 ];
 
 const Carousel = () => {
@@ -28,21 +46,31 @@ const Carousel = () => {
       </h2>
       <div className="overflow-hidden">
         <div className="flex transition-transform duration-300 ease-in-out transform translate-x-[-${currentIndex * 100}%]">
-          <ImageSlide path={images[currentIndex]} />
+          <ImageSlide path={images[currentIndex].link} />
         </div>
       </div>
-      <button
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-slate-800/60 hover:bg-slate-800/80 px-3 py-1 text-dimWhite hover:text-white rounded-full shadow-lg"
-        onClick={goToPrevSlide}
-      >
-        <i className="fa-solid fa-angle-left"></i>
-      </button>
-      <button
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-slate-800/60 hover:bg-slate-800/80 px-3 py-1 text-dimWhite hover:text-white rounded-full shadow-lg"
-        onClick={goToNextSlide}
-      >
-        <i className="fa-solid fa-angle-right"></i>
-      </button>
+
+      <div className="py-2 px-10 w-full bg-[#15212b] text-neutral-400 flex items-center justify-center">
+        <div className="controllor w-full max-w-[41rem] flex items-center justify-between font-['ubuntu']">
+          <div className="title"><h1>{images[currentIndex].title}</h1>
+          <p className="text-sm text-neutral-500">{images[currentIndex].lightingCondition}</p>
+          </div>
+          <div className="controls">
+            <button
+              className="bg-slate-600 w-[3rem] h-[3rem] rounded-full mx-2 hover:bg-slate-500"
+              onClick={goToPrevSlide}
+            >
+              <i className="fa-solid fa-angle-left"></i>
+            </button>
+            <button
+              className="bg-slate-600 w-[3rem] h-[3rem] rounded-full ml-2 hover:bg-slate-500"
+              onClick={goToNextSlide}
+            >
+              <i className="fa-solid fa-angle-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
