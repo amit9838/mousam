@@ -34,10 +34,10 @@ export default function Installation() {
         <div className="flex items-center justify-center border-t-[1px] border-slate-400 md:hidden">
           {tabs.map((item) => {
             let myStyle =
-              "bg-secondary hover:bg-slate-600 py-2 w-auto px-8";
+              "bg-secondary hover:bg-gray-600 py-2 w-auto px-8";
             if (item.tab_name === activeTab) {
               myStyle =
-                "bg-slate-500 hover:bg-slate-600 py-2 w-auto px-8";
+                "bg-gray-500 hover:bg-gray-600 py-2 w-auto px-8";
             }
             return (
               <Button
@@ -55,10 +55,10 @@ export default function Installation() {
         <div className="md:flex items-end flex-col hidden">
           {tabs.map((item) => {
             let myStyle =
-              "bg-secondary hover:bg-slate-600 py-2 w-40 border-b-[1px]";
+              "bg-secondary hover:bg-gray-600 py-2 w-40 border-b-[1px]";
             if (item.tab_name === activeTab) {
               myStyle =
-                "bg-slate-500 hover:bg-slate-600 py-2 w-40 border-b-[1px]";
+                "bg-gray-500 hover:bg-gray-600 py-2 w-40 border-b-[1px]";
             }
             return (
               <Button

@@ -51,7 +51,7 @@ export default function About() {
         </p>
 
         {/* Developer Card */}
-        <div className="max-w-[24rem] w-full bg-slate-700 hover:bg-slate-600 rounded-md flex items-center p-4 my-6">
+        <div className="max-w-[24rem] w-full bg-gray-700 hover:bg-gray-600 rounded-md flex items-center p-4 my-6">
           <img
             src="https://avatars.githubusercontent.com/u/61614402?v=4"
             alt=""
@@ -59,7 +59,7 @@ export default function About() {
           />
           <div className="detail mx-4 text-white text-['ubuntu']">
             <h3 className="text-xl font-['ubuntu']">Amit Chaudhary</h3>
-            <p className="text-[.8rem] text-neutral-300">Software Developer</p>
+            <p className="text-[.8rem] text-neutral-300">Software Engineer</p>
             <div className="social flex gap-2">
               <a
                 href="https://github.com/amit9838"
