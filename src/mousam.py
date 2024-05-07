@@ -2,11 +2,10 @@ import gi
 import time
 import threading
 import gettext
-import keyboard
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GLib
+from gi.repository import Gtk, Adw, Gio, GLib, Gdk
 from gettext import gettext as _, pgettext as C_
 
 
@@ -116,8 +115,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         thread.start()
 
         #Set key listeners
-        keyboard_thread = threading.Thread(target=self.listen_to_keyboard_events)
-        keyboard_thread.start()
+        keycont = Gtk.EventControllerKey()
+        keycont.connect('key-pressed', self.on_key_press)
+        self.add_controller(keycont)
 
 
     # =========== Create Loader =============
@@ -366,30 +366,14 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         adw_preferences_window.show()
 
 
-    #Exec shortcut method
-    def on_hotkey_pressed(self,event):
-        match event:
-            #Create a new thread if shortcut need a new window
-            case "location":
-                GLib.idle_add(self._on_locations_clicked)
-            case "weather":
-                self._refresh_weather(None)
-            case "preferences":
-                GLib.idle_add(self._on_preferences_clicked)
-            case _:
-                return ""
-
-
     #Def shortcuts key listeners
-    def listen_to_keyboard_events(self):
+    def on_key_press(self, key_controller, keyval, keycode, state,*args):
+        if state & Gdk.ModifierType.CONTROL_MASK:
+            if keyval == Gdk.KEY_r:
+                self._refresh_weather(None)
+            if keyval == Gdk.KEY_l:
+                GLib.idle_add(self._on_locations_clicked)
+            if keyval == Gdk.KEY_comma:
+                GLib.idle_add(self._on_preferences_clicked)
 
-        #Listeners
-        keyboard.add_hotkey('ctrl+l', lambda: self.on_hotkey_pressed("location"))
-        keyboard.add_hotkey('ctrl+r', lambda: self.on_hotkey_pressed("weather"))
-        keyboard.add_hotkey('ctrl+comma', lambda: self.on_hotkey_pressed("preferences"))
 
-        #Wait empty key. None key stop de listener
-        keyboard.wait("")  
-        
-        #Free hooks
-        keyboard.unhook_all()
