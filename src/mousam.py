@@ -2,10 +2,11 @@ import gi
 import time
 import threading
 import gettext
+import keyboard
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio
+from gi.repository import Gtk, Adw, Gio, GLib
 from gettext import gettext as _, pgettext as C_
 
 
@@ -113,6 +114,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Initiate UI loading weather data and drawing UI
         thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
+
+        #Set key listeners
+        keyboard_thread = threading.Thread(target=self.listen_to_keyboard_events)
+        keyboard_thread.start()
+
 
     # =========== Create Loader =============
     def show_loader(self):
@@ -358,3 +364,32 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     def _on_locations_clicked(self, *args, **kwargs):
         adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()
+
+
+    #Exec shortcut method
+    def on_hotkey_pressed(self,event):
+        match event:
+            #Create a new thread if shortcut need a new window
+            case "location":
+                GLib.idle_add(self._on_locations_clicked)
+            case "weather":
+                self._refresh_weather(None)
+            case "preferences":
+                GLib.idle_add(self._on_preferences_clicked)
+            case _:
+                return ""
+
+
+    #Def shortcuts key listeners
+    def listen_to_keyboard_events(self):
+
+        #Listeners
+        keyboard.add_hotkey('ctrl+l', lambda: self.on_hotkey_pressed("location"))
+        keyboard.add_hotkey('ctrl+r', lambda: self.on_hotkey_pressed("weather"))
+        keyboard.add_hotkey('ctrl+comma', lambda: self.on_hotkey_pressed("preferences"))
+
+        #Wait empty key. None key stop de listener
+        keyboard.wait("")  
+        
+        #Free hooks
+        keyboard.unhook_all()
