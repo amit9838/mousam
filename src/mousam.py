@@ -5,7 +5,7 @@ import gettext
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio
+from gi.repository import Gtk, Adw, Gio, GLib, Gdk
 from gettext import gettext as _, pgettext as C_
 
 
@@ -113,6 +113,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Initiate UI loading weather data and drawing UI
         thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
+
+        #Set key listeners
+        keycont = Gtk.EventControllerKey()
+        keycont.connect('key-pressed', self.on_key_press)
+        self.add_controller(keycont)
+
 
     # =========== Create Loader =============
     def show_loader(self):
@@ -358,3 +364,16 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     def _on_locations_clicked(self, *args, **kwargs):
         adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()
+
+
+    #Def shortcuts key listeners
+    def on_key_press(self, key_controller, keyval, keycode, state,*args):
+        if state & Gdk.ModifierType.CONTROL_MASK:
+            if keyval == Gdk.KEY_r:
+                self._refresh_weather(None)
+            if keyval == Gdk.KEY_l:
+                GLib.idle_add(self._on_locations_clicked)
+            if keyval == Gdk.KEY_comma:
+                GLib.idle_add(self._on_preferences_clicked)
+
+
