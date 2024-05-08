@@ -5,7 +5,7 @@ import gettext
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio, GLib, Gdk
+from gi.repository import Gtk, Adw, Gio
 from gettext import gettext as _, pgettext as C_
 
 
@@ -384,4 +384,3 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_locations_clicked)
             if keyval == Gdk.KEY_comma:
                 GLib.idle_add(self._on_preferences_clicked)
-
