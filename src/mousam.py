@@ -371,9 +371,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()
 
+
     def _show_shortcuts_dialog(self,*args, **kwargs):
         dialog = ShortcutsDialog(self)
         dialog.show()
+
 
     #Def shortcuts key listeners
     def on_key_press(self, key_controller, keyval, keycode, state,*args):
@@ -384,4 +386,3 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_locations_clicked)
             if keyval == Gdk.KEY_comma:
                 GLib.idle_add(self._on_preferences_clicked)
-
