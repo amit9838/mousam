@@ -5,7 +5,7 @@ import gettext
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio
+from gi.repository import Gtk, Adw, Gio,Gdk,GLib
 from gettext import gettext as _, pgettext as C_
 
 
@@ -67,7 +67,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.header.pack_end(self.hamburger)
 
         # Create a menu button
-        self.location_button = Gtk.Button(label=_("Refresh"))
+        self.location_button = Gtk.Button(label=_("Location"))
         self.header.pack_end(self.location_button)
         self.location_button.set_icon_name("find-location-symbolic")
         self.location_button.connect("clicked", self._on_locations_clicked)
@@ -384,3 +384,5 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_locations_clicked)
             if keyval == Gdk.KEY_comma:
                 GLib.idle_add(self._on_preferences_clicked)
+            if keyval == Gdk.KEY_question:
+                GLib.idle_add(self._show_shortcuts_dialog)
