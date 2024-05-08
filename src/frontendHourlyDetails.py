@@ -261,3 +261,9 @@ class HourlyDetails(Gtk.Grid):
 
                 label_val.set_margin_top(0)
 
+        # Add scrollbar offset
+        container_size = graphic_container.get_preferred_size()[1]
+        container_width = container_size.width
+        scrollbar_offset = (container_width / 24) * (nearest_current_time_idx - 2)
+        h_adjustment = Gtk.Adjustment(value=scrollbar_offset, lower=0, upper=container_width)
+        scrolled_window.set_hadjustment(h_adjustment)
