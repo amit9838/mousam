@@ -138,6 +138,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         self._dialog.group.add(search_box)
 
         self.search_entry = Gtk.Entry()
+        self.search_entry.connect("activate", self._on_find_city_clicked)
         self.search_entry.set_icon_from_icon_name(Gtk.EntryIconPosition(1),'edit-clear-symbolic')
         self.search_entry.set_placeholder_text(_("Search for a city"))
         self.search_entry.set_hexpand(True)
@@ -152,6 +153,7 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         self._dialog.serach_res_grp = Adw.PreferencesGroup()
         self._dialog.serach_res_grp.set_hexpand(True)
+        self._blank_search_page('start')
         self._dialog.group.add(self._dialog.serach_res_grp)
 
         button.connect("clicked", self._on_find_city_clicked)
@@ -172,6 +174,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         
         # Matched city from api
         city_data = find_city(text,5)
+        self._dialog.serach_res_grp.remove(self.search_page_start)
 
         if len(self._dialog.search_results)>0:
             for action_row in self._dialog.search_results:
@@ -201,10 +204,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         
         # If no search result is found
         else:
-            res_row =  Adw.ActionRow.new()
-            res_row.set_title(_("No results found !"))
-            self._dialog.search_results.append(res_row)
-            self._dialog.serach_res_grp.add(res_row)
+            self._blank_search_page(status="no_res")
 
 
     # =========== Add City on selection ===========
@@ -261,3 +261,22 @@ class WeatherLocations(Adw.PreferencesWindow):
                 pass
                 # self.application.refresh_main_ui()
             self.add_toast(create_toast(_("Deleted - {0}".format(widget.get_title())),1))
+
+    def _blank_search_page(self,status):
+        text = _("Press enter to search")
+        icon ="system-search-symbolic"
+        if status == 'no_res':
+            text = _("No results found!")
+            icon ="system-search-symbolic"
+
+        self.search_page_start = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,halign=Gtk.Align.CENTER, spacing = 6, margin_top=60,)
+        search_icon = Gtk.Image.new_from_icon_name(icon)
+        search_icon.set_pixel_size(48)
+        search_icon.set_margin_top(10)
+        search_icon.set_css_classes(["light-4"])
+        search_page_start_text = Gtk.Label(label = text)
+        search_page_start_text.set_css_classes(["text-3", "bold-3", "light-5"])
+        self.search_page_start.append(search_icon)
+        self.search_page_start.append(search_page_start_text)
+        self._dialog.serach_res_grp.add(self.search_page_start)
+

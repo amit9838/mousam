@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-15 15:53+0100\n"
+"POT-Creation-Date: 2024-05-08 13:57+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -238,15 +238,15 @@ msgstr ""
 msgid "United States AQI standard"
 msgstr ""
 
-#: src/frontendCardDayNight.py:73
+#: src/frontendCardDayNight.py:77
 msgid "Sunrise & Sunset"
 msgstr ""
 
-#: src/frontendCardDayNight.py:84
+#: src/frontendCardDayNight.py:88
 msgid "Sunrise"
 msgstr ""
 
-#: src/frontendCardDayNight.py:97
+#: src/frontendCardDayNight.py:101
 msgid "Sunset"
 msgstr ""
 
@@ -278,11 +278,11 @@ msgstr ""
 msgid "West"
 msgstr ""
 
-#: src/frontendCardSquare.py:169 src/mousam.py:250
+#: src/frontendCardSquare.py:169 src/mousam.py:274
 msgid "Northwest"
 msgstr ""
 
-#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:58
+#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:59
 msgid "Wind"
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 msgid "Feels Like • <b> {0} {1}</b>"
 msgstr ""
 
-#: src/frontendForecast.py:36 src/frontendForecast.py:127
+#: src/frontendForecast.py:36 src/frontendForecast.py:130
 msgid "Tomorrow"
 msgstr ""
 
@@ -311,134 +311,146 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
-#: src/frontendForecast.py:125
+#: src/frontendForecast.py:128
 msgid "Today"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:50
+#: src/frontendHourlyDetails.py:51
 msgid "Hourly"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:66
+#: src/frontendHourlyDetails.py:67
 msgid "Precipitation"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:95
+#: src/frontendHourlyDetails.py:96
 msgctxt "wind"
 msgid "Day High"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:111
+#: src/frontendHourlyDetails.py:112
 msgctxt "temperature"
 msgid "Day Max"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:126
+#: src/frontendHourlyDetails.py:127
 msgctxt "precipitation"
 msgid "Day High"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:164
+#: src/frontendHourlyDetails.py:165
 msgid "No precipitation today !"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:165
+#: src/frontendHourlyDetails.py:166
 msgid "No precipitation expected today!"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:166
+#: src/frontendHourlyDetails.py:167
 msgid "Anticipate a precipitation-free day !"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:167
+#: src/frontendHourlyDetails.py:168
 msgid "Enjoy a rain-free day today!"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:168
+#: src/frontendHourlyDetails.py:169
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:169
+#: src/frontendHourlyDetails.py:170
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:198
+#: src/frontendHourlyDetails.py:199
 msgid "Now"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:89
+#: src/frontendUiDrawDayNight.py:98
 msgid "Horizon"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:99
+#: src/frontendUiDrawDayNight.py:108
 msgid "Midnight"
 msgstr ""
 
-#: src/mousam.py:76
+#: src/mousam.py:70
+msgid "Refresh"
+msgstr ""
+
+#: src/mousam.py:79 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:84
+#: src/mousam.py:84 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: src/mousam.py:90
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:126
+#: src/mousam.py:92 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr ""
+
+#: src/mousam.py:150
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:137
+#: src/mousam.py:161
 msgid "No Internet"
 msgstr ""
 
-#: src/mousam.py:141
+#: src/mousam.py:165
 msgid "Could not fetch data from API"
 msgstr ""
 
-#: src/mousam.py:249
+#: src/mousam.py:273
 msgid "From"
 msgstr ""
 
-#: src/mousam.py:251
+#: src/mousam.py:275
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:261
+#: src/mousam.py:285
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:277
+#: src/mousam.py:301
 msgctxt "pressure card"
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:278
+#: src/mousam.py:302
 msgctxt "pressure card"
 msgid "Low"
 msgstr ""
 
-#: src/mousam.py:287
+#: src/mousam.py:311
 msgctxt "uvindex card"
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:288
+#: src/mousam.py:312
 msgctxt "uvindex card"
 msgid "Low"
 msgstr ""
 
-#: src/mousam.py:304
+#: src/mousam.py:328
 msgid "Switched to {}"
 msgstr ""
 
-#: src/mousam.py:307
+#: src/mousam.py:331
 msgid "Refreshed Successfully"
 msgstr ""
 
-#: src/mousam.py:317
+#: src/mousam.py:341
 msgid "Refresh within 5 seconds is ignored!"
 msgstr ""
 
-#: src/mousam.py:322
+#: src/mousam.py:346
 msgid "Refreshing..."
 msgstr ""
 
@@ -564,6 +576,7 @@ msgid "translator_credits"
 msgstr ""
 
 #: src/windowLocations.py:19 src/windowLocations.py:35
+#: src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
@@ -587,16 +600,12 @@ msgstr ""
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:142
+#: src/windowLocations.py:143
 msgid "Search for a city"
 msgstr ""
 
-#: src/windowLocations.py:148 src/windowLocations.py:150
+#: src/windowLocations.py:149 src/windowLocations.py:151
 msgid "Search"
-msgstr ""
-
-#: src/windowLocations.py:205
-msgid "No results found !"
 msgstr ""
 
 #: src/windowLocations.py:229
@@ -615,6 +624,14 @@ msgstr ""
 #: src/windowLocations.py:263
 #, python-brace-format
 msgid "Deleted - {0}"
+msgstr ""
+
+#: src/windowLocations.py:266
+msgid "Press enter to search"
+msgstr ""
+
+#: src/windowLocations.py:269
+msgid "No results found!"
 msgstr ""
 
 #: src/windowPreferences.py:34
@@ -672,4 +689,16 @@ msgstr ""
 
 #: src/windowPreferences.py:132
 msgid "Switched to - {}"
+msgstr ""
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr ""
+
+#: src/shortcutsDialog.ui:33
+msgid "Refresh Weather"
+msgstr ""
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
 msgstr ""
