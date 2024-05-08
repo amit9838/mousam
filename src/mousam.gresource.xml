@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="/io/github/amit9838/mousam">
     <file>css/style.css</file>
-    <file preprocess="xml-stripblanks">shortcuts_dialog.ui</file>
+    <file preprocess="xml-stripblanks">shortcutsDialog.ui</file>
   </gresource>
 </gresources>
 

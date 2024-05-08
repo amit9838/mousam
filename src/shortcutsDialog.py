@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 
-@Gtk.Template(resource_path='/io/github/amit9838/mousam/shortcuts_dialog.ui')
+@Gtk.Template(resource_path='/io/github/amit9838/mousam/shortcutsDialog.ui')
 class ShortcutsDialog(Gtk.ShortcutsWindow):
     __gtype_name__ = 'MousamShortcutsDialog'
 
