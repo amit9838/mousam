@@ -14,6 +14,7 @@ from .utils import create_toast, check_internet_connection
 from .constants import bg_css
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
+from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
 from .frontendCurrentCond import CurrentCondition
 from .frontendHourlyDetails import HourlyDetails
@@ -66,7 +67,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.header.pack_end(self.hamburger)
 
         # Create a menu button
-        self.location_button = Gtk.Button(label="Open")
+        self.location_button = Gtk.Button(label=_("Refresh"))
         self.header.pack_end(self.location_button)
         self.location_button.set_icon_name("find-location-symbolic")
         self.location_button.connect("clicked", self._on_locations_clicked)
@@ -77,13 +78,18 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.add_action(action)
         menu.append(_("Preferences"), "win.preferences")
 
-        # menu.append("Help", "help")
+        action = Gio.SimpleAction.new("shortcuts", None)
+        action.connect("activate", self._show_shortcuts_dialog)
+        self.add_action(action)
+        menu.append(_("Keyboard Shortcuts"), "win.shortcuts")
 
         # Add about option
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Mousam"), "win.about")
+        
+        menu.append(_("Quit"), "app.quit")
 
 
         
@@ -366,6 +372,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         adw_preferences_window.show()
 
 
+    def _show_shortcuts_dialog(self,*args, **kwargs):
+        dialog = ShortcutsDialog(self)
+        dialog.show()
+
+
     #Def shortcuts key listeners
     def on_key_press(self, key_controller, keyval, keycode, state,*args):
         if state & Gdk.ModifierType.CONTROL_MASK:
@@ -375,5 +386,3 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_locations_clicked)
             if keyval == Gdk.KEY_comma:
                 GLib.idle_add(self._on_preferences_clicked)
-
-

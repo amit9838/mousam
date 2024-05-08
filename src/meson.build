@@ -54,7 +54,8 @@ mousam_sources = [
   'utils.py',
   'windowAbout.py',
   'windowPreferences.py',
-  'windowLocations.py'
+  'windowLocations.py',
+  'shortcutsDialog.py'
 ]
 
 install_emptydir(moduledir / 'css')

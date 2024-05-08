@@ -37,6 +37,10 @@ class WeatherApplication(Adw.Application):
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.main_window = None
 
+        self.set_accels_for_action(f"win.preferences", ['<primary>comma'])
+        self.set_accels_for_action(f"win.shortcuts", ['<primary>question'])
+
+
     def do_activate(self):
         win = self.props.active_window
         global css_provider
