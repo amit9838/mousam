@@ -384,4 +384,5 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_locations_clicked)
             if keyval == Gdk.KEY_comma:
                 GLib.idle_add(self._on_preferences_clicked)
-
+            if keyval == Gdk.KEY_question:
+                GLib.idle_add(self._show_shortcuts_dialog)
