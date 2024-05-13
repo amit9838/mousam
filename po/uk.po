@@ -337,6 +337,7 @@ msgstr "Денний максимум"
 
 #: src/frontendHourlyDetails.py:112
 msgctxt "temperature"
+msgid "Day Max"
 msgstr "Денний максимум"
 
 #: src/frontendHourlyDetails.py:127
