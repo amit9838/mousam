@@ -709,4 +709,3 @@ msgstr "Оновити погоду"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Навігація"
-"
