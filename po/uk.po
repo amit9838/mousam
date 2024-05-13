@@ -143,7 +143,7 @@ msgstr "Небагато хмар"
 
 #: src/constants.py:134
 msgid "Partly Cloudy"
-msgstr "Частково хмарно"
+msgstr "Мінлива хмарність"
 
 #: src/constants.py:135
 msgid "Overcast"
@@ -403,7 +403,7 @@ msgstr "Вихід"
 
 #: src/mousam.py:150
 msgid "Getting Weather Data"
-msgstr "Отримання даних погоди"
+msgstr "Отримання метеорологічних даних"
 
 #: src/mousam.py:161
 msgid "No Internet"
@@ -585,7 +585,7 @@ msgstr "Bezruchenko Simon <worcposj44@gmail.com>"
 #: src/windowLocations.py:19 src/windowLocations.py:35
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr "Місця"
+msgstr "Локації"
 
 #: src/windowLocations.py:41
 msgid "Add"
@@ -661,7 +661,7 @@ msgstr "Запустити в повноекранному режимі"
 
 #: src/windowPreferences.py:59
 msgid "Launch the weather app in maximized mode (Refresh required)"
-msgstr "Запустити додаток погоди в повноекранному режимі (потрібно оновлення)."
+msgstr "Запустити додаток погоди в повноекранному режимі (потрібен перезапуск)."
 
 #: src/windowPreferences.py:72
 msgid "Units &amp; Measurements"
@@ -689,7 +689,7 @@ msgstr "Показувати опади в дюймах"
 
 #: src/windowPreferences.py:101
 msgid "This option better works during heavy preciptaion (Refresh required)"
-msgstr "Ця опція краще працює під час сильних опадів (потрібно оновити)"
+msgstr "Ця опція краще працює під час сильних опадів (потрібен перезапуск)"
 
 #: src/windowPreferences.py:129
 msgid "Switching within 2 seconds is ignored!"
