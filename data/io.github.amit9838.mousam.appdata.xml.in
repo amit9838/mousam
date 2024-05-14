@@ -58,6 +58,40 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="1.2.0" date="2024-05-14">
+      <description translate="no">
+        <p>What's New</p>
+        <ul>
+          <li>Mousam is now more usable on low resolution displays.</li>
+          <li>Added keyboard shortcuts for various like refresh, open settings etc. Thanks to @francobattista.</li>
+          <li>"Now" label in hourly forecast is automatically scrolled in the view. Thanks to  @georgescutelnicu</li>
+          <li>Now Mousam uses gnome runtime-version 46.</li>
+        </ul>
+        <p>Bug fixes</p>
+        <ul>
+          <li>Tomorrow's forecast is fixed now where it was showing offset forecast.</li>
+          <li>Some UI improvements in search city dialog.</li>
+          <li>Fixed error where sun rotation was inaccurate sometimes.</li>
+        </ul>
+        <p>Translation</p>
+        <ul>
+          <li>App is now available in various native languages :</li>
+          <li>Dutch  by @Vistaus</li>
+          <li>French + German by @Yellowbery01</li>
+          <li>Brazilian Portuguese by @Luiz-C-Lima</li>
+          <li>Polish by @LukaszH77</li>
+          <li>Ukrainian by @SimonOriginal</li>
+          <li>Hindi by @Scrambled777</li>
+        </ul>
+        <p>Thanks to</p>
+        <ul>
+          <li>@LukaszH77 for adding context related translation changes</li>
+          <li>@yakushabb for adding translation related patches</li>
+          <li>And thanks to the folks who reported issues on GitHub.</li>
+          <li>Thanks you for using Mousam.</li>
+        </ul>
+      </description>
+    </release>
      <release version="1.1.0" date="2024-02-24">
       <description translate="no">
         <p>What's New</p>
