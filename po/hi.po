@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 13:57+0530\n"
-"PO-Revision-Date: 2024-05-14 12:04+0530\n"
+"PO-Revision-Date: 2024-05-14 12:21+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -584,7 +584,7 @@ msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>"
 #: src/windowLocations.py:19 src/windowLocations.py:35
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr "लोकेशन"
+msgstr "स्थान"
 
 #: src/windowLocations.py:41
 msgid "Add"
@@ -592,7 +592,7 @@ msgstr "जोड़ें"
 
 #: src/windowLocations.py:65
 msgid "Remove location"
-msgstr "लोकेशन हटाएं"
+msgstr "स्थान हटाएं"
 
 #: src/windowLocations.py:112
 msgid "Switch city within 2 seconds is ignored!"
@@ -604,7 +604,7 @@ msgstr "{} - चयनित"
 
 #: src/windowLocations.py:125
 msgid "Add New Location"
-msgstr "नई लोकेशन जोड़ें"
+msgstr "नया स्थान जोड़ें"
 
 #: src/windowLocations.py:143
 msgid "Search for a city"
@@ -621,11 +621,11 @@ msgstr "{0} - जोड़ा गया"
 
 #: src/windowLocations.py:231
 msgid "Location already added!"
-msgstr "लोकेशन पहले ही जोड़ी जा चुकी है!"
+msgstr "स्थान पहले ही जोड़ा जा चुका है!"
 
 #: src/windowLocations.py:240
 msgid "Add more locations to delete!"
-msgstr "मिटाने के लिए और अधिक लोकेशन जोड़ें!"
+msgstr "मिटाने के लिए और अधिक स्थान जोड़ें!"
 
 #: src/windowLocations.py:263
 #, python-brace-format
