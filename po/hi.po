@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 13:57+0530\n"
-"PO-Revision-Date: 2024-05-14 11:41+0530\n"
+"PO-Revision-Date: 2024-05-14 12:04+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -621,7 +621,7 @@ msgstr "{0} - जोड़ा गया"
 
 #: src/windowLocations.py:231
 msgid "Location already added!"
-msgstr "लोकेशन पहले ही जोड़ा जा चुकी है!"
+msgstr "लोकेशन पहले ही जोड़ी जा चुकी है!"
 
 #: src/windowLocations.py:240
 msgid "Add more locations to delete!"
