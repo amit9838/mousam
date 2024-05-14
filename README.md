@@ -68,6 +68,17 @@ meson install -C builddir
 mousam
 ```
 
+## Contribution
+Thanks to all the contributors have helped in the development project so that open-source community can enjoy best tools with best features.
+ 
+
+<a href="https://github.com/amit9838/mousam/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=amit9838/mousam&columns=10"/>
+</a>
+
+
+
+
 ## Credits
 - Thanks to [Open Meteo](https://open-meteo.com/) from providing weather data for free of cost. 
 

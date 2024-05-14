@@ -29,9 +29,7 @@ export default function Contribute() {
       <div className="col-span-1 border-r-[1px] border-slate-400 md:block hidden"></div>
       <div className="md:col-span-11 col-span-12  p-3 font-['ubuntu']">
         <p className=" text-neutral-300 bg">
-          Thanks to all the contributors have helped in the development project
-          so that open-source community can enjoy best features in the market.
-        </p>
+        Thanks to all the contributors have helped in the development project so that open-source community can enjoy best tools with best features.       </p>
         <div className="my-3 mx-2">
           <a href="https://github.com/amit9838/mousam/graphs/contributors">
             <img
