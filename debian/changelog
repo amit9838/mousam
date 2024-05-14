@@ -1,3 +1,148 @@
+mousam (1.2.0) stable; urgency=medium
+
+  [ Amit Chaudhary ]
+  * update website and readme links
+
+  [ chlawrence31 ]
+  * Add  Code of Conduct and Contribution Guide page (#88)
+    * Created Contribution_Guide.md
+    * Created Code_of_Conduct.md
+
+  [ Himadri Sekhar Basu ]
+  * Update debian changelog file for version 1.1.0 (#94)
+
+  [ Luiz-Fernandes ]
+  * Create pt_BR.po with Brazilian Portuguese Translation. (#95)
+    * Create pt_BR.po with Brazilian Portuguese Translation
+    * Update LINGUAS
+
+  [ Amit Chaudhary ]
+  * make staings tranalasable
+  * update .pot file
+  * make more strings translatable
+
+  [ Łukasz Horodecki ]
+  * Polish translation (#98)
+    * Polish translation
+    * Update LINGUAS
+    * New strings addes
+
+  [ Luiz-Fernandes ]
+  * Update Brazilian Portuguese Translation (#99)
+
+  [ Łukasz Horodecki ]
+  * Added context to repeatedly used strings (#101)
+    I used pgettext to add context to some strings, that were used more than one times, like "low", "moderate" and "high".
+    And also marked more strings as translatable: current weather, day max.
+    This commit includes updated Polish translation.
+
+  [ Yellowbery01 ]
+  * French + German translations added (#104)
+    * French translation added
+    * German translation added
+    * French + German translations
+
+  [ Heimen Stoffels ]
+  * Added Dutch translation (#107)
+    * Added Dutch translation
+    * Update LINGUAS
+
+  [ Amit Chaudhary ]
+  * make content scrollable on small screens
+  * fix comment
+  * fix typo
+
+  [ Sabri Ünal ]
+  * Translation related patches (#108)
+    * appdata: `translate=no` properties
+    It appears that the appstream project no longer supports
+    `translatable=no` properties, and gettext extract the
+    `translatable=no` marked strings as translatable.
+    I opened an issue to inform about the situation, but `translatable=no`
+    properties are not accepted by developers. You can find the issue
+    here: `https://github.com/ximion/appstream/issues/623`
+    **Please test your script or string extraction process before merging this PR.**
+    > In MetaInfo files, each individual paragraph of a description
+    > (or enumerated entry) is translated individually, however,
+    > you can only exclude the complete block from being translated
+    > by adding `translate="no"` to the description element.
+    Source: https://freedesktop.org/software/appstream/docs/sect-Quickstart-Translation.html
+    * appdata: Add developer ID
+    Flathub requires a developer tag and developer ID.
+    > A developer tag with a name child tag must be present. Only one developer tag is allowed and the name tag also must be present only once in untranslated form.
+    ```
+    <developer id="tld.vendor">
+      <name>Developer name</name>
+    </developer>
+    ```
+    Source: https://docs.flathub.org/docs/for-app-authors/metainfo-guidelines/#name-summary-and-developer-name
+    * i18n: Use C_ alias for pgettext
+    That way it's easy to catch a translatable string.
+
+  [ Amit Chaudhary ]
+  * new website with react-vite
+  * new website with react-vite
+  * fix hamburger icon alingment
+  * add info to website's readme
+  * don't track dist
+  * improve sun rotation logic
+  * remove workflow for automatic deployment of static sites
+  * add missing imports
+  * remove github and ko-fi donation links
+  * some design updates in website
+  * some colour adjustments in the website
+  * fix tomorrow's forecast,  code cleanup
+
+  [ Franco Battista ]
+  * Keyboard shortcuts added: -Open settings, -Open locations, -Refresh weather, using keyboard library
+  * Refactor shortcuts using GTK
+  * Keyboard shortcuts added: -Open settings, -Open locations, -Refresh w… (#113)
+    * Keyboard shortcuts added: -Open settings, -Open locations, -Refresh weather, using keyboard library
+    * Refactor shortcuts using GTK
+    ---------
+    Co-authored-by: Franco Battista <franco@FRANCO-DEBIAN.francobattista.com.ar>
+
+  [ Amit Chaudhary ]
+  * improve shortcuts, menu-item and search city page improved ui of search city dialog Added - press enter to search city now menu items also shows shortcut keys Added keyboard shortcuts dialog updated mousam.pot file
+  * fix filename
+  * Improve shortcuts keys, search locations, add keyboard shortcuts dialog, update mousam.pot file (#114)
+    improve shortcuts, menu-item and search city page
+    improved UI of search city dialog
+    Added - press enter to search city
+    now menu items also shows shortcut keys
+    Added keyboard shortcuts dialog
+    updated mousam.pot file
+    * fix filename
+  * add shortcut for help page
+  * add shortcut to open shortcuts dialog
+
+  [ George ]
+  * Add scrollbar offset logic in HourlyDetails widget (#115)
+
+  [ Amit Chaudhary ]
+  * use runtime-version 46
+  * adjust position of 'now' label in hourly forecast
+
+  [ Simon ]
+  * Added Ukrainian language  (#116)
+    * Added Ukrainian translation
+    * Ukrainian translation updated
+    * add code uk
+    * fix syntax error
+    * fix syntax error - msgid "Day Max"
+    * Clarification of the Ukrainian language translation
+
+  [ Scrambled777 ]
+  * Initial Hindi translation (#117)
+    Adds initial Hindi `hi` language translation.
+    Cheers.
+
+  [ Amit Chaudhary ]
+  * update readme
+  * Release_v1.2.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Tue, 14 May 2024 20:49:26 +0530
+
 mousam (1.1.0) stable; urgency=medium
 
   [ Himadri Sekhar Basu ]
