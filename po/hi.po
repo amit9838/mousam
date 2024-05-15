@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 13:57+0530\n"
-"PO-Revision-Date: 2024-05-14 00:42+0530\n"
+"PO-Revision-Date: 2024-05-14 12:21+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -68,7 +68,7 @@ msgstr "मेट्रिक या इंपीरियल प्रणाल
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 msgid "Overcast day"
-msgstr "घटाटोप दिन"
+msgstr "बादलों से घिरा हुआ दिन"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Clear Sky - imperial"
@@ -80,11 +80,11 @@ msgstr "आंधी तूफान"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:33
 msgid "Dark mode"
-msgstr "गहरा मोड"
+msgstr "गहरा रंग"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:37
 msgid "Light mode"
-msgstr "हल्का मोड"
+msgstr "हल्का रंग"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:45
 msgid "Amit Chaudhary"
@@ -122,7 +122,7 @@ msgstr "वर्षण के लिए इंच का प्रयोग क
 
 #: data/io.github.amit9838.mousam.gschema.xml:28
 msgid "Launch the app in maximized mode."
-msgstr "ऐप को अधिकतमीकृत मोड में शुरू करें।"
+msgstr "ऐप को फुलस्क्रीन में शुरू करें।"
 
 #: data/io.github.amit9838.mousam.gschema.xml:33
 msgid "Mesaurement sysytem to use - metric,imperial"
@@ -146,7 +146,7 @@ msgstr "आंशिक बादल छाए रहेंगे"
 
 #: src/constants.py:135
 msgid "Overcast"
-msgstr "घटाटोप"
+msgstr "बादलों से घिरा हुआ"
 
 #: src/constants.py:136
 msgid "Fog"
@@ -414,7 +414,7 @@ msgstr "API से डेटा प्राप्त नहीं किया 
 
 #: src/mousam.py:273
 msgid "From"
-msgstr "इससे"
+msgstr "दिशा"
 
 #: src/mousam.py:275
 msgid "N"
@@ -646,7 +646,7 @@ msgstr "दिखावट"
 
 #: src/windowPreferences.py:44
 msgid "Dynamic Background"
-msgstr "गतिशील पृष्ठभूमि"
+msgstr "अनुकूलनीय पृष्ठभूमि"
 
 #: src/windowPreferences.py:45
 msgid ""
@@ -655,11 +655,11 @@ msgstr "वर्तमान मौसम की स्थिति के आ�
 
 #: src/windowPreferences.py:58
 msgid "Launch Maximized"
-msgstr "अधिकतमीकृत शुरू करें"
+msgstr "फुलस्क्रीन में शुरू करें"
 
 #: src/windowPreferences.py:59
 msgid "Launch the weather app in maximized mode (Refresh required)"
-msgstr "मौसम ऐप को अधिकतमीकृत शुरू करें (ताजा करना आवश्यक)"
+msgstr "मौसम ऐप को फुलस्क्रीन में शुरू करें (ताजा करना आवश्यक)"
 
 #: src/windowPreferences.py:72
 msgid "Units &amp; Measurements"
