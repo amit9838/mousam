@@ -1,4 +1,4 @@
-﻿# Romanian translation for Mousam.
+# Romanian translation for Mousam.
 # Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # George Scutelnicu <george.v.scutelnicu@gmail.com>, 2024.
