@@ -1,0 +1,714 @@
+﻿# Romanian translation for Mousam.
+# Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# George Scutelnicu <george.v.scutelnicu@gmail.com>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-08 13:57+0530\n"
+"PO-Revision-Date: 2024-05-15 14:04+0000\n"
+"Last-Translator: Scutelnicu George <george.v.scutelnicu@gmail.com>\n"
+"Language-Team: Romanian <LL@li.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3 
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr "Mousam"
+
+#: data/io.github.amit9838.mousam.desktop.in:5 
+#: data/io.github.amit9838.mousam.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Aplicație meteo elegantă și ușor de utilizat"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgstr "Vreme;Mousam;Ploaie;Nor;Prognoză"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Condițiile meteorologice actuale și prognoze."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Caracteristici:"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr ""
+"Afișează temperatura în timp real, umiditatea, viteza vântului, indicele UV, "
+"presiunea și multe altele"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+"Folosește reprezentări grafice, cum ar fi graficele de temperatură, "
+"precipitații și viteza vântului împreună cu direcția, pentru a furniza o "
+"prognoză orară pentru următoarele 24 de ore"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "Oferă prognoze pentru ziua următoare și pentru următoarele 7 zile"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr "Vezi condițiile în sistemul metric sau imperial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Overcast day"
+msgstr "Zi înnorată"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Clear Sky - imperial"
+msgstr "Cer senin - imperial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29 src/constants.py:157
+msgid "Thunderstorm"
+msgstr "Furtună cu descărcări electrice"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:33
+msgid "Dark mode"
+msgstr "Mod întunecat"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:37
+msgid "Light mode"
+msgstr "Mod luminos"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Lista orașelor și coordonatele acestora"
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Stochează locațiile adăugate de utilizator în format de șir JSON, într-un "
+"șir de caractere"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Oraș selectat"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Coordonatele orașului selectat"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Folosește fundal gradient"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Aplică un fundal cu gradient pe fereastra principală în funcție de "
+"condițiile meteorologice"
+
+#: data/io.github.amit9838.mousam.gschema.xml:23
+msgid "Use Inch for precipitation"
+msgstr "Folosește inchi pentru precipitații"
+
+#: data/io.github.amit9838.mousam.gschema.xml:28
+msgid "Launch the app in maximized mode."
+msgstr "Deschide aplicația în modul maximizat."
+
+#: data/io.github.amit9838.mousam.gschema.xml:33
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr "Sistemul de măsurare de utilizat - metric,imperial"
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "metric(km, °C), imperial(mile, °F)"
+
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr "Cer senin"
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr "Câțiva nori"
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr "Parțial noros"
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr "înnorat"
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr "Ceață densă"
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr "Ceață"
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr "Burniță ușoară"
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr "Burniță moderată"
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr "Burniță abundentă"
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr "Burniță înghețată ușoară"
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr "Burniță înghețată abundentă"
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr "Ploaie ușoară"
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr "Ploaie moderată"
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr "Ploaie abundentă"
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr "Ploaie înghețată ușoară"
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr "Ploaie înghețată abundentă"
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr "Cădere ușoară de zăpadă"
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr "Cădere moderată de zăpadă"
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr "Ninsoare abundentă"
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr "Grindină"
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr "Averse de ploaie uşoară"
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr "Averse moderate de ploaie"
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr "Averse puternice de ploaie"
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr "Averse uşoare de zăpadă"
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers "
+msgstr "Averse abundente de zăpadă"
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr "Furtună cu descărcări electrice și grindină"
+
+#: src/frontendCardAirPollution.py:43
+msgid "Air Pollution"
+msgstr "Poluarea Aerului"
+
+#: src/frontendCardAirPollution.py:53
+msgid "United States AQI standard"
+msgstr "Standardul AQI al Statelor Unite"
+
+#: src/frontendCardDayNight.py:77
+msgid "Sunrise & Sunset"
+msgstr "Răsărit & Apus"
+
+#: src/frontendCardDayNight.py:88
+msgid "Sunrise"
+msgstr "Răsărit"
+
+#: src/frontendCardDayNight.py:101
+msgid "Sunset"
+msgstr "Apus"
+
+#: src/frontendCardSquare.py:162 src/frontendCardSquare.py:170
+msgid "North"
+msgstr "Nord"
+
+#: src/frontendCardSquare.py:163
+msgid "Northeast"
+msgstr "Nord-Est"
+
+#: src/frontendCardSquare.py:164
+msgid "East"
+msgstr "Est"
+
+#: src/frontendCardSquare.py:165
+msgid "Southeast"
+msgstr "Sud-Est"
+
+#: src/frontendCardSquare.py:166
+msgid "South"
+msgstr "Sud"
+
+#: src/frontendCardSquare.py:167
+msgid "Southwest"
+msgstr "Sud-Vest"
+
+#: src/frontendCardSquare.py:168
+msgid "West"
+msgstr "Vest"
+
+#: src/frontendCardSquare.py:169 src/mousam.py:274
+msgid "Northwest"
+msgstr "Nord-Vest"
+
+#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:59
+msgid "Wind"
+msgstr "Vânt"
+
+#: src/frontendCardSquare.py:180
+msgid "Pressure"
+msgstr "Presiune"
+
+#: src/frontendCardSquare.py:181
+msgid "Humidity"
+msgstr "Umiditate"
+
+#: src/frontendCardSquare.py:182
+msgid "UV Index"
+msgstr "Indice UV"
+
+#: src/frontendCurrentCond.py:87
+msgid "Feels Like • <b> {0} {1}</b>"
+msgstr "Temperatura resimțită • <b> {0} {1}</b>"
+
+#: src/frontendForecast.py:36 src/frontendForecast.py:130
+msgid "Tomorrow"
+msgstr "Mâine"
+
+#: src/frontendForecast.py:43
+msgid "Weekly"
+msgstr "Săptămânal"
+
+#: src/frontendForecast.py:128
+msgid "Today"
+msgstr "Azi"
+
+#: src/frontendHourlyDetails.py:51
+msgid "Hourly"
+msgstr "Pe ore"
+
+#: src/frontendHourlyDetails.py:67
+msgid "Precipitation"
+msgstr "Precipitații"
+
+#: src/frontendHourlyDetails.py:96
+msgctxt "wind"
+msgid "Day High"
+msgstr "Maxima Zilei"
+
+#: src/frontendHourlyDetails.py:112
+msgctxt "temperature"
+msgid "Day Max"
+msgstr "Maxima Zilei"
+
+#: src/frontendHourlyDetails.py:127
+msgctxt "precipitation"
+msgid "Day High"
+msgstr "Maxima Zilei"
+
+#: src/frontendHourlyDetails.py:165
+msgid "No precipitation today !"
+msgstr "Fără precipitații astăzi!"
+
+#: src/frontendHourlyDetails.py:166
+msgid "No precipitation expected today!"
+msgstr "Nu se așteaptă precipitații astăzi!"
+
+#: src/frontendHourlyDetails.py:167
+msgid "Anticipate a precipitation-free day !"
+msgstr "Anticipați o zi fără precipitații!"
+
+#: src/frontendHourlyDetails.py:168
+msgid "Enjoy a rain-free day today!"
+msgstr "Bucurați-vă de o zi fără ploaie astăzi!"
+
+#: src/frontendHourlyDetails.py:169
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "Starea umbrelei: în repaus. Nu se prevăd precipitații în apropiere!"
+
+#: src/frontendHourlyDetails.py:170
+msgid "No rain in sight today!"
+msgstr "Nu se prevăd ploi astăzi!"
+
+#: src/frontendHourlyDetails.py:199
+msgid "Now"
+msgstr "Acum"
+
+#: src/frontendUiDrawDayNight.py:98
+msgid "Horizon"
+msgstr "Orizont"
+
+#: src/frontendUiDrawDayNight.py:108
+msgid "Midnight"
+msgstr "Miezul nopţii"
+
+#: src/mousam.py:70
+msgid "Refresh"
+msgstr "Actualizează"
+
+#: src/mousam.py:79 src/shortcutsDialog.ui:45
+msgid "Preferences"
+msgstr "Preferințe"
+
+#: src/mousam.py:84 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr "Comenzi rapide"
+
+#: src/mousam.py:90
+msgid "About Mousam"
+msgstr "Despre Mousam"
+
+#: src/mousam.py:92 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr "Închide"
+
+#: src/mousam.py:150
+msgid "Getting Weather Data"
+msgstr "Se obțin datele meteo"
+
+#: src/mousam.py:161
+msgid "No Internet"
+msgstr "Fără conexiune la internet"
+
+#: src/mousam.py:165
+msgid "Could not fetch data from API"
+msgstr "Nu s-au putut obține datele din API"
+
+#: src/mousam.py:273
+msgid "From"
+msgstr "Din"
+
+#: src/mousam.py:275
+msgid "N"
+msgstr "N"
+
+#: src/mousam.py:285
+msgid "Dewpoint"
+msgstr "Punct de rouă"
+
+#: src/mousam.py:301
+msgctxt "pressure card"
+msgid "High"
+msgstr "Ridicată"
+
+#: src/mousam.py:302
+msgctxt "pressure card"
+msgid "Low"
+msgstr "Scăzută"
+
+#: src/mousam.py:311
+msgctxt "uvindex card"
+msgid "High"
+msgstr "Ridicat"
+
+#: src/mousam.py:312
+msgctxt "uvindex card"
+msgid "Low"
+msgstr "Scăzut"
+
+#: src/mousam.py:328
+msgid "Switched to {}"
+msgstr "Schimbat cu {}"
+
+#: src/mousam.py:331
+msgid "Refreshed Successfully"
+msgstr "Actualizare cu succes"
+
+#: src/mousam.py:341
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "Actualizarea în decurs de 5 secunde este ignorată!"
+
+#: src/mousam.py:346
+msgid "Refreshing..."
+msgstr "Se actualizează..."
+
+#: src/weatherData.py:100
+msgid "Good"
+msgstr "Bun"
+
+#: src/weatherData.py:102
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/weatherData.py:104
+msgid "Poor"
+msgstr "Slab"
+
+#: src/weatherData.py:106
+msgid "Unhealthy"
+msgstr "Nesănătos"
+
+#: src/weatherData.py:108
+msgid "Severe"
+msgstr "Sever"
+
+#: src/weatherData.py:110
+msgid "Hazardous"
+msgstr "Riscant"
+
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Low"
+msgstr "Scăzut"
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "High"
+msgstr "Ridicat"
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "Foarte ridicat"
+
+#: src/weatherData.py:126
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "Extrem"
+
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Low"
+msgstr "Scăzută"
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Moderată"
+
+#: src/weatherData.py:135
+msgctxt "humidity"
+msgid "High"
+msgstr "Ridicată"
+
+#: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Low"
+msgstr "Scăzută"
+
+#: src/weatherData.py:142
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Normală"
+
+#: src/weatherData.py:144
+msgctxt "pressure"
+msgid "High"
+msgstr "Ridicată"
+
+#: src/weatherData.py:149
+msgid "Calm"
+msgstr "Calm"
+
+#: src/weatherData.py:151
+msgid "Light"
+msgstr "Ușor"
+
+#: src/weatherData.py:153
+msgctxt "wind"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/weatherData.py:155
+msgid "Strong"
+msgstr "Puternic"
+
+#: src/weatherData.py:157
+msgctxt "wind"
+msgid "Extreme"
+msgstr "Extrem"
+
+#: src/weatherData.py:163
+msgid "km"
+msgstr "km"
+
+#: src/weatherData.py:166
+msgid "miles"
+msgstr "mile"
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and Python"
+msgstr ""
+"Aplicație meteo elegantă și ușor de utilizat creată folosind Gtk și Python"
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Drepturi de Autor © 2024 Mousam Developers"
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr "Mulțumiri Traducător"
+
+#: src/windowLocations.py:19 src/windowLocations.py:35 
+#: src/shortcutsDialog.ui:39
+msgid "Locations"
+msgstr "Locații"
+
+#: src/windowLocations.py:41
+msgid "Add"
+msgstr "Adaugă"
+
+#: src/windowLocations.py:65
+msgid "Remove location"
+msgstr "Șterge locația"
+
+#: src/windowLocations.py:112
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "Schimbarea orașului în decurs de 2 secunde este ignorată!"
+
+#: src/windowLocations.py:115
+msgid "Selected - {}"
+msgstr "Selectat - {}"
+
+#: src/windowLocations.py:125
+msgid "Add New Location"
+msgstr "Adaugă o locație nouă"
+
+#: src/windowLocations.py:143
+msgid "Search for a city"
+msgstr "Caută un oraș"
+
+#: src/windowLocations.py:149 src/windowLocations.py:151
+msgid "Search"
+msgstr "Caută"
+
+#: src/windowLocations.py:229
+msgid "Added - {0}"
+msgstr "Adăugat - {0}"
+
+#: src/windowLocations.py:231
+msgid "Location already added!"
+msgstr "Locații deja adăugate!"
+
+#: src/windowLocations.py:240
+msgid "Add more locations to delete!"
+msgstr "Adăugați mai multe locații de șters!"
+
+#: src/windowLocations.py:263
+msgid "Deleted - {0}"
+msgstr "Șters - {0}"
+
+#: src/windowLocations.py:266
+msgid "Press enter to search"
+msgstr "Apasă Enter pentru a căuta"
+
+#: src/windowLocations.py:269
+msgid "No results found!"
+msgstr "Nu s-au găsit rezultate!"
+
+#: src/windowPreferences.py:34
+msgid "Appearance"
+msgstr "Aspect"
+
+#: src/windowPreferences.py:44
+msgid "Dynamic Background"
+msgstr "Fundal Dinamic"
+
+#: src/windowPreferences.py:45
+msgid ""
+"Background changes based on current weather condition (Restart required)"
+msgstr ""
+"Schimbări de fundal în funcție de starea vremii actuale (Repornire necesară)"
+
+#: src/windowPreferences.py:58
+msgid "Launch Maximized"
+msgstr "Lansați Maximizat"
+
+#: src/windowPreferences.py:59
+msgid "Launch the weather app in maximized mode (Refresh required)"
+msgstr "Lansați aplicația meteo în modul maximizat (Actualizare necesară)"
+
+#: src/windowPreferences.py:72
+msgid "Units &amp; Measurements"
+msgstr "Unități &amp; măsurători"
+
+#: src/windowPreferences.py:76
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:77
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr "Unități în sistemul metric, cum ar fi Celsius, km/h, kilometri"
+
+#: src/windowPreferences.py:85
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:86
+msgid "IMPERIAL system with units like fahrenheit, mph, miles"
+msgstr "Sistem IMPERIAL cu unități precum fahrenheit, mph, mile"
+
+#: src/windowPreferences.py:100
+msgid "Show precipitation in inch"
+msgstr "Arată precipitațiile în inchi"
+
+#: src/windowPreferences.py:101
+msgid "This option better works during heavy preciptaion (Refresh required)"
+msgstr ""
+"Această opțiune funcționează mai bine în timpul precipitațiilor abundente "
+"(Necesită actualizare)"
+
+#: src/windowPreferences.py:129
+msgid "Switching within 2 seconds is ignored!"
+msgstr "Schimbarea în decurs de 2 secunde este ignorată!"
+
+#: src/windowPreferences.py:132
+msgid "Switched to - {}"
+msgstr "Schimbat cu - {}"
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "General"
+
+#: src/shortcutsDialog.ui:33
+msgid "Refresh Weather"
+msgstr "Actualizează vremea"
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
+msgstr "Navigare"
