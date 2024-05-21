@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import gi
 from gi.repository import Gtk
-from gettext import gettext as _
+from gettext import gettext as _, pgettext as C_
 from .constants import icons
 from .utils import is_dynamic_bg_enabled
 
@@ -94,105 +94,98 @@ class Forecast(Gtk.Grid):
             orientation=Gtk.Orientation.VERTICAL, margin_top=0, margin_bottom=0)
         scrolled_window.set_child(forecast_container)
 
+        items_range = 7
+        idx_offset = 0
 
-        # Get Tomorrow's data from hourly forecast
-        tomorrow_date_time_list = [d_t for d_t in hourly_data.time.get("data") if int(
-            datetime.fromtimestamp(d_t).strftime(r"%d")) == (datetime.today() + timedelta(days=1)).date().day]
-        items = tomorrow_date_time_list
+        if page_name != 'weekly':
+            items_range = 24
+            idx_offset = self.get_idx_offset(hourly_data)
 
-        # Get weekly date_time list from daily_data
-        if page_name == 'weekly':
-            items = daily_data.time.get("data")
-
-        # Add weather items in the stack-box
-        for i, item in enumerate(items):
-
+        # -------- Plot items -------
+        for idx in range(items_range):     
             forecast_item_grid = Gtk.Grid(hexpand=True,margin_top=6)
             forecast_item_grid.set_css_classes(
                 ['bg_light_grey', 'custom_card_forecast_item'])
-
             forecast_container.append(forecast_item_grid)
 
-            # Add Date-time Label [dafault : tomorrow]
-            date_time = datetime.fromtimestamp(item)
-            d_t = date_time.strftime("%I:%M %p")
-            weather_code = hourly_data.weathercode.get("data")[i]
+
+            ts = hourly_data.time.get('data')[idx+idx_offset]
+            date_time = datetime.fromtimestamp(ts)
+            dt_label = date_time.strftime("%I:%M %p")
+            temp_max_text = hourly_data.temperature_2m.get("data")[idx+idx_offset]
+            temp_min_text = hourly_data.temperature_2m.get("data")[idx+idx_offset]
+            weather_code = hourly_data.weathercode.get("data")[idx+idx_offset]
 
             if page_name == 'weekly':
-                d_t = date_time.strftime("%A")
-                weather_code = daily_data.weathercode.get("data")[i]
-                if date_time.date().day == datetime.today().date().day:
-                    d_t = _('Today')
-                elif date_time.date().day == (datetime.today()+timedelta(days=1)).date().day:
-                    d_t = _('Tomorrow')
+                ts = daily_data.time.get("data")[idx+idx_offset]
+                date_time = datetime.fromtimestamp(ts)
+                dt_label = date_time.strftime("%A")
+                temp_min_text = daily_data.temperature_2m_min.get("data")[idx+idx_offset]
+                temp_max_text = daily_data.temperature_2m_max.get("data")[idx+idx_offset]
+                weather_code = daily_data.weathercode.get("data")[idx+idx_offset]
 
-            # Add d_t Label
-            label_box = Gtk.Box(margin_top=0, margin_bottom=0)
+                if date_time.date().day == datetime.today().date().day:
+                    dt_label = _('Today')
+                elif date_time.date().day == (datetime.today()+timedelta(days=1)).date().day:
+                    dt_label = _('Tomorrow')
+
+            # Add dt_label Label
+            label_box = Gtk.Box()
             label_box.set_size_request(80, 20)
-            # label_box.set_css_classes(['card_info'])
-            label_day_time = Gtk.Label(label=d_t, halign=Gtk.Align.START)
-            label_box.append(label_day_time)
+            label_day_time = Gtk.Label(label=dt_label, halign=Gtk.Align.START)
             label_day_time.set_css_classes(['text-4', 'bold-2'])
+            label_box.append(label_day_time)
             forecast_item_grid.attach(label_box, 0, 0, 1, 1)
 
-            # Condition Icon
-            # if it is night
-            condition_icon = icons[str(weather_code)]
-            if hourly_data.is_day.get("data")[i] == 0:
-                    condition_icon = icons[str(weather_code)+'n'] 
+            # Condition Icon (if night)
+            if hourly_data.is_day.get("data")[idx+idx_offset] == 0:
+                    weather_code = str(weather_code)+"n"
 
-            icon_main = Gtk.Image().new_from_file(condition_icon)
-            icon_main.set_halign(Gtk.Align.CENTER)
-            icon_main.set_hexpand(True)
-            icon_main.set_pixel_size(50)
-            icon_main.set_margin_end(0)
-            forecast_item_grid.attach(icon_main, 1, 0, 1, 1)
+            # Condition icon =====
+            condition_icon = Gtk.Image().new_from_file(icons[str(weather_code)])
+            condition_icon.set_halign(Gtk.Align.CENTER)
+            condition_icon.set_hexpand(True)
+            condition_icon.set_pixel_size(50)
+            forecast_item_grid.attach(condition_icon, 1, 0, 1, 1)
 
             forecast_cond_grid = Gtk.Grid(valign=Gtk.Align.CENTER,margin_end = 20)
             forecast_item_grid.attach(forecast_cond_grid, 2, 0, 1, 1)
 
-            # # prec probability
-            # if page_name == 'tomorrow':
-            #     prec_probability = hourly_data.precipitation_probability.get("data")[i]
-            #     wind_probability = hourly_data.windspeed_10m.get("data")[i]
-
-            #     drop_icon = Gtk.Image().new_from_file(icons["raindrop"])
-            #     drop_icon.set_pixel_size(25)
-            #     drop_icon.set_halign(Gtk.Align.START)
-            #     forecast_cond_grid.attach(drop_icon, 0, 0, 1, 1)
-
-            #     prec_probability_label = Gtk.Label(label=f" {prec_probability}%", margin_top=5)
-            #     prec_probability_label.set_halign(Gtk.Align.START)
-            #     forecast_cond_grid.attach(prec_probability_label, 1, 0, 1, 1)
-
-            #     # Wind speed probability
-            #     wind_icon = Gtk.Image().new_from_file(icons["wind"])
-            #     wind_icon.set_pixel_size(25)
-            #     wind_icon.set_halign(Gtk.Align.START)
-            #     forecast_cond_grid.attach(wind_icon, 0, 1, 1, 1)
-            #     speed_unit= hourly_data.windspeed_10m.get("unit")
-            #     wind_probability_label = Gtk.Label(label=f" {wind_probability} {speed_unit}", margin_top=5)
-            #     forecast_cond_grid.attach(wind_probability_label, 1, 1, 1, 1)
-
-
-            # Temp label grid
+            # Temp label grid =====
             temp_label_grid = Gtk.Grid(valign=Gtk.Align.CENTER)
             forecast_item_grid.attach(temp_label_grid, 3, 0, 1, 1)
 
             # Max temp label ======
-            temp_max_text = hourly_data.temperature_2m.get("data")[i]
-            if page_name == 'weekly':
-                temp_max_text = daily_data.temperature_2m_max.get("data")[i]
-
             temp_max = Gtk.Label(label=f"{temp_max_text:.0f}° ", margin_start=10,)
             temp_max.set_css_classes(['text-3', 'bold-2'])
             temp_label_grid.attach(temp_max, 1, 0, 1, 1)
 
             # Min temp label ======
-            temp_min_text = hourly_data.temperature_2m.get("data")[i]
-            if page_name == 'weekly':
-                temp_min_text = daily_data.temperature_2m_min.get("data")[i]
-
             temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°", margin_top=5)
             temp_min.set_css_classes(['light-4'])
             temp_label_grid.attach(temp_min, 1, 1, 1, 1)
+
+
+    # ============ get timestamp of upcomming 12:00 AM ====================
+    def get_upcomming_12am(self):
+        # Get current date and time
+        current_time = datetime.now()
+
+        # Set time to 12:00 AM
+        upcoming_12am = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+        # If the current time is already past 12:00 AM, get the timestamp for the next day
+        if current_time >= upcoming_12am:
+            upcoming_12am += timedelta(days=1)
+
+        # Convert to timestamp
+        return upcoming_12am.timestamp()
+
+    # =========== Return index offset from hourly forecast to get tomorrow's weather condition ====================
+    def get_idx_offset(self,hourly_data):
+        idx_off = 0
+        upcomming_12am = self.get_upcomming_12am()
+        for t in hourly_data.time.get("data"):
+            if t > upcomming_12am:
+                return idx_off
+            idx_off+=1

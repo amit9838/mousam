@@ -1,0 +1,673 @@
+# CERTAINS TITRES DESCRIPTIFS.
+# Copyright (C) ANNÉE DU DÉTENTEUR DU DROIT D'AUTEUR DU PAQUET
+# Ce fichier est distribué sous la même licence que le paquet PACKAGE.
+# PREMIER AUTEUR <EMAIL@ADRESSE>, ANNÉE.
+#
+#, flou
+msgid ""
+msgstr ""
+"Project-Id-Version: VERSION DU PAQUET\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-15 15:53+0100\n"
+"PO-Revision-Date: ANNÉE-MO-JA HE:MI+ZONE\n"
+"Last-Translator: NOM COMPLET <EMAIL@ADRESSE>\n"
+"Language-Team: LANGUE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr "Mousam"
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Belle et légère application météo"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgstr "Météo;Mousam;Pluie;Nuage;Prévision;"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Conditions météorologiques actuelles et prévisions."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Caractéristiques :"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr "Affiche la température en temps réel, l'humidité, la vitesse du vent, l'indice UV, la pression et plus"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr "Utilise des représentations graphiques, telles que la température, les graphiques de précipitations et la vitesse du vent avec direction pour fournir une prévision horaire pour les prochaines 24 heures"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "Fournit également les prévisions pour demain et les 7 jours à venir"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr "Voir les conditions dans les systèmes métrique ou impérial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Overcast day"
+msgstr "Journée couverte"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Clear Sky - imperial"
+msgstr "Ciel dégagé - impérial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29 src/constants.py:157
+msgid "Thunderstorm"
+msgstr "Orage"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:33
+msgid "Dark mode"
+msgstr "Mode sombre"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:37
+msgid "Light mode"
+msgstr "Mode clair"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Liste des villes et de leurs coordonnées."
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr "Stocke les emplacements ajoutés par l'utilisateur au format de chaîne JSON"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Ville sélectionnée"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Coordonnées de la ville sélectionnée"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Utiliser un arrière-plan en dégradé"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid "Apply gradient background on main window corresponding to weather condition"
+msgstr "Appliquer un arrière-plan en dégradé sur la fenêtre principale correspondant à la condition météorologique"
+
+#: data/io.github.amit9838.mousam.gschema.xml:23
+msgid "Use Inch for precipitation"
+msgstr "Utiliser des pouces pour les précipitations"
+
+#: data/io.github.amit9838.mousam.gschema.xml:28
+msgid "Launch the app in maximized mode."
+msgstr "Lancer l'application en mode maximisé."
+
+#: data/io.github.amit9838.mousam.gschema.xml:33
+msgid "Measurement system to use - metric, imperial"
+msgstr "Système de mesure à utiliser - métrique, impérial"
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "métrique(km, °C), impérial(mile, °F)"
+
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr "Ciel dégagé"
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr "Quelques nuages"
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr "Partiellement nuageux"
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr "Couvert"
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr "Brouillard"
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr "Brume"
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr "Bruine légère"
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr "Bruine modérée"
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr "Bruine forte"
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr "Bruine verglaçante légère"
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr "Bruine verglaçante forte"
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr "Pluie légère"
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr "Pluie modérée"
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr "Pluie forte"
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr "Pluie verglaçante légère"
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr "Pluie verglaçante forte"
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr "Chute de neige légère"
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr "Chute de neige modérée"
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr "Chute de neige forte"
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr "Grains de neige"
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr "Averses légères"
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr "Averses modérées"
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr "Averses fortes"
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr "Averses de neige légères"
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers"
+msgstr "Averses de neige fortes"
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr "Orage avec grêle"
+
+#: src/frontendCardAirPollution.py:43
+msgid "Air Pollution"
+msgstr "Pollution de l'air"
+
+#: src/frontendCardAirPollution.py:53
+msgid "United States AQI standard"
+msgstr "Norme AQI des États-Unis"
+
+#: src/frontendCardDayNight.py:73
+msgid "Sunrise & Sunset"
+msgstr "Lever & Coucher du soleil"
+
+#: src/frontendCardDayNight.py:84
+msgid "Sunrise"
+msgstr "Lever du soleil"
+
+#: src/frontendCardDayNight.py:97
+msgid "Sunset"
+msgstr "Coucher du soleil"
+
+#: src/frontendCardSquare.py:162 src/frontendCardSquare.py:170
+msgid "North"
+msgstr "Nord"
+
+#: src/frontendCardSquare.py:163
+msgid "Northeast"
+msgstr "Nord-est"
+
+#: src/frontendCardSquare.py:164
+msgid "East"
+msgstr "Est"
+
+#: src/frontendCardSquare.py:165
+msgid "Southeast"
+msgstr "Sud-est"
+
+#: src/frontendCardSquare.py:166
+msgid "South"
+msgstr "Sud"
+
+#: src/frontendCardSquare.py:167
+msgid "Southwest"
+msgstr "Sud-ouest"
+
+#: src/frontendCardSquare.py:168
+msgid "West"
+msgstr "Ouest"
+
+#: src/frontendCardSquare.py:169 src/mousam.py:250
+msgid "Northwest"
+msgstr "Nord-ouest"
+
+#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:58
+msgid "Wind"
+msgstr "Vent"
+
+#: src/frontendCardSquare.py:180
+msgid "Pressure"
+msgstr "Pression"
+
+#: src/frontendCardSquare.py:181
+msgid "Humidity"
+msgstr "Humidité"
+
+#: src/frontendCardSquare.py:182
+msgid "UV Index"
+msgstr "Indice UV"
+
+#: src/frontendCurrentCond.py:87
+#, python-brace-format
+msgid "Feels Like • <b> {0} {1}</b>"
+msgstr "Ressenti • <b> {0} {1}</b>"
+
+#: src/frontendForecast.py:36 src/frontendForecast.py:127
+msgid "Tomorrow"
+msgstr "Demain"
+
+#: src/frontendForecast.py:43
+msgid "Weekly"
+msgstr "Hebdomadaire"
+
+#: src/frontendForecast.py:125
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: src/frontendHourlyDetails.py:50
+msgid "Hourly"
+msgstr "Horaire"
+
+#: src/frontendHourlyDetails.py:66
+msgid "Precipitation"
+msgstr "Précipitations"
+
+#: src/frontendHourlyDetails.py:95
+msgctxt "wind"
+msgid "Day High"
+msgstr "Maximum du jour"
+
+#: src/frontendHourlyDetails.py:111
+msgctxt "temperature"
+msgid "Day Max"
+msgstr "Max du jour"
+
+#: src/frontendHourlyDetails.py:126
+msgctxt "precipitation"
+msgid "Day High"
+msgstr "Maximum du jour"
+
+#: src/frontendHourlyDetails.py:164
+msgid "No precipitation today !"
+msgstr "Pas de précipitations aujourd'hui !"
+
+#: src/frontendHourlyDetails.py:165
+msgid "No precipitation expected today!"
+msgstr "Aucune précipitation attendue aujourd'hui !"
+
+#: src/frontendHourlyDetails.py:166
+msgid "Anticipate a precipitation-free day !"
+msgstr "Anticipez une journée sans précipitations !"
+
+#: src/frontendHourlyDetails.py:167
+msgid "Enjoy a rain-free day today!"
+msgstr "Profitez d'une journée sans pluie aujourd'hui !"
+
+#: src/frontendHourlyDetails.py:168
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "Statut du parapluie : au repos. Aucune précipitation en vue !"
+
+#: src/frontendHourlyDetails.py:169
+msgid "No rain in sight today!"
+msgstr "Pas de pluie en vue aujourd'hui !"
+
+#: src/frontendHourlyDetails.py:198
+msgid "Now"
+msgstr "Maintenant"
+
+#: src/frontendUiDrawDayNight.py:89
+msgid "Horizon"
+msgstr "Horizon"
+
+#: src/frontendUiDrawDayNight.py:99
+msgid "Midnight"
+msgstr "Minuit"
+
+#: src/mousam.py:76
+msgid "Preferences"
+msgstr "Préférences"
+
+#: src/mousam.py:84
+msgid "About Mousam"
+msgstr "À propos de Mousam"
+
+#: src/mousam.py:126
+msgid "Getting Weather Data"
+msgstr "Obtention des données météorologiques"
+
+#: src/mousam.py:137
+msgid "No Internet"
+msgstr "Pas d'Internet"
+
+#: src/mousam.py:141
+msgid "Could not fetch data from API"
+msgstr "Impossible de récupérer les données de l'API"
+
+#: src/mousam.py:249
+msgid "From"
+msgstr "De"
+
+#: src/mousam.py:251
+msgid "N"
+msgstr "N"
+
+#: src/mousam.py:261
+msgid "Dewpoint"
+msgstr "Point de rosée"
+
+#: src/mousam.py:277
+msgctxt "pressure card"
+msgid "High"
+msgstr "Haut"
+
+#: src/mousam.py:278
+msgctxt "pressure card"
+msgid "Low"
+msgstr "Bas"
+
+#: src/mousam.py:287
+msgctxt "uvindex card"
+msgid "High"
+msgstr "Haut"
+
+#: src/mousam.py:288
+msgctxt "uvindex card"
+msgid "Low"
+msgstr "Bas"
+
+#: src/mousam.py:304
+msgid "Switched to {}"
+msgstr "Changé pour {}"
+
+#: src/mousam.py:307
+msgid "Refreshed Successfully"
+msgstr "Rafraîchi avec succès"
+
+#: src/mousam.py:317
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "Rafraîchir dans les 5 secondes est ignoré !"
+
+#: src/mousam.py:322
+msgid "Refreshing..."
+msgstr "Rafraîchissement..."
+
+#: src/weatherData.py:100
+msgid "Good"
+msgstr "Bon"
+
+#: src/weatherData.py:102
+msgid "Moderate"
+msgstr "Modéré"
+
+#: src/weatherData.py:104
+msgid "Poor"
+msgstr "Mauvais"
+
+#: src/weatherData.py:106
+msgid "Unhealthy"
+msgstr "Nocif"
+
+#: src/weatherData.py:108
+msgid "Severe"
+msgstr "Sévère"
+
+#: src/weatherData.py:110
+msgid "Hazardous"
+msgstr "Dangereux"
+
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Low"
+msgstr "Bas"
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "Modéré"
+
+#: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "High"
+msgstr "Haut"
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "Très haut"
+
+#: src/weatherData.py:126
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "Extrême"
+
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Low"
+msgstr "Bas"
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Modéré"
+
+#: src/weatherData.py:135
+msgctxt "humidity"
+msgid "High"
+msgstr "Haut"
+
+#: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Low"
+msgstr "Bas"
+
+#: src/weatherData.py:142
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Normal"
+
+#: src/weatherData.py:144
+msgctxt "pressure"
+msgid "High"
+msgstr "Haut"
+
+#: src/weatherData.py:149
+msgid "Calm"
+msgstr "Calme"
+
+#: src/weatherData.py:151
+msgid "Light"
+msgstr "Léger"
+
+#: src/weatherData.py:153
+msgctxt "wind"
+msgid "Moderate"
+msgstr "Modéré"
+
+#: src/weatherData.py:155
+msgid "Strong"
+msgstr "Fort"
+
+#: src/weatherData.py:157
+msgctxt "wind"
+msgid "Extreme"
+msgstr "Extrême"
+
+#: src/weatherData.py:163
+msgid "km"
+msgstr "km"
+
+#: src/weatherData.py:166
+msgid "miles"
+msgstr "miles"
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and Python"
+msgstr "Belle et légère application météo développée avec Gtk et Python"
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Droit d'auteur © 2024 Développeurs Mousam"
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr "crédits_traducteur"
+
+#: src/windowLocations.py:19 src/windowLocations.py:35
+msgid "Locations"
+msgstr "Emplacements"
+
+#: src/windowLocations.py:41
+msgid "Add"
+msgstr "Ajouter"
+
+#: src/windowLocations.py:65
+msgid "Remove location"
+msgstr "Supprimer l'emplacement"
+
+#: src/windowLocations.py:112
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "Changer de ville dans les 2 secondes est ignoré !"
+
+#: src/windowLocations.py:115
+msgid "Selected - {}"
+msgstr "Sélectionné - {}"
+
+#: src/windowLocations.py:125
+msgid "Add New Location"
+msgstr "Ajouter un nouvel emplacement"
+
+#: src/windowLocations.py:142
+msgid "Search for a city"
+msgstr "Rechercher une ville"
+
+#: src/windowLocations.py:148 src/windowLocations.py:150
+msgid "Search"
+msgstr "Rechercher"
+
+#: src/windowLocations.py:205
+msgid "No results found !"
+msgstr "Aucun résultat trouvé !"
+
+#: src/windowLocations.py:229
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "Ajouté - {0}"
+
+#: src/windowLocations.py:231
+msgid "Location already added!"
+msgstr "Emplacement déjà ajouté !"
+
+#: src/windowLocations.py:240
+msgid "Add more locations to delete!"
+msgstr "Ajouter plus d'emplacements à supprimer !"
+
+#: src/windowLocations.py:263
+#, python-brace-format
+msgid "Deleted - {0}"
+msgstr "Supprimé - {0}"
+
+#: src/windowPreferences.py:34
+msgid "Appearance"
+msgstr "Apparence"
+
+#: src/windowPreferences.py:44
+msgid "Dynamic Background"
+msgstr "Arrière-plan dynamique"
+
+#: src/windowPreferences.py:45
+msgid "Background changes based on current weather condition (Restart required)"
+msgstr "L'arrière-plan change selon les conditions météorologiques actuelles (Redémarrage requis)"
+
+#: src/windowPreferences.py:58
+msgid "Launch Maximized"
+msgstr "Lancer Maximisé"
+
+#: src/windowPreferences.py:59
+msgid "Launch the weather app in maximized mode (Refresh required)"
+msgstr "Lancer l'application météo en mode maximisé (Actualisation requise)"
+
+#: src/windowPreferences.py:72
+msgid "Units & Measurements"
+msgstr "Unités & Mesures"
+
+#: src/windowPreferences.py:76
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:77
+msgid "METRIC system with units like Celsius, km/h, kilometer"
+msgstr "Système MÉTRIQUE avec des unités telles que Celsius, km/h, kilomètre"
+
+#: src/windowPreferences.py:85
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:86
+msgid "IMPERIAL system with units like Fahrenheit, mph, miles"
+msgstr "Système IMPÉRIAL avec des unités telles que Fahrenheit, mph, miles"
+
+#: src/windowPreferences.py:100
+msgid "Show precipitation in inch"
+msgstr "Afficher les précipitations en pouces"
+
+#: src/windowPreferences.py:101
+msgid "This option better works during heavy precipitation (Refresh required)"
+msgstr "Cette option fonctionne mieux en cas de fortes précipitations (Actualisation requise)"
+
+#: src/windowPreferences.py:129
+msgid "Switching within 2 seconds is ignored!"
+msgstr "Le changement dans les 2 secondes est ignoré !"
+
+#: src/windowPreferences.py:132
+msgid "Switched to - {}"
+msgstr "Changé pour - {}"

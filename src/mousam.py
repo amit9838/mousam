@@ -1,16 +1,20 @@
 import gi
 import time
 import threading
+import gettext
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw, Gio
+from gi.repository import Gtk, Adw, Gio,Gdk,GLib
+from gettext import gettext as _, pgettext as C_
+
 
 # module import
 from .utils import create_toast, check_internet_connection
 from .constants import bg_css
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
+from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
 from .frontendCurrentCond import CurrentCondition
 from .frontendHourlyDetails import HourlyDetails
@@ -35,13 +39,13 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         self.main_window = self
         self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        self.set_default_size(1160, 760)
+        self.set_default_size(1160, 818)
         self.set_title("")
         self._use_dynamic_bg()
 
         #  Adding a button into header
         self.header = Adw.HeaderBar()
-        self.header.add_css_class(css_class="flat")
+        self.header.set_css_classes(["flat"])
 
         self.set_titlebar(self.header)
 
@@ -63,7 +67,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.header.pack_end(self.hamburger)
 
         # Create a menu button
-        self.location_button = Gtk.Button(label="Open")
+        self.location_button = Gtk.Button(label=_("Location"))
         self.header.pack_end(self.location_button)
         self.location_button.set_icon_name("find-location-symbolic")
         self.location_button.connect("clicked", self._on_locations_clicked)
@@ -74,21 +78,36 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.add_action(action)
         menu.append(_("Preferences"), "win.preferences")
 
-        # menu.append("Help", "help")
+        action = Gio.SimpleAction.new("shortcuts", None)
+        action.connect("activate", self._show_shortcuts_dialog)
+        self.add_action(action)
+        menu.append(_("Keyboard Shortcuts"), "win.shortcuts")
 
         # Add about option
         action = Gio.SimpleAction.new("about", None)
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Mousam"), "win.about")
+        
+        menu.append(_("Quit"), "app.quit")
 
+
+        
         # Toast overlay
         self.toast_overlay = Adw.ToastOverlay.new()
         self.set_child(self.toast_overlay)
 
+        # Scroll content on small screens
+        self.scrolled_window = Gtk.ScrolledWindow()
+        self.scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.scrolled_window.set_kinetic_scrolling(True)
+        self.toast_overlay.set_child(self.scrolled_window)
+            
+        
         # Main _clamp
         self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
-        self.toast_overlay.set_child(self.clamp)
+        self.scrolled_window.set_child(self.clamp)
 
         # main stack
         self.main_stack = Gtk.Stack.new()
@@ -100,6 +119,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Initiate UI loading weather data and drawing UI
         thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
+
+        #Set key listeners
+        keycont = Gtk.EventControllerKey()
+        keycont.connect('key-pressed', self.on_key_press)
+        self.add_controller(keycont)
+
 
     # =========== Create Loader =============
     def show_loader(self):
@@ -224,22 +249,22 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_grid.set_vexpand(True)
         self.main_stack.add_named(self.main_grid, "main_grid")
 
-        # -------- Current condition Card ---------
+        # -------- Card Current condition  ---------
         current_container_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=200)
         self.main_grid.attach(current_container_clamp, 0, 0, 3, 1)
         current_container_clamp.set_child(CurrentCondition())
         self.main_grid.attach(HourlyDetails(), 0, 1, 2, 1)
 
-        # --------- Forecast card ----------
+        # --------- Card Forecast ----------
         forecast_container_clamp = Adw.Clamp(maximum_size=800, tightening_threshold=100)
         forecast_container_clamp.set_child(Forecast())
         self.main_grid.attach(forecast_container_clamp, 2, 1, 1, 2)
 
-        # ========= Card widget grid ==========
+        # ========= widget grid to hold Cards ==========
         widget_grid = Gtk.Grid()
         self.main_grid.attach(widget_grid, 1, 2, 1, 1)
 
-        # ------- Wind card ----------
+        # ------- Card Wind ----------
         card_obj = CardSquare(
             title="Wind",
             main_val=cw_data.windspeed_10m.get("data"),
@@ -251,7 +276,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 0, 0, 1, 1)
 
-        # -------- Humidity card  ---------
+        # -------- Card Humidity ---------
         card_obj = CardSquare(
             title="Humidity",
             main_val=cw_data.relativehumidity_2m.get("data"),
@@ -266,29 +291,29 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
         widget_grid.attach(card_obj.card, 1, 0, 1, 1)
 
-        # ------- Pressure card -----------
+        # ------- Card Pressure -----------
         card_obj = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.get("data"),
             main_val_unit="",
             desc=cw_data.surface_pressure.get("unit"),
             sub_desc_heading=cw_data.surface_pressure.get("level_str"),
-            text_up=_("High"),
-            text_low=_("Low"),
+            text_up=C_("pressure card", "High"),
+            text_low=C_("pressure card", "Low"),
         )
         widget_grid.attach(card_obj.card, 0, 1, 1, 1)
 
-        # -------- UV Index card ---------
+        # -------- Card UV Index ---------
         card_obj = CardSquare(
             title="UV Index",
             main_val=cw_data.uv_index.get("data"),
             desc=cw_data.uv_index.get("level_str"),
-            text_up=_("High"),
-            text_low=_("Low"),
+            text_up=C_("uvindex card","High"),
+            text_low=C_("uvindex card", "Low"),
         )
         widget_grid.attach(card_obj.card, 1, 1, 1, 1)
 
-        # -------- Card Rectangle ---------
+        # -------- Card Pollution ---------
         card_obj = CardAirPollution()
         widget_grid.attach(card_obj.card, 2, 0, 2, 1)
 
@@ -322,6 +347,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             thread = threading.Thread(target=self._load_weather_data, name="load_data")
             thread.start()
 
+    # ============= Dynamic Background methods ==============
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1):
         if self.settings.get_boolean("use-gradient-bg"):
             dont_delete_classes = ["backgrounds", "csd"]
@@ -344,3 +370,19 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
     def _on_locations_clicked(self, *args, **kwargs):
         adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()
+
+    def _show_shortcuts_dialog(self,*args, **kwargs):
+        dialog = ShortcutsDialog(self)
+        dialog.show()
+
+    #Def shortcuts key listeners
+    def on_key_press(self, key_controller, keyval, keycode, state,*args):
+        if state & Gdk.ModifierType.CONTROL_MASK:
+            if keyval == Gdk.KEY_r:
+                self._refresh_weather(None)
+            if keyval == Gdk.KEY_l:
+                GLib.idle_add(self._on_locations_clicked)
+            if keyval == Gdk.KEY_comma:
+                GLib.idle_add(self._on_preferences_clicked)
+            if keyval == Gdk.KEY_question:
+                GLib.idle_add(self._show_shortcuts_dialog)

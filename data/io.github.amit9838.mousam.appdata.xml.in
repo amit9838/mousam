@@ -43,6 +43,9 @@
   <url type="translate">https://github.com/amit9838/mousam/tree/master/po</url>
   <url type="vcs-browser">https://github.com/amit9838/mousam</url>
   <developer_name>Amit Chaudhary</developer_name>
+  <developer id="io.github.amit9838">
+    <name translate="no">Amit Chaudhary</name>
+  </developer>
   <recommends>
     <control>pointing</control>
     <control>touch</control>
@@ -55,8 +58,42 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="1.2.0" date="2024-05-14">
+      <description translate="no">
+        <p>What's New</p>
+        <ul>
+          <li>Mousam is now more usable on low resolution displays.</li>
+          <li>Added keyboard shortcuts for various like refresh, open settings etc. Thanks to @francobattista.</li>
+          <li>"Now" label in hourly forecast is automatically scrolled in the view. Thanks to  @georgescutelnicu</li>
+          <li>Now Mousam uses gnome runtime-version 46.</li>
+        </ul>
+        <p>Bug fixes</p>
+        <ul>
+          <li>Tomorrow's forecast is fixed now where it was showing offset forecast.</li>
+          <li>Some UI improvements in search city dialog.</li>
+          <li>Fixed error where sun rotation was inaccurate sometimes.</li>
+        </ul>
+        <p>Translation</p>
+        <ul>
+          <li>App is now available in various native languages :</li>
+          <li>Dutch  by @Vistaus</li>
+          <li>French + German by @Yellowbery01</li>
+          <li>Brazilian Portuguese by @Luiz-C-Lima</li>
+          <li>Polish by @LukaszH77</li>
+          <li>Ukrainian by @SimonOriginal</li>
+          <li>Hindi by @Scrambled777</li>
+        </ul>
+        <p>Thanks to</p>
+        <ul>
+          <li>@LukaszH77 for adding context related translation changes</li>
+          <li>@yakushabb for adding translation related patches</li>
+          <li>And thanks to the folks who reported issues on GitHub.</li>
+          <li>Thanks you for using Mousam.</li>
+        </ul>
+      </description>
+    </release>
      <release version="1.1.0" date="2024-02-24">
-      <description translatable="no">
+      <description translate="no">
         <p>What's New</p>
         <ul>
           <li>Dynamic background is back again, app background changes based on current weather condition.</li>
@@ -78,7 +115,7 @@
       </description>
     </release>
     <release version="1.0.2" date="2024-02-8">
-      <description translatable="no">
+      <description translate="no">
         <p>Bug fixes</p>
         <ul>
           <li>Bug fixes related to build</li>
@@ -91,7 +128,7 @@
       </description>
     </release>
     <release version="1.0.1" date="2024-01-16">
-      <description translatable="no">
+      <description translate="no">
         <p>Bug fixes</p>
         <ul>
           <li>Fix bug where some locations dosen't provide valid co-ordinates</li>
@@ -100,7 +137,7 @@
       </description>
     </release>
     <release version="1.0.0" date="2024-01-14">
-      <description translatable="no">
+      <description translate="no">
         <p>What's New</p>
         <ul>
           <li>Introducing a new design with an entirely new app experience.</li>
@@ -124,7 +161,7 @@
       </description>
     </release>
     <release version="0.6.0" date="2023-07-14">
-      <description translatable="no">
+      <description translate="no">
         <ul>
           <li>Adds air-pollution info</li>
           <li>Adds Snowfall summary</li>
@@ -136,7 +173,7 @@
       </description>
     </release>
     <release version="0.5.0" date="2023-07-05">
-      <description translatable="no">
+      <description translate="no">
         <ul>
           <li>Adds sunset/sunrise info</li>
           <li>Add and remove city more quickly</li>
@@ -147,7 +184,7 @@
       </description>
     </release>
     <release version="0.4.0" date="2023-06-25">
-      <description translatable="no">
+      <description translate="no">
         <ul>
           <li>Adds 5 days forecast</li>
           <li>Adds rain summary (rain quantity)</li>
@@ -158,7 +195,7 @@
       </description>
     </release>
     <release version="0.3.0" date="2023-06-22">
-      <description translatable="no">
+      <description translate="no">
         <ul>
           <li>Show today and tomorrow forecasts</li>
           <li>Option:Use Imerial, Metric systems</li>
@@ -173,7 +210,7 @@
       </description>
     </release>
     <release version="0.2.1" date="2023-06-18">
-      <description translatable="no">
+      <description translate="no">
         <ul>
           <li>Use full country name.</li>
           <li>Fix units.</li>
@@ -183,7 +220,7 @@
       </description>
     </release>
     <release version="0.2.0" date="2023-06-17">
-      <description translatable="no">
+      <description translate="no">
         <p>What's New</p>
         <ul>
           <li>Option:Use Custom api-key.</li>
@@ -196,7 +233,7 @@
       </description>
     </release>
     <release version="0.1.0" date="2023-06-11">
-      <description translatable="no">
+      <description translate="no">
         <p>New features and updates</p>
         <ul>
           <li>Use dynamic gradient backgrounds based on current weather.</li>

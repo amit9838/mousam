@@ -18,6 +18,7 @@ domains = {
     "baidu": "https://www.baidu.com/",  # Specifically for china
 }
 
+
 # Check internet connection using socket connecton
 def check_internet_socket():
     try:
@@ -32,7 +33,7 @@ def check_internet_socket():
 def check_internet_domain(url):
     try:
         request = requests.get(url, timeout=TIMEOUT)
-        print("Internet connection confirmed through: ",url)
+        print("Internet connection confirmed through: ", url)
         return True
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
@@ -43,24 +44,26 @@ def check_internet_connection():
         check_internet_socket()
         or check_internet_domain(domains["google"])
         or check_internet_domain(domains["wikipedia"])
-        or check_internet_domain(domains["baidu"]) 
+        or check_internet_domain(domains["baidu"])
     ):
         return True
-    
+
     print("No internet!")
     return False
 
 
 def get_selected_city_coords():
     settings = Gio.Settings.new("io.github.amit9838.mousam")
+
     selected_city = int(str(settings.get_value("selected-city")))
     added_cities = list(settings.get_value("added-cities"))
     city_loc = added_cities[selected_city].split(",")
     return city_loc[-2], city_loc[-1]  # latitude,longitude
 
+
 def is_dynamic_bg_enabled():
     global global_settings
-    return global_settings.get_boolean('use-gradient-bg')
+    return global_settings.get_boolean("use-gradient-bg")
 
 
 def create_toast(text, priority=0):
@@ -77,8 +80,8 @@ def convert_to_local_time(timestamp, timezone_stamp):
 
 
 def get_cords():
-    settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-    selected_city_ = settings.get_string("selected-city")
+    global global_settings
+    selected_city_ = global_settings.get_string("selected-city")
     return [float(x) for x in selected_city_.split(",")]
 
 
@@ -122,5 +125,14 @@ def get_tz_offset_by_cord(lat, lon):
     return epoch_offset
 
 
-def get_local_time():
-    return time.time() + get_my_tz_offset_from_utc() + get_tz_offset_by_cord(*get_cords())
+def get_time_difference(target_latitude, target_longitude):
+    # Get current time in the target location using timeapi.io
+    url = f"https://timeapi.io/api/Time/current/coordinate?latitude={target_latitude}&longitude={target_longitude}"
+    target_time_response = requests.get(url)
+    target_time_data = target_time_response.json()
+    target_current_time = target_time_data["dateTime"]
+    target_time = datetime.strptime(target_current_time[:26], "%Y-%m-%dT%H:%M:%S.%f")
+    
+    epoch_diff = time.time() - target_time.timestamp()
+    data = {"epoch_diff": epoch_diff, "target_time": target_time.timestamp()}
+    return data

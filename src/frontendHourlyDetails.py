@@ -2,11 +2,12 @@ import datetime
 import random
 import time
 import gi
-from gettext import gettext as _
+import gettext
 from gi.repository import Gtk, Gio
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
+from gettext import gettext as _, pgettext as C_
 
 from .constants import icons, icon_loc
 from .frontendUiDrawImageIcon import DrawImage
@@ -92,7 +93,7 @@ class HourlyDetails(Gtk.Grid):
         info_grid = Gtk.Grid(margin_start=20, margin_top=10)
         page_grid.attach(info_grid, 0, 1, 1, 1)
 
-        desc_label = Gtk.Label(label="Day High", halign=Gtk.Align.START)
+        desc_label = Gtk.Label(label=C_("wind", "Day High"), halign=Gtk.Align.START)
         desc_label.set_css_classes(["text-4", "light-2", "bold-2"])
         info_grid.attach(desc_label, 0, 0, 3, 1)
 
@@ -108,7 +109,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Hourly Page
         if page_name == "hourly":
-            desc_label.set_text("Day Max")
+            desc_label.set_text(C_("temperature","Day Max"))
             val_label.set_text(str(max(hourly_data.temperature_2m.get("data"))) + "°")
             unit_label.set_text("")
 
@@ -123,7 +124,7 @@ class HourlyDetails(Gtk.Grid):
             unit = "inch"
 
         if page_name == "prec":
-            desc_label.set_text(_("Day High"))
+            desc_label.set_text(C_("precipitation","Day High"))
             val_label.set_text(f"{max_prec:.2f}")
             unit_label.set_text(unit)
 
@@ -259,3 +260,10 @@ class HourlyDetails(Gtk.Grid):
                     label_val.set_text("0")
 
                 label_val.set_margin_top(0)
+
+        # Add scrollbar offset
+        container_size = graphic_container.get_preferred_size()[1]
+        container_width = container_size.width
+        scrollbar_offset = (container_width / 24) * (nearest_current_time_idx - 1)
+        h_adjustment = Gtk.Adjustment(value=scrollbar_offset, lower=0, upper=container_width)
+        scrolled_window.set_hadjustment(h_adjustment)

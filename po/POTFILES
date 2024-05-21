@@ -5,7 +5,6 @@ src/backendAirPollution.py
 src/backendFindCity.py
 src/backendWeather.py
 src/constants.py
-src/css.py
 src/frontendCardAirPollution.py
 src/frontendCardDayNight.py
 src/frontendCardSquare.py
@@ -27,3 +26,5 @@ src/weatherData.py
 src/windowAbout.py
 src/windowLocations.py
 src/windowPreferences.py
+src/shortcutsDialog.py
+src/shortcutsDialog.ui

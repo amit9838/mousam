@@ -1,0 +1,712 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ПАКЕТ ВЕРСІЯ\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-08 13:57+0530\n"
+"PO-Revision-Date: 2024-05-13 14:31+0530\n"
+"Last-Translator: Bezruchenko Simon <worcposj44@gmail.com>\n"
+"Language-Team: Ukrainian <LL@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr "Mousam"
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7
+msgid "Beautiful and lightweight weather app"
+msgstr "Гарний та легкий додаток для погоди"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgstr "Погода;Mousam;Дощ;Хмара;Прогноз;"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Поточні погодні умови та прогнози."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Особливості:"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr ""
+"Відображає температуру, вологість, швидкість вітру, індекс УФ, тиск та інше в "
+"реальному часі"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+"Використовує графічні представлення, такі як графіки температури, опадів "
+"та швидкості вітру з напрямком, для надання годинного прогнозу на наступні "
+"24 години"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "Також надає прогнози на завтра та на 7 днів"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr "Дивіться умови в метричній або імперській системі"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Overcast day"
+msgstr "Хмарний день"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Clear Sky - imperial"
+msgstr "Ясне небо - імперське"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29 src/constants.py:157
+msgid "Thunderstorm"
+msgstr "Гроза"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:33
+msgid "Dark mode"
+msgstr "Темний режим"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:37
+msgid "Light mode"
+msgstr "Світлий режим"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:45
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Список міст та їхніх координат."
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Зберігає місця, додані користувачем, у форматі json"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Обране місто"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Обрані координати міста"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Використовуйте градієнтний фон"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Застосуйте градієнтний фон головного вікна, відповідно до погодних умов"
+
+#: data/io.github.amit9838.mousam.gschema.xml:23
+msgid "Use Inch for precipitation"
+msgstr "Використовуйте дюйми для опадів"
+
+#: data/io.github.amit9838.mousam.gschema.xml:28
+msgid "Launch the app in maximized mode."
+msgstr "Запустіть додаток у розгорнутому режимі."
+
+#: data/io.github.amit9838.mousam.gschema.xml:33
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr "Система вимірювання - метрична, імперська"
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "метрична(км, °C), імперська(миля, °F)"
+
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr "Ясне небо"
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr "Небагато хмар"
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr "Мінлива хмарність"
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr "Хмарно"
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr "Туман"
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr "Морось"
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr "Легка морось"
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr "Помірна морось"
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr "Сильна морось"
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr "Легка обледеніла морось"
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr "Сильна обледеніла морось"
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr "Легкий дощ"
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr "Помірний дощ"
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr "Сильний дощ"
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr "Легкий обледенілий дощ"
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr "Сильний обледенілий дощ"
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr "Легкий снігопад"
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr "Помірний снігопад"
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr "Сильний снігопад"
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr "Сніжинки"
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr "Легкі зливи"
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr "Помірні зливи"
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr "Сильні зливи"
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr "Легкі снігопади"
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers "
+msgstr "Сильні снігопади"
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr "Гроза з градом"
+
+#: src/frontendCardAirPollution.py:43
+msgid "Air Pollution"
+msgstr "Забруднення повітря"
+
+#: src/frontendCardAirPollution.py:53
+msgid "United States AQI standard"
+msgstr "Стандарт AQI (США)"
+
+#: src/frontendCardDayNight.py:77
+msgid "Sunrise & Sunset"
+msgstr "Схід та захід сонця"
+
+#: src/frontendCardDayNight.py:88
+msgid "Sunrise"
+msgstr "Схід сонця"
+
+#: src/frontendCardDayNight.py:101
+msgid "Sunset"
+msgstr "Захід сонця"
+
+#: src/frontendCardSquare.py:162 src/frontendCardSquare.py:170
+msgid "North"
+msgstr "Північний"
+
+#: src/frontendCardSquare.py:163
+msgid "Northeast"
+msgstr "Північно східний"
+
+#: src/frontendCardSquare.py:164
+msgid "East"
+msgstr "Східний"
+
+#: src/frontendCardSquare.py:165
+msgid "Southeast"
+msgstr "Південно східний"
+
+#: src/frontendCardSquare.py:166
+msgid "South"
+msgstr "Південь"
+
+#: src/frontendCardSquare.py:167
+msgid "Southwest"
+msgstr "Південно західний"
+
+#: src/frontendCardSquare.py:168
+msgid "West"
+msgstr "Західний"
+
+#: src/frontendCardSquare.py:169 src/mousam.py:274
+msgid "Northwest"
+msgstr "Північно західний"
+
+#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:59
+msgid "Wind"
+msgstr "Вітер"
+
+#: src/frontendCardSquare.py:180
+msgid "Pressure"
+msgstr "Тиск"
+
+#: src/frontendCardSquare.py:181
+msgid "Humidity"
+msgstr "Вологість"
+
+#: src/frontendCardSquare.py:182
+msgid "UV Index"
+msgstr "Індекс УФ"
+
+#: src/frontendCurrentCond.py:87
+#, python-brace-format
+msgid "Feels Like • <b> {0} {1}</b>"
+msgstr "Відчувається як • <b> {0} {1}</b>"
+
+#: src/frontendForecast.py:36 src/frontendForecast.py:130
+msgid "Tomorrow"
+msgstr "Завтра"
+
+#: src/frontendForecast.py:43
+msgid "Weekly"
+msgstr "Тижневий"
+
+#: src/frontendForecast.py:128
+msgid "Today"
+msgstr "Сьогодні"
+
+#: src/frontendHourlyDetails.py:51
+msgid "Hourly"
+msgstr "Годинний"
+
+#: src/frontendHourlyDetails.py:67
+msgid "Precipitation"
+msgstr "Опади"
+
+#: src/frontendHourlyDetails.py:96
+msgctxt "wind"
+msgid "Day High"
+msgstr "Денний максимум"
+
+#: src/frontendHourlyDetails.py:112
+msgctxt "temperature"
+msgid "Day Max"
+msgstr "Денний максимум"
+
+#: src/frontendHourlyDetails.py:127
+msgctxt "precipitation"
+msgid "Day High"
+msgstr "Денний максимум"
+
+#: src/frontendHourlyDetails.py:165
+msgid "No precipitation today !"
+msgstr "Сьогодні немає опадів!"
+
+#: src/frontendHourlyDetails.py:166
+msgid "No precipitation expected today!"
+msgstr "Сьогодні не очікуються опади!"
+
+#: src/frontendHourlyDetails.py:167
+msgid "Anticipate a precipitation-free day !"
+msgstr "Очікуйте день без опадів!"
+
+#: src/frontendHourlyDetails.py:168
+msgid "Enjoy a rain-free day today!"
+msgstr "Насолоджуйтесь сьогодні днем без опадів!"
+
+#: src/frontendHourlyDetails.py:169
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "Стан парасолі: спокій. Опадів немає в полі зору!"
+
+#: src/frontendHourlyDetails.py:170
+msgid "No rain in sight today!"
+msgstr "Сьогодні дощу немає в полі зору!"
+
+#: src/frontendHourlyDetails.py:199
+msgid "Now"
+msgstr "Зараз"
+
+#: src/frontendUiDrawDayNight.py:98
+msgid "Horizon"
+msgstr "Горизонт"
+
+#: src/frontendUiDrawDayNight.py:108
+msgid "Midnight"
+msgstr "Північ"
+
+#: src/mousam.py:70
+msgid "Refresh"
+msgstr "Оновити"
+
+#: src/mousam.py:79 src/shortcutsDialog.ui:45
+msgid "Preferences"
+msgstr "Налаштування"
+
+#: src/mousam.py:84 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr "Сполучення клавіш"
+
+#: src/mousam.py:90
+msgid "About Mousam"
+msgstr "Про Mousam"
+
+#: src/mousam.py:92 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr "Вихід"
+
+#: src/mousam.py:150
+msgid "Getting Weather Data"
+msgstr "Отримання метеорологічних даних"
+
+#: src/mousam.py:161
+msgid "No Internet"
+msgstr "Немає Інтернету"
+
+#: src/mousam.py:165
+msgid "Could not fetch data from API"
+msgstr "Не вдалося отримати дані з API"
+
+#: src/mousam.py:273
+msgid "From"
+msgstr "Звідки"
+
+#: src/mousam.py:275
+msgid "N"
+msgstr "Пн"
+
+#: src/mousam.py:285
+msgid "Dewpoint"
+msgstr "Точка роси"
+
+#: src/mousam.py:301
+msgctxt "pressure card"
+msgid "High"
+msgstr "Високий"
+
+#: src/mousam.py:302
+msgctxt "pressure card"
+msgid "Low"
+msgstr "Низький"
+
+#: src/mousam.py:311
+msgctxt "uvindex card"
+msgid "High"
+msgstr "Високий"
+
+#: src/mousam.py:312
+msgctxt "uvindex card"
+msgid "Low"
+msgstr "Низький"
+
+#: src/mousam.py:328
+msgid "Switched to {}"
+msgstr "Перемкнувся на {}"
+
+#: src/mousam.py:331
+msgid "Refreshed Successfully"
+msgstr "Успішно оновлено"
+
+#: src/mousam.py:341
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "Оновлення протягом 5 секунд ігнорується!"
+
+#: src/mousam.py:346
+msgid "Refreshing..."
+msgstr "Оновлення..."
+
+#: src/weatherData.py:100
+msgid "Good"
+msgstr "Добре"
+
+#: src/weatherData.py:102
+msgid "Moderate"
+msgstr "Помірний"
+
+#: src/weatherData.py:104
+msgid "Poor"
+msgstr "Поганий"
+
+#: src/weatherData.py:106
+msgid "Unhealthy"
+msgstr "Нездоровий"
+
+#: src/weatherData.py:108
+msgid "Severe"
+msgstr "Серйозний"
+
+#: src/weatherData.py:110
+msgid "Hazardous"
+msgstr "Небезпечний"
+
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Low"
+msgstr "Низький"
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "Помірний"
+
+#: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "High"
+msgstr "Високий"
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "Дуже високий"
+
+#: src/weatherData.py:126
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "Екстремальний"
+
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Low"
+msgstr "Низький"
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Помірний"
+
+#: src/weatherData.py:135
+msgctxt "humidity"
+msgid "High"
+msgstr "Високий"
+
+#: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Low"
+msgstr "Низький"
+
+#: src/weatherData.py:142
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Нормальний"
+
+#: src/weatherData.py:144
+msgctxt "pressure"
+msgid "High"
+msgstr "Високий"
+
+#: src/weatherData.py:149
+msgid "Calm"
+msgstr "Спокійний"
+
+#: src/weatherData.py:151
+msgid "Light"
+msgstr "Легкий"
+
+#: src/weatherData.py:153
+msgctxt "wind"
+msgid "Moderate"
+msgstr "Помірний"
+
+#: src/weatherData.py:155
+msgid "Strong"
+msgstr "Сильний"
+
+#: src/weatherData.py:157
+msgctxt "wind"
+msgid "Extreme"
+msgstr "Екстремальний"
+
+#: src/weatherData.py:163
+msgid "km"
+msgstr "км"
+
+#: src/weatherData.py:166
+msgid "miles"
+msgstr "милі"
+
+#: src/windowAbout.py:13
+msgid "Beautiful and light weight weather app build using Gtk and Python"
+msgstr "Гарний та легкий додаток для погоди, створений за допомогою Gtk та Python"
+
+#: src/windowAbout.py:17
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Copyright © 2024 Mousam Developers"
+
+#: src/windowAbout.py:20
+msgid "translator_credits"
+msgstr "Bezruchenko Simon <worcposj44@gmail.com>"
+
+#: src/windowLocations.py:19 src/windowLocations.py:35
+#: src/shortcutsDialog.ui:39
+msgid "Locations"
+msgstr "Локації"
+
+#: src/windowLocations.py:41
+msgid "Add"
+msgstr "Додати"
+
+#: src/windowLocations.py:65
+msgid "Remove location"
+msgstr "Видалити місце"
+
+#: src/windowLocations.py:112
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "Перемикання міста протягом 2 секунд ігнорується!"
+
+#: src/windowLocations.py:115
+msgid "Selected - {}"
+msgstr "Обрано - {}"
+
+#: src/windowLocations.py:125
+msgid "Add New Location"
+msgstr "Додати нове місце"
+
+#: src/windowLocations.py:143
+msgid "Search for a city"
+msgstr "Шукати місто"
+
+#: src/windowLocations.py:149 src/windowLocations.py:151
+msgid "Search"
+msgstr "Пошук"
+
+#: src/windowLocations.py:229
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "Додано - {0}"
+
+#: src/windowLocations.py:231
+msgid "Location already added!"
+msgstr "Місце вже додано!"
+
+#: src/windowLocations.py:240
+msgid "Add more locations to delete!"
+msgstr "Додайте більше місць, щоб видалити!"
+
+#: src/windowLocations.py:263
+#, python-brace-format
+msgid "Deleted - {0}"
+msgstr "Видалено - {0}"
+
+#: src/windowLocations.py:266
+msgid "Press enter to search"
+msgstr "Натисніть Enter, щоб шукати"
+
+#: src/windowLocations.py:269
+msgid "No results found!"
+msgstr "Результатів не знайдено!"
+
+#: src/windowPreferences.py:34
+msgid "Appearance"
+msgstr "Зовнішній вигляд"
+
+#: src/windowPreferences.py:44
+msgid "Dynamic Background"
+msgstr "Динамічний фон"
+
+#: src/windowPreferences.py:45
+msgid ""
+"Background changes based on current weather condition (Restart required)"
+msgstr ""
+"Фон змінюється в залежності від поточних погодних умов (потрібен перезапуск)"
+
+#: src/windowPreferences.py:58
+msgid "Launch Maximized"
+msgstr "Запустити в повноекранному режимі"
+
+#: src/windowPreferences.py:59
+msgid "Launch the weather app in maximized mode (Refresh required)"
+msgstr "Запустити додаток погоди в повноекранному режимі (потрібен перезапуск)."
+
+#: src/windowPreferences.py:72
+msgid "Units &amp; Measurements"
+msgstr "Одиниці та вимірювання"
+
+#: src/windowPreferences.py:76
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:77
+msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgstr "МЕТРИЧНА система з одиницями, такими як цельсій, км/год, кілометр"
+
+#: src/windowPreferences.py:85
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:86
+msgid "IMPERIAL system with units like fahrenheit, mph, miles"
+msgstr "ІМПЕРСЬКА система з одиницями, такими як фаренгейт, миль/год, милі"
+
+#: src/windowPreferences.py:100
+msgid "Show precipitation in inch"
+msgstr "Показувати опади в дюймах"
+
+#: src/windowPreferences.py:101
+msgid "This option better works during heavy preciptaion (Refresh required)"
+msgstr "Ця опція краще працює під час сильних опадів (потрібен перезапуск)"
+
+#: src/windowPreferences.py:129
+msgid "Switching within 2 seconds is ignored!"
+msgstr "Перемикання протягом 2 секунд ігнорується!"
+
+#: src/windowPreferences.py:132
+msgid "Switched to - {}"
+msgstr "Перемикач на - {}"
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "Загальне"
+
+#: src/shortcutsDialog.ui:33
+msgid "Refresh Weather"
+msgstr "Оновити погоду"
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
+msgstr "Навігація"

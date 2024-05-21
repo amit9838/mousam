@@ -1,8 +1,7 @@
 # These are supported funding model platforms
-
-github: amit9838
+github: #github sponsor id
 patreon: # Replace with a single Patreon username
-ko_fi: amit9838
+ko_fi: #ko-fi sponsor id
 tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
 community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
 liberapay: # Replace with a single Liberapay username
