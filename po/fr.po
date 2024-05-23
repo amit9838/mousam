@@ -89,7 +89,7 @@ msgstr "Amit Chaudhary"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr "Liste des villes et de leurs coordonnées"
+msgstr "Liste des villes et de leurs coordonnées."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
@@ -106,7 +106,7 @@ msgstr "Coordonnées de la ville sélectionnée"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
 msgid "Use Gradient Background"
-msgstr "Utiliser un arrière plan en dégradé"
+msgstr "Utiliser un arrière-plan en dégradé"
 
 #: data/io.github.amit9838.mousam.gschema.xml:18
 msgid ""
@@ -119,7 +119,7 @@ msgstr "Utiliser comme unité le pouce"
 
 #: data/io.github.amit9838.mousam.gschema.xml:28
 msgid "Launch the app in maximized mode."
-msgstr "Lancer l'application en mode maximisée."
+msgstr "Lancer l'application en mode maximisé."
 
 #: data/io.github.amit9838.mousam.gschema.xml:33
 msgid "Mesaurement sysytem to use - metric,imperial"
@@ -167,7 +167,7 @@ msgstr "Bruine forte"
 
 #: src/constants.py:141
 msgid "Light Freezing Drizzle"
-msgstr "Bruine verglaçante"
+msgstr "Bruine verglaçante Légère"
 
 #: src/constants.py:142
 msgid "Heavy Freezing Drizzle"
