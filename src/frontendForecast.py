@@ -113,7 +113,7 @@ class Forecast(Gtk.Grid):
             date_time = datetime.fromtimestamp(ts)
             dt_label = date_time.strftime("%I:%M %p")
             temp_max_text = hourly_data.temperature_2m.get("data")[idx+idx_offset]
-            temp_min_text = hourly_data.temperature_2m.get("data")[idx+idx_offset]
+            temp_min_text = 0
             weather_code = hourly_data.weathercode.get("data")[idx+idx_offset]
 
             if page_name == 'weekly':
@@ -131,9 +131,9 @@ class Forecast(Gtk.Grid):
 
             # Add dt_label Label
             label_box = Gtk.Box()
-            label_box.set_size_request(80, 20)
+            label_box.set_size_request(80, 68)
             label_day_time = Gtk.Label(label=dt_label, halign=Gtk.Align.START)
-            label_day_time.set_css_classes(['text-4', 'bold-2'])
+            label_day_time.set_css_classes(['text-4', 'bold-2','light-2'])
             label_box.append(label_day_time)
             forecast_item_grid.attach(label_box, 0, 0, 1, 1)
 
@@ -161,9 +161,10 @@ class Forecast(Gtk.Grid):
             temp_label_grid.attach(temp_max, 1, 0, 1, 1)
 
             # Min temp label ======
-            temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°", margin_top=5)
-            temp_min.set_css_classes(['light-4'])
-            temp_label_grid.attach(temp_min, 1, 1, 1, 1)
+            if page_name == 'weekly':
+                temp_min = Gtk.Label(label=f" {temp_min_text:.0f}°", margin_top=5)
+                temp_min.set_css_classes(['light-4'])
+                temp_label_grid.attach(temp_min, 1, 1, 1, 1)
 
 
     # ============ get timestamp of upcomming 12:00 AM ====================
