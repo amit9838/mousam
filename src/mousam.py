@@ -22,6 +22,7 @@ from .frontendForecast import Forecast
 from .frontendCardSquare import CardSquare
 from .frontendCardDayNight import CardDayNight
 from .frontendCardAirPollution import CardAirPollution
+from .config import settings
 from .weatherData import (
     fetch_current_weather,
     fetch_hourly_forecast,
@@ -38,7 +39,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         super().__init__(*args, **kwargs)
 
         self.main_window = self
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.set_default_size(1160, 818)
         self.set_title("")
         self._use_dynamic_bg()
@@ -232,11 +232,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         )
 
         # Check if no city is added
-        added_cities = self.settings.get_strv("added-cities")
 
-        if len(added_cities) == 0:  # Reset city to default if all cities are removed
-            self.settings.reset("added-cities")
-            self.settings.reset("selected-city")
+        if len(settings.added_cities) == 0:  # Reset city to default if all cities are removed
+            settings.reset("added-cities")
+            settings.reset("selected-city")
 
         child = self.main_stack.get_child_by_name("main_grid")
         if child is not None:
@@ -349,7 +348,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
     # ============= Dynamic Background methods ==============
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1):
-        if self.settings.get_boolean("use-gradient-bg"):
+        if settings.is_using_dynamic_bg:
             dont_delete_classes = ["backgrounds", "csd"]
             for cl in self.get_css_classes():
                 if cl not in dont_delete_classes:

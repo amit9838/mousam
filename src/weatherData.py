@@ -1,9 +1,9 @@
 import time
 import gi
 
-from gi.repository import Gio
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
+from .config import settings
 from .Models import *
 from .utils import get_cords
 from gettext import gettext as _, pgettext as C_
@@ -158,11 +158,9 @@ def classify_wind_speed_level(wind_speed):
 
 
 def transform_visibility_data(unit, data):
-    settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-    measurement_type = settings.get_string("measure-type")
     dist_unit = _("km")
     dist = data / 1000
-    if measurement_type == "imperial":
+    if settings.unit == "imperial":
         dist_unit = _("miles")
         dist = data / 1609.34
 

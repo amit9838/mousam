@@ -6,7 +6,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk
 
 from .frontendUiDrawPollutionBar import PollutionBar
-from .utils import is_dynamic_bg_enabled
+from .config import settings
 
 class CardAirPollution:
     def __init__(self):
@@ -36,7 +36,7 @@ class CardAirPollution:
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)
         card.set_css_classes(["view", "card", "custom_card"])
-        if is_dynamic_bg_enabled():
+        if settings.is_using_dynamic_bg:
             card.add_css_class("transparent_5")
 
         # Main title of the card

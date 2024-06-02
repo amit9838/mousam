@@ -3,7 +3,7 @@ import random
 import time
 import gi
 import gettext
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -12,7 +12,7 @@ from gettext import gettext as _, pgettext as C_
 from .constants import icons, icon_loc
 from .frontendUiDrawImageIcon import DrawImage
 from .frontendUiDrawbarLine import DrawBar
-from .utils import is_dynamic_bg_enabled
+from .config import settings
 
 icon_loc += "arrow.svg"
 
@@ -22,8 +22,10 @@ class HourlyDetails(Gtk.Grid):
         super().__init__(*args, **kwargs)
         self.set_hexpand(True)
         self.set_css_classes(["view", "card", "custom_card"])
-        if is_dynamic_bg_enabled():
+
+        if settings.is_using_dynamic_bg:
             self.add_css_class("transparent_5")
+
         self.set_margin_top(20)
         self.set_margin_start(5)
         self.paint_ui()
@@ -114,12 +116,9 @@ class HourlyDetails(Gtk.Grid):
             unit_label.set_text("")
 
         # Precipitation page
-        settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        use_inch_for_prec = settings.get_boolean("use-inch-for-prec")
-
         max_prec = max(hourly_data.precipitation.get("data")[:24])
         unit = hourly_data.precipitation.get("unit")
-        if use_inch_for_prec:
+        if settings.is_using_inch_for_prec:
             max_prec = max_prec / 25.4
             unit = "inch"
 
@@ -245,7 +244,7 @@ class HourlyDetails(Gtk.Grid):
             elif page_name == "prec":
                 bar_obj = None
                 prec = hourly_data.precipitation.get("data")[i]
-                if use_inch_for_prec:
+                if settings.is_using_inch_for_prec:
                     prec = hourly_data.precipitation.get("data")[i] / 25.4
                 if max_prec == 0:
                     bar_obj = DrawBar(0)

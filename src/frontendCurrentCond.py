@@ -1,6 +1,7 @@
 import gi
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk
 from .constants import icons, conditon
+from .config import settings
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -51,7 +52,9 @@ class CurrentCondition(Gtk.Grid):
 
         # Condition temperature
         main_temp_label = Gtk.Label(
-            label="{0:.0f} {1}".format(data.temperature_2m.get("data"),data.temperature_2m.get("unit")),
+            label="{0:.0f} {1}".format(
+                data.temperature_2m.get("data"), data.temperature_2m.get("unit")
+            ),
             halign=Gtk.Align.START,
             valign=Gtk.Align.START,
         )
@@ -64,15 +67,11 @@ class CurrentCondition(Gtk.Grid):
         )
         self.attach(box_right, 1, 0, 1, 1)
 
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
-        self.added_cities = self.settings.get_strv("added-cities")
-        self.selected_city = self.settings.get_string("selected-city")
-
         self.selected_city_index = list(
-            map(lambda city: self.selected_city in city, self.added_cities)
+            map(lambda city: settings.selected_city in city, settings.added_cities)
         ).index(True)
 
-        city_arr = self.added_cities[self.selected_city_index].split(",")
+        city_arr = settings.added_cities[self.selected_city_index].split(",")
 
         # Delete lat,lon from the array
         del city_arr[-1]

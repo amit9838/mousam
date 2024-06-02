@@ -5,11 +5,11 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk
 
 from .frontendUiDrawDayNight import *
+from .config import settings
 from .utils import (
     get_tz_offset_by_cord,
     get_cords,
     get_my_tz_offset_from_utc,
-    is_dynamic_bg_enabled,
     get_time_difference,
 )
 
@@ -70,7 +70,7 @@ class CardDayNight:
         card.set_row_spacing(5)
         card.set_css_classes(["view", "card", "custom_card"])
 
-        if is_dynamic_bg_enabled():
+        if settings.is_using_dynamic_bg:
             card.add_css_class("transparent_5")
 
         # Main title of the card

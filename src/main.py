@@ -26,6 +26,7 @@ gi.require_version('Gtk', '4.0')
 
 from gi.repository import Gtk, Gio, Adw, Gdk
 from .mousam import WeatherMainWindow
+from .config import settings
 
 class WeatherApplication(Adw.Application):
     """The main application singleton class."""
@@ -34,7 +35,6 @@ class WeatherApplication(Adw.Application):
         super().__init__(application_id='io.github.amit9838.mousam',
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
-        self.settings = Gio.Settings(schema_id="io.github.amit9838.mousam")
         self.main_window = None
 
         self.set_accels_for_action(f"win.preferences", ['<primary>comma'])
@@ -52,12 +52,11 @@ class WeatherApplication(Adw.Application):
         css_provider.load_from_data(css,len(css))
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
 
-        launch_maximized = self.settings.get_boolean("launch-maximized")
 
         if not win:
             win = WeatherMainWindow(application=self)
 
-        if launch_maximized:
+        if settings.should_launch_maximized:
             win.maximize()
 
         win.present()

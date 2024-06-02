@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 import gi
 from .constants import icons
-from .utils import is_dynamic_bg_enabled
+from .config import settings
 from .frontendUiDrawBar import *
 from .frontendUiDrawImageIcon import *
 
@@ -53,7 +53,7 @@ class CardSquare:
         card.set_size_request(200, 150)
         card.set_css_classes(["view", "card", "custom_card"])
         
-        if is_dynamic_bg_enabled():
+        if settings.is_using_dynamic_bg:
             card.add_css_class("transparent_5")
         self.card = card
 

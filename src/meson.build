@@ -50,8 +50,8 @@ mousam_sources = [
   'frontendUiDrawPollutionBar.py',
 
   'constants.py',
-  'units.py',
   'utils.py',
+  'config.py',
   'windowAbout.py',
   'windowPreferences.py',
   'windowLocations.py',

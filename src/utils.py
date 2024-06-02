@@ -3,13 +3,13 @@ import socket
 import json
 from datetime import datetime, timedelta, timezone
 import time
-from gi.repository import Adw, Gio
+from gi.repository import Adw
+from .config import settings
 
 current_weather_data = None
 air_pollution_data = None
 forecast_weather_data = None
 epoch_offset = None
-global_settings = Gio.Settings.new("io.github.amit9838.mousam")
 
 TIMEOUT = 5
 domains = {
@@ -53,17 +53,10 @@ def check_internet_connection():
 
 
 def get_selected_city_coords():
-    settings = Gio.Settings.new("io.github.amit9838.mousam")
-
-    selected_city = int(str(settings.get_value("selected-city")))
-    added_cities = list(settings.get_value("added-cities"))
+    selected_city = int(str(settings.selected_city))
+    added_cities = list(settings.added_cities)
     city_loc = added_cities[selected_city].split(",")
     return city_loc[-2], city_loc[-1]  # latitude,longitude
-
-
-def is_dynamic_bg_enabled():
-    global global_settings
-    return global_settings.get_boolean("use-gradient-bg")
 
 
 def create_toast(text, priority=0):
@@ -80,8 +73,7 @@ def convert_to_local_time(timestamp, timezone_stamp):
 
 
 def get_cords():
-    global global_settings
-    selected_city_ = global_settings.get_string("selected-city")
+    selected_city_ = settings.selected_city
     return [float(x) for x in selected_city_.split(",")]
 
 

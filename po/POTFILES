@@ -20,7 +20,6 @@ src/main.py
 src/Models.py
 src/mousam.in
 src/mousam.py
-src/units.py
 src/utils.py
 src/weatherData.py
 src/windowAbout.py
