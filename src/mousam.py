@@ -39,7 +39,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         super().__init__(*args, **kwargs)
 
         self.main_window = self
-        self.set_default_size(1160, 818)
+        self.set_default_size(settings.window_width, settings.window_height)
+        self.connect("close-request",self.save_window_state)
         self.set_title("")
         self._use_dynamic_bg()
 
@@ -385,3 +386,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._on_preferences_clicked)
             if keyval == Gdk.KEY_question:
                 GLib.idle_add(self._show_shortcuts_dialog)
+
+    def save_window_state(self,window):
+        width,height = window.get_default_size()
+        settings.window_width = width
+        settings.window_height = height
+        settings.window_maximized = window.is_maximized()

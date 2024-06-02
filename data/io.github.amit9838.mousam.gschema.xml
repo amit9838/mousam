@@ -23,9 +23,17 @@
       <summary>Use Inch for precipitation</summary>
     </key>
 
-	  <key name="launch-maximized" type="b">
+	  <key name="window-maximized" type="b">
       <default>false</default>
       <summary>Launch the app in maximized mode.</summary>
+    </key>
+	  <key name="window-width" type="i">
+      <default>1160</default>
+      <summary>Main window width</summary>
+    </key>
+	  <key name="window-height" type="i">
+      <default>818</default>
+      <summary>Main window height</summary>
     </key>
 
     <key name="unit" type="s">

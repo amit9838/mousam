@@ -56,7 +56,7 @@ class WeatherApplication(Adw.Application):
         if not win:
             win = WeatherMainWindow(application=self)
 
-        if settings.should_launch_maximized:
+        if settings.window_maximized:
             win.maximize()
 
         win.present()

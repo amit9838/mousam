@@ -17,7 +17,9 @@ class Settings:
             "selected_city": "selected-city",
             "is_using_dynamic_bg": "use-gradient-bg",
             "is_using_inch_for_prec": "use-inch-for-prec",
-            "should_launch_maximized": "launch-maximized",
+            "window_width": "window-width",
+            "window_height": "window-height",
+            "window_maximized": "window-maximized",
             "unit": "unit",
         }
 
@@ -54,12 +56,29 @@ class Settings:
         self.settings.set_boolean(self._settings_map["is_using_inch_for_prec"], value)
 
     @property
-    def should_launch_maximized(self):
-        return self.settings.get_boolean(self._settings_map["should_launch_maximized"])
+    def window_width(self):
+        return self.settings.get_int(self._settings_map["window_width"])
 
-    @should_launch_maximized.setter
-    def should_launch_maximized(self, value):
-        self.settings.set_boolean(self._settings_map["should_launch_maximized"], value)
+    @window_width.setter
+    def window_width(self, value):
+        self.settings.set_int(self._settings_map["window_width"], value)
+
+    @property
+    def window_height(self):
+        return self.settings.get_int(self._settings_map["window_height"])
+
+    @window_height.setter
+    def window_height(self, value):
+        self.settings.set_int(self._settings_map["window_height"], value)
+
+
+    @property
+    def window_maximized(self):
+        return self.settings.get_boolean(self._settings_map["window_maximized"])
+
+    @window_maximized.setter
+    def window_maximized(self, value):
+        self.settings.set_boolean(self._settings_map["window_maximized"], value)
 
     @property
     def unit(self):
