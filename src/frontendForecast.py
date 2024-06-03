@@ -112,6 +112,10 @@ class Forecast(Gtk.Grid):
             ts = hourly_data.time.get('data')[idx+idx_offset]
             date_time = datetime.fromtimestamp(ts)
             dt_label = date_time.strftime("%I:%M %p")
+            
+            if settings.is_using_24h_clock:
+                dt_label = date_time.strftime("%H:%M")
+
             temp_max_text = hourly_data.temperature_2m.get("data")[idx+idx_offset]
             temp_min_text = 0
             weather_code = hourly_data.weathercode.get("data")[idx+idx_offset]

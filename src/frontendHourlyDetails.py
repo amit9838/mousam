@@ -190,9 +190,11 @@ class HourlyDetails(Gtk.Grid):
 
             label_timestamp = Gtk.Label(label="")
             label_timestamp.set_css_classes(["text-6", "bold-2", "light-6"])
-            tm = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
-            tm = tm.strftime("%I:%M %p")
-            label_timestamp.set_text(tm)
+            time_stamp = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+            time_label = time_stamp.strftime("%I:%M %p")
+            if settings.is_using_24h_clock:
+                time_label = time_stamp.strftime("%H:%M")
+            label_timestamp.set_text(time_label)
 
             if i == nearest_current_time_idx:
                 label_timestamp.set_text(_("Now"))

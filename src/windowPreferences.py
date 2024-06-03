@@ -43,6 +43,20 @@ class WeatherPreferences(Adw.PreferencesWindow):
         gradient_row.add_suffix(self.g_switch_box)
         self.appearance_grp.add(gradient_row)
 
+        #  Use 24h Clock Format
+        use_24h_clock_row =  Adw.ActionRow.new()
+        use_24h_clock_row.set_activatable(True)
+        use_24h_clock_row.set_title(_("24 Hour Time Format"))
+        use_24h_clock_row.set_subtitle(_("Use 24 hour Time format (Refresh required)"))
+
+        self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.launch_max_switch = Gtk.Switch()
+        self.launch_max_switch.set_active(settings.is_using_24h_clock)
+        self.launch_max_switch.connect("state-set",self._on_click_use_24h_clock)
+        self.g_switch_box.append(self.launch_max_switch)
+        use_24h_clock_row.add_suffix(self.g_switch_box)
+        self.appearance_grp.add(use_24h_clock_row)
+
         #  Units and measurement
         self.measurement_group = Adw.PreferencesGroup.new()
         self.measurement_group.set_margin_top(20)
@@ -91,6 +105,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_click_launch_maximixed(self,widget,state):
         settings.should_launch_maximized = state
+
+    def _on_click_use_24h_clock(self,widget,state):
+        settings.is_using_24h_clock = state
 
     def _change_unit(self,widget,value):
         if settings.unit != value:

@@ -7,6 +7,7 @@ from gi.repository import Gtk
 import cairo
 from datetime import datetime
 from .utils import get_cords, get_time_difference
+from .config import settings
 
 
 class DrawDayNight:
@@ -79,12 +80,18 @@ class DrawDayNight:
         t_data = get_time_difference(*get_cords())
         target_time = t_data.get("target_time")
 
-        formatted_date_time = datetime.fromtimestamp(target_time).strftime("%I:%M %p")
-        text = formatted_date_time
-
         # Calculate the position for text placement
         text_x = center_x - 30
         text_y = center_y + 15
+        
+        date_time = datetime.fromtimestamp(target_time)
+        formatted_date_time= date_time.strftime("%I:%M %p")
+
+        if settings.is_using_24h_clock:
+            formatted_date_time= date_time.strftime("%H:%M")
+            text_x += 7
+
+        text = formatted_date_time
 
         # Move the text cursor to the calculated position
         context.move_to(text_x, text_y)

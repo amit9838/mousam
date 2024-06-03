@@ -17,15 +17,13 @@
       <summary>Use Gradient Background</summary>
       <description>Apply gradient background on main window corresponding to weather condition</description>
     </key>
-
 	  <key name="use-inch-for-prec" type="b">
       <default>false</default>
       <summary>Use Inch for precipitation</summary>
     </key>
-
-	  <key name="window-maximized" type="b">
+	  <key name="use-24h-clock" type="b">
       <default>false</default>
-      <summary>Launch the app in maximized mode.</summary>
+      <summary>Use 24h hour clock</summary>
     </key>
 	  <key name="window-width" type="i">
       <default>1160</default>
@@ -35,7 +33,10 @@
       <default>818</default>
       <summary>Main window height</summary>
     </key>
-
+	  <key name="window-maximized" type="b">
+      <default>false</default>
+      <summary>Launch the app in maximized mode.</summary>
+    </key>
     <key name="unit" type="s">
       <default>"metric"</default>
       <summary>Mesaurement sysytem to use - metric,imperial</summary>

@@ -17,6 +17,7 @@ class Settings:
             "selected_city": "selected-city",
             "is_using_dynamic_bg": "use-gradient-bg",
             "is_using_inch_for_prec": "use-inch-for-prec",
+            "is_using_24h_clock": "use-24h-clock",
             "window_width": "window-width",
             "window_height": "window-height",
             "window_maximized": "window-maximized",
@@ -56,6 +57,14 @@ class Settings:
         self.settings.set_boolean(self._settings_map["is_using_inch_for_prec"], value)
 
     @property
+    def is_using_24h_clock(self):
+        return self.settings.get_boolean(self._settings_map["is_using_24h_clock"])
+
+    @is_using_24h_clock.setter
+    def is_using_24h_clock(self, value):
+        self.settings.set_boolean(self._settings_map["is_using_24h_clock"], value)
+
+    @property
     def window_width(self):
         return self.settings.get_int(self._settings_map["window_width"])
 
@@ -70,7 +79,6 @@ class Settings:
     @window_height.setter
     def window_height(self, value):
         self.settings.set_int(self._settings_map["window_height"], value)
-
 
     @property
     def window_maximized(self):
