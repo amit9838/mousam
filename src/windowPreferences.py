@@ -50,10 +50,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
         use_24h_clock_row.set_subtitle(_("Use 24 hour Time format (Refresh required)"))
 
         self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
-        self.launch_max_switch = Gtk.Switch()
-        self.launch_max_switch.set_active(settings.is_using_24h_clock)
-        self.launch_max_switch.connect("state-set",self._on_click_use_24h_clock)
-        self.g_switch_box.append(self.launch_max_switch)
+        self.use_24h_clock_switch = Gtk.Switch()
+        self.use_24h_clock_switch.set_active(settings.is_using_24h_clock)
+        self.use_24h_clock_switch.connect("state-set",self._on_click_use_24h_clock)
+        self.g_switch_box.append(self.use_24h_clock_switch)
         use_24h_clock_row.add_suffix(self.g_switch_box)
         self.appearance_grp.add(use_24h_clock_row)
 
