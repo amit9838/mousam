@@ -45,13 +45,11 @@ def fetch_hourly_forecast():
     # Get current weather data from api
     obj = Weather()
     hourly_forecast_data = obj._get_hourly_forecast(*get_cords())
-    # create object of hourly forecast data
-    # print(hourly_forecast_data.get("hourly").items())
+    hourly_forecast_time_list = hourly_forecast_data.get("hourly").get("time")
+
     nearest_current_time_idx = 0
-    for i in range(len(hourly_forecast_data.get("hourly").get("time"))):
-        if (
-            abs(time.time() - hourly_forecast_data.get("hourly").get("time")[i]) // 60
-        ) < 30:
+    for i in range(len(hourly_forecast_time_list)):
+        if (abs(time.time() - hourly_forecast_time_list[i]) // 60) < 30:
             nearest_current_time_idx = i
             break
 

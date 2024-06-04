@@ -51,7 +51,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Temperature Button -------------
         temp_btn = Gtk.ToggleButton.new_with_label(_("Hourly"))
-        temp_btn.set_size_request(100,20)
+        temp_btn.set_size_request(100, 20)
         temp_btn.set_css_classes(["btn_sm"])
         temp_btn.do_clicked(temp_btn)
         style_buttons_box.append(temp_btn)
@@ -59,7 +59,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Wind Button -------------
         wind_btn = Gtk.ToggleButton.new_with_label(_("Wind"))
-        wind_btn.set_size_request(100,20)
+        wind_btn.set_size_request(100, 20)
         wind_btn.set_css_classes(["btn_sm"])
         wind_btn.set_group(temp_btn)
         style_buttons_box.append(wind_btn)
@@ -67,7 +67,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Precipitation Button -------------
         prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
-        prec_btn.set_size_request(100,20)
+        prec_btn.set_size_request(100, 20)
         prec_btn.set_css_classes(["btn_sm"])
         prec_btn.set_group(temp_btn)
         style_buttons_box.append(prec_btn)
@@ -111,7 +111,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Hourly Page
         if page_name == "hourly":
-            desc_label.set_text(C_("temperature","Day Max"))
+            desc_label.set_text(C_("temperature", "Day Max"))
             val_label.set_text(str(max(hourly_data.temperature_2m.get("data"))) + "°")
             unit_label.set_text("")
 
@@ -123,7 +123,7 @@ class HourlyDetails(Gtk.Grid):
             unit = "inch"
 
         if page_name == "prec":
-            desc_label.set_text(C_("precipitation","Day High"))
+            desc_label.set_text(C_("precipitation", "Day High"))
             val_label.set_text(f"{max_prec:.2f}")
             unit_label.set_text(unit)
 
@@ -143,9 +143,10 @@ class HourlyDetails(Gtk.Grid):
 
         scrolled_window.set_child(graphic_container)
 
+        hourly_forecast_time_list = hourly_data.time.get("data")
         nearest_current_time_idx = 0
-        for i in range(len(hourly_data.time.get("data"))):
-            if (abs(time.time() - hourly_data.time.get("data")[i]) // 60) < 30:
+        for i in range(len(hourly_forecast_time_list)):
+            if (abs(time.time() - hourly_forecast_time_list[i]) // 60) < 30:
                 nearest_current_time_idx = i
                 break
 
@@ -175,7 +176,7 @@ class HourlyDetails(Gtk.Grid):
                 no_prec_label.set_halign(Gtk.Align.CENTER)
                 no_prec_label.set_margin_top(40)
                 no_prec_label.set_margin_bottom(40)
-                graphic_box.set_css_classes(["custom_card_hourly",'bg_light_grey'])
+                graphic_box.set_css_classes(["custom_card_hourly", "bg_light_grey"])
                 graphic_box.append(no_prec_label)
                 graphic_container.append(graphic_box)
                 return
@@ -190,7 +191,9 @@ class HourlyDetails(Gtk.Grid):
 
             label_timestamp = Gtk.Label(label="")
             label_timestamp.set_css_classes(["text-6", "bold-2", "light-6"])
-            time_stamp = datetime.datetime.fromtimestamp(hourly_data.time.get("data")[i])
+            time_stamp = datetime.datetime.fromtimestamp(
+                hourly_data.time.get("data")[i]
+            )
             time_label = time_stamp.strftime("%I:%M %p")
             if settings.is_using_24h_clock:
                 time_label = time_stamp.strftime("%H:%M")
@@ -266,5 +269,7 @@ class HourlyDetails(Gtk.Grid):
         container_size = graphic_container.get_preferred_size()[1]
         container_width = container_size.width
         scrollbar_offset = (container_width / 24) * (nearest_current_time_idx - 1)
-        h_adjustment = Gtk.Adjustment(value=scrollbar_offset, lower=0, upper=container_width)
+        h_adjustment = Gtk.Adjustment(
+            value=scrollbar_offset, lower=0, upper=container_width
+        )
         scrolled_window.set_hadjustment(h_adjustment)
