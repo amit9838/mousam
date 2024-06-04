@@ -46,16 +46,34 @@ class WeatherPreferences(Adw.PreferencesWindow):
         #  Use 24h Clock Format
         use_24h_clock_row =  Adw.ActionRow.new()
         use_24h_clock_row.set_activatable(True)
-        use_24h_clock_row.set_title(_("24 Hour Time Format"))
-        use_24h_clock_row.set_subtitle(_("Use 24 hour Time format (Refresh required)"))
-
-        self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
-        self.use_24h_clock_switch = Gtk.Switch()
-        self.use_24h_clock_switch.set_active(settings.is_using_24h_clock)
-        self.use_24h_clock_switch.connect("state-set",self._on_click_use_24h_clock)
-        self.g_switch_box.append(self.use_24h_clock_switch)
-        use_24h_clock_row.add_suffix(self.g_switch_box)
+        use_24h_clock_row.set_title(_("Time Format"))
+        use_24h_clock_row.set_subtitle(_("Weather time format (Refresh required)"))
         self.appearance_grp.add(use_24h_clock_row)
+
+        style_buttons_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        style_buttons_box.add_css_class('linked')
+        style_buttons_box.set_margin_start(2)
+        style_buttons_box.set_valign(Gtk.Align.CENTER)
+        use_24h_clock_row.add_suffix(style_buttons_box)
+
+        btn_24h = Gtk.ToggleButton.new_with_label(_('24 Hour'))
+        btn_24h.set_size_request(80,20)
+        btn_24h.set_css_classes(['btn_sm'])
+        btn_24h.do_clicked(btn_24h)
+        style_buttons_box.append(btn_24h)
+        btn_24h.connect('clicked', self._on_click_use_24h_clock,True)
+
+        btn_12h = Gtk.ToggleButton.new_with_label(_('AM / PM'))
+        btn_12h.set_size_request(80,20)
+        btn_12h.set_css_classes(['btn_sm'])
+        btn_12h.set_group(btn_24h)
+        style_buttons_box.append(btn_12h)
+        btn_12h.connect('clicked', self._on_click_use_24h_clock,False)
+
+        if settings.is_using_24h_clock:
+            btn_24h.do_clicked(btn_24h)
+        else:
+            btn_12h.do_clicked(btn_12h)
 
         #  Units and measurement
         self.measurement_group = Adw.PreferencesGroup.new()
