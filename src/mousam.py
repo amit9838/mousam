@@ -10,7 +10,7 @@ from gettext import gettext as _, pgettext as C_
 
 
 # module import
-from .utils import create_toast, check_internet_connection
+from .utils import create_toast, check_internet_connection, get_time_difference
 from .constants import bg_css
 from .windowAbout import AboutWindow
 from .windowPreferences import WeatherPreferences
@@ -219,9 +219,14 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         apd = threading.Thread(target=fetch_current_air_pollution, name="apt")
         apd.start()
 
-        apd.join()
+        lat,lon = settings.selected_city.split(",")
+        local_time = threading.Thread(target=get_time_difference,args=(lat,lon, True), name="local_time")
+        local_time.start()
+
         hfd.join()
         dfd.join()
+        apd.join()
+        local_time.join()
         self.get_weather()
 
     # ===========  Load weather data and create UI ============
