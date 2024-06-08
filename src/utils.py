@@ -11,6 +11,9 @@ air_pollution_data = None
 forecast_weather_data = None
 epoch_offset = None
 
+global local_time_data
+local_time_data = dict()
+
 TIMEOUT = 5
 domains = {
     "google": "http://www.google.com",
@@ -77,17 +80,6 @@ def get_cords():
     return [float(x) for x in selected_city_.split(",")]
 
 
-def get_my_tz_offset_from_utc():
-    try:
-        offset = datetime.utcnow() - datetime.now()
-        # Convert the offset to seconds
-        offset_seconds = int(offset.total_seconds())
-
-        return offset_seconds
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-
 def get_tz_offset_by_cord(lat, lon):
     global epoch_offset
 
@@ -118,6 +110,12 @@ def get_tz_offset_by_cord(lat, lon):
 
 
 def get_time_difference(target_latitude, target_longitude):
+    global local_time_data
+    
+    cord_str = f"{target_latitude}_{target_longitude}"
+    if local_time_data.get(cord_str) is not None:
+        return local_time_data[cord_str]
+    
     # Get current time in the target location using timeapi.io
     url = f"https://timeapi.io/api/Time/current/coordinate?latitude={target_latitude}&longitude={target_longitude}"
     target_time_response = requests.get(url)
@@ -127,4 +125,5 @@ def get_time_difference(target_latitude, target_longitude):
     
     epoch_diff = time.time() - target_time.timestamp()
     data = {"epoch_diff": epoch_diff, "target_time": target_time.timestamp()}
+    local_time_data[cord_str] = data
     return data

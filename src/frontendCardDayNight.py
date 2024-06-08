@@ -7,9 +7,7 @@ from gi.repository import Gtk
 from .frontendUiDrawDayNight import *
 from .config import settings
 from .utils import (
-    get_tz_offset_by_cord,
     get_cords,
-    get_my_tz_offset_from_utc,
     get_time_difference,
 )
 
@@ -31,15 +29,11 @@ class CardDayNight:
         time_diff = t_data.get("epoch_diff")
         target_time = t_data.get("target_time")
 
-        my_tz_offset = get_my_tz_offset_from_utc()
-
-        tz_offset_from_curr_tz = get_tz_offset_by_cord(*get_cords())
-
         sunrise_ts, sunset_ts = 0, 0
         for i, data in enumerate(daily_data.time.get("data")):
             date_ = int(
                 datetime.fromtimestamp(
-                    data + my_tz_offset + tz_offset_from_curr_tz
+                    data + time_diff
                 ).strftime(r"%d")
             )
             if date_ == datetime.today().date().day:
