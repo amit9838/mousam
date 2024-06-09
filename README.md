@@ -2,7 +2,7 @@
 <img src="data/icons/hicolor/scalable/apps/io.github.amit9838.mousam.svg?raw=true" width="120">
 <h1>Mousam</h1>
 
-<p>Beautiful lightweight weather app based on Python and Gtk</p>
+<p>Weather at a Glance</p>
 
 
 <a href = "https://github.com/amit9838/mousam/releases"><img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff"></a>
