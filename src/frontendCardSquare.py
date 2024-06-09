@@ -135,8 +135,9 @@ class CardSquare:
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
         elif self.title.lower() == "pressure":
+            pressure_level = (self.curr_w.surface_pressure.get("data") - 872) / (1080 - 872)
             level_obj = DrawLevelBar(
-                (self.curr_w.surface_pressure.get("data") - 872) / (1080 - 872),
+                max(pressure_level,0),
                 rounded_cap=True,
             )
             card_icon.attach(level_obj.dw, 0, 1, 1, 1)
