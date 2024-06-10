@@ -58,13 +58,22 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="1.3.1" date="2024-6-10">
+      <description translate="no">
+        <p>Bug fixes</p>
+        <ul>
+          <li>Fix issue where weekly forecast stays celcius when fahrenheit is selected.</li>
+          <li>Fix issue where switching from fahrenheit to celcius dosesn't change to celcius.</li>
+        </ul>
+      </description>
+    </release>
       <release version="1.3.0" date="2024-06-09">
       <description translate="no">
         <p>What's New</p>
         <ul>
-          <li>Added Option to switch between diffrent time-formats 12h/24h.</li>
-          <li>Now app remembres the window size/state.</li>
-          <li>Improved app startup and wether refresh performance.</li>
+          <li>Added Option to switch between different time-formats 12h/24h.</li>
+          <li>Now app retains the window size/state.</li>
+          <li>Improved app startup and weather refresh performance.</li>
         </ul>
 
         <p>Translation</p>
@@ -78,6 +87,7 @@
         </ul>
       </description>
     </release>
+
       <release version="1.2.0" date="2024-05-14">
       <description translate="no">
         <p>What's New</p>

@@ -17,6 +17,8 @@ class Weather:
 
         if settings.unit == "imperial":
             extend_url = f"&temperature_unit=fahrenheit&wind_speed_unit=mph"
+        else:
+            extend_url = ""
 
     # Current Weather =============================================
     @classmethod
