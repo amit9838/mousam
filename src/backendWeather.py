@@ -3,7 +3,7 @@ import datetime
 
 from .config import settings
 
-
+extend_url = ""
 base_url = "https://api.open-meteo.com/v1/forecast"
 
 
@@ -14,7 +14,7 @@ class Weather:
 
     def __init__(self) -> None:
         global extend_url
-        extend_url = ""
+
         if settings.unit == "imperial":
             extend_url = f"&temperature_unit=fahrenheit&wind_speed_unit=mph"
 
@@ -108,10 +108,10 @@ class Weather:
             url = url + f"&start_date={kwargs.get('start_date')}"
 
         if "end_date" in kwargs:
-            url = url + f"&end_date={kwargs.get('end_date')}" + extend_url
+            url = url + f"&end_date={kwargs.get('end_date')}" 
 
         try:
-            url = url + f"&timeformat=unixtime"
+            url = url + f"&timeformat=unixtime" + extend_url
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
