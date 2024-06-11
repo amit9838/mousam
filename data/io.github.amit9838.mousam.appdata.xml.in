@@ -46,6 +46,10 @@
   <developer id="io.github.amit9838">
     <name translate="no">Amit Chaudhary</name>
   </developer>
+  <branding>
+	  <color type="primary" scheme_preference="light">#99f8ff</color>
+	  <color type="primary" scheme_preference="dark">#064d95</color>
+	</branding>
   <recommends>
     <control>pointing</control>
     <control>touch</control>
