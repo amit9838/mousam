@@ -41,8 +41,15 @@ class CardDayNight:
                 sunset_ts = daily_data.sunset.get("data")[i]
                 break
 
-        sunrise = datetime.fromtimestamp(sunrise_ts - time_diff).strftime("%I:%M %p")
-        sunset = datetime.fromtimestamp(sunset_ts - time_diff).strftime("%I:%M %p")
+        sunrise_dt = datetime.fromtimestamp(sunrise_ts - time_diff)
+        sunset_dt = datetime.fromtimestamp(sunset_ts - time_diff)
+
+        sunrise = sunrise_dt.strftime("%I:%M %p")
+        sunset = sunset_dt.strftime("%I:%M %p")
+
+        if settings.is_using_24h_clock:
+            sunrise = sunrise_dt.strftime("%H:%M")
+            sunset = sunset_dt.strftime("%H:%M")
 
         # Caclulate Sun rotation
         degree = 0
