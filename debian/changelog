@@ -1,3 +1,58 @@
+mousam (1.3.1) stable; urgency=medium
+
+  [ Amit Chaudhary ]
+  * fix inconsistenct in  fahrenheit  unit in weelky forecast
+  * Release_v1.3.1
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Wed, 19 Jun 2024 01:30:11 +0530
+
+mousam (1.3.0) stable; urgency=medium
+
+  [ Himadri Sekhar Basu ]
+  * Update debian changelog file for version 1.2.0 (#119)
+
+  [ Scrambled777 ]
+  * Hindi Translation Improvements (#118)
+    * Hindi translation imrovements
+    * Fixed a typo.
+    * Minor changes.
+
+  [ George ]
+  * Add romanian translation (#122)
+  * Update ro translation (#123)
+
+  [ Wasab ]
+  * French translation (#100)
+    * French translation
+    * Just updated the POT-creation and revision dates
+  * French translation (#128)
+    * Update fr_FR.po
+    Finished french translation.
+    * Update fr.po
+    * Update fr.po
+    Finished french translation
+    * Delete po/fr_FR.po
+
+  [ Amit Chaudhary ]
+  * show only one temp label in tomorrow's forecast
+  * isolate settings as class
+  * remember main-window state
+  * remove window state option from preferences
+  * add option to use 24h time format
+  * rename time format switch variable
+  * code cleanup
+  * use toggle buttons for time-format option
+
+  [ Amit ]
+  * improve app loading time
+
+  [ Amit Chaudhary ]
+  * optimize app launch, code cleanup
+  * set lower bound for pressure bar
+  * Release_v1.3.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Wed, 19 Jun 2024 01:20:02 +0530
+
 mousam (1.2.0) stable; urgency=medium
 
   [ Amit Chaudhary ]
