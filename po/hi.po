@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-08 13:57+0530\n"
-"PO-Revision-Date: 2024-05-14 12:21+0530\n"
+"PO-Revision-Date: 2024-06-20 16:22+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
 #: data/io.github.amit9838.mousam.desktop.in:3
@@ -27,7 +27,7 @@ msgstr "मौसम"
 #: data/io.github.amit9838.mousam.desktop.in:5
 #: data/io.github.amit9838.mousam.appdata.xml.in:7
 msgid "Beautiful and lightweight weather app"
-msgstr "सुंदर और हल्का मौसम ऐप"
+msgstr "सुंदर और हल्की मौसम ऐप"
 
 #: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;"
@@ -230,7 +230,7 @@ msgstr "हल्की बर्फ की बौछारें"
 
 #: src/constants.py:156
 msgid "Heavy Snow Showers "
-msgstr "भारी बर्फ की बौछारें"
+msgstr "भारी बर्फ की बौछारें "
 
 #: src/constants.py:158
 msgid "Thunderstorm with Hail"
@@ -242,7 +242,7 @@ msgstr "वायु प्रदूषण"
 
 #: src/frontendCardAirPollution.py:53
 msgid "United States AQI standard"
-msgstr "संयुक्त राज्य अमेरिका AQI मानक"
+msgstr "अमरीकी AQI मानक"
 
 #: src/frontendCardDayNight.py:77
 msgid "Sunrise & Sunset"
@@ -394,7 +394,7 @@ msgstr "कीबोर्ड शॉर्टकट"
 
 #: src/mousam.py:90
 msgid "About Mousam"
-msgstr "Mousam के बारे में"
+msgstr "मौसम के बारे में"
 
 #: src/mousam.py:92 src/shortcutsDialog.ui:57
 msgid "Quit"
@@ -406,7 +406,7 @@ msgstr "मौसम डेटा प्राप्त कर रहे है�
 
 #: src/mousam.py:161
 msgid "No Internet"
-msgstr "कोई इंटरनेट नहीं"
+msgstr "इंटरनेट नहीं"
 
 #: src/mousam.py:165
 msgid "Could not fetch data from API"
@@ -418,7 +418,7 @@ msgstr "दिशा"
 
 #: src/mousam.py:275
 msgid "N"
-msgstr "N"
+msgstr "उ"
 
 #: src/mousam.py:285
 msgid "Dewpoint"
@@ -454,7 +454,7 @@ msgstr "सफलतापूर्वक ताजा किया गया"
 
 #: src/mousam.py:341
 msgid "Refresh within 5 seconds is ignored!"
-msgstr "5 सेकंड के भीतर ताजा करने को नजरअंदाज किया जाएगा!"
+msgstr "5 सेकंड के भीतर ताजा करने पर नजरअंदाज किया जाएगा!"
 
 #: src/mousam.py:346
 msgid "Refreshing..."
@@ -474,7 +474,7 @@ msgstr "खराब"
 
 #: src/weatherData.py:106
 msgid "Unhealthy"
-msgstr "अस्वास्थ्यकर"
+msgstr "अस्वस्थ"
 
 #: src/weatherData.py:108
 msgid "Severe"
@@ -552,10 +552,12 @@ msgctxt "wind"
 msgid "Moderate"
 msgstr "मध्यम"
 
+# Wind Speed
 #: src/weatherData.py:155
 msgid "Strong"
-msgstr "मजबूत"
+msgstr "तेज"
 
+#
 #: src/weatherData.py:157
 msgctxt "wind"
 msgid "Extreme"
@@ -571,7 +573,7 @@ msgstr "मील"
 
 #: src/windowAbout.py:13
 msgid "Beautiful and light weight weather app build using Gtk and Python"
-msgstr "Gtk और Python का उपयोग करके निर्मित सुंदर और हल्के वजन वाला मौसम ऐप"
+msgstr "Gtk और Python का उपयोग करके निर्मित सुंदर और हल्के वजन वाली मौसम ऐप"
 
 #: src/windowAbout.py:17
 msgid "Copyright © 2024 Mousam Developers"
@@ -596,7 +598,7 @@ msgstr "स्थान हटाएं"
 
 #: src/windowLocations.py:112
 msgid "Switch city within 2 seconds is ignored!"
-msgstr "2 सेकंड के भीतर शहर बदलने पर ध्यान नहीं दिया जाता!"
+msgstr "2 सेकंड के भीतर शहर बदलने पर ध्यान नहीं दिया जाएगा!"
 
 #: src/windowLocations.py:115
 msgid "Selected - {}"
