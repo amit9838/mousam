@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-08 13:57+0530\n"
+"POT-Creation-Date: 2024-06-27 08:50+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:5
 #: data/io.github.amit9838.mousam.appdata.xml.in:7
-msgid "Beautiful and lightweight weather app"
+msgid "Weather at a Glance"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:10
-msgid "Weather;Mousam;Rain;Cloud;Forecast;"
+msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
@@ -110,19 +110,31 @@ msgid ""
 "Apply gradient background on main window corresponding to weather condition"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:23
+#: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:28
-msgid "Launch the app in maximized mode."
+#: data/io.github.amit9838.mousam.gschema.xml:26
+msgid "Use 24h hour clock"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:33
-msgid "Mesaurement sysytem to use - metric,imperial"
+#: data/io.github.amit9838.mousam.gschema.xml:30
+msgid "Main window width"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "Main window height"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:38
+msgid "Launch the app in maximized mode."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:42
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
 msgstr ""
 
@@ -238,72 +250,72 @@ msgstr ""
 msgid "United States AQI standard"
 msgstr ""
 
-#: src/frontendCardDayNight.py:77
+#: src/frontendCardDayNight.py:78
 msgid "Sunrise & Sunset"
 msgstr ""
 
-#: src/frontendCardDayNight.py:88
+#: src/frontendCardDayNight.py:89
 msgid "Sunrise"
 msgstr ""
 
-#: src/frontendCardDayNight.py:101
+#: src/frontendCardDayNight.py:102
 msgid "Sunset"
 msgstr ""
 
-#: src/frontendCardSquare.py:162 src/frontendCardSquare.py:170
+#: src/frontendCardSquare.py:163 src/frontendCardSquare.py:171
 msgid "North"
 msgstr ""
 
-#: src/frontendCardSquare.py:163
+#: src/frontendCardSquare.py:164
 msgid "Northeast"
 msgstr ""
 
-#: src/frontendCardSquare.py:164
+#: src/frontendCardSquare.py:165
 msgid "East"
 msgstr ""
 
-#: src/frontendCardSquare.py:165
+#: src/frontendCardSquare.py:166
 msgid "Southeast"
 msgstr ""
 
-#: src/frontendCardSquare.py:166
+#: src/frontendCardSquare.py:167
 msgid "South"
 msgstr ""
 
-#: src/frontendCardSquare.py:167
+#: src/frontendCardSquare.py:168
 msgid "Southwest"
 msgstr ""
 
-#: src/frontendCardSquare.py:168
+#: src/frontendCardSquare.py:169
 msgid "West"
 msgstr ""
 
-#: src/frontendCardSquare.py:169 src/mousam.py:274
+#: src/frontendCardSquare.py:170 src/mousam.py:279
 msgid "Northwest"
 msgstr ""
 
-#: src/frontendCardSquare.py:179 src/frontendHourlyDetails.py:59
+#: src/frontendCardSquare.py:180 src/frontendHourlyDetails.py:61
 msgid "Wind"
 msgstr ""
 
-#: src/frontendCardSquare.py:180
+#: src/frontendCardSquare.py:181
 msgid "Pressure"
 msgstr ""
 
-#: src/frontendCardSquare.py:181
+#: src/frontendCardSquare.py:182
 msgid "Humidity"
 msgstr ""
 
-#: src/frontendCardSquare.py:182
+#: src/frontendCardSquare.py:183
 msgid "UV Index"
 msgstr ""
 
-#: src/frontendCurrentCond.py:87
+#: src/frontendCurrentCond.py:86
 #, python-brace-format
 msgid "Feels Like • <b> {0} {1}</b>"
 msgstr ""
 
-#: src/frontendForecast.py:36 src/frontendForecast.py:130
+#: src/frontendForecast.py:36 src/frontendForecast.py:134
 msgid "Tomorrow"
 msgstr ""
 
@@ -311,29 +323,29 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
-#: src/frontendForecast.py:128
+#: src/frontendForecast.py:132
 msgid "Today"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:51
+#: src/frontendHourlyDetails.py:53
 msgid "Hourly"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:67
+#: src/frontendHourlyDetails.py:69
 msgid "Precipitation"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:96
+#: src/frontendHourlyDetails.py:98
 msgctxt "wind"
 msgid "Day High"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:112
+#: src/frontendHourlyDetails.py:114
 msgctxt "temperature"
 msgid "Day Max"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:127
+#: src/frontendHourlyDetails.py:126
 msgctxt "precipitation"
 msgid "Day High"
 msgstr ""
@@ -362,204 +374,204 @@ msgstr ""
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/frontendHourlyDetails.py:199
+#: src/frontendHourlyDetails.py:203
 msgid "Now"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:98
+#: src/frontendUiDrawDayNight.py:105
 msgid "Horizon"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:108
+#: src/frontendUiDrawDayNight.py:115
 msgid "Midnight"
 msgstr ""
 
-#: src/mousam.py:70
-msgid "Refresh"
+#: src/mousam.py:71
+msgid "Location"
 msgstr ""
 
-#: src/mousam.py:79 src/shortcutsDialog.ui:45
+#: src/mousam.py:80 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:84 src/shortcutsDialog.ui:63
+#: src/mousam.py:85 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/mousam.py:90
+#: src/mousam.py:91
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:92 src/shortcutsDialog.ui:57
+#: src/mousam.py:93 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr ""
 
-#: src/mousam.py:150
+#: src/mousam.py:151
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:161
+#: src/mousam.py:162
 msgid "No Internet"
 msgstr ""
 
-#: src/mousam.py:165
+#: src/mousam.py:166
 msgid "Could not fetch data from API"
 msgstr ""
 
-#: src/mousam.py:273
+#: src/mousam.py:278
 msgid "From"
 msgstr ""
 
-#: src/mousam.py:275
+#: src/mousam.py:280
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:285
+#: src/mousam.py:290
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:301
+#: src/mousam.py:306
 msgctxt "pressure card"
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:302
+#: src/mousam.py:307
 msgctxt "pressure card"
 msgid "Low"
 msgstr ""
 
-#: src/mousam.py:311
+#: src/mousam.py:316
 msgctxt "uvindex card"
 msgid "High"
 msgstr ""
 
-#: src/mousam.py:312
+#: src/mousam.py:317
 msgctxt "uvindex card"
 msgid "Low"
 msgstr ""
 
-#: src/mousam.py:328
+#: src/mousam.py:333
 msgid "Switched to {}"
 msgstr ""
 
-#: src/mousam.py:331
+#: src/mousam.py:336
 msgid "Refreshed Successfully"
 msgstr ""
 
-#: src/mousam.py:341
+#: src/mousam.py:346
 msgid "Refresh within 5 seconds is ignored!"
 msgstr ""
 
-#: src/mousam.py:346
+#: src/mousam.py:351
 msgid "Refreshing..."
 msgstr ""
 
-#: src/weatherData.py:100
+#: src/weatherData.py:98
 msgid "Good"
 msgstr ""
 
-#: src/weatherData.py:102
+#: src/weatherData.py:100
 msgid "Moderate"
 msgstr ""
 
-#: src/weatherData.py:104
+#: src/weatherData.py:102
 msgid "Poor"
 msgstr ""
 
-#: src/weatherData.py:106
+#: src/weatherData.py:104
 msgid "Unhealthy"
 msgstr ""
 
-#: src/weatherData.py:108
+#: src/weatherData.py:106
 msgid "Severe"
 msgstr ""
 
-#: src/weatherData.py:110
+#: src/weatherData.py:108
 msgid "Hazardous"
+msgstr ""
+
+#: src/weatherData.py:116
+msgctxt "uvindex"
+msgid "Low"
 msgstr ""
 
 #: src/weatherData.py:118
 msgctxt "uvindex"
-msgid "Low"
+msgid "Moderate"
 msgstr ""
 
 #: src/weatherData.py:120
 msgctxt "uvindex"
-msgid "Moderate"
+msgid "High"
 msgstr ""
 
 #: src/weatherData.py:122
 msgctxt "uvindex"
-msgid "High"
+msgid "Very High"
 msgstr ""
 
 #: src/weatherData.py:124
 msgctxt "uvindex"
-msgid "Very High"
+msgid "Extreme"
 msgstr ""
 
-#: src/weatherData.py:126
-msgctxt "uvindex"
-msgid "Extreme"
+#: src/weatherData.py:129
+msgctxt "humidity"
+msgid "Low"
 msgstr ""
 
 #: src/weatherData.py:131
 msgctxt "humidity"
-msgid "Low"
+msgid "Moderate"
 msgstr ""
 
 #: src/weatherData.py:133
 msgctxt "humidity"
-msgid "Moderate"
-msgstr ""
-
-#: src/weatherData.py:135
-msgctxt "humidity"
 msgid "High"
 msgstr ""
 
-#: src/weatherData.py:140
+#: src/weatherData.py:138
 msgctxt "pressure"
 msgid "Low"
 msgstr ""
 
-#: src/weatherData.py:142
+#: src/weatherData.py:140
 msgctxt "pressure"
 msgid "Normal"
 msgstr ""
 
-#: src/weatherData.py:144
+#: src/weatherData.py:142
 msgctxt "pressure"
 msgid "High"
 msgstr ""
 
-#: src/weatherData.py:149
+#: src/weatherData.py:147
 msgid "Calm"
 msgstr ""
 
-#: src/weatherData.py:151
+#: src/weatherData.py:149
 msgid "Light"
 msgstr ""
 
-#: src/weatherData.py:153
+#: src/weatherData.py:151
 msgctxt "wind"
 msgid "Moderate"
 msgstr ""
 
-#: src/weatherData.py:155
+#: src/weatherData.py:153
 msgid "Strong"
 msgstr ""
 
-#: src/weatherData.py:157
+#: src/weatherData.py:155
 msgctxt "wind"
 msgid "Extreme"
 msgstr ""
 
-#: src/weatherData.py:163
+#: src/weatherData.py:159
 msgid "km"
 msgstr ""
 
-#: src/weatherData.py:166
+#: src/weatherData.py:162
 msgid "miles"
 msgstr ""
 
@@ -575,119 +587,127 @@ msgstr ""
 msgid "translator_credits"
 msgstr ""
 
-#: src/windowLocations.py:19 src/windowLocations.py:35
+#: src/windowLocations.py:21 src/windowLocations.py:36
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
-#: src/windowLocations.py:41
+#: src/windowLocations.py:44
 msgid "Add"
 msgstr ""
 
-#: src/windowLocations.py:65
+#: src/windowLocations.py:68
 msgid "Remove location"
 msgstr ""
 
-#: src/windowLocations.py:112
+#: src/windowLocations.py:122
 msgid "Switch city within 2 seconds is ignored!"
 msgstr ""
 
-#: src/windowLocations.py:115
+#: src/windowLocations.py:126
 msgid "Selected - {}"
 msgstr ""
 
-#: src/windowLocations.py:125
+#: src/windowLocations.py:138
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:143
+#: src/windowLocations.py:163
 msgid "Search for a city"
 msgstr ""
 
-#: src/windowLocations.py:149 src/windowLocations.py:151
+#: src/windowLocations.py:169 src/windowLocations.py:171
 msgid "Search"
 msgstr ""
 
-#: src/windowLocations.py:229
+#: src/windowLocations.py:248
 #, python-brace-format
 msgid "Added - {0}"
 msgstr ""
 
-#: src/windowLocations.py:231
+#: src/windowLocations.py:250
 msgid "Location already added!"
 msgstr ""
 
-#: src/windowLocations.py:240
+#: src/windowLocations.py:259
 msgid "Add more locations to delete!"
 msgstr ""
 
-#: src/windowLocations.py:263
+#: src/windowLocations.py:286
 #, python-brace-format
 msgid "Deleted - {0}"
 msgstr ""
 
-#: src/windowLocations.py:266
+#: src/windowLocations.py:289
 msgid "Press enter to search"
 msgstr ""
 
-#: src/windowLocations.py:269
+#: src/windowLocations.py:292
 msgid "No results found!"
 msgstr ""
 
-#: src/windowPreferences.py:34
+#: src/windowPreferences.py:25
 msgid "Appearance"
 msgstr ""
 
-#: src/windowPreferences.py:44
+#: src/windowPreferences.py:35
 msgid "Dynamic Background"
 msgstr ""
 
-#: src/windowPreferences.py:45
+#: src/windowPreferences.py:36
 msgid ""
 "Background changes based on current weather condition (Restart required)"
 msgstr ""
 
-#: src/windowPreferences.py:58
-msgid "Launch Maximized"
+#: src/windowPreferences.py:49
+msgid "Time Format"
+msgstr ""
+
+#: src/windowPreferences.py:50
+msgid "Weather time format (Refresh required)"
 msgstr ""
 
 #: src/windowPreferences.py:59
-msgid "Launch the weather app in maximized mode (Refresh required)"
+msgid "24 Hour"
 msgstr ""
 
-#: src/windowPreferences.py:72
+#: src/windowPreferences.py:66
+msgid "AM / PM"
+msgstr ""
+
+#: src/windowPreferences.py:81
 msgid "Units &amp; Measurements"
 msgstr ""
 
-#: src/windowPreferences.py:76
+#: src/windowPreferences.py:85
 msgid "°C"
 msgstr ""
 
-#: src/windowPreferences.py:77
-msgid "METRIC system with units like celcuis, km/h, kilometer"
+#: src/windowPreferences.py:86
+msgid "METRIC system with units like celsius, km/h, kilometer"
 msgstr ""
 
-#: src/windowPreferences.py:85
+#: src/windowPreferences.py:94
 msgid "°F"
 msgstr ""
 
-#: src/windowPreferences.py:86
+#: src/windowPreferences.py:95
 msgid "IMPERIAL system with units like fahrenheit, mph, miles"
 msgstr ""
 
-#: src/windowPreferences.py:100
+#: src/windowPreferences.py:109
 msgid "Show precipitation in inch"
 msgstr ""
 
-#: src/windowPreferences.py:101
+#: src/windowPreferences.py:110
 msgid "This option better works during heavy preciptaion (Refresh required)"
 msgstr ""
 
-#: src/windowPreferences.py:129
+#: src/windowPreferences.py:139
 msgid "Switching within 2 seconds is ignored!"
 msgstr ""
 
-#: src/windowPreferences.py:132
+#: src/windowPreferences.py:142
 msgid "Switched to - {}"
 msgstr ""
 

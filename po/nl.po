@@ -657,7 +657,7 @@ msgid "°C"
 msgstr "°C"
 
 #: src/windowPreferences.py:77
-msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgid "METRIC system with units like celsius, km/h, kilometer"
 msgstr "Metrisch systeem, met eenheden als Celsius, km/u en kilometers"
 
 #: src/windowPreferences.py:85

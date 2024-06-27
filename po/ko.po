@@ -247,7 +247,7 @@ msgid "°C"
 msgstr "°C"
 
 #: ../src/windowPreferences.py:84
-msgid "METRIC system with units like celcuis, km/h, kilometer"
+msgid "METRIC system with units like celsius, km/h, kilometer"
 msgstr "섭씨, km/h, 킬로미터 단위를 사용하는 미터법"
 
 #: ../src/windowPreferences.py:92

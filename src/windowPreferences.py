@@ -83,7 +83,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         self.metric_unit = Adw.ActionRow.new()
         self.metric_unit.set_title(_('°C'))
-        self.metric_unit.set_subtitle(_("METRIC system with units like celcuis, km/h, kilometer"))
+        self.metric_unit.set_subtitle(_("METRIC system with units like celsius, km/h, kilometer"))
         self.metric_check_btn = Gtk.CheckButton.new()
         self.metric_unit.add_prefix(self.metric_check_btn)
         self.metric_unit.set_activatable_widget(self.metric_check_btn)
