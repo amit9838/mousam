@@ -2,6 +2,7 @@ import time
 import gi
 
 from .backendWeather import Weather
+from .backendWeatherDomoticz import WeatherDomoticz
 from .backendAirPollution import AirPollution
 from .config import settings
 from .Models import *
@@ -21,7 +22,17 @@ def fetch_current_weather():
     global current_weather_data
     # Get current weather data from api
     obj = Weather()
-    current_weather_data = obj._get_current_weather(*get_cords())
+    objDomoticz = WeatherDomoticz()
+    lat, lon = get_cords()
+    if settings.is_using_domoticz_for_current_weather and objDomoticz.IsLocationNearDomoticz(lat, lon) and True:
+        current_weather_data = objDomoticz._get_current_weather()
+        # For now copy the weathercode from remote, since Domoticz doesn't provide this
+        remCw = obj._get_current_weather(*get_cords())
+        current_weather_data["current"]["weathercode"] = remCw["current"]["weathercode"]
+    else:
+        current_weather_data = obj._get_current_weather(*get_cords())
+    #print("Current weather:")
+    #print(current_weather_data)
 
     # create object of current weather data
     current_weather_data = CurrentWeather(current_weather_data)

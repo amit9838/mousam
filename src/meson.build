@@ -35,6 +35,7 @@ mousam_sources = [
   'backendAirPollution.py',
   'backendFindCity.py',
   'backendWeather.py',
+  'backendWeatherDomoticz.py',
 
   'frontendForecast.py',
   'frontendCardAirPollution.py',
