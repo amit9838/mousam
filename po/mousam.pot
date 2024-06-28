@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-27 08:50+0530\n"
+"POT-Creation-Date: 2024-06-28 09:06+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,15 +250,15 @@ msgstr ""
 msgid "United States AQI standard"
 msgstr ""
 
-#: src/frontendCardDayNight.py:78
+#: src/frontendCardDayNight.py:66
 msgid "Sunrise & Sunset"
 msgstr ""
 
-#: src/frontendCardDayNight.py:89
+#: src/frontendCardDayNight.py:77
 msgid "Sunrise"
 msgstr ""
 
-#: src/frontendCardDayNight.py:102
+#: src/frontendCardDayNight.py:90
 msgid "Sunset"
 msgstr ""
 
@@ -378,12 +378,12 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:105
+#: src/frontendUiDrawDayNight.py:98
 msgid "Horizon"
 msgstr ""
 
-#: src/frontendUiDrawDayNight.py:115
-msgid "Midnight"
+#: src/frontendUiDrawDayNight.py:108
+msgid "Night"
 msgstr ""
 
 #: src/mousam.py:71

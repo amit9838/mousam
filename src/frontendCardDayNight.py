@@ -1,5 +1,6 @@
 from datetime import datetime
 import gi
+
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk
@@ -31,16 +32,13 @@ class CardDayNight:
 
         sunrise_ts, sunset_ts = 0, 0
         for i, data in enumerate(daily_data.time.get("data")):
-            date_ = int(
-                datetime.fromtimestamp(
-                    data + time_diff
-                ).strftime(r"%d")
-            )
+            date_ = int(datetime.fromtimestamp(data + time_diff).strftime(r"%d"))
             if date_ == datetime.today().date().day:
                 sunrise_ts = daily_data.sunrise.get("data")[i]
                 sunset_ts = daily_data.sunset.get("data")[i]
                 break
 
+        target_dt = datetime.fromtimestamp(target_time)
         sunrise_dt = datetime.fromtimestamp(sunrise_ts - time_diff)
         sunset_dt = datetime.fromtimestamp(sunset_ts - time_diff)
 
@@ -51,18 +49,8 @@ class CardDayNight:
             sunrise = sunrise_dt.strftime("%H:%M")
             sunset = sunset_dt.strftime("%H:%M")
 
-        # Caclulate Sun rotation
-        degree = 0
-        # For Day
-        if target_time < (sunset_ts - time_diff):
-            degree = (target_time - (sunrise_ts - time_diff)) * 180 / (sunset_ts - sunrise_ts)
-            degree = degree + 180 
-
-        # For Night
-        else:
-            degree = (target_time - (sunset_ts-time_diff))*180/(86400-(sunset_ts-sunrise_ts))
-
-        return sunrise, sunset, degree
+        angle = self._calculate_sun_rotation(target_dt,sunrise_dt,sunset_dt)
+        return sunrise, sunset, angle
 
     def create_card(self):
         card = Gtk.Grid(margin_top=10, margin_start=5, margin_bottom=0)
@@ -117,3 +105,23 @@ class CardDayNight:
 
         obj = DrawDayNight(self.degree, 200, 100)
         card_icon.attach(obj.img_box, 0, 1, 1, 1)
+
+    # Sun Rotation
+    def _calculate_sun_rotation(self,target_dt,sunrise_dt,sunset_dt):
+        angle = 0
+        target_ctime_hr = target_dt.hour + (target_dt.minute / 60)
+        target_sunrise_hr = sunrise_dt.hour + (sunrise_dt.minute / 60)
+        target_sunset_hr = sunset_dt.hour + (sunset_dt.minute / 60)
+
+        # day
+        if target_ctime_hr > target_sunrise_hr and target_ctime_hr < target_sunset_hr:
+            angle = (target_ctime_hr-target_sunrise_hr)*180/(target_sunset_hr-target_sunrise_hr)
+            angle += 180 # Sun is above the horizon
+
+        # Night
+        else:
+            if target_ctime_hr < target_sunrise_hr:
+                target_ctime_hr += 24  # Adjust for times after midnight
+            angle = (target_ctime_hr - target_sunset_hr)*180/(24-(target_sunset_hr-target_sunrise_hr))
+        
+        return angle

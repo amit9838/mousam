@@ -20,7 +20,6 @@ class DrawDayNight:
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.set_size_request(self.width + 20, self.height + 20)
         self.drawing_area.set_css_classes(["drawing-padding"])
-        # self.drawing_area.connect("draw", self.on_draw)
         self.drawing_area.set_draw_func(self.on_draw, None)
 
         self.img_box = Gtk.Box()
@@ -64,13 +63,6 @@ class DrawDayNight:
         )  # Full circle (0 to 2π)
         context.stroke()
 
-        # Midnight Mark
-        context.set_dash([1, 0])
-        context.set_source_rgba(0.5, 0.5, 0.5, 0.7)
-        context.move_to(center_x, center_y + outer_radius / 1.2)
-        context.line_to(center_x, center_y + outer_radius)
-        context.stroke()
-
         # Clock
         context.select_font_face(
             "Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL
@@ -112,9 +104,9 @@ class DrawDayNight:
         # Display the text along the circular path
         context.show_text(text)
 
-        text2 = _("Midnight")
+        text2 = _("Night")
         # Calculate the position for text placement
-        text_x = center_x - 30
+        text_x = center_x - 20
         text_y = center_y + outer_radius * 1.3
         # Move the text cursor to the calculated position
         context.move_to(text_x, text_y)
@@ -129,9 +121,9 @@ class DrawDayNight:
                 upper_limit = abs(1.2 - (1 - (360 - 170) / 90))
                 lower_limit = abs(1.2 - (1 - (180 - 170) / 90))
                 yellow = upper_limit - yellow + lower_limit
-            context.set_source_rgba(1, yellow, 0, 1.5)  # Red
+            context.set_source_rgba(1, yellow, 0, 1.5)  # color = function of y (height of sun)
         else:
-            context.set_source_rgba(0.9, 0.9, 0.9, 1.0)  # Red
+            context.set_source_rgba(0.9, 0.9, 0.9, 1.0)  # Whitish(for moon)
 
         # Convert to radian
         sun_angle_rad = math.radians(
