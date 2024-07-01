@@ -1,6 +1,6 @@
 # Hindi translation for mousam.
-# Copyright (C) Mousam Developers
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2024 mousam's COPYRIGHT HOLDER
+# This file is distributed under the same license as the mousam package.
 # Scrambled777 <weblate.scrambled777@simplelogin.com>, 2024.
 #
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-30 11:40+0530\n"
-"PO-Revision-Date: 2024-06-30 23:58+0530\n"
+"PO-Revision-Date: 2024-07-01 23:06+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -96,7 +96,7 @@ msgstr "शहरों की सूची और उनके निर्द�
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr "उपयोगकर्ता द्वारा जोड़े गए स्थानों को json stringified स्ट्रिंग प्रारूप में सहेजता है"
+msgstr "उपयोगकर्ता द्वारा जोड़े गए शहरों को json stringified स्ट्रिंग प्रारूप में सहेजता है"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -113,7 +113,7 @@ msgstr "ग्रेडियेंट पृष्ठभूमि का प्
 #: data/io.github.amit9838.mousam.gschema.xml:18
 msgid ""
 "Apply gradient background on main window corresponding to weather condition"
-msgstr "मौसम की स्थिति के अनुरूप मुख्य खिड़की पर ग्रेडिएंट पृष्ठभूमि लागू करें"
+msgstr "मौसम की स्थिति के अनुरूप मुख्य विंडो पर ग्रेडिएंट पृष्ठभूमि लागू करें"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
@@ -125,11 +125,11 @@ msgstr "24 घंटे की घड़ी का प्रयोग करे�
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr "मुख्य खिड़की की चौड़ाई"
+msgstr "मुख्य विंडो की चौड़ाई"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr "मुख्य खिड़की की ऊंचाई"
+msgstr "मुख्य विंडो की ऊंचाई"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
@@ -393,7 +393,7 @@ msgstr "रात्रि"
 
 #: src/mousam.py:71
 msgid "Location"
-msgstr "स्थान"
+msgstr "शहर"
 
 #: src/mousam.py:80 src/shortcutsDialog.ui:45
 msgid "Preferences"
@@ -461,15 +461,15 @@ msgstr "{} पर बदला गया"
 
 #: src/mousam.py:336
 msgid "Refreshed Successfully"
-msgstr "सफलतापूर्वक ताजा किया गया"
+msgstr "सफलतापूर्वक रीफ्रेश किया गया"
 
 #: src/mousam.py:346
 msgid "Refresh within 5 seconds is ignored!"
-msgstr "5 सेकंड के भीतर ताजा करने पर नजरअंदाज किया जाएगा!"
+msgstr "5 सेकंड के भीतर रीफ्रेश करने पर नजरअंदाज किया जाएगा!"
 
 #: src/mousam.py:351
 msgid "Refreshing..."
-msgstr "ताजा किया जा रहा है..."
+msgstr "रीफ्रेश किया जा रहा है..."
 
 #: src/weatherData.py:98
 msgid "Good"
@@ -593,7 +593,7 @@ msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>"
 #: src/windowLocations.py:21 src/windowLocations.py:36
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr "स्थान"
+msgstr "शहर"
 
 #: src/windowLocations.py:44
 msgid "Add"
@@ -601,7 +601,7 @@ msgstr "जोड़ें"
 
 #: src/windowLocations.py:68
 msgid "Remove location"
-msgstr "स्थान हटाएं"
+msgstr "शहर हटाएं"
 
 #: src/windowLocations.py:122
 msgid "Switch city within 2 seconds is ignored!"
@@ -613,7 +613,7 @@ msgstr "{} - चयनित"
 
 #: src/windowLocations.py:138
 msgid "Add New Location"
-msgstr "नया स्थान जोड़ें"
+msgstr "नया शहर जोड़ें"
 
 #: src/windowLocations.py:163
 msgid "Search for a city"
@@ -630,11 +630,11 @@ msgstr "{0} - जोड़ा गया"
 
 #: src/windowLocations.py:250
 msgid "Location already added!"
-msgstr "स्थान पहले ही जोड़ा जा चुका है!"
+msgstr "शहर पहले ही जोड़ा जा चुका है!"
 
 #: src/windowLocations.py:259
 msgid "Add more locations to delete!"
-msgstr "मिटाने के लिए और अधिक स्थान जोड़ें!"
+msgstr "मिटाने के लिए और अधिक शहर जोड़ें!"
 
 #: src/windowLocations.py:286
 #, python-brace-format
@@ -668,7 +668,7 @@ msgstr "समय प्रारूप"
 
 #: src/windowPreferences.py:50
 msgid "Weather time format (Refresh required)"
-msgstr "मौसम समय प्रारूप (ताज़ा करना आवश्यक)"
+msgstr "मौसम समय प्रारूप (रीफ्रेश आवश्यक)"
 
 #: src/windowPreferences.py:59
 msgid "24 Hour"
@@ -704,11 +704,11 @@ msgstr "इंच में वर्षा दिखाएं"
 
 #: src/windowPreferences.py:110
 msgid "This option better works during heavy preciptaion (Refresh required)"
-msgstr "भारी वर्षा के दौरान यह विकल्प बेहतर काम करता है (ताजा करना आवश्यक)"
+msgstr "भारी वर्षा के दौरान यह विकल्प बेहतर काम करता है (रीफ्रेश आवश्यक)"
 
 #: src/windowPreferences.py:139
 msgid "Switching within 2 seconds is ignored!"
-msgstr "2 सेकंड के भीतर बदलने पर ध्यान नहीं दिया जाता!"
+msgstr "2 सेकंड के भीतर बदलने पर नज़रअंदाज़ किया जाएगा!"
 
 #: src/windowPreferences.py:142
 msgid "Switched to - {}"
@@ -720,7 +720,7 @@ msgstr "सामान्य"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
-msgstr "मौसम ताजा करें"
+msgstr "मौसम रीफ्रेश करें"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
