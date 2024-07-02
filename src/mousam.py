@@ -43,6 +43,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.connect("close-request",self.save_window_state)
         self.set_title("")
         self._use_dynamic_bg()
+        self.stopApp = False
 
         #  Adding a button into header
         self.header = Adw.HeaderBar()
@@ -120,6 +121,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Initiate UI loading weather data and drawing UI
         thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
+
+        threadReload = threading.Thread(target=self._reload_weather_data, name="reload_data")
+        threadReload.start()
 
         #Set key listeners
         keycont = Gtk.EventControllerKey()
@@ -228,6 +232,21 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         apd.join()
         local_time.join()
         self.get_weather()
+
+    # ===========  Reoad weather data and create UI every 'interval' seconds ============
+    def _reload_weather_data(self):
+        running = True
+        while running:
+            from .weatherData import current_weather_data as cw_data
+            if cw_data is not None:
+                next_request = cw_data.time.get("data") + cw_data.interval.get("data")
+                if next_request > time.time():
+                    time.sleep(1)
+                else:
+                    self._load_weather_data()
+            else:
+                time.sleep(1)
+            running = not self.stopApp
 
     # ===========  Load weather data and create UI ============
     def get_weather(self, reload_type=None, title=""):
@@ -393,6 +412,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
                 GLib.idle_add(self._show_shortcuts_dialog)
 
     def save_window_state(self,window):
+        self.stopApp = True
         width,height = window.get_default_size()
         settings.window_width = width
         settings.window_height = height

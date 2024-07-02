@@ -447,114 +447,114 @@ msgstr "Herladen binnen 5 seconden wordt genegeerd!"
 
 #: src/mousam.py:322
 msgid "Refreshing..."
-msgstr "Bezig met herladen…"
+msgstr "Herladen…"
 
-#: src/weatherData.py:100
+#: src/weatherData.py:109
 msgid "Good"
 msgstr "Goed"
 
-#: src/weatherData.py:102
+#: src/weatherData.py:111
 msgid "Moderate"
 msgstr "Redelijk"
 
-#: src/weatherData.py:104
+#: src/weatherData.py:113
 msgid "Poor"
 msgstr "Slecht"
 
-#: src/weatherData.py:106
+#: src/weatherData.py:115
 msgid "Unhealthy"
 msgstr "Ongezond"
 
-#: src/weatherData.py:108
+#: src/weatherData.py:117
 msgid "Severe"
 msgstr "Zeer ongezond"
 
-#: src/weatherData.py:110
+#: src/weatherData.py:119
 msgid "Hazardous"
 msgstr "Gevaarlijk"
 
-#: src/weatherData.py:118
+#: src/weatherData.py:127
 msgctxt "uvindex"
 msgid "Low"
 msgstr "Laag"
 
-#: src/weatherData.py:120
+#: src/weatherData.py:129
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "Gemiddeld"
 
-#: src/weatherData.py:122
+#: src/weatherData.py:131
 msgctxt "uvindex"
 msgid "High"
 msgstr "Hoog"
 
-#: src/weatherData.py:124
+#: src/weatherData.py:133
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "Erg hoog"
 
-#: src/weatherData.py:126
+#: src/weatherData.py:135
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "Extreem"
 
-#: src/weatherData.py:131
-msgctxt "humidity"
-msgid "Low"
-msgstr "Laag"
-
-#: src/weatherData.py:133
-msgctxt "humidity"
-msgid "Moderate"
-msgstr "Gemiddeld"
-
-#: src/weatherData.py:135
-msgctxt "humidity"
-msgid "High"
-msgstr "Hoog"
-
 #: src/weatherData.py:140
-msgctxt "pressure"
+msgctxt "humidity"
 msgid "Low"
 msgstr "Laag"
 
 #: src/weatherData.py:142
-msgctxt "pressure"
-msgid "Normal"
-msgstr "Normaal"
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Gemiddeld"
 
 #: src/weatherData.py:144
-msgctxt "pressure"
+msgctxt "humidity"
 msgid "High"
 msgstr "Hoog"
 
 #: src/weatherData.py:149
+msgctxt "pressure"
+msgid "Low"
+msgstr "Laag"
+
+#: src/weatherData.py:151
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Normaal"
+
+#: src/weatherData.py:153
+msgctxt "pressure"
+msgid "High"
+msgstr "Hoog"
+
+#: src/weatherData.py:158
 msgid "Calm"
 msgstr "Kalm"
 
-#: src/weatherData.py:151
+#: src/weatherData.py:160
 msgid "Light"
 msgstr "Licht"
 
-#: src/weatherData.py:153
+#: src/weatherData.py:162
 msgctxt "wind"
 msgid "Moderate"
 msgstr "Gemiddeld"
 
-#: src/weatherData.py:155
+#: src/weatherData.py:164
 msgid "Strong"
 msgstr "Sterk"
 
-#: src/weatherData.py:157
+#: src/weatherData.py:166
 msgctxt "wind"
 msgid "Extreme"
 msgstr "Extreem"
 
-#: src/weatherData.py:163
+#: src/weatherData.py:172
 msgid "km"
 msgstr "km"
 
-#: src/weatherData.py:166
+#: src/weatherData.py:175
 msgid "miles"
 msgstr "mijlen"
 
@@ -674,12 +674,36 @@ msgstr "Inches gebruiken bij neerslaghoeveelheden"
 
 #: src/windowPreferences.py:101
 msgid "This option better works during heavy preciptaion (Refresh required)"
-msgstr "Deze optie werkt beter bij grote hoeveelheden (herstart vereist)"
+msgstr "Deze optie werkt beter bij grote hoeveelheden neerslag (herstart vereist)"
 
-#: src/windowPreferences.py:129
+#: src/windowPreferences.py:127
+msgid "Use current weather from Domoticz"
+msgstr "Gebruik huidige weergegevens vanuit Domoticz"
+
+#: src/windowPreferences.py:128
+msgid "Read the current weather condition from your Domoticz system (Refresh required)"
+msgstr "Lees de huidge weersgegevens uit je eigen Domoticz systeem (herstart vereist)"
+
+#: src/windowPreferences.py:138
+msgid "Domoticz host"
+msgstr "Domoticz hostnaam"
+
+#: src/windowPreferences.py:139
+msgid "Enter your Domoticz hostname/IP and port number"
+msgstr "Geef je Domoticz hostnaam/IP en poort nummer op"
+
+#: src/windowPreferences.py:149
+msgid "Domoticz weather hardware"
+msgstr "Domoticz 'weer' hardware"
+
+#: src/windowPreferences.py:150
+msgid "Enter your Domoticz weather hardware name (e.g. WC224)"
+msgstr "Geef je Domoticz 'weer' hardware naam op (b.v. WC224)"
+
+#: src/windowPreferences.py:183
 msgid "Switching within 2 seconds is ignored!"
 msgstr "Overschakelen binnen 2 seconden wordt genegeerd!"
 
-#: src/windowPreferences.py:132
+#: src/windowPreferences.py:186
 msgid "Switched to - {}"
 msgstr "Overgeschakeld naar {}"
