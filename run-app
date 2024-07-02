@@ -1,0 +1,34 @@
+#!/bin/bash
+set -e
+
+# simple file to (build and compile) run the app
+
+# meson command needs to be installed to continue
+if command -v meson >/dev/null 2>&1; then
+  echo "command meson could be found"
+
+  # delete old dirs
+  echo "--- delete folders ---"
+  rm -rf builddir/
+  rm -rf compiledir/
+
+  # create new dirs
+  echo "--- create folders ---"
+  mkdir -p builddir/
+  mkdir -p compiledir/
+
+  # setup, compile, and install
+  echo "--- setup app ---"
+  meson setup -Dprefix=$(pwd)/compiledir builddir
+  echo "--- compile app ---"
+  meson compile -C builddir --verbose
+  echo "--- install app ---"
+  meson install -C builddir
+
+  # run
+  echo "--- run app ---"
+  ./compiledir/bin/mousam
+
+else
+  echo "command meson could not be found"
+fi
