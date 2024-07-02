@@ -1,7 +1,9 @@
 .flatpak-builder
 .vscode
 builddir
+compiledir
 __pycache__
+.venv
 
 # Logs
 logs
