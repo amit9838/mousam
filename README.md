@@ -4,7 +4,6 @@
 
 <p>Weather at a Glance</p>
 
-
 <a href = "https://github.com/amit9838/mousam/releases"><img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff"></a>
 <a href = "https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
 </div>
@@ -14,6 +13,7 @@
 </div>
 
 ## Features
+
 * Displays real-time temperature, humidity, wind speed, UV index, pressure and more
 * Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours
 * Also shows tomorrow and 7-day forcasts
@@ -39,7 +39,9 @@ flatpak install flathub io.github.amit9838.mousam
 ```
 sudo snap install mousam
 ```
+
 ### **Debian** (Unofficial)
+
 <a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download on SnapCraft' src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg' style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
 
 Thanks to @hsbasu for maintaining Debian package
@@ -47,15 +49,18 @@ Thanks to @hsbasu for maintaining Debian package
 [Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
 
 ## Build
+
 > [!TIP]
 > To avoid headaches, you can use Nix to build and run the project with just one command. See [Use Nix](#use-nix) for more information.
 
 ### Dependances
+
 * python3-requests
 * build-essential
 * meson
   
 ### Build
+
 ```
 rm -rf builddir
 meson setup -Dprefix=$HOME/.local builddir
@@ -63,22 +68,29 @@ meson compile -C builddir --verbose
 ```
 
 ### Install
+
 ```
 meson install -C builddir
 ```
+
 ### Run
+
 ```
 mousam
 ```
 
 ## Use Nix
+
 ### What is Nix and why should I use it?
+
 Nix is a package manager that is designed to work on multiple platforms. It helps to avoid dependency hell. It is a great tool for developers who want to build and run the project without worrying about the dependencies.
 
 ### How do I install Nix?
+
 For more information, see [Nix Manual](https://nix.dev/manual/nix/2.18/installation/installation).
 
 ### How do I use Nix?
+
 Enter the root directory of the project and run the following command:
 ```
 nix-shell
@@ -90,16 +102,13 @@ This command will create a shell, which downloads and installs all dependencies 
 
 ## Contribution
 Thanks to all the contributors have helped in the development project so that open-source community can enjoy best tools with best features.
- 
 
 <a href="https://github.com/amit9838/mousam/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=amit9838/mousam&columns=10"/>
 </a>
 
-
-
-
 ## Credits
+
 - Thanks to [Open Meteo](https://open-meteo.com/) from providing weather data for free of cost. 
 
 - Thanks to [@basmilius](https://github.com/basmilius) for making beautiful weather icons.
