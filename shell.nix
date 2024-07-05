@@ -55,8 +55,8 @@ let
       source ./$VENV/bin/activate
       export PYTHONPATH=`pwd`/$VENV/${myPython.sitePackages}/:$PYTHONPATH
 
-      pip install pygobject
-      pip install requests
+      pip install --disable-pip-version-check pygobject
+      pip install --disable-pip-version-check requests
 
       # path to compiled schemas: https://stackoverflow.com/questions/28953925/glib-gio-error-no-gsettings-schemas-are-installed-on-the-system
       export XDG_DATA_DIRS=`pwd`/compiledir/share/
