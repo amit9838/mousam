@@ -95,7 +95,7 @@ Enter the root directory of the project and run the following command:
 ```
 nix-shell
 ```
-This command will create a shell, which downloads and installs all dependencies needed to build and run the project. Now you can follow the [steps above](#build-1) to build, install and run the app.
+This command creates a shell that downloads and installs all the dependencies needed to build and run the project. Now you can follow the [steps above](#build-1) to build, install and run the app.
 
 > [!TIP]
 > To skip the build process, you can run the following command: bash run-app
