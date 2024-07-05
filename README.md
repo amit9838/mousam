@@ -47,6 +47,9 @@ Thanks to @hsbasu for maintaining Debian package
 [Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
 
 ## Build
+> [!TIP]
+> To avoid headaches, you can use Nix to build and run the project with just one command. See [Use Nix](#use-nix) for more information.
+
 ### Dependances
 * python3-requests
 * build-essential
@@ -67,6 +70,23 @@ meson install -C builddir
 ```
 mousam
 ```
+
+## Use Nix
+### What is Nix and why should I use it?
+Nix is a package manager that is designed to work on multiple platforms. It helps to avoid dependency hell. It is a great tool for developers who want to build and run the project without worrying about the dependencies.
+
+### How do I install Nix?
+For more information, see [Nix Manual](https://nix.dev/manual/nix/2.18/installation/installation).
+
+### How do I use Nix?
+Enter the root directory of the project and run the following command:
+```
+nix-shell
+```
+This command will create a shell, which downloads and installs all dependencies needed to build and run the project. Now you can follow the [steps above](#build-1) to build, install and run the app.
+
+> [!TIP]
+> To skip the build process, you can run the following command: bash run-app
 
 ## Contribution
 Thanks to all the contributors have helped in the development project so that open-source community can enjoy best tools with best features.
