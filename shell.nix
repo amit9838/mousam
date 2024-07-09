@@ -12,8 +12,6 @@ let
   pythonWithPkgs = myPython.withPackages (pythonPkgs: with pythonPkgs; [
     #black
     ipython
-    meson
-    ninja
     pip
     pygobject3
     requests
@@ -41,6 +39,8 @@ let
       libglibutil
       librsvg
       pkg-config
+      meson
+      ninja
     ];
 
     shellHook = ''
