@@ -16,7 +16,7 @@ class Weather:
         global extend_url
 
         if settings.unit == "imperial":
-            extend_url = f"&temperature_unit=fahrenheit&wind_speed_unit=mph"
+            extend_url = "&temperature_unit=fahrenheit&wind_speed_unit=mph"
         else:
             extend_url = ""
 
@@ -31,7 +31,7 @@ class Weather:
             url = url + f"&current={current_fields}" + extend_url
 
         try:
-            url = url + f"&timeformat=unixtime"
+            url = url + "&timeformat=unixtime"
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
@@ -65,7 +65,7 @@ class Weather:
             url = url + f"&hourly={hourly_fields}" + extend_url
 
         try:
-            url = url + f"&timeformat=unixtime"
+            url = url + "&timeformat=unixtime"
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
@@ -113,7 +113,7 @@ class Weather:
             url = url + f"&end_date={kwargs.get('end_date')}" 
 
         try:
-            url = url + f"&timeformat=unixtime" + extend_url
+            url = url + "&timeformat=unixtime" + extend_url
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()

@@ -2,17 +2,16 @@ import datetime
 import random
 import time
 import gi
-import gettext
 from gi.repository import Gtk
-
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gettext import gettext as _, pgettext as C_
 
 from .constants import icons, icon_loc
 from .frontendUiDrawImageIcon import DrawImage
 from .frontendUiDrawbarLine import DrawBar
 from .config import settings
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
 icon_loc += "arrow.svg"
 
@@ -26,7 +25,7 @@ class HourlyDetails(Gtk.Grid):
         if settings.is_using_dynamic_bg:
             self.add_css_class("transparent_5")
 
-        self.set_margin_top(20)
+        self.set_margin_top(10)
         self.set_margin_start(5)
         self.paint_ui()
         self.daily_forecast = None
@@ -51,7 +50,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Temperature Button -------------
         temp_btn = Gtk.ToggleButton.new_with_label(_("Hourly"))
-        temp_btn.set_size_request(100, 20)
+        temp_btn.set_size_request(80, 16)
         temp_btn.set_css_classes(["btn_sm"])
         temp_btn.do_clicked(temp_btn)
         style_buttons_box.append(temp_btn)
@@ -59,7 +58,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Wind Button -------------
         wind_btn = Gtk.ToggleButton.new_with_label(_("Wind"))
-        wind_btn.set_size_request(100, 20)
+        wind_btn.set_size_request(80, 16)
         wind_btn.set_css_classes(["btn_sm"])
         wind_btn.set_group(temp_btn)
         style_buttons_box.append(wind_btn)
@@ -67,7 +66,7 @@ class HourlyDetails(Gtk.Grid):
 
         # Precipitation Button -------------
         prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
-        prec_btn.set_size_request(100, 20)
+        prec_btn.set_size_request(80, 16)
         prec_btn.set_css_classes(["btn_sm"])
         prec_btn.set_group(temp_btn)
         style_buttons_box.append(prec_btn)
@@ -85,33 +84,35 @@ class HourlyDetails(Gtk.Grid):
 
     # ---------- Create page stack --------------
     def create_stack_page(self, page_name):
-        from .weatherData import daily_forecast_data as daily_data
         from .weatherData import hourly_forecast_data as hourly_data
 
         page_grid = Gtk.Grid()
         self.hourly_stack.add_named(page_grid, page_name)
         self.hourly_stack.set_visible_child_name(page_name)
 
-        info_grid = Gtk.Grid(margin_start=20, margin_top=10)
+        info_grid = Gtk.Grid(
+            margin_start=10, margin_top=15, margin_bottom=5, column_spacing=5
+        )
+        info_grid.set_css_classes(["card_infos"])
         page_grid.attach(info_grid, 0, 1, 1, 1)
 
-        desc_label = Gtk.Label(label=C_("wind", "Day High"), halign=Gtk.Align.START)
-        desc_label.set_css_classes(["text-4", "light-2", "bold-2"])
-        info_grid.attach(desc_label, 0, 0, 3, 1)
+        desc_label = Gtk.Label(label=C_("wind", "Day High •"))
+        desc_label.set_css_classes(["text-4", "light-3", "bold-3"])
+        info_grid.attach(desc_label, 0, 0, 1, 2)
 
         val_label = Gtk.Label(
             label=str(max(hourly_data.windspeed_10m.get("data")[:24])),
             halign=Gtk.Align.START,
         )
-        val_label.set_css_classes(["text-l5", "light-3", "bold-1"])
-        info_grid.attach(val_label, 0, 1, 2, 2)
+        val_label.set_css_classes(["text-3", "light-3", "bold-1"])
+        info_grid.attach(val_label, 1, 0, 2, 2)
         unit_label = Gtk.Label(label=hourly_data.windspeed_10m.get("unit"))
         unit_label.set_css_classes(["text-5", "light-2", "bold-3"])
-        info_grid.attach(unit_label, 2, 2, 1, 1)
+        info_grid.attach(unit_label, 3, 0, 1, 2)
 
         # Hourly Page
         if page_name == "hourly":
-            desc_label.set_text(C_("temperature", "Day Max"))
+            desc_label.set_text(C_("temperature", "Day Max •"))
             val_label.set_text(str(max(hourly_data.temperature_2m.get("data"))) + "°")
             unit_label.set_text("")
 
@@ -123,7 +124,7 @@ class HourlyDetails(Gtk.Grid):
             unit = "inch"
 
         if page_name == "prec":
-            desc_label.set_text(C_("precipitation", "Day High"))
+            desc_label.set_text(C_("precipitation", "Day High •"))
             val_label.set_text(f"{max_prec:.2f}")
             unit_label.set_text(unit)
 
@@ -174,8 +175,8 @@ class HourlyDetails(Gtk.Grid):
                 )
                 no_prec_label.set_css_classes(["text-3a", "bold-3", "light-2"])
                 no_prec_label.set_halign(Gtk.Align.CENTER)
-                no_prec_label.set_margin_top(40)
-                no_prec_label.set_margin_bottom(40)
+                no_prec_label.set_margin_top(20)
+                no_prec_label.set_margin_bottom(20)
                 graphic_box.set_css_classes(["custom_card_hourly", "bg_light_grey"])
                 graphic_box.append(no_prec_label)
                 graphic_container.append(graphic_box)
@@ -190,7 +191,7 @@ class HourlyDetails(Gtk.Grid):
             graphic_container.append(graphic_box)
 
             label_timestamp = Gtk.Label(label="")
-            label_timestamp.set_css_classes(["text-6", "bold-2", "light-6"])
+            label_timestamp.set_css_classes(["text-7", "bold-2", "light-6"])
             time_stamp = datetime.datetime.fromtimestamp(
                 hourly_data.time.get("data")[i]
             )
@@ -212,7 +213,7 @@ class HourlyDetails(Gtk.Grid):
             graphic_box.append(icon_box)
 
             label_val = Gtk.Label(label="")
-            label_val.set_css_classes(["text-4", "bold-2", "light-3"])
+            label_val.set_css_classes(["text-5", "bold-2", "light-3"])
             graphic_box.append(label_val)
 
             if page_name == "wind":

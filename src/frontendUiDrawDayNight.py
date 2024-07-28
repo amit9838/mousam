@@ -1,18 +1,18 @@
 import gi
 import math
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gi.repository import Gtk
 import cairo
 from datetime import datetime
 from .utils import get_cords, get_time_difference
 from .config import settings
 
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+
 
 class DrawDayNight:
     def __init__(self, angle, width, height):
-
         self.angle_degrees = angle  # Specify the rotation angle in degrees
         self.width = width
         self.height = height
@@ -28,7 +28,7 @@ class DrawDayNight:
     def on_draw(self, widget, cr, width, height, data):
         # Create a Cairo surface
         context = cr
-        outer_radius = 43
+        outer_radius = 38
 
         num_rays = 8
         sun_angle = self.angle_degrees  # Degree
@@ -75,12 +75,12 @@ class DrawDayNight:
         # Calculate the position for text placement
         text_x = center_x - 30
         text_y = center_y + 15
-        
+
         date_time = datetime.fromtimestamp(target_time)
-        formatted_date_time= date_time.strftime("%I:%M %p")
+        formatted_date_time = date_time.strftime("%I:%M %p")
 
         if settings.is_using_24h_clock:
-            formatted_date_time= date_time.strftime("%H:%M")
+            formatted_date_time = date_time.strftime("%H:%M")
             text_x += 7
 
         text = formatted_date_time
@@ -92,17 +92,6 @@ class DrawDayNight:
         context.show_text(text)
 
         context.set_font_size(13)
-
-        # Horizon text
-        text = _("Horizon")
-        # Calculate the position for text placement
-        text_x = center_x + outer_radius * 1.3
-        text_y = center_y - 10
-        # Move the text cursor to the calculated position
-        context.move_to(text_x, text_y)
-
-        # Display the text along the circular path
-        context.show_text(text)
 
         text2 = _("Night")
         # Calculate the position for text placement
@@ -121,7 +110,9 @@ class DrawDayNight:
                 upper_limit = abs(1.2 - (1 - (360 - 170) / 90))
                 lower_limit = abs(1.2 - (1 - (180 - 170) / 90))
                 yellow = upper_limit - yellow + lower_limit
-            context.set_source_rgba(1, yellow, 0, 1.5)  # color = function of y (height of sun)
+            context.set_source_rgba(
+                1, yellow, 0, 1.5
+            )  # color = function of y (height of sun)
         else:
             context.set_source_rgba(0.9, 0.9, 0.9, 1.0)  # Whitish(for moon)
 
@@ -155,9 +146,9 @@ class DrawDayNight:
         context.set_line_width(1)
         context.set_source_rgba(0.8, 0.8, 0.8, 1)  # Red
         context.set_line_cap(cairo.LINE_CAP_ROUND)
-        context.move_to(width / 6, height // 2)
+        context.move_to(width / 10, height // 2)
         context.line_to(width, height // 2)
-        dash_length = 12
-        gap_length = 5
+        dash_length = 6
+        gap_length = 3
         context.set_dash([dash_length, gap_length])
         context.stroke()

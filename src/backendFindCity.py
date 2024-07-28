@@ -16,7 +16,7 @@ def find_city(city, count=3):
         cities_res = response.json()
         cities = cities_res.get('results')
         cities_list = []
-        if cities == None:
+        if cities is None:
             return cities_list
         for city in cities:
             data = {

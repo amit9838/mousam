@@ -47,10 +47,10 @@ class CardSquare:
             margin_start=5,
             margin_end=5,
             row_spacing=5,
-            column_spacing=25,
+            column_spacing=0,
         )
         card.halign = Gtk.Align.FILL
-        card.set_size_request(200, 150)
+        card.set_size_request(170, 100)
         card.set_css_classes(["view", "card", "custom_card"])
         
         if settings.is_using_dynamic_bg:
@@ -65,10 +65,11 @@ class CardSquare:
         card.attach(title, 0, 0, 1, 2)
 
         # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid(margin_top=5, row_spacing=0, column_spacing=0)
+        card_info = Gtk.Grid()
         card.attach(card_info, 0, 2, 1, 2)
 
         # Main value (like windspeed = 32km/h)
+        # convert pressure value to int
         self.main_val = int(self.main_val) if self.title == 'Pressure' else self.main_val
         main_val = Gtk.Label(label=self.main_val)
         main_val.set_css_classes(["text-1", "bold"])
@@ -77,26 +78,25 @@ class CardSquare:
 
         # Unit if the main value
         main_val_unit = Gtk.Label(label=self.main_val_unit)
-        main_val_unit.set_css_classes(["text-5", "light-3"])
+        main_val_unit.set_css_classes(["text-7", "light-3"])
         main_val_unit.set_halign(Gtk.Align.START)
         card_info.attach(main_val_unit, 3, 3, 1, 1)
 
-        # Short description
+        # Short description [light, moderate]
         desc_box = Gtk.Box()
-        desc_box.set_size_request(10, 30)
+        desc_box.set_size_request(5, 27)
         card_info.attach(desc_box, 0, 4, 6, 1)
 
         desc = Gtk.Label(label=self.desc)
         desc.set_css_classes(["text-5", "light-2", "bold-2"])
         desc.set_wrap(True)
-        desc.set_margin_start(0)
         desc.set_halign(Gtk.Align.START)
         desc.set_valign(Gtk.Align.START)
         desc_box.append(desc)
 
-        # Sub description heading
+        # Sub description heading [dewpoint,from]
         sub_desc_heading = Gtk.Label(label=self.sub_desc_heading)
-        sub_desc_heading.set_css_classes(["text-4", "light-1"])
+        sub_desc_heading.set_css_classes(["text-6", "light-1"])
         sub_desc_heading.set_halign(Gtk.Align.START)
         card_info.attach(sub_desc_heading, 0, 5, 4, 1)
 
@@ -106,7 +106,6 @@ class CardSquare:
         card_info.attach(sub_desc, 0, 6, 4, 1)
 
         card_icon = Gtk.Grid(halign=Gtk.Align.END)
-        card_icon.set_margin_top(5)
         card.attach(card_icon, 1, 2, 2, 1)
 
         icon_upper_text = Gtk.Label(label=self.text_up)
@@ -116,7 +115,7 @@ class CardSquare:
             icon_upper_text.set_css_classes(["title-5"])
 
         icon_upper_text.set_halign(Gtk.Align.CENTER)
-        icon_upper_text.set_margin_bottom(5)
+        icon_upper_text.set_margin_bottom(0)
         card_icon.attach(icon_upper_text, 0, 0, 1, 1)
 
         if self.title.lower() == "wind":

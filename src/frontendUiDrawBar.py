@@ -1,15 +1,15 @@
 import gi
+from gi.repository import Gtk
+import cairo
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk
-import cairo
 
 
 class DrawLevelBar:
     def __init__(
         self,
-        fill_fr: float = .5,
+        fill_fr: float = 0.5,
         rounded_cap=False,
         width=40,
         height=70,
@@ -28,15 +28,14 @@ class DrawLevelBar:
         self.fill_fr = 1 - fill_fr
         self.rgb = rgb_color  # [r,g,b] (between 0 to 1)
 
-
     def draw(self, area, ctx, h, w, data):
-        x,y1 = (self.width)/2,10
-        x,y2 = (self.width)/2,self.height-10
+        x, y1 = (self.width) / 2, 10
+        x, y2 = (self.width) / 2, self.height - 10
 
         filled = self.fill_fr
         # filled = 1-filled
 
-        lev = y1+(y2-y1)*filled
+        lev = y1 + (y2 - y1) * filled
         ctx.set_source_rgba(*self.rgb, 0.4)
 
         # Set the line width
@@ -50,16 +49,15 @@ class DrawLevelBar:
         # Stroke the line with the gradient
         ctx.stroke()
 
-
         ctx.set_source_rgba(*self.rgb, 1)
-        ctx.move_to(x,lev)
-        ctx.rel_line_to(0,0)
+        ctx.move_to(x, lev)
+        ctx.rel_line_to(0, 0)
         ctx.stroke()
 
         # Draw a triangle using move_to and line_to
-        ctx.move_to(x-15, lev)
+        ctx.move_to(x - 15, lev)
         ctx.rel_line_to(-10, -6)  # Draw the first side
-        ctx.rel_line_to(0,12)  # Draw the second side
-        ctx.close_path()          # Close the path to complete the triangle
+        ctx.rel_line_to(0, 12)  # Draw the second side
+        ctx.close_path()  # Close the path to complete the triangle
 
         ctx.fill()

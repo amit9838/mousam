@@ -13,7 +13,7 @@ class AirPollution:
             url = url + f"&hourly={hourly_fields}"
 
         try:
-            url = url + f"&timeformat=unixtime" + f"&forecast_days=1"
+            url = url + "&timeformat=unixtime" + "&forecast_days=1"
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()

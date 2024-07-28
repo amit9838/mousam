@@ -1,10 +1,7 @@
 import gi
 import time
 import threading
-import gettext
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio,Gdk,GLib
 from gettext import gettext as _, pgettext as C_
 
@@ -29,6 +26,8 @@ from .weatherData import (
     fetch_daily_forecast,
     fetch_current_air_pollution,
 )
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
 global updated_at
 updated_at = time.time()
@@ -137,7 +136,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container_loader.set_margin_top(220)
-        container_loader.set_margin_bottom(300)
+        container_loader.set_margin_bottom(200)
 
         # Create loader
         loader = Gtk.Spinner()
