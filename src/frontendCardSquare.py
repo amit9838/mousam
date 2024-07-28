@@ -2,8 +2,8 @@ from gi.repository import Gtk
 import gi
 from .constants import icons
 from .config import settings
-from .frontendUiDrawBar import *
-from .frontendUiDrawImageIcon import *
+from .frontendUiDrawBar import DrawLevelBar
+from .frontendUiDrawImageIcon import DrawImage
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -72,7 +72,7 @@ class CardSquare:
         # convert pressure value to int
         self.main_val = int(self.main_val) if self.title == 'Pressure' else self.main_val
         main_val = Gtk.Label(label=self.main_val)
-        main_val.set_css_classes(["text-1", "bold"])
+        main_val.set_css_classes(["text-2a", "bold"])
         main_val.set_halign(Gtk.Align.START)
         card_info.attach(main_val, 0, 1, 3, 3)
 
