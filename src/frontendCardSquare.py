@@ -43,10 +43,10 @@ class CardSquare:
 
     def create_card(self):
         card = Gtk.Grid(
-            margin_top=10,
-            margin_start=5,
-            margin_end=5,
-            row_spacing=5,
+            margin_top=6,
+            margin_start=3,
+            margin_end=3,
+            row_spacing=3,
             column_spacing=0,
         )
         card.halign = Gtk.Align.FILL

@@ -135,7 +135,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             return
 
         container_loader = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        container_loader.set_margin_top(220)
+        container_loader.set_margin_top(200)
         container_loader.set_margin_bottom(200)
 
         # Create loader

@@ -26,7 +26,7 @@ class HourlyDetails(Gtk.Grid):
             self.add_css_class("transparent_5")
 
         self.set_margin_top(10)
-        self.set_margin_start(5)
+        self.set_margin_start(3)
         self.paint_ui()
         self.daily_forecast = None
 
@@ -43,7 +43,7 @@ class HourlyDetails(Gtk.Grid):
         style_buttons_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
             halign=Gtk.Align.START,
-            margin_start=2,
+            margin_start=0,
         )
         style_buttons_box.add_css_class("linked")
         style_buttons_box.set_valign(Gtk.Align.CENTER)
@@ -91,7 +91,7 @@ class HourlyDetails(Gtk.Grid):
         self.hourly_stack.set_visible_child_name(page_name)
 
         info_grid = Gtk.Grid(
-            margin_start=10, margin_top=15, margin_bottom=5, column_spacing=5
+            margin_start=10, margin_top=22, margin_bottom=5, column_spacing=5
         )
         info_grid.set_css_classes(["card_infos"])
         page_grid.attach(info_grid, 0, 1, 1, 1)
@@ -175,8 +175,8 @@ class HourlyDetails(Gtk.Grid):
                 )
                 no_prec_label.set_css_classes(["text-3a", "bold-3", "light-2"])
                 no_prec_label.set_halign(Gtk.Align.CENTER)
-                no_prec_label.set_margin_top(20)
-                no_prec_label.set_margin_bottom(20)
+                no_prec_label.set_margin_top(40)
+                no_prec_label.set_margin_bottom(40)
                 graphic_box.set_css_classes(["custom_card_hourly", "bg_light_grey"])
                 graphic_box.append(no_prec_label)
                 graphic_container.append(graphic_box)
@@ -223,8 +223,8 @@ class HourlyDetails(Gtk.Grid):
                 img = DrawImage(
                     icon_loc,
                     hourly_data.wind_direction_10m.get("data")[i] + 180,
-                    30,
-                    30,
+                    26,
+                    26,
                 )
 
                 icon_box.set_margin_top(10)
@@ -243,7 +243,7 @@ class HourlyDetails(Gtk.Grid):
 
                 icon_main = Gtk.Image().new_from_file(condition_icon)
                 icon_main.set_hexpand(True)
-                icon_main.set_pixel_size(50)
+                icon_main.set_pixel_size(46)
                 icon_box.set_margin_bottom(10)
                 icon_box.append(icon_main)
 

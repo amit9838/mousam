@@ -31,7 +31,7 @@ class CardAirPollution:
     def create_card(self):
         idx = self._get_nearest_time_index()
 
-        card = Gtk.Grid(margin_top=10, margin_start=5)
+        card = Gtk.Grid(margin_top=6, margin_start=3)
         self.card = card
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)

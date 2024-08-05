@@ -14,8 +14,8 @@ class Forecast(Gtk.Grid):
         super().__init__(*args, **kwargs)
         self.set_margin_top(10)
         self.set_margin_bottom(5)
-        self.set_margin_start(10)
-        self.set_margin_end(5)
+        self.set_margin_start(6)
+        self.set_margin_end(3)
         self.set_css_classes(["view", "card", "custom_card"])
         if settings.is_using_dynamic_bg:
             self.add_css_class("transparent_5")
@@ -84,7 +84,7 @@ class Forecast(Gtk.Grid):
         # Create scrolled window , add it to stack-box
         scrolled_window = Gtk.ScrolledWindow(margin_top=4, margin_bottom=4)
         scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_size_request(260, 500)
+        scrolled_window.set_size_request(260, 480)
         scrolled_window.set_kinetic_scrolling(True)
         box.append(scrolled_window)
 
@@ -142,7 +142,7 @@ class Forecast(Gtk.Grid):
 
             # Add dt_label Label
             label_box = Gtk.Box()
-            label_box.set_size_request(80, 68)
+            label_box.set_size_request(80, 60)
             label_day_time = Gtk.Label(label=dt_label, halign=Gtk.Align.START)
             label_day_time.set_css_classes(["text-5", "bold-2", "light-2"])
             label_box.append(label_day_time)
@@ -156,7 +156,7 @@ class Forecast(Gtk.Grid):
             condition_icon = Gtk.Image().new_from_file(icons[str(weather_code)])
             condition_icon.set_halign(Gtk.Align.CENTER)
             condition_icon.set_hexpand(True)
-            condition_icon.set_pixel_size(50)
+            condition_icon.set_pixel_size(43)
             forecast_item_grid.attach(condition_icon, 1, 0, 1, 1)
 
             forecast_cond_grid = Gtk.Grid(valign=Gtk.Align.CENTER, margin_end=20)

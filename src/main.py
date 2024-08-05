@@ -20,13 +20,13 @@
 import os
 import sys
 import gi
-
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
 
 from gi.repository import Gtk, Gio, Adw, Gdk
 from .mousam import WeatherMainWindow
 from .config import settings
+
 
 class WeatherApplication(Adw.Application):
     """The main application singleton class."""
@@ -37,8 +37,8 @@ class WeatherApplication(Adw.Application):
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.main_window = None
 
-        self.set_accels_for_action(f"win.preferences", ['<primary>comma'])
-        self.set_accels_for_action(f"win.shortcuts", ['<primary>question'])
+        self.set_accels_for_action("win.preferences", ['<primary>comma'])
+        self.set_accels_for_action("win.shortcuts", ['<primary>question'])
 
 
     def do_activate(self):
