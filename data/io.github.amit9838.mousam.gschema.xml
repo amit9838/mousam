@@ -42,5 +42,23 @@
       <summary>Mesaurement sysytem to use - metric,imperial</summary>
       <description>metric(km, °C), imperial(mile, °F)</description>
     </key>
+
+	  <key name="use-domoticz" type="b">
+      <default>false</default>
+      <summary>Use Domoticz for current weather</summary>
+    </key>
+
+	<key name="domoticz-host" type="s">
+      <default>"192.168.1.10:8080"</default>
+      <summary>Domoticz hostname</summary>
+      <description>Domoticz hostname in the form of ip:port</description>
+    </key>
+
+	<key name="domoticz-weather-hwtype" type="s">
+      <default>"WC224"</default>
+      <summary>Domoticz weather hardware type</summary>
+      <description>Domoticz weather hardware type (for example: WC224). Can be found in hardware overview of Domoticz.</description>
+    </key>
+
 	</schema>
 </schemalist>

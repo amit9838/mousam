@@ -117,6 +117,50 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.prec_unit.add_suffix(self.prec_unit_switch_box)
         self.prec_unit_group.add(self.prec_unit)
         
+        # Domoticz
+        self.domoticz_group = Adw.PreferencesGroup.new()
+        self.domoticz_group.set_margin_top(20)
+        self.domoticz_group.set_title(_('Domoticz'))
+        self.appearance_grp.add(self.domoticz_group)
+        # Domoticz on/off
+        self.domoticz = Adw.ActionRow.new()
+        self.domoticz.set_title(_('Use current weather from Domoticz'))
+        self.domoticz.set_subtitle(_("Read the current weather condition from your Domoticz system  (Refresh required)"))
+        self.domoticz_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.prec_unit.set_activatable(True)
+        self.use_domoticz = Gtk.Switch()
+        self.use_domoticz.set_active(settings.is_using_domoticz_for_current_weather)
+        self.use_domoticz.connect("state-set",self._use_domoticz_for_current_weather)
+        self.domoticz_switch_box.append(self.use_domoticz)
+        self.domoticz.add_suffix(self.domoticz_switch_box)
+        # Domoticz hostname
+        self.domoticz_host = Adw.ActionRow.new()
+        self.domoticz_host.set_title(_('Domoticz host'))
+        self.domoticz_host.set_subtitle(_("Enter your Domoticz hostname/IP and port number"))
+        self.domoticz_text_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.dom_host = Gtk.Entry.new()
+        self.dom_host.set_width_chars(20)
+        self.dom_host.set_text(settings.domoticz_host)
+        self.dom_host.connect("changed", self._domoticz_host)
+        self.domoticz_text_box.append(self.dom_host)
+        self.domoticz_host.add_suffix(self.domoticz_text_box)
+        # Domoticz weather hardware type
+        self.domoticz_hwtype = Adw.ActionRow.new()
+        self.domoticz_hwtype.set_title(_('Domoticz weather hardware'))
+        self.domoticz_hwtype.set_subtitle(_("Enter your Domoticz weather hardware name (e.g. WC224)"))
+        self.domoticz_hw_type_text_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
+        self.dom_hwtype = Gtk.Entry.new()
+        self.dom_hwtype.set_width_chars(20)
+        self.dom_hwtype.set_text(settings.domoticz_weather_hwtype)
+        self.dom_hwtype.connect("changed", self._domoticz_weather_hwtype)
+        self.domoticz_hw_type_text_box.append(self.dom_hwtype)
+        self.domoticz_hwtype.add_suffix(self.domoticz_hw_type_text_box)
+        
+        
+        self.domoticz_group.add(self.domoticz)
+        self.domoticz_group.add(self.domoticz_host)
+        self.domoticz_group.add(self.domoticz_hwtype)
+        
     # =============== Appearance Methods  ===============
     def _use_gradient_bg(self,widget,state):
         settings.is_using_dynamic_bg = state
@@ -143,5 +187,16 @@ class WeatherPreferences(Adw.PreferencesWindow):
                 thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
                 thread.start()
     
-    def _use_inch_for_precipation(self,widget,state):
+    def _use_inch_for_precipation(self, widget, state):
         settings.is_using_inch_for_prec = state
+        
+    def _use_domoticz_for_current_weather(self, widget, state):
+        settings.is_using_domoticz_for_current_weather = GLib.Variant("b", state)
+        
+    def _domoticz_host(self, widget):
+        settings.domoticz_host = GLib.Variant("s", widget.get_text())
+        
+    def _domoticz_weather_hwtype(self, widget):
+        settings.domoticz_weather_hwtype = GLib.Variant("s", widget.get_text())
+
+
