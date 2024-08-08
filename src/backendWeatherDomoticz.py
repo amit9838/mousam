@@ -1,18 +1,16 @@
-import os
 import time
-import jsonpickle
 import json
-import types
 import urllib.request as urllib2
 from .config import settings
+
 
 class WeatherDomoticz:
    def __init__(self):
         self.mWeatherJson = None
         self.mDomoticzSettingsRestApi = "/json.htm?type=settings"
         self.mDomoticzWeatherRestApi = "/json.htm?type=devices&filter=weather&used=true"
-        self.mHostname = settings.domoticz_host # "192.168.1.10:8080"
-        self.mHardwareName = settings.domoticz_weather_hwtype # "WC224"
+        self.mHostname = settings.domoticz_host
+        self.mHardwareName = settings.domoticz_weather_hwtype
    
            
    def ReadDomoticzLocation(self):
@@ -22,7 +20,7 @@ class WeatherDomoticz:
         domJson = json.loads(response.read())
         lat = domJson['Location']['Latitude']
         lon = domJson['Location']['Longitude']
-        return float(lat),float(lon)
+        return float(lat), float(lon)
 
    def IsLocationNearDomoticz(self, lat, lon):
         domLat, domLon = self.ReadDomoticzLocation()
@@ -70,6 +68,8 @@ class WeatherDomoticz:
         cwPreci = float(rain[0]['Rain'])
         cwPressure = float(temp[0]['Barometer'])
         cwWindSpeed = float(wind[0]["Speed"]) * 3.6
+        # Get rid of more then 2 decimals in float
+        cwWindSpeed = float(int(cwWindSpeed*100)/100)
         cwWindDir = wind[0]['Direction']
         cwIsDay = 0
         if isDay:
@@ -96,7 +96,7 @@ class WeatherDomoticz:
                 "precipitation": "mm",
                 "weathercode": "wmo code",
                 "surface_pressure": "hPa",
-                "windspeed_10m": "k/m",
+                "windspeed_10m": "km/h",
                 "winddirection_10m": "°"
             },
             "current": {

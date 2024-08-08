@@ -26,9 +26,10 @@ def fetch_current_weather():
     lat, lon = get_cords()
     if settings.is_using_domoticz_for_current_weather and objDomoticz.IsLocationNearDomoticz(lat, lon) and True:
         current_weather_data = objDomoticz._get_current_weather()
-        # For now copy the weathercode from remote, since Domoticz doesn't provide this
+        # For now copy the elevation and weathercode from remote, since Domoticz doesn't provide this
         remCw = obj._get_current_weather(*get_cords())
         current_weather_data["current"]["weathercode"] = remCw["current"]["weathercode"]
+        current_weather_data["elevation"] = remCw["elevation"]
     else:
         current_weather_data = obj._get_current_weather(*get_cords())
     #print("Current weather:")

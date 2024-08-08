@@ -33,18 +33,31 @@ def check_internet_domain(url):
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
 
+# Check Internet connection using requests
+def check_domoticz_url(url):
+    try:
+        request = requests.get(url, timeout=TIMEOUT)
+        print("Domoticz connection confirmed through: ", url)
+        return True
+    except (requests.ConnectionError, requests.Timeout) as exception:
+        return False
+
 
 def check_internet_connection():
+    result = False
     if (
         check_internet_socket()
         or check_internet_domain(domains["google"])
         or check_internet_domain(domains["wikipedia"])
         or check_internet_domain(domains["baidu"])
     ):
-        return True
-
-    print("No internet!")
-    return False
+        if settings.is_using_domoticz_for_current_weather and check_domoticz_url("http://" + settings.domoticz_host + "/"):
+            result = True
+        else:
+            result = True
+    if not result:
+        print("No internet!")
+    return result
 
 
 def create_toast(text, priority=0):
