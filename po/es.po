@@ -355,7 +355,7 @@ msgstr "Maxima de hoy"
 #: src/frontendHourlyDetails.py:126
 msgctxt "precipitation"
 msgid "Day High"
-msgstr "Alta Precipitacion"
+msgstr "Precipitacion Maxima"
 
 #: src/frontendHourlyDetails.py:165
 msgid "No precipitation today !"
@@ -440,7 +440,7 @@ msgstr "Punto de Rocio"
 #: src/mousam.py:306
 msgctxt "pressure card"
 msgid "High"
-msgstr ""
+msgstr "Alto"
 
 #: src/mousam.py:307
 msgctxt "pressure card"
@@ -609,78 +609,79 @@ msgstr "Cambiar ciudad dentro de 2 segundos es ignorado!"
 
 #: src/windowLocations.py:126
 msgid "Selected - {}"
-msgstr ""
+msgstr "Seleccionado - {}"
 
 #: src/windowLocations.py:138
 msgid "Add New Location"
-msgstr ""
+msgstr "Añadir Nueva Ubicacion"
 
 #: src/windowLocations.py:163
 msgid "Search for a city"
-msgstr ""
+msgstr "Buscar una Ciudad"
 
 #: src/windowLocations.py:169 src/windowLocations.py:171
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #: src/windowLocations.py:248
 #, python-brace-format
 msgid "Added - {0}"
-msgstr ""
+msgstr "Añadido - {0}"
 
 #: src/windowLocations.py:250
 msgid "Location already added!"
-msgstr ""
+msgstr "Ubicacion ya agregada!"
 
 #: src/windowLocations.py:259
 msgid "Add more locations to delete!"
-msgstr ""
+msgstr "Añade mas ubicaciones para elimarla!"
 
 #: src/windowLocations.py:286
 #, python-brace-format
 msgid "Deleted - {0}"
-msgstr ""
+msgstr "Eliminada - {0}"
 
 #: src/windowLocations.py:289
 msgid "Press enter to search"
-msgstr ""
+msgstr "Presiona enter para buscar"
 
 #: src/windowLocations.py:292
 msgid "No results found!"
-msgstr ""
+msgstr "No se encontraron resultados"
 
 #: src/windowPreferences.py:25
 msgid "Appearance"
-msgstr ""
+msgstr "Apariencia"
 
 #: src/windowPreferences.py:35
 msgid "Dynamic Background"
-msgstr ""
+msgstr "Fondo Dinamico"
 
 #: src/windowPreferences.py:36
 msgid ""
 "Background changes based on current weather condition (Restart required)"
 msgstr ""
+"Cambios en segundo plano basados en las condiciones actuales del clima (Reinicio requerido)"
 
 #: src/windowPreferences.py:49
 msgid "Time Format"
-msgstr ""
+msgstr "Formato de Tiempo"
 
 #: src/windowPreferences.py:50
 msgid "Weather time format (Refresh required)"
-msgstr ""
+msgstr "Formato de tiempo del clima (Reinicio requerido)"
 
 #: src/windowPreferences.py:59
 msgid "24 Hour"
-msgstr ""
+msgstr "24 Horas"
 
 #: src/windowPreferences.py:66
 msgid "AM / PM"
-msgstr ""
+msgstr "AM / PM"
 
 #: src/windowPreferences.py:81
 msgid "Units &amp; Measurements"
-msgstr ""
+msgstr "Unidades &amp; Medidas"
 
 #: src/windowPreferences.py:85
 msgid "°C"
@@ -688,7 +689,7 @@ msgstr ""
 
 #: src/windowPreferences.py:86
 msgid "METRIC system with units like celsius, km/h, kilometer"
-msgstr ""
+msgstr "Sistema METRICO con unidades celsius, km/h, kilometros"
 
 #: src/windowPreferences.py:94
 msgid "°F"
@@ -696,32 +697,32 @@ msgstr ""
 
 #: src/windowPreferences.py:95
 msgid "IMPERIAL system with units like fahrenheit, mph, miles"
-msgstr ""
+msgstr "Sistema Imperial con unidades Farenheit, mph, millas"
 
 #: src/windowPreferences.py:109
 msgid "Show precipitation in inch"
-msgstr ""
+msgstr "Mostrar precipitacion en pulgadas"
 
 #: src/windowPreferences.py:110
 msgid "This option better works during heavy preciptaion (Refresh required)"
-msgstr ""
+msgstr "Esta opcion funciona mejor con precipitacion fuerte (Reinicio requerido)"
 
 #: src/windowPreferences.py:139
 msgid "Switching within 2 seconds is ignored!"
-msgstr ""
+msgstr "Cambiar durante 2 segundos es ignorado!"
 
 #: src/windowPreferences.py:142
-msgid "Switched to - {}"
-msgstr ""
+msgid "Switched to - c"
+msgstr "Cambiado a - c"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
-msgstr ""
+msgstr "Actualizar Clima"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
-msgstr ""
+msgstr "Navegacion"
