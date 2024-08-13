@@ -191,7 +191,7 @@ msgstr "Fuerte Lloviza Helada"
 
 #: src/constants.py:143
 msgid "Light Rain"
-msgstr "Lluvia Ligera"
+msgstr "Ligeras Lluvias"
 
 #: src/constants.py:144
 msgid "Moderate Rain"
@@ -336,7 +336,7 @@ msgstr "Hoy"
 
 #: src/frontendHourlyDetails.py:53
 msgid "Hourly"
-msgstr "Hora a Hora"
+msgstr "Por Hora"
 
 #: src/frontendHourlyDetails.py:69
 msgid "Precipitation"
