@@ -712,8 +712,8 @@ msgid "Switching within 2 seconds is ignored!"
 msgstr "Cambiar durante 2 segundos es ignorado!"
 
 #: src/windowPreferences.py:142
-msgid "Switched to - c"
-msgstr "Cambiado a - c"
+msgid "Switched to - {}"
+msgstr "Cambiado a - {}"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
