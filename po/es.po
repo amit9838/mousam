@@ -697,7 +697,7 @@ msgstr ""
 
 #: src/windowPreferences.py:95
 msgid "IMPERIAL system with units like fahrenheit, mph, miles"
-msgstr "Sistema Imperial con unidades Farenheit, mph, millas"
+msgstr "Sistema IMPERIAL con unidades Farenheit, mph, millas"
 
 #: src/windowPreferences.py:109
 msgid "Show precipitation in inch"
