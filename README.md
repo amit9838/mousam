@@ -18,6 +18,16 @@
 * Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours
 * Also shows tomorrow and 7-day forcasts
 * See conditions in metric or imperial systems
+* Use of Domoticz 'weather' device for current conditions (forecast is still retreived from open-meteo.com)
+
+### Domoticz for current weather conditions
+
+For use of Domoticz for your current weather conditions you need to set your hostname/port (or IP address) of your Domoticz system and the name of your weather hardware. You can set these in the settings window.
+
+An example of a weather device is the <a href='https://www.velleman.eu/products/view/?id=455402'>Perel WC224</a>.
+This device can be connected to e.g. WeatherUnderground. Your WeatherUnderground device can then be added as a weather device to Domoticz.
+
+You need a WeatherUnderground account to add the Perel WC224. When that is done you can create an API-key. You need this API-key and your location ID (the ID for your weather station) to add WeatherUnderground to Domoticz.
 
 ## Installation
 

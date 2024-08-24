@@ -22,6 +22,9 @@ class Settings:
             "window_height": "window-height",
             "window_maximized": "window-maximized",
             "unit": "unit",
+            "is_using_domoticz_for_current_weather": "use-domoticz",
+            "domoticz_host": "domoticz-host",
+            "domoticz_hwtype": "domoticz-weather-hwtype"
         }
 
     @property
@@ -95,6 +98,30 @@ class Settings:
     @unit.setter
     def unit(self, value):
         self.settings.set_string(self._settings_map["unit"], value)
+        
+    @property
+    def is_using_domoticz_for_current_weather(self):
+        return self.settings.get_boolean(self._settings_map['is_using_domoticz_for_current_weather'])
+
+    @is_using_domoticz_for_current_weather.setter
+    def is_using_domoticz_for_current_weather(self, value):
+        self.settings.set_value(self._settings_map['is_using_domoticz_for_current_weather'], value)
+
+    @property
+    def domoticz_host(self):
+        return self.settings.get_string(self._settings_map["domoticz_host"])
+
+    @domoticz_host.setter
+    def domoticz_host(self, value):
+        self.settings.set_value(self._settings_map['domoticz_host'], value)
+
+    @property
+    def domoticz_weather_hwtype(self):
+        return self.settings.get_string(self._settings_map["domoticz_hwtype"])
+
+    @domoticz_weather_hwtype.setter
+    def domoticz_weather_hwtype(self, value):
+        self.settings.set_value(self._settings_map['domoticz_hwtype'], value)
 
 def get_settings():
     return Settings()
