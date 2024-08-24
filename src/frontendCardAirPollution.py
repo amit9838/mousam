@@ -1,13 +1,13 @@
 import gi
 import time
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gi.repository import Gtk
 
 from .frontendUiDrawPollutionBar import PollutionBar
 from .config import settings
 
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
 class CardAirPollution:
     def __init__(self):
@@ -31,7 +31,7 @@ class CardAirPollution:
     def create_card(self):
         idx = self._get_nearest_time_index()
 
-        card = Gtk.Grid(margin_top=10, margin_start=5)
+        card = Gtk.Grid(margin_top=6, margin_start=3)
         self.card = card
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)
@@ -51,11 +51,6 @@ class CardAirPollution:
         icon.set_halign(Gtk.Align.END)
         icon.set_css_classes(["light-4"])
         icon.set_tooltip_text(_("United States AQI standard"))
-        # icon.set_margin_end(20)
-        # title = Gtk.Label(label="info")
-        # title.set_hexpand(True)
-        # title.set_halign(Gtk.Align.END)
-        # title.set_css_classes(["text-4", "light-3", "bolda"])
         card.attach(icon, 3, 0, 4, 2)
 
         # Main value (like windspeed = 32km/h)
@@ -64,10 +59,10 @@ class CardAirPollution:
         )
         card.attach(info_box, 0, 2, 4, 2)
         info_box.set_margin_start(10)
-        info_box.set_margin_top(20)
+        info_box.set_margin_top(15)
 
         main_val = Gtk.Label(label=self.air_apllution_data["hourly"]["us_aqi"][idx])
-        main_val.set_css_classes(["text-l3", "bold"])
+        main_val.set_css_classes(["text-l4", "bold"])
         main_val.set_halign(Gtk.Align.START)
         main_val.set_margin_end(10)
         info_box.append(main_val)

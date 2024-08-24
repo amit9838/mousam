@@ -2,11 +2,11 @@
     font-size: 30px;
 }
 .main_temp_label {
-    font-size: 3.7rem;
+    font-size: 3.5rem;
 }
 
 .btn_sm{
-    font-size:1rem;
+    font-size:.95rem;
     padding:0.2rem .9rem;
 }
 
@@ -58,7 +58,7 @@
     font-size: .95rem;
 }
 .text-7{
-    font-size: 9rem;
+    font-size: .9rem;
 }
 .text-8{
     font-size: .85rem;
@@ -158,7 +158,7 @@
 }
 
 .custom_card{
-    padding:.5rem 1rem;
+    padding:.7rem .85rem;
 }
 
 .bar_container{
@@ -168,13 +168,13 @@
 }
 
 .custom_card_forecast_item{
-    padding: 0.12rem 1.5rem;
+    padding: 0rem 1.1rem;
     border-radius: .7rem;
 }
 
 .custom_card_hourly{
     border-radius: .5rem;
-    padding: .7rem .7rem;
+    padding: .4rem .6rem;
     margin-top: .3rem;
 }
 

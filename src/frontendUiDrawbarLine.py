@@ -9,7 +9,7 @@ import cairo
 class DrawBar:
     def __init__(self,value, rgb_color=[0.38, 0.7, 1]):
 
-        self.ht = 45
+        self.ht = 40
         self.dw = Gtk.DrawingArea()
         self.dw.set_size_request(50, self.ht+20)
         self.dw.set_draw_func(self.draw, None)

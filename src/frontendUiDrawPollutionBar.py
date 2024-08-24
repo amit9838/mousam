@@ -1,8 +1,9 @@
 import gi
+import cairo 
+from gi.repository import Gtk
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk
-import cairo 
 
 class PollutionBar(Gtk.DrawingArea):
     def __init__(self,pos):
@@ -18,7 +19,7 @@ class PollutionBar(Gtk.DrawingArea):
         width = self.get_width()
         height = 40
 
-        gradient = cairo.LinearGradient(0, 0, 400, 0)
+        gradient = cairo.LinearGradient(0, 0, 250, 0)
         # Add color stops to the gradient (position, R, G, B, A)
         gradient.add_color_stop_rgba(0, 0, 1, 0, 1)  # Green
         gradient.add_color_stop_rgba(0.3, 1, 1, 0, 1)  # Yellow
@@ -29,7 +30,7 @@ class PollutionBar(Gtk.DrawingArea):
         # cr.set_source_rgba(0.8, 0.8, 0.8, 1)
         cr.set_line_width(6)
         cr.move_to(10, height / 2)
-        cr.line_to(width - 10, height / 2)
+        cr.line_to(width - 5, height / 2)
         cr.set_line_cap(cairo.LINE_CAP_ROUND)
         cr.stroke()
 
