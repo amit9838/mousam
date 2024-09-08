@@ -64,7 +64,7 @@ class CurrentCondition(Gtk.Grid):
 
         # ========== right  section ==========
         box_right = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL, margin_top=45, margin_end=5
+            orientation=Gtk.Orientation.VERTICAL, margin_top=35, margin_end=5
         )
         self.attach(box_right, 1, 0, 1, 1)
 
@@ -78,17 +78,27 @@ class CurrentCondition(Gtk.Grid):
         del city_arr[-1]
         del city_arr[-1]
 
-        current_loc = ",".join(city_arr)
-        loc_label = Gtk.Label(label=current_loc, halign=Gtk.Align.END, margin_bottom=20)
-        loc_label.set_css_classes(["text-2b", "bold-2"])
-        box_right.append(loc_label)
+        box_label = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, margin_bottom=10)
+        box_right.append(box_label)
+
+        loc_label_city = Gtk.Label(
+            label=city_arr[0], halign=Gtk.Align.END, margin_bottom=1
+        )
+        loc_label_city.set_css_classes(["text-2b", "bold-2"])
+        box_label.append(loc_label_city)
+
+        loc_label_country = Gtk.Label(
+            label=city_arr[1], valign=Gtk.Align.END, halign=Gtk.Align.END
+        )
+        loc_label_country.set_css_classes(["text-4", "light-3"])
+        box_label.append(loc_label_country)
 
         feels_like_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
         markup_text = _("Feels like • <b> {0} {1}</b>").format(
             data.apparent_temperature.get("data"), data.apparent_temperature.get("unit")
         )
         feels_like_label.set_markup(markup_text)
-        feels_like_label.set_css_classes(["text-4", "bold-3"])
+        feels_like_label.set_css_classes(["text-5", "bold-3d"])
         box_right.append(feels_like_label)
 
         # visibility_label = Gtk.Label(halign=Gtk.Align.END, margin_bottom=5)
