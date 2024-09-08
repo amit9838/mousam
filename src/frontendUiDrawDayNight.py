@@ -6,6 +6,7 @@ import cairo
 from datetime import datetime
 from .utils import get_cords, get_time_difference
 from .config import settings
+from gettext import gettext as _, pgettext as C_
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

@@ -4,7 +4,7 @@ import gi
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .config import settings
-from .Models import *
+from .Models import CurrentWeather, HourlyWeather, DailyWeather
 from .utils import get_cords
 from gettext import gettext as _, pgettext as C_
 

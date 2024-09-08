@@ -1,7 +1,10 @@
 import gi
+from gi.repository import Gtk, Adw
+from gettext import gettext as _, pgettext as C_
+
+
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw
 
 def AboutWindow(parent,*args):
     dialog = Adw.AboutWindow.new()

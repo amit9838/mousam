@@ -1,5 +1,6 @@
 # Models for All weather data
 
+
 class CurrentWeather:
     total_instances = 0
 
@@ -34,7 +35,6 @@ class HourlyWeather:
         hourly_data = data.get("hourly")
 
         for field, values in hourly_data.items():
-
             setattr(
                 self,
                 field,

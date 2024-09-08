@@ -1,14 +1,16 @@
 import threading
 import time
 import gi
-
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 from .utils import create_toast
 from .backendFindCity import find_city
 from .config import settings
+from gettext import gettext as _, pgettext as C_
+
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 
 global updated_at
 updated_at = time.time()

@@ -2,8 +2,11 @@ import requests
 import socket
 from datetime import datetime
 import time
-from gi.repository import Adw
+import gi
 from .config import settings
+
+gi.require_version("Adw", "1")
+from gi.repository import Adw
 
 local_time_data = dict()
 TIMEOUT = 5
@@ -27,10 +30,10 @@ def check_internet_socket():
 # Check Internet connection using requests
 def check_internet_domain(url):
     try:
-        request = requests.get(url, timeout=TIMEOUT)
+        requests.get(url, timeout=TIMEOUT)
         print("Internet connection confirmed through: ", url)
         return True
-    except (requests.ConnectionError, requests.Timeout) as exception:
+    except (requests.ConnectionError, requests.Timeout):
         return False
 
 

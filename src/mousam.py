@@ -2,7 +2,6 @@ import gi
 import time
 import threading
 
-from gi.repository import Gtk, Adw, Gio,Gdk,GLib
 from gettext import gettext as _, pgettext as C_
 
 
@@ -26,8 +25,10 @@ from .weatherData import (
     fetch_daily_forecast,
     fetch_current_air_pollution,
 )
+
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, Gio, Gdk, GLib
 
 global updated_at
 updated_at = time.time()
@@ -39,7 +40,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         self.main_window = self
         self.set_default_size(settings.window_width, settings.window_height)
-        self.connect("close-request",self.save_window_state)
+        self.connect("close-request", self.save_window_state)
         self.set_title("")
         self._use_dynamic_bg()
 
@@ -88,11 +89,9 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         action.connect("activate", self._on_about_clicked)
         self.add_action(action)
         menu.append(_("About Mousam"), "win.about")
-        
+
         menu.append(_("Quit"), "app.quit")
 
-
-        
         # Toast overlay
         self.toast_overlay = Adw.ToastOverlay.new()
         self.set_child(self.toast_overlay)
@@ -100,11 +99,11 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Scroll content on small screens
         self.scrolled_window = Gtk.ScrolledWindow()
         self.scrolled_window.set_policy(
-            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC
+        )
         self.scrolled_window.set_kinetic_scrolling(True)
         self.toast_overlay.set_child(self.scrolled_window)
-            
-        
+
         # Main _clamp
         self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
         self.scrolled_window.set_child(self.clamp)
@@ -120,11 +119,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         thread = threading.Thread(target=self._load_weather_data, name="load_data")
         thread.start()
 
-        #Set key listeners
+        # Set key listeners
         keycont = Gtk.EventControllerKey()
-        keycont.connect('key-pressed', self.on_key_press)
+        keycont.connect("key-pressed", self.on_key_press)
         self.add_controller(keycont)
-
 
     # =========== Create Loader =============
     def show_loader(self):
@@ -195,7 +193,6 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
     # =========== Load Weather data using threads =============
     def _load_weather_data(self):
-
         has_internet = check_internet_connection()
         if not has_internet:
             self.show_error()
@@ -218,8 +215,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         apd = threading.Thread(target=fetch_current_air_pollution, name="apt")
         apd.start()
 
-        lat,lon = settings.selected_city.split(",")
-        local_time = threading.Thread(target=get_time_difference,args=(lat,lon, True), name="local_time")
+        lat, lon = settings.selected_city.split(",")
+        local_time = threading.Thread(
+            target=get_time_difference, args=(lat, lon, True), name="local_time"
+        )
         local_time.start()
 
         hfd.join()
@@ -238,7 +237,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         # Check if no city is added
 
-        if len(settings.added_cities) == 0:  # Reset city to default if all cities are removed
+        # Reset city to default if all cities are removed
+        if len(settings.added_cities) == 0:
             settings.reset("added-cities")
             settings.reset("selected-city")
 
@@ -312,7 +312,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             title="UV Index",
             main_val=cw_data.uv_index.get("data"),
             desc=cw_data.uv_index.get("level_str"),
-            text_up=C_("uvindex card","High"),
+            text_up=C_("uvindex card", "High"),
             text_low=C_("uvindex card", "Low"),
         )
         widget_grid.attach(card_obj.card, 1, 1, 1, 1)
@@ -375,12 +375,12 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         adw_preferences_window = WeatherLocations(self.main_window)
         adw_preferences_window.show()
 
-    def _show_shortcuts_dialog(self,*args, **kwargs):
+    def _show_shortcuts_dialog(self, *args, **kwargs):
         dialog = ShortcutsDialog(self)
         dialog.show()
 
-    #Def shortcuts key listeners
-    def on_key_press(self, key_controller, keyval, keycode, state,*args):
+    # Def shortcuts key listeners
+    def on_key_press(self, key_controller, keyval, keycode, state, *args):
         if state & Gdk.ModifierType.CONTROL_MASK:
             if keyval == Gdk.KEY_r:
                 self._refresh_weather(None)
@@ -391,8 +391,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             if keyval == Gdk.KEY_question:
                 GLib.idle_add(self._show_shortcuts_dialog)
 
-    def save_window_state(self,window):
-        width,height = window.get_default_size()
+    def save_window_state(self, window):
+        width, height = window.get_default_size()
         settings.window_width = width
         settings.window_height = height
         settings.window_maximized = window.is_maximized()

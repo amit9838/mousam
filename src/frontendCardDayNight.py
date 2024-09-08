@@ -2,6 +2,7 @@ from datetime import datetime
 import gi
 
 from gi.repository import Gtk
+from gettext import gettext as _, pgettext as C_
 
 from .frontendUiDrawDayNight import DrawDayNight
 from .config import settings

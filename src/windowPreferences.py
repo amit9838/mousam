@@ -1,13 +1,14 @@
 import gi
 import time
 import threading
+from gi.repository import Gtk, Adw,GLib
+from .utils import create_toast
+from .config import settings
+from gettext import gettext as _, pgettext as C_
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw,GLib
 
-from .utils import create_toast
-from .config import settings
 
 global updated_at
 updated_at = time.time()
@@ -33,7 +34,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         gradient_row =  Adw.ActionRow.new()
         gradient_row.set_activatable(True)
         gradient_row.set_title(_("Dynamic Background"))
-        gradient_row.set_subtitle(_("Background changes based on current weather condition (Restart required)"))
+        gradient_row.set_subtitle(_("App background changes based on current weather conditions (restart required)"))
 
         self.g_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
         self.gradient_switch = Gtk.Switch()
@@ -83,7 +84,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         self.metric_unit = Adw.ActionRow.new()
         self.metric_unit.set_title(_('°C'))
-        self.metric_unit.set_subtitle(_("METRIC system with units like celsius, km/h, kilometer"))
+        self.metric_unit.set_subtitle(_("Metric system with units like Celsius, km/h, and kilometers"))
         self.metric_check_btn = Gtk.CheckButton.new()
         self.metric_unit.add_prefix(self.metric_check_btn)
         self.metric_unit.set_activatable_widget(self.metric_check_btn)
@@ -92,7 +93,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         self.imperial_unit = Adw.ActionRow.new()
         self.imperial_unit.set_title(_('°F'))
-        self.imperial_unit.set_subtitle(_("IMPERIAL system with units like fahrenheit, mph, miles"))
+        self.imperial_unit.set_subtitle(_("Imperial system with units like Fahrenheit, mph, and miles"))
         self.imperial_check_btn = Gtk.CheckButton.new()
         self.imperial_unit.add_prefix(self.imperial_check_btn)
         self.imperial_check_btn.set_group(self.metric_check_btn)
@@ -106,8 +107,8 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.appearance_grp.add(self.prec_unit_group)
         
         self.prec_unit = Adw.ActionRow.new()
-        self.prec_unit.set_title(_('Show precipitation in inch'))
-        self.prec_unit.set_subtitle(_("This option better works during heavy preciptaion (Refresh required)"))
+        self.prec_unit.set_title(_('Precipitation in inches'))
+        self.prec_unit.set_subtitle(_("This option works better in heavy precipitation (refresh required)"))
         self.prec_unit_switch_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,valign=Gtk.Align.CENTER)
         self.prec_unit.set_activatable(True)
         self.use_inch_switch = Gtk.Switch()
@@ -136,7 +137,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
             if time.time() - updated_at < 2:
                 updated_at = time.time()
-                self.add_toast(create_toast(_("Switching within 2 seconds is ignored!"),1))
+                self.add_toast(create_toast(_("Switching locations within 2 seconds is ignored"),1))
             else:
                 updated_at = time.time()
                 self.add_toast(create_toast(_("Switched to - {}").format(value.capitalize()),1))

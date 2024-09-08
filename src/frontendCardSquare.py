@@ -4,6 +4,7 @@ from .constants import icons
 from .config import settings
 from .frontendUiDrawBar import DrawLevelBar
 from .frontendUiDrawImageIcon import DrawImage
+from gettext import gettext as _, pgettext as C_
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

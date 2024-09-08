@@ -2,6 +2,7 @@ import gi
 import time
 
 from gi.repository import Gtk
+from gettext import gettext as _, pgettext as C_
 
 from .frontendUiDrawPollutionBar import PollutionBar
 from .config import settings

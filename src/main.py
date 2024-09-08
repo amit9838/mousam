@@ -20,12 +20,12 @@
 import os
 import sys
 import gi
-gi.require_version('Adw', '1')
-gi.require_version('Gtk', '4.0')
-
-from gi.repository import Gtk, Gio, Adw, Gdk
 from .mousam import WeatherMainWindow
 from .config import settings
+
+gi.require_version('Adw', '1')
+gi.require_version('Gtk', '4.0')
+from gi.repository import Gtk, Gio, Adw, Gdk
 
 
 class WeatherApplication(Adw.Application):
