@@ -1,0 +1,433 @@
+# Simp-Chinese translation for Weather.
+# Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the the io.github.amit9838.weather package.
+# Sakura<sakura@isakura.top>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-09-08 10:02+0530\n"
+"PO-Revision-Date: 2024-09-20 14:26+0800\n"
+"Last-Translator: Sakura Moon <sakura@isakura.top>\n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Mousam"
+msgstr "Mousam"
+
+msgid "Weather at a glance"
+msgstr "一览天气"
+
+msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgstr "天气；Mousam；雨；云；预测；GTK4；Python；温度；"
+
+msgid "Current Weather conditions and forcasts."
+msgstr "当前天气状况和预测。"
+
+msgid "Features:"
+msgstr "功能："
+
+msgid "Displays real-time temperature, humidity, wind speed, UV index, pressure and more"
+msgstr "显示实时温度、湿度、风速、紫外线指数、气压等"
+
+msgid "Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours"
+msgstr "利用图形化表示，如温度、降水图和带方向的风速，为未来24小时提供每小时预测"
+
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "还提供明天和7天的天气预报"
+
+msgid "See conditions in metric or imperial systems"
+msgstr "查看公制或英制单位的天气条件"
+
+msgid "Overcast day"
+msgstr "阴天"
+
+msgid "Clear Sky - imperial"
+msgstr "晴空 - 英制"
+
+msgid "Thunderstorm"
+msgstr "雷暴"
+
+msgid "Dark mode"
+msgstr "深色模式"
+
+msgid "Light mode"
+msgstr "浅色模式"
+
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+msgid "List of cities and their coordinates."
+msgstr "城市及其坐标列表。"
+
+msgid "Stores locations added by user in json stringified string format in string"
+msgstr "将用户添加的位置存储为JSON格式的字符串"
+
+msgid "Selected city"
+msgstr "选择的城市"
+
+msgid "Selected city cords"
+msgstr "选择的城市坐标"
+
+msgid "Use Gradient Background"
+msgstr "使用渐变背景"
+
+msgid "Apply gradient background on main window corresponding to weather condition"
+msgstr "根据天气条件在主窗口应用渐变背景"
+
+msgid "Use Inch for precipitation"
+msgstr "降水量使用英寸"
+
+msgid "Use 24h hour clock"
+msgstr "使用24小时制时钟"
+
+msgid "Main window width"
+msgstr "主窗口宽度"
+
+msgid "Main window height"
+msgstr "主窗口高度"
+
+msgid "Launch the app in maximized mode."
+msgstr "以最大化模式启动应用程序。"
+
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr "使用的计量系统 - 公制、英制"
+
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "公制(km, °C)，英制(mi, °F)"
+
+msgid "Clear sky"
+msgstr "晴空"
+
+msgid "Few Clouds"
+msgstr "少云"
+
+msgid "Partly Cloudy"
+msgstr "局部多云"
+
+msgid "Overcast"
+msgstr "阴天"
+
+msgid "Fog"
+msgstr "雾"
+
+msgid "Mist"
+msgstr "薄雾"
+
+msgid "Light Drizzle"
+msgstr "小雨"
+
+msgid "Moderate Drizzle"
+msgstr "中等小雨"
+
+msgid "Heavy Intensity Drizzle"
+msgstr "大雨"
+
+msgid "Light Freezing Drizzle"
+msgstr "轻度冻雨"
+
+msgid "Heavy Freezing Drizzle"
+msgstr "强冻雨"
+
+msgid "Light Rain"
+msgstr "小雨"
+
+msgid "Moderate Rain"
+msgstr "中雨"
+
+msgid "Heavy Rain"
+msgstr "大雨"
+
+msgid "Light Freezing Rain"
+msgstr "轻度冻雨"
+
+msgid "Heavy Freezing Rain"
+msgstr "强冻雨"
+
+msgid "Light Snow Fall"
+msgstr "小雪"
+
+msgid "Moderate Snow Fall"
+msgstr "中雪"
+
+msgid "Heavy Snow Fall"
+msgstr "大雪"
+
+msgid "Snow grains"
+msgstr "雪粒"
+
+msgid "Light Rain Showers"
+msgstr "小雨阵雨"
+
+msgid "Moderate Rain Showers"
+msgstr "中等阵雨"
+
+msgid "Heavy Rain Showers"
+msgstr "大雨阵雨"
+
+msgid "Light Snow Showers"
+msgstr "小雪阵雪"
+
+msgid "Heavy Snow Showers "
+msgstr "大雪阵雪"
+
+msgid "Thunderstorm with Hail"
+msgstr "雷暴伴冰雹"
+
+msgid "Air Pollution"
+msgstr "空气污染"
+
+msgid "United States AQI standard"
+msgstr "美国空气质量指数标准"
+
+msgid "Sunrise & Sunset"
+msgstr "日出与日落"
+
+msgid "Sunrise"
+msgstr "日出"
+
+msgid "Sunset"
+msgstr "日落"
+
+msgid "North"
+msgstr "北"
+
+msgid "Northeast"
+msgstr "东北"
+
+msgid "East"
+msgstr "东"
+
+msgid "Southeast"
+msgstr "东南"
+
+msgid "South"
+msgstr "南"
+
+msgid "Southwest"
+msgstr "西南"
+
+msgid "West"
+msgstr "西"
+
+msgid "Northwest"
+msgstr "西北"
+
+msgid "Wind"
+msgstr "风"
+
+msgid "Pressure"
+msgstr "气压"
+
+msgid "Humidity"
+msgstr "湿度"
+
+msgid "UV Index"
+msgstr "紫外线指数"
+
+msgid "Feels like • <b> {0} {1}</b>"
+msgstr "体感温度 • <b>{0} {1}</b>"
+
+msgid "Tomorrow"
+msgstr "明天"
+
+msgid "Weekly"
+msgstr "每周"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Hourly"
+msgstr "每小时"
+
+msgid "Precipitation"
+msgstr "降水"
+
+msgid "Day High •"
+msgstr "日高 •"
+
+msgid "Day Max •"
+msgstr "日最高 •"
+
+msgid "No precipitation today !"
+msgstr "今天无降水！"
+
+msgid "No precipitation expected today!"
+msgstr "今天无预期降水！"
+
+msgid "Anticipate a precipitation-free day !"
+msgstr "预计无降水！"
+
+msgid "Enjoy a rain-free day today!"
+msgstr "享受今天无雨的日子！"
+
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "雨伞状态：休息中。无降水迹象！"
+
+msgid "No rain in sight today!"
+msgstr "今天无雨！"
+
+msgid "Now"
+msgstr "现在"
+
+msgid "Night"
+msgstr "夜晚"
+
+msgid "Location"
+msgstr "位置"
+
+msgid "Preferences"
+msgstr "偏好"
+
+msgid "Keyboard Shortcuts"
+msgstr "键盘快捷键"
+
+msgid "About Mousam"
+msgstr "关于 Mousam"
+
+msgid "Quit"
+msgstr "退出"
+
+msgid "Getting Weather Data"
+msgstr "获取天气数据"
+
+msgid "No Internet"
+msgstr "无网络连接"
+
+msgid "Could not fetch data from API"
+msgstr "无法从API获取数据"
+
+msgid "From"
+msgstr "来自"
+
+msgid "N"
+msgstr "北"
+
+msgid "Dewpoint"
+msgstr "露点"
+
+msgid "High"
+msgstr "高"
+
+msgid "Low"
+msgstr "低"
+
+msgid "Switched to {}"
+msgstr "已切换至 {}"
+
+msgid "Refreshed Successfully"
+msgstr "刷新成功"
+
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "5秒内的刷新请求被忽略！"
+
+msgid "Refreshing..."
+msgstr "正在刷新..."
+
+msgid "Good"
+msgstr "优"
+
+msgid "Moderate"
+msgstr "中等"
+
+msgid "Poor"
+msgstr "较差"
+
+msgid "Unhealthy"
+msgstr "不健康"
+
+msgid "Severe"
+msgstr "严重"
+
+msgid "Hazardous"
+msgstr "危险"
+
+msgid "Calm"
+msgstr "平静"
+
+msgid "Light"
+msgstr "轻微"
+
+msgid "Strong"
+msgstr "强"
+
+msgid "Extreme"
+msgstr "极端"
+
+msgid "km"
+msgstr "公里"
+
+msgid "miles"
+msgstr "英里"
+
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Copyright © 2024 Mousam Developers"
+
+msgid "translator_credits"
+msgstr "翻译人员"
+
+msgid "Locations"
+msgstr "位置"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "Remove location"
+msgstr "移除位置"
+
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "2秒内的城市切换请求被忽略！"
+
+msgid "Selected - {}"
+msgstr "已选择 - {}"
+
+msgid "Add New Location"
+msgstr "添加新位置"
+
+msgid "Search for a city"
+msgstr "搜索城市"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Added - {0}"
+msgstr "已添加 - {0}"
+
+msgid "Location already added"
+msgstr "位置已添加"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Removed - {0}"
+msgstr "已移除 - {0}"
+
+msgid "Help"
+msgstr "帮助"
+
+msgid "Enter"
+msgstr "输入"
+
+msgid "Enter city name"
+msgstr "输入城市名称"
+
+msgid "Esc"
+msgstr "退出"
+
+msgid "Max temperature"
+msgstr "最高温度"
+
+msgid "Max temperature today"
+msgstr "今天最高温度"
+
+msgid "Min temperature"
+msgstr "最低温度"
+
+msgid "Min temperature today"
+msgstr "今天最低温度"
+
