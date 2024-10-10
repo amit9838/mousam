@@ -25,10 +25,9 @@ class WeatherLocations(Adw.PreferencesWindow):
         self.set_default_size(600, 500)
 
         # Settings
-        global selected_city_item, added_cities_list, cities
-        selected_city_item = settings.selected_city
-        added_cities_list = settings.added_cities
-        cities = [x.split(",")[0] for x in added_cities_list]
+        global cities
+        settings.selected_city = settings.selected_city
+        cities = [x.split(",")[0] for x in settings.added_cities]
 
         # ============= Location Page =============
         location_page = Adw.PreferencesPage()
@@ -54,7 +53,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         self.location_grp.set_header_suffix(add_loc_btn)
 
         self.location_rows = []
-        self._create_cities_list(added_cities_list)
+        self._create_cities_list(settings.added_cities)
 
     # =========== Location page methods =============
     def _create_cities_list(self, data):
@@ -63,7 +62,12 @@ class WeatherLocations(Adw.PreferencesWindow):
                 self.location_grp.remove(action_row)
             self.location_rows.clear()
 
-        for city in added_cities_list:
+        if len(settings.added_cities) == 1:
+            city = settings.added_cities[0].split(",")
+            selection_key = f"{city[-2]},{city[-1]}"
+            settings.selected_city = selection_key
+
+        for city in settings.added_cities:
             button = Gtk.Button()
             button.set_icon_name("edit-delete-symbolic")
             button.set_css_classes(["circular"])
@@ -75,9 +79,10 @@ class WeatherLocations(Adw.PreferencesWindow):
                 orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER
             )
             selected_city_index = list(
-                map(lambda city: selected_city_item in city, added_cities_list)
+                map(lambda city: settings.selected_city in city, settings.added_cities)
             ).index(True)
-            if added_cities_list[selected_city_index] == city:
+
+            if settings.added_cities[selected_city_index] == city:
                 check_icon = Gtk.Image()
                 check_icon.set_from_icon_name(
                     "emblem-ok-symbolic"
@@ -103,7 +108,6 @@ class WeatherLocations(Adw.PreferencesWindow):
 
     # ========== Switch Location ============
     def switch_location(self, widget):
-        global selected_city_item
         title = widget.get_title()
         select_cord = f"{widget.get_subtitle()}"
 
@@ -111,10 +115,10 @@ class WeatherLocations(Adw.PreferencesWindow):
             return
 
         # Switch if location is not already selected
-        if selected_city_item != select_cord:
-            selected_city_item = select_cord
-            settings.selected_city = selected_city_item
-            self._create_cities_list(added_cities_list)
+        if settings.selected_city != select_cord:
+            settings.selected_city = select_cord
+            settings.selected_city = settings.selected_city
+            self._create_cities_list(settings.added_cities)
             global updated_at
             # Ignore refreshing weather within 5 second
 
@@ -133,7 +137,6 @@ class WeatherLocations(Adw.PreferencesWindow):
 
     # ========== Add Location ===========
     def _add_location_dialog(self, application):
-
         # Create dialog to search and add location
         self._dialog = Adw.PreferencesWindow()
         self._dialog.set_search_enabled(False)
@@ -242,49 +245,41 @@ class WeatherLocations(Adw.PreferencesWindow):
         loc_city = f"{modified_title},{widget.get_subtitle()}"
 
         # Add city to db if it is not already added
-        if loc_city not in added_cities_list:
-            added_cities_list.append(loc_city)
-            settings.added_cities = added_cities_list
-            self._create_cities_list(added_cities_list)
-            # self.application.refresh_main_ui()
+        if loc_city not in settings.added_cities:
+            self.application.added_cities = [*settings.added_cities, loc_city]
+            settings.added_cities = self.application.added_cities
+            self._create_cities_list(settings.added_cities)
+            if len(self.application.added_cities) == 1:
+                self.application._refresh_weather()
             self._dialog.add_toast(create_toast(_("Added - {0}").format(title), 1))
         else:
             self._dialog.add_toast(create_toast(_("Location already added!"), 1))
 
+
     # ========== Remove City ===========
     def _remove_city(self, btn, widget):
-        global selected_city_item
         city = f"{widget.get_title()},{widget.get_subtitle()}"
 
-        # Don't delete city if only one item is present in the list
-        if len(added_cities_list) == 1:
-            self.add_toast(create_toast(_("Add more locations to delete!"), 1))
-            return
+        settings.added_cities.remove(city)
+        new_list = list(settings.added_cities)
+        new_list.remove(city)
+        settings.added_cities = new_list
 
-        selected_city_index = list(
-            map(lambda x: selected_city_item in x, added_cities_list)
-        ).index(True)
-        s_city = added_cities_list[selected_city_index]
-        added_cities_list.remove(city)
+        self.application.added_cities = new_list
 
-        # If selected city is removed then select first city in the list
-        if widget.get_subtitle() == selected_city_item:
-            first_city = added_cities_list[0].split(",")
-            selected_city_item = f"{first_city[-2]},{first_city[-1]}"
-            settings.selected_city = selected_city_item
+        if len(self.application.added_cities) == 0:
+            self.application._refresh_weather()
+
+        # If selected city was deleted then set first element as selected city
+        elif widget.get_subtitle() == settings.selected_city:
+            first_city = self.application.added_cities[0].split(",")
+            settings.selected_city = f"{first_city[-2]},{first_city[-1]}"
             thread = threading.Thread(
                 target=self.application._load_weather_data, name="load_data"
             )
             thread.start()
 
-        settings.added_cities = added_cities_list
-        self._create_cities_list(added_cities_list)
-        if s_city == city:  # fetch weather only if selected_city was removed
-            pass
-            # self.application.refresh_weather(self.application)
-        else:
-            pass
-            # self.application.refresh_main_ui()
+        self._create_cities_list(settings.added_cities)
         self.add_toast(create_toast(_("Deleted - {0}".format(widget.get_title())), 1))
 
     def _blank_search_page(self, status):

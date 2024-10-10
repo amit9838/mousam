@@ -37,12 +37,17 @@ updated_at = time.time()
 class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        
         self.main_window = self
         self.set_default_size(settings.window_width, settings.window_height)
         self.connect("close-request", self.save_window_state)
         self.set_title("")
         self._use_dynamic_bg()
+
+        # Global variable :
+        self.added_cities = settings.added_cities
+        # self.added_cities variable is being used to quickly check the added_added cities so that
+        # there is no issue caused by dely in writing and reading in db
 
         #  Adding a button into header
         self.header = Adw.HeaderBar()
@@ -153,6 +158,39 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         self.main_stack.add_named(container_loader, "loader")
         self.main_stack.set_visible_child_name("loader")
 
+    # =========== Create Welcome Screen =============
+    def show_welcome_screen(self):
+        child = self.main_stack.get_child_by_name("welcome")
+        if child is not None:
+            self.main_stack.set_visible_child_name("welcome")
+            return
+
+        container_welcome = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        container_welcome.set_margin_top(180)
+        container_welcome.set_margin_bottom(200)
+
+        icon_mousam = Gtk.Image().new_from_icon_name("io.github.amit9838.mousam")
+        icon_mousam.set_hexpand(True)
+        icon_mousam.set_pixel_size(110)
+
+        container_welcome.append(icon_mousam)
+
+        welcome_label = Gtk.Label(label=_("Welcome to Mousam"))
+        welcome_label.set_css_classes(["text-2a", "bold-2"])
+        container_welcome.append(welcome_label)
+
+        btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
+        btn_box.set_margin_top(20)
+        add_loc_button = Gtk.Button(label="Add Location")
+        add_loc_button.connect("clicked", self._on_locations_clicked)
+        add_loc_button.set_css_classes(["pill"])
+        btn_box.append(add_loc_button)
+        container_welcome.append(btn_box)
+
+
+        self.main_stack.add_named(container_welcome, "welcome")
+        self.main_stack.set_visible_child_name("welcome")
+
     # =========== Show No Internet =============
     def show_error(self, type: str = "no_internet", desc: str = ""):
         # Loader container
@@ -197,6 +235,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         if not has_internet:
             self.show_error()
             return
+      
+        if len(self.added_cities) == 0:
+            self.show_welcome_screen()
+            return
 
         self.show_loader()
 
@@ -238,9 +280,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         # Check if no city is added
 
         # Reset city to default if all cities are removed
-        if len(settings.added_cities) == 0:
-            settings.reset("added-cities")
-            settings.reset("selected-city")
+        # if len(settings.added_cities) == 0:
 
         child = self.main_stack.get_child_by_name("main_grid")
         if child is not None:
@@ -335,11 +375,15 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             self.toast_overlay.add_toast(create_toast(_("Refreshed Successfully"), 1))
 
     # ============= Refresh buttom methods ==============
-    def _refresh_weather(self, widget):
+    def _refresh_weather(self, widget=None):
         global updated_at
         # Ignore refreshing weather within 5 second
 
-        if time.time() - updated_at < 5:
+        if len(self.added_cities) == 0:
+            thread = threading.Thread(target=self._load_weather_data, name="load_data")
+            thread.start()
+
+        elif time.time() - updated_at < 5:
             updated_at = time.time()
             self.toast_overlay.add_toast(
                 create_toast(_("Refresh within 5 seconds is ignored!"), 1)
