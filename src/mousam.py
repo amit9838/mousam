@@ -167,7 +167,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
 
         container_welcome = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container_welcome.set_margin_top(180)
-        container_welcome.set_margin_bottom(200)
+        container_welcome.set_margin_bottom(190)
 
         icon_mousam = Gtk.Image().new_from_icon_name("io.github.amit9838.mousam")
         icon_mousam.set_hexpand(True)
@@ -180,7 +180,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         container_welcome.append(welcome_label)
 
         btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
-        btn_box.set_margin_top(20)
+        btn_box.set_margin_top(15)
         add_loc_button = Gtk.Button(label="Add Location")
         add_loc_button.connect("clicked", self._on_locations_clicked)
         add_loc_button.set_css_classes(["pill"])

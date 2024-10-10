@@ -3,12 +3,12 @@
 	<schema id="io.github.amit9838.mousam" path="/io/github/amit9838/mousam/">
 
     <key name="added-cities" type="as">
-      <default>['Delhi,India,28.6517178,77.2219388']</default>
+      <default>[]</default>
       <summary>List of cities and their coordinates.</summary>
       <description>Stores locations added by user in json stringified string format in string</description>
     </key>
 	  <key name="selected-city" type="s">
-      <default>"28.6517178,77.2219388"</default>
+      <default>""</default>
       <summary>Selected city</summary>
       <description>Selected city cords</description>
     </key>
