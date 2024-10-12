@@ -37,7 +37,7 @@ updated_at = time.time()
 class WeatherMainWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
+
         self.main_window = self
         self.set_default_size(settings.window_width, settings.window_height)
         self.connect("close-request", self.save_window_state)
@@ -179,14 +179,15 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         welcome_label.set_css_classes(["text-2a", "bold-2"])
         container_welcome.append(welcome_label)
 
-        btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,halign=Gtk.Align.CENTER)
+        btn_box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL, halign=Gtk.Align.CENTER
+        )
         btn_box.set_margin_top(15)
         add_loc_button = Gtk.Button(label="Add Location")
         add_loc_button.connect("clicked", self._on_locations_clicked)
         add_loc_button.set_css_classes(["pill"])
         btn_box.append(add_loc_button)
         container_welcome.append(btn_box)
-
 
         self.main_stack.add_named(container_welcome, "welcome")
         self.main_stack.set_visible_child_name("welcome")
@@ -235,7 +236,7 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         if not has_internet:
             self.show_error()
             return
-      
+
         if len(self.added_cities) == 0:
             self.show_welcome_screen()
             return
@@ -402,10 +403,10 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
             for cl in self.get_css_classes():
                 if cl not in dont_delete_classes:
                     self.remove_css_class(cl)
-            weather_code = str(weather_code)
+            weather_code_str = str(weather_code)
             if is_day == 0:
-                weather_code += "n"
-            self.add_css_class(css_class=bg_css[weather_code])
+                weather_code_str += "n"
+            self.add_css_class(css_class=bg_css[weather_code_str])
 
     # ============= Menu button methods ==============
     def _on_about_clicked(self, *args, **kwargs):

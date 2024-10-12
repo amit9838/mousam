@@ -269,47 +269,96 @@
     /* Replace with your desired color */
 }
 
-.clear_sky,
-.few_clouds {
-    background: linear-gradient(127deg, rgba(187, 188, 179, 1), rgba(0, 134, 218, 0) 100%),
-        linear-gradient(217deg, rgba(187, 188, 179, 1), rgba(0, 174, 258, 1) 100%),
-        linear-gradient(136deg, rgba(187, 188, 179, 1), rgba(0, 174, 258, 1) 100%);
-
-
+.clear_sky {
+    background-color: hsla(205, 60%, 35%, 1);
+    background-image:
+        radial-gradient(at 100% 5%, hsla(215, 43%, 77%, 0.51) 0px, transparent 50%),
+        radial-gradient(at 43% 38%, hsla(206, 47%, 45%, 0.87) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(24, 1%, 83%, 0.69) 0px, transparent 50%),
+        radial-gradient(at 43% 99%, hsla(214, 71%, 36%, 0.88) 0px, transparent 50%);
 }
 
-.overcast,
+.few_clouds {
+    /* background: linear-gradient(127deg, rgba(187, 188, 179, 1), rgba(0, 134, 218, 0) 100%),
+    linear-gradient(217deg, rgba(187, 188, 179, 1), rgba(0, 174, 258, 1) 100%),
+    linear-gradient(136deg, rgba(187, 188, 179, 1), rgba(0, 174, 258, 1) 100%); */
+    background-color: hsla(210, 51%, 40%, 1);
+    background-image:
+        radial-gradient(at 46% 22%, hsla(201, 54%, 45%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(180, 17%, 72%, 1) 0px, transparent 50%),
+        radial-gradient(at 28% 88%, hsla(0, 0%, 74%, 0.59) 0px, transparent 50%),
+        radial-gradient(at 86% 78%, hsla(200, 19%, 59%, 1) 0px, transparent 50%);
+}
+
+
+
+.overcast {
+    background-color: hsla(210, 48%, 33%, 1);
+    background-image:
+        radial-gradient(at 72% 40%, hsla(216, 16%, 24%, 0.41) 0px, transparent 50%),
+        radial-gradient(at 49% 30%, hsla(201, 51%, 43%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(195, 45%, 70%, 1) 0px, transparent 50%),
+        radial-gradient(at 86% 78%, hsla(195, 14%, 46%, 1) 0px, transparent 50%);
+}
+
 .showers_scattered {
-    background: linear-gradient(127deg, rgba(155, 155, 155, 1), rgba(0, 134, 215, 0) 100%),
-        linear-gradient(217deg, rgba(155, 155, 155, 1), rgba(0, 134, 215, 1) 100%),
-        linear-gradient(336deg, rgba(155, 155, 155, 1), rgba(0, 134, 218, 1) 100%);
+    background-color: hsla(206, 25%, 51%, 1);
+    background-image:
+        radial-gradient(at 85% 68%, hsla(206, 40%, 35%, 0.96) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(265, 7%, 57%, 0.69) 0px, transparent 50%),
+        radial-gradient(at 56% 89%, hsla(206, 61%, 22%, 1) 0px, transparent 50%),
+        radial-gradient(at 75% 27%, hsla(215, 43%, 77%, 0.47) 0px, transparent 50%),
+        radial-gradient(at 92% 12%, hsla(0, 0%, 0%, 0.87) 0px, transparent 50%),
+        radial-gradient(at 3% 66%, hsla(206, 52%, 27%, 1) 0px, transparent 50%);
 
 }
 
 .showers_large {
-    background: linear-gradient(127deg, rgba(134, 137, 154, 1), rgba(134, 137, 154, 0) 100%),
+    /* background: linear-gradient(127deg, rgba(134, 137, 154, 1), rgba(134, 137, 154, 0) 100%),
         linear-gradient(217deg, rgba(134, 137, 154, 1), rgba(0, 134, 218, 1) 100%),
-        linear-gradient(336deg, rgba(134, 137, 154, 1), rgba(0, 134, 218, 1) 100%);
+        linear-gradient(336deg, rgba(134, 137, 154, 1), rgba(0, 134, 218, 1) 100%); */
+    background-color: hsla(205, 26%, 38%, 1);
+    background-image:
+        radial-gradient(at 3% 0%, hsla(240, 18%, 15%, 0.69) 0px, transparent 50%),
+        radial-gradient(at 85% 68%, hsla(210, 34%, 20%, 0.96) 0px, transparent 50%),
+        radial-gradient(at 89% 11%, hsla(213, 14%, 4%, 0.56) 0px, transparent 50%),
+        radial-gradient(at 66% 100%, hsla(206, 42%, 14%, 1) 0px, transparent 50%),
+        radial-gradient(at 19% 73%, hsla(214, 33%, 25%, 1) 0px, transparent 50%),
+        radial-gradient(at 58% 0%, hsla(209, 95%, 82%, 0.75) 0px, transparent 50%),
+        radial-gradient(at 55% 24%, hsla(195, 0%, 0%, 0.94) 0px, transparent 50%);
 
 }
 
 .storm {
-    background: linear-gradient(127deg, rgb(108, 123, 152), rgb(92, 92, 92)),
+    /* background: linear-gradient(127deg, rgb(108, 123, 152), rgb(92, 92, 92)),
         linear-gradient(217deg, rgb(108, 123, 152), rgb(92, 92, 92)),
-        linear-gradient(336deg, rgb(108, 123, 152), rgb(92, 92, 92));
+        linear-gradient(336deg, rgb(108, 123, 152), rgb(92, 92, 92)); */
+    background-color: hsla(211, 21%, 35%, 1);
+    background-image:
+        radial-gradient(at 43% 37%, hsla(205, 22%, 9%, 0.76) 0px, transparent 50%),
+        radial-gradient(at 38% 77%, hsla(203, 32%, 12%, 0.73) 0px, transparent 50%),
+        radial-gradient(at 98% 88%, hsla(217, 15%, 9%, 0.9) 0px, transparent 50%),
+        radial-gradient(at 67% 94%, hsla(217, 20%, 14%, 1) 0px, transparent 50%),
+        radial-gradient(at 6% 89%, hsla(17, 3%, 53%, 1) 0px, transparent 50%),
+        radial-gradient(at 99% 10%, hsla(189, 14%, 12%, 0.92) 0px, transparent 50%),
+        radial-gradient(at 17% 4%, hsla(212, 19%, 14%, 1) 0px, transparent 50%),
+        radial-gradient(at 66% 0%, hsla(213, 100%, 81%, 0.72) 0px, transparent 50%);
 
 }
 
 .snow {
-    background: linear-gradient(135deg, rgb(40, 60, 87) 0%, rgb(80, 104, 133) 30%, rgb(137, 166, 181) 60%, rgb(187, 195, 202) 80%, rgb(187, 195, 202) 100%),
-        linear-gradient(45deg, rgb(200, 203, 207), rgb(212, 213, 215) 50%, rgba(255, 255, 255, 0.9));
+    /* background: linear-gradient(135deg, rgb(40, 60, 87) 0%, rgb(80, 104, 133) 30%, rgb(137, 166, 181) 60%, rgb(187, 195, 202) 80%, rgb(187, 195, 202) 100%),
+        linear-gradient(45deg, rgb(200, 203, 207), rgb(212, 213, 215) 50%, rgba(255, 255, 255, 0.9)); */
+    background: rgb(32, 79, 156);
+    background: linear-gradient(171deg, rgba(32, 79, 156, 1) 11%, rgba(44, 91, 145, 1) 33%, rgba(105, 133, 154, 1) 63%, rgba(213, 215, 217, 1) 97%);
 
 }
 
 .fog {
-    background: linear-gradient(49deg, transparent 0%, rgba(212, 195, 156, 0.43) 100%) 68% 73%/194% 147%,
-        linear-gradient(137deg, #9cafb0 0%, #c4c3be 70%, #c5c8b5 100%) 72% 55%/174% 123%;
-
+    /* background: linear-gradient(49deg, transparent 0%, rgba(212, 195, 156, 0.43) 100%) 68% 73%/194% 147%,
+        linear-gradient(137deg, #9cafb0 0%, #c4c3be 70%, #c5c8b5 100%) 72% 55%/174% 123%; */
+    background: rgb(53, 60, 59);
+    background: linear-gradient(0deg, rgba(53, 60, 59, 1) 3%, rgba(86, 92, 93, 1) 40%, rgba(138, 142, 153, 1) 73%, rgba(197, 202, 210, 1) 100%);
 }
 
 /* ------------- night --------------- */
