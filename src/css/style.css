@@ -364,40 +364,58 @@
 /* ------------- night --------------- */
 
 .clear_sky_night {
-    background: linear-gradient(127deg, rgba(45, 48, 72, 1), rgba(23, 27, 60, 0) 100%),
-        linear-gradient(217deg, rgba(45, 48, 72, 1), rgba(23, 27, 60, 1) 100%);
+    background-color: hsla(235, 86%, 11%, 1);
+    background-image:
+        radial-gradient(at 0% 100%, hsla(32, 17%, 55%, 0.3) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, hsla(221, 14%, 33%, 0.83) 0px, transparent 50%),
+        radial-gradient(at 82% 78%, hsla(217, 83%, 14%, 0.58) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(240, 92%, 10%, 1) 0px, transparent 50%);
 
 }
 
 .few_clouds_night {
-    background: linear-gradient(to right bottom, #777777, #69696c, #5b5c62, #4d5057, #3e444d, #353c47, #2b3440, #222d3a, #1c2735, #172130, #121b2b, #0e1526);
-
+    background-color: hsla(216, 26%, 22%, 1);
+    background-image:
+        radial-gradient(at 100% 0%, hsla(221, 56%, 12%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(223, 37%, 15%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 3%, hsla(223, 35%, 17%, 1) 0px, transparent 50%);
 }
 
 .overcast_night,
 .showers_scattered_night {
-    background: linear-gradient(127deg, rgba(27, 29, 40, 1), rgba(23, 27, 60, 0) 100%),
-        linear-gradient(217deg, rgba(27, 29, 40, 1), rgba(46, 46, 46, 1) 100%);
+    background-color: hsla(240, 13%, 28%, 1);
+    background-image:
+        radial-gradient(at 100% 99%, hsla(240, 21%, 6%, 1) 0px, transparent 50%),
+        radial-gradient(at 99% 0%, hsla(240, 0%, 0%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(240, 19%, 9%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsla(240, 16%, 19%, 1) 0px, transparent 50%),
+        radial-gradient(at 38% 0%, hsla(288, 13%, 80%, 0.21) 0px, transparent 50%);
 
 }
 
 .showers_large_night {
-    background: linear-gradient(127deg, rgba(27, 29, 40, 1), rgba(23, 27, 60, 0) 100%),
-        linear-gradient(237deg, rgba(27, 29, 40, 1), rgba(46, 46, 46, 1) 100%);
+    background-color: hsla(206, 27%, 15%, 1);
+    background-image:
+        radial-gradient(at 100% 0%, hsla(217, 17%, 7%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsla(203, 41%, 17%, 1) 0px, transparent 50%),
+        radial-gradient(at 0% 3%, hsla(222, 33%, 9%, 1) 0px, transparent 50%);
 
 }
 
 .storm_night {
-    background: linear-gradient(127deg, rgba(50, 50, 50, 1), rgba(54, 55, 37, 1) 100%),
-        linear-gradient(237deg, rgba(50, 50, 50, 1), rgba(54, 55, 37, 1) 100%);
+    background-color: hsla(245, 14%, 14%, 1);
+    background-image:
+        radial-gradient(at 100% 100%, hsla(175, 16%, 7%, 1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(240, 21%, 6%, 1) 0px, transparent 50%),
+        radial-gradient(at 56% 0%, hsla(217, 12%, 31%, 0.81) 0px, transparent 50%),
+        radial-gradient(at 24% 0%, hsla(215, 9%, 5%, 1) 0px, transparent 50%),
+        radial-gradient(at 1% 99%, hsla(40, 15%, 54%, 0.48) 0px, transparent 50%);
 
 }
 
 .snow_night {
-    background: linear-gradient(127deg, rgba(50, 50, 50, 1), rgba(98, 98, 98, 1) 100%),
-        linear-gradient(217deg, rgba(50, 50, 50, 1), rgba(98, 98, 98, 1) 100%),
-        linear-gradient(336deg, rgba(50, 50, 50, 1), rgba(98, 98, 98, 1) 100%);
-
+    background: rgb(20, 29, 52);
+    background: linear-gradient(180deg, rgba(20, 29, 52, 1) 0%, rgba(28, 44, 64, 1) 26%, rgba(28, 45, 73, 1) 52%, rgba(63, 66, 89, 1) 78%, rgba(96, 96, 96, 1) 100%);
 }
 
 .fog_night {
