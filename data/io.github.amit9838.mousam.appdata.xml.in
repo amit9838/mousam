@@ -47,8 +47,8 @@
     <name translate="no">Amit Chaudhary</name>
   </developer>
   <branding>
-	  <color type="primary" scheme_preference="light">#99f8ff</color>
-	  <color type="primary" scheme_preference="dark">#064d95</color>
+	  <color type="primary" scheme_preference="light">#A7D2F4</color>
+	  <color type="primary" scheme_preference="dark">#294C69</color>
 	</branding>
   <recommends>
     <control>pointing</control>
