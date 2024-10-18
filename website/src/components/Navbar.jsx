@@ -22,7 +22,7 @@ export default function Navbar() {
                 return (
                   <li key={item}>
                     <Button
-                      myStyle={null}
+                      myStyle="rounded-full"
                       onClick={() => {
                         const element = document.getElementById(item);
                         element.scrollIntoView({
@@ -68,7 +68,7 @@ export default function Navbar() {
                 return (
                   <li key={item}>
                     <Button
-                      myStyle={null}
+                      myStyle="rounded-full"
                       onClick={() => {
                         const element = document.getElementById(item);
                         element.scrollIntoView({

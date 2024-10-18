@@ -10,7 +10,7 @@ export default function About() {
         <h2 className="mx-2  my-2 text-2xl ">About</h2>
       </div>
       <div className="col-span-1 border-r-[1px] border-slate-400 md:block hidden"></div>
-      <div className="md:col-span-11 col-span-12 p-4 text-neutral-300 font-['ubuntu']">
+      <div className="md:col-span-11 col-span-12 p-4 text-neutral-300 font-sans max-w-[90%]">
         <p>
           Mousam is a sleek desktop-weather application offering real-time
           weather updates and forecasts for the next{" "}
@@ -30,25 +30,23 @@ export default function About() {
           <code className={code_style}>Open-Meteo API</code> , ensuring accurate
           and timely information.
         </p>
-
         <h4 className="text-neutral-200 mt-8 font-bold">About me</h4>
         <p className="my-1 ">
-          Hello, I'm Amit. I began this project as part of my journey in
-          learning Gtk with Python. It's exciting to see Mousam receiving
-          positive responses, which is really motivating for me. Throughout this
-          experience, I've gained valuable knowledge and continue to learn every
-          day.
+          I’m Amit, and I initiated this project as part of my ongoing
+          exploration of Gtk with Python. It’s great to see Mousam’s success and
+          positive feedback. It motivates me to keep working on the project.
         </p>
         <p>
-          I admire the collaborative nature of open source, where people can
-          freely interact, discuss cool ideas, and contribute to projects.
+          I commend the collaborative spirit inherent in open source, where
+          individuals can freely interact, exchange innovative ideas, and
+          contribute to projects collectively.
         </p>
         <p>
-          If you haven't already, consider starting your own open source project
-          or contribute to existing projects it's a fantastic way to learn and
-          grow.
-          <br /> Happy coding!
+          Let's build something amazing together! Join the open source community
+          today. Whether you're starting your own project or contributing to an
+          existing one, it's a fantastic way to learn and grow.
         </p>
+        Let's code together!
 
         {/* Developer Card */}
         <div className="max-w-[24rem] w-full bg-gray-700 hover:bg-gray-600 rounded-md flex items-center p-4 my-6">
