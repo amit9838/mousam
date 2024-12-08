@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import gi
 from gi.repository import Gtk
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 from .constants import icons
 from .config import settings
 

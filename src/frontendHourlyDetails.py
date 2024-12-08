@@ -32,55 +32,46 @@ class HourlyDetails(Gtk.Grid):
 
     def paint_ui(self):
         # Hourly Stack
+
         self.hourly_stack = Gtk.Stack.new()
         self.hourly_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.attach(self.hourly_stack, 0, 1, 1, 1)
 
-        # Tab Box
+        # Hourly Buttons
         tab_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, hexpand=True)
         self.attach(tab_box, 0, 0, 1, 1)
 
-        style_buttons_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            halign=Gtk.Align.START,
-            margin_start=0,
-        )
+        style_buttons_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         style_buttons_box.add_css_class("linked")
         style_buttons_box.set_valign(Gtk.Align.CENTER)
 
-        # Temperature Button -------------
-        temp_btn = Gtk.ToggleButton.new_with_label(_("Hourly"))
-        temp_btn.set_size_request(80, 16)
-        temp_btn.set_css_classes(["btn_sm"])
-        temp_btn.do_clicked(temp_btn)
-        style_buttons_box.append(temp_btn)
-        temp_btn.connect("clicked", self._on_btn_clicked, "hourly")
+        button_data = [
+            ("Hourly", "hourly"),
+            ("Wind", "wind"),
+            ("Precipitation", "prec"),
+        ]
 
-        # Wind Button -------------
-        wind_btn = Gtk.ToggleButton.new_with_label(_("Wind"))
-        wind_btn.set_size_request(80, 16)
-        wind_btn.set_css_classes(["btn_sm"])
-        wind_btn.set_group(temp_btn)
-        style_buttons_box.append(wind_btn)
-        wind_btn.connect("clicked", self._on_btn_clicked, "wind")
+        first_btn = None
+        for label, page_name in button_data:
+            button = Gtk.ToggleButton.new_with_label(_(label))
+            button.set_size_request(80, 16)
+            button.set_css_classes(["btn_sm"])
+            if first_btn is None:
+                first_btn = button
+            else:
+                button.set_group(first_btn)
+            style_buttons_box.append(button)
+            button.connect("clicked", self._on_btn_clicked, page_name)
 
-        # Precipitation Button -------------
-        prec_btn = Gtk.ToggleButton.new_with_label(_("Precipitation"))
-        prec_btn.set_size_request(80, 16)
-        prec_btn.set_css_classes(["btn_sm"])
-        prec_btn.set_group(temp_btn)
-        style_buttons_box.append(prec_btn)
-        prec_btn.connect("clicked", self._on_btn_clicked, "prec")
-
+        first_btn.do_clicked(first_btn)
         tab_box.append(style_buttons_box)
         self.create_stack_page("hourly")
 
     def _on_btn_clicked(self, widget, page_name):
         if self.hourly_stack.get_child_by_name(page_name):
             self.hourly_stack.set_visible_child_name(page_name)
-            return
-
-        self.create_stack_page(page_name)
+        else:
+            self.create_stack_page(page_name)
 
     # ---------- Create page stack --------------
     def create_stack_page(self, page_name):
@@ -190,7 +181,7 @@ class HourlyDetails(Gtk.Grid):
 
             graphic_container.append(graphic_box)
 
-            label_timestamp = Gtk.Label(label="")
+            label_timestamp = Gtk.Label()
             label_timestamp.set_css_classes(["text-7", "bold-2", "light-6"])
             time_stamp = datetime.datetime.fromtimestamp(
                 hourly_data.time.get("data")[i]
@@ -212,7 +203,7 @@ class HourlyDetails(Gtk.Grid):
             icon_box = Gtk.Box(halign=Gtk.Align.CENTER)
             graphic_box.append(icon_box)
 
-            label_val = Gtk.Label(label="")
+            label_val = Gtk.Label()
             label_val.set_css_classes(["text-5", "bold-2", "light-3"])
             graphic_box.append(label_val)
 
