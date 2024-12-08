@@ -104,7 +104,7 @@ class HourlyDetails(Gtk.Grid):
         # Hourly Page
         if page_name == "hourly":
             desc_label.set_text(C_("temperature", "Day Max •"))
-            val_label.set_text(str(max(hourly_data.temperature_2m.get("data"))) + "°")
+            val_label.set_text(str(max(hourly_data.temperature_2m.get("data")[:24])) + "°")
             unit_label.set_text("")
 
         # Precipitation page
