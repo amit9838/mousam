@@ -30,6 +30,7 @@ export default function Installation() {
         </h2>
       </div>
       <div className="md:col-span-10 col-span-12 border-b-[1px] border-slate-400">
+
         <h2 className="mx-2 mb-4 text-xl md:hidden block ">Installation</h2>
         <div className="flex items-center justify-center border-t-[1px] border-slate-400 md:hidden">
           {tabs.map((item) => {
@@ -51,14 +52,15 @@ export default function Installation() {
           })}
         </div>
       </div>
+
       <div className="col-span-2 md:block hidden h-[30rem] border-r-[1px] border-slate-400">
         <div className="md:flex items-end flex-col hidden">
           {tabs.map((item) => {
             let myStyle =
-              "bg-secondary hover:bg-gray-600 py-2 w-40 border-b-[1px]";
+              "bg-secondary hover:bg-gray-600 py-2 w-40 border-b-[1px] border-slate-500";
             if (item.tab_name === activeTab) {
               myStyle =
-                "bg-gray-500 hover:bg-gray-600 py-2 w-40 border-b-[1px]";
+                "bg-gray-500 hover:bg-gray-600 py-2 w-40 border-b-[1px] border-slate-500";
             }
             return (
               <Button
@@ -72,7 +74,7 @@ export default function Installation() {
           })}
         </div>
       </div>
-      <div className="md:col-span-10 col-span-12  m-6">
+      <div className="md:col-span-10 col-span-12 m-6">
         {tabs.map((item) => {
           return (
             item.tab_name === activeTab && (
