@@ -1,3 +1,49 @@
+mousam (1.4.0) stable; urgency=medium
+
+  [ সৌম্যদীপ ঘোষ ]
+  * snap: update for `core24` (#152)
+
+  [ Amit Chaudhary ]
+  * style: make ui components smaller
+  * style: use smaller font in sq cards and  pollution card
+  * style: reduce grid spacing, make forecast items smaller
+
+  [ radical4ever ]
+  * Update es.po (#155)
+    * Update es.po
+    * Update es.po
+    * Update es.po
+    * Update es.po
+    * Update es.po
+
+  [ Nekothegamer ]
+  * Italian translation (#158)
+    * add the translation file
+    * Update LINGUAS
+
+  [ Amit Chaudhary ]
+  * fix typos and code formatting
+  * redesign location view on main page
+  * rename some files, use gnome runtime 47
+  * add welcome screen
+  * remove default location
+  * add new backgrounds for weather conditions during day
+  * add background for night weather conditions
+  * update branding colors
+  * update style and links
+
+  [ lipcut ]
+  * add zh-TW translations (#171)
+
+  [ Amit Chaudhary ]
+  * simplify button generation in hourly forecast
+  * take temperature av of first 24 hr
+  * add new screenshots
+  * update website links
+  * Release_v1.4.0
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Thu, 12 Dec 2024 12:37:40 +0530
+
 mousam (1.3.2) stable; urgency=medium
 
   [ Tobias Bernard ]
@@ -26,10 +72,10 @@ mousam (1.3.2) stable; urgency=medium
   [ Scrambled777 ]
   * Hindi translation update (#148)
     * Hindi translation update
-    Minor update for updated strings.
-    Cheers.
+      Minor update for updated strings.
+      Cheers.
     * Update hi.po
-    Fixes to include input from @amit9838
+      Fixes to include input from @amit9838
 
  -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Mon, 01 Jul 2024 23:38:44 +0530
 
@@ -62,7 +108,7 @@ mousam (1.3.0) stable; urgency=medium
     * Just updated the POT-creation and revision dates
   * French translation (#128)
     * Update fr_FR.po
-    Finished french translation.
+      Finished french translation.
     * Update fr.po
     * Update fr.po
     Finished french translation
