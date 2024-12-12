@@ -17,25 +17,18 @@
   </description>
     <screenshots>
       <screenshot type="default">
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png</image>
-          <caption>Overcast day</caption>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png</image>
+          <caption>Clear Sky - day</caption>
       </screenshot>
       <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3-clear_sky-imperial.png</image>
-          <caption>Clear Sky - imperial</caption>
-      </screenshot>
-      <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2-thunderstorm.png</image>
-          <caption>Thunderstorm</caption>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png</image>
+          <caption>Snofall - day</caption>
       </screenshot>
         <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png</image>
-          <caption>Dark mode</caption>
+          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png</image>
+          <caption>Clear Sky - night</caption>
       </screenshot>
-        <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png</image>
-          <caption>Light mode</caption>
-      </screenshot>
+
   </screenshots>
   <launchable type="desktop-id">io.github.amit9838.mousam.desktop</launchable>
   <url type="homepage">https://amit9838.github.io/mousam/</url>
@@ -62,6 +55,26 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.4.0" date="2024-12-12">
+      <description translate="no">
+        <p>What's New</p>
+        <ul>
+          <li>Added new backgrounds for both day and night weather conditions.</li>
+          <li>Introduced a welcome screen for first-time users.</li>
+        </ul>
+        <p>Bug Fixes</p>
+        <ul>
+          <li>Fixed typos and improved code formatting for better maintainability.</li>
+          <li>Resolved issues related to styling and default location settings.</li>
+        </ul>
+        <p>Translation</p>
+        <ul>
+          <li>Added Italian translation, thanks to @Nekothegamer.</li>
+          <li>Added Traditional Chinese (zh-TW) translation, thanks to @lipcut.</li>
+          <li>Updated Spanish translation, thanks to @radical4ever.</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.3.2" date="2024-6-30">
       <description translate="no">
         <p>What's New</p>
