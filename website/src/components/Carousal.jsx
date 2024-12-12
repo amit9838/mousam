@@ -10,19 +10,19 @@ import ImageSlide from "./ImageSlide";
 
 const images = [
   {
-    title: "Few Clouds",
-    lightingCondition: "Night",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
-  },
-  {
-    title: "Overcast",
-    lightingCondition: "Night",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
-  },
-  {
-    title: "Partly Cloud",
+    title: "Clear Sky",
     lightingCondition: "Day",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png",
+  },
+  {
+    title: "Snowfall",
+    lightingCondition: "Day",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png",
+  },
+  {
+    title: "Clear Sky",
+    lightingCondition: "Night",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3.png",
   },
 ];
 
