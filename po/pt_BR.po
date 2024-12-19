@@ -347,17 +347,17 @@ msgstr "Precipitação"
 #: src/frontendHourlyDetails.py:99
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Alta Diária"
+msgstr "Alta Diária •"
 
 #: src/frontendHourlyDetails.py:115
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Máxima Diária"
+msgstr "Máxima Diária •"
 
 #: src/frontendHourlyDetails.py:127
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Alta Diária"
+msgstr "Alta Diária •"
 
 #: src/frontendHourlyDetails.py:166
 msgid "No precipitation today !"
