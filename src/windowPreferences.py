@@ -88,7 +88,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.metric_check_btn = Gtk.CheckButton.new()
         self.metric_unit.add_prefix(self.metric_check_btn)
         self.metric_unit.set_activatable_widget(self.metric_check_btn)
-        self.metric_unit.connect("activated", self._change_unit,'metric')
+        self.metric_check_btn.connect("toggled", self._change_unit,'metric')
         self.measurement_group.add(self.metric_unit)
 
         self.imperial_unit = Adw.ActionRow.new()
@@ -98,7 +98,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.imperial_unit.add_prefix(self.imperial_check_btn)
         self.imperial_check_btn.set_group(self.metric_check_btn)
         self.imperial_unit.set_activatable_widget(self.imperial_check_btn)
-        self.imperial_unit.connect("activated", self._change_unit,'imperial')
+        self.imperial_check_btn.connect("toggled", self._change_unit,'imperial')
         self.measurement_group.add(self.imperial_unit)
         GLib.idle_add(self.metric_unit.activate) if settings.unit == 'metric' else  GLib.idle_add(self.imperial_unit.activate)
 
