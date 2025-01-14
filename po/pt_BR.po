@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-08 10:02+0530\n"
+"POT-Creation-Date: 2025-01-08 13:17+0700\n"
 "PO-Revision-Date: 2024-12-14 12:00-0300\n"
 "Last-Translator: Nelson K. Hennemann Filho <nelsonhf@outlook.com>\n"
 "Language-Team: \n"
@@ -66,26 +66,20 @@ msgid "See conditions in metric or imperial systems"
 msgstr "Ver previsões em sistema métrico ou imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
-msgid "Overcast day"
-msgstr "Coberto de nuvens"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Clear Sky - imperial"
+#, fuzzy
+msgid "Clear Sky - day"
 msgstr "Céu Limpo - imperial"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:29 src/constants.py:157
-msgid "Thunderstorm"
-msgstr "Tempestade"
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Snofall - day"
+msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:33
-msgid "Dark mode"
-msgstr "Modo escuro"
+#: data/io.github.amit9838.mousam.appdata.xml.in:29
+#, fuzzy
+msgid "Clear Sky - night"
+msgstr "Céu Limpo - imperial"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:37
-msgid "Light mode"
-msgstr "Modo claro"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:45
+#: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
 msgstr "Amit Chaudhary"
 
@@ -247,6 +241,10 @@ msgstr "Chuvas Leves de Neve"
 msgid "Heavy Snow Showers "
 msgstr "Chuvas de Neve Pesadas "
 
+#: src/constants.py:157
+msgid "Thunderstorm"
+msgstr "Tempestade"
+
 #: src/constants.py:158
 msgid "Thunderstorm with Hail"
 msgstr "Tempestade com Granizo"
@@ -299,11 +297,11 @@ msgstr "Sudoeste"
 msgid "West"
 msgstr "Oeste"
 
-#: src/frontendCardSquare.py:170 src/mousam.py:278
+#: src/frontendCardSquare.py:170 src/mousam.py:319
 msgid "Northwest"
 msgstr "Noroeste"
 
-#: src/frontendCardSquare.py:180 src/frontendHourlyDetails.py:60
+#: src/frontendCardSquare.py:180
 msgid "Wind"
 msgstr "Vento"
 
@@ -319,7 +317,7 @@ msgstr "Humidade"
 msgid "UV Index"
 msgstr "Índice UV"
 
-#: src/frontendCurrentCond.py:87
+#: src/frontendCurrentCond.py:97
 #, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "Sensação térmica de • <b> {0} {1}</b>"
@@ -336,54 +334,46 @@ msgstr "Semanal"
 msgid "Today"
 msgstr "Hoje"
 
-#: src/frontendHourlyDetails.py:52
-msgid "Hourly"
-msgstr "Por Hora"
-
-#: src/frontendHourlyDetails.py:68
-msgid "Precipitation"
-msgstr "Precipitação"
-
-#: src/frontendHourlyDetails.py:99
+#: src/frontendHourlyDetails.py:90
 msgctxt "wind"
 msgid "Day High •"
 msgstr "Alta Diária •"
 
-#: src/frontendHourlyDetails.py:115
+#: src/frontendHourlyDetails.py:106
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr "Máxima Diária •"
 
-#: src/frontendHourlyDetails.py:127
+#: src/frontendHourlyDetails.py:118
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr "Alta Diária •"
 
-#: src/frontendHourlyDetails.py:166
+#: src/frontendHourlyDetails.py:157
 msgid "No precipitation today !"
 msgstr "Sem precipitação para hoje!"
 
-#: src/frontendHourlyDetails.py:167
+#: src/frontendHourlyDetails.py:158
 msgid "No precipitation expected today!"
 msgstr "Sem precipitação prevista para hoje!"
 
-#: src/frontendHourlyDetails.py:168
+#: src/frontendHourlyDetails.py:159
 msgid "Anticipate a precipitation-free day !"
 msgstr "Antecipe um dia livre de precipitação!"
 
-#: src/frontendHourlyDetails.py:169
+#: src/frontendHourlyDetails.py:160
 msgid "Enjoy a rain-free day today!"
 msgstr "Hoje aproveite um dia livre de chuva!"
 
-#: src/frontendHourlyDetails.py:170
+#: src/frontendHourlyDetails.py:161
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "Status de guarda chuva: em descanso. Sem precipitação em vista!"
 
-#: src/frontendHourlyDetails.py:171
+#: src/frontendHourlyDetails.py:162
 msgid "No rain in sight today!"
 msgstr "Sem chuva prevista para hoje!"
 
-#: src/frontendHourlyDetails.py:204
+#: src/frontendHourlyDetails.py:195
 msgid "Now"
 msgstr "Agora"
 
@@ -391,83 +381,88 @@ msgstr "Agora"
 msgid "Night"
 msgstr "Noite"
 
-#: src/mousam.py:71
+#: src/mousam.py:76
 msgid "Location"
 msgstr "Localização"
 
-#: src/mousam.py:80 src/shortcutsDialog.ui:45
+#: src/mousam.py:85 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "Preferências"
 
-#: src/mousam.py:85 src/shortcutsDialog.ui:63
+#: src/mousam.py:90 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
 
-#: src/mousam.py:91
+#: src/mousam.py:96
 msgid "About Mousam"
 msgstr "Sobre Mousam"
 
-#: src/mousam.py:93 src/shortcutsDialog.ui:57
+#: src/mousam.py:98 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "Sair"
 
-#: src/mousam.py:148
+#: src/mousam.py:153
 msgid "Getting Weather Data"
 msgstr "Adquirindo Dados Meteorológicos"
 
-#: src/mousam.py:159
+#: src/mousam.py:178
+#, fuzzy
+msgid "Welcome to Mousam"
+msgstr "Sobre Mousam"
+
+#: src/mousam.py:198
 msgid "No Internet"
 msgstr "Sem Internet"
 
-#: src/mousam.py:163
+#: src/mousam.py:202
 msgid "Could not fetch data from API"
 msgstr "Não foi possível pegar dados da API"
 
-#: src/mousam.py:277
+#: src/mousam.py:318
 msgid "From"
 msgstr "De"
 
-#: src/mousam.py:279
+#: src/mousam.py:320
 msgid "N"
 msgstr "N"
 
-#: src/mousam.py:289
+#: src/mousam.py:330
 msgid "Dewpoint"
 msgstr "Ponto de Condensação"
 
-#: src/mousam.py:305
+#: src/mousam.py:346
 msgctxt "pressure card"
 msgid "High"
 msgstr "Alto"
 
-#: src/mousam.py:306
+#: src/mousam.py:347
 msgctxt "pressure card"
 msgid "Low"
 msgstr "Baixo"
 
-#: src/mousam.py:315
+#: src/mousam.py:356
 msgctxt "uvindex card"
 msgid "High"
 msgstr "Alto"
 
-#: src/mousam.py:316
+#: src/mousam.py:357
 msgctxt "uvindex card"
 msgid "Low"
 msgstr "Baixo"
 
-#: src/mousam.py:332
+#: src/mousam.py:373
 msgid "Switched to {}"
 msgstr "Trocou para {}"
 
-#: src/mousam.py:335
+#: src/mousam.py:376
 msgid "Refreshed Successfully"
 msgstr "Recarregou com Sucesso"
 
-#: src/mousam.py:345
+#: src/mousam.py:390
 msgid "Refresh within 5 seconds is ignored!"
 msgstr "Recarregamento dentro de 5 segundos é ignorado!"
 
-#: src/mousam.py:350
+#: src/mousam.py:395
 msgid "Refreshing..."
 msgstr "Recarregando..."
 
@@ -588,62 +583,58 @@ msgstr "Copyright © 2024 Mousam Developers"
 msgid "translator_credits"
 msgstr "Luiz Lima, Nelson K. Hennemann Filho"
 
-#: src/windowLocations.py:21 src/windowLocations.py:36
+#: src/windowLocations.py:23 src/windowLocations.py:37
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "Localizações"
 
-#: src/windowLocations.py:44
+#: src/windowLocations.py:45
 msgid "Add"
 msgstr "Adicionar"
 
-#: src/windowLocations.py:68
+#: src/windowLocations.py:74
 msgid "Remove location"
 msgstr "Remover localização"
 
-#: src/windowLocations.py:122
+#: src/windowLocations.py:128
 msgid "Switch city within 2 seconds is ignored!"
 msgstr "Trocar cidade dentro de 2 segundos é ignorado!"
 
-#: src/windowLocations.py:126
+#: src/windowLocations.py:132
 msgid "Selected - {}"
 msgstr "Selecionado - {}"
 
-#: src/windowLocations.py:138
+#: src/windowLocations.py:143
 msgid "Add New Location"
 msgstr "Adicionar Nova Localização"
 
-#: src/windowLocations.py:163
+#: src/windowLocations.py:168
 msgid "Search for a city"
 msgstr "Procurar por uma cidade"
 
-#: src/windowLocations.py:169 src/windowLocations.py:171
+#: src/windowLocations.py:174 src/windowLocations.py:176
 msgid "Search"
 msgstr "Procurar"
 
-#: src/windowLocations.py:248
+#: src/windowLocations.py:254
 #, python-brace-format
 msgid "Added - {0}"
 msgstr "Adicionado - {0}"
 
-#: src/windowLocations.py:250
+#: src/windowLocations.py:256
 msgid "Location already added!"
 msgstr "Localização já adicionada!"
 
-#: src/windowLocations.py:259
-msgid "Add more locations to delete!"
-msgstr "Adicione mais localizações para poder apagar!"
-
-#: src/windowLocations.py:286
+#: src/windowLocations.py:283
 #, python-brace-format
 msgid "Deleted - {0}"
 msgstr "Apagado - {0}"
 
-#: src/windowLocations.py:289
+#: src/windowLocations.py:286
 msgid "Press enter to search"
 msgstr "Pressione Enter para procurar"
 
-#: src/windowLocations.py:292
+#: src/windowLocations.py:289
 msgid "No results found!"
 msgstr "Nenhum resultado encontrado!"
 
@@ -727,6 +718,24 @@ msgstr "Atualizar clima"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Navegação"
+
+#~ msgid "Overcast day"
+#~ msgstr "Coberto de nuvens"
+
+#~ msgid "Dark mode"
+#~ msgstr "Modo escuro"
+
+#~ msgid "Light mode"
+#~ msgstr "Modo claro"
+
+#~ msgid "Hourly"
+#~ msgstr "Por Hora"
+
+#~ msgid "Precipitation"
+#~ msgstr "Precipitação"
+
+#~ msgid "Add more locations to delete!"
+#~ msgstr "Adicione mais localizações para poder apagar!"
 
 #~ msgid "Beautiful and lightweight weather app"
 #~ msgstr "Belo e leve aplicativo de clima"
