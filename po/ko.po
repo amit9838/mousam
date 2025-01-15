@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-19 16:45+0900\n"
+"POT-Creation-Date: 2025-01-08 13:17+0700\n"
 "PO-Revision-Date: 2023-09-19 17:00+0900\n"
 "Last-Translator: 동헌희 <hunhee@kakao.com>\n"
 "Language-Team: \n"
@@ -17,317 +17,845 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: ../src/uiCurrent_w.py:75
-msgid "Feels like {0:.1f}{1}"
-msgstr "체감온도 {0:.1f}{1}"
+#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr ""
 
-#: ../src/uiCurrent_w.py:153
-msgid "Humidity"
-msgstr "습도"
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:16
+msgid "Weather at a glance"
+msgstr ""
 
-#: ../src/uiCurrent_w.py:153 ../src/uiForecast_w.py:198
-#, python-brace-format
-msgid "{0}%"
-msgstr "{0}%"
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgstr ""
 
-#: ../src/uiCurrent_w.py:154
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Clear Sky - day"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Snofall - day"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29
+msgid "Clear Sky - night"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:38
+msgid "Amit Chaudhary"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+#, fuzzy
+msgid "Selected city"
+msgstr "{} 선택"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+#, fuzzy
+msgid "Selected city cords"
+msgstr "{} 선택"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+#, fuzzy
+msgid "Use Gradient Background"
+msgstr "동적 배경"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:22
+msgid "Use Inch for precipitation"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:26
+msgid "Use 24h hour clock"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:30
+msgid "Main window width"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "Main window height"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:38
+msgid "Launch the app in maximized mode."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:42
+msgid "Mesaurement sysytem to use - metric,imperial"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:43
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr ""
+
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr ""
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr ""
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr ""
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr ""
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr ""
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr ""
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr ""
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr ""
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr ""
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr ""
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr ""
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr ""
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr ""
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr ""
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr ""
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr ""
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr ""
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr ""
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr ""
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr ""
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr ""
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr ""
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr ""
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr ""
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers "
+msgstr ""
+
+#: src/constants.py:157
+msgid "Thunderstorm"
+msgstr ""
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr ""
+
+#: src/frontendCardAirPollution.py:44
+msgid "Air Pollution"
+msgstr ""
+
+#: src/frontendCardAirPollution.py:54
+msgid "United States AQI standard"
+msgstr ""
+
+#: src/frontendCardDayNight.py:68
+msgid "Sunrise & Sunset"
+msgstr ""
+
+#: src/frontendCardDayNight.py:79
+msgid "Sunrise"
+msgstr ""
+
+#: src/frontendCardDayNight.py:92
+msgid "Sunset"
+msgstr ""
+
+#: src/frontendCardSquare.py:163 src/frontendCardSquare.py:171
+msgid "North"
+msgstr ""
+
+#: src/frontendCardSquare.py:164
+msgid "Northeast"
+msgstr ""
+
+#: src/frontendCardSquare.py:165
+msgid "East"
+msgstr ""
+
+#: src/frontendCardSquare.py:166
+msgid "Southeast"
+msgstr ""
+
+#: src/frontendCardSquare.py:167
+msgid "South"
+msgstr ""
+
+#: src/frontendCardSquare.py:168
+msgid "Southwest"
+msgstr ""
+
+#: src/frontendCardSquare.py:169
+msgid "West"
+msgstr ""
+
+#: src/frontendCardSquare.py:170 src/mousam.py:319
+msgid "Northwest"
+msgstr ""
+
+#: src/frontendCardSquare.py:180
+msgid "Wind"
+msgstr ""
+
+#: src/frontendCardSquare.py:181
 msgid "Pressure"
 msgstr "압력"
 
-#: ../src/uiCurrent_w.py:154
-#, python-brace-format
-msgid "{0} hPa"
-msgstr "{0} hPa"
+#: src/frontendCardSquare.py:182
+msgid "Humidity"
+msgstr "습도"
 
-#: ../src/uiCurrent_w.py:155
-msgid "Wind speed"
-msgstr "풍속"
+#: src/frontendCardSquare.py:183
+msgid "UV Index"
+msgstr ""
 
-#: ../src/uiCurrent_w.py:155
-#, python-brace-format
-msgid "{0:.1f} {1} {2}"
-msgstr "{0:.1f} {1} {2}"
+#: src/frontendCurrentCond.py:97
+#, fuzzy, python-brace-format
+msgid "Feels like • <b> {0} {1}</b>"
+msgstr "체감온도 {0:.1f}{1}"
 
-#: ../src/uiCurrent_w.py:156
-msgid "Visibility"
-msgstr "가시거리"
-
-#: ../src/uiCurrent_w.py:157 ../src/uiCurrent_w.py:173
-msgid "Air Quality"
-msgstr "공기질"
-
-#: ../src/uiCurrent_w.py:184
-msgid "rain in next 1 hour"
-msgstr "1시간 이내 비"
-
-#: ../src/uiCurrent_w.py:188
-msgid "snow in next 1 hour"
-msgstr "1시간 이내 눈"
-
-#: ../src/uiCurrent_w.py:195
-msgid "No snow for atleast 1 hour"
-msgstr "1시간 이내 눈 없음"
-
-#: ../src/uiCurrent_w.py:197
-msgid "No rain/snow for atleast 1 hour"
-msgstr "1시간 이내 비나 눈 없음"
-
-#: ../src/uiCurrent_w.py:199
-msgid "No rain for atleast 1 hour"
-msgstr "1시간 이내 비 없음"
-
-#: ../src/uiForecast_w.py:27 ../src/uiForecast_w.py:123
-msgid "Today"
-msgstr "오늘"
-
-#: ../src/uiForecast_w.py:32 ../src/uiForecast_w.py:125
+#: src/frontendForecast.py:36 src/frontendForecast.py:141
 msgid "Tomorrow"
 msgstr "내일"
 
-#: ../src/uiForecast_w.py:37
-msgid "5 Days"
-msgstr "5일"
+#: src/frontendForecast.py:43
+msgid "Weekly"
+msgstr ""
 
-#: ../src/uiForecast_w.py:128
-msgid "AM"
-msgstr "오전"
+#: src/frontendForecast.py:136
+msgid "Today"
+msgstr "오늘"
 
-#: ../src/uiForecast_w.py:131
-msgid "PM"
-msgstr "오후"
+#: src/frontendHourlyDetails.py:90
+msgctxt "wind"
+msgid "Day High •"
+msgstr ""
 
-#: ../src/uiForecast_w.py:210
-#, python-brace-format
-msgid "{0:.1f} {1}"
-msgstr "{0:.1f} {1}"
+#: src/frontendHourlyDetails.py:106
+msgctxt "temperature"
+msgid "Day Max •"
+msgstr ""
 
-#: ../src/uiForecast_w.py:215
-#, python-brace-format
-msgid "{0:.0f}°"
-msgstr "{0:.0f}°"
+#: src/frontendHourlyDetails.py:118
+msgctxt "precipitation"
+msgid "Day High •"
+msgstr ""
 
-#: ../src/utils.py:31
-msgid "Request timeout!"
-msgstr "요청시간 초과!"
+#: src/frontendHourlyDetails.py:157
+msgid "No precipitation today !"
+msgstr ""
 
-#: ../src/utils.py:35
-msgid "No internet connection!"
-msgstr "인터넷 연결 없음!"
+#: src/frontendHourlyDetails.py:158
+msgid "No precipitation expected today!"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "N"
-msgstr "북"
+#: src/frontendHourlyDetails.py:159
+msgid "Anticipate a precipitation-free day !"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "NNE"
-msgstr "북북동"
+#: src/frontendHourlyDetails.py:160
+msgid "Enjoy a rain-free day today!"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "NE"
-msgstr "북동"
+#: src/frontendHourlyDetails.py:161
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "ENE"
-msgstr "동북동"
+#: src/frontendHourlyDetails.py:162
+msgid "No rain in sight today!"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "E"
-msgstr "동"
+#: src/frontendHourlyDetails.py:195
+msgid "Now"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "ESE"
-msgstr "동남동"
+#: src/frontendUiDrawDayNight.py:97
+msgid "Night"
+msgstr ""
 
-#: ../src/utils.py:58
-msgid "SE"
-msgstr "남동"
+#: src/mousam.py:76
+#, fuzzy
+msgid "Location"
+msgstr "위치"
 
-#: ../src/utils.py:58
-msgid "SSE"
-msgstr "남남동"
-
-#: ../src/utils.py:59
-msgid "S"
-msgstr "남"
-
-#: ../src/utils.py:59
-msgid "SSW"
-msgstr "남남서"
-
-#: ../src/utils.py:59
-msgid "SW"
-msgstr "남서"
-
-#: ../src/utils.py:59
-msgid "WSW"
-msgstr "서남서"
-
-#: ../src/utils.py:59
-msgid "W"
-msgstr "서"
-
-#: ../src/utils.py:59
-msgid "WNW"
-msgstr "서북서"
-
-#: ../src/utils.py:59
-msgid "NW"
-msgstr "북서"
-
-#: ../src/utils.py:59
-msgid "NNW"
-msgstr "북북서"
-
-#: ../src/weather.py:66
-msgid "Refresh"
-msgstr "새로고침"
-
-#: ../src/weather.py:85
+#: src/mousam.py:85 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "설정"
 
-#: ../src/weather.py:91
-msgid "About Weather"
-msgstr "날씨에 대해"
+#: src/mousam.py:90 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr ""
 
-#: ../src/weather.py:123
-msgid "No internet!"
+#: src/mousam.py:96
+msgid "About Mousam"
+msgstr ""
+
+#: src/mousam.py:98 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr ""
+
+#: src/mousam.py:153
+msgid "Getting Weather Data"
+msgstr ""
+
+#: src/mousam.py:178
+msgid "Welcome to Mousam"
+msgstr ""
+
+#: src/mousam.py:198
+#, fuzzy
+msgid "No Internet"
 msgstr "인터넷 연결 없음!"
 
-#: ../src/weather.py:133
+#: src/mousam.py:202
+msgid "Could not fetch data from API"
+msgstr ""
+
+#: src/mousam.py:318
+msgid "From"
+msgstr ""
+
+#: src/mousam.py:320
+msgid "N"
+msgstr "북"
+
+#: src/mousam.py:330
+msgid "Dewpoint"
+msgstr ""
+
+#: src/mousam.py:346
+msgctxt "pressure card"
+msgid "High"
+msgstr ""
+
+#: src/mousam.py:347
+msgctxt "pressure card"
+msgid "Low"
+msgstr ""
+
+#: src/mousam.py:356
+msgctxt "uvindex card"
+msgid "High"
+msgstr ""
+
+#: src/mousam.py:357
+msgctxt "uvindex card"
+msgid "Low"
+msgstr ""
+
+#: src/mousam.py:373
+msgid "Switched to {}"
+msgstr ""
+
+#: src/mousam.py:376
+#, fuzzy
+msgid "Refreshed Successfully"
+msgstr "저장 성공"
+
+#: src/mousam.py:390
 msgid "Refresh within 5 seconds is ignored!"
 msgstr "5초 이내 새로고침 무시!"
 
-#: ../src/weather.py:142
+#: src/mousam.py:395
 msgid "Refreshing..."
 msgstr "새로고침 중…"
 
-#: ../src/windowAbout.py:8
-msgid "Weather"
-msgstr "날씨"
+#: src/weatherData.py:98
+msgid "Good"
+msgstr ""
 
-#: ../src/windowAbout.py:13
-msgid "Beautiful and light weight weather app build using Gtk and python"
-msgstr "Gtk와 python으로 만들어진 아름답고 가벼운 날씨 앱"
+#: src/weatherData.py:100
+msgid "Moderate"
+msgstr ""
 
-#: ../src/windowAbout.py:17
-msgid "Copyright © 2023 Weather Developers"
+#: src/weatherData.py:102
+msgid "Poor"
+msgstr ""
+
+#: src/weatherData.py:104
+msgid "Unhealthy"
+msgstr ""
+
+#: src/weatherData.py:106
+msgid "Severe"
+msgstr ""
+
+#: src/weatherData.py:108
+msgid "Hazardous"
+msgstr ""
+
+#: src/weatherData.py:116
+msgctxt "uvindex"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr ""
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "High"
+msgstr ""
+
+#: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "Very High"
+msgstr ""
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr ""
+
+#: src/weatherData.py:129
+msgctxt "humidity"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Moderate"
+msgstr ""
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "High"
+msgstr ""
+
+#: src/weatherData.py:138
+msgctxt "pressure"
+msgid "Low"
+msgstr ""
+
+#: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Normal"
+msgstr ""
+
+#: src/weatherData.py:142
+msgctxt "pressure"
+msgid "High"
+msgstr ""
+
+#: src/weatherData.py:147
+msgid "Calm"
+msgstr ""
+
+#: src/weatherData.py:149
+msgid "Light"
+msgstr ""
+
+#: src/weatherData.py:151
+msgctxt "wind"
+msgid "Moderate"
+msgstr ""
+
+#: src/weatherData.py:153
+msgid "Strong"
+msgstr ""
+
+#: src/weatherData.py:155
+msgctxt "wind"
+msgid "Extreme"
+msgstr ""
+
+#: src/weatherData.py:159
+msgid "km"
+msgstr ""
+
+#: src/weatherData.py:162
+msgid "miles"
+msgstr ""
+
+#: src/windowAbout.py:20
+#, fuzzy
+msgid "Copyright © 2024 Mousam Developers"
 msgstr "Copyright © 2023 Weather Developers"
 
-#: ../src/windowAbout.py:20
+#: src/windowAbout.py:23
 msgid "translator_credits"
 msgstr ""
 
-#: ../src/windowPreferences.py:32 ../src/windowPreferences.py:37
+#: src/windowLocations.py:23 src/windowLocations.py:37
+#: src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "위치"
 
-#: ../src/windowPreferences.py:42
+#: src/windowLocations.py:45
 msgid "Add"
 msgstr "추가"
 
-#: ../src/windowPreferences.py:57
-msgid "Appearance"
-msgstr "모양"
-
-#: ../src/windowPreferences.py:66
-msgid "Dynamic Background"
-msgstr "동적 배경"
-
-#: ../src/windowPreferences.py:67
-msgid "Background changes based on current weather condition (Restart required)"
-msgstr "배경이 현재 날씨에 따라 바뀝니다 (재시작 팔요)"
-
-#: ../src/windowPreferences.py:79
-msgid "Units &amp; Measurements"
-msgstr "단위"
-
-#: ../src/windowPreferences.py:83
-msgid "°C"
-msgstr "°C"
-
-#: ../src/windowPreferences.py:84
-msgid "METRIC system with units like celsius, km/h, kilometer"
-msgstr "섭씨, km/h, 킬로미터 단위를 사용하는 미터법"
-
-#: ../src/windowPreferences.py:92
-msgid "°F"
-msgstr "°F"
-
-#: ../src/windowPreferences.py:93
-msgid "IMPERIAL system with units like fahrenheit, mph, mile"
-msgstr "화씨, mph, 마일 단위를 사용하는 야드파운드법"
-
-#: ../src/windowPreferences.py:104
-msgid "Misc"
-msgstr "기타"
-
-#: ../src/windowPreferences.py:116
-msgid "Personal API Key"
-msgstr "개인 API 키"
-
-#: ../src/windowPreferences.py:117
-msgid "Use your personal api key from openweathermap.org (Restart Required)"
-msgstr "openweathermap.org의 개인 API 키를 사용 (재시작 필요)"
-
-#: ../src/windowPreferences.py:124
-msgid "API Key"
-msgstr "API 키"
-
-#: ../src/windowPreferences.py:133
-msgid "Save"
-msgstr "저장"
-
-#: ../src/windowPreferences.py:138
-msgid "Enter your api-key"
-msgstr "api 키 입력"
-
-#: ../src/windowPreferences.py:142
-msgid "Active"
-msgstr "활성"
-
-#: ../src/windowPreferences.py:147
-msgid "Invalid Key"
-msgstr "유효하지 않은 키"
-
-#: ../src/windowPreferences.py:167
+#: src/windowLocations.py:74
 msgid "Remove location"
 msgstr "위치 제거"
 
-#: ../src/windowPreferences.py:199
+#: src/windowLocations.py:128
+#, fuzzy
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "5초 이내 새로고침 무시!"
+
+#: src/windowLocations.py:132
 msgid "Selected - {}"
 msgstr "{} 선택"
 
-#: ../src/windowPreferences.py:204
+#: src/windowLocations.py:143
 msgid "Add New Location"
 msgstr "새로운 위치 추가"
 
-#: ../src/windowPreferences.py:222
+#: src/windowLocations.py:168
 msgid "Search for a city"
 msgstr "도시 검색"
 
-#: ../src/windowPreferences.py:227 ../src/windowPreferences.py:229
+#: src/windowLocations.py:174 src/windowLocations.py:176
 msgid "Search"
 msgstr "검색"
 
-#: ../src/windowPreferences.py:274
-msgid "No results found !"
-msgstr "결과가 없습니다!"
-
-#: ../src/windowPreferences.py:288
+#: src/windowLocations.py:254
 #, python-brace-format
 msgid "Added - {0}"
 msgstr "{0}추가"
 
-#: ../src/windowPreferences.py:290
-msgid "City already added!"
+#: src/windowLocations.py:256
+#, fuzzy
+msgid "Location already added!"
 msgstr "도시가 이미 추가되어있습니다!"
 
-#: ../src/windowPreferences.py:308
-#, python-brace-format
-msgid "Removed - {0}"
-msgstr "{0} 제거"
+#: src/windowLocations.py:283
+#, fuzzy, python-brace-format
+msgid "Deleted - {0}"
+msgstr "{} 선택"
 
-#: ../src/windowPreferences.py:333
-msgid "Saved Successfully"
-msgstr "저장 성공"
+#: src/windowLocations.py:286
+msgid "Press enter to search"
+msgstr ""
+
+#: src/windowLocations.py:289
+#, fuzzy
+msgid "No results found!"
+msgstr "결과가 없습니다!"
+
+#: src/windowPreferences.py:26
+msgid "Appearance"
+msgstr "모양"
+
+#: src/windowPreferences.py:36
+msgid "Dynamic Background"
+msgstr "동적 배경"
+
+#: src/windowPreferences.py:37
+#, fuzzy
+msgid ""
+"App background changes based on current weather conditions (restart required)"
+msgstr "배경이 현재 날씨에 따라 바뀝니다 (재시작 팔요)"
+
+#: src/windowPreferences.py:50
+msgid "Time Format"
+msgstr ""
+
+#: src/windowPreferences.py:51
+msgid "Weather time format (Refresh required)"
+msgstr ""
+
+#: src/windowPreferences.py:60
+msgid "24 Hour"
+msgstr ""
+
+#: src/windowPreferences.py:67
+msgid "AM / PM"
+msgstr ""
+
+#: src/windowPreferences.py:82
+msgid "Units &amp; Measurements"
+msgstr "단위"
+
+#: src/windowPreferences.py:86
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:87
+#, fuzzy
+msgid "Metric system with units like Celsius, km/h, and kilometers"
+msgstr "섭씨, km/h, 킬로미터 단위를 사용하는 미터법"
+
+#: src/windowPreferences.py:95
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:96
+#, fuzzy
+msgid "Imperial system with units like Fahrenheit, mph, and miles"
+msgstr "화씨, mph, 마일 단위를 사용하는 야드파운드법"
+
+#: src/windowPreferences.py:110
+msgid "Precipitation in inches"
+msgstr ""
+
+#: src/windowPreferences.py:111
+msgid "This option works better in heavy precipitation (refresh required)"
+msgstr ""
+
+#: src/windowPreferences.py:140
+#, fuzzy
+msgid "Switching locations within 2 seconds is ignored"
+msgstr "5초 이내 새로고침 무시!"
+
+#: src/windowPreferences.py:143
+#, fuzzy
+msgid "Switched to - {}"
+msgstr "{} 선택"
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr ""
+
+#: src/shortcutsDialog.ui:33
+#, fuzzy
+msgid "Refresh Weather"
+msgstr "새로고침"
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
+msgstr ""
+
+#, python-brace-format
+#~ msgid "{0}%"
+#~ msgstr "{0}%"
+
+#, python-brace-format
+#~ msgid "{0} hPa"
+#~ msgstr "{0} hPa"
+
+#~ msgid "Wind speed"
+#~ msgstr "풍속"
+
+#, python-brace-format
+#~ msgid "{0:.1f} {1} {2}"
+#~ msgstr "{0:.1f} {1} {2}"
+
+#~ msgid "Visibility"
+#~ msgstr "가시거리"
+
+#~ msgid "Air Quality"
+#~ msgstr "공기질"
+
+#~ msgid "rain in next 1 hour"
+#~ msgstr "1시간 이내 비"
+
+#~ msgid "snow in next 1 hour"
+#~ msgstr "1시간 이내 눈"
+
+#~ msgid "No snow for atleast 1 hour"
+#~ msgstr "1시간 이내 눈 없음"
+
+#~ msgid "No rain/snow for atleast 1 hour"
+#~ msgstr "1시간 이내 비나 눈 없음"
+
+#~ msgid "No rain for atleast 1 hour"
+#~ msgstr "1시간 이내 비 없음"
+
+#~ msgid "5 Days"
+#~ msgstr "5일"
+
+#~ msgid "AM"
+#~ msgstr "오전"
+
+#~ msgid "PM"
+#~ msgstr "오후"
+
+#, python-brace-format
+#~ msgid "{0:.1f} {1}"
+#~ msgstr "{0:.1f} {1}"
+
+#, python-brace-format
+#~ msgid "{0:.0f}°"
+#~ msgstr "{0:.0f}°"
+
+#~ msgid "Request timeout!"
+#~ msgstr "요청시간 초과!"
+
+#~ msgid "No internet connection!"
+#~ msgstr "인터넷 연결 없음!"
+
+#~ msgid "NNE"
+#~ msgstr "북북동"
+
+#~ msgid "NE"
+#~ msgstr "북동"
+
+#~ msgid "ENE"
+#~ msgstr "동북동"
+
+#~ msgid "E"
+#~ msgstr "동"
+
+#~ msgid "ESE"
+#~ msgstr "동남동"
+
+#~ msgid "SE"
+#~ msgstr "남동"
+
+#~ msgid "SSE"
+#~ msgstr "남남동"
+
+#~ msgid "S"
+#~ msgstr "남"
+
+#~ msgid "SSW"
+#~ msgstr "남남서"
+
+#~ msgid "SW"
+#~ msgstr "남서"
+
+#~ msgid "WSW"
+#~ msgstr "서남서"
+
+#~ msgid "W"
+#~ msgstr "서"
+
+#~ msgid "WNW"
+#~ msgstr "서북서"
+
+#~ msgid "NW"
+#~ msgstr "북서"
+
+#~ msgid "NNW"
+#~ msgstr "북북서"
+
+#~ msgid "About Weather"
+#~ msgstr "날씨에 대해"
+
+#~ msgid "Weather"
+#~ msgstr "날씨"
+
+#~ msgid "Beautiful and light weight weather app build using Gtk and python"
+#~ msgstr "Gtk와 python으로 만들어진 아름답고 가벼운 날씨 앱"
+
+#~ msgid "Misc"
+#~ msgstr "기타"
+
+#~ msgid "Personal API Key"
+#~ msgstr "개인 API 키"
+
+#~ msgid "Use your personal api key from openweathermap.org (Restart Required)"
+#~ msgstr "openweathermap.org의 개인 API 키를 사용 (재시작 필요)"
+
+#~ msgid "API Key"
+#~ msgstr "API 키"
+
+#~ msgid "Save"
+#~ msgstr "저장"
+
+#~ msgid "Enter your api-key"
+#~ msgstr "api 키 입력"
+
+#~ msgid "Active"
+#~ msgstr "활성"
+
+#~ msgid "Invalid Key"
+#~ msgstr "유효하지 않은 키"
+
+#, python-brace-format
+#~ msgid "Removed - {0}"
+#~ msgstr "{0} 제거"

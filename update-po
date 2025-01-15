@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for po in po/*.po; do
+  msgmerge --update $po po/mousam.pot
+  rm $po~
+done
