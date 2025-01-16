@@ -65,7 +65,7 @@ msgid "Clear Sky - day"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snofall - day"
+msgid "Snowfall - day"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
@@ -123,7 +123,7 @@ msgid "Launch the app in maximized mode."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Mesaurement sysytem to use - metric,imperial"
+msgid "Mesaurement system to use - metric,imperial"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
