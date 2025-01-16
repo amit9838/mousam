@@ -39,7 +39,7 @@
     </key>
     <key name="unit" type="s">
       <default>"metric"</default>
-      <summary>Mesaurement sysytem to use - metric,imperial</summary>
+      <summary>Measurement system to use - metric,imperial</summary>
       <description>metric(km, °C), imperial(mile, °F)</description>
     </key>
 	</schema>
