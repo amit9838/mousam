@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 13:17+0700\n"
+"POT-Creation-Date: 2025-01-17 16:58+0530\n"
 "PO-Revision-Date: 2024-11-02 12:00+0800\n"
 "Last-Translator: lipcut <cratemover9001@proton.me>\n"
 "Language-Team: Traditional Chinese <LL@li.org>\n"
@@ -66,7 +66,7 @@ msgid "Clear Sky - day"
 msgstr "晴空 - 英制"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snofall - day"
+msgid "Snowfall - day"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
@@ -125,7 +125,8 @@ msgid "Launch the app in maximized mode."
 msgstr "以最大化模式啟動應用程式。"
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Mesaurement sysytem to use - metric,imperial"
+#, fuzzy
+msgid "Measurement system to use - metric,imperial"
 msgstr "使用的度量系統 - 公制、英制"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43

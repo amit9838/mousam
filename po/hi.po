@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 13:17+0700\n"
+"POT-Creation-Date: 2025-01-17 16:58+0530\n"
 "PO-Revision-Date: 2024-07-01 23:06+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -71,7 +71,7 @@ msgid "Clear Sky - day"
 msgstr "साफ आसमान - इंपीरियल"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snofall - day"
+msgid "Snowfall - day"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
@@ -130,7 +130,8 @@ msgid "Launch the app in maximized mode."
 msgstr "ऐप को फुलस्क्रीन में शुरू करें।"
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Mesaurement sysytem to use - metric,imperial"
+#, fuzzy
+msgid "Measurement system to use - metric,imperial"
 msgstr "उपयोग के लिए मापन प्रणाली - मेट्रिक, इंपीरियल"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43

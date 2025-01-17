@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 13:17+0700\n"
+"POT-Creation-Date: 2025-01-17 16:58+0530\n"
 "PO-Revision-Date: 2024-05-15 14:04+0000\n"
 "Last-Translator: Scutelnicu George <george.v.scutelnicu@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "Clear Sky - day"
 msgstr "Cer senin - imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snofall - day"
+msgid "Snowfall - day"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
@@ -135,7 +135,8 @@ msgid "Launch the app in maximized mode."
 msgstr "Deschide aplicația în modul maximizat."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Mesaurement sysytem to use - metric,imperial"
+#, fuzzy
+msgid "Measurement system to use - metric,imperial"
 msgstr "Sistemul de măsurare de utilizat - metric,imperial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-08 13:17+0700\n"
+"POT-Creation-Date: 2025-01-17 16:58+0530\n"
 "PO-Revision-Date: 2025-01-14 13:06+0700\n"
 "Last-Translator: Atirut Wattanamongkol <atirut.wattanamongkol@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -70,7 +70,8 @@ msgid "Clear Sky - day"
 msgstr "ท้องฟ้าแจ่มใส - กลางวัน"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snofall - day"
+#, fuzzy
+msgid "Snowfall - day"
 msgstr "หิมะตก - กลางวัน"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
@@ -128,7 +129,7 @@ msgid "Launch the app in maximized mode."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Mesaurement sysytem to use - metric,imperial"
+msgid "Measurement system to use - metric,imperial"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
