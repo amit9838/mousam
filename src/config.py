@@ -1,5 +1,6 @@
 from gi.repository import Gio
 
+
 class Settings:
     _instance = None
     APP_ID = "io.github.amit9838.mousam"
@@ -12,91 +13,82 @@ class Settings:
 
     def init_settings(self):
         self.settings = Gio.Settings(self.APP_ID)
-        self._settings_map = {
-            "added_cities": "added-cities",
-            "selected_city": "selected-city",
-            "is_using_dynamic_bg": "use-gradient-bg",
-            "is_using_inch_for_prec": "use-inch-for-prec",
-            "is_using_24h_clock": "use-24h-clock",
-            "window_width": "window-width",
-            "window_height": "window-height",
-            "window_maximized": "window-maximized",
-            "unit": "unit",
-        }
 
     @property
     def added_cities(self):
-        return self.settings.get_strv(self._settings_map["added_cities"])
+        return self.settings.get_strv("added-cities")
 
     @added_cities.setter
     def added_cities(self, value):
-        self.settings.set_strv(self._settings_map["added_cities"], value)
+        self.settings.set_strv("added-cities", value)
 
     @property
     def selected_city(self):
-        return self.settings.get_string(self._settings_map["selected_city"])
+        return self.settings.get_string("selected-city")
 
     @selected_city.setter
     def selected_city(self, value):
-        self.settings.set_string(self._settings_map["selected_city"], value)
+        self.settings.set_string("selected-city", value)
 
     @property
     def is_using_dynamic_bg(self):
-        return self.settings.get_boolean(self._settings_map["is_using_dynamic_bg"])
+        return self.settings.get_boolean("use-gradient-bg")
 
     @is_using_dynamic_bg.setter
     def is_using_dynamic_bg(self, value):
-        self.settings.set_boolean(self._settings_map["is_using_dynamic_bg"], value)
+        self.settings.set_boolean("use-gradient-bg", value)
 
     @property
     def is_using_inch_for_prec(self):
-        return self.settings.get_boolean(self._settings_map["is_using_inch_for_prec"])
+        return self.settings.get_boolean("use-inch-for-prec")
 
     @is_using_inch_for_prec.setter
     def is_using_inch_for_prec(self, value):
-        self.settings.set_boolean(self._settings_map["is_using_inch_for_prec"], value)
+        self.settings.set_boolean("use-inch-for-prec", value)
 
     @property
     def is_using_24h_clock(self):
-        return self.settings.get_boolean(self._settings_map["is_using_24h_clock"])
+        return self.settings.get_boolean("use-24h-clock")
 
     @is_using_24h_clock.setter
     def is_using_24h_clock(self, value):
-        self.settings.set_boolean(self._settings_map["is_using_24h_clock"], value)
+        self.settings.set_boolean("use-24h-clock", value)
 
     @property
     def window_width(self):
-        return self.settings.get_int(self._settings_map["window_width"])
+        return self.settings.get_int("window-width")
 
     @window_width.setter
     def window_width(self, value):
-        self.settings.set_int(self._settings_map["window_width"], value)
+        self.settings.set_int("window-width", value)
 
     @property
     def window_height(self):
-        return self.settings.get_int(self._settings_map["window_height"])
+        return self.settings.get_int("window-height")
 
     @window_height.setter
     def window_height(self, value):
-        self.settings.set_int(self._settings_map["window_height"], value)
+        self.settings.set_int("window-height", value)
 
     @property
     def window_maximized(self):
-        return self.settings.get_boolean(self._settings_map["window_maximized"])
+        return self.settings.get_boolean("window-maximized")
 
     @window_maximized.setter
     def window_maximized(self, value):
-        self.settings.set_boolean(self._settings_map["window_maximized"], value)
+        self.settings.set_boolean("window-maximized", value)
 
     @property
     def unit(self):
-        return self.settings.get_string(self._settings_map["unit"])
+        return self.settings.get_string("unit")
 
     @unit.setter
     def unit(self, value):
-        self.settings.set_string(self._settings_map["unit"], value)
+        self.settings.set_string("unit", value)
+
 
 def get_settings():
     return Settings()
+
 
 settings = get_settings()
