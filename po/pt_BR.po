@@ -25,7 +25,7 @@ msgstr "Mousam"
 #: data/io.github.amit9838.mousam.desktop.in:5
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:16
 msgid "Weather at a glance"
-msgstr "Tempo a uma olhada"
+msgstr "Clima a uma olhada"
 
 #: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
@@ -68,16 +68,16 @@ msgstr "Ver previsões em sistema métrico ou imperial"
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 #, fuzzy
 msgid "Clear Sky - day"
-msgstr "Céu Limpo - imperial"
+msgstr "Céu Limpo - dia"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
-msgstr ""
+msgstr "Nevasca - dia"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
 #, fuzzy
 msgid "Clear Sky - night"
-msgstr "Céu Limpo - imperial"
+msgstr "Céu Limpo - noite"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
@@ -352,7 +352,7 @@ msgstr "Alta Diária •"
 
 #: src/frontendHourlyDetails.py:157
 msgid "No precipitation today !"
-msgstr "Sem precipitação para hoje!"
+msgstr "Sem precipitação para hoje !"
 
 #: src/frontendHourlyDetails.py:158
 msgid "No precipitation expected today!"
@@ -360,7 +360,7 @@ msgstr "Sem precipitação prevista para hoje!"
 
 #: src/frontendHourlyDetails.py:159
 msgid "Anticipate a precipitation-free day !"
-msgstr "Antecipe um dia livre de precipitação!"
+msgstr "Antecipe um dia livre de precipitação !"
 
 #: src/frontendHourlyDetails.py:160
 msgid "Enjoy a rain-free day today!"
@@ -368,7 +368,7 @@ msgstr "Hoje aproveite um dia livre de chuva!"
 
 #: src/frontendHourlyDetails.py:161
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "Status de guarda chuva: em descanso. Sem precipitação em vista!"
+msgstr "Status de guarda chuva: em descanso. Sem precipitação em vista !"
 
 #: src/frontendHourlyDetails.py:162
 msgid "No rain in sight today!"
