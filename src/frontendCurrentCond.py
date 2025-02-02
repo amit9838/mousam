@@ -78,7 +78,7 @@ class CurrentCondition(Gtk.Grid):
         del city_arr[-1]
         del city_arr[-1]
 
-        current_loc = ",".join(city_arr)
+        current_loc = ", ".join(city_arr)
         loc_label = Gtk.Label(label=current_loc, halign=Gtk.Align.END, margin_bottom=20)
         loc_label.set_css_classes(["text-2b", "bold-2"])
         box_right.append(loc_label)
