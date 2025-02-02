@@ -77,10 +77,10 @@ class WeatherLocations(Adw.PreferencesWindow):
             box.append(button)
 
             # Location Row
-            location_row =  Adw.ActionRow.new()
+            location_row = Adw.ActionRow.new()
             location_row.set_activatable(True)
-            location_row.set_title(f"{city.split(',')[0]},{city.split(',')[1]}")
-            location_row.set_subtitle(f"{city.split(',')[-2]},{city.split(',')[-1]}")
+            location_row.set_title(f"{city.split(',')[0]}, {city.split(',')[1]}")
+            location_row.set_subtitle(f"{city.split(',')[-2]}, {city.split(',')[-1]}")
             location_row.add_suffix(box)
             
             # Location row signal
@@ -188,7 +188,7 @@ class WeatherLocations(Adw.PreferencesWindow):
                 res_row.set_activatable(True)
                 title_arr = [loc.name,loc.state,loc.country]
                 title_arr = [x for x in title_arr if x is not None]
-                title = ",".join(title_arr)
+                title = ", ".join(title_arr)
                 res_row.set_title(title)
 
                 # Skip plotting the location in the search results if it has invalid cords
@@ -236,7 +236,7 @@ class WeatherLocations(Adw.PreferencesWindow):
             city = f"{widget.get_title()},{widget.get_subtitle()}"
 
             # Don't delete city if only one item is present in the list
-            if len(added_cities)==1:
+            if len(added_cities) == 1:
                 self.add_toast(create_toast(_("Add more locations to delete!"),1))
                 return
 
