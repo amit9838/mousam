@@ -2,34 +2,37 @@
 # Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the the io.github.amit9838.weather package.
 # Сергей Ворон <voron@duck.com>, 2023.
+# Anatoly Evdokimov <mobineko@inbox.ru>, 2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-17 16:58+0530\n"
-"PO-Revision-Date: 2023-06-18 11:17+0300\n"
-"Last-Translator: Сергей Ворон <voron@duck.com>\n"
-"Language-Team: \n"
-"Language: ru_RU\n"
+"PO-Revision-Date: 2025-03-22 01:22+0300\n"
+"Last-Translator: Anatoly Evdokimov <mobineko@inbox.ru>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Gtranslator 47.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
-msgstr ""
+msgstr "Mousam"
 
 #: data/io.github.amit9838.mousam.desktop.in:5
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:16
 msgid "Weather at a glance"
-msgstr ""
+msgstr "Погода в одно мгновение"
 
 #: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr ""
+msgstr "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 msgid "Current Weather conditions and forcasts."
@@ -37,13 +40,15 @@ msgstr "Текущие условия погоды и прогнозы."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
-msgstr "Функции:"
+msgstr "Возможности:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
 "Displays real-time temperature, humidity, wind speed, UV index, pressure and "
 "more"
 msgstr ""
+"Отображает температуру, влажность, скорость ветра, ультрафиолетовый индекс, "
+"давление и многое другое в режиме реального времени"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid ""
@@ -51,30 +56,33 @@ msgid ""
 "graphs and wind-speed with direction to provide an hourly forecast for the "
 "next 24 hours"
 msgstr ""
+"Использует графические представления, такие как графики температуры, осадков "
+"и скорости ветра с направлением, чтобы обеспечить почасовый прогноз на "
+"следующие 24 часа."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 msgid "Also provides tomorrow and 7-day forcasts"
-msgstr ""
+msgstr "Также предоставляет прогнозы на завтра и на 7 дней"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
 msgid "See conditions in metric or imperial systems"
-msgstr ""
+msgstr "Смотрите условия в метрической или имперской системе"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 msgid "Clear Sky - day"
-msgstr ""
+msgstr "Ясное небо — день"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
-msgstr ""
+msgstr "Снегопад — день"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
 msgid "Clear Sky - night"
-msgstr ""
+msgstr "Ясное небо — ночь"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
-msgstr "Amit Chaudhary"
+msgstr "Амит Чаудхари"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
@@ -91,9 +99,8 @@ msgid "Selected city"
 msgstr "Выбранный город"
 
 #: data/io.github.amit9838.mousam.gschema.xml:13
-#, fuzzy
 msgid "Selected city cords"
-msgstr "Выбранный город"
+msgstr "Координаты выбранного города"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
 msgid "Use Gradient Background"
@@ -108,195 +115,195 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
-msgstr ""
+msgstr "Использовать дюймы для осадков"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr ""
+msgstr "Использовать 24-часовой формат"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr ""
+msgstr "Ширина главного окна"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr ""
+msgstr "Высота главного окна"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr ""
+msgstr "Запустите приложение в режиме полного экрана"
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
-msgstr ""
+msgstr "Используемая система измерения - метрическая, имперская"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr ""
+msgstr "метрическая (км, °C), имперская (мили, °F)"
 
 #: src/constants.py:132
 msgid "Clear sky"
-msgstr ""
+msgstr "Ясное небо"
 
 #: src/constants.py:133
 msgid "Few Clouds"
-msgstr ""
+msgstr "Малооблачно"
 
 #: src/constants.py:134
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "Переменная облачность"
 
 #: src/constants.py:135
 msgid "Overcast"
-msgstr ""
+msgstr "Пасмурно"
 
 #: src/constants.py:136
 msgid "Fog"
-msgstr ""
+msgstr "Туман"
 
 #: src/constants.py:137
 msgid "Mist"
-msgstr ""
+msgstr "Дымка"
 
 #: src/constants.py:138
 msgid "Light Drizzle"
-msgstr ""
+msgstr "Слабая морось"
 
 #: src/constants.py:139
 msgid "Moderate Drizzle"
-msgstr ""
+msgstr "Умеренная морось"
 
 #: src/constants.py:140
 msgid "Heavy Intensity Drizzle"
-msgstr ""
+msgstr "Сильная морось"
 
 #: src/constants.py:141
 msgid "Light Freezing Drizzle"
-msgstr ""
+msgstr "Легкая изморозь"
 
 #: src/constants.py:142
 msgid "Heavy Freezing Drizzle"
-msgstr ""
+msgstr "Сильная изморозь"
 
 #: src/constants.py:143
 msgid "Light Rain"
-msgstr ""
+msgstr "Небольшой дождь"
 
 #: src/constants.py:144
 msgid "Moderate Rain"
-msgstr ""
+msgstr "Умеренный дождь"
 
 #: src/constants.py:145
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Ливень"
 
 #: src/constants.py:146
 msgid "Light Freezing Rain"
-msgstr ""
+msgstr "Слабый ледяной дождь"
 
 #: src/constants.py:147
 msgid "Heavy Freezing Rain"
-msgstr ""
+msgstr "Сильный ледяной дождь"
 
 #: src/constants.py:148
 msgid "Light Snow Fall"
-msgstr ""
+msgstr "Слабый снег"
 
 #: src/constants.py:149
 msgid "Moderate Snow Fall"
-msgstr ""
+msgstr "Снегопад"
 
 #: src/constants.py:150
 msgid "Heavy Snow Fall"
-msgstr ""
+msgstr "Сильный снег"
 
 #: src/constants.py:151
 msgid "Snow grains"
-msgstr ""
+msgstr "Мелкая снежная крупа"
 
 #: src/constants.py:152
 msgid "Light Rain Showers"
-msgstr ""
+msgstr "Кратковременный слабый дождь"
 
 #: src/constants.py:153
 msgid "Moderate Rain Showers"
-msgstr ""
+msgstr "Периодический умеренный дождь"
 
 #: src/constants.py:154
 msgid "Heavy Rain Showers"
-msgstr ""
+msgstr "Продолжительный сильный дождь"
 
 #: src/constants.py:155
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Кратковременный слабый снег"
 
 #: src/constants.py:156
 msgid "Heavy Snow Showers "
-msgstr ""
+msgstr "Продолжительный сильный снег"
 
 #: src/constants.py:157
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Гроза"
 
 #: src/constants.py:158
 msgid "Thunderstorm with Hail"
-msgstr ""
+msgstr "Гроза с градом"
 
 #: src/frontendCardAirPollution.py:44
 msgid "Air Pollution"
-msgstr ""
+msgstr "Качество воздуха"
 
 #: src/frontendCardAirPollution.py:54
 msgid "United States AQI standard"
-msgstr ""
+msgstr "Американский стандарт индекса качества воздуха (AQI)"
 
 #: src/frontendCardDayNight.py:68
 msgid "Sunrise & Sunset"
-msgstr ""
+msgstr "Восход и закат"
 
 #: src/frontendCardDayNight.py:79
 msgid "Sunrise"
-msgstr ""
+msgstr "Восход"
 
 #: src/frontendCardDayNight.py:92
 msgid "Sunset"
-msgstr ""
+msgstr "Закат"
 
 #: src/frontendCardSquare.py:163 src/frontendCardSquare.py:171
 msgid "North"
-msgstr ""
+msgstr "Север"
 
 #: src/frontendCardSquare.py:164
 msgid "Northeast"
-msgstr ""
+msgstr "Северо-восток"
 
 #: src/frontendCardSquare.py:165
 msgid "East"
-msgstr ""
+msgstr "Восток"
 
 #: src/frontendCardSquare.py:166
 msgid "Southeast"
-msgstr ""
+msgstr "Юго-восток"
 
 #: src/frontendCardSquare.py:167
 msgid "South"
-msgstr ""
+msgstr "Юг"
 
 #: src/frontendCardSquare.py:168
 msgid "Southwest"
-msgstr ""
+msgstr "Юго-запад"
 
 #: src/frontendCardSquare.py:169
 msgid "West"
-msgstr ""
+msgstr "Запад"
 
 #: src/frontendCardSquare.py:170 src/mousam.py:319
 msgid "Northwest"
-msgstr ""
+msgstr "Северо-запад"
 
 #: src/frontendCardSquare.py:180
 msgid "Wind"
-msgstr ""
+msgstr "Ветер"
 
 #: src/frontendCardSquare.py:181
 msgid "Pressure"
@@ -308,71 +315,71 @@ msgstr "Влажность"
 
 #: src/frontendCardSquare.py:183
 msgid "UV Index"
-msgstr ""
+msgstr "УФ-индекс"
 
 #: src/frontendCurrentCond.py:97
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
-msgstr "Ощущается как {0:.1f}{1}"
+msgstr "Ощущается как • <b> {0} {1}</b>"
 
 #: src/frontendForecast.py:36 src/frontendForecast.py:141
 msgid "Tomorrow"
-msgstr ""
+msgstr "Завтра"
 
 #: src/frontendForecast.py:43
 msgid "Weekly"
-msgstr ""
+msgstr "На неделю"
 
 #: src/frontendForecast.py:136
 msgid "Today"
-msgstr ""
+msgstr "Сегодня"
 
 #: src/frontendHourlyDetails.py:90
 msgctxt "wind"
 msgid "Day High •"
-msgstr ""
+msgstr "Дневной максимум"
 
 #: src/frontendHourlyDetails.py:106
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr ""
+msgstr "Дневной пик"
 
 #: src/frontendHourlyDetails.py:118
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr ""
+msgstr "Дневной максимум"
 
 #: src/frontendHourlyDetails.py:157
 msgid "No precipitation today !"
-msgstr ""
+msgstr "Сегодня без осадков!"
 
 #: src/frontendHourlyDetails.py:158
 msgid "No precipitation expected today!"
-msgstr ""
+msgstr "Осадки сегодня не ожидаются!"
 
 #: src/frontendHourlyDetails.py:159
 msgid "Anticipate a precipitation-free day !"
-msgstr ""
+msgstr "Ждите сухого дня!"
 
 #: src/frontendHourlyDetails.py:160
 msgid "Enjoy a rain-free day today!"
-msgstr ""
+msgstr "Наслаждайтесь днём без дождя!"
 
 #: src/frontendHourlyDetails.py:161
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr ""
+msgstr "Зонтик можно отложить. Осадки не предвидятся!"
 
 #: src/frontendHourlyDetails.py:162
 msgid "No rain in sight today!"
-msgstr ""
+msgstr "Дождь сегодня не предвидится!"
 
 #: src/frontendHourlyDetails.py:195
 msgid "Now"
-msgstr ""
+msgstr "Сейчас"
 
 #: src/frontendUiDrawDayNight.py:97
 msgid "Night"
-msgstr ""
+msgstr "Ночь"
 
 #: src/mousam.py:76
 #, fuzzy
@@ -385,36 +392,35 @@ msgstr "Настройки"
 
 #: src/mousam.py:90 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Клавиатурные сочетания"
 
 #: src/mousam.py:96
 msgid "About Mousam"
-msgstr ""
+msgstr "О Mousam"
 
 #: src/mousam.py:98 src/shortcutsDialog.ui:57
 msgid "Quit"
-msgstr ""
+msgstr "Выход"
 
 #: src/mousam.py:153
-#, fuzzy
 msgid "Getting Weather Data"
-msgstr "Не удалось загрузить данные о погоде"
+msgstr "Получение данных о погоде"
 
 #: src/mousam.py:178
 msgid "Welcome to Mousam"
-msgstr ""
+msgstr "Добро пожаловать в Mousam"
 
 #: src/mousam.py:198
 msgid "No Internet"
-msgstr ""
+msgstr "Нет соединения с Интернетом"
 
 #: src/mousam.py:202
 msgid "Could not fetch data from API"
-msgstr ""
+msgstr "Невозможно получить данные через API"
 
 #: src/mousam.py:318
 msgid "From"
-msgstr ""
+msgstr "До"
 
 #: src/mousam.py:320
 msgid "N"
@@ -422,145 +428,144 @@ msgstr "С"
 
 #: src/mousam.py:330
 msgid "Dewpoint"
-msgstr ""
+msgstr "Точка росы"
 
 #: src/mousam.py:346
 msgctxt "pressure card"
 msgid "High"
-msgstr ""
+msgstr "Максимум"
 
 #: src/mousam.py:347
 msgctxt "pressure card"
 msgid "Low"
-msgstr ""
+msgstr "Минимум"
 
 #: src/mousam.py:356
 msgctxt "uvindex card"
 msgid "High"
-msgstr ""
+msgstr "Максимум"
 
 #: src/mousam.py:357
 msgctxt "uvindex card"
 msgid "Low"
-msgstr ""
+msgstr "Минимум"
 
 #: src/mousam.py:373
 msgid "Switched to {}"
-msgstr ""
+msgstr "Переключено на {}"
 
 #: src/mousam.py:376
 msgid "Refreshed Successfully"
-msgstr ""
+msgstr "Данные успешно обновлены"
 
 #: src/mousam.py:390
 msgid "Refresh within 5 seconds is ignored!"
-msgstr ""
+msgstr "Обновление чаще чем в 5 секунд игнорируется!"
 
 #: src/mousam.py:395
-#, fuzzy
 msgid "Refreshing..."
-msgstr "Обновить"
+msgstr "Обновление..."
 
 #: src/weatherData.py:98
 msgid "Good"
-msgstr ""
+msgstr "Хорошо"
 
 #: src/weatherData.py:100
 msgid "Moderate"
-msgstr ""
+msgstr "Умеренно"
 
 #: src/weatherData.py:102
 msgid "Poor"
-msgstr ""
+msgstr "Плохо"
 
 #: src/weatherData.py:104
 msgid "Unhealthy"
-msgstr ""
+msgstr "Неблагоприятно"
 
 #: src/weatherData.py:106
 msgid "Severe"
-msgstr ""
+msgstr "Сильное загрязнение"
 
 #: src/weatherData.py:108
 msgid "Hazardous"
-msgstr ""
+msgstr "Опасный уровень"
 
 #: src/weatherData.py:116
 msgctxt "uvindex"
 msgid "Low"
-msgstr ""
+msgstr "Низкий"
 
 #: src/weatherData.py:118
 msgctxt "uvindex"
 msgid "Moderate"
-msgstr ""
+msgstr "Умеренный"
 
 #: src/weatherData.py:120
 msgctxt "uvindex"
 msgid "High"
-msgstr ""
+msgstr "Высокий"
 
 #: src/weatherData.py:122
 msgctxt "uvindex"
 msgid "Very High"
-msgstr ""
+msgstr "Очень высокий"
 
 #: src/weatherData.py:124
 msgctxt "uvindex"
 msgid "Extreme"
-msgstr ""
+msgstr "Экстремальный"
 
 #: src/weatherData.py:129
 msgctxt "humidity"
 msgid "Low"
-msgstr ""
+msgstr "Низкий"
 
 #: src/weatherData.py:131
 msgctxt "humidity"
 msgid "Moderate"
-msgstr ""
+msgstr "Умеренный"
 
 #: src/weatherData.py:133
 msgctxt "humidity"
 msgid "High"
-msgstr ""
+msgstr "Высокий"
 
 #: src/weatherData.py:138
 msgctxt "pressure"
 msgid "Low"
-msgstr ""
+msgstr "Низкий"
 
 #: src/weatherData.py:140
 msgctxt "pressure"
 msgid "Normal"
-msgstr ""
+msgstr "Нормальный"
 
 #: src/weatherData.py:142
 msgctxt "pressure"
 msgid "High"
-msgstr ""
+msgstr "Высокий"
 
 #: src/weatherData.py:147
 msgid "Calm"
-msgstr ""
+msgstr "Спокойно"
 
 #: src/weatherData.py:149
 msgid "Light"
-msgstr ""
+msgstr "Легкий"
 
 #: src/weatherData.py:151
 msgctxt "wind"
 msgid "Moderate"
-msgstr ""
+msgstr "Умеренный"
 
 #: src/weatherData.py:153
 msgid "Strong"
-msgstr ""
+msgstr "Сильный"
 
 #: src/weatherData.py:155
 msgctxt "wind"
 msgid "Extreme"
-msgstr ""
+msgstr "Экстремальный"
 
 #: src/weatherData.py:159
 msgid "km"
@@ -568,21 +573,22 @@ msgstr "км"
 
 #: src/weatherData.py:162
 msgid "miles"
-msgstr ""
+msgstr "мили"
 
 #: src/windowAbout.py:20
-#, fuzzy
 msgid "Copyright © 2024 Mousam Developers"
-msgstr "Авторские права © 2023 Разработчики"
+msgstr "Авторские права © 2024 Mousam Разработчики"
 
 #: src/windowAbout.py:23
 msgid "translator_credits"
-msgstr "Сергей Ворон <voron@duck.com>"
+msgstr ""
+"Сергей Ворон <voron@duck.com>\n"
+"Tom Emv <saibaneko@gmail.com>"
 
 #: src/windowLocations.py:23 src/windowLocations.py:37
 #: src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr "Местоположение"
+msgstr "Местоположения"
 
 #: src/windowLocations.py:45
 msgid "Add"
@@ -594,12 +600,11 @@ msgstr "Удалить местоположение"
 
 #: src/windowLocations.py:128
 msgid "Switch city within 2 seconds is ignored!"
-msgstr ""
+msgstr "Переключение города чаще чем раз в 2 секунды игнорируется!"
 
 #: src/windowLocations.py:132
-#, fuzzy
 msgid "Selected - {}"
-msgstr "Выбранный город"
+msgstr "Выбранный - {}"
 
 #: src/windowLocations.py:143
 msgid "Add New Location"
@@ -611,25 +616,25 @@ msgstr "Поиск города"
 
 #: src/windowLocations.py:174 src/windowLocations.py:176
 msgid "Search"
-msgstr "Искать"
+msgstr "Поиск"
 
 #: src/windowLocations.py:254
 #, python-brace-format
 msgid "Added - {0}"
-msgstr ""
+msgstr "Добавлено - {0}"
 
 #: src/windowLocations.py:256
 msgid "Location already added!"
-msgstr ""
+msgstr "Местоположение уже добавлено!"
 
 #: src/windowLocations.py:283
 #, python-brace-format
 msgid "Deleted - {0}"
-msgstr ""
+msgstr "Удалено - {0}"
 
 #: src/windowLocations.py:286
 msgid "Press enter to search"
-msgstr ""
+msgstr "Нажмите Ввод для поиска"
 
 #: src/windowLocations.py:289
 #, fuzzy
@@ -654,68 +659,67 @@ msgstr ""
 
 #: src/windowPreferences.py:50
 msgid "Time Format"
-msgstr ""
+msgstr "Формат времени"
 
 #: src/windowPreferences.py:51
 msgid "Weather time format (Refresh required)"
-msgstr ""
+msgstr "Формат времени (Требуется обновление)"
 
 #: src/windowPreferences.py:60
 msgid "24 Hour"
-msgstr ""
+msgstr "24 часовый"
 
 #: src/windowPreferences.py:67
 msgid "AM / PM"
-msgstr ""
+msgstr "12 часовый"
 
 #: src/windowPreferences.py:82
 msgid "Units &amp; Measurements"
-msgstr ""
+msgstr "Единицы &amp; измерения"
 
 #: src/windowPreferences.py:86
 msgid "°C"
-msgstr ""
+msgstr "°C"
 
 #: src/windowPreferences.py:87
 msgid "Metric system with units like Celsius, km/h, and kilometers"
-msgstr ""
+msgstr "Метрическая система: градусы Цельсия (°C), км/ч, километры"
 
 #: src/windowPreferences.py:95
 msgid "°F"
-msgstr ""
+msgstr "°F"
 
 #: src/windowPreferences.py:96
 msgid "Imperial system with units like Fahrenheit, mph, and miles"
-msgstr ""
+msgstr "Имперская система: градусы Фаренгейта (°F), мили/ч, мили"
 
 #: src/windowPreferences.py:110
 msgid "Precipitation in inches"
-msgstr ""
+msgstr "Осадки в дюймах"
 
 #: src/windowPreferences.py:111
 msgid "This option works better in heavy precipitation (refresh required)"
-msgstr ""
+msgstr "Эта опция точнее при сильных осадках (требуется обновление)"
 
 #: src/windowPreferences.py:140
 msgid "Switching locations within 2 seconds is ignored"
-msgstr ""
+msgstr "Переключение локаций чаще чем раз в 2 секунды игнорируется"
 
 #: src/windowPreferences.py:143
 msgid "Switched to - {}"
-msgstr ""
+msgstr "Переключено на - {} "
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
-msgstr ""
+msgstr "Общие"
 
 #: src/shortcutsDialog.ui:33
-#, fuzzy
 msgid "Refresh Weather"
-msgstr "Погода"
+msgstr "Обновить погоду"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
-msgstr ""
+msgstr "Навигация"
 
 #~ msgid "Beautiful and lightweight weather app"
 #~ msgstr "Красивое и легкое приложение погоды"
