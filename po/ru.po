@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-17 16:58+0530\n"
-"PO-Revision-Date: 2025-03-22 01:22+0300\n"
+"PO-Revision-Date: 2025-03-23 23:56+0300\n"
 "Last-Translator: Anatoly Evdokimov <mobineko@inbox.ru>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -119,7 +119,7 @@ msgstr "Использовать дюймы для осадков"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr "Использовать 24-часовой формат"
+msgstr "Использовать 24 часовой формат"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
@@ -420,11 +420,11 @@ msgstr "Невозможно получить данные через API"
 
 #: src/mousam.py:318
 msgid "From"
-msgstr "До"
+msgstr "Дует с"
 
 #: src/mousam.py:320
 msgid "N"
-msgstr "С"
+msgstr "Север"
 
 #: src/mousam.py:330
 msgid "Dewpoint"
@@ -468,19 +468,19 @@ msgstr "Обновление..."
 
 #: src/weatherData.py:98
 msgid "Good"
-msgstr "Хорошо"
+msgstr "Хорошее качество"
 
 #: src/weatherData.py:100
 msgid "Moderate"
-msgstr "Умеренно"
+msgstr "Умеренное загрязнение"
 
 #: src/weatherData.py:102
 msgid "Poor"
-msgstr "Плохо"
+msgstr "Плохое качество"
 
 #: src/weatherData.py:104
 msgid "Unhealthy"
-msgstr "Неблагоприятно"
+msgstr "Неблагоприятный уровень"
 
 #: src/weatherData.py:106
 msgid "Severe"
@@ -518,32 +518,32 @@ msgstr "Экстремальный"
 #: src/weatherData.py:129
 msgctxt "humidity"
 msgid "Low"
-msgstr "Низкий"
+msgstr "Низкая"
 
 #: src/weatherData.py:131
 msgctxt "humidity"
 msgid "Moderate"
-msgstr "Умеренный"
+msgstr "Умеренная"
 
 #: src/weatherData.py:133
 msgctxt "humidity"
 msgid "High"
-msgstr "Высокий"
+msgstr "Высокая"
 
 #: src/weatherData.py:138
 msgctxt "pressure"
 msgid "Low"
-msgstr "Низкий"
+msgstr "Низкое"
 
 #: src/weatherData.py:140
 msgctxt "pressure"
 msgid "Normal"
-msgstr "Нормальный"
+msgstr "Нормальное"
 
 #: src/weatherData.py:142
 msgctxt "pressure"
 msgid "High"
-msgstr "Высокий"
+msgstr "Высокое"
 
 #: src/weatherData.py:147
 msgid "Calm"
@@ -583,7 +583,7 @@ msgstr "Авторские права © 2024 Mousam Разработчики"
 msgid "translator_credits"
 msgstr ""
 "Сергей Ворон <voron@duck.com>\n"
-"Tom Emv <saibaneko@gmail.com>"
+"Tom Emv <saibaneko@gmail.com> "
 
 #: src/windowLocations.py:23 src/windowLocations.py:37
 #: src/shortcutsDialog.ui:39
