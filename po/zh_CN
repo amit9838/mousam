@@ -211,7 +211,7 @@ msgstr "大雪"
 
 #: src/constants.py:151
 msgid "Snow grains"
-msgstr "粒雪"
+msgstr "米雪"
 
 #: src/constants.py:152
 msgid "Light Rain Showers"
@@ -444,7 +444,7 @@ msgstr "低"
 
 #: src/mousam.py:373
 msgid "Switched to {}"
-msgstr "已切換至 {}"
+msgstr "已切换至 {}"
 
 #: src/mousam.py:376
 msgid "Refreshed Successfully"
