@@ -400,7 +400,7 @@ msgstr "正在获取天气数据"
 #: src/mousam.py:178
 #, fuzzy
 msgid "Welcome to Mousam"
-msgstr "关于Mousam"
+msgstr "欢迎使用Mousam"
 
 #: src/mousam.py:198
 msgid "No Internet"
@@ -697,7 +697,7 @@ msgstr "已切换至 - {}"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
-msgstr "一般"
+msgstr "通用"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
