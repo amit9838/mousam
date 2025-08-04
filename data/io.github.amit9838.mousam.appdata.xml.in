@@ -6,12 +6,12 @@
   <name>Mousam</name>
   <summary>Weather at a glance</summary>
   <description>
-    <p>Current Weather conditions and forcasts.</p>
+    <p>Current Weather conditions and forecasts.</p>
     <p>Features:</p>
     <ul>
       <li>Displays real-time temperature, humidity, wind speed, UV index, pressure and more</li>
       <li>Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours</li>
-      <li>Also provides tomorrow and 7-day forcasts</li>
+      <li>Also provides tomorrow and 7-day forecasts</li>
       <li>See conditions in metric or imperial systems</li>
     </ul>
   </description>
@@ -301,7 +301,7 @@
         <p>New features and updates</p>
         <ul>
           <li>Use dynamic gradient backgrounds based on current weather.</li>
-          <li>See forcasts in beautiful card view.</li>
+          <li>See forecasts in beautiful card view.</li>
           <li>Search and add cities.</li>
         </ul>
       </description>
