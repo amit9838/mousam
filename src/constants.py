@@ -157,3 +157,5 @@ conditon = {
     "95": _("Thunderstorm"),
     "96": _("Thunderstorm with Hail"),
 }
+
+hpa_to_inhg = 0.02953

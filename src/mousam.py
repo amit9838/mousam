@@ -340,9 +340,8 @@ class WeatherMainWindow(Gtk.ApplicationWindow):
         card_obj = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.get("data"),
-            main_val_unit="",
-            desc=cw_data.surface_pressure.get("unit"),
-            sub_desc_heading=cw_data.surface_pressure.get("level_str"),
+            main_val_unit=cw_data.surface_pressure.get("unit"),
+            desc=cw_data.surface_pressure.get("level_str"),
             text_up=C_("pressure card", "High"),
             text_low=C_("pressure card", "Low"),
         )

@@ -2,6 +2,7 @@ import requests
 import datetime
 
 from .config import settings
+from .constants import hpa_to_inhg
 
 extend_url = ""
 base_url = "https://api.open-meteo.com/v1/forecast"
@@ -35,6 +36,10 @@ class Weather:
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
+            if settings.unit == "imperial":
+                inHg = data['current']['surface_pressure'] * hpa_to_inhg
+                data['current']['surface_pressure'] = inHg
+                data['current_units']['surface_pressure'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
@@ -69,6 +74,11 @@ class Weather:
             response = requests.get(url)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
+            if settings.unit == "imperial":
+                for i in range(len(data['hourly']['surface_pressure'])):
+                    inHg = data['hourly']['surface_pressure'][i] * hpa_to_inhg
+                    data['hourly']['surface_pressure'][i] = inHg
+                data['hourly_units']['surface_pressure'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
