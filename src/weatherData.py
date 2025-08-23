@@ -4,6 +4,7 @@ import gi
 from .backendWeather import Weather
 from .backendAirPollution import AirPollution
 from .config import settings
+from .constants import hpa_to_inhg
 from .Models import CurrentWeather, HourlyWeather, DailyWeather
 from .utils import get_cords
 from gettext import gettext as _, pgettext as C_
@@ -134,9 +135,14 @@ def classify_humidity_level(uv_index):
 
 
 def classify_presssure_level(pressure):
-    if pressure < 940:
+    low = 940
+    normal = 1010
+    if settings.unit == "imperial":
+        low *= hpa_to_inhg
+        normal *= hpa_to_inhg
+    if pressure < low:
         return C_("pressure", "Low")
-    elif pressure <= 1010:
+    elif pressure <= normal:
         return C_("pressure", "Normal")
     else:
         return C_("pressure", "High")
