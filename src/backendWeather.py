@@ -62,7 +62,7 @@ class Weather:
     # Hourly Forecast ==============================================
     @classmethod
     def forecast_hourly(cls,latitude: float, longitude: float, **kwargs):
-        url = base_url + f"?latitude={latitude}&longitude={longitude}"
+        url = base_url + f"?latitude={latitude}&longitude={longitude}&timezone=auto"
 
         # Check for kwargs keyword parameters
         if "hourly" in kwargs:
