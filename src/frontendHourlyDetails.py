@@ -29,6 +29,7 @@ class HourlyDetails(Gtk.Grid):
         self.set_margin_start(3)
         self.paint_ui()
         self.daily_forecast = None
+        self.scrolled_window
 
     def paint_ui(self):
         # Hourly Stack
@@ -122,9 +123,14 @@ class HourlyDetails(Gtk.Grid):
         scrolled_window = Gtk.ScrolledWindow(
             hexpand=True, halign=Gtk.Align.FILL, margin_top=2
         )
+        self.scrolled_window = scrolled_window
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
         scrolled_window.set_kinetic_scrolling(True)
         page_grid.attach(scrolled_window, 0, 2, 1, 1)
+
+        controller = Gtk.EventControllerScroll.new(Gtk.EventControllerScrollFlags.BOTH_AXES)
+        scrolled_window.add_controller(controller)
+        controller.connect("scroll", self.on_scroll)
 
         graphic_container = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
@@ -265,3 +271,20 @@ class HourlyDetails(Gtk.Grid):
             value=scrollbar_offset, lower=0, upper=container_width
         )
         scrolled_window.set_hadjustment(h_adjustment)
+
+    def on_scroll(self, controller, dx, dy):
+        hadj = self.scrolled_window.get_hadjustment()
+        step = hadj.get_step_increment()
+
+        # convert vertical scroll to horizontal,
+        # keep horizontal the same
+        if dx == 0 and dy != 0:
+            delta = step * (1 if dy >0 else -1)
+        else:
+            delta = dx
+
+        #set the new horizontal position without going too far. 
+        new_val = hadj.get_value() + delta
+        new_val = max(hadj.get_lower(), min(new_val, hadj.get_upper() - hadj.get_page_size()))
+        hadj.set_value(new_val)
+        return True
