@@ -1,14 +1,14 @@
 # Italian translation for Mousam
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Neko the gamer, 2024.
+# Neko the gamer, 2024-2025.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: unnamed project\n"
+"Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-17 16:58+0530\n"
-"PO-Revision-Date: 2024-08-18 22:19+0200\n"
+"PO-Revision-Date: 2025-11-14 11:45+0200\n"
 "Last-Translator: Neko the gamer\n"
 "Language-Team: \n"
 "Language: it\n"
@@ -66,18 +66,16 @@ msgid "See conditions in metric or imperial systems"
 msgstr "Vedi le condizioni nel sistema metrico o imperiale"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
-#, fuzzy
 msgid "Clear Sky - day"
 msgstr "Cielo sereno - imperiale"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
-msgstr ""
+msgstr "Nevicata - giorno"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
-#, fuzzy
 msgid "Clear Sky - night"
-msgstr "Cielo sereno - imperiale"
+msgstr "Cielo sereno - notte"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
@@ -134,7 +132,6 @@ msgid "Launch the app in maximized mode."
 msgstr "Avvia l'app in modalità massimizzata."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-#, fuzzy
 msgid "Measurement system to use - metric,imperial"
 msgstr "Sistema di misura da usare - metrico,imperiale"
 
@@ -319,7 +316,6 @@ msgid "UV Index"
 msgstr "Indice UV"
 
 #: src/frontendCurrentCond.py:97
-#, fuzzy, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "Percepiti • <b> {0} {1}</b>"
 
@@ -336,22 +332,19 @@ msgid "Today"
 msgstr "Oggi"
 
 #: src/frontendHourlyDetails.py:90
-#, fuzzy
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Alta"
+msgstr "Massimo del giorno •"
 
 #: src/frontendHourlyDetails.py:106
-#, fuzzy
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Massima"
+msgstr "Massima del giorno •"
 
 #: src/frontendHourlyDetails.py:118
-#, fuzzy
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Alta"
+msgstr "Massima del giorno •"
 
 #: src/frontendHourlyDetails.py:157
 msgid "No precipitation today !"
@@ -410,9 +403,8 @@ msgid "Getting Weather Data"
 msgstr "Recuperando i dati meteo"
 
 #: src/mousam.py:178
-#, fuzzy
 msgid "Welcome to Mousam"
-msgstr "Informazioni su Mousam"
+msgstr "Benvenuti su Mousam"
 
 #: src/mousam.py:198
 msgid "No Internet"
@@ -468,7 +460,7 @@ msgstr "L'aggiornamento entro 5 secondi è ignorato!"
 
 #: src/mousam.py:395
 msgid "Refreshing..."
-msgstr "Aggiornando..."
+msgstr "Aggiornamento..."
 
 #: src/weatherData.py:98
 msgid "Good"
@@ -585,7 +577,7 @@ msgstr "Copyright © 2024 Sviluppatori di Mousam"
 
 #: src/windowAbout.py:23
 msgid "translator_credits"
-msgstr "Neko the gamer <https://labyrinth.zone/nekothegamer>"
+msgstr "Neko the gamer <https://labyrinth.zone/nekothegamer>\n"
 
 #: src/windowLocations.py:23 src/windowLocations.py:37
 #: src/shortcutsDialog.ui:39
@@ -651,7 +643,6 @@ msgid "Dynamic Background"
 msgstr "Sfondo dinamico"
 
 #: src/windowPreferences.py:37
-#, fuzzy
 msgid ""
 "App background changes based on current weather conditions (restart required)"
 msgstr ""
@@ -682,35 +673,30 @@ msgid "°C"
 msgstr "°C"
 
 #: src/windowPreferences.py:87
-#, fuzzy
 msgid "Metric system with units like Celsius, km/h, and kilometers"
-msgstr "Sistema metrico con unità tipo celsius, km/h, chilometri"
+msgstr "Sistema metrico con unità Celsius, km/h, chilometri"
 
 #: src/windowPreferences.py:95
 msgid "°F"
 msgstr "°F"
 
 #: src/windowPreferences.py:96
-#, fuzzy
 msgid "Imperial system with units like Fahrenheit, mph, and miles"
-msgstr "Sistema imperiale con unità tipo fahrenheit, mph, miglia"
+msgstr "Sistema imperiale con unità Fahrenheit, mph, miglia"
 
 #: src/windowPreferences.py:110
-#, fuzzy
 msgid "Precipitation in inches"
-msgstr "Mostra precipitazioni in pollici"
+msgstr "Precipitazioni in pollici"
 
 #: src/windowPreferences.py:111
-#, fuzzy
 msgid "This option works better in heavy precipitation (refresh required)"
 msgstr ""
-"Questa opzione funziona meglio durante una precipitazioni intense (Riavvio "
+"Questa opzione funziona meglio durante le precipitazioni intense (Riavvio "
 "richiesto) "
 
 #: src/windowPreferences.py:140
-#, fuzzy
 msgid "Switching locations within 2 seconds is ignored"
-msgstr "Cambiare entro 2 secondi è ignorato!"
+msgstr "Il cambio della posizione fatto entro 2 secondi è ignorato!"
 
 #: src/windowPreferences.py:143
 msgid "Switched to - {}"
