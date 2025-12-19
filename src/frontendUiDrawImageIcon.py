@@ -5,41 +5,47 @@ from gi.repository import Gtk, Gdk, GdkPixbuf
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-
 class DrawImage:
     def __init__(self, path, angle, width, height):
-        self.image_path = path  # Replace with the path to your image file
-        self.angle_degrees = angle  # Specify the rotation angle in degrees
+        self.image_path = path
+        self.angle_degrees = angle
         self.width = width
         self.height = height
 
+        # 1. Load and scale the image ONCE during initialization
+        try:
+            temp_pixbuf = GdkPixbuf.Pixbuf.new_from_file(self.image_path)
+            self.pixbuf = temp_pixbuf.scale_simple(self.width, self.height, GdkPixbuf.InterpType.BILINEAR)
+        except Exception as e:
+            print(f"Error loading image: {e}")
+            self.pixbuf = None
+
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(self.width + 15, self.height + 15)
-        self.drawing_area.set_css_classes(["drawing-padding"])
+        # Adding a bit of extra space for rotation clipping prevention
+        self.drawing_area.set_size_request(self.width + 20, self.height + 20)
         self.drawing_area.set_draw_func(self.on_draw, None)
 
         self.img_box = Gtk.Box()
         self.img_box.append(self.drawing_area)
 
     def on_draw(self, widget, cr, width, height, data):
-        # Clear the drawing area
-        cr.set_source_rgba(0, 1, 1, 0)
-        cr.rectangle(0, 0, width, height)
-        cr.fill()
+        if not self.pixbuf:
+            return
 
-        # Load the image
-        pixbuf = GdkPixbuf.Pixbuf.new_from_file(self.image_path)
-        pixbuf = pixbuf.scale_simple(self.width, self.height, GdkPixbuf.InterpType(2))
+        # 2. Clear background (Transparent)
+        cr.set_source_rgba(0, 0, 0, 0)
+        cr.paint()
 
-        # Calculate the rotation point
-        rotation_x = (width - width * 0.1) / 2
-        rotation_y = (height - height * 0.1) / 2
+        # 3. Calculate the center of the drawing area for rotation
+        center_x = width / 2
+        center_y = height / 2
 
-        # Rotate the image around its center
-        cr.translate(rotation_x, rotation_y)
+        # 4. Perform the rotation
+        # Move to center -> Rotate -> Move back
+        cr.translate(center_x, center_y)
         cr.rotate(self.angle_degrees * math.pi / 180)
-        cr.translate(-rotation_x, -rotation_y)
+        cr.translate(-self.width / 2, -self.height / 2)
 
-        # Paint the rotated image
-        Gdk.cairo_set_source_pixbuf(cr, pixbuf, 1, 1)
+        # 5. Paint the pre-loaded pixbuf
+        Gdk.cairo_set_source_pixbuf(cr, self.pixbuf, 0, 0)
         cr.paint()

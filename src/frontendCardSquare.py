@@ -43,7 +43,7 @@ class CardSquare:
         sub_desc: str = "",
         text_up: str = "",
         text_low: str = "",
-        visual_data: Optional[float] = None,  # Passed explicitly now
+        visual_data: Optional[float] = None,
     ):
         self.title_key = title.lower()
         self.main_val = main_val
@@ -71,7 +71,6 @@ class CardSquare:
         """Constructs the UI using Box layout for better performance than Grid."""
 
         # 1. Main Container (Vertical Box)
-        # We use a Box instead of Grid because we are just stacking Title on top of Content
         card_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         card_box.set_size_request(170, 100)
         card_box.set_css_classes(CSS_CARD_BASE)
