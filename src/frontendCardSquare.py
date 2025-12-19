@@ -1,28 +1,51 @@
-from gi.repository import Gtk
 import gi
+from gettext import gettext as _, pgettext as C_
+from typing import Optional, Union
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw
+
 from .constants import icons
 from .config import settings
 from .frontendUiDrawBar import DrawLevelBar
 from .frontendUiDrawImageIcon import DrawImage
-from gettext import gettext as _, pgettext as C_
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
+# Standardizing CSS classes for reuse
+CSS_CARD_BASE = ["view", "card", "custom_card"]
+CSS_TEXT_TITLE = ["text-4", "light-3", "bold"]
+CSS_TEXT_VALUE = ["text-2a", "bold"]
+CSS_TEXT_UNIT = ["text-7", "light-3"]
+CSS_TEXT_DESC = ["text-5", "light-2", "bold-2"]
 
 
 class CardSquare:
+    """
+    A reusable Card component for displaying weather metrics (Wind, Humidity, etc.).
+    Displays a title, main value, description, and a visual indicator (Icon or Bar).
+    """
+
+    # Static mapping for translations to avoid recreating dict on every init
+    TITLES_MAP = {
+        "wind": _("Wind"),
+        "pressure": _("Pressure"),
+        "humidity": _("Humidity"),
+        "uv index": _("UV Index"),
+    }
+
     def __init__(
         self,
-        title,
-        main_val,
-        main_val_unit="",
-        desc="",
-        sub_desc_heading="",
-        sub_desc="",
-        text_up="",
-        text_low="",
+        title: str,
+        main_val: Union[str, int, float],
+        main_val_unit: str = "",
+        desc: str = "",
+        sub_desc_heading: str = "",
+        sub_desc: str = "",
+        text_up: str = "",
+        text_low: str = "",
+        visual_data: Optional[float] = None,  # Passed explicitly now
     ):
-        self.title = title
+        self.title_key = title.lower()
         self.main_val = main_val
         self.main_val_unit = main_val_unit
         self.desc = desc
@@ -31,139 +54,158 @@ class CardSquare:
         self.text_up = text_up
         self.text_low = text_low
 
-        from .weatherData import current_weather_data
+        # Data needed for the visual (Wind Degree, Pressure Value, etc.)
+        # If not provided, fallback to main_val (useful for Humidity/UV)
+        self.visual_data = visual_data if visual_data is not None else main_val
 
-        self.curr_w = current_weather_data
-        if self.title.lower() == "wind":
-            self.sub_desc = self._get_wind_dir(
-                self.curr_w.winddirection_10m.get("data")
-            )
+        # Pre-process specific logic
+        if self.title_key == "pressure":
+            self.main_val = int(self.main_val)
 
-        self.card = None
-        self.create_card()
+        if self.title_key == "wind" and isinstance(self.visual_data, (int, float)):
+            self.sub_desc = self._get_wind_direction_str(self.visual_data)
 
-    def create_card(self):
-        card = Gtk.Grid(
-            margin_top=6,
-            margin_start=3,
-            margin_end=3,
-            row_spacing=3,
-            column_spacing=0,
-        )
-        card.halign = Gtk.Align.FILL
-        card.set_size_request(170, 100)
-        card.set_css_classes(["view", "card", "custom_card"])
-        
+        self.card = self._build_ui()
+
+    def _build_ui(self) -> Gtk.Widget:
+        """Constructs the UI using Box layout for better performance than Grid."""
+
+        # 1. Main Container (Vertical Box)
+        # We use a Box instead of Grid because we are just stacking Title on top of Content
+        card_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        card_box.set_size_request(170, 100)
+        card_box.set_css_classes(CSS_CARD_BASE)
+        card_box.set_margin_top(6)
+        card_box.set_margin_start(3)
+        card_box.set_margin_end(3)
+
         if settings.is_using_dynamic_bg:
-            card.add_css_class("transparent_5")
-        self.card = card
+            card_box.add_css_class("transparent_5")
 
-        # Main title of the card
-        title = Gtk.Label(label=self._get_translasable_title(self.title))
-        title.set_hexpand(True)
-        title.set_halign(Gtk.Align.START)
-        title.set_css_classes(["text-4", "light-3", "bold"])
-        card.attach(title, 0, 0, 1, 2)
+        # 2. Title Area
+        display_title = self.TITLES_MAP.get(self.title_key, self.title_key.capitalize())
+        lbl_title = Gtk.Label(label=display_title)
+        lbl_title.set_halign(Gtk.Align.START)
+        lbl_title.set_css_classes(CSS_TEXT_TITLE)
+        card_box.append(lbl_title)
 
-        # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid()
-        card.attach(card_info, 0, 2, 1, 2)
+        # 3. Content Area (Horizontal Split: Text Left | Graphic Right)
+        content_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        content_box.set_hexpand(True)
+        card_box.append(content_box)
 
-        # Main value (like windspeed = 32km/h)
-        # convert pressure value to int
-        self.main_val = int(self.main_val) if self.title == 'Pressure' else self.main_val
-        main_val = Gtk.Label(label=self.main_val)
-        main_val.set_css_classes(["text-2a", "bold"])
-        main_val.set_halign(Gtk.Align.START)
-        card_info.attach(main_val, 0, 1, 3, 3)
+        # --- Left Side: Text Info ---
+        info_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+        info_box.set_hexpand(True)
+        content_box.append(info_box)
 
-        # Unit if the main value
-        main_val_unit = Gtk.Label(label=self.main_val_unit)
-        main_val_unit.set_css_classes(["text-7", "light-3"])
-        main_val_unit.set_halign(Gtk.Align.START)
-        card_info.attach(main_val_unit, 3, 3, 1, 1)
+        # Value & Unit Row
+        val_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
+        lbl_val = Gtk.Label(label=str(self.main_val))
+        lbl_val.set_css_classes(CSS_TEXT_VALUE)
 
-        # Short description [light, moderate]
-        desc_box = Gtk.Box()
-        desc_box.set_size_request(5, 27)
-        card_info.attach(desc_box, 0, 4, 6, 1)
+        lbl_unit = Gtk.Label(label=self.main_val_unit)
+        lbl_unit.set_css_classes(CSS_TEXT_UNIT)
+        # Align unit to the baseline of the value
+        lbl_unit.set_valign(Gtk.Align.BASELINE)
 
-        desc = Gtk.Label(label=self.desc)
-        desc.set_css_classes(["text-5", "light-2", "bold-2"])
-        desc.set_wrap(True)
-        desc.set_halign(Gtk.Align.START)
-        desc.set_valign(Gtk.Align.START)
-        desc_box.append(desc)
+        val_box.append(lbl_val)
+        val_box.append(lbl_unit)
+        info_box.append(val_box)
 
-        # Sub description heading [dewpoint,from]
-        sub_desc_heading = Gtk.Label(label=self.sub_desc_heading)
-        sub_desc_heading.set_css_classes(["text-6", "light-1"])
-        sub_desc_heading.set_halign(Gtk.Align.START)
-        card_info.attach(sub_desc_heading, 0, 5, 4, 1)
+        # Description (Wrapped)
+        if self.desc:
+            lbl_desc = Gtk.Label(label=self.desc)
+            lbl_desc.set_css_classes(CSS_TEXT_DESC)
+            lbl_desc.set_wrap(True)
+            lbl_desc.set_halign(Gtk.Align.START)
+            lbl_desc.set_max_width_chars(10)  # Prevent text from pushing box too wide
+            info_box.append(lbl_desc)
 
-        sub_desc = Gtk.Label(label=self.sub_desc)
-        sub_desc.set_css_classes(["text-4", "bold-2"])
-        sub_desc.set_halign(Gtk.Align.START)
-        card_info.attach(sub_desc, 0, 6, 4, 1)
+        # Sub-Description (Dewpoint / Wind Dir)
+        if self.sub_desc_heading or self.sub_desc:
+            sub_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+            sub_box.set_margin_top(4)
 
-        card_icon = Gtk.Grid(halign=Gtk.Align.END)
-        card.attach(card_icon, 1, 2, 2, 1)
+            if self.sub_desc_heading:
+                lbl_head = Gtk.Label(label=self.sub_desc_heading)
+                lbl_head.set_css_classes(["text-6", "light-1"])
+                lbl_head.set_halign(Gtk.Align.START)
+                sub_box.append(lbl_head)
 
-        icon_upper_text = Gtk.Label(label=self.text_up)
-        if self.title.lower() == "wind":
-            icon_upper_text.set_css_classes(["text-4", "bold-3"])
-        else:
-            icon_upper_text.set_css_classes(["title-5"])
+            if self.sub_desc:
+                lbl_sub = Gtk.Label(label=self.sub_desc)
+                lbl_sub.set_css_classes(["text-4", "bold-2"])
+                lbl_sub.set_halign(Gtk.Align.START)
+                sub_box.append(lbl_sub)
 
-        icon_upper_text.set_halign(Gtk.Align.CENTER)
-        icon_upper_text.set_margin_bottom(0)
-        card_icon.attach(icon_upper_text, 0, 0, 1, 1)
+            info_box.append(sub_box)
 
-        if self.title.lower() == "wind":
-            obj = DrawImage(
-                icons['arrow'], self.curr_w.winddirection_10m.get("data") + 180, 35, 35
-            )
+        # --- Right Side: Visual/Graphic ---
+        visual_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        visual_box.set_halign(Gtk.Align.END)
+        visual_box.set_valign(Gtk.Align.CENTER)
+        content_box.append(visual_box)
 
-            card_icon.attach(obj.img_box, 0, 1, 1, 1)
+        # Upper Text (N, High, etc)
+        if self.text_up:
+            lbl_up = Gtk.Label(label=self.text_up)
+            css = ["text-4", "bold-3"] if self.title_key == "wind" else ["title-5"]
+            lbl_up.set_css_classes(css)
+            visual_box.append(lbl_up)
 
-        elif self.title.lower() == "humidity":
-            level_obj = DrawLevelBar(
-                self.curr_w.relativehumidity_2m.get("data") / 100,
-                rounded_cap=True,
-                rgb_color=[0.588, 0.937, 1],
-            )
-            card_icon.attach(level_obj.dw, 0, 1, 1, 1)
+        # The Graphic (Canvas)
+        graphic_widget = self._create_visual_widget()
+        if graphic_widget:
+            visual_box.append(graphic_widget)
 
-        elif self.title.lower() == "pressure":
-            low = 872.0
-            high = 1080.0
-            if settings.unit == 'imperial':
+        # Lower Text
+        if self.text_low:
+            lbl_low = Gtk.Label(label=self.text_low)
+            css = ["text-4", "bold"] if self.title_key == "wind" else ["title-5"]
+            lbl_low.set_css_classes(css)
+            visual_box.append(lbl_low)
+
+        return card_box
+
+    def _create_visual_widget(self) -> Optional[Gtk.Widget]:
+        """Generates the central graphic (Arrow or Bar) based on title."""
+        try:
+            val = float(self.visual_data)
+        except (ValueError, TypeError):
+            return None
+
+        if self.title_key == "wind":
+            # Arrow Icon
+            # icons['arrow'] should be a resource path or similar
+            return DrawImage(icons["arrow"], val + 180, 35, 35).img_box
+
+        elif self.title_key == "humidity":
+            # Level Bar (0.0 - 1.0)
+            return DrawLevelBar(
+                val / 100.0, rounded_cap=True, rgb_color=[0.588, 0.937, 1]
+            ).dw
+
+        elif self.title_key == "pressure":
+            # Pressure Calculation
+            low, high = 872.0, 1080.0
+            if settings.unit == "imperial":
                 low *= 0.02953
                 high *= 0.02953
-            pressure_level = (self.curr_w.surface_pressure.get("data") - low) / (high - low)
-            level_obj = DrawLevelBar(
-                max(pressure_level,0),
-                rounded_cap=True,
-            )
-            card_icon.attach(level_obj.dw, 0, 1, 1, 1)
 
-        elif self.title.lower() == "uv index":
-            level_obj = DrawLevelBar(
-                self.curr_w.uv_index.get("data") / 12,
-                rounded_cap=True,
-                rgb_color=[0.408, 0.494, 1.000],
-            )
-            card_icon.attach(level_obj.dw, 0, 1, 1, 1)
+            level = (val - low) / (high - low)
+            return DrawLevelBar(max(0.0, min(level, 1.0)), rounded_cap=True).dw
 
-        icon_bottom_text = Gtk.Label(label=self.text_low)
-        if self.title.lower() == "wind":
-            icon_bottom_text.set_css_classes(["text-4", "bold"])
-        else:
-            icon_bottom_text.set_css_classes(["title-5"])
-        icon_bottom_text.set_valign(Gtk.Align.CENTER)
-        card_icon.attach(icon_bottom_text, 0, 2, 1, 1)
+        elif self.title_key == "uv index":
+            # UV Level (Assuming Max 12)
+            return DrawLevelBar(
+                val / 12.0, rounded_cap=True, rgb_color=[0.408, 0.494, 1.000]
+            ).dw
 
-    def _get_wind_dir(self, angle):
+        return None
+
+    def _get_wind_direction_str(self, angle: float) -> str:
+        """Converts degrees to cardinal direction."""
         directions = [
             _("North"),
             _("Northeast"),
@@ -173,18 +215,7 @@ class CardSquare:
             _("Southwest"),
             _("West"),
             _("Northwest"),
-            _("North")
+            _("North"),
         ]
-
-        angle = angle % 360
-        index = round(angle / 45) % 8
+        index = round(angle % 360 / 45) % 8
         return directions[index]
-
-    def _get_translasable_title(self,title):
-        titles = {
-            "wind":_("Wind"),
-            "pressure":_("Pressure"),
-            "humidity":_("Humidity"),
-            "uv index":_("UV Index"),
-        }
-        return titles[title.lower()]

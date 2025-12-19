@@ -141,7 +141,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
             else:
                 updated_at = time.time()
                 self.add_toast(create_toast(_("Switched to - {}").format(value.capitalize()),1))
-                thread = threading.Thread(target=self.application._load_weather_data,name="load_data")
+                thread = threading.Thread(target=self.application._start_data_refresh(),name="load_data")
                 thread.start()
     
     def _use_inch_for_precipation(self,widget,state):
