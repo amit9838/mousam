@@ -250,7 +250,7 @@ class WeatherLocations(Adw.PreferencesWindow):
             settings.added_cities = self.application.added_cities
             self._create_cities_list(settings.added_cities)
             if len(self.application.added_cities) == 1:
-                self.application._refresh_weather()
+                self.application._start_data_refresh()
             self._dialog.add_toast(create_toast(_("Added - {0}").format(title), 1))
         else:
             self._dialog.add_toast(create_toast(_("Location already added!"), 1))
@@ -268,7 +268,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         self.application.added_cities = new_list
 
         if len(self.application.added_cities) == 0:
-            self.application._refresh_weather()
+            self.application._start_data_refresh()
 
         # If selected city was deleted then set first element as selected city
         elif widget.get_subtitle() == settings.selected_city:
