@@ -1,6 +1,6 @@
 import requests
 import socket
-from datetime import datetime
+import datetime
 import time
 import gi
 from .config import settings
@@ -10,6 +10,9 @@ from gi.repository import Adw
 
 local_time_data = dict()
 TIMEOUT = 5
+GEONAMES_USERNAME = "mousam"
+
+
 domains = {
     "google": "http://www.google.com",
     "wikipedia": "https://www.wikipedia.org/",
@@ -61,20 +64,24 @@ def get_cords():
     return [float(x) for x in selected_city_.split(",")]
 
 
+
 def get_time_difference(target_latitude, target_longitude, force=False):
     global local_time_data
-
+    
     cord_str = f"{target_latitude}_{target_longitude}"
     if force is False and local_time_data.get(cord_str) is not None:
         return local_time_data[cord_str]
-
-    # Get current time in the target location using timeapi.io
-    url = f"https://timeapi.io/api/Time/current/coordinate?latitude={target_latitude}&longitude={target_longitude}"
-    target_time_response = requests.get(url)
-    target_time_data = target_time_response.json()
-    target_current_time = target_time_data["dateTime"]
-    target_time = datetime.strptime(target_current_time[:26], "%Y-%m-%dT%H:%M:%S.%f")
-
+    
+    # Get timezone information from GeoNames
+    url = f"http://api.geonames.org/timezoneJSON?lat={target_latitude}&lng={target_longitude}&username={GEONAMES_USERNAME}"
+    response = requests.get(url)
+    timezone_data = response.json()
+    
+    # Parse the time string from GeoNames
+    time_str = timezone_data["time"]
+    target_time = datetime.datetime.strptime(time_str, "%Y-%m-%d %H:%M")
+    
+    # Calculate difference in seconds
     epoch_diff = time.time() - target_time.timestamp()
     data = {"epoch_diff": epoch_diff, "target_time": target_time.timestamp()}
     local_time_data[cord_str] = data

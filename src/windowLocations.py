@@ -69,7 +69,7 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         for city in settings.added_cities:
             button = Gtk.Button()
-            button.set_icon_name("edit-delete-symbolic")
+            button.set_icon_name("user-trash-symbolic")
             button.set_css_classes(["circular"])
             button.set_tooltip_text(_("Remove location"))
             button.set_has_frame(False)
@@ -83,12 +83,8 @@ class WeatherLocations(Adw.PreferencesWindow):
             ).index(True)
 
             if settings.added_cities[selected_city_index] == city:
-                check_icon = Gtk.Image()
-                check_icon.set_from_icon_name(
-                    "emblem-ok-symbolic"
-                )  # Set the icon name and size
-                check_icon.set_pixel_size(18)
-                check_icon.set_margin_end(15)
+                check_icon = Gtk.Image.new_from_icon_name("object-select")
+                check_icon.set_margin_end(10)
                 box.append(check_icon)
             box.append(button)
 
