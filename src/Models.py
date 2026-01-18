@@ -17,7 +17,6 @@ class CurrentWeather:
 
     def print_data(self):
         from pprint import pprint
-
         pprint(self.__dict__)
 
     def update_data(self, field, new_data):
@@ -71,7 +70,6 @@ class DailyWeather:
 
     def print_data(self):
         from pprint import pprint
-
         pprint(self.__dict__)
 
     def update_data(self, field, new_data):
@@ -93,7 +91,6 @@ class Location:
 
     def print_data(self):
         from pprint import pprint
-
         pprint(self.__dict__)
 
     def update_data(self, field, new_data):

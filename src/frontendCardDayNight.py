@@ -28,7 +28,7 @@ class CardDayNight:
     def get_sunset_sunrise_degree(self):
         from .weatherData import daily_forecast_data as daily_data
 
-        t_data = get_time_difference(*get_cords())
+        t_data = get_time_difference()
         time_diff = t_data.get("epoch_diff")
         target_time = t_data.get("target_time")
 

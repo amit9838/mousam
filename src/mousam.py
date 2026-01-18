@@ -186,9 +186,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             apd = threading.Thread(target=fetch_current_air_pollution, name="apt")
             apd.start()
 
-            lat, lon = settings.selected_city.split(",")
             local_time = threading.Thread(
-                target=get_time_difference, args=(lat, lon, True), name="local_time"
+                target=get_time_difference, args=("", True), name="local_time"
             )
             local_time.start()
 
@@ -369,6 +368,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             return
         # Note: In Gtk4, we usually append classes.
         # If you need to clear old ones, you'd typically track the last applied class.
+        for cl in self.get_css_classes():
+            if cl not in ["backgrounds", "csd"]: self.remove_css_class(cl)
+
         code_key = str(weather_code)
         if is_day == 0:
             code_key += "n"

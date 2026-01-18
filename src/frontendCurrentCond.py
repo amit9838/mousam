@@ -2,7 +2,9 @@ import gi
 from gi.repository import Gtk
 from .constants import icons, conditon
 from .config import settings
+from .utils import JsonProcessor
 from gettext import gettext as _, pgettext as C_
+
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -68,27 +70,25 @@ class CurrentCondition(Gtk.Grid):
         )
         self.attach(box_right, 1, 0, 1, 1)
 
-        self.selected_city_index = list(
-            map(lambda city: settings.selected_city in city, settings.added_cities)
-        ).index(True)
+        city_list_json = JsonProcessor.str_list_to_json(settings.added_cities)
 
-        city_arr = settings.added_cities[self.selected_city_index].split(",")
+        self.selected_city_index = self._get_selected_city(
+            settings.selected_city, city_list_json
+        )
 
-        # Delete lat,lon from the array
-        del city_arr[-1]
-        del city_arr[-1]
+        city_info = city_list_json[self.selected_city_index]
 
         box_label = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, margin_bottom=10)
         box_right.append(box_label)
 
         loc_label_city = Gtk.Label(
-            label=city_arr[0], halign=Gtk.Align.END, margin_bottom=1
+            label=city_info.get("name"), halign=Gtk.Align.END, margin_bottom=1
         )
         loc_label_city.set_css_classes(["text-2b", "bold-2"])
         box_label.append(loc_label_city)
 
         loc_label_country = Gtk.Label(
-            label=city_arr[1], valign=Gtk.Align.END, halign=Gtk.Align.END
+            label=city_info.get("country"), valign=Gtk.Align.END, halign=Gtk.Align.END
         )
         loc_label_country.set_css_classes(["text-4", "light-3"])
         box_label.append(loc_label_country)
@@ -108,3 +108,9 @@ class CurrentCondition(Gtk.Grid):
         # visibility_label.set_markup(markup_text)
         # visibility_label.set_css_classes(["text-4", "bold-3"])
         # box_right.append(visibility_label)
+
+    def _get_selected_city(self, selected_city, cities):
+        for i, city in enumerate(cities):
+            if selected_city == f"{city.get("latitude")},{city.get("longitude")}":
+                return i
+        return 0

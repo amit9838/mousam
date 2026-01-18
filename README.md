@@ -98,7 +98,7 @@ I hope you ❤️ <b>Mousam</b>, if you think it is worth supporting you can do 
 <br>
 <br>
 <a href="https://www.buymeacoffee.com/ami9838">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ami9838&button_colour=FF5F5F&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" />
+    <img className="mt-4" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ami9838&button_colour=FF5F5F&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" />
 </a>
 </div>
 <div align="center">

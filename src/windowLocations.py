@@ -1,6 +1,10 @@
-import threading
+import json
 import time
+from typing import List, Dict, Optional
 import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 from .utils import create_toast
@@ -8,295 +12,240 @@ from .backendFindCity import find_city
 from .config import settings
 from gettext import gettext as _, pgettext as C_
 
+# --- Data Layer Utilities ---
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
 
-global updated_at
-updated_at = time.time()
+class LocationData:
+    """Helper to handle serialization and formatting of city data."""
+
+    @staticmethod
+    def to_storage_string(city_dict: Dict) -> str:
+        """Converts a city dictionary to a JSON string for settings."""
+        return json.dumps(city_dict)
+
+    @staticmethod
+    def from_storage_string(json_str: str) -> Dict:
+        """Converts a JSON string from settings back to a dictionary."""
+        try:
+            return json.loads(json_str)
+        except (json.JSONDecodeError, TypeError):
+            return {}
+
+    @staticmethod
+    def format_display_name(data: Dict) -> str:
+        """Creates a clean 'City, State, Country' string."""
+        parts = [data.get("name"), data.get("state"), data.get("country")]
+        return ", ".join(filter(None, parts))
+
+    @staticmethod
+    def get_coords_key(data: Dict) -> str:
+        """Returns a unique coordinate string used for selection tracking."""
+        return f"{data.get('latitude')},{data.get('longitude')}"
+
+
+# --- Components ---
+
+
+class CitySearchDialog(Adw.PreferencesWindow):
+    """Encapsulated search UI."""
+
+    def __init__(self, parent, on_selection_callback):
+        super().__init__(transient_for=parent, default_width=350, default_height=500)
+        self.set_title(_("Add New Location"))
+        self.callback = on_selection_callback
+        self.results_rows = []
+        self._init_ui()
+
+    def _init_ui(self):
+        page = Adw.PreferencesPage()
+        group = Adw.PreferencesGroup()
+        self.add(page)
+        page.add(group)
+
+        # Search Entry Box
+        header_box = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL, spacing=6, margin_bottom=10
+        )
+        self.search_entry = Gtk.Entry(
+            placeholder_text=_("Search for a city"), hexpand=True
+        )
+        self.search_entry.connect("activate", self._perform_search)
+
+        search_btn = Gtk.Button(icon_name="system-search-symbolic")
+        search_btn.connect("clicked", self._perform_search)
+
+        header_box.append(self.search_entry)
+        header_box.append(search_btn)
+        group.add(header_box)
+
+        # Results List
+        self.results_group = Adw.PreferencesGroup()
+        group.add(self.results_group)
+        self._set_placeholder(_("Search for your city..."))
+
+    def _set_placeholder(self, text):
+        self.placeholder = Gtk.Label(label=text, margin_top=40)
+        self.placeholder.add_css_class("dim-label")
+        self.results_group.add(self.placeholder)
+
+    def _perform_search(self, _widget):
+        query = self.search_entry.get_text().strip()
+        if not query:
+            return
+
+        # Logic to clear results
+        if hasattr(self, "placeholder"):
+            self.results_group.remove(self.placeholder)
+        for row in self.results_rows:
+            self.results_group.remove(row)
+        self.results_rows.clear()
+
+        cities = find_city(query, 5)  # Returns list of dicts
+
+        if not cities:
+            self._set_placeholder(_("No cities found."))
+            return
+
+        for city in cities:
+            display = LocationData.format_display_name(city)
+            row = Adw.ActionRow(
+                title=display,
+                subtitle=f"{city.get('latitude')}, {city.get('longitude')}",
+            )
+            row.set_activatable(True)
+            # Store the raw dict on the row object for easy retrieval
+            row.connect("activated", self._on_row_selected, city)
+            self.results_group.add(row)
+            self.results_rows.append(row)
+
+    def _on_row_selected(self, row, city_data):
+        self.callback(city_data)
+        self.destroy()
+
+
+# --- Main Application Window ---
 
 
 class WeatherLocations(Adw.PreferencesWindow):
     def __init__(self, application, **kwargs):
         super().__init__(**kwargs)
         self.application = application
+        self.last_switch_time = 0
+        self.row_map = {}  # Track rows to prevent full UI rebuilds
+
         self.set_title(_("Locations"))
         self.set_transient_for(application)
-        self.set_default_size(600, 500)
+        self.set_default_size(550, 450)
 
-        # Settings
-        global cities
-        settings.selected_city = settings.selected_city
-        cities = [x.split(",")[0] for x in settings.added_cities]
+        self._build_ui()
+        self._refresh_list()
 
-        # ============= Location Page =============
-        location_page = Adw.PreferencesPage()
-        self.add(location_page)
+    def _build_ui(self):
+        page = Adw.PreferencesPage()
+        self.location_grp = Adw.PreferencesGroup(title=_("Saved Locations"))
 
-        self.location_grp = Adw.PreferencesGroup()
-        self.location_grp.set_title(_("Locations"))
-        location_page.add(self.location_grp)
-
-        # Add location button with plus icon
-        add_loc_btn = Gtk.Button()
-        add_loc_btn_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER, spacing=4
+        add_btn = Gtk.Button(label=_("Add"), icon_name="list-add-symbolic")
+        add_btn.connect(
+            "clicked",
+            lambda _: CitySearchDialog(self, self._handle_city_added).present(),
         )
-        label = Gtk.Label(label=_("Add"))
-        add_loc_btn_box.append(label)
 
-        add_icon = Gtk.Image.new_from_icon_name("list-add-symbolic")
-        add_icon.set_pixel_size(14)
-        add_loc_btn_box.append(add_icon)
-        add_loc_btn.set_child(add_loc_btn_box)
-        add_loc_btn.connect("clicked", self._add_location_dialog)
-        self.location_grp.set_header_suffix(add_loc_btn)
+        self.location_grp.set_header_suffix(add_btn)
+        page.add(self.location_grp)
+        self.add(page)
 
-        self.location_rows = []
-        self._create_cities_list(settings.added_cities)
+    def _refresh_list(self):
+        """Clears and re-populates the location rows."""
+        # Senior move: Clear rows efficiently
+        while child := self.location_grp.get_row(0):
+            if isinstance(child, Adw.ActionRow):
+                self.location_grp.remove(child)
+            else:
+                break  # Keep the header suffix if it's there
 
-    # =========== Location page methods =============
-    def _create_cities_list(self, data):
-        if len(self.location_rows) > 0:
-            for action_row in self.location_rows:
-                self.location_grp.remove(action_row)
-            self.location_rows.clear()
+        for city_str in settings.added_cities:
+            if not city_str:
+                continue
 
-        if len(settings.added_cities) == 1:
-            city = settings.added_cities[0].split(",")
-            selection_key = f"{city[-2]},{city[-1]}"
-            settings.selected_city = selection_key
+            city_data = LocationData.from_storage_string(city_str)
+            row = self._create_row(city_data)
+            self.location_grp.add(row)
 
-        for city in settings.added_cities:
-            button = Gtk.Button()
-            button.set_icon_name("user-trash-symbolic")
-            button.set_css_classes(["circular"])
-            button.set_tooltip_text(_("Remove location"))
-            button.set_has_frame(False)
+    def _create_row(self, data: Dict) -> Adw.ActionRow:
+        display_name = LocationData.format_display_name(data)
+        coords = LocationData.get_coords_key(data)
 
-            # Add ckeck icon if city is selected
-            box = Gtk.Box(
-                orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER
-            )
-            selected_city_index = list(
-                map(lambda city: settings.selected_city in city, settings.added_cities)
-            ).index(True)
+        row = Adw.ActionRow(title=display_name, subtitle=coords, activatable=True)
 
-            if settings.added_cities[selected_city_index] == city:
-                check_icon = Gtk.Image.new_from_icon_name("object-select")
-                check_icon.set_margin_end(10)
-                box.append(check_icon)
-            box.append(button)
+        # Selection Indicator
+        suffix_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        if settings.selected_city == coords:
+            indicator = Gtk.Image.new_from_icon_name("object-select-symbolic")
+            indicator.add_css_class("accent")
+            suffix_box.append(indicator)
 
-            # Location Row
-            location_row = Adw.ActionRow.new()
-            location_row.set_activatable(True)
-            location_row.set_title(f"{city.split(',')[0]},{city.split(',')[1]}")
-            location_row.set_subtitle(f"{city.split(',')[-2]},{city.split(',')[-1]}")
-            location_row.add_suffix(box)
+        # Delete Button
+        del_btn = Gtk.Button(icon_name="user-trash-symbolic", has_frame=False)
+        del_btn.add_css_class("circular")
+        del_btn.connect("clicked", self._handle_city_removed, data)
 
-            # Location row signal
-            location_row.connect("activated", self.switch_location)
-            self.location_rows.append(location_row)
-            self.location_grp.add(location_row)
+        suffix_box.append(del_btn)
+        row.add_suffix(suffix_box)
+        row.connect("activated", self._handle_city_switched, data)
 
-            button.connect("clicked", self._remove_city, location_row)
+        return row
 
-    # ========== Switch Location ============
-    def switch_location(self, widget):
-        title = widget.get_title()
-        select_cord = f"{widget.get_subtitle()}"
+    def _handle_city_added(self, city_dict: Dict):
+        json_str = LocationData.to_storage_string(city_dict)
 
-        if len(select_cord.split(",")) < 2:
+        if json_str in settings.added_cities:
+            self.add_toast(Adw.Toast(title=_("Location already exists")))
             return
 
-        # Switch if location is not already selected
-        if settings.selected_city != select_cord:
-            settings.selected_city = select_cord
-            settings.selected_city = settings.selected_city
-            self._create_cities_list(settings.added_cities)
-            global updated_at
-            # Ignore refreshing weather within 5 second
 
-            if time.time() - updated_at < 2:
-                updated_at = time.time()
-                self.add_toast(
-                    create_toast(_("Switch city within 2 seconds is ignored!"), 1)
-                )
-            else:
-                updated_at = time.time()
-                self.add_toast(create_toast(_("Selected - {}").format(title), 1))
-                thread = threading.Thread(
-                    target=self.application._load_weather_data, name="load_data"
-                )
-                thread.start()
+        # Update settings
+        settings.added_cities = [*settings.added_cities, json_str]
+        self.application.added_cities = settings.added_cities
 
-    # ========== Add Location ===========
-    def _add_location_dialog(self, application):
-        # Create dialog to search and add location
-        self._dialog = Adw.PreferencesWindow()
-        self._dialog.set_search_enabled(False)
-        self._dialog.set_title(title=_("Add New Location"))
-        self._dialog.set_transient_for(self)
-        self._dialog.set_default_size(300, 500)
+        self._refresh_list()
 
-        self._dialog.page = Adw.PreferencesPage()
-        self._dialog.add(self._dialog.page)
+        if len(settings.added_cities) == 1:
+            self._handle_city_switched(None, city_dict)
 
-        self._dialog.group = Adw.PreferencesGroup()
-        self._dialog.page.add(self._dialog.group)
+    def _handle_city_switched(self, _row, city_dict: Dict):
+        new_coords = LocationData.get_coords_key(city_dict)
 
-        # Create search box
-        search_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            valign=Gtk.Align.CENTER,
-            spacing=6,
-            margin_bottom=10,
-        )
-        search_box.set_hexpand(True)
-        self._dialog.group.add(search_box)
+        if settings.selected_city == new_coords and not len(settings.added_cities):
+            return
 
-        self.search_entry = Gtk.Entry()
-        self.search_entry.connect("activate", self._on_find_city_clicked)
-        self.search_entry.set_icon_from_icon_name(
-            Gtk.EntryIconPosition(1), "edit-clear-symbolic"
-        )
-        self.search_entry.set_placeholder_text(_("Search for a city"))
-        self.search_entry.set_hexpand(True)
-        self.search_entry.connect("icon-press", self._clear_search_box)
-        search_box.append(self.search_entry)
+        # Rate limiting switch
+        now = time.time()
+        if now - self.last_switch_time < 2:
+            self.add_toast(Adw.Toast(title=_("Please wait before switching again")))
+            return
 
-        # Create search button
-        button = Gtk.Button(label=_("Search"))
-        button.set_icon_name("system-search-symbolic")
-        button.set_tooltip_text(_("Search"))
-        search_box.append(button)
+        settings.selected_city = new_coords
+        self.last_switch_time = now
 
-        self._dialog.serach_res_grp = Adw.PreferencesGroup()
-        self._dialog.serach_res_grp.set_hexpand(True)
-        self._blank_search_page("start")
-        self._dialog.group.add(self._dialog.serach_res_grp)
+        self._refresh_list()
+        self.application._start_data_refresh()
+        self.add_toast(Adw.Toast(title=_("Selected {}").format(city_dict.get("name"))))
 
-        button.connect("clicked", self._on_find_city_clicked)
-        self._dialog.search_results = []
-        self._dialog.show()
-
-    # ============ Clear Search results ============
-    def _clear_search_box(self, widget, pos):
-        self.search_entry.set_text("")
-
-    # =========== Click on find city ===========
-    def _on_find_city_clicked(self, widget):
-        self._find_city(widget)
-
-    # =========== Find city ===========
-    def _find_city(self, widget):
-        text = self.search_entry.get_text()
-
-        # Matched city from api
-        city_data = find_city(text, 5)
-        self._dialog.serach_res_grp.remove(self.search_page_start)
-
-        if len(self._dialog.search_results) > 0:
-            for action_row in self._dialog.search_results:
-                self._dialog.serach_res_grp.remove(action_row)
-            self._dialog.search_results.clear()
-
-        # Plot search results if found
-        if city_data:
-            for loc in city_data:
-                res_row = Adw.ActionRow.new()
-                res_row.set_activatable(True)
-                title_arr = [loc.name, loc.state, loc.country]
-                title_arr = [x for x in title_arr if x is not None]
-                title = ",".join(title_arr)
-                res_row.set_title(title)
-
-                # Skip plotting the location in the search results if it has invalid cords
-                if loc.latitude is None or loc.longitude is None:
-                    continue
-                if loc.latitude == "" or loc.longitude == "":
-                    continue
-
-                res_row.set_subtitle(f"{loc.latitude},{loc.longitude}")
-                res_row.connect("activated", self._add_city)
-                self._dialog.search_results.append(res_row)
-                self._dialog.serach_res_grp.add(res_row)
-
-        # If no search result is found
-        else:
-            self._blank_search_page(status="no_res")
-
-    # =========== Add City on selection ===========
-    def _add_city(self, widget):
-        # get title,subtitle from selected item in search result
-        title = widget.get_title()
-        title_arr = title.split(",")
-        modified_title = title_arr[0]
-        if len(title_arr) > 2:
-            modified_title = f"{title_arr[0]},{title_arr[2]}"
-        elif len(title_arr) > 1:
-            modified_title = f"{title_arr[0]},{title_arr[1]}"
-
-        loc_city = f"{modified_title},{widget.get_subtitle()}"
-
-        # Add city to db if it is not already added
-        if loc_city not in settings.added_cities:
-            self.application.added_cities = [*settings.added_cities, loc_city]
-            settings.added_cities = self.application.added_cities
-            self._create_cities_list(settings.added_cities)
-            if len(self.application.added_cities) == 1:
-                self.application._start_data_refresh()
-            self._dialog.add_toast(create_toast(_("Added - {0}").format(title), 1))
-        else:
-            self._dialog.add_toast(create_toast(_("Location already added!"), 1))
-
-
-    # ========== Remove City ===========
-    def _remove_city(self, btn, widget):
-        city = f"{widget.get_title()},{widget.get_subtitle()}"
-
-        settings.added_cities.remove(city)
-        new_list = list(settings.added_cities)
-        new_list.remove(city)
+    def _handle_city_removed(self, _btn, city_data: str):
+        coords_to_remove = LocationData.get_coords_key(city_data)
+        json_str = LocationData.to_storage_string(city_data)
+        new_list = [item for item in settings.added_cities if item != json_str]
         settings.added_cities = new_list
-
-        self.application.added_cities = new_list
+        self.application.added_cities = settings.added_cities
 
         if len(self.application.added_cities) == 0:
             self.application._start_data_refresh()
 
-        # If selected city was deleted then set first element as selected city
-        elif widget.get_subtitle() == settings.selected_city:
-            first_city = self.application.added_cities[0].split(",")
-            settings.selected_city = f"{first_city[-2]},{first_city[-1]}"
-            thread = threading.Thread(
-                target=self.application._load_weather_data, name="load_data"
-            )
-            thread.start()
+        # Reset selection if we deleted the active city
+        if settings.selected_city == coords_to_remove and new_list:
+            first_city = LocationData.from_storage_string(new_list[0])
+            settings.selected_city = LocationData.get_coords_key(first_city)
 
-        self._create_cities_list(settings.added_cities)
-        self.add_toast(create_toast(_("Deleted - {0}".format(widget.get_title())), 1))
+            self.application._start_data_refresh()
 
-    def _blank_search_page(self, status):
-        text = _("Press enter to search")
-        icon = "system-search-symbolic"
-        if status == "no_res":
-            text = _("No results found!")
-            icon = "system-search-symbolic"
-
-        self.search_page_start = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            halign=Gtk.Align.CENTER,
-            spacing=6,
-            margin_top=60,
-        )
-        search_icon = Gtk.Image.new_from_icon_name(icon)
-        search_icon.set_pixel_size(48)
-        search_icon.set_margin_top(10)
-        search_icon.set_css_classes(["light-4"])
-        search_page_start_text = Gtk.Label(label=text)
-        search_page_start_text.set_css_classes(["text-3", "bold-3", "light-5"])
-        self.search_page_start.append(search_icon)
-        self.search_page_start.append(search_page_start_text)
-        self._dialog.serach_res_grp.add(self.search_page_start)
+        self._refresh_list()

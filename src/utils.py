@@ -1,9 +1,13 @@
-import requests
 import socket
 import datetime
 import time
+import json
 import gi
 from .config import settings
+import requests
+from typing import List
+from zoneinfo import ZoneInfo  # Python 3.9+ internal library
+
 
 gi.require_version("Adw", "1")
 from gi.repository import Adw
@@ -64,25 +68,53 @@ def get_cords():
     return [float(x) for x in selected_city_.split(",")]
 
 
+def get_timezone_from_selected_city():
+    added_cities = JsonProcessor.str_list_to_json(settings.added_cities)
+    for city in added_cities:
+        if settings.selected_city == f"{city.get("latitude")},{city.get("longitude")}":
+            return city.get("timezone","Asia/Kolkata")
 
-def get_time_difference(target_latitude, target_longitude, force=False):
+def get_time_difference(timezone_str:str="", force=False):
     global local_time_data
     
-    cord_str = f"{target_latitude}_{target_longitude}"
-    if force is False and local_time_data.get(cord_str) is not None:
-        return local_time_data[cord_str]
+    if not timezone_str:
+        timezone_str = get_timezone_from_selected_city()
+
+    # Use timezone name as the cache key
+    if force is False and local_time_data.get(timezone_str) is not None:
+        return local_time_data[timezone_str]
     
-    # Get timezone information from GeoNames
-    url = f"http://api.geonames.org/timezoneJSON?lat={target_latitude}&lng={target_longitude}&username={GEONAMES_USERNAME}"
-    response = requests.get(url)
-    timezone_data = response.json()
-    
-    # Parse the time string from GeoNames
-    time_str = timezone_data["time"]
-    target_time = datetime.datetime.strptime(time_str, "%Y-%m-%d %H:%M")
-    
-    # Calculate difference in seconds
-    epoch_diff = time.time() - target_time.timestamp()
-    data = {"epoch_diff": epoch_diff, "target_time": target_time.timestamp()}
-    local_time_data[cord_str] = data
-    return data
+    try:
+        # Get the current time in the target timezone using internal libraries
+        target_tz = ZoneInfo(timezone_str)
+        target_now = datetime.datetime.now(target_tz)
+        
+        # Calculate difference in seconds between local system clock and target timezone
+        # we convert both to timestamps to get a clean epoch difference
+        current_system_timestamp = time.time()
+        target_timestamp = target_now.timestamp()
+        
+        epoch_diff = current_system_timestamp - target_timestamp
+        
+        data = {
+            "epoch_diff": epoch_diff, 
+            "target_time": target_timestamp,
+            "timezone": timezone_str
+        }
+        
+        local_time_data[timezone_str] = data
+        return data
+
+    except Exception as e:
+        return {"error": f"Invalid timezone or library error: {str(e)}"}
+
+
+
+class JsonProcessor():
+    @staticmethod
+    def str_list_to_json(data:List)->List:
+        return [json.loads(item) for item in data]
+
+    @staticmethod
+    def json_list_to_str(data:List)->List:
+        return [json.dumps(item) for item in data]

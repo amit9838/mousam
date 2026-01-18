@@ -70,7 +70,7 @@ class DrawDayNight:
         )
         context.set_font_size(13)
         context.set_source_rgba(0.7, 0.7, 0.7, 1.0)  # Black
-        t_data = get_time_difference(*get_cords())
+        t_data = get_time_difference()
         target_time = t_data.get("target_time")
 
         # Calculate the position for text placement
