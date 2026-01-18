@@ -366,8 +366,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1):
         if not settings.is_using_dynamic_bg:
             return
-        # Note: In Gtk4, we usually append classes.
-        # If you need to clear old ones, you'd typically track the last applied class.
+
         for cl in self.get_css_classes():
             if cl not in ["backgrounds", "csd"]: self.remove_css_class(cl)
 
