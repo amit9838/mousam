@@ -136,10 +136,15 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     # ================= Data Handling =================
 
-    def _start_data_refresh(self, is_initial=False):
+    def _start_data_refresh(self, is_initial=False, force_welcome=False):
+        if force_welcome:
+            self._update_view_state("welcome")
+            return
+
         if not check_internet_connection():
             self._update_view_state("error_no_internet")
             return
+
 
         if not self.added_cities:
             self._update_view_state("welcome")

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 15:54+0530\n"
+"POT-Creation-Date: 2026-01-19 23:56+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -623,61 +623,99 @@ msgstr ""
 msgid "Dynamic Background"
 msgstr ""
 
-#: src/windowPreferences.py:37
+#: src/windowPreferences.py:39
 msgid ""
 "App background changes based on current weather conditions (restart required)"
 msgstr ""
 
-#: src/windowPreferences.py:50
+#: src/windowPreferences.py:56
 msgid "Time Format"
 msgstr ""
 
-#: src/windowPreferences.py:51
+#: src/windowPreferences.py:57
 msgid "Weather time format (Refresh required)"
 msgstr ""
 
-#: src/windowPreferences.py:60
+#: src/windowPreferences.py:66
 msgid "24 Hour"
 msgstr ""
 
-#: src/windowPreferences.py:67
+#: src/windowPreferences.py:73
 msgid "AM / PM"
 msgstr ""
 
-#: src/windowPreferences.py:82
+#: src/windowPreferences.py:88
 msgid "Units &amp; Measurements"
 msgstr ""
 
-#: src/windowPreferences.py:86
+#: src/windowPreferences.py:92
 msgid "°C"
 msgstr ""
 
-#: src/windowPreferences.py:87
+#: src/windowPreferences.py:94
 msgid "Metric system with units like Celsius, km/h, and kilometers"
 msgstr ""
 
-#: src/windowPreferences.py:95
+#: src/windowPreferences.py:103
 msgid "°F"
 msgstr ""
 
-#: src/windowPreferences.py:96
+#: src/windowPreferences.py:105
 msgid "Imperial system with units like Fahrenheit, mph, and miles"
 msgstr ""
 
-#: src/windowPreferences.py:110
+#: src/windowPreferences.py:124
 msgid "Precipitation in inches"
 msgstr ""
 
-#: src/windowPreferences.py:111
+#: src/windowPreferences.py:126
 msgid "This option works better in heavy precipitation (refresh required)"
 msgstr ""
 
-#: src/windowPreferences.py:140
+#: src/windowPreferences.py:141
+msgid "Data Management"
+msgstr ""
+
+#: src/windowPreferences.py:146
+msgid "Reset to Default"
+msgstr ""
+
+#: src/windowPreferences.py:147
+msgid "Clear all preferences and restore default values"
+msgstr ""
+
+#: src/windowPreferences.py:149
+msgid "Reset…"
+msgstr ""
+
+#: src/windowPreferences.py:178
 msgid "Switching locations within 2 seconds is ignored"
 msgstr ""
 
-#: src/windowPreferences.py:143
+#: src/windowPreferences.py:184
 msgid "Switched to - {}"
+msgstr ""
+
+#: src/windowPreferences.py:197
+msgid "Reset Settings?"
+msgstr ""
+
+#: src/windowPreferences.py:198
+msgid ""
+"This will restore all settings to default and may clear your saved cities. "
+"This action cannot be undone."
+msgstr ""
+
+#: src/windowPreferences.py:200
+msgid "Cancel"
+msgstr ""
+
+#: src/windowPreferences.py:201
+msgid "Reset"
+msgstr ""
+
+#: src/windowPreferences.py:233
+msgid "Preferences have been reset"
 msgstr ""
 
 #: src/shortcutsDialog.ui:29

@@ -14,6 +14,11 @@ class Settings:
     def init_settings(self):
         self.settings = Gio.Settings(self.APP_ID)
 
+    def reset_to_defaults(self):
+        """Resets all keys in the schema to their default values."""
+        for key in self.settings.list_keys():
+            self.settings.reset(key)
+
     @property
     def added_cities(self):
         return self.settings.get_strv("added-cities")
