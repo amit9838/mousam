@@ -3,8 +3,6 @@ import requests
 from typing import List
 from requests.exceptions import RequestException
 
-from .Models import Location
-
 # Configure logging at the module level
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,5 @@
 project('mousam',
-          version: '1.3.2',
+          version: '1.4.1',
     meson_version: '>= 0.61.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )

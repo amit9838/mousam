@@ -55,6 +55,32 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+  <release version="1.4.1" date="2026-01-19">
+  <description translate="no">
+    <p>What's New</p>
+    <ul>
+      <li>Improved UI spacing and updated icons for better visual consistency.</li>
+      <li>General performance improvements and smoother interactions.</li>
+      <li>Improved hourly forecast scrolling without requiring the Shift key.</li>
+      <li>More accurate imperial unit handling, including inHg support.</li>
+    </ul>
+
+    <p>Bug Fixes</p>
+    <ul>
+      <li>Fixed application crashes caused by timeapi.io.</li>
+      <li>Fixed unit toggle behavior for improved reliability.</li>
+      <li>Resolved hourly weather API issues by using automatic timezone handling.</li>
+      <li>Fixed minor UI issues and typos.</li>
+    </ul>
+
+    <p>Translations</p>
+    <ul>
+      <li>Added Thai, Hungarian, Czech, and Simplified Chinese (zh_CN) translations.</li>
+      <li>Updated Portuguese (Brazil), Russian, Italian, and other existing translations.</li>
+    </ul>
+  </description>
+</release>
+
     <release version="1.4.0" date="2024-12-12">
       <description translate="no">
         <p>What's New</p>

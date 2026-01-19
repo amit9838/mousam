@@ -15,7 +15,7 @@ def AboutWindow(*args):
         developer_name="Amit Chaudhary",
         developers= ["Amit Chaudhary"],
         issue_url="https://github.com/amit9838/mousam/issues",
-        version="1.4.0",
+        version="1.4.1",
         website="https://amit9838.github.io/mousam/",
         copyright=_("Copyright © 2024 Mousam Developers"),
         license_type=Gtk.License(Gtk.License.GPL_3_0),
