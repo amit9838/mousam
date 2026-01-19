@@ -1,3 +1,110 @@
+mousam (1.4.1) stable; urgency=medium
+
+  [ Amit Chaudhary ]
+  * update image link in app data
+  * update mousam.pot  and corresponding  .po files
+  * simplify settings
+  * update flatpak workflow
+  * use aboutDiaglog instead of aboutWindow
+  * Revert "Add updated it.po file (#233)" (#235)
+    This reverts commit b6d536fd437881a3801653387e5836453ea3c481.
+  * Update runtime, improve code quality (#236)
+    * Update runtime, improve code quality
+    Update to gnome runtime `v49`
+    Use `Adw.ApplicationWindow` for better compatibility
+    Improve code quality
+    * remove non-valuable comments
+  * Update runtime, improve code quality (#237)
+    * Update runtime, improve code quality
+    Update to gnome runtime `v49`
+    Use `Adw.ApplicationWindow` for better compatibility
+    Improve code quality
+    * remove non-valuable comments
+  * switch to geoname.org for timezone data, minor ui fixes
+  * use timezone to calculate relative timezone offset
+    - Improve performance
+    - Improve code quality
+    - Store json string as city data
+  * remove bad comment
+  * Release v1.4.1
+  * hotfix: bar showing wrong data
+
+  [ Nelson Kerber Hennemann Filho ]
+  * Update pt_BR.po (#186)
+    * Update pt_BR.po
+    Updated pt_BR translation based on latest template and fixed some typos
+    * Update 2 pt_BR.po
+    Added some missing chars
+  * Minor typos fixed (#200)
+    * Update io.github.amit9838.mousam.gschema.xml
+    Minor typos fixed
+    * Update io.github.amit9838.mousam.appdata.xml.in
+    Minor typo fixed
+  * Update pt_BR.po (#202)
+    * Update pt_BR.po
+    Updated translations and formatting fixes
+    * Update 2 pt_BR.po
+    Update PO revision date
+
+  [ Phqen1x ]
+  * fix: use Gtk.ToggleButton.toggled for setting unit, fixes #179 (#194)
+    Co-authored-by: Drew VanDine <avandine23@gmail.com>
+
+  [ Atirut Wattanamongkol ]
+  * Update `mousam.pot` (#195)
+    This is so we get the latest strings previously not translated
+  * Add PO updater script and update PO files (#197)
+    * Add PO update script
+    * Update PO files
+  * Add Thai localisation (#198)
+
+  [ Márton Kónya ]
+  * Add Hungarian localisation (#201)
+    * Add Hungarian localisation
+    * update hu.po
+
+  [ Fjuro ]
+  * Add Czech translation (#205)
+    * Add Czech translation
+    * Add Czech language
+
+  [ Tom Emv ]
+  * add updated russian translation (#209)
+  * corrected inaccuracies in russian translation (#210)
+    * add updated russian translation
+    * correct inaccuracies
+
+  [ ostfriese4 ]
+  * Update translation (#215)
+
+  [ xujie86 ]
+  * Create zh_CN (#219)
+  * Update zh_CN (#220)
+    * Update zh_CN
+    * Update zh_CN
+    * Rename zh_CN to zh_CN.po
+    * Update zh_CN.po. improve the quality of the translation.
+  * Add zh_CN translation (#223)
+
+  [ TheBlueOompaLoompa ]
+  * Add conversions and handling for inHg under imperial (#227)
+
+  [ John Beers ]
+  * Fix typos (#163) (#224)
+
+  [ Travis Well ]
+  * fix #166: hourly weather API parameter `timezone=auto` (#230)
+    Co-authored-by: TravisFW <travisfw>
+
+  [ Andrea Scaduto ]
+  * allow scrolling the hourly forecast without having to hold shift key (#232)
+    Co-authored-by: Andrea <arsca96@tutamail.com>
+
+  [ Nekothegamer ]
+  * Add updated it.po file (#233)
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Mon, 19 Jan 2026 22:32:49 +0530
+
 mousam (1.4.0) stable; urgency=medium
 
   [ সৌম্যদীপ ঘোষ ]
