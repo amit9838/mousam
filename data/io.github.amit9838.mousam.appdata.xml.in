@@ -55,6 +55,15 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.4.2" date="2026-01-20">
+  <description translate="no">
+    <p>What's New</p>
+    <ul>
+      <li>Added option to reset app data from settings.</li>
+      <li>Fixed bar showing incorrect data.</li>
+    </ul>
+  </description>
+</release>
   <release version="1.4.1" date="2026-01-19">
   <description translate="no">
     <p>What's New</p>
