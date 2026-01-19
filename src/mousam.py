@@ -277,7 +277,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             sub_desc=f"{cw_data.dewpoint_2m.get('data')} {cw_data.dewpoint_2m.get('unit')}",
             text_up="100",
             text_low="0",
-            visual_data=cw_data.relativehumidity_2m.get("data") / 100
+            visual_data=cw_data.relativehumidity_2m.get("data")
         ).card
         add_card(hum_card, 1, 0)
 
@@ -294,7 +294,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             desc=cw_data.surface_pressure.get("level_str"),
             text_up=C_("pressure card", "High"),
             text_low=C_("pressure card", "Low"),
-            visual_data=(cw_data.surface_pressure.get("data") - low) / (high - low)
+            visual_data=cw_data.surface_pressure.get("data")
         ).card
         add_card(pres_card, 0, 1)
 
@@ -305,7 +305,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             desc=cw_data.uv_index.get("level_str"),
             text_up=C_("uvindex card", "High"),
             text_low=C_("uvindex card", "Low"),
-            visual_data=cw_data.uv_index.get("data") / 12,
+            visual_data=cw_data.uv_index.get("data"),
         ).card
         add_card(uv_card, 1, 1)
 
