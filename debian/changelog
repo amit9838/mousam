@@ -1,3 +1,11 @@
+mousam (1.4.2) stable; urgency=medium
+
+  [ Amit Chaudhary ]
+  * add option to reset app data
+  * Release v1.4.2
+
+ -- Himadri Sekhar Basu <hsb10@iitbbs.ac.in>  Mon, 26 Jan 2026 00:31:49 +0530
+
 mousam (1.4.1) stable; urgency=medium
 
   [ Amit Chaudhary ]
