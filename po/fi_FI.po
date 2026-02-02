@@ -249,7 +249,7 @@ msgstr "Ukkosmyrsky ja rakeita"
 
 #: src/frontendCardAirPollution.py:44
 msgid "Air Pollution"
-msgstr "Ilman Laatu"
+msgstr "Ilmanlaatu"
 
 #: src/frontendCardAirPollution.py:54
 msgid "United States AQI standard"
