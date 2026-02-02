@@ -249,7 +249,7 @@ msgstr "Ukkosmyrsky ja rakeita"
 
 #: src/frontendCardAirPollution.py:44
 msgid "Air Pollution"
-msgstr "Ilmansaaste"
+msgstr "Ilman Laatu"
 
 #: src/frontendCardAirPollution.py:54
 msgid "United States AQI standard"
@@ -257,15 +257,15 @@ msgstr "Yhdysvaltain AQI-standardi"
 
 #: src/frontendCardDayNight.py:68
 msgid "Sunrise & Sunset"
-msgstr "Auringon nousu ja lasku"
+msgstr "Aurinko"
 
 #: src/frontendCardDayNight.py:79
 msgid "Sunrise"
-msgstr "Aurinko nousee"
+msgstr "Nousee"
 
 #: src/frontendCardDayNight.py:92
 msgid "Sunset"
-msgstr "Aurinko laskee"
+msgstr "Laskee"
 
 #: src/frontendCardSquare.py:163 src/frontendCardSquare.py:171
 msgid "North"
@@ -417,7 +417,7 @@ msgstr "Ei voitu hakea tietoja API:sta"
 
 #: src/mousam.py:318
 msgid "From"
-msgstr ""
+msgstr "Suunnasta"
 
 #: src/mousam.py:320
 msgid "N"
