@@ -1,0 +1,716 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Juha Antikainen <jussi.antikainen@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: unnamed project\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-17 16:58+0530\n"
+"PO-Revision-Date: 2026-02-02 02:49+0200\n"
+"Last-Translator: Juha Antikainen <jussi.antikainen@gmail.com>\n"
+"Language-Team: Suomi\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr "Mousam"
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:16
+msgid "Weather at a glance"
+msgstr "Sääkatsaus"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgstr "Sää;Mousam;Sade;Pilvi;Ennuste;GTK4;Python;lämpötila;"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forcasts."
+msgstr "Tämän hetken säätilanne ja ennuste."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Ominaisuudet:"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr ""
+"Näyttää reaaliaikaisen lämpötilan, ilmankosteuden, tuulen nopeuden, UV-"
+"indeksin, ilmanpaineen ja paljon muuta"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid ""
+"Utilizes graphical representations, such as temperature , precipitation "
+"graphs and wind-speed with direction to provide an hourly forecast for the "
+"next 24 hours"
+msgstr ""
+"Käyttää selkeitä graafeja, kuten lämpötila- ja sadekuntokäyriä sekä tuulen "
+"nopeutta ja suuntaa, tarjotakseen tuntikohtaisen ennusteen seuraaville 24 "
+"tunnille"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Also provides tomorrow and 7-day forcasts"
+msgstr "Sisältää myös huomisen sään ja 7 päivän ennusteen"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "See conditions in metric or imperial systems"
+msgstr "Tarkastele säätietoja metrisinä tai imperiaalisina yksikköinä"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid "Clear Sky - day"
+msgstr "Selkeä - päivä"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:25
+msgid "Snowfall - day"
+msgstr "Lumisade - päivä"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:29
+msgid "Clear Sky - night"
+msgstr "Selkeä - yö"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:38
+msgid "Amit Chaudhary"
+msgstr "Amit Chaudhary"
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Kaupungit ja sijaintikoordinaatit."
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Tallentaa käyttäjän lisäämät sijainnit merkkijonoksi muunnetussa JSON-"
+"muodossa"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Valittu kaupunki"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Valitun kaupungin koordinaatit"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Käytä liukuväriä taustalla"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr "Käytä sääolosuhteiden mukaan vaihtuvaa liukuväritaustaa pääikkunassa"
+
+#: data/io.github.amit9838.mousam.gschema.xml:22
+msgid "Use Inch for precipitation"
+msgstr "Käytä tuumia sademäärässä"
+
+#: data/io.github.amit9838.mousam.gschema.xml:26
+msgid "Use 24h hour clock"
+msgstr "Käytä 24 tunnin kelloa"
+
+#: data/io.github.amit9838.mousam.gschema.xml:30
+msgid "Main window width"
+msgstr "Pääikkunan leveys"
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "Main window height"
+msgstr "Pääikkunan korkeus"
+
+#: data/io.github.amit9838.mousam.gschema.xml:38
+msgid "Launch the app in maximized mode."
+msgstr "Avaa sovellus koko näytölle."
+
+#: data/io.github.amit9838.mousam.gschema.xml:42
+msgid "Measurement system to use - metric,imperial"
+msgstr "Käytettävä mittajärjestelmä - metrinen,imperiaalinen"
+
+#: data/io.github.amit9838.mousam.gschema.xml:43
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "metrinen(km, °C), imperiaalinen(maili, °F)"
+
+#: src/constants.py:132
+msgid "Clear sky"
+msgstr "Selkeä"
+
+#: src/constants.py:133
+msgid "Few Clouds"
+msgstr "Melkein selkeä"
+
+#: src/constants.py:134
+msgid "Partly Cloudy"
+msgstr "Puolipilvinen"
+
+#: src/constants.py:135
+msgid "Overcast"
+msgstr "Pilvinen"
+
+#: src/constants.py:136
+msgid "Fog"
+msgstr "Sumua"
+
+#: src/constants.py:137
+msgid "Mist"
+msgstr "Utua"
+
+#: src/constants.py:138
+msgid "Light Drizzle"
+msgstr "Kevyt Tihkusade"
+
+#: src/constants.py:139
+msgid "Moderate Drizzle"
+msgstr "Kohtalainen Tihkusade"
+
+#: src/constants.py:140
+msgid "Heavy Intensity Drizzle"
+msgstr "Voimakas Tihkusade"
+
+#: src/constants.py:141
+msgid "Light Freezing Drizzle"
+msgstr "Kevyt Jäätävä Tihkusade"
+
+#: src/constants.py:142
+msgid "Heavy Freezing Drizzle"
+msgstr "Voimakas Jäätävä Tihkusade"
+
+#: src/constants.py:143
+msgid "Light Rain"
+msgstr "Kevyt Sade"
+
+#: src/constants.py:144
+msgid "Moderate Rain"
+msgstr "Kohtalainen Sade"
+
+#: src/constants.py:145
+msgid "Heavy Rain"
+msgstr "Voimakas Sade"
+
+#: src/constants.py:146
+msgid "Light Freezing Rain"
+msgstr "Kevyt Jäätävä Sade"
+
+#: src/constants.py:147
+msgid "Heavy Freezing Rain"
+msgstr "Voimakas Jäätävä Sade"
+
+#: src/constants.py:148
+msgid "Light Snow Fall"
+msgstr "Kevyt Lumisade"
+
+#: src/constants.py:149
+msgid "Moderate Snow Fall"
+msgstr "Kohtalainen Lumisade"
+
+#: src/constants.py:150
+msgid "Heavy Snow Fall"
+msgstr "Voimakas Lumisade"
+
+#: src/constants.py:151
+msgid "Snow grains"
+msgstr "Lumijyväsiä"
+
+#: src/constants.py:152
+msgid "Light Rain Showers"
+msgstr "Kevyitä Sadekuuroja"
+
+#: src/constants.py:153
+msgid "Moderate Rain Showers"
+msgstr "Kohtalaisia Sadekuuroja"
+
+#: src/constants.py:154
+msgid "Heavy Rain Showers"
+msgstr "Voimakkaita Sadekuuroja"
+
+#: src/constants.py:155
+msgid "Light Snow Showers"
+msgstr "Kevyitä Lumikuuroja"
+
+#: src/constants.py:156
+msgid "Heavy Snow Showers "
+msgstr "Voimakkaita Lumikuuroja "
+
+#: src/constants.py:157
+msgid "Thunderstorm"
+msgstr "Ukkosmyrsky"
+
+#: src/constants.py:158
+msgid "Thunderstorm with Hail"
+msgstr "Ukkosmyrsky ja rakeita"
+
+#: src/frontendCardAirPollution.py:44
+msgid "Air Pollution"
+msgstr "Ilmansaaste"
+
+#: src/frontendCardAirPollution.py:54
+msgid "United States AQI standard"
+msgstr "Yhdysvaltain AQI-standardi"
+
+#: src/frontendCardDayNight.py:68
+msgid "Sunrise & Sunset"
+msgstr "Auringon nousu ja lasku"
+
+#: src/frontendCardDayNight.py:79
+msgid "Sunrise"
+msgstr "Aurinko nousee"
+
+#: src/frontendCardDayNight.py:92
+msgid "Sunset"
+msgstr "Aurinko laskee"
+
+#: src/frontendCardSquare.py:163 src/frontendCardSquare.py:171
+msgid "North"
+msgstr "Pohjoinen"
+
+#: src/frontendCardSquare.py:164
+msgid "Northeast"
+msgstr "Koillinen"
+
+#: src/frontendCardSquare.py:165
+msgid "East"
+msgstr "Itä"
+
+#: src/frontendCardSquare.py:166
+msgid "Southeast"
+msgstr "Kaakko"
+
+#: src/frontendCardSquare.py:167
+msgid "South"
+msgstr "Etelä"
+
+#: src/frontendCardSquare.py:168
+msgid "Southwest"
+msgstr "Lounas"
+
+#: src/frontendCardSquare.py:169
+msgid "West"
+msgstr "Länsi"
+
+#: src/frontendCardSquare.py:170 src/mousam.py:319
+msgid "Northwest"
+msgstr "Luode"
+
+#: src/frontendCardSquare.py:180
+msgid "Wind"
+msgstr "Tuuli"
+
+#: src/frontendCardSquare.py:181
+msgid "Pressure"
+msgstr "Ilmanpaine"
+
+#: src/frontendCardSquare.py:182
+msgid "Humidity"
+msgstr "Kosteus"
+
+#: src/frontendCardSquare.py:183
+msgid "UV Index"
+msgstr "UV Indeksi"
+
+#: src/frontendCurrentCond.py:97
+#, python-brace-format
+msgid "Feels like • <b> {0} {1}</b>"
+msgstr "Tuntuu kuin • <b> {0} {1}</b>"
+
+#: src/frontendForecast.py:36 src/frontendForecast.py:141
+msgid "Tomorrow"
+msgstr "Huomenna"
+
+#: src/frontendForecast.py:43
+msgid "Weekly"
+msgstr "Viikoittain"
+
+#: src/frontendForecast.py:136
+msgid "Today"
+msgstr "Tänään"
+
+#: src/frontendHourlyDetails.py:90
+msgctxt "wind"
+msgid "Day High •"
+msgstr "Päivän Korkein •"
+
+#: src/frontendHourlyDetails.py:106
+msgctxt "temperature"
+msgid "Day Max •"
+msgstr "Päivän Korkein •"
+
+#: src/frontendHourlyDetails.py:118
+msgctxt "precipitation"
+msgid "Day High •"
+msgstr "Päivän Korkein •"
+
+#: src/frontendHourlyDetails.py:157
+msgid "No precipitation today !"
+msgstr "Tänään ei sada!"
+
+#: src/frontendHourlyDetails.py:158
+msgid "No precipitation expected today!"
+msgstr "Tänään ei odoteta sadetta!"
+
+#: src/frontendHourlyDetails.py:159
+msgid "Anticipate a precipitation-free day !"
+msgstr "Luvassa on sateeton päivä!"
+
+#: src/frontendHourlyDetails.py:160
+msgid "Enjoy a rain-free day today!"
+msgstr "Nauti päivästäsi ilman sadetta!"
+
+#: src/frontendHourlyDetails.py:161
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "Sateenvarjo saa levätä. Ei sadetta näköpiirissä!"
+
+#: src/frontendHourlyDetails.py:162
+msgid "No rain in sight today!"
+msgstr "Ei sadetta näkyvissä tänään!"
+
+#: src/frontendHourlyDetails.py:195
+msgid "Now"
+msgstr "Nyt"
+
+#: src/frontendUiDrawDayNight.py:97
+msgid "Night"
+msgstr "Yö"
+
+#: src/mousam.py:76
+msgid "Location"
+msgstr "Paikka"
+
+#: src/mousam.py:85 src/shortcutsDialog.ui:45
+msgid "Preferences"
+msgstr "Asetukset"
+
+#: src/mousam.py:90 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr "Pikanäppäimet"
+
+#: src/mousam.py:96
+msgid "About Mousam"
+msgstr "Tietoja Mousamista"
+
+#: src/mousam.py:98 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr "Lopeta"
+
+#: src/mousam.py:153
+msgid "Getting Weather Data"
+msgstr "Haetaan Säätietoja"
+
+#: src/mousam.py:178
+msgid "Welcome to Mousam"
+msgstr "Tervetuloa Mousamiin"
+
+#: src/mousam.py:198
+msgid "No Internet"
+msgstr "Ei Internet yhteyttä"
+
+#: src/mousam.py:202
+msgid "Could not fetch data from API"
+msgstr "Ei voitu hakea tietoja API:sta"
+
+#: src/mousam.py:318
+msgid "From"
+msgstr ""
+
+#: src/mousam.py:320
+msgid "N"
+msgstr "P"
+
+#: src/mousam.py:330
+msgid "Dewpoint"
+msgstr "Kosteuspiste"
+
+#: src/mousam.py:346
+msgctxt "pressure card"
+msgid "High"
+msgstr "Korkea"
+
+#: src/mousam.py:347
+msgctxt "pressure card"
+msgid "Low"
+msgstr "Matala"
+
+#: src/mousam.py:356
+msgctxt "uvindex card"
+msgid "High"
+msgstr "Korkea"
+
+#: src/mousam.py:357
+msgctxt "uvindex card"
+msgid "Low"
+msgstr "Matala"
+
+#: src/mousam.py:373
+msgid "Switched to {}"
+msgstr "Vaihdettu {}"
+
+#: src/mousam.py:376
+msgid "Refreshed Successfully"
+msgstr "Päivitys Onnistui"
+
+#: src/mousam.py:390
+msgid "Refresh within 5 seconds is ignored!"
+msgstr "Päivitys alle 5 sekunnin välein ei ole mahdollista!"
+
+#: src/mousam.py:395
+msgid "Refreshing..."
+msgstr "Päivitetään..."
+
+#: src/weatherData.py:98
+msgid "Good"
+msgstr "Hyvä"
+
+#: src/weatherData.py:100
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/weatherData.py:102
+msgid "Poor"
+msgstr "Huono"
+
+#: src/weatherData.py:104
+msgid "Unhealthy"
+msgstr "Epäterveellinen"
+
+#: src/weatherData.py:106
+msgid "Severe"
+msgstr "Ankara"
+
+#: src/weatherData.py:108
+msgid "Hazardous"
+msgstr "Vaarallinen"
+
+#: src/weatherData.py:116
+msgctxt "uvindex"
+msgid "Low"
+msgstr "Matala"
+
+#: src/weatherData.py:118
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/weatherData.py:120
+msgctxt "uvindex"
+msgid "High"
+msgstr "Korkea"
+
+#: src/weatherData.py:122
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "Erittäin Korkea"
+
+#: src/weatherData.py:124
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "Äärimmäinen"
+
+#: src/weatherData.py:129
+msgctxt "humidity"
+msgid "Low"
+msgstr "Matala"
+
+#: src/weatherData.py:131
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/weatherData.py:133
+msgctxt "humidity"
+msgid "High"
+msgstr "Korkea"
+
+#: src/weatherData.py:138
+msgctxt "pressure"
+msgid "Low"
+msgstr "Matala"
+
+#: src/weatherData.py:140
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Normaali"
+
+#: src/weatherData.py:142
+msgctxt "pressure"
+msgid "High"
+msgstr "Korkea"
+
+#: src/weatherData.py:147
+msgid "Calm"
+msgstr "Tyyni"
+
+#: src/weatherData.py:149
+msgid "Light"
+msgstr "Kevyt"
+
+#: src/weatherData.py:151
+msgctxt "wind"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/weatherData.py:153
+msgid "Strong"
+msgstr "Kova"
+
+#: src/weatherData.py:155
+msgctxt "wind"
+msgid "Extreme"
+msgstr "Äärimmäinen"
+
+#: src/weatherData.py:159
+msgid "km"
+msgstr "km"
+
+#: src/weatherData.py:162
+msgid "miles"
+msgstr "mailia"
+
+#: src/windowAbout.py:20
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Tekijänoikeus © 2024 Mousam Kehittäjät"
+
+#: src/windowAbout.py:23
+msgid "translator_credits"
+msgstr "juha antikainen <jussi.antikainen@gmail.com>"
+
+#: src/windowLocations.py:23 src/windowLocations.py:37
+#: src/shortcutsDialog.ui:39
+msgid "Locations"
+msgstr "Paikat"
+
+#: src/windowLocations.py:45
+msgid "Add"
+msgstr "Lisää"
+
+#: src/windowLocations.py:74
+msgid "Remove location"
+msgstr "Poista paikka"
+
+#: src/windowLocations.py:128
+msgid "Switch city within 2 seconds is ignored!"
+msgstr "Kaupungin vaihtaminen 2 sekunnin välein ei ole mahdollista!"
+
+#: src/windowLocations.py:132
+msgid "Selected - {}"
+msgstr "Valitut - {}"
+
+#: src/windowLocations.py:143
+msgid "Add New Location"
+msgstr "Lisää Uusi Paikka"
+
+#: src/windowLocations.py:168
+msgid "Search for a city"
+msgstr "Etsi kaupunkia"
+
+#: src/windowLocations.py:174 src/windowLocations.py:176
+msgid "Search"
+msgstr "Etsi"
+
+#: src/windowLocations.py:254
+#, python-brace-format
+msgid "Added - {0}"
+msgstr "Lisätty - {0}"
+
+#: src/windowLocations.py:256
+msgid "Location already added!"
+msgstr "Paikka on jo lisätty!"
+
+#: src/windowLocations.py:283
+#, python-brace-format
+msgid "Deleted - {0}"
+msgstr "Poistettu - {0}"
+
+#: src/windowLocations.py:286
+msgid "Press enter to search"
+msgstr "Paina Enter hakeaksesi"
+
+#: src/windowLocations.py:289
+msgid "No results found!"
+msgstr "Tuloksia ei löytynyt!"
+
+#: src/windowPreferences.py:26
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+#: src/windowPreferences.py:36
+msgid "Dynamic Background"
+msgstr "Dynaaminen Tausta"
+
+#: src/windowPreferences.py:37
+msgid ""
+"App background changes based on current weather conditions (restart required)"
+msgstr ""
+"Taustakuva päivittyy sääolosuhteiden perusteella (uudelleenkäynnistys "
+"vaaditaan)."
+
+#: src/windowPreferences.py:50
+msgid "Time Format"
+msgstr "Aika Formaatti"
+
+#: src/windowPreferences.py:51
+msgid "Weather time format (Refresh required)"
+msgstr "Sään aikamuoto (Päivitys vaaditaan)"
+
+#: src/windowPreferences.py:60
+msgid "24 Hour"
+msgstr "24 Tuntia"
+
+#: src/windowPreferences.py:67
+msgid "AM / PM"
+msgstr "AM / PM"
+
+#: src/windowPreferences.py:82
+msgid "Units &amp; Measurements"
+msgstr "Yksiköt &amp; Mittaukset"
+
+#: src/windowPreferences.py:86
+msgid "°C"
+msgstr "°C"
+
+#: src/windowPreferences.py:87
+msgid "Metric system with units like Celsius, km/h, and kilometers"
+msgstr "Metrinen järjestelmä yksiköillä Celsius, km/h, ja kilometri"
+
+#: src/windowPreferences.py:95
+msgid "°F"
+msgstr "°F"
+
+#: src/windowPreferences.py:96
+msgid "Imperial system with units like Fahrenheit, mph, and miles"
+msgstr "Imperiaalinen järjestelmä yksiköillä Fahrenheit, mph, ja maili"
+
+#: src/windowPreferences.py:110
+msgid "Precipitation in inches"
+msgstr "Sademäärä tuumina"
+
+#: src/windowPreferences.py:111
+msgid "This option works better in heavy precipitation (refresh required)"
+msgstr ""
+"Tämä valinta toimii paremmin runsailla sademäärillä (Päivitys tarpeellinen)"
+
+#: src/windowPreferences.py:140
+msgid "Switching locations within 2 seconds is ignored"
+msgstr "Sijainnin vaihtaminen alle 2 sekunnin välein ei ole mahdollista"
+
+#: src/windowPreferences.py:143
+msgid "Switched to - {}"
+msgstr "Vaihdettu - {}"
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "Yleiset"
+
+#: src/shortcutsDialog.ui:33
+msgid "Refresh Weather"
+msgstr "Päivitä Sää"
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
+msgstr "Valikko"
