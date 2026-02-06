@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PAKETVERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-17 16:58+0530\n"
-"PO-Revision-Date: 2025-05-27 14:08+0200\n"
+"PO-Revision-Date: 2026-02-06 14:33+0100\n"
 "Last-Translator: Jonas Harer <jonas.harer@icloud.com>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Poedit 3.6\n"
 
 #: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
@@ -27,12 +27,11 @@ msgstr "Mousam"
 #: data/io.github.amit9838.mousam.desktop.in:5
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:16
 msgid "Weather at a glance"
-msgstr ""
+msgstr "Wetter auf einen Blick"
 
 #: data/io.github.amit9838.mousam.desktop.in:10
-#, fuzzy
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr "Wetter;Mousam;Regen;Wolke;Vorhersage;"
+msgstr "Wetter;Mousam;Regen;Wolke;Vorhersage;GTK4;Python;Temperatur;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 msgid "Current Weather conditions and forcasts."
@@ -66,21 +65,19 @@ msgstr "Bietet auch Vorhersagen für morgen und die nächsten 7 Tage"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
 msgid "See conditions in metric or imperial systems"
-msgstr "Siehe Bedingungen in metrischen oder imperialen Systemen"
+msgstr "Bedingungen im metrischen oder angloamerikanischen Maßsystem ansehen"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
-#, fuzzy
 msgid "Clear Sky - day"
-msgstr "Klarer Himmel - imperial"
+msgstr "Klarer Himmel - Tag"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
-msgstr ""
+msgstr "Schneefall - Tag"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
-#, fuzzy
 msgid "Clear Sky - night"
-msgstr "Klarer Himmel - imperial"
+msgstr "Klarer Himmel - Nacht"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
@@ -121,28 +118,27 @@ msgstr "Verwenden Sie Zoll für Niederschlag"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr ""
+msgstr "24-Stunden-Format verwenden"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr ""
+msgstr "Breite des Hauptfensters"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr ""
+msgstr "Höhe des Hauptfensters"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
 msgstr "Starten Sie die App im maximierten Modus."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-#, fuzzy
 msgid "Measurement system to use - metric,imperial"
-msgstr "Zu verwendendes Maßsystem - metrisch, imperial"
+msgstr "Zu verwendendes Maßsystem - metrisch, angloamerikanisch"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "metrisch(km, °C), imperial(meile, °F)"
+msgstr "metrisch(km, °C), angloamerikanisch(Meile, °F)"
 
 #: src/constants.py:132
 msgid "Clear sky"
@@ -241,9 +237,8 @@ msgid "Light Snow Showers"
 msgstr "Leichte Schneeschauer"
 
 #: src/constants.py:156
-#, fuzzy
 msgid "Heavy Snow Showers "
-msgstr "Starke Schneeschauer"
+msgstr "Starke Schneeschauer "
 
 #: src/constants.py:157
 msgid "Thunderstorm"
@@ -322,7 +317,7 @@ msgid "UV Index"
 msgstr "UV-Index"
 
 #: src/frontendCurrentCond.py:97
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "Gefühlte Temperatur • <b> {0} {1}</b>"
 
@@ -339,22 +334,19 @@ msgid "Today"
 msgstr "Heute"
 
 #: src/frontendHourlyDetails.py:90
-#, fuzzy
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Tageshoch"
+msgstr "Tageshoch •"
 
 #: src/frontendHourlyDetails.py:106
-#, fuzzy
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Tagesmaximum"
+msgstr "Tagesmaximum •"
 
 #: src/frontendHourlyDetails.py:118
-#, fuzzy
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Tageshoch"
+msgstr "Tageshoch •"
 
 #: src/frontendHourlyDetails.py:157
 msgid "No precipitation today !"
@@ -385,14 +377,12 @@ msgid "Now"
 msgstr "Jetzt"
 
 #: src/frontendUiDrawDayNight.py:97
-#, fuzzy
 msgid "Night"
-msgstr "Leicht"
+msgstr "Nacht"
 
 #: src/mousam.py:76
-#, fuzzy
 msgid "Location"
-msgstr "Standorte"
+msgstr "Standort"
 
 #: src/mousam.py:85 src/shortcutsDialog.ui:45
 msgid "Preferences"
@@ -400,7 +390,7 @@ msgstr "Einstellungen"
 
 #: src/mousam.py:90 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastenkombinationen"
 
 #: src/mousam.py:96
 msgid "About Mousam"
@@ -415,9 +405,8 @@ msgid "Getting Weather Data"
 msgstr "Wetterdaten abrufen"
 
 #: src/mousam.py:178
-#, fuzzy
 msgid "Welcome to Mousam"
-msgstr "Über Mousam"
+msgstr "Willkommen bei Mousam"
 
 #: src/mousam.py:198
 msgid "No Internet"
@@ -641,10 +630,9 @@ msgstr "Gelöscht - {0}"
 
 #: src/windowLocations.py:286
 msgid "Press enter to search"
-msgstr ""
+msgstr "Zum Suchen die Eingabetaste drücken"
 
 #: src/windowLocations.py:289
-#, fuzzy
 msgid "No results found!"
 msgstr "Keine Ergebnisse gefunden!"
 
@@ -657,7 +645,6 @@ msgid "Dynamic Background"
 msgstr "Dynamischer Hintergrund"
 
 #: src/windowPreferences.py:37
-#, fuzzy
 msgid ""
 "App background changes based on current weather conditions (restart required)"
 msgstr ""
@@ -669,59 +656,50 @@ msgid "Time Format"
 msgstr "Zeitformat"
 
 #: src/windowPreferences.py:51
-#, fuzzy
 msgid "Weather time format (Refresh required)"
-msgstr ""
-"Starten Sie die Wetter-App im maximierten Modus (Aktualisierung erforderlich)"
+msgstr "Angezeigtes Zeitformat (Aktualisierung erforderlich)"
 
 #: src/windowPreferences.py:60
-#, fuzzy
 msgid "24 Hour"
-msgstr "Stündlich"
+msgstr "24 Stunden"
 
 #: src/windowPreferences.py:67
 msgid "AM / PM"
-msgstr ""
+msgstr "AM / PM"
 
 #: src/windowPreferences.py:82
-#, fuzzy
 msgid "Units &amp; Measurements"
-msgstr "Einheiten & Messungen"
+msgstr "Einheiten &amp; Messungen"
 
 #: src/windowPreferences.py:86
 msgid "°C"
 msgstr "°C"
 
 #: src/windowPreferences.py:87
-#, fuzzy
 msgid "Metric system with units like Celsius, km/h, and kilometers"
-msgstr "METRISCHES System mit Einheiten wie Celsius, km/h, Kilometer"
+msgstr "Metrisches System mit Einheiten wie Celsius, km/h, Kilometer"
 
 #: src/windowPreferences.py:95
 msgid "°F"
 msgstr "°F"
 
 #: src/windowPreferences.py:96
-#, fuzzy
 msgid "Imperial system with units like Fahrenheit, mph, and miles"
-msgstr "IMPERIALES System mit Einheiten wie Fahrenheit, mph, Meilen"
+msgstr "Angloamerikanisches System mit Einheiten wie Fahrenheit, mph, Meilen"
 
 #: src/windowPreferences.py:110
-#, fuzzy
 msgid "Precipitation in inches"
-msgstr "Niederschlag in Zoll anzeigen"
+msgstr "Niederschlag in Zoll"
 
 #: src/windowPreferences.py:111
-#, fuzzy
 msgid "This option works better in heavy precipitation (refresh required)"
 msgstr ""
 "Diese Option funktioniert besser bei starkem Niederschlag (Aktualisierung "
 "erforderlich)"
 
 #: src/windowPreferences.py:140
-#, fuzzy
 msgid "Switching locations within 2 seconds is ignored"
-msgstr "Wechsel innerhalb von 2 Sekunden wird ignoriert!"
+msgstr "Standort-Wechsel innerhalb von 2 Sekunden wird ignoriert"
 
 #: src/windowPreferences.py:143
 msgid "Switched to - {}"
@@ -729,7 +707,7 @@ msgstr "Gewechselt zu - {}"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
@@ -737,7 +715,7 @@ msgstr "Wetter aktualisieren"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #~ msgid "Beautiful and lightweight weather app"
 #~ msgstr "Schöne und leichte Wetter-App"
