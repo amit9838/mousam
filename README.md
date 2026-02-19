@@ -97,8 +97,14 @@ Thanks to all the contributors have helped in the development project so that op
 I hope you ❤️ <b>Mousam</b>, if you think it is worth supporting you can do so using below methods
 <br>
 <br>
+ 
+<div>
+<a href="https://www.paypal.com/ncp/payment/MDNGWG9HQZDCE">
+ <img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1280px-PayPal.svg.png alt="cards"  width="128" />    
+</a>
+<span>&nbsp; &nbsp; &nbsp;</span>
 <a href="https://www.buymeacoffee.com/ami9838">
-    <img className="mt-4" alt="support" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ami9838&button_colour=FF5F5F&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" />
+    <img className="mt-4" alt="support" width="128" src="https://miro.medium.com/1*QCQqlZr6doDP-cszzpaSpw.png" />
 </a>
 </div>
 <div align="center">
