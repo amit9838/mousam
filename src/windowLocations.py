@@ -130,7 +130,6 @@ class WeatherLocations(Adw.PreferencesWindow):
     def __init__(self, application, **kwargs):
         super().__init__(**kwargs)
         self.application = application
-        self.last_switch_time = 0
         self.row_map = {}  # Track rows to prevent full UI rebuilds
 
         self.set_title(_("Locations"))
@@ -218,15 +217,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         if settings.selected_city == new_coords and not len(settings.added_cities):
             return
 
-        # Rate limiting switch
-        now = time.time()
-        if now - self.last_switch_time < 2:
-            self.add_toast(Adw.Toast(title=_("Please wait before switching again")))
-            return
-
         settings.selected_city = new_coords
-        self.last_switch_time = now
-
         self._refresh_list()
         self.application._start_data_refresh()
         self.add_toast(Adw.Toast(title=_("Selected {}").format(city_dict.get("name"))))
