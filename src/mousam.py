@@ -18,15 +18,15 @@ from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
 
 # Frontend Components
-from .frontendCurrentCond import CurrentCondition
-from .frontendHourlyDetails import HourlyDetails
-from .frontendForecast import Forecast
-from .frontendCardSquare import CardSquare
-from .frontendCardDayNight import CardDayNight
-from .frontendCardAirPollution import CardAirPollution
+from .UI_CurrentCond import CurrentCondition
+from .UI_HourlyDetails import HourlyDetails
+from .UI_Forecast import Forecast
+from .UI_CardSquare import CardSquare
+from .UI_CardDayNight import CardDayNight
+from .UI_CardAirPollution import CardAirPollution
 
 from .config import settings
-from .weatherData import (
+from .CORE_weatherData import (
     fetch_current_weather,
     fetch_hourly_forecast,
     fetch_daily_forecast,
@@ -220,7 +220,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         Now that fetching is done, we can safely import and read the data.
         """
         # Lazy import inside the function to ensure we read the updated state
-        from .weatherData import current_weather_data as cw_data
+        from .CORE_weatherData import current_weather_data as cw_data
 
         # Clear previous grid if exists
         child = self.main_stack.get_child_by_name("content")

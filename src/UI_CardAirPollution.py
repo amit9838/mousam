@@ -4,7 +4,7 @@ import time
 from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
-from .frontendUiDrawPollutionBar import PollutionBar
+from .UI_CompDrawPollutionBar import PollutionBar
 from .config import settings
 
 gi.require_version("Gtk", "4.0")
@@ -12,7 +12,7 @@ gi.require_version("Adw", "1")
 
 class CardAirPollution:
     def __init__(self):
-        from .weatherData import air_apllution_data, classify_aqi
+        from .CORE_weatherData import air_apllution_data, classify_aqi
 
         self.air_apllution_data = air_apllution_data
         self.classify_aqi = classify_aqi

@@ -6,8 +6,8 @@ from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
 from .constants import icons, icon_loc
-from .frontendUiDrawImageIcon import DrawImage
-from .frontendUiDrawbarLine import DrawBar
+from .UI_CompDrawImageIcon import DrawImage
+from .UI_CompDrawbarLine import DrawBar
 from .config import settings
 
 gi.require_version("Gtk", "4.0")
@@ -76,7 +76,7 @@ class HourlyDetails(Gtk.Grid):
 
     # ---------- Create page stack --------------
     def create_stack_page(self, page_name):
-        from .weatherData import hourly_forecast_data as hourly_data
+        from .CORE_weatherData import hourly_forecast_data as hourly_data
 
         page_grid = Gtk.Grid()
         self.hourly_stack.add_named(page_grid, page_name)

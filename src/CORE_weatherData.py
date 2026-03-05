@@ -1,11 +1,11 @@
 import time
 import gi
 
-from .backendWeather import Weather
-from .backendAirPollution import AirPollution
+from .API_Weather import Weather
+from .API_AirPollution import AirPollution
 from .config import settings
 from .constants import hpa_to_inhg
-from .Models import CurrentWeather, HourlyWeather, DailyWeather
+from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather
 from .utils import get_cords
 from gettext import gettext as _, pgettext as C_
 

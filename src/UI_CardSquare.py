@@ -8,8 +8,8 @@ from gi.repository import Gtk, Adw
 
 from .constants import icons
 from .config import settings
-from .frontendUiDrawBar import DrawLevelBar
-from .frontendUiDrawImageIcon import DrawImage
+from .UI_CompDrawBar import DrawLevelBar
+from .UI_CompDrawImageIcon import DrawImage
 
 # Standardizing CSS classes for reuse
 CSS_CARD_BASE = ["view", "card", "custom_card"]

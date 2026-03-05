@@ -8,7 +8,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 from .utils import create_toast
-from .backendFindCity import find_city
+from .API_FindCity import find_city
 from .config import settings
 from gettext import gettext as _, pgettext as C_
 

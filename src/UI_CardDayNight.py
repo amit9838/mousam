@@ -4,7 +4,7 @@ import gi
 from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
-from .frontendUiDrawDayNight import DrawDayNight
+from .UI_CompDrawDayNight import DrawDayNight
 from .config import settings
 from .utils import (
     get_cords,
@@ -26,7 +26,7 @@ class CardDayNight:
         self.create_card()
 
     def get_sunset_sunrise_degree(self):
-        from .weatherData import daily_forecast_data as daily_data
+        from .CORE_weatherData import daily_forecast_data as daily_data
 
         t_data = get_time_difference()
         time_diff = t_data.get("epoch_diff")
