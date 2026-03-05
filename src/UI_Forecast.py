@@ -73,8 +73,8 @@ class Forecast(Gtk.Grid):
         # ============ Add items to Stack [Tomorrow/Week] =============
 
     def page_stacks(self, page_name):
-        from .weatherData import daily_forecast_data as daily_data
-        from .weatherData import hourly_forecast_data as hourly_data
+        from .CORE_weatherData import daily_forecast_data as daily_data
+        from .CORE_weatherData import hourly_forecast_data as hourly_data
 
         # Create box and add it stack
         box = Gtk.Box(margin_top=0, margin_bottom=0)
