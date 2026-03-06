@@ -1,5 +1,4 @@
 import gi
-import time
 import threading
 
 gi.require_version("Gtk", "4.0")
@@ -44,8 +43,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self.connect("close-request", self._save_window_state)
 
         # State Tracking
-        self._last_updated = time.time()
-        self.added_cities = settings.added_cities
+        self.added_cities= settings.added_cities
 
         # --- UI Construction ---
         self._setup_actions()
@@ -150,18 +148,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self._update_view_state("welcome")
             return
 
-        current_time = time.time()
-        if not is_initial and (current_time - self._last_updated < 5):
-            self.toast_overlay.add_toast(
-                create_toast(_("Please wait a moment before refreshing"), 1)
-            )
-            return
 
         self._update_view_state("loader")
-        if not is_initial:
-            self.toast_overlay.add_toast(create_toast(_("Refreshing..."), 1))
-
-        self._last_updated = current_time
 
         # Pass coordinates to thread to ensure thread-safety against config changes
         city_coords = settings.selected_city
@@ -211,7 +199,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         """Called on Main Thread after the worker has populated weatherData."""
         self._render_weather_grid()
         self._update_view_state("content")
-        self.toast_overlay.add_toast(create_toast(_("Updated successfully"), 1))
 
     # ================= UI Rendering =================
 

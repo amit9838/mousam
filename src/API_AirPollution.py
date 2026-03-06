@@ -1,11 +1,12 @@
 import requests
-
+from .utils import cached
 
 base_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
 
 
 class AirPollution:
     @staticmethod
+    @cached()
     def current_air_pollution(latitude: float, longitude: float, **kwargs):
         url = base_url + f"?latitude={latitude}&longitude={longitude}"
         if "hourly" in kwargs:
