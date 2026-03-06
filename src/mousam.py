@@ -150,8 +150,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
 
         self._update_view_state("loader")
-        if not is_initial:
-            self.toast_overlay.add_toast(create_toast(_("Refreshing..."), 1))
 
         # Pass coordinates to thread to ensure thread-safety against config changes
         city_coords = settings.selected_city
@@ -201,7 +199,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         """Called on Main Thread after the worker has populated weatherData."""
         self._render_weather_grid()
         self._update_view_state("content")
-        self.toast_overlay.add_toast(create_toast(_("Updated successfully"), 1))
 
     # ================= UI Rendering =================
 

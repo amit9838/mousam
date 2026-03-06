@@ -220,7 +220,7 @@ class WeatherLocations(Adw.PreferencesWindow):
         settings.selected_city = new_coords
         self._refresh_list()
         self.application._start_data_refresh()
-        self.add_toast(Adw.Toast(title=_("Selected {}").format(city_dict.get("name"))))
+        self.add_toast(Adw.Toast(title=_("Switched to {}").format(city_dict.get("name"))))
 
     def _handle_city_removed(self, _btn, city_data: str):
         coords_to_remove = LocationData.get_coords_key(city_data)
