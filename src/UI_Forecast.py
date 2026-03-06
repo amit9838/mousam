@@ -325,7 +325,7 @@ class Forecast(Gtk.Grid):
         grid.attach(temp_grid, 2, 0, 1, 1)
 
         # Max temperature
-        max_label = Gtk.Label(label=f"{temp_max:.0f}° ", margin_start=10)
+        max_label = Gtk.Label(label=f"{temp_max:.0f}° ", margin_start=4)
         max_label.set_css_classes(["text-4", "bold-2"])
         temp_grid.attach(max_label, 1, 0, 1, 1)
 
