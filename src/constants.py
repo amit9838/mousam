@@ -128,7 +128,7 @@ bg_css = {
 # 1 ->   indicates day
 # 1n ->  indicates night
 
-conditon = {
+condition = {
     "0": _("Clear sky"),
     "1": _("Few Clouds"),
     "2": _("Partly Cloudy"),

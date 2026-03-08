@@ -2,6 +2,7 @@ import logging
 import requests
 from typing import List
 from requests.exceptions import RequestException
+from .utils import cached
 
 # Configure logging at the module level
 logger = logging.getLogger(__name__)
@@ -9,6 +10,7 @@ logger = logging.getLogger(__name__)
 GEO_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
 
+@cached(5)
 def find_city(city: str, count: int = 3) -> List[dict]:
     """
     Fetches city location data from the Open-Meteo Geocoding API.
@@ -26,7 +28,6 @@ def find_city(city: str, count: int = 3) -> List[dict]:
         # Use a timeout to prevent the thread from hanging indefinitely
         response = requests.get(GEO_BASE_URL, params=params, timeout=10)
         response.raise_for_status()
-
         payload = response.json()
         results = payload.get("results", [])
 

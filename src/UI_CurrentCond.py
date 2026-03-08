@@ -1,6 +1,6 @@
 import gi
 from gi.repository import Gtk
-from .constants import icons, conditon
+from .constants import icons, condition
 from .config import settings
 from .utils import JsonProcessor
 from gettext import gettext as _, pgettext as C_
@@ -26,7 +26,7 @@ class CurrentCondition(Gtk.Grid):
             orientation=Gtk.Orientation.VERTICAL,
             hexpand=True,
             halign=Gtk.Align.START,
-            margin_top=30,
+            margin_top=0,
         )
         self.attach(box_left, 0, 0, 1, 1)
 
@@ -46,7 +46,7 @@ class CurrentCondition(Gtk.Grid):
 
         # Condition label
         cond_label = Gtk.Label(
-            label=conditon[str(data.weathercode.get("data"))],
+            label=condition[str(data.weathercode.get("data"))],
             halign=Gtk.Align.START,
             valign=Gtk.Align.END,
         )
@@ -66,7 +66,7 @@ class CurrentCondition(Gtk.Grid):
 
         # ========== right  section ==========
         box_right = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL, margin_top=35, margin_end=5
+            orientation=Gtk.Orientation.VERTICAL, margin_top=10, margin_end=5
         )
         self.attach(box_right, 1, 0, 1, 1)
 

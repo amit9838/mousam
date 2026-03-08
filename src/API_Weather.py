@@ -3,6 +3,7 @@ import datetime
 
 from .config import settings
 from .constants import hpa_to_inhg
+from .utils import cached
 
 extend_url = ""
 base_url = "https://api.open-meteo.com/v1/forecast"
@@ -23,6 +24,7 @@ class Weather:
 
     # Current Weather =============================================
     @classmethod
+    @cached()
     def current_weather(cls,latitude: float, longitude: float, **kwargs):
         url = base_url + f"?latitude={latitude}&longitude={longitude}"
 
@@ -61,6 +63,7 @@ class Weather:
 
     # Hourly Forecast ==============================================
     @classmethod
+    @cached()
     def forecast_hourly(cls,latitude: float, longitude: float, **kwargs):
         url = base_url + f"?latitude={latitude}&longitude={longitude}&timezone=auto"
 
@@ -108,6 +111,7 @@ class Weather:
 
     # Forecast daily ====================================================
     @classmethod
+    @cached()
     def forecast_daily(cls,latitude: float, longitude: float, **kwargs):
         url = base_url + f"?latitude={latitude}&longitude={longitude}"
         if "daily" in kwargs:
