@@ -84,6 +84,14 @@ class Settings:
         self.settings.set_boolean("window-maximized", value)
 
     @property
+    def auto_refresh_interval(self):
+        return self.settings.get_int("auto-refresh-interval")
+
+    @auto_refresh_interval.setter
+    def auto_refresh_interval(self, value):
+        self.settings.set_int("auto-refresh-interval", value)
+
+    @property
     def unit(self):
         return self.settings.get_string("unit")
 
