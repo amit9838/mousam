@@ -136,6 +136,40 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self.prec_unit.add_suffix(self.prec_unit_switch_box)
         self.prec_unit_group.add(self.prec_unit)
 
+        # Auto Refresh
+        self.auto_refresh_group = Adw.PreferencesGroup.new()
+        self.auto_refresh_group.set_margin_top(20)
+        appearance_page.add(self.auto_refresh_group)
+
+        self.auto_refresh_intervals = [0, 15, 30, 60, 120]
+        auto_refresh_labels = Gtk.StringList.new(
+            [
+                _("Off"),
+                _("Every 15 minutes"),
+                _("Every 30 minutes"),
+                _("Every hour"),
+                _("Every 2 hours"),
+            ]
+        )
+
+        self.auto_refresh_row = Adw.ComboRow.new()
+        self.auto_refresh_row.set_title(_("Auto Refresh"))
+        self.auto_refresh_row.set_subtitle(
+            _("Automatically refresh weather data at a set interval")
+        )
+        self.auto_refresh_row.set_model(auto_refresh_labels)
+
+        current_interval = settings.auto_refresh_interval
+        if current_interval in self.auto_refresh_intervals:
+            self.auto_refresh_row.set_selected(
+                self.auto_refresh_intervals.index(current_interval)
+            )
+        else:
+            self.auto_refresh_row.set_selected(0)
+
+        self.auto_refresh_row.connect("notify::selected", self._on_auto_refresh_changed)
+        self.auto_refresh_group.add(self.auto_refresh_row)
+
         # =============== Data Management Group ===============
         self.data_group = Adw.PreferencesGroup.new()
         self.data_group.set_title(_("Data Management"))
@@ -191,6 +225,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
     def _use_inch_for_precipation(self, widget, state):
         settings.is_using_inch_for_prec = state
 
+    def _on_auto_refresh_changed(self, combo_row, _pspec):
+        index = combo_row.get_selected()
+        settings.auto_refresh_interval = self.auto_refresh_intervals[index]
+
     def _on_reset_clicked(self, button):
         dialog = Adw.MessageDialog.new(
             self,
@@ -220,6 +258,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         # 2. Update the UI widgets to reflect the new state
         self.gradient_switch.set_active(settings.is_using_dynamic_bg)
         self.use_inch_switch.set_active(settings.is_using_inch_for_prec)
+        self.auto_refresh_row.set_selected(0)
 
         if settings.unit == "metric":
             self.metric_check_btn.set_active(True)

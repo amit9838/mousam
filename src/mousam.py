@@ -44,6 +44,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # State Tracking
         self.added_cities= settings.added_cities
+        self._auto_refresh_timer_id = None
 
         # --- UI Construction ---
         self._setup_actions()
@@ -52,6 +53,13 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # Initial Data Load
         self._start_data_refresh(is_initial=True)
+
+        # Auto-refresh setup
+        self._setup_auto_refresh()
+        settings.settings.connect(
+            "changed::auto-refresh-interval",
+            lambda *_: self._setup_auto_refresh(),
+        )
 
     def _setup_ui(self):
         """Initialize the main UI skeleton using Adwaita patterns."""
@@ -369,7 +377,26 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         if css_class:
             self.add_css_class(css_class)
 
+    def _setup_auto_refresh(self):
+        if self._auto_refresh_timer_id is not None:
+            GLib.source_remove(self._auto_refresh_timer_id)
+            self._auto_refresh_timer_id = None
+
+        interval = settings.auto_refresh_interval
+        if interval > 0:
+            self._auto_refresh_timer_id = GLib.timeout_add_seconds(
+                interval * 60, self._on_auto_refresh_tick
+            )
+
+    def _on_auto_refresh_tick(self):
+        self._start_data_refresh()
+        return GLib.SOURCE_CONTINUE
+
     def _save_window_state(self, window):
+        if self._auto_refresh_timer_id is not None:
+            GLib.source_remove(self._auto_refresh_timer_id)
+            self._auto_refresh_timer_id = None
+
         width, height = window.get_default_size()
         settings.window_width = width
         settings.window_height = height
