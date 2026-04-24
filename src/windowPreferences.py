@@ -1,247 +1,278 @@
-import gi
-import time
 import threading
-from gi.repository import Gtk, Adw, GLib
-from .utils import create_toast
+import time
+from enum import IntEnum
+from typing import Optional
+
+import gi
+from gi.repository import Adw, Gtk, GLib
+
 from .config import settings
-from gettext import gettext as _, pgettext as C_
+from .utils import create_toast
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
+# ----------------------------------------------------------------------
+# Constants & Enums
+# ----------------------------------------------------------------------
+class AutoRefreshInterval(IntEnum):
+    OFF = 0
+    ONE_MIN = 1
+    FIFTEEN_MIN = 15
+    THIRTY_MIN = 30
+    ONE_HOUR = 60
+    TWO_HOURS = 120
 
-updated_at = time.time()
+AUTO_REFRESH_LABELS = {
+    AutoRefreshInterval.OFF: _("Off"),
+    AutoRefreshInterval.ONE_MIN: _("Every minute"),
+    AutoRefreshInterval.FIFTEEN_MIN: _("Every 15 minutes"),
+    AutoRefreshInterval.THIRTY_MIN: _("Every 30 minutes"),
+    AutoRefreshInterval.ONE_HOUR: _("Every hour"),
+    AutoRefreshInterval.TWO_HOURS: _("Every 2 hours"),
+}
 
 
 class WeatherPreferences(Adw.PreferencesWindow):
-    def __init__(self, application, **kwargs):
+    """Preferences window for weather application."""
+
+    def __init__(self, application: Adw.Application, **kwargs):
         super().__init__(**kwargs)
         self.application = application
         self.set_transient_for(application)
         self.set_default_size(600, 500)
+        self.set_title(_("Weather Preferences"))
 
-        # =============== Appearance Page  ===============
+        # Internal state
+        self._last_unit_switch_time: float = time.time()
+
+        self._build_ui()
+        self._bind_settings_to_ui()
+
+    # ------------------------------------------------------------------
+    # UI Construction
+    # ------------------------------------------------------------------
+    def _build_ui(self) -> None:
+        """Create all preference pages and groups."""
         appearance_page = Adw.PreferencesPage()
         appearance_page.set_title(_("Appearance"))
         appearance_page.set_icon_name("applications-graphics-symbolic")
         self.add(appearance_page)
 
-        self.appearance_grp = Adw.PreferencesGroup()
-        appearance_page.add(self.appearance_grp)
+        general_group = Adw.PreferencesGroup()
+        appearance_page.add(general_group)
 
-        # Dynamic Background
-        gradient_row = Adw.ActionRow.new()
-        gradient_row.set_activatable(True)
-        gradient_row.set_title(_("Dynamic Background"))
-        gradient_row.set_subtitle(
-            _(
-                "App background changes based on current weather conditions (restart required)"
-            )
+        self._add_dynamic_background_row(general_group)
+        self._add_time_format_row(general_group)
+        self._add_auto_refresh_row(general_group)
+        self._add_units_and_measurements_group(general_group)
+        self._add_reset_row(appearance_page)
+
+    def _add_dynamic_background_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Dynamic Background"),
+            subtitle=_(
+                "App background changes based on current weather conditions"
+            ),
+            icon_name="preferences-color-symbolic",
+            activatable=True,
         )
+        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        switch.set_active(settings.is_using_dynamic_bg)
+        switch.connect("state-set", self._on_dynamic_bg_toggled)
+        row.add_suffix(switch)
+        self._dynamic_bg_switch = switch
+        parent.add(row)
 
-        self.g_switch_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER
+    def _add_time_format_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Time Format"),
+            subtitle=_("Weather time format"),
+            icon_name="preferences-system-time-symbolic",
+            activatable=True,
         )
-        self.gradient_switch = Gtk.Switch()
-        self.gradient_switch.set_active(settings.is_using_dynamic_bg)
-        self.gradient_switch.connect("state-set", self._use_gradient_bg)
-        self.g_switch_box.append(self.gradient_switch)
-        gradient_row.add_suffix(self.g_switch_box)
-        self.appearance_grp.add(gradient_row)
-
-        #  Use 24h Clock Format
-        use_24h_clock_row = Adw.ActionRow.new()
-        use_24h_clock_row.set_activatable(True)
-        use_24h_clock_row.set_title(_("Time Format"))
-        use_24h_clock_row.set_subtitle(_("Weather time format (Refresh required)"))
-        self.appearance_grp.add(use_24h_clock_row)
-
-        style_buttons_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        style_buttons_box.add_css_class("linked")
-        style_buttons_box.set_margin_start(2)
-        style_buttons_box.set_valign(Gtk.Align.CENTER)
-        use_24h_clock_row.add_suffix(style_buttons_box)
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        button_box.add_css_class("linked")
+        button_box.set_margin_start(2)
+        button_box.set_valign(Gtk.Align.CENTER)
+        row.add_suffix(button_box)
 
         btn_24h = Gtk.ToggleButton.new_with_label(_("24 Hour"))
         btn_24h.set_size_request(80, 20)
         btn_24h.set_css_classes(["btn-sm"])
-        btn_24h.do_clicked(btn_24h)
-        style_buttons_box.append(btn_24h)
-        btn_24h.connect("clicked", self._on_click_use_24h_clock, True)
+        btn_24h.connect("clicked", self._on_24h_clock_toggled, True)
 
         btn_12h = Gtk.ToggleButton.new_with_label(_("AM / PM"))
         btn_12h.set_size_request(80, 20)
-        btn_12h.set_css_classes(["btn_sm"])
+        btn_12h.set_css_classes(["btn-sm"])
         btn_12h.set_group(btn_24h)
-        style_buttons_box.append(btn_12h)
-        btn_12h.connect("clicked", self._on_click_use_24h_clock, False)
+        btn_12h.connect("clicked", self._on_24h_clock_toggled, False)
 
+        button_box.append(btn_24h)
+        button_box.append(btn_12h)
+
+        self._time_btn_24h = btn_24h
+        self._time_btn_12h = btn_12h
+        parent.add(row)
+
+    def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
+        labels = Gtk.StringList.new(list(AUTO_REFRESH_LABELS.values()))
+        row = Adw.ComboRow(
+            title=_("Auto Refresh"),
+            subtitle=_("Automatically refresh weather data at a set interval"),
+            icon_name="view-refresh-symbolic",
+            model=labels,
+        )
+        current = settings.auto_refresh_interval
+        try:
+            selected = AutoRefreshInterval(current)
+        except ValueError:
+            selected = AutoRefreshInterval.OFF
+        row.set_selected(list(AutoRefreshInterval).index(selected))
+        row.connect("notify::selected", self._on_auto_refresh_changed)
+        self._auto_refresh_row = row
+        parent.add(row)
+
+    def _add_units_and_measurements_group(self, parent: Adw.PreferencesGroup) -> None:
+        """Units selection: Celsius / Fahrenheit as linked toggle buttons."""
+        group = Adw.PreferencesGroup()
+        group.set_margin_top(20)
+        group.set_title(_("Units &amp; Measurements"))
+        parent.add(group)
+
+        # Create a single row for temperature unit selection
+        unit_row = Adw.ActionRow(
+            title=_("System Unit"),
+            subtitle=_("Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"),
+            icon_name="power-profile-balanced-symbolic",
+            activatable=True,
+        )
+
+        # Linked buttons container
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        button_box.add_css_class("linked")
+        button_box.set_margin_start(2)
+        button_box.set_valign(Gtk.Align.CENTER)
+
+        btn_celsius = Gtk.ToggleButton.new_with_label(_("Metric"))
+        btn_celsius.set_size_request(80, 20)
+        btn_celsius.set_css_classes(["btn-sm"])
+        btn_celsius.connect("clicked", self._on_unit_toggled, "metric")
+
+        btn_fahrenheit = Gtk.ToggleButton.new_with_label(_("Imperial"))
+        btn_fahrenheit.set_size_request(80, 20)
+        btn_fahrenheit.set_css_classes(["btn-sm"])
+        btn_fahrenheit.set_group(btn_celsius)
+        btn_fahrenheit.connect("clicked", self._on_unit_toggled, "imperial")
+
+        button_box.append(btn_celsius)
+        button_box.append(btn_fahrenheit)
+        unit_row.add_suffix(button_box)
+
+        group.add(unit_row)
+
+        # Store references for reset and binding
+        self._unit_btn_celsius = btn_celsius
+        self._unit_btn_fahrenheit = btn_fahrenheit
+
+        # Precipitation unit (inches/mm) - unchanged
+        prec_row = Adw.ActionRow(
+            title=_("Precipitation in inches"),
+            subtitle=_("This option works better in heavy precipitation"),
+            icon_name="function-linear-symbolic",
+            activatable=True,
+        )
+        prec_switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        prec_switch.set_active(settings.is_using_inch_for_prec)
+        prec_switch.connect("state-set", self._on_precip_unit_toggled)
+        prec_row.add_suffix(prec_switch)
+        self._precip_switch = prec_switch
+
+        group.add(prec_row)
+
+    def _add_reset_row(self, parent: Adw.PreferencesPage) -> None:
+        data_group = Adw.PreferencesGroup()
+        data_group.set_title(_("Data Management"))
+        data_group.set_margin_top(20)
+        parent.add(data_group)
+
+        row = Adw.ActionRow(
+            title=_("Reset to Default"),
+            subtitle=_("Clear all preferences and restore default values"),
+            icon_name="object-rotate-left-symbolic",
+        )
+        reset_btn = Gtk.Button.new_with_label(_("Reset…"))
+        reset_btn.set_valign(Gtk.Align.CENTER)
+        reset_btn.add_css_class("destructive-action")
+        reset_btn.connect("clicked", self._on_reset_clicked)
+        row.add_suffix(reset_btn)
+        data_group.add(row)
+
+    # ------------------------------------------------------------------
+    # UI Binding & Initial State
+    # ------------------------------------------------------------------
+    def _bind_settings_to_ui(self) -> None:
+        """Set initial UI state from current settings."""
+        self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
+
+        # Time format
         if settings.is_using_24h_clock:
-            btn_24h.do_clicked(btn_24h)
+            self._time_btn_24h.set_active(True)
         else:
-            btn_12h.do_clicked(btn_12h)
+            self._time_btn_12h.set_active(True)
 
-        #  Units and measurement
-        self.measurement_group = Adw.PreferencesGroup.new()
-        self.measurement_group.set_margin_top(20)
-        self.measurement_group.set_title(_("Units &amp; Measurements"))
-        self.appearance_grp.add(self.measurement_group)
-
-        self.metric_unit = Adw.ActionRow.new()
-        self.metric_unit.set_title(_("°C"))
-        self.metric_unit.set_subtitle(
-            _("Metric system with units like Celsius, km/h, and kilometers")
-        )
-        self.metric_check_btn = Gtk.CheckButton.new()
-        self.metric_unit.add_prefix(self.metric_check_btn)
-        self.metric_unit.set_activatable_widget(self.metric_check_btn)
-        self.metric_check_btn.connect("toggled", self._change_unit, "metric")
-        self.measurement_group.add(self.metric_unit)
-
-        self.imperial_unit = Adw.ActionRow.new()
-        self.imperial_unit.set_title(_("°F"))
-        self.imperial_unit.set_subtitle(
-            _("Imperial system with units like Fahrenheit, mph, and miles")
-        )
-        self.imperial_check_btn = Gtk.CheckButton.new()
-        self.imperial_unit.add_prefix(self.imperial_check_btn)
-        self.imperial_check_btn.set_group(self.metric_check_btn)
-        self.imperial_unit.set_activatable_widget(self.imperial_check_btn)
-        self.imperial_check_btn.connect("toggled", self._change_unit, "imperial")
-        self.measurement_group.add(self.imperial_unit)
-        (
-            GLib.idle_add(self.metric_unit.activate)
-            if settings.unit == "metric"
-            else GLib.idle_add(self.imperial_unit.activate)
-        )
-
-        self.prec_unit_group = Adw.PreferencesGroup.new()
-        self.prec_unit_group.set_margin_top(20)
-        self.appearance_grp.add(self.prec_unit_group)
-
-        self.prec_unit = Adw.ActionRow.new()
-        self.prec_unit.set_title(_("Precipitation in inches"))
-        self.prec_unit.set_subtitle(
-            _("This option works better in heavy precipitation (refresh required)")
-        )
-        self.prec_unit_switch_box = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER
-        )
-        self.prec_unit.set_activatable(True)
-        self.use_inch_switch = Gtk.Switch()
-        self.use_inch_switch.set_active(settings.is_using_inch_for_prec)
-        self.use_inch_switch.connect("state-set", self._use_inch_for_precipation)
-        self.prec_unit_switch_box.append(self.use_inch_switch)
-        self.prec_unit.add_suffix(self.prec_unit_switch_box)
-        self.prec_unit_group.add(self.prec_unit)
-
-        # Auto Refresh
-        self.auto_refresh_group = Adw.PreferencesGroup.new()
-        self.auto_refresh_group.set_margin_top(20)
-        appearance_page.add(self.auto_refresh_group)
-
-        self.auto_refresh_intervals = [0,1, 15, 30, 60, 120]
-        auto_refresh_labels = Gtk.StringList.new(
-            [
-                _("Off"),
-                _("Every minute"),
-                _("Every 15 minutes"),
-                _("Every 30 minutes"),
-                _("Every hour"),
-                _("Every 2 hours"),
-            ]
-        )
-
-        self.auto_refresh_row = Adw.ComboRow.new()
-        self.auto_refresh_row.set_title(_("Auto Refresh"))
-        self.auto_refresh_row.set_subtitle(
-            _("Automatically refresh weather data at a set interval")
-        )
-        self.auto_refresh_row.set_model(auto_refresh_labels)
-
-        current_interval = settings.auto_refresh_interval
-        if current_interval in self.auto_refresh_intervals:
-            self.auto_refresh_row.set_selected(
-                self.auto_refresh_intervals.index(current_interval)
-            )
+        # Temperature unit
+        if settings.unit == "metric":
+            self._unit_btn_celsius.set_active(True)
         else:
-            self.auto_refresh_row.set_selected(0)
+            self._unit_btn_fahrenheit.set_active(True)
 
-        self.auto_refresh_row.connect("notify::selected", self._on_auto_refresh_changed)
-        self.auto_refresh_group.add(self.auto_refresh_row)
+        # Precipitation unit
+        self._precip_switch.set_active(settings.is_using_inch_for_prec)
 
-        # =============== Data Management Group ===============
-        self.data_group = Adw.PreferencesGroup.new()
-        self.data_group.set_title(_("Data Management"))
-        self.data_group.set_margin_top(20)
-        appearance_page.add(self.data_group)
-
-        reset_row = Adw.ActionRow.new()
-        reset_row.set_title(_("Reset to Default"))
-        reset_row.set_subtitle(_("Clear all preferences and restore default values"))
-
-        reset_button = Gtk.Button.new_with_label(_("Reset…"))
-        reset_button.set_valign(Gtk.Align.CENTER)
-        reset_button.add_css_class("destructive-action")  # Makes the button red
-        reset_button.connect("clicked", self._on_reset_clicked)
-
-        reset_row.add_suffix(reset_button)
-        self.data_group.add(reset_row)
-
-    # =============== Appearance Methods  ===============
-    def _use_gradient_bg(self, widget, state):
+    # ------------------------------------------------------------------
+    # Signal Handlers
+    # ------------------------------------------------------------------
+    def _on_dynamic_bg_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_dynamic_bg = state
+        self._start_refresh_thread()
 
-    def _on_click_launch_maximixed(self, widget, state):
-        settings.should_launch_maximized = state
+    def _on_24h_clock_toggled(self, button: Gtk.ToggleButton, use_24h: bool) -> None:
+        settings.is_using_24h_clock = use_24h
+        self._start_refresh_thread()
 
-    def _on_click_use_24h_clock(self, widget, state):
-        settings.is_using_24h_clock = state
+    def _on_unit_toggled(self, button: Gtk.ToggleButton, unit: str) -> None:
+        settings.unit = unit
+        self.add_toast(create_toast(_("Switched to - {}").format(unit.capitalize()), 1))
 
-    def _change_unit(self, widget, value):
-        if settings.unit != value:
-            settings.unit = value
 
-            # Ignore refreshing weather within 5 second
-            global updated_at
-
-            if time.time() - updated_at < 2:
-                updated_at = time.time()
-                self.add_toast(
-                    create_toast(
-                        _("Switching locations within 2 seconds is ignored"), 1
-                    )
-                )
-            else:
-                updated_at = time.time()
-                self.add_toast(
-                    create_toast(_("Switched to - {}").format(value.capitalize()), 1)
-                )
-                thread = threading.Thread(
-                    target=self.application._start_data_refresh(), name="load_data"
-                )
-                thread.start()
-
-    def _use_inch_for_precipation(self, widget, state):
+    def _on_precip_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_inch_for_prec = state
+        self._start_refresh_thread()
 
-    def _on_auto_refresh_changed(self, combo_row, _pspec):
-        index = combo_row.get_selected()
-        auto_refresh_interval = self.auto_refresh_intervals[index]
-        settings.auto_refresh_interval = auto_refresh_interval
+    def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
+        idx = combo.get_selected()
+        try:
+            interval = list(AutoRefreshInterval)[idx]
+        except IndexError:
+            interval = AutoRefreshInterval.OFF
 
-        message = _("Auto refresh disabled")
-        if auto_refresh_interval > 0:
-            message = _("Auto refresh every {} min").format(auto_refresh_interval)
+        settings.auto_refresh_interval = interval.value
 
-        self.add_toast(create_toast(message, 1))
+        if interval == AutoRefreshInterval.OFF:
+            msg = _("Auto refresh disabled")
+        else:
+            msg = _("Auto refresh every {} min").format(interval.value)
 
-    def _on_reset_clicked(self, button):
+        self.add_toast(create_toast(msg, 1))
+
+    def _on_reset_clicked(self, _button: Gtk.Button) -> None:
         dialog = Adw.MessageDialog.new(
             self,
             _("Reset Settings?"),
             _(
-                "This will restore all settings to default and wiil clear your saved cities. This action cannot be undone."
+                "This will restore all settings to default and will clear your saved cities. "
+                "This action cannot be undone."
             ),
         )
         dialog.add_response("cancel", _("Cancel"))
@@ -249,31 +280,47 @@ class WeatherPreferences(Adw.PreferencesWindow):
         dialog.set_response_appearance("reset", Adw.ResponseAppearance.DESTRUCTIVE)
         dialog.set_default_response("cancel")
         dialog.set_close_response("cancel")
-
-        def on_response(dialog, response):
-            if response == "reset":
-                self._perform_reset()
-
-        dialog.connect("response", on_response)
+        dialog.connect("response", self._on_reset_dialog_response)
         dialog.present()
 
-    def _perform_reset(self):
+    def _on_reset_dialog_response(self, dialog: Adw.MessageDialog, response: str) -> None:
+        if response == "reset":
+            self._perform_reset()
 
-        # 1. Reset the underlying settings object
+    def _perform_reset(self) -> None:
+        """Reset settings and refresh UI + data."""
         settings.reset_to_defaults()
 
-        # 2. Update the UI widgets to reflect the new state
-        self.gradient_switch.set_active(settings.is_using_dynamic_bg)
-        self.use_inch_switch.set_active(settings.is_using_inch_for_prec)
-        self.auto_refresh_row.set_selected(0)
+        # Update UI widgets
+        self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
+        self._precip_switch.set_active(settings.is_using_inch_for_prec)
 
+        # Auto refresh combo
+        default_interval = AutoRefreshInterval.OFF
+        self._auto_refresh_row.set_selected(list(AutoRefreshInterval).index(default_interval))
+
+        # Temperature unit buttons
         if settings.unit == "metric":
-            self.metric_check_btn.set_active(True)
+            self._unit_btn_celsius.set_active(True)
         else:
-            self.imperial_check_btn.set_active(True)
+            self._unit_btn_fahrenheit.set_active(True)
 
-        # 3. Notify the user
+        # Time format buttons
+        if settings.is_using_24h_clock:
+            self._time_btn_24h.set_active(True)
+        else:
+            self._time_btn_12h.set_active(True)
+
         self.add_toast(create_toast(_("Preferences have been reset"), 1))
 
-        # 4. Refresh data if necessary
-        self.application._start_data_refresh(force_welcome=True)
+        # Force a refresh of weather data (showing welcome screen)
+        self._start_refresh_thread()
+
+
+    def _start_refresh_thread(self):
+        thread = threading.Thread(
+            target=self.application._start_data_refresh,
+            name="refresh_after_unit_change"
+        )
+        thread.daemon = True
+        thread.start()
