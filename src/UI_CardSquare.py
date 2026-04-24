@@ -124,7 +124,7 @@ class CardSquare:
         # Sub-Description (Dewpoint / Wind Dir)
         if self.sub_desc_heading or self.sub_desc:
             sub_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-            sub_box.set_margin_top(4)
+            sub_box.set_margin_top(10)
 
             if self.sub_desc_heading:
                 lbl_head = Gtk.Label(label=self.sub_desc_heading)
@@ -143,7 +143,7 @@ class CardSquare:
         # --- Right Side: Visual/Graphic ---
         visual_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         visual_box.set_halign(Gtk.Align.END)
-        visual_box.set_valign(Gtk.Align.CENTER)
+        visual_box.set_valign(Gtk.Align.END)
         content_box.append(visual_box)
 
         # Upper Text (N, High, etc)

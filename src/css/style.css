@@ -439,10 +439,16 @@
 }
 
 /* Cards */
+.card-left-padding-sm {
+    padding-left: 1.5rem;
+}
+
+
 .card {
-    padding: 0.7rem 0.85rem;
+    padding: 0.8rem 1rem;
     border-radius: 1rem;
 }
+
 
 .card-forecast-item {
     padding: 0 1.1rem;

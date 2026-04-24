@@ -95,11 +95,12 @@ class CardAirPollution:
         )
         card.attach(info_box, 0, 2, 4, 2)
         info_box.set_margin_start(10)
-        info_box.set_margin_top(10)
+        info_box.set_margin_top(5)
 
         main_val = Gtk.Label(label=self.air_apllution_data["hourly"]["us_aqi"][idx])
         main_val.set_css_classes(["text-5xl", "font-medium"])
         main_val.set_halign(Gtk.Align.START)
+        main_val.set_halign(Gtk.Align.END)
         main_val.set_margin_end(10)
         info_box.append(main_val)
 
@@ -107,7 +108,7 @@ class CardAirPollution:
             label=self.classify_aqi(self.air_apllution_data["hourly"]["us_aqi"][idx])
         )
         desc.set_css_classes(["text-xl", "opacity-90", "font-semibold"])
-        desc.set_margin_bottom(0)
+        desc.set_margin_bottom(7)
         desc.set_valign(Gtk.Align.END)
         desc.set_halign(Gtk.Align.START)
         info_box.append(desc)
