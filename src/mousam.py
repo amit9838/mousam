@@ -8,7 +8,7 @@ from gi.repository import Gtk, Adw, Gio, GLib
 from gettext import gettext as _, pgettext as C_
 
 # Module imports
-from .utils import create_toast, check_internet_connection, get_time_difference, local_time_data, AutoRefreshTimer, fetch_all_weather_data_async
+from .utils import create_toast, check_internet_connection, get_time_difference, local_time_data, AutoRefreshTimer, fetch_all_weather_data_async, show_notification
 from .constants import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
@@ -149,7 +149,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     # ================= Data Handling =================
 
-    def _start_data_refresh(self, is_initial=False, force_welcome=False):
+    def _start_data_refresh(self, is_initial=False, force_welcome=False, is_auto=False):
         if force_welcome:
             self._update_view_state("welcome")
             return
@@ -166,16 +166,18 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         self._update_view_state("loader")
         fetch_all_weather_data_async(
-            on_success=self._on_data_fetch_success,
+            on_success=lambda: self._on_data_fetch_success(is_auto),
             on_error=lambda err: self._update_view_state("error_api")
         )
 
     # _worker_fetch_data moved to utils.fetch_all_weather_data_async
 
-    def _on_data_fetch_success(self):
+    def _on_data_fetch_success(self, is_auto=False):
         """Called on Main Thread after the worker has populated weatherData."""
         self._render_weather_grid()
         self._update_view_state("content")
+        if is_auto:
+            show_notification(self.get_application())
 
     # ================= UI Rendering =================
 
@@ -388,7 +390,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _on_auto_refresh_tick(self):
         self._pre_refresh_cleanup()
-        self._start_data_refresh()
+        self._start_data_refresh(is_auto=True)
         return GLib.SOURCE_CONTINUE
 
     def _save_window_state(self, window):

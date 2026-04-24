@@ -66,6 +66,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._add_dynamic_background_row(general_group)
         self._add_time_format_row(general_group)
         self._add_auto_refresh_row(general_group)
+        self._add_notification_row(general_group)
         self._add_units_and_measurements_group(general_group)
         self._add_reset_row(appearance_page)
 
@@ -132,6 +133,20 @@ class WeatherPreferences(Adw.PreferencesWindow):
         row.set_selected(list(AutoRefreshInterval).index(selected))
         row.connect("notify::selected", self._on_auto_refresh_changed)
         self._auto_refresh_row = row
+        parent.add(row)
+
+    def _add_notification_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Show Notifications"),
+            subtitle=_("Show notification when weather is updated"),
+            icon_name="preferences-system-notifications-symbolic",
+            activatable=True,
+        )
+        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        switch.set_active(settings.show_notifications)
+        switch.connect("state-set", self._on_notifications_toggled)
+        row.add_suffix(switch)
+        self._notification_switch = switch
         parent.add(row)
 
     def _add_units_and_measurements_group(self, parent: Adw.PreferencesGroup) -> None:
@@ -231,6 +246,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
         # Precipitation unit
         self._precip_switch.set_active(settings.is_using_inch_for_prec)
 
+        # Notifications
+        self._notification_switch.set_active(settings.show_notifications)
+
     # ------------------------------------------------------------------
     # Signal Handlers
     # ------------------------------------------------------------------
@@ -250,6 +268,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
     def _on_precip_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_inch_for_prec = state
         self._start_refresh_thread()
+
+    def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:
+        settings.show_notifications = state
 
     def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
         idx = combo.get_selected()
@@ -295,6 +316,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         # Update UI widgets
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
         self._precip_switch.set_active(settings.is_using_inch_for_prec)
+        self._notification_switch.set_active(settings.show_notifications)
 
         # Auto refresh combo
         default_interval = AutoRefreshInterval.OFF

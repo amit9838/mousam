@@ -16,7 +16,8 @@ from zoneinfo import ZoneInfo  # Python 3.9+ internal library
 from .config import settings
 
 gi.require_version("Adw", "1")
-from gi.repository import  Adw, GLib
+from gi.repository import  Adw, GLib, Gio
+from gettext import gettext as _
 
 # ----------------------------------------------------------------------
 # Cache for internet connection status
@@ -312,6 +313,39 @@ def weak_connect(widget, signal_name, bound_method):
                 return method(*args, **kwargs)
                 
     return widget.connect(signal_name, wrapper)
+
+
+def get_selected_city_name():
+    added_cities = JsonProcessor.str_list_to_json(settings.added_cities)
+    for city in added_cities:
+        if settings.selected_city == f"{city.get('latitude')},{city.get('longitude')}":
+            return city.get("name", _("Unknown City"))
+    return _("Unknown City")
+
+
+def show_notification(app):
+    if not app or not settings.show_notifications:
+        return
+
+    from .CORE_weatherData import current_weather_data as cw_data
+    from .constants import condition as cond_map
+
+    if not cw_data:
+        return
+
+    city_name = get_selected_city_name()
+    
+    # Get weather info
+    temp = cw_data.temperature_2m.get("data")
+    unit = cw_data.temperature_2m.get("unit")
+    w_code = str(cw_data.weathercode.get("data"))
+    
+    cond_str = cond_map.get(w_code, _("Unknown"))
+    
+    notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
+    notification.set_body(f"{cond_str}")
+    
+    app.send_notification("weather-update", notification)
 
 
 def fetch_all_weather_data_async(on_success=None, on_error=None):

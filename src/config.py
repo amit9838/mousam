@@ -99,6 +99,14 @@ class Settings:
     def unit(self, value):
         self.settings.set_string("unit", value)
 
+    @property
+    def show_notifications(self):
+        return self.settings.get_boolean("show-notifications")
+
+    @show_notifications.setter
+    def show_notifications(self, value):
+        self.settings.set_boolean("show-notifications", value)
+
 
 def get_settings():
     return Settings()

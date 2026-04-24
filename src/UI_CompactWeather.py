@@ -39,7 +39,7 @@ class CompactWeather(Gtk.Overlay):
         self._stop_polling()
         GLib.idle_add(self._cleanup_ui)
         _reset_weather_data()
-        self._start_polling()
+        self._start_polling(is_auto=True)
         return GLib.SOURCE_CONTINUE
 
     def _cleanup_ui(self):
@@ -54,16 +54,25 @@ class CompactWeather(Gtk.Overlay):
         for w in to_remove:
             self.remove_overlay(w)
 
-    def _trigger_fetch(self):
-        from .utils import fetch_all_weather_data_async
-        fetch_all_weather_data_async()
+    def _trigger_fetch(self, is_auto=False):
+        from .utils import fetch_all_weather_data_async, show_notification
+        
+        def on_success():
+            if is_auto:
+                root = self.get_root()
+                if root:
+                    app = root.get_application()
+                    if app:
+                        show_notification(app)
 
-    def _start_polling(self):
+        fetch_all_weather_data_async(on_success=on_success)
+
+    def _start_polling(self, is_auto=False):
         """Begin polling for data, store timeout id."""
         if self._is_data_ready():
             GLib.idle_add(self._build_ui)
         else:
-            self._trigger_fetch()
+            self._trigger_fetch(is_auto=is_auto)
             self._show_loader()
             self._poll_timeout_id = GLib.timeout_add(500, self._check_all_data_ready)
 

@@ -47,5 +47,10 @@
       <summary>Measurement system to use - metric,imperial</summary>
       <description>metric(km, °C), imperial(mile, °F)</description>
     </key>
+    <key name="show-notifications" type="b">
+      <default>false</default>
+      <summary>Show weather update notifications</summary>
+      <description>Show a notification when weather data is updated.</description>
+    </key>
 	</schema>
 </schemalist>
