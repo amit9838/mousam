@@ -10,7 +10,7 @@ from gettext import gettext as _, pgettext as C_
 # Module imports
 from .utils import create_toast, check_internet_connection, get_time_difference, local_time_data, AutoRefreshTimer, fetch_all_weather_data_async
 from .constants import bg_css
-from .windowAbout import AboutWindow
+from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
@@ -427,4 +427,4 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         ShortcutsDialog(self).present()
 
     def _on_action_about(self, action, param):
-        AboutWindow(self)
+        show_about_window(self)
