@@ -37,6 +37,7 @@ class CompactWeather(Gtk.Overlay):
 
     def _on_auto_refresh_tick(self):
         self._stop_polling()
+        GLib.idle_add(self._cleanup_ui)
         _reset_weather_data()
         self._start_polling()
         return GLib.SOURCE_CONTINUE
@@ -60,8 +61,7 @@ class CompactWeather(Gtk.Overlay):
     def _start_polling(self):
         """Begin polling for data, store timeout id."""
         if self._is_data_ready():
-            self._cleanup_ui()
-            self._build_ui()
+            GLib.idle_add(self._build_ui)
         else:
             self._trigger_fetch()
             self._show_loader()
@@ -321,9 +321,9 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         self.set_title(_("Mousam Compact"))
         self.set_default_size(280, 220)
         self.set_resizable(False)
-        self.set_decorated(False)
-        self.add_css_class("compact-window")
+
         if settings.is_using_dynamic_bg and bg_classes:
+            self.add_css_class("bg-dark-overlay")
             valid_bgs = set(bg_css.values())
             for cls in bg_classes:
                 if cls in valid_bgs:

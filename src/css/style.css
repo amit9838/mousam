@@ -463,7 +463,6 @@
 
 .card-info {
     background-color: #F6635C;
-    color: white;
 }
 
 /* Bar container */
@@ -474,7 +473,7 @@
 
 /* Compact mode (used when window is small) */
 .compact-window {
-    border-radius: 13px;
+    border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
@@ -643,7 +642,8 @@
 }
 
 .dynamic-bg {
-    background-color: transparent;
+    /* background-color: transparent; */
+    color: white;
 }
 
 .app-body {

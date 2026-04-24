@@ -343,7 +343,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1) -> None:
         # Always required classes
-        required = {"background", "csd"}
+        required = {"background", "csd", "dynamic-bg"}
         
         # Add weather class if dynamic backgrounds are on
         if settings.is_using_dynamic_bg:
