@@ -131,7 +131,7 @@ class CardAirPollution:
         popover_content.set_margin_end(8)
         popover_content.set_size_request(280, -1)
 
-        popover_title = Gtk.Label(label=_("Air Quality Index Trend"))
+        popover_title = Gtk.Label(label=_("Air Quality Index"))
         popover_title.set_css_classes(["text-lg", "font-medium"])
         popover_title.set_halign(Gtk.Align.START)
         popover_content.append(popover_title)
