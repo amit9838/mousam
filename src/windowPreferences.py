@@ -1,10 +1,11 @@
 import threading
 import time
 from enum import IntEnum
-from typing import Optional
 
 import gi
-from gi.repository import Adw, Gtk, GLib
+from gi.repository import Adw, Gtk
+from gettext import gettext as _, pgettext as C_
+
 
 from .config import settings
 from .utils import create_toast
