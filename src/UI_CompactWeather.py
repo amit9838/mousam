@@ -8,11 +8,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
 # ----- Helper to reset global data -----
-def _reset_weather_data():
-    """Force reload on next compact open by clearing cached data."""
-    from . import CORE_weatherData as wd
-    wd.current_weather_data = None
-    wd.air_apllution_data = None
+# Removed _reset_weather_data as it causes crashes in the main window
 
 class CompactWeather(Gtk.Overlay):
     def __init__(self, on_back_clicked, **kwargs):
@@ -38,7 +34,6 @@ class CompactWeather(Gtk.Overlay):
     def _on_auto_refresh_tick(self):
         self._stop_polling()
         GLib.idle_add(self._cleanup_ui)
-        _reset_weather_data()
         self._start_polling(is_auto=True)
         return GLib.SOURCE_CONTINUE
 
@@ -117,6 +112,7 @@ class CompactWeather(Gtk.Overlay):
             self._poll_timeout_id = None
 
     def _build_ui(self):
+        self._cleanup_ui()
         from .CORE_weatherData import current_weather_data as data, air_apllution_data as aq_data
         from .utils import JsonProcessor, get_timezone_from_selected_city
         import datetime
@@ -153,7 +149,6 @@ class CompactWeather(Gtk.Overlay):
         grid.set_margin_end(25)
         grid.set_margin_top(25)
         grid.set_margin_bottom(25)
-        self.add_overlay(grid)
 
         # City
         city_list = JsonProcessor.str_list_to_json(settings.added_cities)
@@ -305,9 +300,8 @@ class CompactWeather(Gtk.Overlay):
         self.add_controller(motion_ctrl)
 
     def _on_back_clicked(self, button):
-        # Stop polling and flush global data before calling the callback
+        # Stop polling before calling the callback
         self._stop_polling()
-        _reset_weather_data()
         if self.on_back_clicked:
             self.on_back_clicked()
 
@@ -331,23 +325,43 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         self.set_default_size(280, 220)
         self.set_resizable(False)
 
-        if settings.is_using_dynamic_bg and bg_classes:
-            self.add_css_class("bg-dark-overlay")
-            valid_bgs = set(bg_css.values())
-            for cls in bg_classes:
-                if cls in valid_bgs:
-                    self.add_css_class(cls)
+        self.connect("destroy", self._on_window_destroy)
 
         handle = Gtk.WindowHandle()
         self.set_content(handle)
 
         self.compact_view = CompactWeather(on_back_clicked=self._on_back)
         handle.set_child(self.compact_view)
+        
+        self.update_bg(bg_classes)
+
+    def update_bg(self, bg_classes):
+        if settings.is_using_dynamic_bg:
+            self.add_css_class("bg-dark-overlay")
+            valid_bgs = set(bg_css.values())
+            
+            # Remove existing weather backgrounds
+            for cls in list(self.get_css_classes()):
+                if cls in valid_bgs:
+                    self.remove_css_class(cls)
+                    
+            # Add new ones
+            if bg_classes:
+                for cls in bg_classes:
+                    if cls in valid_bgs:
+                        self.add_css_class(cls)
+        
+        # Trigger a refresh of the compact view data/UI
+        if hasattr(self, "compact_view"):
+            self.compact_view._start_polling()
 
     def _on_back(self):
-        # call the external callback (e.g., to close this window)
-        if self.on_back_to_normal:
-            self.on_back_to_normal()
-        # window will be destroyed by the caller; we also ensure data is flushed
-        # (already done in CompactWeather._on_back_clicked)
-        self.destroy()
+        # Trigger the show-normal action on the application
+        app = self.get_application()
+        if app:
+            app.activate_action("show-normal", None)
+
+    def _on_window_destroy(self, *args):
+        app = self.get_application()
+        if app and hasattr(app, "compact_window"):
+            app.compact_window = None

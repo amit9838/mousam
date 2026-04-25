@@ -15,7 +15,7 @@ from .utils import weak_connect
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-icon_loc += "arrow.svg"
+# icon_loc imported for reference if needed
 
 
 class HourlyDetails(Gtk.Grid):
@@ -255,7 +255,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_text(str(speed))
         val_label.set_margin_top(0)
         
-        icon_box.append(DrawImage(icon_loc, direction + 180, 32, 32).img_box)
+        icon_box.append(DrawImage(icons.get("arrow"), direction + 180, 32, 32).img_box)
         icon_box.set_margin_top(10)
         icon_box.set_margin_bottom(5)
 
