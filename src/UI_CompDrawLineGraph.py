@@ -23,7 +23,7 @@ class LineGraph:
             return
 
         # Padding
-        padding_top = 15
+        padding_top = 25
         padding_bottom = 15
         padding_left = 10
         padding_right = 10
@@ -68,12 +68,29 @@ class LineGraph:
         ctx.set_line_width(2.5)
         ctx.set_line_cap(cairo.LINE_CAP_ROUND)
         ctx.set_line_join(cairo.LINE_JOIN_ROUND)
-        ctx.set_source_rgba(*self.color, 1.0)
         
-        ctx.move_to(*get_coords(0))
-        for i in range(1, num_points):
-            ctx.line_to(*get_coords(i))
-        ctx.stroke()
+        if self.current_idx is not None and 0 <= self.current_idx < num_points - 1:
+            # Draw past and current as solid
+            ctx.set_source_rgba(*self.color, 1.0)
+            ctx.move_to(*get_coords(0))
+            for i in range(1, self.current_idx + 1):
+                ctx.line_to(*get_coords(i))
+            ctx.stroke()
+            
+            # Draw future as dashed and dimmed
+            ctx.set_source_rgba(*self.color, 0.4)
+            ctx.set_dash([4.0, 4.0])
+            ctx.move_to(*get_coords(self.current_idx))
+            for i in range(self.current_idx + 1, num_points):
+                ctx.line_to(*get_coords(i))
+            ctx.stroke()
+            ctx.set_dash([]) # Reset dash
+        else:
+            ctx.set_source_rgba(*self.color, 1.0)
+            ctx.move_to(*get_coords(0))
+            for i in range(1, num_points):
+                ctx.line_to(*get_coords(i))
+            ctx.stroke()
 
         # 3. Draw current point indicator if provided
         if self.current_idx is not None and 0 <= self.current_idx < num_points:
@@ -112,7 +129,7 @@ class LineGraph:
         ctx.set_font_size(9)
         ctx.set_source_rgba(1, 1, 1, 0.5)
         max_text = f"MAX: {int(max_val)}"
-        ctx.move_to(padding_left, padding_top + 5)
+        ctx.move_to(padding_left, 15)
         ctx.show_text(max_text)
 
         # Min label
@@ -120,19 +137,32 @@ class LineGraph:
         ctx.move_to(padding_left, height - padding_bottom - 4)
         ctx.show_text(min_text)
 
-        # 5. Draw Start and End time labels
+        # 5. Draw daily time labels and date checkpoints
         if self.times and len(self.times) == num_points:
-            ctx.set_source_rgba(1, 1, 1, 0.4)
             ctx.set_font_size(8)
             
-            start_date = datetime.fromtimestamp(self.times[0]).strftime("%d %b")
-            end_date = datetime.fromtimestamp(self.times[-1]).strftime("%d %b")
-            
-            # Start date (bottom left)
-            ctx.move_to(padding_left, height - 2)
-            ctx.show_text(start_date)
-            
-            # End date (bottom right)
-            extents = ctx.text_extents(end_date)
-            ctx.move_to(width - padding_right - extents.width, height - 2)
-            ctx.show_text(end_date)
+            for i, ts in enumerate(self.times):
+                dt = datetime.fromtimestamp(ts)
+                
+                # Checkpoint at midnight (date change)
+                if dt.hour == 0:
+                    x, y = get_coords(i)
+                    
+                    # Small dot on the curve
+                    ctx.set_source_rgba(1, 1, 1, 0.8)
+                    ctx.arc(x, y, 2.5, 0, 2 * 3.14159)
+                    ctx.fill()
+
+                # Draw a label at noon of each day
+                if dt.hour == 12:
+                    ctx.set_source_rgba(1, 1, 1, 0.4)
+                    date_str = dt.strftime("%d %b")
+                    x, _ = get_coords(i)
+                    extents = ctx.text_extents(date_str)
+                    
+                    # Prevent clipping at the edges
+                    x_pos = x - extents.width / 2
+                    x_pos = max(padding_left, min(x_pos, width - padding_right - extents.width))
+                    
+                    ctx.move_to(x_pos, height - 2)
+                    ctx.show_text(date_str)
