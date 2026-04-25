@@ -19,7 +19,8 @@ class CurrentCondition(Gtk.Grid):
         self.paint_ui()
 
     def paint_ui(self):
-        from .CORE_weatherData import current_weather_data as data
+        from .CORE_weatherData import weather_manager
+        data = weather_manager.current_weather
 
         # ========== left section ===========
         box_left = Gtk.Box(

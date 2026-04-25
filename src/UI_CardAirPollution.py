@@ -13,10 +13,10 @@ gi.require_version("Adw", "1")
 
 class CardAirPollution:
     def __init__(self):
-        from .CORE_weatherData import air_apllution_data, classify_aqi
+        from .CORE_weatherData import weather_manager
 
-        self.air_apllution_data = air_apllution_data
-        self.classify_aqi = classify_aqi
+        self.air_apllution_data = weather_manager.air_pollution
+        self.classify_aqi = weather_manager.classify_aqi
         self.card = None
         self.create_card()
 

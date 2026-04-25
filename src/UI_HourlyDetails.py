@@ -95,15 +95,16 @@ class HourlyDetails(Gtk.Grid):
         spinner.set_margin_top(80)
         container.append(spinner)
 
-        def _fetch_data():
-            try:
-                from .CORE_weatherData import fetch_hourly_forecast
-                hourly_data = fetch_hourly_forecast()
-                GLib.idle_add(self._on_data_loaded, page_name, container, spinner, hourly_data)
-            except Exception as e:
-                print(f"Error loading hourly details: {e}")
-
-        threading.Thread(target=_fetch_data, daemon=True).start()
+        from .CORE_weatherData import weather_manager
+        if weather_manager.is_ready:
+            self._on_data_loaded(page_name, container, spinner, weather_manager.hourly_forecast)
+        else:
+            def _wait_for_data(mgr, pspec):
+                if mgr.is_ready:
+                    GLib.idle_add(self._on_data_loaded, page_name, container, spinner, mgr.hourly_forecast)
+                    mgr.disconnect_by_func(_wait_for_data)
+            
+            weather_manager.connect("notify::is-ready", _wait_for_data)
 
     def _on_data_loaded(self, page_name, container, spinner, hourly_data):
         """Callback to build the UI once data is fetched."""

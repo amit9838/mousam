@@ -1,6 +1,6 @@
 import time
-import gi
-
+import threading
+from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .config import settings
@@ -9,190 +9,183 @@ from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather
 from .CORE_Helpers import get_cords
 from gettext import gettext as _, pgettext as C_
 
-gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
-
-current_weather_data = None
-hourly_forecast_data = None
-daily_forecast_data = None
-air_apllution_data = None
-
-
-def fetch_current_weather():
-    global current_weather_data
-    # Get current weather data from api
-    obj = Weather()
-    raw_data = obj._get_current_weather(*get_cords())
-    if raw_data is None:
-        raise ValueError("Failed to fetch current weather data")
-
-    # create object of current weather data
-    current_weather_data = CurrentWeather(raw_data)
-
-    # Add level strings for diffrent attributes
-    current_weather_data.relativehumidity_2m["level_str"] = classify_humidity_level(
-        current_weather_data.relativehumidity_2m.get("data")
-    )
-    current_weather_data.windspeed_10m["level_str"] = classify_wind_speed_level(
-        current_weather_data.windspeed_10m.get("data")
-    )
-    current_weather_data.surface_pressure["level_str"] = classify_presssure_level(
-        current_weather_data.surface_pressure.get("data")
-    )
-
-    return current_weather_data
-
-
-def fetch_hourly_forecast():
-    global hourly_forecast_data
-    obj = Weather()
-    raw_data = obj._get_hourly_forecast(*get_cords())
-    if raw_data is None:
-        raise ValueError("Failed to fetch hourly forecast data")
-
-    hourly_forecast_time_list = raw_data.get("hourly").get("time")
-
-    nearest_current_time_idx = 0
-    for i in range(len(hourly_forecast_time_list)):
-        if (abs(time.time() - hourly_forecast_time_list[i]) // 60) < 30:
-            nearest_current_time_idx = i
-            break
-
-    hourly_forecast_data = HourlyWeather(raw_data)
-
-    current_weather_data.uv_index = {
-        "data": hourly_forecast_data.uv_index["data"][nearest_current_time_idx],
-        "level_str": classify_uv_index(
-            hourly_forecast_data.uv_index["data"][nearest_current_time_idx]
-        ),
-    }
-    current_weather_data.dewpoint_2m = {
-        "unit": hourly_forecast_data.dewpoint_2m["unit"],
-        "data": hourly_forecast_data.dewpoint_2m["data"][nearest_current_time_idx],
-    }
-    current_weather_data.visibility = transform_visibility_data(
-        hourly_forecast_data.visibility["unit"],
-        hourly_forecast_data.visibility["data"][nearest_current_time_idx],
-    )
-
-    return hourly_forecast_data
-
-
-def fetch_daily_forecast():
-    global daily_forecast_data
-
-    obj = Weather()
-    raw_data = obj._get_daily_forecast(*get_cords())
-    if raw_data is None:
-        raise ValueError("Failed to fetch daily forecast data")
-
-    # create object of daily forecast data
-    daily_forecast_data = DailyWeather(raw_data)
-
-    return daily_forecast_data
-
-
-def fetch_current_air_pollution():
-    global air_apllution_data
-    obj = AirPollution()
-    raw_data = obj._get_current_air_pollution(*get_cords())
-    if raw_data is None:
-        raise ValueError("Failed to fetch air pollution data")
+class WeatherDataManager(GObject.Object):
+    """
+    Centralized data manager for Mousam.
+    Handles data storage, validation, and notification of updates.
+    """
     
-    air_apllution_data = raw_data
+    __gsignals__ = {
+        'data-updated': (GObject.SignalFlags.RUN_FIRST, None, ()),
+    }
+
+    # Properties for data storage
+    current_weather = GObject.Property(type=GObject.TYPE_PYOBJECT)
+    hourly_forecast = GObject.Property(type=GObject.TYPE_PYOBJECT)
+    daily_forecast = GObject.Property(type=GObject.TYPE_PYOBJECT)
+    air_pollution = GObject.Property(type=GObject.TYPE_PYOBJECT)
     
-    # Process current AQI
-    hourly_time_list = air_apllution_data.get("hourly").get("time")
-    nearest_idx = 0
-    now_ts = time.time()
-    for i, ts in enumerate(hourly_time_list):
-        if abs(now_ts - ts) < 1800: # within 30 mins
-            nearest_idx = i
-            break
+    def __init__(self):
+        super().__init__()
+        self._lock = threading.Lock()
+
+    @GObject.Property(type=bool, default=False)
+    def is_ready(self):
+        """Returns True if all essential data is loaded and valid."""
+        with self._lock:
+            return (self.current_weather is not None and 
+                    self.hourly_forecast is not None and 
+                    self.daily_forecast is not None and
+                    self.air_pollution is not None)
+
+    def clear(self):
+        """Resets all data."""
+        with self._lock:
+            self.current_weather = None
+            self.hourly_forecast = None
+            self.daily_forecast = None
+            self.air_pollution = None
+        self.notify("is-ready")
+
+    def update_current_weather(self):
+        obj = Weather()
+        raw_data = obj._get_current_weather(*get_cords())
+        if raw_data is None:
+            raise ValueError("Failed to fetch current weather data")
+
+        data = CurrentWeather(raw_data)
+        data.relativehumidity_2m["level_str"] = self.classify_humidity_level(data.relativehumidity_2m.get("data"))
+        data.windspeed_10m["level_str"] = self.classify_wind_speed_level(data.windspeed_10m.get("data"))
+        data.surface_pressure["level_str"] = self.classify_presssure_level(data.surface_pressure.get("data"))
+        
+        with self._lock:
+            self.current_weather = data
+        self.emit("data-updated")
+        self.notify("is-ready")
+        return data
+
+    def update_hourly_forecast(self):
+        obj = Weather()
+        raw_data = obj._get_hourly_forecast(*get_cords())
+        if raw_data is None:
+            raise ValueError("Failed to fetch hourly forecast data")
+
+        hourly_data = HourlyWeather(raw_data)
+        time_list = raw_data.get("hourly").get("time")
+        
+        nearest_idx = 0
+        now = time.time()
+        for i, ts in enumerate(time_list):
+            if abs(now - ts) < 1800:
+                nearest_idx = i
+                break
+
+        # Update current weather with derived hourly fields
+        with self._lock:
+            if self.current_weather:
+                self.current_weather.uv_index = {
+                    "data": hourly_data.uv_index["data"][nearest_idx],
+                    "level_str": self.classify_uv_index(hourly_data.uv_index["data"][nearest_idx]),
+                }
+                self.current_weather.dewpoint_2m = {
+                    "unit": hourly_data.dewpoint_2m["unit"],
+                    "data": hourly_data.dewpoint_2m["data"][nearest_idx],
+                }
+                self.current_weather.visibility = self.transform_visibility_data(
+                    hourly_data.visibility["unit"],
+                    hourly_data.visibility["data"][nearest_idx],
+                )
+            self.hourly_forecast = hourly_data
             
-    # Add processed current values to a dict for easy access
-    air_apllution_data["current_us_aqi"] = air_apllution_data.get("hourly").get("us_aqi")[nearest_idx]
-    air_apllution_data["current_eu_aqi"] = air_apllution_data.get("hourly").get("european_aqi")[nearest_idx]
-    
-    return air_apllution_data
+        self.emit("data-updated")
+        self.notify("is-ready")
+        return hourly_data
 
+    def update_daily_forecast(self):
+        obj = Weather()
+        raw_data = obj._get_daily_forecast(*get_cords())
+        if raw_data is None:
+            raise ValueError("Failed to fetch daily forecast data")
 
-def classify_aqi(aqi_value):
-    if aqi_value >= 0 and aqi_value <= 50:
-        return _("Good")
-    elif aqi_value <= 100:
-        return _("Moderate")
-    elif aqi_value <= 150:
-        return _("Poor")
-    elif aqi_value <= 200:
-        return _("Unhealthy")
-    elif aqi_value <= 300:
-        return _("Severe")
-    else:
+        data = DailyWeather(raw_data)
+        with self._lock:
+            self.daily_forecast = data
+        self.emit("data-updated")
+        self.notify("is-ready")
+        return data
+
+    def update_air_pollution(self):
+        obj = AirPollution()
+        raw_data = obj._get_current_air_pollution(*get_cords())
+        if raw_data is None:
+            raise ValueError("Failed to fetch air pollution data")
+        
+        time_list = raw_data.get("hourly").get("time")
+        nearest_idx = 0
+        now = time.time()
+        for i, ts in enumerate(time_list):
+            if abs(now - ts) < 1800:
+                nearest_idx = i
+                break
+                
+        raw_data["current_us_aqi"] = raw_data.get("hourly").get("us_aqi")[nearest_idx]
+        raw_data["current_eu_aqi"] = raw_data.get("hourly").get("european_aqi")[nearest_idx]
+        
+        with self._lock:
+            self.air_pollution = raw_data
+        self.emit("data-updated")
+        self.notify("is-ready")
+        return raw_data
+
+    # Helper classification methods
+    @staticmethod
+    def classify_aqi(aqi_value):
+        if aqi_value <= 50: return _("Good")
+        if aqi_value <= 100: return _("Moderate")
+        if aqi_value <= 150: return _("Poor")
+        if aqi_value <= 200: return _("Unhealthy")
+        if aqi_value <= 300: return _("Severe")
         return _("Hazardous")
 
-
-# ========= Classify diffrent attributes of current weather ==========
-
-
-def classify_uv_index(uv_index):
-    if uv_index <= 2:
-        return C_("uvindex", "Low")
-    elif uv_index <= 5:
-        return C_("uvindex", "Moderate")
-    elif uv_index <= 7:
-        return C_("uvindex", "High")
-    elif uv_index <= 10:
-        return C_("uvindex", "Very High")
-    else:
+    @staticmethod
+    def classify_uv_index(uv):
+        if uv <= 2: return C_("uvindex", "Low")
+        if uv <= 5: return C_("uvindex", "Moderate")
+        if uv <= 7: return C_("uvindex", "High")
+        if uv <= 10: return C_("uvindex", "Very High")
         return C_("uvindex", "Extreme")
 
-
-def classify_humidity_level(uv_index):
-    if uv_index < 50:
-        return C_("humidity", "Low")
-    elif uv_index <= 80:
-        return C_("humidity", "Moderate")
-    else:
+    @staticmethod
+    def classify_humidity_level(h):
+        if h < 50: return C_("humidity", "Low")
+        if h <= 80: return C_("humidity", "Moderate")
         return C_("humidity", "High")
 
-
-def classify_presssure_level(pressure):
-    low = 940
-    normal = 1010
-    if settings.unit == "imperial":
-        low *= hpa_to_inhg
-        normal *= hpa_to_inhg
-    if pressure < low:
-        return C_("pressure", "Low")
-    elif pressure <= normal:
-        return C_("pressure", "Normal")
-    else:
+    @staticmethod
+    def classify_presssure_level(p):
+        low, normal = 940, 1010
+        if settings.unit == "imperial":
+            low, normal = low * hpa_to_inhg, normal * hpa_to_inhg
+        if p < low: return C_("pressure", "Low")
+        if p <= normal: return C_("pressure", "Normal")
         return C_("pressure", "High")
 
-
-def classify_wind_speed_level(wind_speed):
-    if wind_speed <= 1:
-        return _("Calm")
-    elif wind_speed <= 25:
-        return _("Light")
-    elif wind_speed <= 40:
-        return C_("wind", "Moderate")
-    elif wind_speed <= 60:
-        return _("Strong")
-    else:
+    @staticmethod
+    def classify_wind_speed_level(w):
+        if w <= 1: return _("Calm")
+        if w <= 25: return _("Light")
+        if w <= 40: return C_("wind", "Moderate")
+        if w <= 60: return _("Strong")
         return C_("wind", "Extreme")
 
+    @staticmethod
+    def transform_visibility_data(unit, data):
+        dist_unit, dist = _("km"), data / 1000
+        if settings.unit == "imperial":
+            dist_unit, dist = _("miles"), data / 1609.34
+        if unit.lower() == "m":
+            data, unit = dist, dist_unit
+        return {"unit": unit, "data": data}
 
-def transform_visibility_data(unit, data):
-    dist_unit = _("km")
-    dist = data / 1000
-    if settings.unit == "imperial":
-        dist_unit = _("miles")
-        dist = data / 1609.34
-
-    if unit.lower() == "m":
-        data = dist
-        unit = dist_unit
-
-    return {"unit": unit, "data": data}
+# Singleton instance
+weather_manager = WeatherDataManager()

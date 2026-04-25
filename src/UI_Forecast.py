@@ -20,7 +20,7 @@ import threading
 
 from .constants import icons
 from .config import settings
-from .CORE_weatherData import fetch_hourly_forecast, fetch_daily_forecast
+from .CORE_weatherData import weather_manager
 from .CORE_GTKUtils import weak_connect
 
 
@@ -197,17 +197,15 @@ class Forecast(Gtk.Grid):
         spinner.set_margin_top(self.SCROLLED_WINDOW_HEIGHT // 2)
         container.append(spinner)
 
-        def _fetch_data():
-            try:
-                # Import data modules lazily to avoid circular imports
-                daily_data = fetch_daily_forecast()
-                hourly_data = fetch_hourly_forecast()
-                GLib.idle_add(self._on_data_loaded, page, container, spinner, daily_data, hourly_data)
-            except Exception as e:
-                print(f"Error loading forecast data: {e}")
-                # Handle error UI if needed
-
-        threading.Thread(target=_fetch_data, daemon=True).start()
+        if weather_manager.is_ready:
+            self._on_data_loaded(page, container, spinner, weather_manager.daily_forecast, weather_manager.hourly_forecast)
+        else:
+            def _wait_for_data(mgr, pspec):
+                if mgr.is_ready:
+                    GLib.idle_add(self._on_data_loaded, page, container, spinner, mgr.daily_forecast, mgr.hourly_forecast)
+                    mgr.disconnect_by_func(_wait_for_data)
+            
+            weather_manager.connect("notify::is-ready", _wait_for_data)
 
     def _on_data_loaded(
         self,

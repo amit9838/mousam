@@ -10,12 +10,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
     """
     Fetches all weather data in a thread-safe manner.
     """
-    from .CORE_weatherData import (
-        fetch_current_weather,
-        fetch_hourly_forecast,
-        fetch_daily_forecast,
-        fetch_current_air_pollution
-    )
+    from .CORE_weatherData import weather_manager
 
     with _fetch_lock:
         if on_success:
@@ -25,6 +20,10 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
 
     def _worker():
         from .CORE_Helpers import TIMEOUT
+        
+        # Reset ready state before starting fresh fetch
+        weather_manager.clear()
+        
         error_container = []
 
         def wrap_target(target, *args):
@@ -34,7 +33,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 error_container.append(e)
 
         try:
-            cwd = threading.Thread(target=wrap_target, args=(fetch_current_weather,), name="cwt")
+            cwd = threading.Thread(target=wrap_target, args=(weather_manager.update_current_weather,), name="cwt")
             cwd.start()
             cwd.join(timeout=TIMEOUT)
             
@@ -45,9 +44,9 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 raise error_container[0]
 
             threads = [
-                threading.Thread(target=wrap_target, args=(fetch_hourly_forecast,), name="hft"),
-                threading.Thread(target=wrap_target, args=(fetch_daily_forecast,), name="dft"),
-                threading.Thread(target=wrap_target, args=(fetch_current_air_pollution,), name="apt"),
+                threading.Thread(target=wrap_target, args=(weather_manager.update_hourly_forecast,), name="hft"),
+                threading.Thread(target=wrap_target, args=(weather_manager.update_daily_forecast,), name="dft"),
+                threading.Thread(target=wrap_target, args=(weather_manager.update_air_pollution,), name="apt"),
                 threading.Thread(target=wrap_target, args=(get_time_difference, "", True), name="local_time")
             ]
             

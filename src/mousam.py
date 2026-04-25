@@ -26,12 +26,6 @@ from .UI_CardAirPollution import CardAirPollution
 from .UI_CompactWeather import CompactWeatherWindow
 
 from .config import settings
-from .CORE_weatherData import (
-    fetch_current_weather,
-    fetch_hourly_forecast,
-    fetch_daily_forecast,
-    fetch_current_air_pollution,
-)
 
 
 class WeatherMainWindow(Adw.ApplicationWindow):
@@ -56,6 +50,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # Initial Data Load
         self._start_data_refresh(is_initial=True)
 
+        # Centralized Data Handling
+        from .CORE_weatherData import weather_manager
+        weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
+        
         # Auto-refresh setup
         settings.connect(
             "changed::auto-refresh-interval",
@@ -174,13 +172,15 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     # _worker_fetch_data moved to utils.fetch_all_weather_data_async
 
+    def _on_weather_manager_ready(self, *args):
+        """Called when data ready state changes."""
+        from .CORE_weatherData import weather_manager
+        if weather_manager.is_ready:
+            GLib.idle_add(self._render_weather_grid)
+
     def _on_data_fetch_success(self, is_auto=False):
         """Called on Main Thread after the worker has populated weatherData."""
-        if self.get_visible():
-            self._render_weather_grid()
-        else:
-            self._needs_render = True
-            
+        # Note: self._on_weather_manager_ready handles rendering via signals
         self._update_view_state("content")
 
     # ================= UI Rendering =================
@@ -194,9 +194,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         if child:
             self.main_stack.remove(child)
 
-        from .CORE_weatherData import current_weather_data as cw_data
-        if cw_data is None:
+        from .CORE_weatherData import weather_manager
+        if not weather_manager.is_ready:
             return
+        
+        cw_data = weather_manager.current_weather
 
         # Dynamic Background
         w_code = cw_data.weathercode.get("data")

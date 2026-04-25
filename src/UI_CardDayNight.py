@@ -28,7 +28,8 @@ class CardDayNight:
         self.create_card()
 
     def get_sunset_sunrise_degree(self):
-        from .CORE_weatherData import daily_forecast_data as daily_data
+        from .CORE_weatherData import weather_manager
+        daily_data = weather_manager.daily_forecast
 
         t_data = get_time_difference()
         target_time = t_data.get("target_time")

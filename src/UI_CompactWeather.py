@@ -62,7 +62,8 @@ class CompactWeather(Gtk.Overlay):
 
     def _start_polling(self, is_auto=False):
         """Begin polling for data, store timeout id."""
-        if self._is_data_ready():
+        from .CORE_weatherData import weather_manager
+        if weather_manager.is_ready:
             GLib.idle_add(self._build_ui)
         else:
             if not check_internet_connection(force=not is_auto):
@@ -82,17 +83,6 @@ class CompactWeather(Gtk.Overlay):
             self.stack.add_named(spinner, "loader")
         self.stack.set_visible_child_name("loader")
 
-    def _is_data_ready(self):
-        from .CORE_weatherData import current_weather_data, air_apllution_data
-        import threading
-        if current_weather_data is None or air_apllution_data is None:
-            return False
-
-        # This checks for the race condition of the threads in mousam.py with "cwt" and "apt" tags
-        # If new data is actively being fetched, wait for it to finish
-        if any(t.name in ("cwt", "apt", "compact_fetch") for t in threading.enumerate()):
-            return False
-        return True
 
     def _show_error(self, message):
         is_net_error = str(message) == _("No Internet")
@@ -122,10 +112,11 @@ class CompactWeather(Gtk.Overlay):
 
     def _check_all_data_ready(self):
         """Polling callback. Returns False to stop when data is ready."""
+        from .CORE_weatherData import weather_manager
         if self._poll_timeout_id is None:
             return False   # already stopped
 
-        if not self._is_data_ready():
+        if not weather_manager.is_ready:
             self._show_loader()
             return True   # continue polling
 
@@ -141,7 +132,9 @@ class CompactWeather(Gtk.Overlay):
 
     def _build_ui(self):
         self._cleanup_ui()
-        from .CORE_weatherData import current_weather_data as data, air_apllution_data as aq_data
+        from .CORE_weatherData import weather_manager
+        data = weather_manager.current_weather
+        aq_data = weather_manager.air_pollution
         from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city
         import datetime
         from zoneinfo import ZoneInfo

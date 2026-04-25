@@ -49,8 +49,8 @@ def weak_connect(widget, signal_name, bound_method):
     return widget.connect(signal_name, wrapper)
 
 def show_notification(app):
-    from . import CORE_weatherData as wd
-    cw_data = wd.current_weather_data
+    from .CORE_weatherData import weather_manager
+    cw_data = weather_manager.current_weather
     if not app or not settings.show_notifications:
         return
     from .constants import condition as cond_map
