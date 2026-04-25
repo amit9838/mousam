@@ -225,11 +225,19 @@ class HourlyDetails(Gtk.Grid):
         return item_box
 
     def _add_time_label(self, box, index, hourly_data, nearest_idx):
+        from .CORE_Helpers import get_timezone_from_selected_city
+        from zoneinfo import ZoneInfo
+        tz_str = get_timezone_from_selected_city()
+        try:
+            tz_info = ZoneInfo(tz_str)
+        except Exception:
+            tz_info = None
+            
         ts = hourly_data.time.data[index]
-        dt = datetime.datetime.fromtimestamp(ts)
+        dt = datetime.datetime.fromtimestamp(ts, tz_info)
         time_str = dt.strftime("%H:%M") if settings.is_using_24h_clock else dt.strftime("%I:%M %p")
         
-        label = Gtk.Label(label=time_str)
+        label = Gtk.Label(label=time_str, margin_top=6)
         label.set_css_classes(["text-sm", "font-semibold", "opacity-60"])
         if index == nearest_idx:
             label.set_text(_("Now"))
@@ -248,6 +256,7 @@ class HourlyDetails(Gtk.Grid):
         img.set_pixel_size(50)
         icon_box.append(img)
         icon_box.set_margin_bottom(5)
+        icon_box.set_margin_top(5)
 
     def _setup_wind_item(self, icon_box, val_label, index, hourly_data):
         speed = hourly_data.windspeed_10m.data[index]
@@ -256,7 +265,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_margin_top(0)
         
         icon_box.append(DrawImage(icons.get("arrow"), direction + 180, 32, 32).img_box)
-        icon_box.set_margin_top(10)
+        icon_box.set_margin_top(5)
         icon_box.set_margin_bottom(5)
 
     def _setup_prec_item(self, icon_box, val_label, index, hourly_data, max_prec):
@@ -301,7 +310,10 @@ class HourlyDetails(Gtk.Grid):
         width = container.get_width()
         if width > 0:
             offset = (width / 24) * (index - 1)
+            offset = max(0, offset)
             scrolled.get_hadjustment().set_value(offset)
+            return GLib.SOURCE_REMOVE
+        return GLib.SOURCE_CONTINUE
 
 
     def on_scroll(self, controller, dx, dy):
