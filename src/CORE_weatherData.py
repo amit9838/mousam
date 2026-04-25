@@ -6,7 +6,7 @@ from .API_AirPollution import AirPollution
 from .config import settings
 from .constants import hpa_to_inhg
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather
-from .utils import get_cords
+from .CORE_Helpers import get_cords
 from gettext import gettext as _, pgettext as C_
 
 gi.require_version("Gtk", "4.0")

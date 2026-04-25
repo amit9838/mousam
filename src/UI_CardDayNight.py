@@ -7,7 +7,7 @@ from gettext import gettext as _, pgettext as C_
 
 from .UI_CompDrawDayNight import DrawDayNight
 from .config import settings
-from .utils import (
+from .CORE_Helpers import (
     get_cords,
     get_time_difference,
 )

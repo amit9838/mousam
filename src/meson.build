@@ -52,7 +52,10 @@ mousam_sources = [
   'UI_CompactWeather.py',
 
   'constants.py',
-  'utils.py',
+  'CORE_Cache.py',
+  'CORE_Helpers.py',
+  'CORE_Networking.py',
+  'CORE_GTKUtils.py',
   'config.py',
   'windowAbout.py',
   'windowPreferences.py',

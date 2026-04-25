@@ -8,7 +8,8 @@ from gi.repository import Gtk, Adw, Gio, GLib
 from gettext import gettext as _, pgettext as C_
 
 # Module imports
-from .utils import create_toast, check_internet_connection, get_time_difference, local_time_data, AutoRefreshTimer, fetch_all_weather_data_async, show_notification
+from .CORE_Helpers import check_internet_connection, local_time_data
+from .CORE_Networking import fetch_all_weather_data_async
 from .constants import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences

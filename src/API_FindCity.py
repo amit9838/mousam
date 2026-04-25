@@ -2,7 +2,7 @@ import logging
 import requests
 from typing import List
 from requests.exceptions import RequestException
-from .utils import cached
+from .CORE_Cache import cached
 
 # Configure logging at the module level
 logger = logging.getLogger(__name__)

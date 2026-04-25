@@ -8,7 +8,7 @@ from gettext import gettext as _, pgettext as C_
 
 
 from .config import settings
-from .utils import create_toast
+from .CORE_Helpers import create_toast
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

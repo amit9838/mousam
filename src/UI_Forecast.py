@@ -21,7 +21,7 @@ import threading
 from .constants import icons
 from .config import settings
 from .CORE_weatherData import fetch_hourly_forecast, fetch_daily_forecast
-from .utils import weak_connect
+from .CORE_GTKUtils import weak_connect
 
 
 

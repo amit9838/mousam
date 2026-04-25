@@ -4,8 +4,6 @@ import math
 from gi.repository import Gtk
 import cairo
 from datetime import datetime
-from .utils import get_cords, get_time_difference
-from .config import settings
 from gettext import gettext as _, pgettext as C_
 
 gi.require_version("Gtk", "4.0")
@@ -22,7 +20,7 @@ class DrawDayNight:
         self.drawing_area = Gtk.DrawingArea()
         self.drawing_area.set_size_request(self.width + 20, self.height + 20)
         self.drawing_area.set_css_classes(["drawing-padding"])
-        from .utils import safe_set_draw_func
+        from .CORE_GTKUtils import safe_set_draw_func
         safe_set_draw_func(self.drawing_area, self, "on_draw")
 
         self.img_box = Gtk.Box()

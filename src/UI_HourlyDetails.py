@@ -10,7 +10,7 @@ from .constants import icons, icon_loc
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .config import settings
-from .utils import weak_connect
+from .CORE_GTKUtils import weak_connect
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

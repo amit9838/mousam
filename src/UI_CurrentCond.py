@@ -2,7 +2,7 @@ import gi
 from gi.repository import Gtk
 from .constants import icons, condition
 from .config import settings
-from .utils import JsonProcessor
+from .CORE_Helpers import JsonProcessor
 from gettext import gettext as _, pgettext as C_
 
 

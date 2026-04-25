@@ -42,7 +42,8 @@ class CompactWeather(Gtk.Overlay):
             self.remove_overlay(w)
 
     def _trigger_fetch(self, is_auto=False):
-        from .utils import fetch_all_weather_data_async, show_notification
+        from .CORE_Networking import fetch_all_weather_data_async
+        from .CORE_GTKUtils import show_notification
         
         def on_success():
             if is_auto:
@@ -106,7 +107,7 @@ class CompactWeather(Gtk.Overlay):
     def _build_ui(self):
         self._cleanup_ui()
         from .CORE_weatherData import current_weather_data as data, air_apllution_data as aq_data
-        from .utils import JsonProcessor, get_timezone_from_selected_city
+        from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city
         import datetime
         from zoneinfo import ZoneInfo
 
@@ -223,7 +224,7 @@ class CompactWeather(Gtk.Overlay):
         self.lbl_time_val.set_use_markup(True)
         self.lbl_time_val.set_margin_bottom(5)
 
-        from .utils import get_timezone_from_selected_city
+        from .CORE_Helpers import get_timezone_from_selected_city
         self.target_tz = ZoneInfo(get_timezone_from_selected_city())
         now = datetime.datetime.now(self.target_tz)
         date_str = now.strftime("%d %B")

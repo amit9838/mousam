@@ -1,5 +1,5 @@
 import requests
-from .utils import cached
+from .CORE_Cache import cached
 
 base_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
 

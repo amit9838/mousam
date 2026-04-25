@@ -13,7 +13,7 @@ class DrawBar:
         self.ht = 40
         self.dw = Gtk.DrawingArea()
         self.dw.set_size_request(50, self.ht+20)
-        from .utils import safe_set_draw_func; safe_set_draw_func(self.dw, self, "draw")
+        from .CORE_GTKUtils import safe_set_draw_func; safe_set_draw_func(self.dw, self, "draw")
         self.value = self.ht*value
         self.rgb = rgb_color
 

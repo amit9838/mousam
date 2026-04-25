@@ -12,7 +12,7 @@ class PollutionBar(Gtk.DrawingArea):
         height = 40
         self.set_hexpand(True)
         self.slider_pos = pos  # Initial position of the slider
-        from .utils import safe_set_draw_func; safe_set_draw_func(self, self, "on_draw")
+        from .CORE_GTKUtils import safe_set_draw_func; safe_set_draw_func(self, self, "on_draw")
         self.set_size_request(width,height)
 
     def on_draw(self, area, cr, h, w, data):

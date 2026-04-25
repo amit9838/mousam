@@ -3,7 +3,7 @@ import datetime
 
 from .config import settings
 from .constants import hpa_to_inhg
-from .utils import cached
+from .CORE_Cache import cached
 
 extend_url = ""
 base_url = "https://api.open-meteo.com/v1/forecast"

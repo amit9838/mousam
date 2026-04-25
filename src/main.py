@@ -46,7 +46,7 @@ class WeatherApplication(Adw.Application):
         self.create_action("show-normal", self._on_show_normal)
         
         # Centralized auto-refresh
-        from .utils import AutoRefreshTimer
+        from .CORE_GTKUtils import AutoRefreshTimer
         self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
 
     def do_activate(self):
@@ -68,7 +68,8 @@ class WeatherApplication(Adw.Application):
         self.auto_refresh.setup()
 
     def _on_auto_refresh_tick(self):
-        from .utils import fetch_all_weather_data_async, show_notification
+        from .CORE_Networking import fetch_all_weather_data_async
+        from .CORE_GTKUtils import show_notification
         
         def on_success():
             show_notification(self)

@@ -23,7 +23,7 @@ class DrawImage:
         self.drawing_area = Gtk.DrawingArea()
         # Adding a bit of extra space for rotation clipping prevention
         self.drawing_area.set_size_request(self.width + 20, self.height + 20)
-        from .utils import safe_set_draw_func
+        from .CORE_GTKUtils import safe_set_draw_func
         safe_set_draw_func(self.drawing_area, self, "on_draw")
 
         self.img_box = Gtk.Box()
