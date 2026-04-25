@@ -49,11 +49,14 @@ class cached:
 
                 result = func(*args, **kwargs)
                 self.misses += 1
-                self.cache[key] = (result, time.time())
-                self.currsize += 1
-                if self.maxsize is not None and self.currsize > self.maxsize:
-                    self.cache.popitem(last=False)
-                    self.currsize -= 1
+                
+                # Only cache valid data (non-None results)
+                if result is not None:
+                    self.cache[key] = (result, time.time())
+                    self.currsize += 1
+                    if self.maxsize is not None and self.currsize > self.maxsize:
+                        self.cache.popitem(last=False)
+                        self.currsize -= 1
                 return result
 
         def cache_info():

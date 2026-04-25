@@ -11,7 +11,7 @@ from gettext import gettext as _
 
 INTERNET_CACHE_TTL = 120
 DEFAULT_TIMEZONE = "UTC"
-TIMEOUT = 5
+TIMEOUT = 10
 _internet_cache = {"timestamp": 0.0, "status": False}
 local_time_data = dict()
 

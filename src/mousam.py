@@ -155,7 +155,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self._update_view_state("welcome")
             return
 
-        if not check_internet_connection():
+        # Force internet check if manually triggered
+        if not check_internet_connection(force=not is_auto):
             self._update_view_state("error_no_internet")
             return
 
@@ -168,7 +169,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._update_view_state("loader")
         fetch_all_weather_data_async(
             on_success=lambda: self._on_data_fetch_success(is_auto),
-            on_error=lambda err: self._update_view_state("error_api")
+            on_error=lambda err: self._update_view_state("error_api", err)
         )
 
     # _worker_fetch_data moved to utils.fetch_all_weather_data_async
@@ -300,7 +301,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         self.main_stack.add_named(grid, "content")
 
-    def _update_view_state(self, state: str):
+    def _update_view_state(self, state: str, message: str = ""):
         # Lazy Loading Views
         if self.main_stack.get_child_by_name(state) is None:
             if state == "loader":
@@ -309,16 +310,19 @@ class WeatherMainWindow(Adw.ApplicationWindow):
                 self.main_stack.add_named(self._create_welcome_page(), state)
             elif state == "error_no_internet":
                 self.main_stack.add_named(
-                    self._create_error_page("network-error-symbolic", _("No Internet")),
+                    self._create_error_page("network-error-symbolic", _("No Internet"), _("Please check your connection.")),
                     state,
                 )
             elif state == "error_api":
                 self.main_stack.add_named(
-                    self._create_error_page("computer-fail-symbolic", _("API Error")),
+                    self._create_error_page("computer-fail-symbolic", _("Fetch Error"), ""),
                     state,
                 )
 
-        if self.main_stack.get_child_by_name(state):
+        child = self.main_stack.get_child_by_name(state)
+        if child:
+            if state == "error_api" and message:
+                child.set_description(str(message))
             self.main_stack.set_visible_child_name(state)
 
     def _create_loader_page(self):
@@ -342,10 +346,19 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         page.set_child(btn)
         return page
 
-    def _create_error_page(self, icon, title):
+    def _create_error_page(self, icon, title, description):
         page = Adw.StatusPage()
         page.set_icon_name(icon)
         page.set_title(title)
+        page.set_description(description)
+        
+        btn = Gtk.Button(label=_("Retry"))
+        btn.add_css_class("pill")
+        btn.add_css_class("suggested-action")
+        btn.connect("clicked", lambda x: self._start_data_refresh())
+        btn.set_halign(Gtk.Align.CENTER)
+        page.set_child(btn)
+        
         return page
 
     def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1) -> None:

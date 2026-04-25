@@ -22,10 +22,12 @@ def fetch_current_weather():
     global current_weather_data
     # Get current weather data from api
     obj = Weather()
-    current_weather_data = obj._get_current_weather(*get_cords())
+    raw_data = obj._get_current_weather(*get_cords())
+    if raw_data is None:
+        raise ValueError("Failed to fetch current weather data")
 
     # create object of current weather data
-    current_weather_data = CurrentWeather(current_weather_data)
+    current_weather_data = CurrentWeather(raw_data)
 
     # Add level strings for diffrent attributes
     current_weather_data.relativehumidity_2m["level_str"] = classify_humidity_level(
@@ -43,10 +45,12 @@ def fetch_current_weather():
 
 def fetch_hourly_forecast():
     global hourly_forecast_data
-    # Get current weather data from api
     obj = Weather()
-    hourly_forecast_data = obj._get_hourly_forecast(*get_cords())
-    hourly_forecast_time_list = hourly_forecast_data.get("hourly").get("time")
+    raw_data = obj._get_hourly_forecast(*get_cords())
+    if raw_data is None:
+        raise ValueError("Failed to fetch hourly forecast data")
+
+    hourly_forecast_time_list = raw_data.get("hourly").get("time")
 
     nearest_current_time_idx = 0
     for i in range(len(hourly_forecast_time_list)):
@@ -54,7 +58,7 @@ def fetch_hourly_forecast():
             nearest_current_time_idx = i
             break
 
-    hourly_forecast_data = HourlyWeather(hourly_forecast_data)
+    hourly_forecast_data = HourlyWeather(raw_data)
 
     current_weather_data.uv_index = {
         "data": hourly_forecast_data.uv_index["data"][nearest_current_time_idx],
@@ -77,12 +81,13 @@ def fetch_hourly_forecast():
 def fetch_daily_forecast():
     global daily_forecast_data
 
-    # Get current weather data from api
     obj = Weather()
-    daily_forecast_data = obj._get_daily_forecast(*get_cords())
+    raw_data = obj._get_daily_forecast(*get_cords())
+    if raw_data is None:
+        raise ValueError("Failed to fetch daily forecast data")
 
     # create object of daily forecast data
-    daily_forecast_data = DailyWeather(daily_forecast_data)
+    daily_forecast_data = DailyWeather(raw_data)
 
     return daily_forecast_data
 
@@ -90,7 +95,11 @@ def fetch_daily_forecast():
 def fetch_current_air_pollution():
     global air_apllution_data
     obj = AirPollution()
-    air_apllution_data = obj._get_current_air_pollution(*get_cords())
+    raw_data = obj._get_current_air_pollution(*get_cords())
+    if raw_data is None:
+        raise ValueError("Failed to fetch air pollution data")
+    
+    air_apllution_data = raw_data
     
     # Process current AQI
     hourly_time_list = air_apllution_data.get("hourly").get("time")

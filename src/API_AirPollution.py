@@ -1,5 +1,6 @@
 import requests
 from .CORE_Cache import cached
+from .CORE_Helpers import TIMEOUT
 
 base_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
 
@@ -15,7 +16,7 @@ class AirPollution:
 
         try:
             url = url + "&timeformat=unixtime" + "&past_days=3" + "&forecast_days=3"
-            response = requests.get(url)
+            response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             return data

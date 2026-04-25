@@ -2,6 +2,7 @@ import gi
 from gi.repository import Gtk, Adw, GLib
 from .config import settings
 from .constants import icons, condition, bg_css
+from .CORE_Helpers import check_internet_connection
 from gettext import gettext as _
 
 gi.require_version("Gtk", "4.0")
@@ -52,14 +53,22 @@ class CompactWeather(Gtk.Overlay):
                     app = root.get_application()
                     if app:
                         show_notification(app)
+        
+        def on_error(err):
+            self._stop_polling()
+            self._show_error(err)
 
-        fetch_all_weather_data_async(on_success=on_success)
+        fetch_all_weather_data_async(on_success=on_success, on_error=on_error)
 
     def _start_polling(self, is_auto=False):
         """Begin polling for data, store timeout id."""
         if self._is_data_ready():
             GLib.idle_add(self._build_ui)
         else:
+            if not check_internet_connection(force=not is_auto):
+                self._show_error(_("No Internet"))
+                return
+
             self._trigger_fetch(is_auto=is_auto)
             self._show_loader()
             self._poll_timeout_id = GLib.timeout_add(500, self._check_all_data_ready)
@@ -84,6 +93,32 @@ class CompactWeather(Gtk.Overlay):
         if any(t.name in ("cwt", "apt", "compact_fetch") for t in threading.enumerate()):
             return False
         return True
+
+    def _show_error(self, message):
+        is_net_error = str(message) == _("No Internet")
+        icon_name = "network-error-symbolic" if is_net_error else "computer-fail-symbolic"
+        
+        if not self.stack.get_child_by_name("error"):
+            icon = Gtk.Image.new_from_icon_name(icon_name)
+            icon.set_pixel_size(64)
+            icon.set_halign(Gtk.Align.CENTER)
+            icon.set_valign(Gtk.Align.CENTER)
+            icon.set_opacity(0.5)
+            icon.set_tooltip_text(str(message))
+            
+            # Click to retry (hidden interaction)
+            click = Gtk.GestureClick()
+            click.connect("pressed", lambda *args: self._start_polling())
+            icon.add_controller(click)
+            
+            self.stack.add_named(icon, "error")
+        else:
+            # Update icon and message if child already exists
+            icon = self.stack.get_child_by_name("error")
+            icon.set_from_icon_name(icon_name)
+            icon.set_tooltip_text(str(message))
+
+        self.stack.set_visible_child_name("error")
 
     def _check_all_data_ready(self):
         """Polling callback. Returns False to stop when data is ready."""

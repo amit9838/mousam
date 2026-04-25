@@ -4,6 +4,7 @@ import datetime
 from .config import settings
 from .constants import hpa_to_inhg
 from .CORE_Cache import cached
+from .CORE_Helpers import TIMEOUT
 
 extend_url = ""
 base_url = "https://api.open-meteo.com/v1/forecast"
@@ -35,7 +36,7 @@ class Weather:
 
         try:
             url = url + "&timeformat=unixtime"
-            response = requests.get(url)
+            response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             if settings.unit == "imperial":
@@ -74,7 +75,7 @@ class Weather:
 
         try:
             url = url + "&timeformat=unixtime"
-            response = requests.get(url)
+            response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             if settings.unit == "imperial":
@@ -128,7 +129,7 @@ class Weather:
 
         try:
             url = url + "&timeformat=unixtime" + extend_url
-            response = requests.get(url)
+            response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             return data
