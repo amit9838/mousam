@@ -149,19 +149,19 @@ class HourlyDetails(Gtk.Grid):
 
     def _setup_temp_header(self, hourly_data):
         self.desc_label.set_text(C_("temperature", "Day Max •"))
-        max_temp = max(hourly_data.temperature_2m.get('data')[:24])
+        max_temp = max(hourly_data.temperature_2m.data[:24])
         self.val_label.set_text(f"{max_temp}°")
         self.unit_label.set_text("")
 
     def _setup_wind_header(self, hourly_data):
         self.desc_label.set_text(C_("wind", "Day High •"))
-        max_wind = max(hourly_data.windspeed_10m.get("data")[:24])
+        max_wind = max(hourly_data.windspeed_10m.data[:24])
         self.val_label.set_text(str(max_wind))
-        self.unit_label.set_text(hourly_data.windspeed_10m.get("unit"))
+        self.unit_label.set_text(hourly_data.windspeed_10m.unit)
 
     def _setup_prec_header(self, hourly_data):
-        max_prec = max(hourly_data.precipitation.get("data")[:24])
-        unit = hourly_data.precipitation.get("unit")
+        max_prec = max(hourly_data.precipitation.data[:24])
+        unit = hourly_data.precipitation.unit
         if settings.is_using_inch_for_prec:
             max_prec /= 25.4
             unit = "inch"
@@ -183,12 +183,12 @@ class HourlyDetails(Gtk.Grid):
         graphic_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         scrolled_window.set_child(graphic_container)
 
-        if page_name == "prec" and sum(hourly_data.precipitation.get("data")[:24]) == 0:
+        if page_name == "prec" and sum(hourly_data.precipitation.data[:24]) == 0:
             graphic_container.append(self._create_empty_prec_widget())
             return scrolled_window
 
-        nearest_idx = self._get_nearest_time_index(hourly_data.time.get("data"))
-        max_prec = max(hourly_data.precipitation.get("data")[:24]) if page_name == "prec" else 0
+        nearest_idx = self._get_nearest_time_index(hourly_data.time.data)
+        max_prec = max(hourly_data.precipitation.data[:24]) if page_name == "prec" else 0
 
         for i in range(24):
             item = self._create_hour_item(page_name, i, hourly_data, nearest_idx, max_prec)
@@ -225,7 +225,7 @@ class HourlyDetails(Gtk.Grid):
         return item_box
 
     def _add_time_label(self, box, index, hourly_data, nearest_idx):
-        ts = hourly_data.time.get("data")[index]
+        ts = hourly_data.time.data[index]
         dt = datetime.datetime.fromtimestamp(ts)
         time_str = dt.strftime("%H:%M") if settings.is_using_24h_clock else dt.strftime("%I:%M %p")
         
@@ -238,11 +238,10 @@ class HourlyDetails(Gtk.Grid):
         box.append(label)
 
     def _setup_temp_item(self, icon_box, val_label, index, hourly_data):
-        temp = hourly_data.temperature_2m.get("data")[index]
-        val_label.set_text(f"{temp}°")
-        
-        code = hourly_data.weathercode.get("data")[index]
-        icon_key = str(code) + ("n" if hourly_data.is_day.get("data")[index] == 0 else "")
+        temp = hourly_data.temperature_2m.data[index]
+        val_label.set_text(f"{temp:.0f}°")
+        code = hourly_data.weathercode.data[index]
+        icon_key = str(code) + ("n" if hourly_data.is_day.data[index] == 0 else "")
         icon_path = icons.get(icon_key, icons.get("unknown"))
         
         img = Gtk.Image.new_from_file(icon_path)
@@ -251,8 +250,8 @@ class HourlyDetails(Gtk.Grid):
         icon_box.set_margin_bottom(5)
 
     def _setup_wind_item(self, icon_box, val_label, index, hourly_data):
-        speed = hourly_data.windspeed_10m.get("data")[index]
-        direction = hourly_data.wind_direction_10m.get("data")[index]
+        speed = hourly_data.windspeed_10m.data[index]
+        direction = hourly_data.wind_direction_10m.data[index]
         val_label.set_text(str(speed))
         val_label.set_margin_top(0)
         
@@ -261,7 +260,7 @@ class HourlyDetails(Gtk.Grid):
         icon_box.set_margin_bottom(5)
 
     def _setup_prec_item(self, icon_box, val_label, index, hourly_data, max_prec):
-        val = hourly_data.precipitation.get("data")[index]
+        val = hourly_data.precipitation.data[index]
         if settings.is_using_inch_for_prec: val /= 25.4
         
         bar = DrawBar(val / max_prec if max_prec > 0 else 0)
@@ -306,7 +305,10 @@ class HourlyDetails(Gtk.Grid):
 
 
     def on_scroll(self, controller, dx, dy):
-        hadj = self.scrolled_window.get_hadjustment()
+        widget = controller.get_widget()
+        if not widget:
+            return False
+        hadj = widget.get_hadjustment()
         if dx == 0 and dy != 0:
             delta = hadj.get_step_increment() * (1 if dy > 0 else -1)
         else:

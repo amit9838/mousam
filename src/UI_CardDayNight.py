@@ -37,12 +37,13 @@ class CardDayNight:
         tz = ZoneInfo(timezone_str)
 
         sunrise_ts, sunset_ts = 0, 0
-        for i, data in enumerate(daily_data.time.get("data")):
+        for i, data in enumerate(daily_data.time.data):
             # Check date using target timezone
-            date_ = int(datetime.fromtimestamp(data, tz=tz).strftime(r"%d"))
-            if date_ == datetime.now(tz).date().day:
-                sunrise_ts = daily_data.sunrise.get("data")[i]
-                sunset_ts = daily_data.sunset.get("data")[i]
+            dt = datetime.fromtimestamp(data, tz=tz)
+            current_time = datetime.now(tz)
+            if dt.date() == current_time.date():
+                sunrise_ts = daily_data.sunrise.data[i]
+                sunset_ts = daily_data.sunset.data[i]
                 break
 
         target_dt = datetime.fromtimestamp(target_time, tz=tz)

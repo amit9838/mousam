@@ -5,7 +5,7 @@ from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .config import settings
 from .constants import hpa_to_inhg
-from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather
+from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from gettext import gettext as _, pgettext as C_
 
@@ -54,9 +54,9 @@ class WeatherDataManager(GObject.Object):
             raise ValueError("Failed to fetch current weather data")
 
         data = CurrentWeather(raw_data)
-        data.relativehumidity_2m["level_str"] = self.classify_humidity_level(data.relativehumidity_2m.get("data"))
-        data.windspeed_10m["level_str"] = self.classify_wind_speed_level(data.windspeed_10m.get("data"))
-        data.surface_pressure["level_str"] = self.classify_presssure_level(data.surface_pressure.get("data"))
+        data.relativehumidity_2m.level_str = self.classify_humidity_level(data.relativehumidity_2m.data)
+        data.windspeed_10m.level_str = self.classify_wind_speed_level(data.windspeed_10m.data)
+        data.surface_pressure.level_str = self.classify_presssure_level(data.surface_pressure.data)
         
         with self._lock:
             self.current_weather = data
@@ -83,17 +83,21 @@ class WeatherDataManager(GObject.Object):
         # Update current weather with derived hourly fields
         with self._lock:
             if self.current_weather:
-                self.current_weather.uv_index = {
-                    "data": hourly_data.uv_index["data"][nearest_idx],
-                    "level_str": self.classify_uv_index(hourly_data.uv_index["data"][nearest_idx]),
-                }
-                self.current_weather.dewpoint_2m = {
-                    "unit": hourly_data.dewpoint_2m["unit"],
-                    "data": hourly_data.dewpoint_2m["data"][nearest_idx],
-                }
-                self.current_weather.visibility = self.transform_visibility_data(
-                    hourly_data.visibility["unit"],
-                    hourly_data.visibility["data"][nearest_idx],
+                self.current_weather.uv_index = WeatherField(
+                    data=hourly_data.uv_index.data[nearest_idx],
+                    level_str=self.classify_uv_index(hourly_data.uv_index.data[nearest_idx]),
+                )
+                self.current_weather.dewpoint_2m = WeatherField(
+                    unit=hourly_data.dewpoint_2m.unit,
+                    data=hourly_data.dewpoint_2m.data[nearest_idx],
+                )
+                vis_transformed = self.transform_visibility_data(
+                    hourly_data.visibility.unit,
+                    hourly_data.visibility.data[nearest_idx],
+                )
+                self.current_weather.visibility = WeatherField(
+                    data=vis_transformed["data"],
+                    unit=vis_transformed["unit"]
                 )
             self.hourly_forecast = hourly_data
             
@@ -128,14 +132,15 @@ class WeatherDataManager(GObject.Object):
                 nearest_idx = i
                 break
                 
-        raw_data["current_us_aqi"] = raw_data.get("hourly").get("us_aqi")[nearest_idx]
-        raw_data["current_eu_aqi"] = raw_data.get("hourly").get("european_aqi")[nearest_idx]
+        data = AirPollutionData(raw_data)
+        data.current_us_aqi = data.us_aqi.data[nearest_idx]
+        data.current_eu_aqi = data.european_aqi.data[nearest_idx]
         
         with self._lock:
-            self.air_pollution = raw_data
+            self.air_pollution = data
         self.emit("data-updated")
         self.notify("is-ready")
-        return raw_data
+        return data
 
     # Helper classification methods
     @staticmethod

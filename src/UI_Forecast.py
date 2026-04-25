@@ -277,22 +277,22 @@ class Forecast(Gtk.Grid):
         grid.set_css_classes(["bg-light-gray", "card-forecast-item"])
 
         # Extract common data
-        timestamp = data_source.time.get("data")[index]
+        timestamp = data_source.time.data[index]
         dt = datetime.fromtimestamp(timestamp)
 
         # Prepare label and temperatures
         if page == ForecastPage.WEEKLY:
             label_text = self._format_weekly_label(dt)
-            temp_max = data_source.temperature_2m_max.get("data")[index]
-            temp_min = data_source.temperature_2m_min.get("data")[index]
-            weather_code = data_source.weathercode.get("data")[index]
+            temp_max = data_source.temperature_2m_max.data[index]
+            temp_min = data_source.temperature_2m_min.data[index]
+            weather_code = data_source.weathercode.data[index]
         else:  # TOMORROW
             label_text = self._format_hourly_label(dt)
-            temp_max = data_source.temperature_2m.get("data")[index]
+            temp_max = data_source.temperature_2m.data[index]
             temp_min = None  # No min temp for hourly
-            weather_code = data_source.weathercode.get("data")[index]
+            weather_code = data_source.weathercode.data[index]
             # Adjust for night if needed
-            if hourly_data.is_day.get("data")[index] == 0:
+            if hourly_data.is_day.data[index] == 0:
                 weather_code = f"{weather_code}n"
 
         # Build the grid columns
@@ -392,7 +392,7 @@ class Forecast(Gtk.Grid):
             int: Index offset into the time array.
         """
         target_ts = self._get_next_midnight_timestamp()
-        time_series: List[float] = hourly_data.time.get("data")
+        time_series: List[float] = hourly_data.time.data
         for idx, ts in enumerate(time_series):
             if ts > target_ts:
                 return idx

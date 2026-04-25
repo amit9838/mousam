@@ -201,8 +201,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         cw_data = weather_manager.current_weather
 
         # Dynamic Background
-        w_code = cw_data.weathercode.get("data")
-        is_day = cw_data.is_day.get("data")
+        w_code = cw_data.weathercode.data
+        is_day = cw_data.is_day.data
         self._use_dynamic_bg(
             w_code if w_code is not None else 0,
             is_day if is_day is not None else 1
@@ -245,27 +245,28 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # Wind
         wind_card = CardSquare(
             title="Wind",
-            main_val=cw_data.windspeed_10m.get("data"),
-            main_val_unit=cw_data.windspeed_10m.get("unit"),
-            desc=cw_data.windspeed_10m.get("level_str"),
-            sub_desc_heading=_("From"),
-            sub_desc=_("Northwest"),
-            text_up=_("N"),
-            visual_data=cw_data.winddirection_10m.get("data")
+            main_val=cw_data.windspeed_10m.data,
+            main_val_unit=cw_data.windspeed_10m.unit,
+            desc=cw_data.windspeed_10m.level_str,
+            sub_desc_heading=_("Direction"),
+            sub_desc=str(cw_data.winddirection_10m.data) + "°",
+            text_up="90",
+            text_low="0",
+            visual_data=cw_data.winddirection_10m.data
         ).card
         add_card(wind_card, 0, 0)
 
         # Humidity
         hum_card = CardSquare(
             title="Humidity",
-            main_val=cw_data.relativehumidity_2m.get("data"),
+            main_val=cw_data.relativehumidity_2m.data,
             main_val_unit="%",
-            desc=cw_data.relativehumidity_2m.get("level_str"),
+            desc=cw_data.relativehumidity_2m.level_str,
             sub_desc_heading=_("Dewpoint"),
-            sub_desc=f"{cw_data.dewpoint_2m.get('data')} {cw_data.dewpoint_2m.get('unit')}",
+            sub_desc=f"{cw_data.dewpoint_2m.data} {cw_data.dewpoint_2m.unit}",
             text_up="100",
             text_low="0",
-            visual_data=cw_data.relativehumidity_2m.get("data")
+            visual_data=cw_data.relativehumidity_2m.data
         ).card
         add_card(hum_card, 1, 0)
 
@@ -277,23 +278,24 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             high *= 0.02953
         pres_card = CardSquare(
             title="Pressure",
-            main_val=cw_data.surface_pressure.get("data"),
-            main_val_unit=cw_data.surface_pressure.get("unit"),
-            desc=cw_data.surface_pressure.get("level_str"),
-            text_up=C_("pressure card", "High"),
-            text_low=C_("pressure card", "Low"),
-            visual_data=cw_data.surface_pressure.get("data")
+            main_val=cw_data.surface_pressure.data,
+            main_val_unit=cw_data.surface_pressure.unit,
+            desc=cw_data.surface_pressure.level_str,
+            text_up=str(int(high)),
+            text_low=str(int(low)),
+            visual_data=cw_data.surface_pressure.data
         ).card
         add_card(pres_card, 0, 1)
 
         # UV Index
         uv_card = CardSquare(
             title="UV Index",
-            main_val=cw_data.uv_index.get("data"),
-            desc=cw_data.uv_index.get("level_str"),
-            text_up=C_("uvindex card", "High"),
-            text_low=C_("uvindex card", "Low"),
-            visual_data=cw_data.uv_index.get("data"),
+            main_val=cw_data.uv_index.data,
+            main_val_unit="",
+            desc=cw_data.uv_index.level_str,
+            text_up="14",
+            text_low="0",
+            visual_data=cw_data.uv_index.data,
         ).card
         add_card(uv_card, 1, 1)
 

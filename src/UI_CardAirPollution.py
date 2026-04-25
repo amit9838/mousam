@@ -15,43 +15,44 @@ class CardAirPollution:
     def __init__(self):
         from .CORE_weatherData import weather_manager
 
-        self.air_apllution_data = weather_manager.air_pollution
+        self.air_pollution_data = weather_manager.air_pollution
         self.classify_aqi = weather_manager.classify_aqi
         self.card = None
         self.create_card()
 
+    # Thresholds based on WHO Global Air Quality Guidelines 2021 (in µg/m³)
+    THRESHOLDS = {
+        "pm2_5": [(15, "success"), (35, "warning"), (75, "error")],
+        "pm10": [(45, "success"), (100, "warning"), (150, "error")],
+        "carbon_monoxide": [(4000, "success"), (7000, "warning"), (10000, "error")],
+        "carbon_dioxide": [(1000, "success"), (2000, "warning"), (5000, "error")],
+        "nitrogen_dioxide": [(25, "success"), (50, "warning"), (120, "error")],
+        "sulphur_dioxide": [(40, "success"), (50, "warning"), (125, "error")],
+        "ozone": [(100, "success"), (120, "warning"), (160, "error")],
+        "ammonia": [(100, "success"), (200, "warning"), (400, "error")],
+        "methane": [(1900, "success"), (2500, "warning"), (5000, "error")],
+        "dust": [(45, "success"), (100, "warning"), (150, "error")],
+        "alder_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+        "birch_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+        "grass_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+        "mugwort_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+        "olive_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+        "ragweed_pollen": [(15, "success"), (90, "warning"), (500, "error")],
+    }
+
     def _get_pollutant_status_color(self, key, val):
-        # Standard thresholds (approximate) for color coding
-        thresholds = {
-            "pm2_5": [(12, "success"), (35, "warning"), (55, "error")],
-            "pm10": [(54, "success"), (154, "warning"), (254, "error")],
-            "carbon_monoxide": [(4.4, "success"), (9.4, "warning"), (12.4, "error")],
-            "carbon_dioxide": [(600, "success"), (1000, "warning"), (2000, "error")],
-            "nitrogen_dioxide": [(53, "success"), (100, "warning"), (360, "error")],
-            "sulphur_dioxide": [(35, "success"), (75, "warning"), (185, "error")],
-            "ozone": [(54, "success"), (70, "warning"), (85, "error")],
-            "ammonia": [(200, "success"), (400, "warning"), (800, "error")],
-            "methane": [(1800, "success"), (2500, "warning"), (5000, "error")],
-            "dust": [(50, "success"), (150, "warning"), (250, "error")],
-            "alder_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-            "birch_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-            "grass_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-            "mugwort_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-            "olive_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-            "ragweed_pollen": [(15, "success"), (90, "warning"), (1500, "error")],
-        }
         
-        if key not in thresholds:
+        if key not in self.THRESHOLDS:
             return "accent"
             
-        for threshold, color in thresholds[key]:
+        for threshold, color in self.THRESHOLDS[key]:
             if val is not None and float(val) <= threshold:
                 return color
         return "error"
 
     def _get_nearest_time_index(self):
         nearest_current_time_idx = 0
-        air_poll_time = self.air_apllution_data["hourly"]["time"]
+        air_poll_time = self.air_pollution_data.time.data
         for i in range(len(air_poll_time)):
             if (abs(time.time() - air_poll_time[i]) // 60) < 30:
                 nearest_current_time_idx = i
@@ -97,7 +98,7 @@ class CardAirPollution:
         info_box.set_margin_start(10)
         info_box.set_margin_top(5)
 
-        main_val = Gtk.Label(label=self.air_apllution_data["hourly"]["us_aqi"][idx])
+        main_val = Gtk.Label(label=str(self.air_pollution_data.us_aqi.data[idx]))
         main_val.set_css_classes(["text-5xl", "font-medium"])
         main_val.set_halign(Gtk.Align.START)
         main_val.set_halign(Gtk.Align.END)
@@ -105,7 +106,7 @@ class CardAirPollution:
         info_box.append(main_val)
 
         desc = Gtk.Label(
-            label=self.classify_aqi(self.air_apllution_data["hourly"]["us_aqi"][idx])
+            label=self.classify_aqi(self.air_pollution_data.us_aqi.data[idx])
         )
         desc.set_css_classes(["text-xl", "opacity-90", "font-semibold"])
         desc.set_margin_bottom(7)
@@ -114,7 +115,7 @@ class CardAirPollution:
         info_box.append(desc)
 
         # Pollution bar
-        aqi = self.air_apllution_data["hourly"]["us_aqi"][idx]
+        aqi = self.air_pollution_data.us_aqi.data[idx]
 
         bar_level = aqi / 350
         pollution_bar = PollutionBar(min(bar_level, 0.99))
@@ -129,7 +130,7 @@ class CardAirPollution:
         popover_content.set_margin_bottom(8)
         popover_content.set_margin_start(8)
         popover_content.set_margin_end(8)
-        popover_content.set_size_request(280, -1)
+        popover_content.set_size_request(340, -1)
 
         popover_title = Gtk.Label(label=_("Air Quality Index"))
         popover_title.set_css_classes(["text-lg", "font-medium"])
@@ -137,8 +138,8 @@ class CardAirPollution:
         popover_content.append(popover_title)
 
         # AQI Trend Graph
-        aqi_trend = self.air_apllution_data["hourly"]["us_aqi"]
-        aqi_times = self.air_apllution_data["hourly"]["time"]
+        aqi_trend = self.air_pollution_data.us_aqi.data
+        aqi_times = self.air_pollution_data.time.data
         graph = LineGraph(aqi_trend, times=aqi_times, current_idx=idx)
         popover_content.append(graph.dw)
 
@@ -175,28 +176,39 @@ class CardAirPollution:
         ]
 
         for key, name in pollutants:
-            if key in self.air_apllution_data["hourly"]:
-                val = self.air_apllution_data["hourly"][key][idx]
+            if hasattr(self.air_pollution_data, key):
+                field = getattr(self.air_pollution_data, key)
+                val = field.data[idx]
 
                 # Skip if value is not available for the current hour
                 if val is None:
                     continue
 
-                unit = self.air_apllution_data["hourly_units"].get(key, "μg/m³")
+                unit = field.unit if field.unit else "μg/m³"
                 color_class = self._get_pollutant_status_color(key, val)
 
                 row = Adw.ActionRow(title=name)
+                
+                # Recommended safe limit
+                if key in self.THRESHOLDS:
+                    safe_limit = self.THRESHOLDS[key][0][0]
+                    row.set_subtitle(_("Safe limit: ≤ {0} {1}").format(safe_limit, unit))
+
+                # Format value
+                val_str = f"{val:.1f}" if isinstance(val, float) else str(val)
 
                 # Indicator dot
                 indicator = Gtk.Image.new_from_icon_name("media-record-symbolic")
                 indicator.add_css_class(color_class)
-                indicator.set_pixel_size(8)
+                indicator.set_pixel_size(10)
                 row.add_prefix(indicator)
 
-                # Value label
+                # Right-aligned value container
                 val_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4)
-                val_label = Gtk.Label(label=str(val))
-                val_label.add_css_class("font-medium")
+                val_box.set_valign(Gtk.Align.CENTER)
+                
+                val_label = Gtk.Label(label=val_str)
+                val_label.add_css_class("font-bold")
 
                 unit_label = Gtk.Label(label=unit)
                 unit_label.add_css_class("dim-label")
@@ -207,6 +219,15 @@ class CardAirPollution:
                 row.add_suffix(val_box)
 
                 list_box.append(row)
+
+        info_text = _("AQI: US EPA Standard\nPollutant limits: WHO Guidelines (2021)")
+        info_label = Gtk.Label(label=info_text)
+        info_label.set_wrap(True)
+        info_label.add_css_class("dim-label")
+        info_label.add_css_class("text-xs")
+        info_label.set_margin_top(4)
+        info_label.set_justify(Gtk.Justification.CENTER)
+        popover_content.append(info_label)
 
         popover.set_child(popover_content)
         return popover

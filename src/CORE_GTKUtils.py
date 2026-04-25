@@ -57,9 +57,9 @@ def show_notification(app):
     if not cw_data:
         return
     city_name = get_selected_city_name()
-    temp = cw_data.temperature_2m.get("data")
-    unit = cw_data.temperature_2m.get("unit")
-    w_code = str(cw_data.weathercode.get("data"))
+    temp = cw_data.temperature_2m.data
+    unit = cw_data.temperature_2m.unit
+    w_code = str(cw_data.weathercode.data)
     cond_str = cond_map.get(w_code, _("Unknown"))
     notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
     notification.set_body(f"{cond_str}")

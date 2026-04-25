@@ -146,8 +146,8 @@ class CompactWeather(Gtk.Overlay):
 
         # Apply dynamic background to root window (async)
         if settings.is_using_dynamic_bg:
-            weather_code = data.weathercode.get("data", 0)
-            is_day = data.is_day.get("data", 1)
+            weather_code = data.weathercode.data if data.weathercode.data is not None else 0
+            is_day = data.is_day.data if data.is_day.data is not None else 1
             code_key = f"{weather_code}{'n' if is_day == 0 else ''}"
             css_class = bg_css.get(code_key, "")
             
@@ -190,7 +190,7 @@ class CompactWeather(Gtk.Overlay):
         grid.attach(lbl_city, 0, 0, 1, 1)
 
         # Condition
-        weather_code = data.weathercode.get("data", 0)
+        weather_code = data.weathercode.data
         lbl_cond = Gtk.Label(label=condition.get(str(weather_code), condition.get("0", "Unknown")))
         lbl_cond.set_halign(Gtk.Align.START)
         lbl_cond.add_css_class("text-xl")
@@ -214,7 +214,7 @@ class CompactWeather(Gtk.Overlay):
         grid.attach(spacer, 0, 2, 1, 1)
 
         # Temperature
-        temp_val = data.temperature_2m.get('data')
+        temp_val = data.temperature_2m.data
         temp_str = f"{temp_val:.0f}°" if temp_val is not None else "--°"
         lbl_temp = Gtk.Label(label=temp_str)
         lbl_temp.set_halign(Gtk.Align.START)
@@ -278,22 +278,22 @@ class CompactWeather(Gtk.Overlay):
             idx = int((deg + 11.25) / 22.5) % 16
             return dirs[idx]
 
-        wind_deg = data.winddirection_10m.get('data')
+        wind_deg = data.winddirection_10m.data
         wind_dir = get_wind_dir(wind_deg)
-        wind_speed = data.windspeed_10m.get('data')
-        wind_speed_str = f"{wind_speed} {data.windspeed_10m.get('unit')}" if wind_speed is not None else "--"
+        wind_speed = data.windspeed_10m.data
+        wind_speed_str = f"{wind_speed} {data.windspeed_10m.unit}" if wind_speed is not None else "--"
         add_detail_row(_("Wind"), f"{wind_speed_str} • {wind_dir}", 1)
 
-        hum = data.relativehumidity_2m.get('data')
+        hum = data.relativehumidity_2m.data
         hum_str = f"{hum} %" if hum is not None else "-- %"
         add_detail_row(_("Hum."), hum_str, 2)
 
-        pres = data.surface_pressure.get('data')
-        pres_str = f"{pres} {data.surface_pressure.get('unit')}" if pres is not None else "--"
+        pres = data.surface_pressure.data
+        pres_str = f"{pres} {data.surface_pressure.unit}" if pres is not None else "--"
         add_detail_row(_("Pres."), pres_str, 3)
 
         # AQI (data is guaranteed ready)
-        aqi_value = aq_data.get("current_us_aqi", "--") if aq_data else "--"
+        aqi_value = aq_data.current_us_aqi if aq_data and aq_data.current_us_aqi is not None else "--"
         add_detail_row(_("AQI"), str(aqi_value), 4)
 
         # Show content
