@@ -50,7 +50,6 @@ class WeatherApplication(Adw.Application):
         self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
 
     def do_activate(self):
-        global css_provider
         CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
         css_provider = Gtk.CssProvider()
         Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
