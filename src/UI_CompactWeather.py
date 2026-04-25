@@ -15,8 +15,6 @@ class CompactWeather(Gtk.Overlay):
         super().__init__(**kwargs)
         self.on_back_clicked = on_back_clicked
         self._poll_timeout_id = None    # store timeout for cleanup
-        from .utils import AutoRefreshTimer
-        self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
         
         self.add_css_class("compact-container")
         self.set_valign(Gtk.Align.FILL)
@@ -29,13 +27,7 @@ class CompactWeather(Gtk.Overlay):
 
         self._setup_back_button()
         self._start_polling()
-        self.auto_refresh.setup()
 
-    def _on_auto_refresh_tick(self):
-        self._stop_polling()
-        GLib.idle_add(self._cleanup_ui)
-        self._start_polling(is_auto=True)
-        return GLib.SOURCE_CONTINUE
 
     def _cleanup_ui(self):
         """Remove old content overlays so fresh UI can be drawn."""
@@ -313,7 +305,6 @@ class CompactWeather(Gtk.Overlay):
 
     def dispose(self):
         self._stop_polling()
-        self.auto_refresh.stop()
         super().dispose()
 
 
@@ -360,6 +351,11 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         app = self.get_application()
         if app:
             app.activate_action("show-normal", None)
+
+    def update_ui(self):
+        # Re-trigger polling/build
+        if hasattr(self, "compact_view"):
+            self.compact_view._start_polling()
 
     def _on_window_destroy(self, *args):
         app = self.get_application()

@@ -316,18 +316,27 @@ def weak_connect(widget, signal_name, bound_method):
 
 
 def get_selected_city_name():
-    added_cities = JsonProcessor.str_list_to_json(settings.added_cities)
-    for city in added_cities:
-        if settings.selected_city == f"{city.get('latitude')},{city.get('longitude')}":
-            return city.get("name", _("Unknown City"))
+    try:
+        lat, lon = get_cords()
+        added_cities = JsonProcessor.str_list_to_json(settings.added_cities)
+        for city in added_cities:
+            # Numerical comparison to avoid string formatting issues
+            c_lat = float(city.get('latitude', 0))
+            c_lon = float(city.get('longitude', 0))
+            if abs(lat - c_lat) < 0.001 and abs(lon - c_lon) < 0.001:
+                return city.get("name", _("Unknown City"))
+    except:
+        pass
+        
     return _("Unknown City")
 
-
 def show_notification(app):
+    from . import CORE_weatherData as wd
+    cw_data = wd.current_weather_data
+    
     if not app or not settings.show_notifications:
         return
 
-    from .CORE_weatherData import current_weather_data as cw_data
     from .constants import condition as cond_map
 
     if not cw_data:
@@ -345,13 +354,30 @@ def show_notification(app):
     notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
     notification.set_body(f"{cond_str}")
     
-    app.send_notification("weather-update", notification)
+    # Try to set a themed icon first (more reliable in some environments)
+    try:
+        from .constants import condition as cond_map
+        # Map some common codes to themed icons if possible, or just use a generic one
+        notification.set_icon(Gio.ThemedIcon.new("weather-few-clouds-symbolic"))
+    except:
+        pass
 
+    # Add a default action (clicking the notification opens the app)
+    # We use "app.show-normal" which we defined in main.py
+    notification.set_default_action("app.show-normal")
+    
+    # or None to always show a new one.
+    notif_id = f"mousam-upd-{int(time.time())}"
+    app.send_notification(notif_id, notification)
+
+
+_fetch_callbacks = []
+_fetch_lock = Lock()
 
 def fetch_all_weather_data_async(on_success=None, on_error=None):
     """
     Fetches all weather data in a thread-safe manner, avoiding race conditions.
-    Runs current_weather fetch sequentially before hourly/daily/pollution fetches.
+    Supports multiple concurrent callers by queuing callbacks.
     """
     import threading
     from .CORE_weatherData import (
@@ -361,41 +387,44 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
         fetch_current_air_pollution
     )
 
+    with _fetch_lock:
+        if on_success:
+            _fetch_callbacks.append(on_success)
+        
+        # If worker already running, just add callback and return
+        if any(t.name == "fetch_all_worker" for t in threading.enumerate()):
+            return
+
     def _worker():
         try:
-            # cwd : current_weather_data
-            # cwt : current_weather_thread
+            # Sequentially fetch current weather first (as others might depend on it)
             cwd = threading.Thread(target=fetch_current_weather, name="cwt")
             cwd.start()
             cwd.join()
 
-            hfd = threading.Thread(target=fetch_hourly_forecast, name="hft")
-            hfd.start()
-
-            dfd = threading.Thread(target=fetch_daily_forecast, name="dft")
-            dfd.start()
-
-            apd = threading.Thread(target=fetch_current_air_pollution, name="apt")
-            apd.start()
-
-            local_time = threading.Thread(
-                target=get_time_difference, args=("", True), name="local_time"
-            )
-            local_time.start()
-
-            hfd.join()
-            dfd.join()
-            apd.join()
-            local_time.join()
+            # Parallelize the rest
+            threads = [
+                threading.Thread(target=fetch_hourly_forecast, name="hft"),
+                threading.Thread(target=fetch_daily_forecast, name="dft"),
+                threading.Thread(target=fetch_current_air_pollution, name="apt"),
+                threading.Thread(target=get_time_difference, args=("", True), name="local_time")
+            ]
             
-            if on_success:
-                GLib.idle_add(on_success)
+            for t in threads: t.start()
+            for t in threads: t.join()
+            
+            with _fetch_lock:
+                callbacks = _fetch_callbacks[:]
+                _fetch_callbacks.clear()
+            
+            for cb in callbacks:
+                GLib.idle_add(cb)
+                
         except Exception as e:
             print(f"Error fetching data: {e}")
             if on_error:
                 GLib.idle_add(on_error, str(e))
 
-    if not any(t.name == "fetch_all_worker" for t in threading.enumerate()):
-        threading.Thread(target=_worker, name="fetch_all_worker", daemon=True).start()
+    threading.Thread(target=_worker, name="fetch_all_worker", daemon=True).start()
 
 

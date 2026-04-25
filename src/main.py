@@ -44,6 +44,10 @@ class WeatherApplication(Adw.Application):
         # Mode switching actions
         self.create_action("show-compact", self._on_show_compact)
         self.create_action("show-normal", self._on_show_normal)
+        
+        # Centralized auto-refresh
+        from .utils import AutoRefreshTimer
+        self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
 
     def do_activate(self):
         global css_provider
@@ -62,6 +66,20 @@ class WeatherApplication(Adw.Application):
             self.main_window.maximize()
 
         self.main_window.present()
+        self.auto_refresh.setup()
+
+    def _on_auto_refresh_tick(self):
+        from .utils import fetch_all_weather_data_async, show_notification
+        
+        def on_success():
+            show_notification(self)
+            # Notify all windows to refresh UI
+            if self.main_window:
+                self.main_window._on_data_fetch_success(is_auto=True)
+            if self.compact_window:
+                self.compact_window.update_ui()
+                
+        fetch_all_weather_data_async(on_success=on_success)
 
     def _on_show_compact(self, *args):
         if not self.main_window: return
@@ -79,6 +97,7 @@ class WeatherApplication(Adw.Application):
             self.compact_window.connect("destroy", self._on_compact_destroy)
         else:
             self.compact_window.update_bg(bg_classes)
+            self.compact_window.update_ui()
             
         self.compact_window.present()
 

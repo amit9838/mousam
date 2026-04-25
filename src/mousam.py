@@ -44,8 +44,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self.connect("destroy", self._on_window_destroy)
 
         # State Tracking
-        self.added_cities= settings.added_cities
-        self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
+        self.added_cities = settings.added_cities
+        self._needs_render = False
 
         # --- UI Construction ---
         self._setup_actions()
@@ -56,10 +56,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh(is_initial=True)
 
         # Auto-refresh setup
-        self.auto_refresh.setup()
-        settings.settings.connect(
+        settings.connect(
             "changed::auto-refresh-interval",
-            lambda *_: self.auto_refresh.setup(),
+            lambda *_: self.get_application().auto_refresh.setup(),
         )
 
     def _setup_ui(self):
@@ -181,8 +180,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self._needs_render = True
             
         self._update_view_state("content")
-        if is_auto:
-            show_notification(self.get_application())
 
     # ================= UI Rendering =================
 
@@ -395,13 +392,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # Clear timezone cache (will be repopulated during fetch)
         local_time_data.clear()
 
-    def _on_auto_refresh_tick(self):
-        self._pre_refresh_cleanup()
-        self._start_data_refresh(is_auto=True)
-        return GLib.SOURCE_CONTINUE
 
     def _save_window_state(self, window):
-        self.auto_refresh.stop()
 
         width, height = window.get_default_size()
         settings.window_width = width

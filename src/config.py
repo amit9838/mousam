@@ -19,6 +19,14 @@ class Settings:
         for key in self.settings.list_keys():
             self.settings.reset(key)
 
+    def connect(self, signal, callback):
+        """Connect to a signal on the underlying Gio.Settings object."""
+        return self.settings.connect(signal, callback)
+
+    def disconnect(self, handler_id):
+        """Disconnect from a signal on the underlying Gio.Settings object."""
+        self.settings.disconnect(handler_id)
+
     @property
     def added_cities(self):
         return self.settings.get_strv("added-cities")
