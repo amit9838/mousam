@@ -18,7 +18,6 @@ gi.require_version("Adw", "1")
 # ----------------------------------------------------------------------
 class AutoRefreshInterval(IntEnum):
     OFF = 0
-    ONE_MIN = 1
     FIFTEEN_MIN = 15
     THIRTY_MIN = 30
     ONE_HOUR = 60
@@ -26,7 +25,6 @@ class AutoRefreshInterval(IntEnum):
 
 AUTO_REFRESH_LABELS = {
     AutoRefreshInterval.OFF: _("Off"),
-    AutoRefreshInterval.ONE_MIN: _("Every minute"),
     AutoRefreshInterval.FIFTEEN_MIN: _("Every 15 minutes"),
     AutoRefreshInterval.THIRTY_MIN: _("Every 30 minutes"),
     AutoRefreshInterval.ONE_HOUR: _("Every hour"),
@@ -64,9 +62,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
         appearance_page.add(general_group)
 
         self._add_dynamic_background_row(general_group)
+        self._add_notification_row(general_group)
         self._add_time_format_row(general_group)
         self._add_auto_refresh_row(general_group)
-        self._add_notification_row(general_group)
         self._add_units_and_measurements_group(general_group)
         self._add_reset_row(appearance_page)
 
@@ -138,7 +136,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
     def _add_notification_row(self, parent: Adw.PreferencesGroup) -> None:
         row = Adw.ActionRow(
             title=_("Show Notifications"),
-            subtitle=_("Show notification when weather is updated automatically"),
+            subtitle=_("Show notification when weather is refreshed automatically"),
             icon_name="preferences-system-notifications-symbolic",
             activatable=True,
         )
