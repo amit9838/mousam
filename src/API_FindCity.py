@@ -1,12 +1,12 @@
-import logging
 import requests
 from typing import List
 from requests.exceptions import RequestException
 from .CORE_Cache import cached
 from .configs import GEOCODING_BASE_URL, TIMEOUT
+from .CORE_Logging import get_logger
 
 # Configure logging at the module level
-logger = logging.getLogger(__name__)
+logger = get_logger("API_FindCity")
 
 # GEO_BASE_URL moved to configs.py
 

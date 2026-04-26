@@ -4,7 +4,10 @@ from typing import Callable
 from gi.repository import GLib, Gio
 from .settings import settings
 from .CORE_Helpers import get_selected_city_name
+from .CORE_Logging import get_logger
 from gettext import gettext as _
+
+logger = get_logger("utils")
 
 class AutoRefreshTimer:
     def __init__(self, callback: Callable):
@@ -70,3 +73,4 @@ def show_notification(app):
     notification.set_default_action("app.show-normal")
     notif_id = f"mousam-upd-{int(time.time())}"
     app.send_notification(notif_id, notification)
+    logger.info(f"Notification sent for {city_name}: {temp}{unit}, {cond_str}")

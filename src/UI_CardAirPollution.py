@@ -23,10 +23,7 @@ class CardAirPollution:
         self.card = None
         self.create_card()
 
-    
-
     def _get_pollutant_status_color(self, key, val):
-        
         if key not in THRESHOLDS:
             return "accent"
             
@@ -37,7 +34,6 @@ class CardAirPollution:
 
 
     def _get_nearest_time_index(self):
-        
         t_data = get_time_difference()
         target_time = t_data.get("target_time")
         timezone_str = t_data.get("timezone", "UTC")

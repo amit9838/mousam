@@ -2,6 +2,9 @@ import threading
 from threading import Lock
 from gi.repository import GLib
 from .CORE_Helpers import get_time_difference
+from .CORE_Logging import get_logger
+
+logger = get_logger("networking")
 
 _fetch_callbacks = []
 _fetch_lock = Lock()
@@ -20,6 +23,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
 
     def _worker():
         from .CORE_Helpers import TIMEOUT
+        logger.info("Starting background fetch for all weather data")
         
         # Reset ready state before starting fresh fetch
         weather_manager.clear()
@@ -28,8 +32,11 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
 
         def wrap_target(target, *args):
             try:
+                logger.debug(f"Starting target: {target.__name__}")
                 target(*args)
+                logger.debug(f"Finished target: {target.__name__}")
             except Exception as e:
+                logger.error(f"Error in target {target.__name__}: {e}")
                 error_container.append(e)
 
         try:
@@ -43,6 +50,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
             if error_container:
                 raise error_container[0]
 
+            logger.info("Current weather fetched successfully, starting forecasts and air pollution")
             threads = [
                 threading.Thread(target=wrap_target, args=(weather_manager.update_hourly_forecast,), name="hft"),
                 threading.Thread(target=wrap_target, args=(weather_manager.update_daily_forecast,), name="dft"),
@@ -61,6 +69,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
             if error_container:
                 raise error_container[0]
             
+            logger.info("All background fetch targets completed successfully")
             with _fetch_lock:
                 callbacks = _fetch_callbacks[:]
                 _fetch_callbacks.clear()
@@ -69,7 +78,7 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 GLib.idle_add(cb)
                 
         except Exception as e:
-            print(f"Error fetching data: {e}")
+            logger.error(f"Error fetching data: {e}")
             if on_error:
                 GLib.idle_add(on_error, str(e))
 

@@ -23,6 +23,9 @@ import gi
 from .mousam import WeatherMainWindow
 from .settings import settings
 from .configs import APP_ID
+from .CORE_Logging import log_manager, get_logger
+
+logger = get_logger("main")
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -62,6 +65,7 @@ class WeatherApplication(Adw.Application):
             self.quit()
 
     def do_activate(self):
+        logger.info("Application activated")
         CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
         css_provider = Gtk.CssProvider()
         Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION

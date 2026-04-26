@@ -5,6 +5,9 @@ from .settings import settings
 from .CORE_Cache import cached
 from .CORE_Helpers import TIMEOUT
 from .configs import HPA_TO_INHG, OPEN_METEO_BASE_URL
+from .CORE_Logging import get_logger
+
+logger = get_logger("API_Weather")
 
 extend_url = ""
 
@@ -44,7 +47,7 @@ class Weather:
                 data['current_units']['surface_pressure'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+            logger.error(f"Failed to fetch current weather data: {e}")
 
     def _get_current_weather(self, lat, lon):
         current_args = [
@@ -84,7 +87,7 @@ class Weather:
                 data['hourly_units']['surface_pressure'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+            logger.error(f"Failed to fetch data: {e}")
 
     def _get_hourly_forecast(self, lat, lon):
         hourly_args = [
@@ -133,7 +136,7 @@ class Weather:
             data = response.json()
             return data
         except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+            logger.error(f"Failed to fetch data: {e}")
 
     def _get_daily_forecast(self, lat, lon):
         daily_args = [

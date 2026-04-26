@@ -15,6 +15,9 @@ from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
+from .CORE_Logging import get_logger
+
+logger = get_logger("ui")
 
 # Frontend Components
 from .UI_CurrentCond import CurrentCondition
@@ -54,11 +57,35 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         from .CORE_weatherData import weather_manager
         weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
         
-        # Auto-refresh setup
+        # Settings setup
         settings.connect(
             "changed::auto-refresh-interval",
             lambda *_: self.get_application().auto_refresh.setup(),
         )
+        settings.connect(
+            "changed::debug-mode",
+            self._on_debug_mode_changed,
+        )
+        settings.connect(
+            "changed::selected-city",
+            self._on_selected_city_changed,
+        )
+
+    def _on_selected_city_changed(self, *args):
+        from .CORE_Helpers import get_selected_city_name
+        city = get_selected_city_name()
+        logger.info(f"Location switched to: {city}")
+        self._start_data_refresh()
+
+    def _on_debug_mode_changed(self, *args):
+        from .CORE_Logging import log_manager
+        if settings.debug_mode:
+            toast = Adw.Toast.new(_("Debug Mode Enabled"))
+            toast.set_button_label(_("View Logs"))
+            toast.set_action_name("win.open-logs")
+            self.toast_overlay.add_toast(toast)
+        else:
+            self.toast_overlay.add_toast(Adw.Toast.new(_("Debug Mode Disabled")))
 
     def _setup_ui(self):
         """Initialize the main UI skeleton using Adwaita patterns."""
@@ -131,6 +158,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             ("preferences", self._on_action_preferences, ["<Control>comma"]),
             ("shortcuts", self._on_action_shortcuts, ["<Control>question"]),
             ("about", self._on_action_about, None),
+            ("open-logs", self._on_action_open_logs, None),
         ]
 
         for name, callback, accel in actions:
@@ -449,3 +477,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _on_action_about(self, action, param):
         show_about_window(self)
+
+    def _on_action_open_logs(self, action, param):
+        from .CORE_Logging import log_manager
+        log_manager.open_log_file()

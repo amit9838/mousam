@@ -52,5 +52,10 @@
       <summary>Show weather update notifications</summary>
       <description>Show a notification when weather data is updated.</description>
     </key>
-	</schema>
+    <key name="debug-mode" type="b">
+      <default>false</default>
+      <summary>Enable debug mode</summary>
+      <description>Enables detailed logging and console output.</description>
+    </key>
+  </schema>
 </schemalist>

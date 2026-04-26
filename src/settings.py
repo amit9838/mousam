@@ -115,6 +115,14 @@ class Settings:
     def show_notifications(self, value):
         self.settings.set_boolean("show-notifications", value)
 
+    @property
+    def debug_mode(self):
+        return self.settings.get_boolean("debug-mode")
+
+    @debug_mode.setter
+    def debug_mode(self, value):
+        self.settings.set_boolean("debug-mode", value)
+
 
 def get_settings():
     return Settings()

@@ -9,6 +9,9 @@ from gi.repository import Adw
 from .settings import settings
 from gettext import gettext as _
 from .configs import TIMEOUT, INTERNET_CACHE_TTL, DEFAULT_TIMEZONE, DOMAINS
+from .CORE_Logging import get_logger
+
+logger = get_logger("helpers")
 
 _internet_cache = {"timestamp": 0.0, "status": False}
 local_time_data = dict()
@@ -24,6 +27,9 @@ def check_internet_connection(force: bool = False) -> bool:
         or check_internet_domain(DOMAINS["wikipedia"])
         or check_internet_domain(DOMAINS["baidu"])
     )
+    if not status:
+        logger.error("Internet connection check failed - all domains/sockets unreachable")
+    
     _internet_cache = {"timestamp": now, "status": status}
     return status
 

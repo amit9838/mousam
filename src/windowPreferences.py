@@ -10,6 +10,7 @@ from gettext import gettext as _, pgettext as C_
 from .settings import settings
 from .CORE_Helpers import create_toast
 from .configs import AUTO_REFRESH_OPTIONS
+from .CORE_Logging import log_manager
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -51,7 +52,20 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._add_time_format_row(general_group)
         self._add_auto_refresh_row(general_group)
         self._add_units_and_measurements_group(general_group)
-        self._add_reset_row(appearance_page)
+
+        advanced_page = Adw.PreferencesPage()
+        advanced_page.set_title(_("Advanced"))
+        advanced_page.set_icon_name("preferences-system-symbolic")
+        self.add(advanced_page)
+
+        debug_group = Adw.PreferencesGroup()
+        debug_group.set_title(_("Logging &amp; Debugging"))
+        advanced_page.add(debug_group)
+
+        self._add_debug_mode_row(debug_group)
+        self._add_open_logs_row(debug_group)
+        self._add_clear_logs_row(debug_group)
+        self._add_reset_row(advanced_page)
 
     def _add_dynamic_background_row(self, parent: Adw.PreferencesGroup) -> None:
         row = Adw.ActionRow(
@@ -208,6 +222,48 @@ class WeatherPreferences(Adw.PreferencesWindow):
         row.add_suffix(reset_btn)
         data_group.add(row)
 
+    def _add_debug_mode_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Debug Mode"),
+            subtitle=_("Enable verbose logging and console output"),
+            icon_name="utilities-terminal-symbolic",
+            activatable=True,
+        )
+        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        switch.set_active(settings.debug_mode)
+        switch.connect("state-set", self._on_debug_mode_toggled)
+        row.add_suffix(switch)
+        self._debug_switch = switch
+        parent.add(row)
+
+    def _add_open_logs_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Open Logs Folder"),
+            subtitle=_("Access the application log files"),
+            icon_name="folder-open-symbolic",
+            activatable=True,
+        )
+        btn = Gtk.Button(icon_name="folder-open-symbolic")
+        btn.set_valign(Gtk.Align.CENTER)
+        btn.add_css_class("flat")
+        btn.connect("clicked", self._on_open_logs_clicked)
+        row.add_suffix(btn)
+        parent.add(row)
+
+    def _add_clear_logs_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Clear Log File"),
+            subtitle=_("Delete all contents of the current log file"),
+            icon_name="edit-clear-all-symbolic",
+            activatable=True,
+        )
+        btn = Gtk.Button(icon_name="edit-clear-all-symbolic")
+        btn.set_valign(Gtk.Align.CENTER)
+        btn.add_css_class("flat")
+        btn.connect("clicked", self._on_clear_logs_clicked)
+        row.add_suffix(btn)
+        parent.add(row)
+
     # ------------------------------------------------------------------
     # UI Binding & Initial State
     # ------------------------------------------------------------------
@@ -255,6 +311,19 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.show_notifications = state
+
+    def _on_debug_mode_toggled(self, switch: Gtk.Switch, state: bool) -> None:
+        settings.debug_mode = state
+        log_manager.update_level()
+
+    def _on_open_logs_clicked(self, _button: Gtk.Button) -> None:
+        log_manager.open_log_folder()
+
+    def _on_clear_logs_clicked(self, _button: Gtk.Button) -> None:
+        if log_manager.clear_logs():
+            self.add_toast(create_toast(_("Logs cleared"), 1))
+        else:
+            self.add_toast(create_toast(_("Failed to clear logs"), 1))
 
     def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
         idx = combo.get_selected()

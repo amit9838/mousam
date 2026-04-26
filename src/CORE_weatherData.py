@@ -7,7 +7,10 @@ from .settings import settings
 from .configs import HPA_TO_INHG
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
+from .CORE_Logging import get_logger
 from gettext import gettext as _, pgettext as C_
+
+logger = get_logger("data_manager")
 
 class WeatherDataManager(GObject.Object):
     """
@@ -49,8 +52,10 @@ class WeatherDataManager(GObject.Object):
 
     def update_current_weather(self):
         obj = Weather()
+        logger.debug(f"Fetching current weather for cords: {get_cords()}")
         raw_data = obj._get_current_weather(*get_cords())
         if raw_data is None:
+            logger.error("Failed to fetch current weather data from API")
             raise ValueError("Failed to fetch current weather data")
 
         data = CurrentWeather(raw_data)
@@ -140,6 +145,7 @@ class WeatherDataManager(GObject.Object):
             self.air_pollution = data
         self.emit("data-updated")
         self.notify("is-ready")
+        logger.info("Air pollution data updated successfully")
         return data
 
     # Helper classification methods

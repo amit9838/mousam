@@ -2,6 +2,9 @@ import requests
 from .CORE_Cache import cached
 from .CORE_Helpers import TIMEOUT
 from .configs import AIR_QUALITY_BASE_URL
+from .CORE_Logging import get_logger
+
+logger = get_logger("API_AirPollution")
 
 # base_url moved to configs.py
 
@@ -22,7 +25,7 @@ class AirPollution:
             data = response.json()
             return data
         except requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
+            logger.error(f"Failed to fetch air pollution data: {e}")
 
     def _get_current_air_pollution(self, lat, lon):
         hourly_args = [
