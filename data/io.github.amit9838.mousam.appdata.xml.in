@@ -34,19 +34,7 @@
       <caption>Night mode view</caption>
     </screenshot>
   </screenshots>
-  <keywords>
-    <keyword>Weather</keyword>
-    <keyword>Forecast</keyword>
-    <keyword>AQI</keyword>
-    <keyword>Air Quality</keyword>
-    <keyword>Meteorology</keyword>
-  </keywords>
-  <provides>
-    <binary>mousam</binary>
-  </provides>
-  <requires>
-    <display_length compare="ge">360</display_length>
-  </requires>
+
   <launchable type="desktop-id">io.github.amit9838.mousam.desktop</launchable>
   <url type="homepage">https://amit9838.github.io/mousam/</url>
   <url type="bugtracker">https://github.com/amit9838/mousam/issues</url>
@@ -60,11 +48,11 @@
 	  <color type="primary" scheme_preference="light">#A7D2F4</color>
 	  <color type="primary" scheme_preference="dark">#294C69</color>
 	</branding>
-  <supports>
+  <recommends>
     <control>pointing</control>
     <control>touch</control>
     <control>keyboard</control>
-  </supports>
+  </recommends>
   <custom>
     <value key="Purism::form_factor">workstation</value>
     <value key="Purism::form_factor">mobile</value>
