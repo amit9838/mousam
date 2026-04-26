@@ -48,6 +48,17 @@ class WeatherApplication(Adw.Application):
         # Centralized auto-refresh
         from .CORE_GTKUtils import AutoRefreshTimer
         self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
+        
+        self.connect("window-removed", self._on_window_removed)
+
+    def do_shutdown(self):
+        self.auto_refresh.stop()
+        Adw.Application.do_shutdown(self)
+
+    def _on_window_removed(self, app, window):
+        # If any of the main windows are closed, quit the application
+        if window == self.main_window or window == self.compact_window:
+            self.quit()
 
     def do_activate(self):
         CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"

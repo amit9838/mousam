@@ -16,6 +16,7 @@ class CompactWeather(Gtk.Overlay):
         super().__init__(**kwargs)
         self.on_back_clicked = on_back_clicked
         self._poll_timeout_id = None    # store timeout for cleanup
+        self._clock_timeout_id = None   # store clock timeout for cleanup
         
         self.add_css_class("compact-container")
         self.set_valign(Gtk.Align.FILL)
@@ -132,6 +133,7 @@ class CompactWeather(Gtk.Overlay):
 
     def _build_ui(self):
         self._cleanup_ui()
+        self._stop_clock()
         from .CORE_weatherData import weather_manager
         data = weather_manager.current_weather
         aq_data = weather_manager.air_pollution
@@ -267,7 +269,7 @@ class CompactWeather(Gtk.Overlay):
             t_str = now.strftime(fmt)
             self.lbl_time_val.set_markup(f"{d_str} • {t_str}")
             return True
-        GLib.timeout_add_seconds(1, update_clock)
+        self._clock_timeout_id = GLib.timeout_add_seconds(1, update_clock)
 
         # Wind
         def get_wind_dir(deg):
@@ -332,8 +334,14 @@ class CompactWeather(Gtk.Overlay):
     def _on_hover_leave(self, controller):
         self.btn_back.set_visible(False)
 
+    def _stop_clock(self):
+        if self._clock_timeout_id:
+            GLib.source_remove(self._clock_timeout_id)
+            self._clock_timeout_id = None
+
     def dispose(self):
         self._stop_polling()
+        self._stop_clock()
         super().dispose()
 
 
