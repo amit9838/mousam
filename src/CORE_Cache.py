@@ -4,9 +4,9 @@ import time
 from threading import Lock
 from collections import OrderedDict
 from typing import Callable, Optional, Any
+from .configs import DATA_CACHE_TTL, DATA_MAX_ENTRIES
 
-DATA_CACHE_TTL = 60
-DATA_MAX_ENTRIES = 128
+# Constants moved to configs.py
 
 class cached:
     """

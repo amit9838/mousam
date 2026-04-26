@@ -31,6 +31,7 @@ mousam_sources = [
   'mousam.py',
   'CORE_Models.py',
   'CORE_weatherData.py',
+  'CORE_Icons.py',
 
   'API_AirPollution.py',
   'API_FindCity.py',
@@ -51,12 +52,12 @@ mousam_sources = [
   'UI_CompDrawLineGraph.py',
   'UI_CompactWeather.py',
 
-  'constants.py',
+  'configs.py',
   'CORE_Cache.py',
   'CORE_Helpers.py',
   'CORE_Networking.py',
   'CORE_GTKUtils.py',
-  'config.py',
+  'settings.py',
   'windowAbout.py',
   'windowPreferences.py',
   'windowLocations.py',
@@ -71,8 +72,16 @@ icon_conf = configuration_data()
 icon_conf.set('icon_location', get_option('prefix'))
 
 configure_file(
-  input: 'constants.py',
-  output: 'constants.py',
+  input: 'configs.py',
+  output: 'configs.py',
+  configuration: icon_conf,
+  install: true,
+  install_dir: moduledir
+)
+
+configure_file(
+  input: 'CORE_Icons.py',
+  output: 'CORE_Icons.py',
   configuration: icon_conf,
   install: true,
   install_dir: moduledir

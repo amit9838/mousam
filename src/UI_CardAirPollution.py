@@ -7,7 +7,7 @@ from gettext import gettext as _, pgettext as C_
 
 from .UI_CompDrawPollutionBar import PollutionBar
 from .UI_CompDrawLineGraph import LineGraph
-from .config import settings
+from .settings import settings
 from .CORE_Helpers import get_time_difference
 
 gi.require_version("Gtk", "4.0")

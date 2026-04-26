@@ -2,7 +2,7 @@ import weakref
 import time
 from typing import Callable
 from gi.repository import GLib, Gio
-from .config import settings
+from .settings import settings
 from .CORE_Helpers import get_selected_city_name
 from gettext import gettext as _
 
@@ -53,7 +53,7 @@ def show_notification(app):
     cw_data = weather_manager.current_weather
     if not app or not settings.show_notifications:
         return
-    from .constants import condition as cond_map
+    from .CORE_Icons import condition as cond_map
     if not cw_data:
         return
     city_name = get_selected_city_name()

@@ -7,29 +7,14 @@ from gi.repository import Adw, Gtk
 from gettext import gettext as _, pgettext as C_
 
 
-from .config import settings
+from .settings import settings
 from .CORE_Helpers import create_toast
+from .configs import AUTO_REFRESH_OPTIONS
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-# ----------------------------------------------------------------------
-# Constants & Enums
-# ----------------------------------------------------------------------
-class AutoRefreshInterval(IntEnum):
-    OFF = 0
-    FIFTEEN_MIN = 15
-    THIRTY_MIN = 30
-    ONE_HOUR = 60
-    TWO_HOURS = 120
-
-AUTO_REFRESH_LABELS = {
-    AutoRefreshInterval.OFF: _("Off"),
-    AutoRefreshInterval.FIFTEEN_MIN: _("Every 15 minutes"),
-    AutoRefreshInterval.THIRTY_MIN: _("Every 30 minutes"),
-    AutoRefreshInterval.ONE_HOUR: _("Every hour"),
-    AutoRefreshInterval.TWO_HOURS: _("Every 2 hours"),
-}
+# Using centralized constants from .configs
 
 
 class WeatherPreferences(Adw.PreferencesWindow):
@@ -116,7 +101,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         parent.add(row)
 
     def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
-        labels = Gtk.StringList.new(list(AUTO_REFRESH_LABELS.values()))
+        labels = Gtk.StringList.new([opt[1] for opt in AUTO_REFRESH_OPTIONS])
         row = Adw.ComboRow(
             title=_("Auto Refresh"),
             subtitle=_("Automatically refresh weather data at a set interval"),
@@ -124,11 +109,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
             model=labels,
         )
         current = settings.auto_refresh_interval
-        try:
-            selected = AutoRefreshInterval(current)
-        except ValueError:
-            selected = AutoRefreshInterval.OFF
-        row.set_selected(list(AutoRefreshInterval).index(selected))
+        selected_idx = 0
+        for i, (val, label) in enumerate(AUTO_REFRESH_OPTIONS):
+            if val == current:
+                selected_idx = i
+                break
+        row.set_selected(selected_idx)
         row.connect("notify::selected", self._on_auto_refresh_changed)
         self._auto_refresh_row = row
         parent.add(row)
@@ -272,17 +258,16 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
         idx = combo.get_selected()
-        try:
-            interval = list(AutoRefreshInterval)[idx]
-        except IndexError:
-            interval = AutoRefreshInterval.OFF
+        if idx >= len(AUTO_REFRESH_OPTIONS):
+            return
 
-        settings.auto_refresh_interval = interval.value
+        interval_val, interval_label = AUTO_REFRESH_OPTIONS[idx]
+        settings.auto_refresh_interval = interval_val
 
-        if interval == AutoRefreshInterval.OFF:
+        if interval_val == 0:
             msg = _("Auto refresh disabled")
         else:
-            msg = _("Auto refresh every {} min").format(interval.value)
+            msg = _("Auto refresh every {} min").format(interval_val)
 
         self.add_toast(create_toast(msg, 1))
 
@@ -317,8 +302,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._notification_switch.set_active(settings.show_notifications)
 
         # Auto refresh combo
-        default_interval = AutoRefreshInterval.OFF
-        self._auto_refresh_row.set_selected(list(AutoRefreshInterval).index(default_interval))
+        self._auto_refresh_row.set_selected(0) # 0 is always OFF in our list
 
         # Temperature unit buttons
         if settings.unit == "metric":

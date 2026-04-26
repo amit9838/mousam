@@ -6,20 +6,12 @@ import datetime
 from typing import List
 from zoneinfo import ZoneInfo
 from gi.repository import Adw
-from .config import settings
+from .settings import settings
 from gettext import gettext as _
+from .configs import TIMEOUT, INTERNET_CACHE_TTL, DEFAULT_TIMEZONE, DOMAINS
 
-INTERNET_CACHE_TTL = 120
-DEFAULT_TIMEZONE = "UTC"
-TIMEOUT = 15
 _internet_cache = {"timestamp": 0.0, "status": False}
 local_time_data = dict()
-
-domains = {
-    "google": "http://www.google.com",
-    "wikipedia": "https://www.wikipedia.org/",
-    "baidu": "https://www.baidu.com/",
-}
 
 def check_internet_connection(force: bool = False) -> bool:
     global _internet_cache
@@ -28,9 +20,9 @@ def check_internet_connection(force: bool = False) -> bool:
         return _internet_cache["status"]
     status = (
         check_internet_socket()
-        or check_internet_domain(domains["google"])
-        or check_internet_domain(domains["wikipedia"])
-        or check_internet_domain(domains["baidu"])
+        or check_internet_domain(DOMAINS["google"])
+        or check_internet_domain(DOMAINS["wikipedia"])
+        or check_internet_domain(DOMAINS["baidu"])
     )
     _internet_cache = {"timestamp": now, "status": status}
     return status

@@ -6,10 +6,10 @@ from gi.repository import Gtk, GLib, Adw
 import threading
 from gettext import gettext as _, pgettext as C_
 
-from .constants import icons, icon_loc
+from .CORE_Icons import icons
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
-from .config import settings
+from .settings import settings
 from .CORE_GTKUtils import weak_connect
 
 gi.require_version("Gtk", "4.0")

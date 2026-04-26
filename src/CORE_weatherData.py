@@ -3,8 +3,8 @@ import threading
 from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
-from .config import settings
-from .constants import hpa_to_inhg
+from .settings import settings
+from .configs import HPA_TO_INHG
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from gettext import gettext as _, pgettext as C_
@@ -170,7 +170,7 @@ class WeatherDataManager(GObject.Object):
     def classify_presssure_level(p):
         low, normal = 940, 1010
         if settings.unit == "imperial":
-            low, normal = low * hpa_to_inhg, normal * hpa_to_inhg
+            low, normal = low * HPA_TO_INHG, normal * HPA_TO_INHG
         if p < low: return C_("pressure", "Low")
         if p <= normal: return C_("pressure", "Normal")
         return C_("pressure", "High")

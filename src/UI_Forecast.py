@@ -18,8 +18,8 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, GLib, Adw
 import threading
 
-from .constants import icons
-from .config import settings
+from .CORE_Icons import icons
+from .settings import settings
 from .CORE_weatherData import weather_manager
 from .CORE_GTKUtils import weak_connect
 

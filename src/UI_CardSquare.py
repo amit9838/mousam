@@ -6,8 +6,8 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
-from .constants import icons
-from .config import settings
+from .CORE_Icons import icons
+from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawImageIcon import DrawImage
 

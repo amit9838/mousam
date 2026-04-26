@@ -1,15 +1,16 @@
 import requests
 from .CORE_Cache import cached
 from .CORE_Helpers import TIMEOUT
+from .configs import AIR_QUALITY_BASE_URL
 
-base_url = "https://air-quality-api.open-meteo.com/v1/air-quality"
+# base_url moved to configs.py
 
 
 class AirPollution:
     @staticmethod
     @cached()
     def current_air_pollution(latitude: float, longitude: float, **kwargs):
-        url = base_url + f"?latitude={latitude}&longitude={longitude}"
+        url = AIR_QUALITY_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
         if "hourly" in kwargs:
             hourly_fields = ",".join(kwargs.get("hourly"))
             url = url + f"&hourly={hourly_fields}"

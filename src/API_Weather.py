@@ -1,13 +1,12 @@
 import requests
 import datetime
 
-from .config import settings
-from .constants import hpa_to_inhg
+from .settings import settings
 from .CORE_Cache import cached
 from .CORE_Helpers import TIMEOUT
+from .configs import HPA_TO_INHG, OPEN_METEO_BASE_URL
 
 extend_url = ""
-base_url = "https://api.open-meteo.com/v1/forecast"
 
 
 class Weather:
@@ -27,7 +26,7 @@ class Weather:
     @classmethod
     @cached()
     def current_weather(cls,latitude: float, longitude: float, **kwargs):
-        url = base_url + f"?latitude={latitude}&longitude={longitude}"
+        url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
 
         # Check for kwargs keyword parameters
         if "current" in kwargs:
@@ -40,7 +39,7 @@ class Weather:
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             if settings.unit == "imperial":
-                inHg = data['current']['surface_pressure'] * hpa_to_inhg
+                inHg = data['current']['surface_pressure'] * HPA_TO_INHG
                 data['current']['surface_pressure'] = inHg
                 data['current_units']['surface_pressure'] = 'inHg'
             return data
@@ -66,7 +65,7 @@ class Weather:
     @classmethod
     @cached()
     def forecast_hourly(cls,latitude: float, longitude: float, **kwargs):
-        url = base_url + f"?latitude={latitude}&longitude={longitude}&timezone=auto"
+        url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}&timezone=auto"
 
         # Check for kwargs keyword parameters
         if "hourly" in kwargs:
@@ -80,7 +79,7 @@ class Weather:
             data = response.json()
             if settings.unit == "imperial":
                 for i in range(len(data['hourly']['surface_pressure'])):
-                    inHg = data['hourly']['surface_pressure'][i] * hpa_to_inhg
+                    inHg = data['hourly']['surface_pressure'][i] * HPA_TO_INHG
                     data['hourly']['surface_pressure'][i] = inHg
                 data['hourly_units']['surface_pressure'] = 'inHg'
             return data
@@ -114,7 +113,7 @@ class Weather:
     @classmethod
     @cached()
     def forecast_daily(cls,latitude: float, longitude: float, **kwargs):
-        url = base_url + f"?latitude={latitude}&longitude={longitude}"
+        url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
         if "daily" in kwargs:
             hourly_fields = ",".join(kwargs.get("daily"))
             url = url + f"&daily={hourly_fields}"

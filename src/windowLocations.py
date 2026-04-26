@@ -9,7 +9,7 @@ from gi.repository import Gtk, Adw
 
 from .CORE_Helpers import create_toast
 from .API_FindCity import find_city
-from .config import settings
+from .settings import settings
 from gettext import gettext as _, pgettext as C_
 
 # --- Data Layer Utilities ---

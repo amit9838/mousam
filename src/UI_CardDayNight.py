@@ -6,7 +6,7 @@ from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
 from .UI_CompDrawDayNight import DrawDayNight
-from .config import settings
+from .settings import settings
 from .CORE_Helpers import get_time_difference
 
 gi.require_version("Gtk", "4.0")

@@ -21,7 +21,8 @@ import os
 import sys
 import gi
 from .mousam import WeatherMainWindow
-from .config import settings
+from .settings import settings
+from .configs import APP_ID
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -32,7 +33,7 @@ class WeatherApplication(Adw.Application):
     """The main application singleton class."""
 
     def __init__(self):
-        super().__init__(application_id='io.github.amit9838.mousam',
+        super().__init__(application_id=APP_ID,
                          flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
         self.create_action('quit', lambda *_: self.quit(), ['<primary>q'])
         self.main_window = None

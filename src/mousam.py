@@ -10,7 +10,7 @@ from gettext import gettext as _, pgettext as C_
 # Module imports
 from .CORE_Helpers import check_internet_connection, local_time_data
 from .CORE_Networking import fetch_all_weather_data_async
-from .constants import bg_css
+from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
@@ -25,7 +25,7 @@ from .UI_CardDayNight import CardDayNight
 from .UI_CardAirPollution import CardAirPollution
 from .UI_CompactWeather import CompactWeatherWindow
 
-from .config import settings
+from .settings import settings
 
 
 class WeatherMainWindow(Adw.ApplicationWindow):

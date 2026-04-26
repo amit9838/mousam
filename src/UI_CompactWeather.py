@@ -1,7 +1,7 @@
 import gi
 from gi.repository import Gtk, Adw, GLib
-from .config import settings
-from .constants import icons, condition, bg_css
+from .settings import settings
+from .CORE_Icons import icons, condition, bg_css
 from .CORE_Helpers import check_internet_connection
 from gettext import gettext as _
 
