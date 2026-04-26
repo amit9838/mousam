@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 22:25+0530\n"
+"POT-Creation-Date: 2026-04-26 18:09+0530\n"
 "PO-Revision-Date: 2024-07-01 23:06+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -24,7 +24,7 @@ msgid "Mousam"
 msgstr "मौसम"
 
 #: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:14
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
 msgid "Weather at a glance"
 msgstr "मौसम एक नज़र में"
 
@@ -148,246 +148,371 @@ msgstr "उपयोग के लिए मापन प्रणाली - �
 msgid "metric(km, °C), imperial(mile, °F)"
 msgstr "मेट्रिक(किमी, °C), इंपीरियल(मील, °F)"
 
-#: src/constants.py:132
+#: data/io.github.amit9838.mousam.gschema.xml:52
+msgid "Show weather update notifications"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:53
+msgid "Show a notification when weather data is updated."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:57
+msgid "Enable debug mode"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:58
+msgid "Enables detailed logging and console output."
+msgstr ""
+
+#: src/configs.py:33
+msgid "Off"
+msgstr ""
+
+#: src/configs.py:34
+msgid "Every 15 minutes"
+msgstr ""
+
+#: src/configs.py:35
+msgid "Every 30 minutes"
+msgstr ""
+
+#: src/configs.py:36
+msgid "Every hour"
+msgstr ""
+
+#: src/configs.py:37
+msgid "Every 2 hours"
+msgstr ""
+
+#: src/CORE_GTKUtils.py:66
+msgid "Unknown"
+msgstr ""
+
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+msgid "Unknown City"
+msgstr ""
+
+#: src/CORE_Icons.py:134
 msgid "Clear sky"
 msgstr "साफ आसमान"
 
-#: src/constants.py:133
+#: src/CORE_Icons.py:135
 msgid "Few Clouds"
 msgstr "कुछ बादल"
 
-#: src/constants.py:134
+#: src/CORE_Icons.py:136
 msgid "Partly Cloudy"
 msgstr "आंशिक बादल छाए रहेंगे"
 
-#: src/constants.py:135
+#: src/CORE_Icons.py:137
 msgid "Overcast"
 msgstr "बादलों से घिरा हुआ"
 
-#: src/constants.py:136
+#: src/CORE_Icons.py:138
 msgid "Fog"
 msgstr "कोहरा"
 
-#: src/constants.py:137
+#: src/CORE_Icons.py:139
 msgid "Mist"
 msgstr "कुहासा"
 
-#: src/constants.py:138
+#: src/CORE_Icons.py:140
 msgid "Light Drizzle"
 msgstr "हल्की बूंदाबांदी"
 
-#: src/constants.py:139
+#: src/CORE_Icons.py:141
 msgid "Moderate Drizzle"
 msgstr "मध्यम बूंदाबांदी"
 
-#: src/constants.py:140
+#: src/CORE_Icons.py:142
 msgid "Heavy Intensity Drizzle"
 msgstr "भारी तीव्रता वाली बूंदाबांदी"
 
-#: src/constants.py:141
+#: src/CORE_Icons.py:143
 msgid "Light Freezing Drizzle"
 msgstr "हल्की बर्फीली बूंदाबांदी"
 
-#: src/constants.py:142
+#: src/CORE_Icons.py:144
 msgid "Heavy Freezing Drizzle"
 msgstr "भारी बर्फीली बूंदाबांदी"
 
-#: src/constants.py:143
+#: src/CORE_Icons.py:145
 msgid "Light Rain"
 msgstr "हल्की बारिश"
 
-#: src/constants.py:144
+#: src/CORE_Icons.py:146
 msgid "Moderate Rain"
 msgstr "मध्यम बारिश"
 
-#: src/constants.py:145
+#: src/CORE_Icons.py:147
 msgid "Heavy Rain"
 msgstr "भारी बारिश"
 
-#: src/constants.py:146
+#: src/CORE_Icons.py:148
 msgid "Light Freezing Rain"
 msgstr "हल्की बर्फीली बारिश"
 
-#: src/constants.py:147
+#: src/CORE_Icons.py:149
 msgid "Heavy Freezing Rain"
 msgstr "भारी बर्फीली बारिश"
 
-#: src/constants.py:148
+#: src/CORE_Icons.py:150
 msgid "Light Snow Fall"
 msgstr "हल्की बर्फबारी"
 
-#: src/constants.py:149
+#: src/CORE_Icons.py:151
 msgid "Moderate Snow Fall"
 msgstr "मध्यम बर्फबारी"
 
-#: src/constants.py:150
+#: src/CORE_Icons.py:152
 msgid "Heavy Snow Fall"
 msgstr "भारी बर्फबारी"
 
-#: src/constants.py:151
+#: src/CORE_Icons.py:153
 msgid "Snow grains"
 msgstr "बर्फ के दाने"
 
-#: src/constants.py:152
+#: src/CORE_Icons.py:154
 msgid "Light Rain Showers"
 msgstr "हल्की बारिश की बौछारें"
 
-#: src/constants.py:153
+#: src/CORE_Icons.py:155
 msgid "Moderate Rain Showers"
 msgstr "मध्यम वर्षा की बौछारें"
 
-#: src/constants.py:154
+#: src/CORE_Icons.py:156
 msgid "Heavy Rain Showers"
 msgstr "भारी बारिश की बौछारें"
 
-#: src/constants.py:155
+#: src/CORE_Icons.py:157
 msgid "Light Snow Showers"
 msgstr "हल्की बर्फ की बौछारें"
 
-#: src/constants.py:156
+#: src/CORE_Icons.py:158
 msgid "Heavy Snow Showers "
 msgstr "भारी बर्फ की बौछारें "
 
-#: src/constants.py:157
+#: src/CORE_Icons.py:159
 msgid "Thunderstorm"
 msgstr "आंधी तूफान"
 
-#: src/constants.py:158
+#: src/CORE_Icons.py:160
 msgid "Thunderstorm with Hail"
 msgstr "ओलावृष्टि के साथ आंधी"
 
-#: src/CORE_weatherData.py:99
+#: src/CORE_weatherData.py:154
 msgid "Good"
 msgstr "अच्छा"
 
-#: src/CORE_weatherData.py:101
+#: src/CORE_weatherData.py:155
 msgid "Moderate"
 msgstr "मध्यम"
 
-#: src/CORE_weatherData.py:103
+#: src/CORE_weatherData.py:156
 msgid "Poor"
 msgstr "खराब"
 
-#: src/CORE_weatherData.py:105
+#: src/CORE_weatherData.py:157
 msgid "Unhealthy"
 msgstr "अस्वस्थ"
 
-#: src/CORE_weatherData.py:107
+#: src/CORE_weatherData.py:158
 msgid "Severe"
 msgstr "गंभीर"
 
-#: src/CORE_weatherData.py:109
+#: src/CORE_weatherData.py:159
 msgid "Hazardous"
 msgstr "खतरनाक"
 
-#: src/CORE_weatherData.py:117
+#: src/CORE_weatherData.py:163
 msgctxt "uvindex"
 msgid "Low"
 msgstr "निम्न"
 
-#: src/CORE_weatherData.py:119
+#: src/CORE_weatherData.py:164
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "मध्यम"
 
-#: src/CORE_weatherData.py:121
+#: src/CORE_weatherData.py:165
 msgctxt "uvindex"
 msgid "High"
 msgstr "उच्च"
 
-#: src/CORE_weatherData.py:123
+#: src/CORE_weatherData.py:166
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "बहुत उच्च"
 
-#: src/CORE_weatherData.py:125
+#: src/CORE_weatherData.py:167
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "अत्यधिक"
 
-#: src/CORE_weatherData.py:130
+#: src/CORE_weatherData.py:171
 msgctxt "humidity"
 msgid "Low"
 msgstr "निम्न"
 
-#: src/CORE_weatherData.py:132
+#: src/CORE_weatherData.py:172
 msgctxt "humidity"
 msgid "Moderate"
 msgstr "मध्यम"
 
-#: src/CORE_weatherData.py:134
+#: src/CORE_weatherData.py:173
 msgctxt "humidity"
 msgid "High"
 msgstr "उच्च"
 
-#: src/CORE_weatherData.py:144
+#: src/CORE_weatherData.py:180
 msgctxt "pressure"
 msgid "Low"
 msgstr "निम्न"
 
-#: src/CORE_weatherData.py:146
+#: src/CORE_weatherData.py:181
 msgctxt "pressure"
 msgid "Normal"
 msgstr "सामान्य"
 
-#: src/CORE_weatherData.py:148
+#: src/CORE_weatherData.py:182
 msgctxt "pressure"
 msgid "High"
 msgstr "उच्च"
 
-#: src/CORE_weatherData.py:153
+#: src/CORE_weatherData.py:186
 msgid "Calm"
 msgstr "शांत"
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:187
 msgid "Light"
 msgstr "हल्की"
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:188
 msgctxt "wind"
 msgid "Moderate"
 msgstr "मध्यम"
 
 # Wind Speed
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:189
 msgid "Strong"
 msgstr "तेज"
 
 #
-#: src/CORE_weatherData.py:161
+#: src/CORE_weatherData.py:190
 msgctxt "wind"
 msgid "Extreme"
 msgstr "अत्यधिक"
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:194
 msgid "km"
 msgstr "किमी"
 
-#: src/CORE_weatherData.py:168
+#: src/CORE_weatherData.py:196
 msgid "miles"
 msgstr "मील"
 
-#: src/UI_CardAirPollution.py:44
+#: src/UI_CardAirPollution.py:93
 msgid "Air Pollution"
 msgstr "वायु प्रदूषण"
 
-#: src/UI_CardAirPollution.py:54
-msgid "United States AQI standard"
-msgstr "अमरीकी AQI मानक"
+#: src/UI_CardAirPollution.py:105
+msgid "Air Quality Components"
+msgstr ""
 
-#: src/UI_CardDayNight.py:68
+#: src/UI_CardAirPollution.py:153
+msgid "Air Quality Index"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:180
+msgid "PM2.5"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:181
+msgid "PM10"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:182
+msgid "CO"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:183
+msgid "CO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:184
+msgid "NO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:185
+msgid "SO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:186
+msgid "O₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:187
+msgid "Dust"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:188
+msgid "NH₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:189
+msgid "CH₄"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:190
+#, fuzzy
+msgid "Alder Pollen"
+msgstr "वायु प्रदूषण"
+
+#: src/UI_CardAirPollution.py:191
+#, fuzzy
+msgid "Birch Pollen"
+msgstr "वायु प्रदूषण"
+
+#: src/UI_CardAirPollution.py:192
+msgid "Grass Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:193
+msgid "Mugwort Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:194
+msgid "Olive Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:195
+msgid "Ragweed Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:215
+#, python-brace-format
+msgid "Safe limit: ≤ {0} {1}"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:243
+msgid ""
+"AQI: US EPA Standard\n"
+"Pollutant limits: WHO Guidelines (2021)"
+msgstr ""
+
+#: src/UI_CardDayNight.py:76
 msgid "Sunrise & Sunset"
 msgstr "सूर्योदय एवं सूर्यास्त"
 
-#: src/UI_CardDayNight.py:79
+#: src/UI_CardDayNight.py:87
 msgid "Sunrise"
 msgstr "सूर्योदय"
 
-#: src/UI_CardDayNight.py:92
+#: src/UI_CardDayNight.py:100
 msgid "Sunset"
 msgstr "सूर्यास्त"
 
-#: src/UI_CardSquare.py:30
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:287
 msgid "Wind"
 msgstr "वायु"
 
@@ -431,162 +556,185 @@ msgstr "दक्षिणपश्चिम"
 msgid "West"
 msgstr "पश्चिम"
 
-#: src/UI_CardSquare.py:216 src/mousam.py:264
+#: src/UI_CardSquare.py:216
 msgid "Northwest"
 msgstr "उत्तरपश्चिम"
 
-#: src/UI_Forecast.py:136 src/UI_Forecast.py:287
-msgid "Tomorrow"
-msgstr "कल"
+#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+msgid "No Internet"
+msgstr "इंटरनेट नहीं"
 
-#: src/UI_Forecast.py:144
-msgid "Weekly"
-msgstr "साप्ताहिक"
+#: src/UI_CompactWeather.py:291
+msgid "Hum."
+msgstr ""
 
-#: src/UI_Forecast.py:285
-msgid "Today"
-msgstr "आज"
+#: src/UI_CompactWeather.py:295
+#, fuzzy
+msgid "Pres."
+msgstr "वायुदाब"
 
-#: src/UI_CompDrawDayNight.py:97
+#: src/UI_CompactWeather.py:299
+msgid "AQI"
+msgstr ""
+
+#: src/UI_CompactWeather.py:352
+#, fuzzy
+msgid "Mousam Compact"
+msgstr "मौसम"
+
+#: src/UI_CompDrawDayNight.py:154
+msgid "Day"
+msgstr ""
+
+#: src/UI_CompDrawDayNight.py:154
 msgid "Night"
 msgstr "रात्रि"
 
-#: src/UI_CurrentCond.py:97
+#: src/UI_CurrentCond.py:98
 #, fuzzy, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "<b> {0} {1}</b> • जैसा महसूस होता है"
 
-#: src/UI_HourlyDetails.py:91
-#, fuzzy
-msgctxt "wind"
-msgid "Day High •"
-msgstr "दिन का उच्च"
+#: src/UI_Forecast.py:140 src/UI_Forecast.py:319
+msgid "Tomorrow"
+msgstr "कल"
 
-#: src/UI_HourlyDetails.py:107
+#: src/UI_Forecast.py:148
+msgid "Weekly"
+msgstr "साप्ताहिक"
+
+#: src/UI_Forecast.py:317
+msgid "Today"
+msgstr "आज"
+
+#: src/UI_HourlyDetails.py:151
 #, fuzzy
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr "दिन का अधिकतम"
 
-#: src/UI_HourlyDetails.py:119
+#: src/UI_HourlyDetails.py:157
+#, fuzzy
+msgctxt "wind"
+msgid "Day High •"
+msgstr "दिन का उच्च"
+
+#: src/UI_HourlyDetails.py:168
 #, fuzzy
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr "दिन का उच्च"
 
-#: src/UI_HourlyDetails.py:163
-msgid "No precipitation today !"
-msgstr "आज वर्षा नहीं!"
-
-#: src/UI_HourlyDetails.py:164
-msgid "No precipitation expected today!"
-msgstr "आज वर्षा की कोई उम्मीद नहीं!"
-
-#: src/UI_HourlyDetails.py:165
-msgid "Anticipate a precipitation-free day !"
-msgstr "वर्षा-मुक्त दिन की आशा करें!"
-
-#: src/UI_HourlyDetails.py:166
-msgid "Enjoy a rain-free day today!"
-msgstr "आज वर्षा-मुक्त दिन का आनंद लें!"
-
-#: src/UI_HourlyDetails.py:167
-msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "छाता स्थिति: आराम कर रहा है। वर्षा नहीं दिख रही!"
-
-#: src/UI_HourlyDetails.py:168
-msgid "No rain in sight today!"
-msgstr "आज बारिश की कोई संभावना नहीं!"
-
-#: src/UI_HourlyDetails.py:201
+#: src/UI_HourlyDetails.py:243
 msgid "Now"
 msgstr "अभी"
 
-#: src/mousam.py:99
+#: src/UI_HourlyDetails.py:288
+msgid "No precipitation today !"
+msgstr "आज वर्षा नहीं!"
+
+#: src/UI_HourlyDetails.py:289
+msgid "No precipitation expected today!"
+msgstr "आज वर्षा की कोई उम्मीद नहीं!"
+
+#: src/UI_HourlyDetails.py:290
+msgid "Anticipate a precipitation-free day !"
+msgstr "वर्षा-मुक्त दिन की आशा करें!"
+
+#: src/UI_HourlyDetails.py:291
+msgid "Enjoy a rain-free day today!"
+msgstr "आज वर्षा-मुक्त दिन का आनंद लें!"
+
+#: src/UI_HourlyDetails.py:292
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "छाता स्थिति: आराम कर रहा है। वर्षा नहीं दिख रही!"
+
+#: src/UI_HourlyDetails.py:293
+msgid "No rain in sight today!"
+msgstr "आज बारिश की कोई संभावना नहीं!"
+
+#: src/mousam.py:83
+msgid "Debug Mode Enabled"
+msgstr ""
+
+#: src/mousam.py:84
+msgid "View Logs"
+msgstr ""
+
+#: src/mousam.py:88
+msgid "Debug Mode Disabled"
+msgstr ""
+
+#: src/mousam.py:125
 #, fuzzy
 msgid "Refresh weather"
 msgstr "मौसम रीफ्रेश करें"
 
-#: src/mousam.py:114 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "शहर"
 
-#: src/mousam.py:138 src/shortcutsDialog.ui:45
+#: src/mousam.py:146
+msgid "Compact Mode"
+msgstr ""
+
+#: src/mousam.py:172 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "प्राथमिकताएं"
 
-#: src/mousam.py:139 src/shortcutsDialog.ui:63
+#: src/mousam.py:173 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "कीबोर्ड शॉर्टकट"
 
-#: src/mousam.py:140
+#: src/mousam.py:174
 msgid "About Mousam"
 msgstr "मौसम के बारे में"
 
-#: src/mousam.py:141 src/shortcutsDialog.ui:57
+#: src/mousam.py:175 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "छोड़ें"
 
-#: src/mousam.py:263
-msgid "From"
-msgstr "दिशा"
+#: src/mousam.py:279
+#, fuzzy
+msgid "Direction"
+msgstr "वर्षण"
 
-#: src/mousam.py:265
-msgid "N"
-msgstr "उ"
-
-#: src/mousam.py:276
+#: src/mousam.py:293
 msgid "Dewpoint"
 msgstr "ओसांक"
 
-#: src/mousam.py:295
-msgctxt "pressure card"
-msgid "High"
-msgstr "उच्च"
-
-#: src/mousam.py:296
-msgctxt "pressure card"
-msgid "Low"
-msgstr "निम्न"
-
-#: src/mousam.py:306
-msgctxt "uvindex card"
-msgid "High"
-msgstr "उच्च"
-
-#: src/mousam.py:307
-msgctxt "uvindex card"
-msgid "Low"
-msgstr "निम्न"
-
-#: src/mousam.py:327
-msgid "No Internet"
-msgstr "इंटरनेट नहीं"
-
-#: src/mousam.py:332
-msgid "API Error"
+#: src/mousam.py:345
+msgid "Please check your connection."
 msgstr ""
 
-#: src/mousam.py:343
+#: src/mousam.py:350
+msgid "Fetch Error"
+msgstr ""
+
+#: src/mousam.py:364
 msgid "Getting Weather Data"
 msgstr "मौसम डेटा प्राप्त कर रहे हैं"
 
-#: src/mousam.py:350
+#: src/mousam.py:371
 #, fuzzy
 msgid "Welcome to Mousam"
 msgstr "मौसम के बारे में"
 
-#: src/mousam.py:351
+#: src/mousam.py:372
 #, fuzzy
 msgid "Add a location to get started."
 msgstr "मिटाने के लिए और अधिक शहर जोड़ें!"
 
-#: src/mousam.py:352
+#: src/mousam.py:373
 #, fuzzy
 msgid "Add Location"
 msgstr "नया शहर जोड़ें"
 
-#: src/windowAbout.py:20
+#: src/mousam.py:387
+msgid "Retry"
+msgstr ""
+
+#: src/windowAbout.py:18
 msgid "Copyright © 2024 Mousam Developers"
 msgstr "कॉपीराइट © 2024 मौसम के विकासकर्ता"
 
@@ -631,148 +779,175 @@ msgstr "शहर पहले ही जोड़ा जा चुका है
 msgid "Switched to {}"
 msgstr "{} पर बदला गया"
 
-#: src/windowPreferences.py:26
+#: src/windowPreferences.py:29
+#, fuzzy
+msgid "Weather Preferences"
+msgstr "प्राथमिकताएं"
+
+#: src/windowPreferences.py:43
 msgid "Appearance"
 msgstr "दिखावट"
 
-#: src/windowPreferences.py:36
+#: src/windowPreferences.py:57
+msgid "Advanced"
+msgstr ""
+
+#: src/windowPreferences.py:62
+msgid "Logging &amp; Debugging"
+msgstr ""
+
+#: src/windowPreferences.py:72
 msgid "Dynamic Background"
 msgstr "अनुकूलनीय पृष्ठभूमि"
 
-#: src/windowPreferences.py:39
+#: src/windowPreferences.py:74
 #, fuzzy
-msgid ""
-"App background changes based on current weather conditions (restart required)"
+msgid "App background changes based on current weather conditions"
 msgstr "वर्तमान मौसम की स्थिति के आधार पर पृष्ठभूमि परिवर्तन (पुनः प्रारंभ आवश्यक)"
 
-#: src/windowPreferences.py:56
+#: src/windowPreferences.py:88
 msgid "Time Format"
 msgstr "समय प्रारूप"
 
-#: src/windowPreferences.py:57
-msgid "Weather time format (Refresh required)"
+#: src/windowPreferences.py:89
+#, fuzzy
+msgid "Weather time format"
 msgstr "मौसम समय प्रारूप (रीफ्रेश आवश्यक)"
 
-#: src/windowPreferences.py:66
+#: src/windowPreferences.py:99
 msgid "24 Hour"
 msgstr "24 घंटे"
 
-#: src/windowPreferences.py:73
+#: src/windowPreferences.py:104
 msgid "AM / PM"
 msgstr "AM / PM"
 
-#: src/windowPreferences.py:88
+#: src/windowPreferences.py:120
+msgid "Auto Refresh"
+msgstr ""
+
+#: src/windowPreferences.py:121
+msgid "Automatically refresh weather data at a set interval"
+msgstr ""
+
+#: src/windowPreferences.py:138
+#, fuzzy
+msgid "Show Notifications"
+msgstr "शहर"
+
+#: src/windowPreferences.py:139
+msgid "Show notification when weather is refreshed automatically"
+msgstr ""
+
+#: src/windowPreferences.py:154
 msgid "Units &amp; Measurements"
 msgstr "इकाइयां &amp; मापन"
 
-#: src/windowPreferences.py:92
-msgid "°C"
-msgstr "°C"
+#: src/windowPreferences.py:159
+msgid "System Unit"
+msgstr ""
 
-#: src/windowPreferences.py:94
-#, fuzzy
-msgid "Metric system with units like Celsius, km/h, and kilometers"
-msgstr "सेल्सियस, किमी/घंटा, किलोमीटर जैसी इकाइयों के साथ मेट्रिक प्रणाली"
+#: src/windowPreferences.py:160
+msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
+msgstr ""
 
-#: src/windowPreferences.py:103
-msgid "°F"
-msgstr "°F"
+#: src/windowPreferences.py:171
+msgid "Metric"
+msgstr ""
 
-#: src/windowPreferences.py:105
-#, fuzzy
-msgid "Imperial system with units like Fahrenheit, mph, and miles"
-msgstr "फारेनहाइट, मील प्रति घंटे, मील जैसी इकाइयों के साथ इंपीरियल प्रणाली"
+#: src/windowPreferences.py:176
+msgid "Imperial"
+msgstr ""
 
-#: src/windowPreferences.py:124
+#: src/windowPreferences.py:194
 #, fuzzy
 msgid "Precipitation in inches"
 msgstr "इंच में वर्षा दिखाएं"
 
-#: src/windowPreferences.py:126
+#: src/windowPreferences.py:195
 #, fuzzy
-msgid "This option works better in heavy precipitation (refresh required)"
+msgid "This option works better in heavy precipitation"
 msgstr "भारी वर्षा के दौरान यह विकल्प बेहतर काम करता है (रीफ्रेश आवश्यक)"
 
-#: src/windowPreferences.py:147
-msgid "Off"
-msgstr ""
-
-#: src/windowPreferences.py:148
-msgid "Every 15 minutes"
-msgstr ""
-
-#: src/windowPreferences.py:149
-msgid "Every 30 minutes"
-msgstr ""
-
-#: src/windowPreferences.py:150
-msgid "Every hour"
-msgstr ""
-
-#: src/windowPreferences.py:151
-msgid "Every 2 hours"
-msgstr ""
-
-#: src/windowPreferences.py:156
-msgid "Auto Refresh"
-msgstr ""
-
-#: src/windowPreferences.py:158
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
-
-#: src/windowPreferences.py:175
+#: src/windowPreferences.py:209
 msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:180
+#: src/windowPreferences.py:214
 msgid "Reset to Default"
 msgstr ""
 
-#: src/windowPreferences.py:181
+#: src/windowPreferences.py:215
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/windowPreferences.py:183
+#: src/windowPreferences.py:218
 msgid "Reset…"
 msgstr ""
 
-#: src/windowPreferences.py:212
-#, fuzzy
-msgid "Switching locations within 2 seconds is ignored"
-msgstr "2 सेकंड के भीतर बदलने पर नज़रअंदाज़ किया जाएगा!"
-
-#: src/windowPreferences.py:218
-msgid "Switched to - {}"
-msgstr "{} - पर बदला गया"
-
-#: src/windowPreferences.py:233
-msgid "Auto refresh disabled"
+#: src/windowPreferences.py:227
+msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:235
-msgid "Auto refresh every {} min"
+#: src/windowPreferences.py:228
+msgid "Enable verbose logging and console output"
+msgstr ""
+
+#: src/windowPreferences.py:241
+msgid "Open Logs Folder"
 msgstr ""
 
 #: src/windowPreferences.py:242
+msgid "Access the application log files"
+msgstr ""
+
+#: src/windowPreferences.py:255
+msgid "Clear Log File"
+msgstr ""
+
+#: src/windowPreferences.py:256
+msgid "Delete all contents of the current log file"
+msgstr ""
+
+#: src/windowPreferences.py:305
+msgid "Switched to - {}"
+msgstr "{} - पर बदला गया"
+
+#: src/windowPreferences.py:324
+msgid "Logs cleared"
+msgstr ""
+
+#: src/windowPreferences.py:326
+msgid "Failed to clear logs"
+msgstr ""
+
+#: src/windowPreferences.py:337
+msgid "Auto refresh disabled"
+msgstr ""
+
+#: src/windowPreferences.py:339
+msgid "Auto refresh every {} min"
+msgstr ""
+
+#: src/windowPreferences.py:346
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:244
+#: src/windowPreferences.py:348
 msgid ""
-"This will restore all settings to default and wiil clear your saved cities. "
+"This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:352
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:353
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:276
+#: src/windowPreferences.py:388
 msgid "Preferences have been reset"
 msgstr ""
 
@@ -787,6 +962,49 @@ msgstr "मौसम रीफ्रेश करें"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "पथ-प्रदर्शन"
+
+#~ msgid "United States AQI standard"
+#~ msgstr "अमरीकी AQI मानक"
+
+#~ msgid "From"
+#~ msgstr "दिशा"
+
+#~ msgid "N"
+#~ msgstr "उ"
+
+#~ msgctxt "pressure card"
+#~ msgid "High"
+#~ msgstr "उच्च"
+
+#~ msgctxt "pressure card"
+#~ msgid "Low"
+#~ msgstr "निम्न"
+
+#~ msgctxt "uvindex card"
+#~ msgid "High"
+#~ msgstr "उच्च"
+
+#~ msgctxt "uvindex card"
+#~ msgid "Low"
+#~ msgstr "निम्न"
+
+#~ msgid "°C"
+#~ msgstr "°C"
+
+#, fuzzy
+#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
+#~ msgstr "सेल्सियस, किमी/घंटा, किलोमीटर जैसी इकाइयों के साथ मेट्रिक प्रणाली"
+
+#~ msgid "°F"
+#~ msgstr "°F"
+
+#, fuzzy
+#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
+#~ msgstr "फारेनहाइट, मील प्रति घंटे, मील जैसी इकाइयों के साथ इंपीरियल प्रणाली"
+
+#, fuzzy
+#~ msgid "Switching locations within 2 seconds is ignored"
+#~ msgstr "2 सेकंड के भीतर बदलने पर नज़रअंदाज़ किया जाएगा!"
 
 #~ msgid "Location"
 #~ msgstr "शहर"
@@ -837,9 +1055,6 @@ msgstr "पथ-प्रदर्शन"
 
 #~ msgid "Hourly"
 #~ msgstr "प्रति घंटा"
-
-#~ msgid "Precipitation"
-#~ msgstr "वर्षण"
 
 #~ msgid "Horizon"
 #~ msgstr "क्षितिज"
