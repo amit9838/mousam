@@ -9,6 +9,7 @@ from .UI_CompDrawPollutionBar import PollutionBar
 from .UI_CompDrawLineGraph import LineGraph
 from .settings import settings
 from .CORE_Helpers import get_time_difference
+from .configs import THRESHOLDS
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -22,32 +23,14 @@ class CardAirPollution:
         self.card = None
         self.create_card()
 
-    # Thresholds based on WHO Global Air Quality Guidelines 2021 (in µg/m³)
-    THRESHOLDS = {
-        "pm2_5": [(15, "success"), (35, "warning"), (75, "error")],
-        "pm10": [(45, "success"), (100, "warning"), (150, "error")],
-        "carbon_monoxide": [(4000, "success"), (7000, "warning"), (10000, "error")],
-        "carbon_dioxide": [(1000, "success"), (2000, "warning"), (5000, "error")],
-        "nitrogen_dioxide": [(25, "success"), (50, "warning"), (120, "error")],
-        "sulphur_dioxide": [(40, "success"), (50, "warning"), (125, "error")],
-        "ozone": [(100, "success"), (120, "warning"), (160, "error")],
-        "ammonia": [(100, "success"), (200, "warning"), (400, "error")],
-        "methane": [(1900, "success"), (2500, "warning"), (5000, "error")],
-        "dust": [(45, "success"), (100, "warning"), (150, "error")],
-        "alder_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-        "birch_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-        "grass_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-        "mugwort_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-        "olive_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-        "ragweed_pollen": [(15, "success"), (90, "warning"), (500, "error")],
-    }
+    
 
     def _get_pollutant_status_color(self, key, val):
         
-        if key not in self.THRESHOLDS:
+        if key not in THRESHOLDS:
             return "accent"
             
-        for threshold, color in self.THRESHOLDS[key]:
+        for threshold, color in THRESHOLDS[key]:
             if val is not None and float(val) <= threshold:
                 return color
         return "error"
@@ -211,8 +194,8 @@ class CardAirPollution:
                 row = Adw.ActionRow(title=name)
                 
                 # Recommended safe limit
-                if key in self.THRESHOLDS:
-                    safe_limit = self.THRESHOLDS[key][0][0]
+                if key in THRESHOLDS:
+                    safe_limit = THRESHOLDS[key][0][0]
                     row.set_subtitle(_("Safe limit: ≤ {0} {1}").format(safe_limit, unit))
 
                 # Format value
