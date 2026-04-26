@@ -20,6 +20,7 @@
       <li>Support for both metric and imperial measurement systems</li>
     </ul>
   </description>
+  <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png</image>
       <caption>Main dashboard showing current weather and hourly forecast</caption>

@@ -1,7 +1,7 @@
 import gi
 from gi.repository import Gtk, Adw
 from gettext import gettext as _
-from configs import VERSION
+from .configs import VERSION
 
 
 gi.require_version('Gtk', '4.0')
