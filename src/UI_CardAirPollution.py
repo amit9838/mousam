@@ -1,5 +1,6 @@
 import gi
-import time
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from gi.repository import Gtk, Adw
 from gettext import gettext as _, pgettext as C_
@@ -7,6 +8,7 @@ from gettext import gettext as _, pgettext as C_
 from .UI_CompDrawPollutionBar import PollutionBar
 from .UI_CompDrawLineGraph import LineGraph
 from .config import settings
+from .CORE_Helpers import get_time_difference
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -50,19 +52,36 @@ class CardAirPollution:
                 return color
         return "error"
 
-    def _get_nearest_time_index(self):
-        nearest_current_time_idx = 0
-        air_poll_time = self.air_pollution_data.time.data
-        for i in range(len(air_poll_time)):
-            if (abs(time.time() - air_poll_time[i]) // 60) < 30:
-                nearest_current_time_idx = i
-                break
 
-        return nearest_current_time_idx
+    def _get_nearest_time_index(self):
+        
+        t_data = get_time_difference()
+        target_time = t_data.get("target_time")
+        timezone_str = t_data.get("timezone", "UTC")
+        tz = ZoneInfo(timezone_str)
+        
+        target_dt = datetime.fromtimestamp(target_time, tz=tz)
+
+        # convet target dt into timestamp
+        target_timestamp = target_dt.timestamp()
+        
+        air_poll_times = self.air_pollution_data.time.data
+        if not air_poll_times:
+            return 0
+
+        best_idx = 0
+        min_diff = float('inf')
+
+        for i, ts in enumerate(air_poll_times):
+            diff = abs(target_timestamp - ts)
+            if diff < min_diff:
+                min_diff = diff
+                best_idx = i
+        
+        return best_idx
 
     def create_card(self):
         idx = self._get_nearest_time_index()
-
         card = Gtk.Grid(margin_top=6, margin_start=3)
         self.card = card
         card.halign = Gtk.Align.FILL
@@ -140,7 +159,9 @@ class CardAirPollution:
         # AQI Trend Graph
         aqi_trend = self.air_pollution_data.us_aqi.data
         aqi_times = self.air_pollution_data.time.data
-        graph = LineGraph(aqi_trend, times=aqi_times, current_idx=idx)
+        timezone_str = get_time_difference().get("timezone", "UTC")
+        tz = ZoneInfo(timezone_str)
+        graph = LineGraph(aqi_trend, times=aqi_times, current_idx=idx, tz=tz)
         popover_content.append(graph.dw)
 
         separator = Gtk.Separator()

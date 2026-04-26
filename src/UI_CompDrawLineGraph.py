@@ -2,16 +2,18 @@ import gi
 from gi.repository import Gtk
 import cairo
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
 class LineGraph:
-    def __init__(self, values, times=None, current_idx=None, color=[0.38, 0.7, 1]):
+    def __init__(self, values, times=None, current_idx=None, color=[0.38, 0.7, 1], tz=None):
         self.values = values
         self.times = times
         self.current_idx = current_idx
         self.color = color
+        self.tz = tz if tz else ZoneInfo("UTC")
         self.dw = Gtk.DrawingArea()
         self.dw.set_size_request(260, 120) # Increased height for date labels
         
@@ -142,19 +144,14 @@ class LineGraph:
             ctx.set_font_size(8)
             
             for i, ts in enumerate(self.times):
-                dt = datetime.fromtimestamp(ts)
-                
-                # Checkpoint at midnight (date change)
+                dt = datetime.fromtimestamp(ts, tz=self.tz)
+                # Draw a label at midnight of each day
                 if dt.hour == 0:
                     x, y = get_coords(i)
-                    
                     # Small dot on the curve
                     ctx.set_source_rgba(1, 1, 1, 0.8)
                     ctx.arc(x, y, 2.5, 0, 2 * 3.14159)
                     ctx.fill()
-
-                # Draw a label at noon of each day
-                if dt.hour == 12:
                     ctx.set_source_rgba(1, 1, 1, 0.4)
                     date_str = dt.strftime("%d %b")
                     x, _ = get_coords(i)
