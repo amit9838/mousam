@@ -1,4 +1,5 @@
 import Hero from "./components/Hero.jsx";
+import Navbar from "./components/Navbar.jsx";
 import Features from "./components/Features.jsx";
 import Installation from "./components/Installation.jsx";
 import Contribute from "./components/Contribute.jsx";
@@ -9,6 +10,7 @@ import Carousel from "./components/Carousal.jsx";
 function App() {
   return (
     <>
+      <Navbar />
       <Hero />
       <Carousel/>
       <Features />

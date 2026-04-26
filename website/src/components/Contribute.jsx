@@ -18,50 +18,40 @@ const askContribution = [
 
 export default function Contribute() {
   return (
-    <section
-      id="contribute"
-      className="md:px-6 px-2 pt-6 grid grid-cols-12 my-auto bg-secondary h-contain text-white "
-    >
-      <div className="col-span-1  border-b-[1px] border-r-[1px] border-slate-400 md:block hidden"></div>
-      <div className="md:col-span-11 col-span-12  border-b-[1px] border-slate-400 flex items-end">
-        <h2 className="mx-2  my-2 text-2xl ">Contribute</h2>
+    <section id="contribute" className="blueprint-grid bg-neutral-900/30">
+      <div className="blueprint-col-sidebar min-h-[300px]">
+        <div className="blueprint-marker -top-[3px] -right-[3px]" />
       </div>
-      <div className="col-span-1 border-r-[1px] border-slate-400 md:block hidden"></div>
-      <div className="md:col-span-11 col-span-12  p-3 font-['ubuntu']">
-        <p className=" text-neutral-300 bg">
-        Thanks to all the contributors have helped in the development project so that open-source community can enjoy best tools with best features.       </p>
-        <div className="my-3 mx-2">
-          <a href="https://github.com/amit9838/mousam/graphs/contributors">
-            <img
-              className="sm:block hidden"
-              src="https://contrib.rocks/image?repo=amit9838/mousam&columns=12"
-            />
-            <img
-              className="sm:hidden block"
-              src="https://contrib.rocks/image?repo=amit9838/mousam&columns=6"
-            />
-          </a>
-        </div>
 
-        <div className="mt-10">
-          <h4 className="text-xl text-neutral-100 bg">
-            You can also contribute if you wish to, here are some ways
-          </h4>
+      <div className="blueprint-col-content">
+        <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Contribute</h2>
+        <div className="max-w-3xl">
+          <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">
+            Mousam is built by the community, for the community. Your contributions help ensure that everyone has access to a beautiful, open-source weather tool.
+          </p>
 
-          {askContribution.map((item) => (
-            <div
-              key={item.icon}
-              className="flex items-center my-4 hover:bg-slate-500 text-neutral-300 hover:text-white py-1 rounded-md"
-            >
-              <div className="mx-2 text-neutral-200 bg-slate-600  w-10 h-10 flex items-center justify-center rounded-full">
-                <i className={item.icon}></i>
-              </div>
-              <a className=" " href={item.link}>
-                {item.text}
-                <i className="fa-solid fa-square-arrow-up-right mx-2 text-[.9rem] text-neutral-300"></i>
+          <div className="flex flex-wrap gap-4 mb-10">
+            <a href="https://github.com/amit9838/mousam/graphs/contributors">
+              <img src="https://contrib.rocks/image?repo=amit9838/mousam&columns=14" className="rounded-xl border border-white/5 w-full" alt="Contributors" />
+            </a>
+          </div>
+
+          <h4 className="text-xl font-bold text-white mb-6 font-['Outfit']">How you can help</h4>
+          <div className="grid gap-3">
+            {askContribution.map((item) => (
+              <a
+                key={item.icon}
+                href={item.link}
+                className="group flex items-center p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 hover:border-white/10 transition-all duration-300"
+              >
+                <div className="w-10 h-10 flex items-center justify-center bg-sky-500/10 text-sky-400 rounded-lg group-hover:scale-110 transition-transform">
+                  <i className={`${item.icon} text-sm`}></i>
+                </div>
+                <span className="ml-4 text-sm text-neutral-400 group-hover:text-white font-medium">{item.text}</span>
+                <i className="fa-solid fa-arrow-right-long ml-auto mr-2 text-neutral-600 group-hover:text-sky-400 transition-colors text-xs"></i>
               </a>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

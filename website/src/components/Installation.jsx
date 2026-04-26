@@ -20,68 +20,38 @@ const tabs = [
 export default function Installation() {
   const [activeTab, setActiveTab] = useState("flatpak");
   return (
-    <section
-      id="installation"
-      className="md:p-6 py-6 px-2 grid grid-cols-12 my-auto bg-primary h-contain text-white"
-    >
-      <div className="col-span-2 h-[5rem] border-b-[1px] border-r-[1px] border-slate-400 relative md:block hidden">
-        <h2 className="mx-2  my-2 absolute bottom-0 right-0 text-xl ">
-          Installation
-        </h2>
+    <section id="installation" className="blueprint-grid bg-neutral-900/30">
+      <div className="blueprint-col-sidebar min-h-[300px]">
+        <div className="blueprint-marker -top-[3px] -right-[3px]" />
       </div>
-      <div className="md:col-span-10 col-span-12 border-b-[1px] border-slate-400">
-
-        <h2 className="mx-2 mb-4 text-xl md:hidden block ">Installation</h2>
-        <div className="flex items-center justify-center border-t-[1px] border-slate-400 md:hidden">
+      
+      <div className="blueprint-col-content">
+        <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-12">Installation</h2>
+        <div className="flex gap-10 mb-12 border-b border-white/5">
           {tabs.map((item) => {
-            let myStyle =
-              "bg-secondary hover:bg-gray-600 py-2 w-auto px-8";
-            if (item.tab_name === activeTab) {
-              myStyle =
-                "bg-gray-500 hover:bg-gray-600 py-2 w-auto px-8";
-            }
-            return (
-              <Button
-                key={item.tab_name}
-                myStyle={myStyle}
-                onClick={() => setActiveTab(item.tab_name)}
-              >
-                {item.tab_name}
-              </Button>
-            );
+             const isActive = item.tab_name === activeTab;
+             return (
+               <button
+                 key={item.tab_name}
+                 onClick={() => setActiveTab(item.tab_name)}
+                 className={`pb-4 px-1 font-bold text-sm tracking-widest uppercase transition-all duration-300 relative ${
+                   isActive 
+                   ? "text-sky-400" 
+                   : "text-neutral-500 hover:text-neutral-300"
+                 }`}
+               >
+                 {item.tab_name}
+                 {isActive && (
+                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500 animate-in slide-in-from-left-full duration-300"></div>
+                 )}
+               </button>
+             );
           })}
         </div>
-      </div>
 
-      <div className="col-span-2 md:block hidden h-[30rem] border-r-[1px] border-slate-400">
-        <div className="md:flex items-end flex-col hidden">
-          {tabs.map((item) => {
-            let myStyle =
-              "bg-secondary hover:bg-gray-600 py-2 w-40 border-b-[1px] border-slate-500";
-            if (item.tab_name === activeTab) {
-              myStyle =
-                "bg-gray-500 hover:bg-gray-600 py-2 w-40 border-b-[1px] border-slate-500";
-            }
-            return (
-              <Button
-                key={item.tab_name}
-                myStyle={myStyle}
-                onClick={() => setActiveTab(item.tab_name)}
-              >
-                {item.tab_name}
-              </Button>
-            );
-          })}
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+          {tabs.find(t => t.tab_name === activeTab)?.content}
         </div>
-      </div>
-      <div className="md:col-span-10 col-span-12 m-6">
-        {tabs.map((item) => {
-          return (
-            item.tab_name === activeTab && (
-              <div key={item.tab_name}>{item.content}</div>
-            )
-          );
-        })}
       </div>
     </section>
   );

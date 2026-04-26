@@ -6,94 +6,92 @@ const MENU_ITEMS = ["home", "installation", "contribute", "about"];
 
 export default function Navbar() {
   const [showNav, setshowNav] = useState(false);
+
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setshowNav(false);
+    }
+  };
+
   return (
-    <>
-      <nav className="p-6 grid gap-4 grid-cols-12 items-center">
-        <div className="col-span-4 flex">
-          <img src={logo} alt="logo" className="md:max-h-16 max-h-12" />
-          <h1 className="my-auto md:text-[2.4rem] text-[1.6rem] mx-2 font-sans font-semibold">
-            Mousam
-          </h1>
+    <header className="fixed top-4 inset-x-0 z-[1000] px-4">
+      <nav className="max-w-5xl mx-auto bg-zinc-900/70 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-3 flex items-center justify-between shadow-[0_15px_40px_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-2 group cursor-pointer" onClick={() => scrollTo('home')}>
+          <img src={logo} alt="logo" className="h-7 md:h-8 transition-transform group-hover:scale-110" />
+          <h1 className="text-lg md:text-xl font-bold font-['Outfit'] tracking-tight">Mousam</h1>
         </div>
-        <div className="col-span-8">
-          <div className="bg-secondary md:block hidden  max-w-[40rem] float-end pr-1 pl-2 py-1 rounded-full">
-            <ul className="list-none flex   md:gap-0 lg:gap-4 items-center justify-center">
-              {MENU_ITEMS.map((item) => {
-                return (
-                  <li key={item}>
-                    <Button
-                      myStyle="rounded-full"
-                      onClick={() => {
-                        const element = document.getElementById(item);
-                        element.scrollIntoView({
-                          behavior: "smooth",
-                        });
-                      }}
-                    >
-                      {item.toUpperCase()}
-                    </Button>
-                  </li>
-                );
-              })}
-              <li>
-                <a
-                  className="bg-black px-4 py-2 rounded-[6rem] hover:text-black hover:bg-white flex items-center"
-                  href="https://github.com/amit9838/mousam" target="_blank"
-                >
-                  <i className="fa-brands fa-github mr-2"></i>
-                  Github
-                </a>
-              </li>
-            </ul>
-          </div>
-          {/* Phone */}
-          <div className=" md:hidden block">
-            <div
-              className="flex float-right "
-              onClick={() => setshowNav(!showNav)}
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-1">
+          {MENU_ITEMS.map((item) => (
+            <button
+              key={item}
+              onClick={() => scrollTo(item)}
+              className="px-4 py-1.5 text-xs font-semibold text-neutral-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 uppercase tracking-widest"
             >
-              <i className="fa-solid fa-bars"></i>
-            </div>
-          </div>
+              {item}
+            </button>
+          ))}
+          <div className="w-px h-5 bg-white/10 mx-3"></div>
+          <Button
+            href="https://github.com/amit9838/mousam"
+            target="_blank"
+            rel="noreferrer"
+            variant="white"
+            size="sm"
+            className="gap-2 px-4 py-1.5"
+          >
+            <i className="fa-brands fa-github text-sm"></i>
+            GitHub
+          </Button>
         </div>
-      </nav>
-      {showNav && (
-        <div
-          onClick={(prev) => setshowNav(!prev)}
-          className="fixed top-0 left-0 w-screen bg-gradient-to-b from-gray-900/0  via-gray-800 h-screen flex items-center justify-center z-10"
+
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden text-white p-2"
+          onClick={() => setshowNav(true)}
         >
-          <div className="fixed bg-neutral-900 w-[18rem] h-[30rem] rounded-md opacity-100 z-40">
-            <ul className="list-none  h-[30rem]  flex flex-col gap-10 items-center justify-center">
-              {MENU_ITEMS.map((item) => {
-                return (
-                  <li key={item}>
-                    <Button
-                      myStyle="rounded-full"
-                      onClick={() => {
-                        const element = document.getElementById(item);
-                        element.scrollIntoView({
-                          behavior: "smooth",
-                        });
-                      }}
-                    >
-                      {item.toUpperCase()}
-                    </Button>
-                  </li>
-                );
-              })}
-              <li>
-                <a
-                  className="bg-black px-4 py-2 rounded-[6rem] hover:text-black hover:bg-white flex items-center"
-                  href="https://github.com/amit9838/mousam"
-                >
-                  <i className="fa-brands fa-github mr-2"></i>
-                  Github
-                </a>
-              </li>
-            </ul>
+          <i className="fa-solid fa-bars-staggered text-xl"></i>
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {showNav && (
+        <div className="fixed inset-0 bg-zinc-950/90 backdrop-blur-2xl z-[1100] flex flex-col items-center justify-center p-8 animate-in fade-in duration-300">
+          <button
+            className="absolute top-8 right-8 text-white p-4"
+            onClick={() => setshowNav(false)}
+          >
+            <i className="fa-solid fa-xmark text-3xl"></i>
+          </button>
+
+          <div className="flex flex-col items-center gap-8">
+            {/* <img src={logo} alt="logo" className="h-20 mb-4" /> */}
+            {MENU_ITEMS.map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollTo(item)}
+                className="text-4xl font-bold text-white font-['Outfit'] hover:text-sky-400 transition-colors uppercase"
+              >
+                {item}
+              </button>
+            ))}
+            <Button
+              href="https://github.com/amit9838/mousam"
+              target="_blank"
+              rel="noreferrer"
+              variant="white"
+              size="lg"
+              className="mt-8 gap-3 px-12 py-4"
+            >
+              <i className="fa-brands fa-github text-2xl"></i>
+              GitHub
+            </Button>
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }
