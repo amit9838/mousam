@@ -10,26 +10,42 @@
     <p>Features:</p>
     <ul>
       <li>Displays real-time temperature, humidity, wind speed, UV index, pressure and more</li>
-      <li>Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours</li>
-      <li>Also provides tomorrow and 7-day forecasts</li>
-      <li>See conditions in metric or imperial systems</li>
+      <li>Comprehensive Air Quality Index and air pollutants data</li>
+      <li>Compact weather mode for a minimal, focused view</li>
+      <li>Hourly, tomorrow, and 7-day detailed forecasts</li>
+      <li>Visual graphs for sun and moon positions and day/night cycles</li>
+      <li>Hourly temperature, wind direction and precipitation tracking</li>
+      <li>Dynamic background styling that adapts to weather conditions</li>
+      <li>System notifications for weather updates with configurable preferences</li>
+      <li>Support for both metric and imperial measurement systems</li>
     </ul>
   </description>
-    <screenshots>
-      <screenshot type="default">
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png</image>
-          <caption>Clear Sky - day</caption>
-      </screenshot>
-      <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png</image>
-          <caption>Snowfall - day</caption>
-      </screenshot>
-        <screenshot>
-          <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3.png</image>
-          <caption>Clear Sky - night</caption>
-      </screenshot>
-
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png</image>
+      <caption>Main dashboard showing current weather and hourly forecast</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png</image>
+      <caption>Detailed weather conditions during rain</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3.png</image>
+      <caption>Night mode view</caption>
+    </screenshot>
   </screenshots>
+  <keywords>
+    <keyword>Weather</keyword>
+    <keyword>Forecast</keyword>
+    <keyword>AQI</keyword>
+    <keyword>Air Quality</keyword>
+    <keyword>Meteorology</keyword>
+  </keywords>
+  <provides>
+    <binary>mousam</binary>
+  </provides>
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
   <launchable type="desktop-id">io.github.amit9838.mousam.desktop</launchable>
   <url type="homepage">https://amit9838.github.io/mousam/</url>
   <url type="bugtracker">https://github.com/amit9838/mousam/issues</url>
@@ -43,18 +59,35 @@
 	  <color type="primary" scheme_preference="light">#A7D2F4</color>
 	  <color type="primary" scheme_preference="dark">#294C69</color>
 	</branding>
-  <recommends>
+  <supports>
     <control>pointing</control>
     <control>touch</control>
-  </recommends>
+    <control>keyboard</control>
+  </supports>
   <custom>
     <value key="Purism::form_factor">workstation</value>
+    <value key="Purism::form_factor">mobile</value>
   </custom>
   <categories>
     <category>Utility</category>
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.0.0" date="2026-04-26">
+      <description translate="no">
+        <p>Major Architecture Update and New Features</p>
+        <ul>
+          <li>Introduced Air Pollutants tracking and redesigned Day/Night visual cards.</li>
+          <li>Implemented Compact Weather Mode with loading states and auto-refresh.</li>
+          <li>Added system notifications with a new preference toggle.</li>
+          <li>Implemented Dynamic Background styling for a more immersive experience.</li>
+          <li>New Logging System with Debug Mode and log file management for troubleshooting.</li>
+          <li>Major architectural refactor for improved state management and UI concurrency.</li>
+          <li>Centralized configuration and constants management.</li>
+          <li>Fixed memory leaks and improved overall application performance.</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.0" date="2026-03-23">
       <description translate="no">
         <p>What's New</p>

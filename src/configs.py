@@ -1,8 +1,8 @@
 from gettext import gettext as _
-from enum import IntEnum
 
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
+VERSION = "2.0.0"
 
 # --- Networking & Timeout ---
 TIMEOUT = 15

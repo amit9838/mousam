@@ -1,6 +1,8 @@
 import gi
 from gi.repository import Gtk, Adw
 from gettext import gettext as _
+from configs import VERSION
+
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -11,7 +13,7 @@ def show_about_window(parent_window: Gtk.Window = None) -> None:
     about = Adw.AboutDialog(
         application_name="Mousam",
         application_icon="io.github.amit9838.mousam",
-        version="1.5.0",
+        version=VERSION,
         comments=_("Weather at a glance"),
         developer_name="Amit Chaudhary",
         developers=["Amit Chaudhary"],
