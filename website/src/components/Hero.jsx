@@ -17,8 +17,8 @@ export default function Hero() {
       {/* Dark Gradient Overlay for readability */}
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent"></div>
 
-      <div className="relative z-10 col-span-12 flex items-center justify-start pt-28 pb-20 md:pt-36 px-6 md:px-16 lg:px-24">
-        <div className="flex items-center">
+      <div className="relative z-10 col-span-12 flex items-censter justify-start pt-28 pb-20 md:pt-36 px-6 md:px-16 lg:px-24">
+        <div className=" mt-[15vh]">
           {/* Left Content */}
           <div className="max-w-2xl text-left">
             <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-8 md:mb-6">
@@ -37,7 +37,7 @@ export default function Hero() {
             <p className="text-base md:text-lg text-neutral-400 mb-12 md:mb-10 max-w-lg font-['Inter'] leading-relaxed">
               Displays real-time temperature, humidity, wind speed, UV index, pressure along with weather and AQI forecasts
             </p>
-            <div className="flex flex-wrap items-center justify-start gap-3">
+            <div className="flex flex-wrap items-center justify-start gap-3 md:gap-4 mt-20">
               <Button
                 className="gap-1 px-3"
                 onClick={() => {

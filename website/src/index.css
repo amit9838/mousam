@@ -48,9 +48,6 @@
 
 /* Blueprint Utility Classes */
 @layer components {
-  .blueprint-grid {
-    @apply grid grid-cols-12 relative border-t border-white/10;
-  }
 
   .blueprint-col-sidebar {
     @apply col-span-1 md:col-span-1 border-r border-white/10 hidden md:flex items-center justify-center relative;

@@ -1,80 +1,78 @@
-import Button from "./Button";
+// 1. Constants for clean configuration
+const TECH_STACK = ["Python", "GTK4", "Libadwaita", "Cairo", "Open-Meteo API"];
+
+const SOCIAL_LINKS = [
+  { icon: "fa-brands fa-linkedin", href: "https://www.linkedin.com/in/amit-chaudhary-2b8b22199/" },
+  { icon: "fa-brands fa-square-x-twitter", href: "https://twitter.com/AMIT0539" },
+];
+
 export default function About() {
-  let code_style = "bg-white/10 px-2 py-0.5 rounded text-sky-300 font-mono text-sm";
   return (
-    <section id="about" className="relative blueprint-grid bg-neutral-950/30 w-full overflow-hidden">
-      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">About</h2>
-        <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed font-['Inter']">
-          <p>
-            Mousam is a sleek desktop-weather application offering real-time
-            weather updates and forecasts for the next{" "}
-            <code className={code_style}>24 hours</code> and{" "}
-            <code className={code_style}>7 days</code>. It provides comprehensive{" "}
-            <code className={code_style}>Air Quality Index</code> tracking, a minimal{" "}
-            <code className={code_style}>Compact Mode</code>, and utilizes graphs and
-            bars to visually represent weather conditions. Supports both{" "}
-            <code className={code_style}>imperial</code> and{" "}
-            <code className={code_style}> metric </code> units for user
-            convenience.
-          </p>
-          <p>
-            Developed with <code className={code_style}> Python</code> and{" "}
-            <code className={code_style}>GTK4</code> using{" "}
-            <code className={code_style}>Libadwaita</code> and{" "}
-            <code className={code_style}>Cairo</code> for graphics, Mousam fetches
-            weather data from the{" "}
-            <code className={code_style}>Open-Meteo API</code>, ensuring accurate
-            and timely information.
-          </p>
+    <section id="about" className="relative blueprint-grid bg-neutral-900/30 w-full overflow-hidden">
+      <div className="relative z-10 py-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto w-full">
+        
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          
+          {/* Left Column: Project Overview */}
+          <div className="lg:col-span-6 space-y-8 font-['Inter']">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white/90">About</h2>
+            
+            <div className="space-y-6 text-neutral-400 leading-relaxed text-sm md:text-base">
+              <p>
+                Mousam is a sleek desktop-weather application offering real-time weather updates, 
+                24-hour and 7-day forecasts. It features comprehensive <strong>Air Quality Index</strong> tracking, 
+                a minimal <strong>Compact Mode</strong>, and rich visual data representations.
+              </p>
+              
+              <p>
+                Developed with <span className="text-sky-400">Python</span> and <span className="text-sky-400">GTK4</span>, 
+                the app utilizes <span className="text-sky-400">Libadwaita</span> and <span className="text-sky-400">Cairo</span> 
+                for a native look and feel, fetching precise data via the <span className="text-sky-400">Open-Meteo API</span>.
+              </p>
+            </div>
+          </div>
 
-          <div className="pt-10 border-t border-white/5">
-            <div className="relative group max-w-xl bg-white/[0.03] border border-white/10 rounded-xl p-6 md:p-8 overflow-hidden transition-all duration-500 hover:bg-white/[0.05] hover:border-white/20">
+          {/* Right Column: Author Card */}
+          <div className="lg:col-span-6 flex items-start">
+            <div className="relative group w-full bg-zinc-950 border border-white/5 rounded-3xl p-6 md:p-8 overflow-hidden transition-all duration-500 hover:border-white/10">
               {/* Background Glow */}
-              <div className="absolute -top-24 -right-24 w-64 h-64 bg-sky-500/10 blur-[100px] rounded-full group-hover:bg-sky-500/20 transition-colors duration-500"></div>
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-sky-500/5 blur-[120px] rounded-full"></div>
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
                 <div className="relative flex-shrink-0">
                   <img
                     src="https://avatars.githubusercontent.com/u/61614402?v=4"
                     alt="Amit Chaudhary"
-                    className="h-24 w-24 md:h-32 md:w-32 rounded-xl object-cover shadow-2xl border border-white/10"
+                    className="h-24 w-24 rounded-2xl object-cover border border-white/10"
                   />
-                  <div className="absolute -bottom-1.5 -right-1.5 bg-sky-500 text-white w-8 h-8 rounded-full flex items-center justify-center border-4 border-neutral-900 shadow-lg">
+                  <div className="absolute -bottom-1 -right-1 bg-sky-500 text-white w-7 h-7 rounded-full flex items-center justify-center border-4 border-zinc-950">
                     <i className="fa-solid fa-code text-[10px]"></i>
                   </div>
                 </div>
 
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-white tracking-tight mb-0.5 font-['Outfit']">Amit Chaudhary</h3>
-                  <p className="text-sky-400 font-semibold mb-5 tracking-wide uppercase text-[10px]">Software Engineer</p>
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-xl font-bold text-white font-['Outfit']">Amit Chaudhary</h3>
+                  <p className="text-sky-400 font-medium text-xs tracking-widest uppercase mb-4">Software Engineer</p>
 
                   <p className="text-neutral-400 text-sm leading-relaxed mb-6 font-['Inter']">
-                    I initiated Mousam as an exploration of GTK and Python.
-                    I’m passionate about open-source and the collaborative spirit of
-                    building tools that empower users with beautiful, intuitive interfaces.
+                    I initiated Mousam as an exploration of GTK and Python. Passionate about 
+                    open-source and building intuitive tools for the Linux community.
                   </p>
 
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                    <Button
-                      href="https://github.com/amit9838"
+                  <div className="flex items-center justify-center sm:justify-start gap-3">
+                    <a 
+                      href="https://github.com/amit9838" 
                       target="_blank"
-                      variant="white"
-                      size="sm"
-                      className="gap-2 px-5 py-2"
+                      className="px-4 py-2 bg-white text-black text-xs font-bold rounded-lg hover:bg-neutral-200 transition-colors"
                     >
-                      <i className="fa-brands fa-github"></i>
-                      Follow
-                    </Button>
-
-                    <div className="flex gap-2">
-                      <a href="https://www.linkedin.com/in/amit-chaudhary-2b8b22199/" target="_blank" className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
-                        <i className="fa-brands fa-linkedin text-lg"></i>
+                      Follow on GitHub
+                    </a>
+                    {SOCIAL_LINKS.map((link, i) => (
+                      <a key={i} href={link.href} target="_blank" className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
+                        <i className={`${link.icon} text-lg`}></i>
                       </a>
-                      <a href="https://twitter.com/AMIT0539" target="_blank" className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10 transition-all">
-                        <i className="fa-brands fa-square-x-twitter text-lg"></i>
-                      </a>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
