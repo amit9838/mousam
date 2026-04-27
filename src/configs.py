@@ -2,7 +2,7 @@ from gettext import gettext as _
 
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
-VERSION = "2.0.1"
+VERSION = "2.0.2"
 
 # --- Networking & Timeout ---
 TIMEOUT = 15

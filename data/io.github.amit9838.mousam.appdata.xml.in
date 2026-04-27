@@ -61,6 +61,21 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="2.0.2" date="2026-04-27">
+      <description translate="no">
+        <p>Major Architecture Update and New Features</p>
+        <ul>
+          <li>Introduced Air Pollutants tracking and redesigned Day/Night visual cards.</li>
+          <li>Implemented Compact Weather Mode with loading states and auto-refresh.</li>
+          <li>Added system notifications with a new preference toggle.</li>
+          <li>Implemented Dynamic Background styling for a more immersive experience.</li>
+          <li>New Logging System with Debug Mode and log file management for troubleshooting.</li>
+          <li>Major architectural refactor for improved state management and UI concurrency.</li>
+          <li>Centralized configuration and constants management.</li>
+          <li>Fixed memory leaks and improved overall application performance.</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.1" date="2026-04-27">
       <description translate="no">
         <p>Major Architecture Update and New Features</p>
