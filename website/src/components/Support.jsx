@@ -1,11 +1,7 @@
 export default function Support() {
   return (
-    <section id="support" className="blueprint-grid bg-neutral-950/50">
-      <div className="blueprint-col-sidebar min-h-[150px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-      
-      <div className="blueprint-col-content">
+    <section id="support" className="relative blueprint-grid bg-neutral-950/50 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Support</h2>
         <div className="max-w-2xl">
           <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">

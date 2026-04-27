@@ -2,12 +2,8 @@ import Button from "./Button";
 export default function About() {
   let code_style = "bg-white/10 px-2 py-0.5 rounded text-sky-300 font-mono text-sm";
   return (
-    <section id="about" className="blueprint-grid bg-neutral-950/30">
-      <div className="blueprint-col-sidebar min-h-[300px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-
-      <div className="blueprint-col-content">
+    <section id="about" className="relative blueprint-grid bg-neutral-950/30 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">About</h2>
         <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed font-['Inter']">
           <p>

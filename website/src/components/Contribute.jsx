@@ -18,12 +18,8 @@ const askContribution = [
 
 export default function Contribute() {
   return (
-    <section id="contribute" className="blueprint-grid bg-neutral-900/30">
-      <div className="blueprint-col-sidebar min-h-[300px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-
-      <div className="blueprint-col-content">
+    <section id="contribute" className="relative blueprint-grid bg-neutral-900/30 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Contribute</h2>
         <div className="max-w-3xl">
           <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">

@@ -16,9 +16,9 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 inset-x-0 z-[1000] px-4">
-      <nav className="max-w-5xl mx-auto bg-zinc-900/70 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-3 flex items-center justify-between shadow-[0_15px_40px_rgba(0,0,0,0.4)]">
-        <div className="flex items-center gap-2 group cursor-pointer" onClick={() => scrollTo('home')}>
+    <header className="fixed top-0 inset-x-0 z-[1000] w-full bg-zinc-950/60  border-b border-white/5">
+      <nav className="max-w-7xl mx-auto px-4 md:px-6 h-12 md:h-16 flex items-center justify-between">
+        <div className="flex items-center gap-2 group cursor-pointer shrink-0" onClick={() => scrollTo('home')}>
           <img src={logo} alt="logo" className="h-7 md:h-8 transition-transform group-hover:scale-110" />
           <h1 className="text-lg md:text-xl font-bold font-['Outfit'] tracking-tight">Mousam</h1>
         </div>
@@ -50,7 +50,7 @@ export default function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-2 shrink-0"
           onClick={() => setshowNav(true)}
         >
           <i className="fa-solid fa-bars-staggered text-xl"></i>
@@ -59,36 +59,45 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {showNav && (
-        <div className="fixed inset-0 bg-zinc-950/90 backdrop-blur-2xl z-[1100] flex flex-col items-center justify-center p-8 animate-in fade-in duration-300">
-          <button
-            className="absolute top-8 right-8 text-white p-4"
-            onClick={() => setshowNav(false)}
-          >
-            <i className="fa-solid fa-xmark text-3xl"></i>
-          </button>
+        <div className="fixed inset-0 bg-zinc-950 z-[1100] flex flex-col p-6 animate-in fade-in slide-in-from-top-4 duration-300">
+          <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center gap-2">
+              <img src={logo} alt="logo" className="h-7" />
+              <h1 className="text-lg font-bold font-['Outfit']">Mousam</h1>
+            </div>
+            <button
+              className="text-white p-2"
+              onClick={() => setshowNav(false)}
+            >
+              <i className="fa-solid fa-xmark text-2xl"></i>
+            </button>
+          </div>
 
-          <div className="flex flex-col items-center gap-8">
-            {/* <img src={logo} alt="logo" className="h-20 mb-4" /> */}
+          <div className="flex flex-col gap-6">
             {MENU_ITEMS.map((item) => (
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
-                className="text-4xl font-bold text-white font-['Outfit'] hover:text-sky-400 transition-colors uppercase"
+                className="text-2xl font-bold text-left text-neutral-400 hover:text-white transition-colors uppercase tracking-widest font-['Outfit']"
               >
                 {item}
               </button>
             ))}
-            <Button
-              href="https://github.com/amit9838/mousam"
-              target="_blank"
-              rel="noreferrer"
-              variant="white"
-              size="lg"
-              className="mt-8 gap-3 px-12 py-4"
-            >
-              <i className="fa-brands fa-github text-2xl"></i>
-              GitHub
-            </Button>
+            
+            <div className="mt-8 pt-8 border-t border-white/10">
+              <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">Community</p>
+              <Button
+                href="https://github.com/amit9838/mousam"
+                target="_blank"
+                rel="noreferrer"
+                variant="secondary"
+                size="md"
+                className="w-full gap-3 py-4"
+              >
+                <i className="fa-brands fa-github text-xl"></i>
+                GitHub Source
+              </Button>
+            </div>
           </div>
         </div>
       )}

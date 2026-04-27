@@ -57,13 +57,9 @@ const Carousel = () => {
   };
 
   return (
-    <section id="showcase" className="blueprint-grid bg-neutral-900/40 border-y border-white/5">
-      <div className="blueprint-col-sidebar min-h-[400px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-
-      <div className="blueprint-col-content">
-        <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-10">Showcase</h2>
+    <section id="showcase" className="relative blueprint-grid bg-neutral-900/40 border-y border-white/5 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-10 px-2 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white/90 mb-6 text-center lg:text-left px-6 md:px-0">Showcase</h2>
 
         <div className="relative">
           {/* Subtle Background Glow behind the image */}
@@ -78,20 +74,20 @@ const Carousel = () => {
             )}
 
             {/* Main Image Container */}
-            <div className="min-h-[300px] md:min-h-[425px] flex items-center justify-center relative px-4">
+            <div className="flex items-center justify-center relative">
               <img
                 src={images[currentIndex].link}
                 alt={images[currentIndex].title}
                 onLoad={() => setLoading(false)}
-                className={`max-w-full max-h-[420px] object-contain rounded-xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all duration-700 animate-in fade-in zoom-in-95 ${loading ? "opacity-0" : "opacity-100"}`}
+                className={`w-full md:max-w-4xl md:max-h-[550px] h-auto object-contain md:mx-auto rounded-xl md:rounded-3xl shadow-2xl transition-all duration-700 ${loading ? "opacity-0" : "opacity-100"}`}
               />
             </div>
 
             {/* Minimal Info & Controls */}
-            <div className="mt-10 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+            <div className="mt-6 flex flex-col lg:flex-row lg:items-end justify-between gap-6 text-center lg:text-left px-6 md:px-0">
               <div className="max-w-xl animate-in fade-in slide-in-from-left-4 duration-700" key={`info-${currentIndex}`}>
-                <h3 className="text-2xl font-bold text-white mb-3 font-['Outfit']">{images[currentIndex].title}</h3>
-                <p className="text-base text-neutral-400 font-['Inter'] leading-relaxed">{images[currentIndex].description}</p>
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 font-['Outfit']">{images[currentIndex].title}</h3>
+                <p className="text-sm md:text-base text-neutral-400 font-['Inter'] leading-relaxed">{images[currentIndex].description}</p>
               </div>
 
               <div className="flex items-center gap-5 self-center lg:self-end bg-white/5 p-2.5 rounded-2xl border border-white/10 backdrop-blur-md">

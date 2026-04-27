@@ -8,6 +8,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   h1,
@@ -21,6 +22,8 @@
 
   body {
     @apply bg-zinc-900 text-white selection:bg-sky-500/30 selection:text-sky-200;
+    overflow-x: hidden;
+    width: 100%;
   }
 }
 

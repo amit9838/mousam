@@ -23,14 +23,10 @@ const FEATURES = [
 
 export default function Features() {
   return (
-    <section className="blueprint-grid bg-neutral-950/50">
-      <div className="blueprint-col-sidebar min-h-[200px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-      
-      <div className="blueprint-col-content">
+    <section className="relative blueprint-grid bg-neutral-950/50 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Features</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
           {FEATURES.map((item) => {
             return (
               <div

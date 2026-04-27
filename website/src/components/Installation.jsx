@@ -20,12 +20,8 @@ const tabs = [
 export default function Installation() {
   const [activeTab, setActiveTab] = useState("flatpak");
   return (
-    <section id="installation" className="blueprint-grid bg-neutral-900/30">
-      <div className="blueprint-col-sidebar min-h-[300px]">
-        <div className="blueprint-marker -top-[3px] -right-[3px]" />
-      </div>
-      
-      <div className="blueprint-col-content">
+    <section id="installation" className="relative blueprint-grid bg-neutral-900/30 w-full overflow-hidden">
+      <div className="relative z-10 col-span-12 py-16 px-6 md:px-16 lg:px-24 max-w-7xl mx-auto">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-12">Installation</h2>
         <div className="flex gap-10 mb-12 border-b border-white/5">
           {tabs.map((item) => {

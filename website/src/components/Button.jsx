@@ -28,7 +28,7 @@ export default function Button({
   }[variant];
   const sizeClasses = {
     sm: 'px-4 py-1.5 text-xs rounded-md',
-    md: 'px-8 py-3 text-sm rounded-lg',
+    md: 'px-6 py-3 text-sm rounded-lg',
     lg: 'px-10 py-4 text-base rounded-xl',
     icon: 'w-10 h-10 rounded-full',
   }[size];
