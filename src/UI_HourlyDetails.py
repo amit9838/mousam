@@ -6,7 +6,7 @@ from gi.repository import Gtk, GLib, Adw
 import threading
 from gettext import gettext as _, pgettext as C_
 
-from .CORE_Icons import icons
+from .CORE_Icons import get_icon_path, create_weather_icon
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
@@ -250,10 +250,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_text(f"{temp:.0f}°")
         code = hourly_data.weathercode.data[index]
         icon_key = str(code) + ("n" if hourly_data.is_day.data[index] == 0 else "")
-        icon_path = icons.get(icon_key, icons.get("unknown"))
-        
-        img = Gtk.Image.new_from_file(icon_path)
-        img.set_pixel_size(50)
+        img = create_weather_icon(icon_key, settings.icon_theme, 50)
         icon_box.append(img)
         icon_box.set_margin_bottom(5)
         icon_box.set_margin_top(5)
@@ -264,7 +261,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_text(str(speed))
         val_label.set_margin_top(0)
         
-        icon_box.append(DrawImage(icons.get("arrow"), direction + 180, 32, 32).img_box)
+        icon_box.append(DrawImage(get_icon_path("arrow", settings.icon_theme), direction + 180, 32, 32).img_box)
         icon_box.set_margin_top(5)
         icon_box.set_margin_bottom(5)
 

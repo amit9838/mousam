@@ -18,7 +18,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, GLib, Adw
 import threading
 
-from .CORE_Icons import icons
+from .CORE_Icons import get_icon_path, create_weather_icon
 from .settings import settings
 from .CORE_weatherData import weather_manager
 from .CORE_GTKUtils import weak_connect
@@ -330,15 +330,9 @@ class Forecast(Gtk.Grid):
 
     def _add_icon_column(self, grid: Gtk.Grid, weather_code: Union[int, str]) -> None:
         """Add the weather icon column (col 1)."""
-        icon_path = icons.get(str(weather_code))
-        if not icon_path:
-            # Fallback to unknown icon if not found
-            icon_path = icons.get("unknown", "")
-
-        image = Gtk.Image.new_from_file(icon_path)
+        image = create_weather_icon(str(weather_code), settings.icon_theme, self.ICON_SIZE)
         image.set_halign(Gtk.Align.END)
         image.set_hexpand(True)
-        image.set_pixel_size(self.ICON_SIZE)
         grid.attach(image, 1, 0, 1, 1)
 
     def _add_placeholder_column(self, grid: Gtk.Grid) -> None:

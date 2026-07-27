@@ -57,5 +57,10 @@
       <summary>Enable debug mode</summary>
       <description>Enables detailed logging and console output.</description>
     </key>
+    <key name="icon-theme" type="s">
+      <default>"default"</default>
+      <summary>Icon theme</summary>
+      <description>Weather icon set: "default" (mousam default icons) or "material" (Google material design icons)</description>
+    </key>
   </schema>
 </schemalist>

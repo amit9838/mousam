@@ -6,7 +6,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
-from .CORE_Icons import icons
+from .CORE_Icons import get_icon_path
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawImageIcon import DrawImage
@@ -176,8 +176,7 @@ class CardSquare:
 
         if self.title_key == "wind":
             # Arrow Icon
-            # icons['arrow'] should be a resource path or similar
-            return DrawImage(icons["arrow"], val + 180, 35, 35).img_box
+            return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35).img_box
 
         elif self.title_key == "humidity":
             # Level Bar (0.0 - 1.0)

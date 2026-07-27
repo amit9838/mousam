@@ -11,6 +11,7 @@ from .settings import settings
 from .CORE_Helpers import create_toast
 from .configs import AUTO_REFRESH_OPTIONS
 from .CORE_Logging import log_manager
+from .CORE_Icons import get_icon_path
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -48,6 +49,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         appearance_page.add(general_group)
 
         self._add_dynamic_background_row(general_group)
+        self._add_icon_theme_row(general_group)
         self._add_notification_row(general_group)
         self._add_time_format_row(general_group)
         self._add_auto_refresh_row(general_group)
@@ -66,6 +68,37 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._add_open_logs_row(debug_group)
         self._add_clear_logs_row(debug_group)
         self._add_reset_row(advanced_page)
+
+    def _add_icon_theme_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Icon Theme"),
+            subtitle=_("Choose between Default and Material design weather icons"),
+            icon_name="applications-graphics-symbolic",
+            activatable=True,
+        )
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        button_box.add_css_class("linked")
+        button_box.set_margin_start(2)
+        button_box.set_valign(Gtk.Align.CENTER)
+        row.add_suffix(button_box)
+
+        btn_default = Gtk.ToggleButton.new_with_label(_("Default"))
+        btn_default.set_size_request(80, 20)
+        btn_default.set_css_classes(["btn-sm"])
+        btn_default.connect("clicked", self._on_icon_theme_toggled, "default")
+
+        btn_material = Gtk.ToggleButton.new_with_label(_("Material"))
+        btn_material.set_size_request(80, 20)
+        btn_material.set_css_classes(["btn-sm"])
+        btn_material.set_group(btn_default)
+        btn_material.connect("clicked", self._on_icon_theme_toggled, "material")
+
+        button_box.append(btn_default)
+        button_box.append(btn_material)
+
+        self._icon_theme_btn_default = btn_default
+        self._icon_theme_btn_material = btn_material
+        parent.add(row)
 
     def _add_dynamic_background_row(self, parent: Adw.PreferencesGroup) -> None:
         row = Adw.ActionRow(
@@ -289,11 +322,22 @@ class WeatherPreferences(Adw.PreferencesWindow):
         # Notifications
         self._notification_switch.set_active(settings.show_notifications)
 
+        # Icon theme
+        if settings.icon_theme == "material":
+            self._icon_theme_btn_material.set_active(True)
+        else:
+            self._icon_theme_btn_default.set_active(True)
+
     # ------------------------------------------------------------------
     # Signal Handlers
     # ------------------------------------------------------------------
     def _on_dynamic_bg_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_dynamic_bg = state
+        self._start_refresh_thread()
+
+    def _on_icon_theme_toggled(self, button: Gtk.ToggleButton, theme: str) -> None:
+        settings.icon_theme = theme
+        self.add_toast(create_toast(_("Icon theme changed to {}").format(theme.capitalize()), 1))
         self._start_refresh_thread()
 
     def _on_24h_clock_toggled(self, button: Gtk.ToggleButton, use_24h: bool) -> None:
@@ -384,6 +428,12 @@ class WeatherPreferences(Adw.PreferencesWindow):
             self._time_btn_24h.set_active(True)
         else:
             self._time_btn_12h.set_active(True)
+
+        # Icon theme buttons
+        if settings.icon_theme == "material":
+            self._icon_theme_btn_material.set_active(True)
+        else:
+            self._icon_theme_btn_default.set_active(True)
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))
 

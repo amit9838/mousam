@@ -7,24 +7,49 @@ install_data(
   install_dir: join_paths(get_option('datadir'), 'icons', scalable_dir),
 )
 
-scalable_dir = join_paths('hicolor','scalable', 'mousam_icons')
-
 fs = import('fs')
-source_svgs = []
-source_svgs += files(
+
+# --- Default icons installed as default_icons ---
+default_icons_source_dir = join_paths('hicolor', 'scalable', 'default_icons')
+default_icons_install_dir = join_paths('hicolor', 'scalable', 'default_icons')
+
+default_svgs = []
+default_svgs += files(
   run_command(
     'find',
-    meson.current_source_dir() / scalable_dir,
+    meson.current_source_dir() / default_icons_source_dir,
     '-name', '*.svg',
     check: true
   ).stdout().strip().split('\n')
 )
 
-foreach i : range(source_svgs.length())
-  svg = source_svgs[i]
+foreach i : range(default_svgs.length())
+  svg = default_svgs[i]
   install_data(
-    join_paths(scalable_dir, fs.name(svg)),
-	  install_dir: join_paths(get_option('datadir'), 'icons', scalable_dir)
+    join_paths(default_icons_source_dir, fs.name(svg)),
+    install_dir: join_paths(get_option('datadir'), 'icons', default_icons_install_dir)
+  )
+endforeach
+
+# --- Material icons installed as material_icons ---
+material_icons_source_dir = join_paths('hicolor', 'scalable', 'material_icons')
+material_icons_install_dir = join_paths('hicolor', 'scalable', 'material_icons')
+
+material_svgs = []
+material_svgs += files(
+  run_command(
+    'find',
+    meson.current_source_dir() / material_icons_source_dir,
+    '-name', '*.svg',
+    check: true
+  ).stdout().strip().split('\n')
+)
+
+foreach i : range(material_svgs.length())
+  svg = material_svgs[i]
+  install_data(
+    join_paths(material_icons_source_dir, fs.name(svg)),
+    install_dir: join_paths(get_option('datadir'), 'icons', material_icons_install_dir)
   )
 endforeach
 
