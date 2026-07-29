@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-26 18:09+0530\n"
-"PO-Revision-Date: 2026-07-28 17:48-0300\n"
-"Last-Translator: Nelson K. Hennemann F. <nelsonhf@outlook.com>\n"
+"PO-Revision-Date: 2026-07-29 13:21-0300\n"
+"Last-Translator: Nelson K. Hennemann Filho <nelsonhf@outlook.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -463,32 +463,32 @@ msgstr "CH₄"
 
 #: src/UI_CardAirPollution.py:190
 msgid "Alder Pollen"
-msgstr ""
+msgstr "Pólen de Avela"
 
 #: src/UI_CardAirPollution.py:191
 msgid "Birch Pollen"
-msgstr ""
+msgstr "Pólen de Bétula"
 
 #: src/UI_CardAirPollution.py:192
 msgid "Grass Pollen"
-msgstr ""
+msgstr "Pólen de Gramíneas"
 
 #: src/UI_CardAirPollution.py:193
 msgid "Mugwort Pollen"
-msgstr ""
+msgstr "Pólen da Artemísia"
 
 #: src/UI_CardAirPollution.py:194
 msgid "Olive Pollen"
-msgstr ""
+msgstr "Pólen de Oliveira"
 
 #: src/UI_CardAirPollution.py:195
 msgid "Ragweed Pollen"
-msgstr ""
+msgstr "Pólen de Ambrósia"
 
 #: src/UI_CardAirPollution.py:215
 #, python-brace-format
 msgid "Safe limit: ≤ {0} {1}"
-msgstr "Limites seguros: ≤ {0} {1}"
+msgstr "Limite seguro: ≤ {0} {1}"
 
 #: src/UI_CardAirPollution.py:243
 msgid ""
