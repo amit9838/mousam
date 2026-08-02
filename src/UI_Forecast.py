@@ -140,7 +140,7 @@ class Forecast(Gtk.Grid):
         tomorrow_btn.set_size_request(self.ITEM_WIDTH_REQUEST, self.ITEM_HEIGHT_REQUEST)
         tomorrow_btn.set_css_classes(["btn-sm"])
         tomorrow_btn.set_active(True)
-        weak_connect(tomorrow_btn, "clicked", self._on_tomorrow_clicked)
+        tomorrow_btn.connect("clicked", self._on_tomorrow_clicked)
         button_bar.append(tomorrow_btn)
 
         # Weekly button (grouped with tomorrow)
@@ -148,7 +148,7 @@ class Forecast(Gtk.Grid):
         weekly_btn.set_size_request(self.ITEM_WIDTH_REQUEST, self.ITEM_HEIGHT_REQUEST)
         weekly_btn.set_css_classes(["btn-sm"])
         weekly_btn.set_group(tomorrow_btn)
-        weak_connect(weekly_btn, "clicked", self._on_weekly_clicked)
+        weekly_btn.connect("clicked", self._on_weekly_clicked)
         button_bar.append(weekly_btn)
 
         return button_bar
