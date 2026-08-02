@@ -123,6 +123,14 @@ class Settings:
     def debug_mode(self, value):
         self.settings.set_boolean("debug-mode", value)
 
+    @property
+    def icon_theme(self):
+        return self.settings.get_string("icon-theme")
+
+    @icon_theme.setter
+    def icon_theme(self, value):
+        self.settings.set_string("icon-theme", value)
+
 
 def get_settings():
     return Settings()

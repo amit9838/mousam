@@ -1,7 +1,7 @@
 import gi
 from gi.repository import Gtk, Adw, GLib
 from .settings import settings
-from .CORE_Icons import icons, condition, bg_css
+from .CORE_Icons import get_icon_path, condition, bg_css, create_weather_icon
 from .CORE_Helpers import check_internet_connection
 from gettext import gettext as _
 
@@ -199,13 +199,11 @@ class CompactWeather(Gtk.Overlay):
         grid.attach(lbl_cond, 0, 1, 1, 1)
 
         # Weather Icon
-        icon_path = icons.get(str(weather_code), icons.get("unknown"))
+        condition_code = str(weather_code)
         is_day_val = data.is_day.get("data", 1)
         if is_day_val == 0:
-            icon_path = icons.get(str(weather_code) + "n", icon_path)
-
-        img_cond = Gtk.Image.new_from_file(icon_path)
-        img_cond.set_pixel_size(70)
+            condition_code = condition_code + "n"
+        img_cond = create_weather_icon(condition_code, settings.icon_theme, 70)
         img_cond.set_halign(Gtk.Align.END)
         img_cond.set_valign(Gtk.Align.CENTER)
         grid.attach(img_cond, 2, 0, 1, 2)

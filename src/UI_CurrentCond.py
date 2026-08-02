@@ -1,6 +1,6 @@
 import gi
 from gi.repository import Gtk
-from .CORE_Icons import icons, condition
+from .CORE_Icons import get_icon_path, condition, create_weather_icon
 from .settings import settings
 from .CORE_Helpers import JsonProcessor
 from gettext import gettext as _, pgettext as C_
@@ -36,13 +36,11 @@ class CurrentCondition(Gtk.Grid):
 
         # condition icon
         weather_code = data.weathercode.data
-        condition_icon = icons[str(weather_code)]
+        condition_code = str(weather_code)
         if data.is_day.data == 0:
-            condition_icon = icons[str(weather_code) + "n"]
-
-        icon_main = Gtk.Image().new_from_file(condition_icon)
+            condition_code = condition_code + "n"
+        icon_main = create_weather_icon(condition_code, settings.icon_theme, 90)
         icon_main.set_hexpand(True)
-        icon_main.set_pixel_size(90)
         condition_grid.attach(icon_main, 0, 0, 1, 2)
 
         # Condition label
