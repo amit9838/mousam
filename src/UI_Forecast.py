@@ -86,7 +86,6 @@ class Forecast(Gtk.Grid):
     def _setup_styling(self) -> None:
         """Apply margins and CSS classes to the widget."""
         self.set_margin_top(10)
-        self.set_margin_bottom(5)
         self.set_margin_start(6)
         self.set_margin_end(3)
 
