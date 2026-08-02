@@ -204,6 +204,21 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         group.add(prec_row)
 
+        # Pressure unit (hPa/inHg)
+        pres_row = Adw.ActionRow(
+            title=_("Pressure in inHg"),
+            subtitle=_("Show pressure in inches of mercury (inHg) regardless of unit system"),
+            icon_name="gauge-symbolic",
+            activatable=True,
+        )
+        pres_switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        pres_switch.set_active(settings.is_using_inhg_for_pressure)
+        pres_switch.connect("state-set", self._on_pressure_unit_toggled)
+        pres_row.add_suffix(pres_switch)
+        self._pressure_switch = pres_switch
+
+        group.add(pres_row)
+
     def _add_reset_row(self, parent: Adw.PreferencesPage) -> None:
         data_group = Adw.PreferencesGroup()
         data_group.set_title(_("Data Management"))
@@ -307,6 +322,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_precip_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_inch_for_prec = state
+        self._start_refresh_thread()
+
+    def _on_pressure_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
+        settings.is_using_inhg_for_pressure = state
         self._start_refresh_thread()
 
     def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:

@@ -175,7 +175,7 @@ class WeatherDataManager(GObject.Object):
     @staticmethod
     def classify_presssure_level(p):
         low, normal = 940, 1010
-        if settings.unit == "imperial":
+        if settings.unit == "imperial" or settings.is_using_inhg_for_pressure:
             low, normal = low * HPA_TO_INHG, normal * HPA_TO_INHG
         if p < low: return C_("pressure", "Low")
         if p <= normal: return C_("pressure", "Normal")
