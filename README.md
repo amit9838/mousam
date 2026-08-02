@@ -16,8 +16,14 @@
 ## Features
 
 - Displays real-time temperature, humidity, wind speed, UV index, pressure and more
-- Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with direction to provide an hourly forecast for the next 24 hours
-- Also shows tomorrow and 7-day forcasts
+- **Air Quality Index**: Comprehensive air pollutants data with health-based classification
+- **Compact Mode**: A sleek, minimal view for focused weather tracking
+- **Dynamic Backgrounds**: Adaptive UI that changes its aesthetic based on current conditions
+- **Smart Notifications**: System alerts for weather updates with preference controls
+- **Detailed Forecasts**: Hourly, tomorrow, and 7-day forecasts with graphical representations
+- **Celestial Tracking**: Visual graphs for sun and moon positions and day/night cycles
+- **Advanced Metrics**: Hourly temperature, wind direction and precipitation tracking
+- **Architecture**: Asynchronous data loading and refined state management for peak performance
 - See conditions in metric or imperial systems
 
 ## Installation

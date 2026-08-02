@@ -3,73 +3,61 @@ import Navbar from "./Navbar";
 import Button from "./Button";
 export default function Hero() {
   return (
-    <section id="home">
+    <section id="home" className="relative blueprint-grid bg-zinc-900 overflow-hidden pt-20">
+      {/* Background Image - Full Width Cover */}
       <div
-        className="relative h-screen bg-cover bg-right text-white"
-        style={{ backgroundImage: `url(${bg})` }}
-      >
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 md:bg-gradient-to-r md:from-black  md:opacity-80 bg-gradient-to-b from-black  via-gray-800 opacity-80"></div>
-        {/* Content inside the hero section */}
-        <div className="relative">
-          <Navbar />
-          <div className=" p-8 mt-20 text-white z-100 ">
-            <h1 className="text-lg font-mono mb-4 text-gray-200">
-              THE ONLY WEATHER APP YOU NEED //
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${bg})`,
+          backgroundPosition: 'right center',
+          backgroundSize: 'cover'
+        }}
+      ></div>
+
+      {/* Dark Gradient Overlay for readability */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent"></div>
+
+      <div className="relative z-10 blueprint-col-sidebar min-h-[500px] hidden md:flex border-white/5">
+        <div className="blueprint-marker -bottom-[3px] -right-[3px]" />
+      </div>
+
+      <div className="relative z-10 blueprint-col-content">
+        <div className="flex items-center min-h-[400px] md:min-h-[500px] py-12 md:py-20">
+          {/* Left Content */}
+          <div className="max-w-2xl text-center lg:text-left">
+            <div className="inline-flex items-center gap-3 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-6">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-sky-500"></span>
+              </span>
+              Mousam 2.0 is out
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-[1.2] tracking-tight font-['Outfit']">
+              Elevate your <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4d94a5] to-sky-600">weather</span> experience.
             </h1>
-            <p className="text-5xl text-roboto max-w-[35rem] font-['Ubuntu']">
-              Get
-              <span className="font-semibold text-red-400]"> forecast </span>
-              information at one place.
+
+            <p className="text-base md:text-lg text-neutral-400 mb-10 max-w-lg font-['Inter'] leading-relaxed mx-auto lg:mx-0">
+              Displays real-time temperature, humidity, wind speed, UV index, pressure along with weather and AQI forecasts
             </p>
-            <p className="text-sm md:text-neutral-300/80 text-neutral-300 mx-1 mt-4 max-w-[24rem]">
-              30k+ downloads from flathub, snapstore and other stores.
-            </p>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+              <Button
+                onClick={() => {
+                  const element = document.getElementById("installation");
+                  element.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Install Now
+              </Button>
 
-            {/* <Button
-              onClick={() => {
-                const element = document.getElementById("installation");
-                element.scrollIntoView({
-                  behavior: "smooth",
-                });
-              }}
-              myStyle="bg-gradient-to-r from-[#166EAE] to-[#7B8389]  px-5 py-2  font-semibold rounded-fullf mt-20 text-white border-[1px] border-gray-400/70 hover:border-gray-300 "
-            >
-              INSTALL
-            </Button> */}
-            <div className="grid grid-cols-[1fr_2fr_1fr] grid-rows-[1fr_2fr_1fr] h-20 w-40 gap-0 mt-20">
-              {/* Top-left box */}
-              <div className="border-r-[1px] border-b-[1px] border-gray-300"></div>
-              {/* Top-center box */}
-              <div className="border-b-[1px] border-gray-300"></div>
-              {/* Top-right box */}
-              <div className="border-l-[1px] border-b-[1px] border-gray-300"></div>
-
-              {/* Middle-left box */}
-              <div className="border-r-[1px] border-gray-300"></div>
-              {/* Center box (Button) */}
-              <div className="flex items-center justify-center">
-                <button
-                  onClick={() => {
-                    const element = document.getElementById("installation");
-                    element.scrollIntoView({
-                      behavior: "smooth",
-                    });
-                  }}
-                  className="bg-gradient-to-r from-[#166EAE] to-[#7B8389]  px-5 py-2  font-semibold  text-white hover:text-neutral-300"
-                >
-                  INSTALL
-                </button>
-              </div>
-              {/* Middle-right box */}
-              <div className="border-l-[1px] border-gray-300"></div>
-
-              {/* Bottom-left box */}
-              <div className="border-r-[1px] border-t-[1px] border-gray-300"></div>
-              {/* Bottom-center box */}
-              <div className="border-t-[1px] border-gray-300"></div>
-              {/* Bottom-right box */}
-              <div className="border-l-[1px] border-t-[1px] border-gray-300"></div>
+              <Button
+                href="https://github.com/amit9838/mousam"
+                target="_blank"
+                variant="secondary"
+              >
+                View Source
+              </Button>
             </div>
           </div>
         </div>

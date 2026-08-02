@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mousam\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-23 22:25+0530\n"
+"POT-Creation-Date: 2026-04-26 18:09+0530\n"
 "PO-Revision-Date: 2024-11-02 12:00+0800\n"
 "Last-Translator: lipcut <cratemover9001@proton.me>\n"
 "Language-Team: Traditional Chinese <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgid "Mousam"
 msgstr "天氣"
 
 #: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:14
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
 msgid "Weather at a glance"
 msgstr "一目了然的天氣"
 
@@ -143,244 +143,369 @@ msgstr "使用的度量系統 - 公制、英制"
 msgid "metric(km, °C), imperial(mile, °F)"
 msgstr "公制(公里, °C)、英制(英里, °F)"
 
-#: src/constants.py:132
+#: data/io.github.amit9838.mousam.gschema.xml:52
+msgid "Show weather update notifications"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:53
+msgid "Show a notification when weather data is updated."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:57
+msgid "Enable debug mode"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:58
+msgid "Enables detailed logging and console output."
+msgstr ""
+
+#: src/configs.py:33
+msgid "Off"
+msgstr ""
+
+#: src/configs.py:34
+msgid "Every 15 minutes"
+msgstr ""
+
+#: src/configs.py:35
+msgid "Every 30 minutes"
+msgstr ""
+
+#: src/configs.py:36
+msgid "Every hour"
+msgstr ""
+
+#: src/configs.py:37
+msgid "Every 2 hours"
+msgstr ""
+
+#: src/CORE_GTKUtils.py:66
+msgid "Unknown"
+msgstr ""
+
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+msgid "Unknown City"
+msgstr ""
+
+#: src/CORE_Icons.py:134
 msgid "Clear sky"
 msgstr "晴朗"
 
-#: src/constants.py:133
+#: src/CORE_Icons.py:135
 msgid "Few Clouds"
 msgstr "少雲"
 
-#: src/constants.py:134
+#: src/CORE_Icons.py:136
 msgid "Partly Cloudy"
 msgstr "局部多雲"
 
-#: src/constants.py:135
+#: src/CORE_Icons.py:137
 msgid "Overcast"
 msgstr "陰天"
 
-#: src/constants.py:136
+#: src/CORE_Icons.py:138
 msgid "Fog"
 msgstr "霧"
 
-#: src/constants.py:137
+#: src/CORE_Icons.py:139
 msgid "Mist"
 msgstr "薄霧"
 
-#: src/constants.py:138
+#: src/CORE_Icons.py:140
 msgid "Light Drizzle"
 msgstr "小毛毛雨"
 
-#: src/constants.py:139
+#: src/CORE_Icons.py:141
 msgid "Moderate Drizzle"
 msgstr "中度毛毛雨"
 
-#: src/constants.py:140
+#: src/CORE_Icons.py:142
 msgid "Heavy Intensity Drizzle"
 msgstr "大毛毛雨"
 
-#: src/constants.py:141
+#: src/CORE_Icons.py:143
 msgid "Light Freezing Drizzle"
 msgstr "輕度凍毛毛雨"
 
-#: src/constants.py:142
+#: src/CORE_Icons.py:144
 msgid "Heavy Freezing Drizzle"
 msgstr "重度凍毛毛雨"
 
-#: src/constants.py:143
+#: src/CORE_Icons.py:145
 msgid "Light Rain"
 msgstr "小雨"
 
-#: src/constants.py:144
+#: src/CORE_Icons.py:146
 msgid "Moderate Rain"
 msgstr "中雨"
 
-#: src/constants.py:145
+#: src/CORE_Icons.py:147
 msgid "Heavy Rain"
 msgstr "大雨"
 
-#: src/constants.py:146
+#: src/CORE_Icons.py:148
 msgid "Light Freezing Rain"
 msgstr "輕度凍雨"
 
-#: src/constants.py:147
+#: src/CORE_Icons.py:149
 msgid "Heavy Freezing Rain"
 msgstr "重度凍雨"
 
-#: src/constants.py:148
+#: src/CORE_Icons.py:150
 msgid "Light Snow Fall"
 msgstr "小雪"
 
-#: src/constants.py:149
+#: src/CORE_Icons.py:151
 msgid "Moderate Snow Fall"
 msgstr "中雪"
 
-#: src/constants.py:150
+#: src/CORE_Icons.py:152
 msgid "Heavy Snow Fall"
 msgstr "大雪"
 
-#: src/constants.py:151
+#: src/CORE_Icons.py:153
 msgid "Snow grains"
 msgstr "粒雪"
 
-#: src/constants.py:152
+#: src/CORE_Icons.py:154
 msgid "Light Rain Showers"
 msgstr "小陣雨"
 
-#: src/constants.py:153
+#: src/CORE_Icons.py:155
 msgid "Moderate Rain Showers"
 msgstr "中陣雨"
 
-#: src/constants.py:154
+#: src/CORE_Icons.py:156
 msgid "Heavy Rain Showers"
 msgstr "大陣雨"
 
-#: src/constants.py:155
+#: src/CORE_Icons.py:157
 msgid "Light Snow Showers"
 msgstr "小陣雪"
 
-#: src/constants.py:156
+#: src/CORE_Icons.py:158
 msgid "Heavy Snow Showers "
 msgstr "大陣雪"
 
-#: src/constants.py:157
+#: src/CORE_Icons.py:159
 msgid "Thunderstorm"
 msgstr "雷雨"
 
-#: src/constants.py:158
+#: src/CORE_Icons.py:160
 msgid "Thunderstorm with Hail"
 msgstr "雷雨伴隨冰雹"
 
-#: src/CORE_weatherData.py:99
+#: src/CORE_weatherData.py:154
 msgid "Good"
 msgstr "良好"
 
-#: src/CORE_weatherData.py:101
+#: src/CORE_weatherData.py:155
 msgid "Moderate"
 msgstr "中等"
 
-#: src/CORE_weatherData.py:103
+#: src/CORE_weatherData.py:156
 msgid "Poor"
 msgstr "不佳"
 
-#: src/CORE_weatherData.py:105
+#: src/CORE_weatherData.py:157
 msgid "Unhealthy"
 msgstr "不健康"
 
-#: src/CORE_weatherData.py:107
+#: src/CORE_weatherData.py:158
 msgid "Severe"
 msgstr "嚴重"
 
-#: src/CORE_weatherData.py:109
+#: src/CORE_weatherData.py:159
 msgid "Hazardous"
 msgstr "危險"
 
-#: src/CORE_weatherData.py:117
+#: src/CORE_weatherData.py:163
 msgctxt "uvindex"
 msgid "Low"
 msgstr "低"
 
-#: src/CORE_weatherData.py:119
+#: src/CORE_weatherData.py:164
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "中等"
 
-#: src/CORE_weatherData.py:121
+#: src/CORE_weatherData.py:165
 msgctxt "uvindex"
 msgid "High"
 msgstr "高"
 
-#: src/CORE_weatherData.py:123
+#: src/CORE_weatherData.py:166
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "很高"
 
-#: src/CORE_weatherData.py:125
+#: src/CORE_weatherData.py:167
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "極高"
 
-#: src/CORE_weatherData.py:130
+#: src/CORE_weatherData.py:171
 msgctxt "humidity"
 msgid "Low"
 msgstr "低"
 
-#: src/CORE_weatherData.py:132
+#: src/CORE_weatherData.py:172
 msgctxt "humidity"
 msgid "Moderate"
 msgstr "中等"
 
-#: src/CORE_weatherData.py:134
+#: src/CORE_weatherData.py:173
 msgctxt "humidity"
 msgid "High"
 msgstr "高"
 
-#: src/CORE_weatherData.py:144
+#: src/CORE_weatherData.py:180
 msgctxt "pressure"
 msgid "Low"
 msgstr "低"
 
-#: src/CORE_weatherData.py:146
+#: src/CORE_weatherData.py:181
 msgctxt "pressure"
 msgid "Normal"
 msgstr "正常"
 
-#: src/CORE_weatherData.py:148
+#: src/CORE_weatherData.py:182
 msgctxt "pressure"
 msgid "High"
 msgstr "高"
 
-#: src/CORE_weatherData.py:153
+#: src/CORE_weatherData.py:186
 msgid "Calm"
 msgstr "平靜"
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:187
 msgid "Light"
 msgstr "微風"
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:188
 msgctxt "wind"
 msgid "Moderate"
 msgstr "中等"
 
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:189
 msgid "Strong"
 msgstr "強風"
 
-#: src/CORE_weatherData.py:161
+#: src/CORE_weatherData.py:190
 msgctxt "wind"
 msgid "Extreme"
 msgstr "極端"
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:194
 msgid "km"
 msgstr "公里"
 
-#: src/CORE_weatherData.py:168
+#: src/CORE_weatherData.py:196
 msgid "miles"
 msgstr "英里"
 
-#: src/UI_CardAirPollution.py:44
+#: src/UI_CardAirPollution.py:93
 msgid "Air Pollution"
 msgstr "空氣污染"
 
-#: src/UI_CardAirPollution.py:54
-msgid "United States AQI standard"
-msgstr "美國AQI標準"
+#: src/UI_CardAirPollution.py:105
+msgid "Air Quality Components"
+msgstr ""
 
-#: src/UI_CardDayNight.py:68
+#: src/UI_CardAirPollution.py:153
+msgid "Air Quality Index"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:180
+msgid "PM2.5"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:181
+msgid "PM10"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:182
+msgid "CO"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:183
+msgid "CO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:184
+msgid "NO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:185
+msgid "SO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:186
+msgid "O₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:187
+msgid "Dust"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:188
+msgid "NH₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:189
+msgid "CH₄"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:190
+#, fuzzy
+msgid "Alder Pollen"
+msgstr "空氣污染"
+
+#: src/UI_CardAirPollution.py:191
+#, fuzzy
+msgid "Birch Pollen"
+msgstr "空氣污染"
+
+#: src/UI_CardAirPollution.py:192
+msgid "Grass Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:193
+msgid "Mugwort Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:194
+msgid "Olive Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:195
+msgid "Ragweed Pollen"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:215
+#, python-brace-format
+msgid "Safe limit: ≤ {0} {1}"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:243
+msgid ""
+"AQI: US EPA Standard\n"
+"Pollutant limits: WHO Guidelines (2021)"
+msgstr ""
+
+#: src/UI_CardDayNight.py:76
 msgid "Sunrise & Sunset"
 msgstr "日出和日落"
 
-#: src/UI_CardDayNight.py:79
+#: src/UI_CardDayNight.py:87
 msgid "Sunrise"
 msgstr "日出"
 
-#: src/UI_CardDayNight.py:92
+#: src/UI_CardDayNight.py:100
 msgid "Sunset"
 msgstr "日落"
 
-#: src/UI_CardSquare.py:30
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:287
 msgid "Wind"
 msgstr "風"
 
@@ -424,159 +549,182 @@ msgstr "西南"
 msgid "West"
 msgstr "西"
 
-#: src/UI_CardSquare.py:216 src/mousam.py:264
+#: src/UI_CardSquare.py:216
 msgid "Northwest"
 msgstr "西北"
 
-#: src/UI_Forecast.py:136 src/UI_Forecast.py:287
-msgid "Tomorrow"
-msgstr "明天"
+#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+msgid "No Internet"
+msgstr "無網路連接"
 
-#: src/UI_Forecast.py:144
-msgid "Weekly"
-msgstr "每週"
+#: src/UI_CompactWeather.py:291
+msgid "Hum."
+msgstr ""
 
-#: src/UI_Forecast.py:285
-msgid "Today"
-msgstr "今天"
+#: src/UI_CompactWeather.py:295
+#, fuzzy
+msgid "Pres."
+msgstr "氣壓"
 
-#: src/UI_CompDrawDayNight.py:97
+#: src/UI_CompactWeather.py:299
+msgid "AQI"
+msgstr ""
+
+#: src/UI_CompactWeather.py:352
+#, fuzzy
+msgid "Mousam Compact"
+msgstr "天氣"
+
+#: src/UI_CompDrawDayNight.py:154
+msgid "Day"
+msgstr ""
+
+#: src/UI_CompDrawDayNight.py:154
 msgid "Night"
 msgstr "夜間"
 
-#: src/UI_CurrentCond.py:97
+#: src/UI_CurrentCond.py:98
 #, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "體感溫度 • <b> {0} {1}</b>"
 
-#: src/UI_HourlyDetails.py:91
-msgctxt "wind"
-msgid "Day High •"
-msgstr "全天最高 •"
+#: src/UI_Forecast.py:140 src/UI_Forecast.py:319
+msgid "Tomorrow"
+msgstr "明天"
 
-#: src/UI_HourlyDetails.py:107
+#: src/UI_Forecast.py:148
+msgid "Weekly"
+msgstr "每週"
+
+#: src/UI_Forecast.py:317
+msgid "Today"
+msgstr "今天"
+
+#: src/UI_HourlyDetails.py:151
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr "全天最高 •"
 
-#: src/UI_HourlyDetails.py:119
+#: src/UI_HourlyDetails.py:157
+msgctxt "wind"
+msgid "Day High •"
+msgstr "全天最高 •"
+
+#: src/UI_HourlyDetails.py:168
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr "全天最高 •"
 
-#: src/UI_HourlyDetails.py:163
-msgid "No precipitation today !"
-msgstr "今天無降水！"
-
-#: src/UI_HourlyDetails.py:164
-msgid "No precipitation expected today!"
-msgstr "今天預計無降水！"
-
-#: src/UI_HourlyDetails.py:165
-msgid "Anticipate a precipitation-free day !"
-msgstr "預期今天無降水！"
-
-#: src/UI_HourlyDetails.py:166
-msgid "Enjoy a rain-free day today!"
-msgstr "今天享受無雨天！"
-
-#: src/UI_HourlyDetails.py:167
-msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "雨傘狀態：休息中。無降水跡象！"
-
-#: src/UI_HourlyDetails.py:168
-msgid "No rain in sight today!"
-msgstr "今天看不到雨的跡象！"
-
-#: src/UI_HourlyDetails.py:201
+#: src/UI_HourlyDetails.py:243
 msgid "Now"
 msgstr "現在"
 
-#: src/mousam.py:99
+#: src/UI_HourlyDetails.py:288
+msgid "No precipitation today !"
+msgstr "今天無降水！"
+
+#: src/UI_HourlyDetails.py:289
+msgid "No precipitation expected today!"
+msgstr "今天預計無降水！"
+
+#: src/UI_HourlyDetails.py:290
+msgid "Anticipate a precipitation-free day !"
+msgstr "預期今天無降水！"
+
+#: src/UI_HourlyDetails.py:291
+msgid "Enjoy a rain-free day today!"
+msgstr "今天享受無雨天！"
+
+#: src/UI_HourlyDetails.py:292
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "雨傘狀態：休息中。無降水跡象！"
+
+#: src/UI_HourlyDetails.py:293
+msgid "No rain in sight today!"
+msgstr "今天看不到雨的跡象！"
+
+#: src/mousam.py:83
+msgid "Debug Mode Enabled"
+msgstr ""
+
+#: src/mousam.py:84
+msgid "View Logs"
+msgstr ""
+
+#: src/mousam.py:88
+msgid "Debug Mode Disabled"
+msgstr ""
+
+#: src/mousam.py:125
 #, fuzzy
 msgid "Refresh weather"
 msgstr "重新整理天氣"
 
-#: src/mousam.py:114 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "位置"
 
-#: src/mousam.py:138 src/shortcutsDialog.ui:45
+#: src/mousam.py:146
+msgid "Compact Mode"
+msgstr ""
+
+#: src/mousam.py:172 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "偏好設定"
 
-#: src/mousam.py:139 src/shortcutsDialog.ui:63
+#: src/mousam.py:173 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "鍵盤快捷鍵"
 
-#: src/mousam.py:140
+#: src/mousam.py:174
 msgid "About Mousam"
 msgstr "關於天氣"
 
-#: src/mousam.py:141 src/shortcutsDialog.ui:57
+#: src/mousam.py:175 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "退出"
 
-#: src/mousam.py:263
-msgid "From"
-msgstr "來自"
+#: src/mousam.py:279
+#, fuzzy
+msgid "Direction"
+msgstr "降水量"
 
-#: src/mousam.py:265
-msgid "N"
-msgstr "北"
-
-#: src/mousam.py:276
+#: src/mousam.py:293
 msgid "Dewpoint"
 msgstr "露點"
 
-#: src/mousam.py:295
-msgctxt "pressure card"
-msgid "High"
-msgstr "高"
-
-#: src/mousam.py:296
-msgctxt "pressure card"
-msgid "Low"
-msgstr "低"
-
-#: src/mousam.py:306
-msgctxt "uvindex card"
-msgid "High"
-msgstr "高"
-
-#: src/mousam.py:307
-msgctxt "uvindex card"
-msgid "Low"
-msgstr "低"
-
-#: src/mousam.py:327
-msgid "No Internet"
-msgstr "無網路連接"
-
-#: src/mousam.py:332
-msgid "API Error"
+#: src/mousam.py:345
+msgid "Please check your connection."
 msgstr ""
 
-#: src/mousam.py:343
+#: src/mousam.py:350
+msgid "Fetch Error"
+msgstr ""
+
+#: src/mousam.py:364
 msgid "Getting Weather Data"
 msgstr "正在獲取天氣資料"
 
-#: src/mousam.py:350
+#: src/mousam.py:371
 #, fuzzy
 msgid "Welcome to Mousam"
 msgstr "關於天氣"
 
-#: src/mousam.py:351
+#: src/mousam.py:372
 #, fuzzy
 msgid "Add a location to get started."
 msgstr "新增更多位置以刪除！"
 
-#: src/mousam.py:352
+#: src/mousam.py:373
 #, fuzzy
 msgid "Add Location"
 msgstr "新增位置"
 
-#: src/windowAbout.py:20
+#: src/mousam.py:387
+msgid "Retry"
+msgstr ""
+
+#: src/windowAbout.py:18
 msgid "Copyright © 2024 Mousam Developers"
 msgstr "版權所有 © 2024 Mousam開發者"
 
@@ -621,142 +769,174 @@ msgstr "位置已經新增！"
 msgid "Switched to {}"
 msgstr "已切換至 {}"
 
-#: src/windowPreferences.py:26
+#: src/windowPreferences.py:29
+#, fuzzy
+msgid "Weather Preferences"
+msgstr "偏好設定"
+
+#: src/windowPreferences.py:43
 msgid "Appearance"
 msgstr "外觀"
 
-#: src/windowPreferences.py:36
+#: src/windowPreferences.py:57
+msgid "Advanced"
+msgstr ""
+
+#: src/windowPreferences.py:62
+msgid "Logging &amp; Debugging"
+msgstr ""
+
+#: src/windowPreferences.py:72
 msgid "Dynamic Background"
 msgstr "動態背景"
 
-#: src/windowPreferences.py:39
-msgid ""
-"App background changes based on current weather conditions (restart required)"
+#: src/windowPreferences.py:74
+#, fuzzy
+msgid "App background changes based on current weather conditions"
 msgstr "應用程式背景根據當前天氣狀況變化(需要重新啟動)"
 
-#: src/windowPreferences.py:56
+#: src/windowPreferences.py:88
 msgid "Time Format"
 msgstr "時間格式"
 
-#: src/windowPreferences.py:57
-msgid "Weather time format (Refresh required)"
+#: src/windowPreferences.py:89
+#, fuzzy
+msgid "Weather time format"
 msgstr "天氣時間格式(需要重新整理)"
 
-#: src/windowPreferences.py:66
+#: src/windowPreferences.py:99
 msgid "24 Hour"
 msgstr "24小時制"
 
-#: src/windowPreferences.py:73
+#: src/windowPreferences.py:104
 msgid "AM / PM"
 msgstr "上午/下午"
 
-#: src/windowPreferences.py:88
-msgid "Units &amp; Measurements"
-msgstr "單位與度量"
-
-#: src/windowPreferences.py:92
-msgid "°C"
-msgstr "°C"
-
-#: src/windowPreferences.py:94
-msgid "Metric system with units like Celsius, km/h, and kilometers"
-msgstr "公制單位系統,如攝氏度、公里/小時和公里"
-
-#: src/windowPreferences.py:103
-msgid "°F"
-msgstr "°F"
-
-#: src/windowPreferences.py:105
-msgid "Imperial system with units like Fahrenheit, mph, and miles"
-msgstr "英制單位系統,如華氏度、英里/小時和英里"
-
-#: src/windowPreferences.py:124
-msgid "Precipitation in inches"
-msgstr "以英吋顯示降水量"
-
-#: src/windowPreferences.py:126
-msgid "This option works better in heavy precipitation (refresh required)"
-msgstr "此選項在大雨時效果更好(需要重新整理)"
-
-#: src/windowPreferences.py:147
-msgid "Off"
-msgstr ""
-
-#: src/windowPreferences.py:148
-msgid "Every 15 minutes"
-msgstr ""
-
-#: src/windowPreferences.py:149
-msgid "Every 30 minutes"
-msgstr ""
-
-#: src/windowPreferences.py:150
-msgid "Every hour"
-msgstr ""
-
-#: src/windowPreferences.py:151
-msgid "Every 2 hours"
-msgstr ""
-
-#: src/windowPreferences.py:156
+#: src/windowPreferences.py:120
 msgid "Auto Refresh"
 msgstr ""
 
-#: src/windowPreferences.py:158
+#: src/windowPreferences.py:121
 msgid "Automatically refresh weather data at a set interval"
 msgstr ""
 
-#: src/windowPreferences.py:175
+#: src/windowPreferences.py:138
+#, fuzzy
+msgid "Show Notifications"
+msgstr "位置"
+
+#: src/windowPreferences.py:139
+msgid "Show notification when weather is refreshed automatically"
+msgstr ""
+
+#: src/windowPreferences.py:154
+msgid "Units &amp; Measurements"
+msgstr "單位與度量"
+
+#: src/windowPreferences.py:159
+msgid "System Unit"
+msgstr ""
+
+#: src/windowPreferences.py:160
+msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
+msgstr ""
+
+#: src/windowPreferences.py:171
+msgid "Metric"
+msgstr ""
+
+#: src/windowPreferences.py:176
+msgid "Imperial"
+msgstr ""
+
+#: src/windowPreferences.py:194
+msgid "Precipitation in inches"
+msgstr "以英吋顯示降水量"
+
+#: src/windowPreferences.py:195
+#, fuzzy
+msgid "This option works better in heavy precipitation"
+msgstr "此選項在大雨時效果更好(需要重新整理)"
+
+#: src/windowPreferences.py:209
 msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:180
+#: src/windowPreferences.py:214
 msgid "Reset to Default"
 msgstr ""
 
-#: src/windowPreferences.py:181
+#: src/windowPreferences.py:215
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/windowPreferences.py:183
+#: src/windowPreferences.py:218
 msgid "Reset…"
 msgstr ""
 
-#: src/windowPreferences.py:212
-msgid "Switching locations within 2 seconds is ignored"
-msgstr "2秒內的位置切換將被忽略"
-
-#: src/windowPreferences.py:218
-msgid "Switched to - {}"
-msgstr "已切換至 - {}"
-
-#: src/windowPreferences.py:233
-msgid "Auto refresh disabled"
+#: src/windowPreferences.py:227
+msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:235
-msgid "Auto refresh every {} min"
+#: src/windowPreferences.py:228
+msgid "Enable verbose logging and console output"
+msgstr ""
+
+#: src/windowPreferences.py:241
+msgid "Open Logs Folder"
 msgstr ""
 
 #: src/windowPreferences.py:242
+msgid "Access the application log files"
+msgstr ""
+
+#: src/windowPreferences.py:255
+msgid "Clear Log File"
+msgstr ""
+
+#: src/windowPreferences.py:256
+msgid "Delete all contents of the current log file"
+msgstr ""
+
+#: src/windowPreferences.py:305
+msgid "Switched to - {}"
+msgstr "已切換至 - {}"
+
+#: src/windowPreferences.py:324
+msgid "Logs cleared"
+msgstr ""
+
+#: src/windowPreferences.py:326
+msgid "Failed to clear logs"
+msgstr ""
+
+#: src/windowPreferences.py:337
+msgid "Auto refresh disabled"
+msgstr ""
+
+#: src/windowPreferences.py:339
+msgid "Auto refresh every {} min"
+msgstr ""
+
+#: src/windowPreferences.py:346
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:244
+#: src/windowPreferences.py:348
 msgid ""
-"This will restore all settings to default and wiil clear your saved cities. "
+"This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:352
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:353
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:276
+#: src/windowPreferences.py:388
 msgid "Preferences have been reset"
 msgstr ""
 
@@ -771,6 +951,46 @@ msgstr "重新整理天氣"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "導覽"
+
+#~ msgid "United States AQI standard"
+#~ msgstr "美國AQI標準"
+
+#~ msgid "From"
+#~ msgstr "來自"
+
+#~ msgid "N"
+#~ msgstr "北"
+
+#~ msgctxt "pressure card"
+#~ msgid "High"
+#~ msgstr "高"
+
+#~ msgctxt "pressure card"
+#~ msgid "Low"
+#~ msgstr "低"
+
+#~ msgctxt "uvindex card"
+#~ msgid "High"
+#~ msgstr "高"
+
+#~ msgctxt "uvindex card"
+#~ msgid "Low"
+#~ msgstr "低"
+
+#~ msgid "°C"
+#~ msgstr "°C"
+
+#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
+#~ msgstr "公制單位系統,如攝氏度、公里/小時和公里"
+
+#~ msgid "°F"
+#~ msgstr "°F"
+
+#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
+#~ msgstr "英制單位系統,如華氏度、英里/小時和英里"
+
+#~ msgid "Switching locations within 2 seconds is ignored"
+#~ msgstr "2秒內的位置切換將被忽略"
 
 #~ msgid "Location"
 #~ msgstr "位置"
@@ -821,6 +1041,3 @@ msgstr "導覽"
 
 #~ msgid "Hourly"
 #~ msgstr "每小時"
-
-#~ msgid "Precipitation"
-#~ msgstr "降水量"

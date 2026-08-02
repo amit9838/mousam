@@ -1,929 +1,1034 @@
-# SOME DESCRIPTIVE TITLE.
+# EUROPEAN PORTUGUESE TRANSLATION.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Bruno Miguel, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-26 18:09+0530\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-06-30 22:20+0100\n"
+"Last-Translator: Bruno Miguel\n"
+"Language-Team: \n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:2
-#: data/io.github.amit9838.mousam.appdata.xml.in:6
+#: data/io.github.amit9838.mousam.desktop.in:2 data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
-msgstr ""
+msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
+#: data/io.github.amit9838.mousam.desktop.in:4 data/io.github.amit9838.mousam.appdata.xml.in:7
+#: src/windowAbout.py:15
 msgid "Weather at a glance"
-msgstr ""
+msgstr "Vislumbre da previsão do tempo"
 
 #: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr ""
+msgstr "Tempo;Mousam;Chuva;Nuvem;Previsão;GTK4;Python;temperatura;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 msgid "Current Weather conditions and forecasts."
-msgstr ""
+msgstr "Condições atuais e previsões do estado do tempo."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
-msgstr ""
+msgstr "Funcionalidades:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
-msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
+msgid "Displays real-time temperature, humidity, wind speed, UV index, pressure and more"
 msgstr ""
+"Exibe, em tempo real, temperatura, humidade e velocidade do vento, índice U.V.,  pressão atmosférica e mais"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid ""
-"Utilizes graphical representations, such as temperature , precipitation "
-"graphs and wind-speed with direction to provide an hourly forecast for the "
-"next 24 hours"
+"Utilizes graphical representations, such as temperature , precipitation graphs and wind-speed with "
+"direction to provide an hourly forecast for the next 24 hours"
 msgstr ""
+"Utiliza representações gráficas, tais como temperatura, gráficos de precipitação e velocidade do vento com "
+"direção, para fornecer uma previsão a cada hora para as próximas 24 horas"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 msgid "Also provides tomorrow and 7-day forecasts"
-msgstr ""
+msgstr "Também fornece previsões para amanhã e para os próximos 7 dias"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
 msgid "See conditions in metric or imperial systems"
-msgstr ""
+msgstr "Ver previsões no sistema métrico ou imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 msgid "Clear Sky - day"
-msgstr ""
+msgstr "Céu Limpo - dia"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
-msgstr ""
+msgstr "Queda de neve - dia"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
 msgid "Clear Sky - night"
-msgstr ""
+msgstr "Céu Limpo - noite"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
-msgstr ""
+msgstr "Amit Chaudhary"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr ""
+msgstr "Lista de cidades e respetivas coordenadas."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
-msgid ""
-"Stores locations added by user in json stringified string format in string"
-msgstr ""
+msgid "Stores locations added by user in json stringified string format in string"
+msgstr "Armazena localizações adicionados pelo utilizador num formato de string 'JSON'"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
-msgstr ""
+msgstr "Cidade selecionada"
 
 #: data/io.github.amit9838.mousam.gschema.xml:13
 msgid "Selected city cords"
-msgstr ""
+msgstr "Coordenadas da cidade selecionada"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
 msgid "Use Gradient Background"
-msgstr ""
+msgstr "Usar fundo com gradiente"
 
 #: data/io.github.amit9838.mousam.gschema.xml:18
-msgid ""
-"Apply gradient background on main window corresponding to weather condition"
-msgstr ""
+msgid "Apply gradient background on main window corresponding to weather condition"
+msgstr "Aplicar gradiente de fundo na janela principal de acordo com a condição climatérica"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
-msgstr ""
+msgstr "Usar polegadas para precipitação"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr ""
+msgstr "Usar relógio de 24h"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr ""
+msgstr "Largura da janela principal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr ""
+msgstr "Altura da janela principal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr ""
+msgstr "Iniciar a aplicação em ecrã inteiro."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "Intervalo da atualização automática em minutos"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
-msgstr ""
+msgstr "Intervalo de atualização automática da previsão do tempo. 0 significa desativo."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
-msgstr ""
+msgstr "Sistema de medidas para utilização - métrico,imperial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr ""
+msgstr "métrico(km, °C), imperial(milha, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "Mostrar notificações de atualização das previsões"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "Mostrar uma notificação quando a previsão é atualizada."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
 msgid "Enable debug mode"
-msgstr ""
+msgstr "Ativar modo de 'debug'"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
 msgid "Enables detailed logging and console output."
-msgstr ""
+msgstr "Ativa registo detalhado e 'output' para o terminal."
 
 #: src/configs.py:33
 msgid "Off"
-msgstr ""
+msgstr "Desligado"
 
 #: src/configs.py:34
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "A cada 15 minutos"
 
 #: src/configs.py:35
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "A cada 30 minutos"
 
 #: src/configs.py:36
 msgid "Every hour"
-msgstr ""
+msgstr "A cada hora"
 
 #: src/configs.py:37
 msgid "Every 2 hours"
-msgstr ""
+msgstr "A cada duas horas"
 
 #: src/CORE_GTKUtils.py:66
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
 msgid "Unknown City"
-msgstr ""
+msgstr "Cidade desconhecida"
 
 #: src/CORE_Icons.py:134
 msgid "Clear sky"
-msgstr ""
+msgstr "Céu limpo"
 
 #: src/CORE_Icons.py:135
 msgid "Few Clouds"
-msgstr ""
+msgstr "Poucas nuvens"
 
 #: src/CORE_Icons.py:136
 msgid "Partly Cloudy"
-msgstr ""
+msgstr "Parcialmente nublado"
 
 #: src/CORE_Icons.py:137
 msgid "Overcast"
-msgstr ""
+msgstr "Nublado"
 
 #: src/CORE_Icons.py:138
 msgid "Fog"
-msgstr ""
+msgstr "Nevoeiro"
 
 #: src/CORE_Icons.py:139
 msgid "Mist"
-msgstr ""
+msgstr "Névoa"
 
 #: src/CORE_Icons.py:140
 msgid "Light Drizzle"
-msgstr ""
+msgstr "Chuvisco ligeiro"
 
 #: src/CORE_Icons.py:141
 msgid "Moderate Drizzle"
-msgstr ""
+msgstr "Chuvisco moderado"
 
 #: src/CORE_Icons.py:142
 msgid "Heavy Intensity Drizzle"
-msgstr ""
+msgstr "Chuvisco intenso"
 
 #: src/CORE_Icons.py:143
 msgid "Light Freezing Drizzle"
-msgstr ""
+msgstr "Chuvisco ligeiro e frio"
 
 #: src/CORE_Icons.py:144
 msgid "Heavy Freezing Drizzle"
-msgstr ""
+msgstr "Chuvisco intenso e frio"
 
 #: src/CORE_Icons.py:145
 msgid "Light Rain"
-msgstr ""
+msgstr "Chuva ligeira"
 
 #: src/CORE_Icons.py:146
 msgid "Moderate Rain"
-msgstr ""
+msgstr "Chuva moderada"
 
 #: src/CORE_Icons.py:147
 msgid "Heavy Rain"
-msgstr ""
+msgstr "Chuva intensa"
 
 #: src/CORE_Icons.py:148
 msgid "Light Freezing Rain"
-msgstr ""
+msgstr "Chuva ligeiro e fria"
 
 #: src/CORE_Icons.py:149
 msgid "Heavy Freezing Rain"
-msgstr ""
+msgstr "Chuva intensa e fria"
 
 #: src/CORE_Icons.py:150
 msgid "Light Snow Fall"
-msgstr ""
+msgstr "Queda ligeira de neve"
 
 #: src/CORE_Icons.py:151
 msgid "Moderate Snow Fall"
-msgstr ""
+msgstr "Queda moderada de neve"
 
 #: src/CORE_Icons.py:152
 msgid "Heavy Snow Fall"
-msgstr ""
+msgstr "Queda intensa de neve"
 
 #: src/CORE_Icons.py:153
 msgid "Snow grains"
-msgstr ""
+msgstr "Flocos de neve"
 
 #: src/CORE_Icons.py:154
 msgid "Light Rain Showers"
-msgstr ""
+msgstr "Aguaceiros ligeiros"
 
 #: src/CORE_Icons.py:155
 msgid "Moderate Rain Showers"
-msgstr ""
+msgstr "Aguaceiros moderados"
 
 #: src/CORE_Icons.py:156
 msgid "Heavy Rain Showers"
-msgstr ""
+msgstr "Aguaceiros intensos"
 
 #: src/CORE_Icons.py:157
 msgid "Light Snow Showers"
-msgstr ""
+msgstr "Chuvas de neve ligeiras"
 
 #: src/CORE_Icons.py:158
 msgid "Heavy Snow Showers "
-msgstr ""
+msgstr "Chuvas de neve intensas "
 
 #: src/CORE_Icons.py:159
 msgid "Thunderstorm"
-msgstr ""
+msgstr "Trovoada"
 
 #: src/CORE_Icons.py:160
 msgid "Thunderstorm with Hail"
-msgstr ""
+msgstr "Trovoada com granizo"
 
 #: src/CORE_weatherData.py:154
 msgid "Good"
-msgstr ""
+msgstr "Bom"
 
 #: src/CORE_weatherData.py:155
 msgid "Moderate"
-msgstr ""
+msgstr "Moderado"
 
 #: src/CORE_weatherData.py:156
 msgid "Poor"
-msgstr ""
+msgstr "Ruim"
 
 #: src/CORE_weatherData.py:157
 msgid "Unhealthy"
-msgstr ""
+msgstr "Insalubre"
 
 #: src/CORE_weatherData.py:158
 msgid "Severe"
-msgstr ""
+msgstr "Severo"
 
 #: src/CORE_weatherData.py:159
 msgid "Hazardous"
-msgstr ""
+msgstr "Perigoso"
 
 #: src/CORE_weatherData.py:163
 msgctxt "uvindex"
 msgid "Low"
-msgstr ""
+msgstr "Baixo"
 
 #: src/CORE_weatherData.py:164
 msgctxt "uvindex"
 msgid "Moderate"
-msgstr ""
+msgstr "Moderado"
 
 #: src/CORE_weatherData.py:165
 msgctxt "uvindex"
 msgid "High"
-msgstr ""
+msgstr "Alto"
 
 #: src/CORE_weatherData.py:166
 msgctxt "uvindex"
 msgid "Very High"
-msgstr ""
+msgstr "Muito alto"
 
 #: src/CORE_weatherData.py:167
 msgctxt "uvindex"
 msgid "Extreme"
-msgstr ""
+msgstr "Extremo"
 
 #: src/CORE_weatherData.py:171
 msgctxt "humidity"
 msgid "Low"
-msgstr ""
+msgstr "Baixa"
 
 #: src/CORE_weatherData.py:172
 msgctxt "humidity"
 msgid "Moderate"
-msgstr ""
+msgstr "Moderada"
 
 #: src/CORE_weatherData.py:173
 msgctxt "humidity"
 msgid "High"
-msgstr ""
+msgstr "Alta"
 
 #: src/CORE_weatherData.py:180
 msgctxt "pressure"
 msgid "Low"
-msgstr ""
+msgstr "Baixa"
 
 #: src/CORE_weatherData.py:181
 msgctxt "pressure"
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/CORE_weatherData.py:182
 msgctxt "pressure"
 msgid "High"
-msgstr ""
+msgstr "Alta"
 
 #: src/CORE_weatherData.py:186
 msgid "Calm"
-msgstr ""
+msgstr "Calmo"
 
 #: src/CORE_weatherData.py:187
 msgid "Light"
-msgstr ""
+msgstr "Leve"
 
 #: src/CORE_weatherData.py:188
 msgctxt "wind"
 msgid "Moderate"
-msgstr ""
+msgstr "Moderado"
 
 #: src/CORE_weatherData.py:189
 msgid "Strong"
-msgstr ""
+msgstr "Forte"
 
 #: src/CORE_weatherData.py:190
 msgctxt "wind"
 msgid "Extreme"
-msgstr ""
+msgstr "Extremo"
 
 #: src/CORE_weatherData.py:194
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: src/CORE_weatherData.py:196
 msgid "miles"
-msgstr ""
+msgstr "milhas"
 
 #: src/UI_CardAirPollution.py:93
 msgid "Air Pollution"
-msgstr ""
+msgstr "Poluição atmosférica"
 
 #: src/UI_CardAirPollution.py:105
 msgid "Air Quality Components"
-msgstr ""
+msgstr "Componentes da qualidade do ar"
 
 #: src/UI_CardAirPollution.py:153
 msgid "Air Quality Index"
-msgstr ""
+msgstr "Índice da qualidade do ar"
 
 #: src/UI_CardAirPollution.py:180
 msgid "PM2.5"
-msgstr ""
+msgstr "PM2.5"
 
 #: src/UI_CardAirPollution.py:181
 msgid "PM10"
-msgstr ""
+msgstr "PM10"
 
 #: src/UI_CardAirPollution.py:182
 msgid "CO"
-msgstr ""
+msgstr "CO"
 
 #: src/UI_CardAirPollution.py:183
 msgid "CO₂"
-msgstr ""
+msgstr "CO₂"
 
 #: src/UI_CardAirPollution.py:184
 msgid "NO₂"
-msgstr ""
+msgstr "NO₂"
 
 #: src/UI_CardAirPollution.py:185
 msgid "SO₂"
-msgstr ""
+msgstr "SO₂"
 
 #: src/UI_CardAirPollution.py:186
 msgid "O₃"
-msgstr ""
+msgstr "O₃"
 
 #: src/UI_CardAirPollution.py:187
 msgid "Dust"
-msgstr ""
+msgstr "Poeira"
 
 #: src/UI_CardAirPollution.py:188
 msgid "NH₃"
-msgstr ""
+msgstr "NH₃"
 
 #: src/UI_CardAirPollution.py:189
 msgid "CH₄"
-msgstr ""
+msgstr "CH₄"
 
 #: src/UI_CardAirPollution.py:190
 msgid "Alder Pollen"
-msgstr ""
+msgstr "Pólen de alnos"
 
 #: src/UI_CardAirPollution.py:191
 msgid "Birch Pollen"
-msgstr ""
+msgstr "Pólen de bétulas"
 
 #: src/UI_CardAirPollution.py:192
 msgid "Grass Pollen"
-msgstr ""
+msgstr "Polén de gramas"
 
 #: src/UI_CardAirPollution.py:193
 msgid "Mugwort Pollen"
-msgstr ""
+msgstr "Pólen de artemísias"
 
 #: src/UI_CardAirPollution.py:194
 msgid "Olive Pollen"
-msgstr ""
+msgstr "Pólen de oliveiras"
 
 #: src/UI_CardAirPollution.py:195
 msgid "Ragweed Pollen"
-msgstr ""
+msgstr "Pólen de ambrósias"
 
 #: src/UI_CardAirPollution.py:215
 #, python-brace-format
 msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
+msgstr "Limite seguro: ≤ {0} {1}"
 
 #: src/UI_CardAirPollution.py:243
 msgid ""
 "AQI: US EPA Standard\n"
 "Pollutant limits: WHO Guidelines (2021)"
 msgstr ""
+"AQI: Padrão da agência norte-americana EPA \n"
+"Limites de poluentes: Diretrizes da OMS (2021)"
 
 #: src/UI_CardDayNight.py:76
 msgid "Sunrise & Sunset"
-msgstr ""
+msgstr "Amanhecer e pôr-do-sol"
 
 #: src/UI_CardDayNight.py:87
 msgid "Sunrise"
-msgstr ""
+msgstr "Amanhecer"
 
 #: src/UI_CardDayNight.py:100
 msgid "Sunset"
-msgstr ""
+msgstr "Pôr-do-sol"
 
 #: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:287
 msgid "Wind"
-msgstr ""
+msgstr "Vento"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
-msgstr ""
+msgstr "Pressão"
 
 #: src/UI_CardSquare.py:32
 msgid "Humidity"
-msgstr ""
+msgstr "Humidade"
 
 #: src/UI_CardSquare.py:33
 msgid "UV Index"
-msgstr ""
+msgstr "Índice UV"
 
 #: src/UI_CardSquare.py:209 src/UI_CardSquare.py:217
 msgid "North"
-msgstr ""
+msgstr "Norte"
 
 #: src/UI_CardSquare.py:210
 msgid "Northeast"
-msgstr ""
+msgstr "Nordeste"
 
 #: src/UI_CardSquare.py:211
 msgid "East"
-msgstr ""
+msgstr "Leste"
 
 #: src/UI_CardSquare.py:212
 msgid "Southeast"
-msgstr ""
+msgstr "Sudeste"
 
 #: src/UI_CardSquare.py:213
 msgid "South"
-msgstr ""
+msgstr "Sul"
 
 #: src/UI_CardSquare.py:214
 msgid "Southwest"
-msgstr ""
+msgstr "Sudoeste"
 
 #: src/UI_CardSquare.py:215
 msgid "West"
-msgstr ""
+msgstr "Oeste"
 
 #: src/UI_CardSquare.py:216
 msgid "Northwest"
-msgstr ""
+msgstr "Noroeste"
 
 #: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
 msgid "No Internet"
-msgstr ""
+msgstr "Sem Internet"
 
 #: src/UI_CompactWeather.py:291
 msgid "Hum."
-msgstr ""
+msgstr "Hum."
 
 #: src/UI_CompactWeather.py:295
 msgid "Pres."
-msgstr ""
+msgstr "Pres."
 
 #: src/UI_CompactWeather.py:299
 msgid "AQI"
-msgstr ""
+msgstr "AQI"
 
 #: src/UI_CompactWeather.py:352
 msgid "Mousam Compact"
-msgstr ""
+msgstr "Mousam compacto"
 
 #: src/UI_CompDrawDayNight.py:154
 msgid "Day"
-msgstr ""
+msgstr "Dia"
 
 #: src/UI_CompDrawDayNight.py:154
 msgid "Night"
-msgstr ""
+msgstr "Noite"
 
 #: src/UI_CurrentCond.py:98
 #, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
-msgstr ""
+msgstr "Sensação térmica de • <b> {0} {1}</b>"
 
 #: src/UI_Forecast.py:140 src/UI_Forecast.py:319
 msgid "Tomorrow"
-msgstr ""
+msgstr "Amanhã"
 
 #: src/UI_Forecast.py:148
 msgid "Weekly"
-msgstr ""
+msgstr "Semanal"
 
 #: src/UI_Forecast.py:317
 msgid "Today"
-msgstr ""
+msgstr "Hoje"
 
 #: src/UI_HourlyDetails.py:151
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr ""
+msgstr "Máxima diária •"
 
 #: src/UI_HourlyDetails.py:157
 msgctxt "wind"
 msgid "Day High •"
-msgstr ""
+msgstr "Pico diário •"
 
 #: src/UI_HourlyDetails.py:168
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr ""
+msgstr "Pico diário •"
 
 #: src/UI_HourlyDetails.py:243
 msgid "Now"
-msgstr ""
+msgstr "Agora"
 
 #: src/UI_HourlyDetails.py:288
 msgid "No precipitation today !"
-msgstr ""
+msgstr "Sem precipitação para hoje!"
 
 #: src/UI_HourlyDetails.py:289
 msgid "No precipitation expected today!"
-msgstr ""
+msgstr "Sem precipitação prevista para hoje!"
 
 #: src/UI_HourlyDetails.py:290
 msgid "Anticipate a precipitation-free day !"
-msgstr ""
+msgstr "Conte com um dia livre de precipitação!"
 
 #: src/UI_HourlyDetails.py:291
 msgid "Enjoy a rain-free day today!"
-msgstr ""
+msgstr "Aproveite um dia livre de chuva!"
 
 #: src/UI_HourlyDetails.py:292
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr ""
+msgstr "Estado do guarda-chuva: em descanso. Sem precipitação à vista !"
 
 #: src/UI_HourlyDetails.py:293
 msgid "No rain in sight today!"
-msgstr ""
+msgstr "Sem chuva à vista para hoje!"
 
 #: src/mousam.py:83
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "Modo 'debug' ativado"
 
 #: src/mousam.py:84
 msgid "View Logs"
-msgstr ""
+msgstr "Ver registos"
 
 #: src/mousam.py:88
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "Modo 'debug' desativo"
 
 #: src/mousam.py:125
 msgid "Refresh weather"
-msgstr ""
+msgstr "Atualizar previsão"
 
 #: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr ""
+msgstr "Localizações"
 
 #: src/mousam.py:146
 msgid "Compact Mode"
-msgstr ""
+msgstr "Modo compacto"
 
 #: src/mousam.py:172 src/shortcutsDialog.ui:45
 msgid "Preferences"
-msgstr ""
+msgstr "Configurações"
 
 #: src/mousam.py:173 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Teclas de atalho"
 
 #: src/mousam.py:174
 msgid "About Mousam"
-msgstr ""
+msgstr "Sobre Mousam"
 
 #: src/mousam.py:175 src/shortcutsDialog.ui:57
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 #: src/mousam.py:279
 msgid "Direction"
-msgstr ""
+msgstr "Direçao"
 
 #: src/mousam.py:293
 msgid "Dewpoint"
-msgstr ""
+msgstr "Ponto de orvalho"
 
 #: src/mousam.py:345
 msgid "Please check your connection."
-msgstr ""
+msgstr "Por favor verifique a sua ligação."
 
 #: src/mousam.py:350
 msgid "Fetch Error"
-msgstr ""
+msgstr "Erro ao obter dados"
 
 #: src/mousam.py:364
 msgid "Getting Weather Data"
-msgstr ""
+msgstr "A obter dados metereológicos"
 
 #: src/mousam.py:371
 msgid "Welcome to Mousam"
-msgstr ""
+msgstr "Sobre Mousam"
 
 #: src/mousam.py:372
 msgid "Add a location to get started."
-msgstr ""
+msgstr "Adicione uma localização para começar."
 
 #: src/mousam.py:373
 msgid "Add Location"
-msgstr ""
+msgstr "Adicionar localização"
 
 #: src/mousam.py:387
 msgid "Retry"
-msgstr ""
+msgstr "Tentar novamente"
 
 #: src/windowAbout.py:18
 msgid "Copyright © 2024 Mousam Developers"
-msgstr ""
+msgstr "Copyright © 2024 Mousam Developers"
 
 #: src/windowAbout.py:22
 msgid "translator-credits"
-msgstr ""
+msgstr "créditos-tradução"
 
 #: src/windowLocations.py:54
 msgid "Add New Location"
-msgstr ""
+msgstr "Adicionar nova localização"
 
 #: src/windowLocations.py:70
 msgid "Search for a city"
-msgstr ""
+msgstr "Pesquisar uma cidade"
 
 #: src/windowLocations.py:84
 msgid "Search for your city..."
-msgstr ""
+msgstr "Pesquise a sua cidade..."
 
 #: src/windowLocations.py:106
 msgid "No cities found."
-msgstr ""
+msgstr "Nenhuma cidade encontrada."
 
 #: src/windowLocations.py:144
 msgid "Saved Locations"
-msgstr ""
+msgstr "Localizações guardadas"
 
 #: src/windowLocations.py:146
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #: src/windowLocations.py:201
 msgid "Location already exists"
-msgstr ""
+msgstr "Localização já adicionada"
 
 #: src/windowLocations.py:223
 msgid "Switched to {}"
-msgstr ""
+msgstr "Trocou para {}"
 
 #: src/windowPreferences.py:29
 msgid "Weather Preferences"
-msgstr ""
+msgstr "Configurações da previsão do tempo"
 
 #: src/windowPreferences.py:43
 msgid "Appearance"
-msgstr ""
+msgstr "Aparência"
 
 #: src/windowPreferences.py:57
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: src/windowPreferences.py:62
 msgid "Logging &amp; Debugging"
-msgstr ""
+msgstr "Registo &amp; 'Debugging'"
 
 #: src/windowPreferences.py:72
 msgid "Dynamic Background"
-msgstr ""
+msgstr "Fundo dinâmico"
 
 #: src/windowPreferences.py:74
 msgid "App background changes based on current weather conditions"
-msgstr ""
+msgstr "A mudança do fundo é baseada nas condições climatéricas atuais"
 
 #: src/windowPreferences.py:88
 msgid "Time Format"
-msgstr ""
+msgstr "Formato da hora"
 
 #: src/windowPreferences.py:89
 msgid "Weather time format"
-msgstr ""
+msgstr "Formato do horário da previsão do tempo"
 
 #: src/windowPreferences.py:99
 msgid "24 Hour"
-msgstr ""
+msgstr "24 Horas"
 
 #: src/windowPreferences.py:104
 msgid "AM / PM"
-msgstr ""
+msgstr "AM / PM"
 
 #: src/windowPreferences.py:120
 msgid "Auto Refresh"
-msgstr ""
+msgstr "Atualizar automaticamente"
 
 #: src/windowPreferences.py:121
 msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+msgstr "Atualizar automaticamente os dados meteorológicos num intervalo definido"
 
 #: src/windowPreferences.py:138
 msgid "Show Notifications"
-msgstr ""
+msgstr "Mostrar notificações"
 
 #: src/windowPreferences.py:139
 msgid "Show notification when weather is refreshed automatically"
-msgstr ""
+msgstr "Mostrar notificações quando a previsão do tempo é atualizada automaticamente"
 
 #: src/windowPreferences.py:154
 msgid "Units &amp; Measurements"
-msgstr ""
+msgstr "Unidades &amp; de Medida"
 
 #: src/windowPreferences.py:159
 msgid "System Unit"
-msgstr ""
+msgstr "Unidade do sistema"
 
 #: src/windowPreferences.py:160
 msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
+msgstr "Métrica (C, mm, km/h) ou Imperial (F, polegadas, mi/h) [é necessário reiniciar a aplicação]"
 
 #: src/windowPreferences.py:171
 msgid "Metric"
-msgstr ""
+msgstr "Métrica"
 
 #: src/windowPreferences.py:176
 msgid "Imperial"
-msgstr ""
+msgstr "Imperial"
 
 #: src/windowPreferences.py:194
 msgid "Precipitation in inches"
-msgstr ""
+msgstr "Precipitação em polegadas"
 
 #: src/windowPreferences.py:195
 msgid "This option works better in heavy precipitation"
-msgstr ""
+msgstr "Esta opção funciona melhor durante uma precipitação intensa (é necessário reiniciar a aplicação)"
 
 #: src/windowPreferences.py:209
 msgid "Data Management"
-msgstr ""
+msgstr "Gestão de dados"
 
 #: src/windowPreferences.py:214
 msgid "Reset to Default"
-msgstr ""
+msgstr "Repôr pré-definições"
 
 #: src/windowPreferences.py:215
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Remove todas as configurações e restaura os valores padrão"
 
 #: src/windowPreferences.py:218
 msgid "Reset…"
-msgstr ""
+msgstr "Repôr…"
 
 #: src/windowPreferences.py:227
 msgid "Debug Mode"
-msgstr ""
+msgstr "Modo 'debug'"
 
 #: src/windowPreferences.py:228
 msgid "Enable verbose logging and console output"
-msgstr ""
+msgstr "Ativa registo verboso e 'output' para o terminal"
 
 #: src/windowPreferences.py:241
 msgid "Open Logs Folder"
-msgstr ""
+msgstr "Abrir pasta de registos"
 
 #: src/windowPreferences.py:242
 msgid "Access the application log files"
-msgstr ""
+msgstr "Abrir os ficheiros de registo da aplicação"
 
 #: src/windowPreferences.py:255
 msgid "Clear Log File"
-msgstr ""
+msgstr "Limpar ficheiros de registo"
 
 #: src/windowPreferences.py:256
 msgid "Delete all contents of the current log file"
-msgstr ""
+msgstr "Remover todo o conteúdo do ficheiro de registo atual"
 
 #: src/windowPreferences.py:305
 msgid "Switched to - {}"
-msgstr ""
+msgstr "Trocou para - {}"
 
 #: src/windowPreferences.py:324
 msgid "Logs cleared"
-msgstr ""
+msgstr "Ficheiros de registo limpos"
 
 #: src/windowPreferences.py:326
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "Falha na limpeza dos ficheiros de registo"
 
 #: src/windowPreferences.py:337
 msgid "Auto refresh disabled"
-msgstr ""
+msgstr "Atualização automática desativada"
 
 #: src/windowPreferences.py:339
 msgid "Auto refresh every {} min"
-msgstr ""
+msgstr "Atualizar automaticamente a cada {} min"
 
 #: src/windowPreferences.py:346
 msgid "Reset Settings?"
-msgstr ""
+msgstr "Repôr configurações?"
 
 #: src/windowPreferences.py:348
 msgid ""
-"This will restore all settings to default and will clear your saved cities. "
-"This action cannot be undone."
+"This will restore all settings to default and will clear your saved cities. This action cannot be undone."
 msgstr ""
+"Isto irá repôr todas configurações para os valores padrão e remover as suas cidades guardadas.Esta ação é "
+"irreversível."
 
 #: src/windowPreferences.py:352
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: src/windowPreferences.py:353
 msgid "Reset"
-msgstr ""
+msgstr "Repôr"
 
 #: src/windowPreferences.py:388
 msgid "Preferences have been reset"
-msgstr ""
+msgstr "As configurações foram repostas"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
-msgstr ""
+msgstr "Atualizar estado do tempo"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
-msgstr ""
+msgstr "Navegação"
+
+#~ msgid "United States AQI standard"
+#~ msgstr "Padrão AQI dos Estados Unidos"
+
+#~ msgid "From"
+#~ msgstr "De"
+
+#~ msgid "N"
+#~ msgstr "N"
+
+#~ msgctxt "pressure card"
+#~ msgid "High"
+#~ msgstr "Alto"
+
+#~ msgctxt "pressure card"
+#~ msgid "Low"
+#~ msgstr "Baixo"
+
+#~ msgctxt "uvindex card"
+#~ msgid "High"
+#~ msgstr "Alto"
+
+#~ msgctxt "uvindex card"
+#~ msgid "Low"
+#~ msgstr "Baixo"
+
+#~ msgid "°C"
+#~ msgstr "°C"
+
+#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
+#~ msgstr "Sistema Métrico com unidades como Celsius, km/h e quilômetro"
+
+#~ msgid "°F"
+#~ msgstr "°F"
+
+#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
+#~ msgstr "Sistema Imperial com unidades como Fahrenheit, milhas por hora e milhas"
+
+#~ msgid "Switching locations within 2 seconds is ignored"
+#~ msgstr "Trocando localidades dentro de 2 segundos é ignorado"
+
+#~ msgid "Location"
+#~ msgstr "Localização"
+
+#~ msgid "Could not fetch data from API"
+#~ msgstr "Não foi possível pegar dados da API"
+
+#~ msgid "Refreshed Successfully"
+#~ msgstr "Recarregou com Sucesso"
+
+#~ msgid "Refresh within 5 seconds is ignored!"
+#~ msgstr "Recarregamento dentro de 5 segundos é ignorado!"
+
+#~ msgid "Refreshing..."
+#~ msgstr "Recarregando..."
+
+#~ msgid "Remove location"
+#~ msgstr "Remover localização"
+
+#~ msgid "Switch city within 2 seconds is ignored!"
+#~ msgstr "Trocar cidade dentro de 2 segundos é ignorado!"
+
+#~ msgid "Selected - {}"
+#~ msgstr "Selecionado - {}"
+
+#~ msgid "Search"
+#~ msgstr "Procurar"
+
+#, python-brace-format
+#~ msgid "Added - {0}"
+#~ msgstr "Adicionado - {0}"
+
+#, python-brace-format
+#~ msgid "Deleted - {0}"
+#~ msgstr "Apagado - {0}"
+
+#~ msgid "Press enter to search"
+#~ msgstr "Pressione Enter para procurar"
+
+#~ msgid "Overcast day"
+#~ msgstr "Coberto de nuvens"
+
+#~ msgid "Dark mode"
+#~ msgstr "Modo escuro"
+
+#~ msgid "Light mode"
+#~ msgstr "Modo claro"
+
+#~ msgid "Hourly"
+#~ msgstr "Por Hora"
+
+#~ msgid "Beautiful and lightweight weather app"
+#~ msgstr "Belo e leve aplicativo de clima"
+
+#~ msgid "Horizon"
+#~ msgstr "Horizonte"
+
+#~ msgid "Midnight"
+#~ msgstr "Meia Noite"
+
+#~ msgid "Beautiful and light weight weather app build using Gtk and Python"
+#~ msgstr "Belo e leve aplicativo de clima feito com Gtk e Python"
+
+#~ msgid "Launch Maximized"
+#~ msgstr "Abrir em tela cheia"

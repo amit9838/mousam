@@ -3,7 +3,62 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-      font-family:"JetBrains Mono";
-    }
+  html {
+    font-family: "Inter", "Ubuntu", sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Outfit", sans-serif;
+  }
+
+  body {
+    @apply bg-zinc-900 text-white selection:bg-sky-500/30 selection:text-sky-200;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+  border: 2px solid #000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Blueprint Utility Classes */
+@layer components {
+  .blueprint-grid {
+    @apply grid grid-cols-12 relative border-t border-white/10;
+  }
+
+  .blueprint-col-sidebar {
+    @apply col-span-1 md:col-span-1 border-r border-white/10 hidden md:flex items-center justify-center relative;
+  }
+
+  .blueprint-col-content {
+    @apply col-span-12 md:col-span-11 p-8 md:p-16 relative border-t border-white/5 md:border-t-0;
+  }
+
+  .blueprint-marker {
+    @apply absolute w-1.5 h-1.5 bg-sky-400 rounded-full z-20;
+    box-shadow: 0 0 10px 2px rgba(56, 189, 248, 0.5);
+  }
+}

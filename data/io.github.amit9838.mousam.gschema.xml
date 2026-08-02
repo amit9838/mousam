@@ -30,7 +30,7 @@
       <summary>Main window width</summary>
     </key>
 	  <key name="window-height" type="i">
-      <default>736</default>
+      <default>760</default>
       <summary>Main window height</summary>
     </key>
 	  <key name="window-maximized" type="b">

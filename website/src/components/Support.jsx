@@ -1,20 +1,29 @@
 export default function Support() {
   return (
-    <section className="md:px-6 px-2 pb-5 grid grid-cols-2 sm:grid-cols-12 my-auto bg-secondary h-contain text-white">
-      <div className="col-span-1 md:block hidden h-[5rem] border-b-[1px] border-r-[1px] border-slate-400"></div>
-      <div className="md:col-span-11 col-span-12  border-b-[1px] border-slate-400 flex items-end">
-        <h2 className="mx-2  my-2 text-2xl ">Support</h2>
+    <section id="support" className="blueprint-grid bg-neutral-950/50">
+      <div className="blueprint-col-sidebar min-h-[150px]">
+        <div className="blueprint-marker -top-[3px] -right-[3px]" />
       </div>
-      <div className="col-span-1 h-[15rem] border-r-[1px] border-slate-400 md:block hidden"></div>
-      <div className="col-span-11 p-4 font-['ubuntu']">
-        <p className="text-neutral-300">
-          I hope you ❤️ Mousam , if you think it is worth supporting you can do
-          so. Thanks!
-        </p>
+      
+      <div className="blueprint-col-content">
+        <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Support</h2>
+        <div className="max-w-2xl">
+          <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">
+            I hope you ❤️ Mousam. If you find the application useful and would like to support its continued development, you can do so here. Your support is greatly appreciated!
+          </p>
 
-        <a href="https://www.buymeacoffee.com/ami9838">
-          <img className="mt-4" src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ami9838&button_colour=FF5F5F&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" />
-        </a>
+          <a 
+            href="https://www.buymeacoffee.com/ami9838"
+            target="_blank"
+            className="inline-block transition-transform hover:scale-105 active:scale-95"
+          >
+            <img 
+              src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=ami9838&button_colour=FF5F5F&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" 
+              alt="Buy me a coffee"
+              className="h-12 shadow-lg rounded-xl"
+            />
+          </a>
+        </div>
       </div>
     </section>
   );
