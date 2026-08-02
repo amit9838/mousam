@@ -21,6 +21,11 @@
       <default>false</default>
       <summary>Use Inch for precipitation</summary>
     </key>
+	  <key name="use-inhg-for-pressure" type="b">
+	    <default>false</default>
+	    <summary>Show pressure in inches of mercury (inHg)</summary>
+	    <description>If enabled, pressure values will be displayed in inHg regardless of the global unit setting.</description>
+	  </key>
 	  <key name="use-24h-clock" type="b">
       <default>false</default>
       <summary>Use 24h hour clock</summary>

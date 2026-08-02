@@ -41,7 +41,7 @@ class Weather:
             response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
-            if settings.unit == "imperial":
+            if settings.unit == "imperial" or settings.is_using_inhg_for_pressure:
                 inHg = data['current']['surface_pressure'] * HPA_TO_INHG
                 data['current']['surface_pressure'] = inHg
                 data['current_units']['surface_pressure'] = 'inHg'
@@ -80,7 +80,7 @@ class Weather:
             response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
-            if settings.unit == "imperial":
+            if settings.unit == "imperial" or settings.is_using_inhg_for_pressure:
                 for i in range(len(data['hourly']['surface_pressure'])):
                     inHg = data['hourly']['surface_pressure'][i] * HPA_TO_INHG
                     data['hourly']['surface_pressure'][i] = inHg

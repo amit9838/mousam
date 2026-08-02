@@ -60,6 +60,14 @@ class Settings:
         self.settings.set_boolean("use-inch-for-prec", value)
 
     @property
+    def is_using_inhg_for_pressure(self):
+        return self.settings.get_boolean("use-inhg-for-pressure")
+
+    @is_using_inhg_for_pressure.setter
+    def is_using_inhg_for_pressure(self, value):
+        self.settings.set_boolean("use-inhg-for-pressure", value)
+
+    @property
     def is_using_24h_clock(self):
         return self.settings.get_boolean("use-24h-clock")
 
