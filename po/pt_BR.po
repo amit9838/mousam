@@ -648,12 +648,12 @@ msgstr "Máxima Diária •"
 #: src/UI_HourlyDetails.py:157
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Alta Diária •"
+msgstr "Pico Diário •"
 
 #: src/UI_HourlyDetails.py:168
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Alta Diária •"
+msgstr "Pico Diário •"
 
 #: src/UI_HourlyDetails.py:243
 msgid "Now"
