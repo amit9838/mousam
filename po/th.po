@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 18:09+0530\n"
+"POT-Creation-Date: 2026-08-05 12:03-0300\n"
 "PO-Revision-Date: 2025-01-14 13:06+0700\n"
 "Last-Translator: Atirut Wattanamongkol <atirut.wattanamongkol@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -19,18 +19,18 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 47.1\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:2
+#: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
 #, fuzzy
 msgid "Weather at a glance"
 msgstr "ภาพรวมสภาพอากาศ"
 
-#: data/io.github.amit9838.mousam.desktop.in:9
+#: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr "สภาพอากาศ;Mousam;ฝน;เมฆ;พยากรณ์;GTK4;Python;อุณหภูมิ;"
 
@@ -50,37 +50,54 @@ msgid ""
 msgstr "แสดงอุณหภูมิ ความชื้น ความเร็วลม ดัชนี UV ความกดอากาศ และอื่นๆ แบบเรียลไทม์"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid ""
-"Utilizes graphical representations, such as temperature , precipitation "
-"graphs and wind-speed with direction to provide an hourly forecast for the "
-"next 24 hours"
+msgid "Comprehensive Air Quality Index and air pollutants data"
 msgstr ""
-"ใช้การแสดงกราฟิก เช่น กราฟอุณหภูมิ ปริมาณน้ำฝน และความเร็วลมพร้อมทิศทาง "
-"เพื่อให้การพยากรณ์รายชั่วโมงสำหรับ 24 ชั่วโมงข้างหน้า"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-#, fuzzy
-msgid "Also provides tomorrow and 7-day forecasts"
-msgstr "นอกจากนี้ยังให้การคาดการณ์ล่วงหน้าในวันพรุ่งนี้และ 7 วันล่วงหน้า"
+msgid "Compact weather mode for a minimal, focused view"
+msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "See conditions in metric or imperial systems"
+#, fuzzy
+msgid "Hourly, tomorrow, and 7-day detailed forecasts"
+msgstr "นอกจากนี้ยังให้การคาดการณ์ล่วงหน้าในวันพรุ่งนี้และ 7 วันล่วงหน้า"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:16
+msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:17
+msgid "Hourly temperature, wind direction and precipitation tracking"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:18
+#, fuzzy
+msgid "Dynamic background styling that adapts to weather conditions"
+msgstr "การเปลี่ยนแปลงพื้นหลังแอปขึ้นอยู่กับสภาพอากาศในปัจจุบัน (ต้องเริ่มใหม่)"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:19
+msgid "System notifications for weather updates with configurable preferences"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:20
+#, fuzzy
+msgid "Support for both metric and imperial measurement systems"
 msgstr "ดูสภาพอากาศในระบบเมตริกหรืออิมพีเรียล"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:21
-msgid "Clear Sky - day"
-msgstr "ท้องฟ้าแจ่มใส - กลางวัน"
+#: data/io.github.amit9838.mousam.appdata.xml.in:26
+msgid "Main dashboard showing current weather and hourly forecast"
+msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:25
+#: data/io.github.amit9838.mousam.appdata.xml.in:30
 #, fuzzy
-msgid "Snowfall - day"
-msgstr "หิมะตก - กลางวัน"
+msgid "Detailed weather conditions during rain"
+msgstr "สภาพอากาศปัจจุบันและพยากรณ์อากาศ"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:29
-msgid "Clear Sky - night"
-msgstr "ท้องฟ้าแจ่มใส - กลางคืน"
+#: data/io.github.amit9838.mousam.appdata.xml.in:34
+msgid "Night mode view"
+msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:38
+#: data/io.github.amit9838.mousam.appdata.xml.in:43
 msgid "Amit Chaudhary"
 msgstr "Amit Chaudhary"
 
@@ -162,6 +179,16 @@ msgstr ""
 msgid "Enables detailed logging and console output."
 msgstr ""
 
+#: data/io.github.amit9838.mousam.gschema.xml:62
+msgid "Icon theme"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:63
+msgid ""
+"Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
+"material design icons)"
+msgstr ""
+
 #: src/configs.py:33
 msgid "Off"
 msgstr ""
@@ -190,118 +217,118 @@ msgstr ""
 msgid "Unknown City"
 msgstr ""
 
-#: src/CORE_Icons.py:134
+#: src/CORE_Icons.py:261
 msgid "Clear sky"
 msgstr "ท้องฟ้าแจ่มใส"
 
-#: src/CORE_Icons.py:135
+#: src/CORE_Icons.py:262
 msgid "Few Clouds"
 msgstr "มีเมฆน้อย"
 
-#: src/CORE_Icons.py:136
+#: src/CORE_Icons.py:263
 msgid "Partly Cloudy"
 msgstr "มีเมฆบางส่วน"
 
-#: src/CORE_Icons.py:137
+#: src/CORE_Icons.py:264
 msgid "Overcast"
 msgstr "มีเมฆมาก"
 
-#: src/CORE_Icons.py:138
+#: src/CORE_Icons.py:265
 #, fuzzy
 msgid "Fog"
 msgstr "หมอก"
 
-#: src/CORE_Icons.py:139
+#: src/CORE_Icons.py:266
 #, fuzzy
 msgid "Mist"
 msgstr "หมอก"
 
-#: src/CORE_Icons.py:140
+#: src/CORE_Icons.py:267
 msgid "Light Drizzle"
 msgstr "ฝนตกปรอยๆ"
 
-#: src/CORE_Icons.py:141
+#: src/CORE_Icons.py:268
 msgid "Moderate Drizzle"
 msgstr "ฝนตกปรอยๆ ปานกลาง"
 
-#: src/CORE_Icons.py:142
+#: src/CORE_Icons.py:269
 msgid "Heavy Intensity Drizzle"
 msgstr "ฝนตกปรอยๆ หนัก"
 
-#: src/CORE_Icons.py:143
+#: src/CORE_Icons.py:270
 #, fuzzy
 msgid "Light Freezing Drizzle"
 msgstr "ฝนปรอยเย็น"
 
-#: src/CORE_Icons.py:144
+#: src/CORE_Icons.py:271
 #, fuzzy
 msgid "Heavy Freezing Drizzle"
 msgstr "ฝนปรอยเย็นจัด"
 
-#: src/CORE_Icons.py:145
+#: src/CORE_Icons.py:272
 msgid "Light Rain"
 msgstr "ฝนตกเล็กน้อย"
 
-#: src/CORE_Icons.py:146
+#: src/CORE_Icons.py:273
 msgid "Moderate Rain"
 msgstr "ฝนตกปานกลาง"
 
-#: src/CORE_Icons.py:147
+#: src/CORE_Icons.py:274
 msgid "Heavy Rain"
 msgstr "ฝนตกหนัก"
 
-#: src/CORE_Icons.py:148
+#: src/CORE_Icons.py:275
 #, fuzzy
 msgid "Light Freezing Rain"
 msgstr "ฝนเยือกแข็งเล็กน้อย"
 
-#: src/CORE_Icons.py:149
+#: src/CORE_Icons.py:276
 #, fuzzy
 msgid "Heavy Freezing Rain"
 msgstr "ฝนเยือกแข็งหนัก"
 
-#: src/CORE_Icons.py:150
+#: src/CORE_Icons.py:277
 msgid "Light Snow Fall"
 msgstr "หิมะตกเล็กน้อย"
 
-#: src/CORE_Icons.py:151
+#: src/CORE_Icons.py:278
 msgid "Moderate Snow Fall"
 msgstr "หิมะตกปานกลาง"
 
-#: src/CORE_Icons.py:152
+#: src/CORE_Icons.py:279
 msgid "Heavy Snow Fall"
 msgstr "หิมะตกหนัก"
 
-#: src/CORE_Icons.py:153
+#: src/CORE_Icons.py:280
 #, fuzzy
 msgid "Snow grains"
 msgstr "เม็ดหิมะ"
 
-#: src/CORE_Icons.py:154
+#: src/CORE_Icons.py:281
 msgid "Light Rain Showers"
 msgstr "ฝนตกปรอยๆ"
 
-#: src/CORE_Icons.py:155
+#: src/CORE_Icons.py:282
 msgid "Moderate Rain Showers"
 msgstr "ฝนตกปานกลาง"
 
-#: src/CORE_Icons.py:156
+#: src/CORE_Icons.py:283
 msgid "Heavy Rain Showers"
 msgstr "ฝนตกหนัก"
 
-#: src/CORE_Icons.py:157
+#: src/CORE_Icons.py:284
 msgid "Light Snow Showers"
 msgstr "หิมะตกปรอยๆ"
 
-#: src/CORE_Icons.py:158
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Showers "
 msgstr "หิมะตกหนัก"
 
-#: src/CORE_Icons.py:159
+#: src/CORE_Icons.py:286
 msgid "Thunderstorm"
 msgstr "พายุฝนฟ้าคะนอง"
 
-#: src/CORE_Icons.py:160
+#: src/CORE_Icons.py:287
 msgid "Thunderstorm with Hail"
 msgstr "พายุฝนฟ้าคะนองพร้อมลูกเห็บ"
 
@@ -515,9 +542,20 @@ msgstr "พระอาทิตย์ขึ้น"
 msgid "Sunset"
 msgstr "พระอาทิตย์ตก"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:287
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
+#: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr "ลม"
+
+#: src/UI_HourlyDetails.py:51
+#, fuzzy
+msgid "Hourly"
+msgstr "24 ชั่วโมง"
+
+#: src/UI_HourlyDetails.py:53
+#, fuzzy
+msgid "Precipitation"
+msgstr "หน่วยปริมาณน้ำฝนเป็นนิ้ว"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
@@ -531,35 +569,35 @@ msgstr "ความชื่น"
 msgid "UV Index"
 msgstr "ดัชนี UV"
 
-#: src/UI_CardSquare.py:209 src/UI_CardSquare.py:217
+#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
 msgid "North"
 msgstr "ทิศเหนือ"
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:209
 msgid "Northeast"
 msgstr "ทิศตะวันออกเฉียงเหนือ"
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:210
 msgid "East"
 msgstr "ทิศตะวันออก"
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:211
 msgid "Southeast"
 msgstr "ทิศตะวันออกเฉียงใต้"
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:212
 msgid "South"
 msgstr "ทิศใต้"
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:213
 msgid "Southwest"
 msgstr "ทิศตะวันตกเฉียงใต้"
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:214
 msgid "West"
 msgstr "ทิศตะวันตก"
 
-#: src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:215
 msgid "Northwest"
 msgstr "ทิศตะวันตกเฉียงเหนือ"
 
@@ -567,20 +605,20 @@ msgstr "ทิศตะวันตกเฉียงเหนือ"
 msgid "No Internet"
 msgstr "ไม่มีอินเทอร์เน็ต"
 
-#: src/UI_CompactWeather.py:291
+#: src/UI_CompactWeather.py:289
 msgid "Hum."
 msgstr ""
 
-#: src/UI_CompactWeather.py:295
+#: src/UI_CompactWeather.py:293
 #, fuzzy
 msgid "Pres."
 msgstr "ความกดอากาศ"
 
-#: src/UI_CompactWeather.py:299
+#: src/UI_CompactWeather.py:297
 msgid "AQI"
 msgstr ""
 
-#: src/UI_CompactWeather.py:352
+#: src/UI_CompactWeather.py:350
 #, fuzzy
 msgid "Mousam Compact"
 msgstr "Mousam"
@@ -593,20 +631,20 @@ msgstr ""
 msgid "Night"
 msgstr "กลางคืน"
 
-#: src/UI_CurrentCond.py:98
+#: src/UI_CurrentCond.py:96
 #, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "รู้สึกเหมือน • <b> {0} {1}</b>"
 
-#: src/UI_Forecast.py:140 src/UI_Forecast.py:319
+#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
 msgid "Tomorrow"
 msgstr "พรุ่งนี้"
 
-#: src/UI_Forecast.py:148
+#: src/UI_Forecast.py:147
 msgid "Weekly"
 msgstr "รายสัปดาห์"
 
-#: src/UI_Forecast.py:317
+#: src/UI_Forecast.py:316
 msgid "Today"
 msgstr "วันนี้"
 
@@ -629,27 +667,27 @@ msgstr "สูงสุดของวัน •"
 msgid "Now"
 msgstr "ตอนนี้"
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:285
 msgid "No precipitation today !"
 msgstr "วันนี้ไม่มีฝนตก!"
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:286
 msgid "No precipitation expected today!"
 msgstr "วันนี้คาดว่าไม่มีฝน!"
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:287
 msgid "Anticipate a precipitation-free day !"
 msgstr "คาดว่าจะเป็นวันไม่มีฝนตก!"
 
-#: src/UI_HourlyDetails.py:291
+#: src/UI_HourlyDetails.py:288
 msgid "Enjoy a rain-free day today!"
 msgstr "เพลิดเพลินกับวันที่ไม่มีฝน!"
 
-#: src/UI_HourlyDetails.py:292
+#: src/UI_HourlyDetails.py:289
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "สถานะร่ม: กำลังพักพักผ่อน ไม่มีฝนให้เห็น!"
 
-#: src/UI_HourlyDetails.py:293
+#: src/UI_HourlyDetails.py:290
 msgid "No rain in sight today!"
 msgstr "วันนี้ไม่เห็นฝนเลย!"
 
@@ -731,11 +769,11 @@ msgstr "เพิ่มตำแหน่งที่ตั้งใหม่"
 msgid "Retry"
 msgstr ""
 
-#: src/windowAbout.py:18
+#: src/windowAbout.py:20
 msgid "Copyright © 2024 Mousam Developers"
 msgstr ""
 
-#: src/windowAbout.py:22
+#: src/windowAbout.py:24
 #, fuzzy
 msgid "translator-credits"
 msgstr "Atirut Wattanamongkol <atirut.wattanamongkol@gmail.com>"
@@ -776,174 +814,194 @@ msgstr "เพิ่มตำแหน่งที่ตั้งนี้ไป
 msgid "Switched to {}"
 msgstr "เปลี่ยนเป็น {} แล้ว"
 
-#: src/windowPreferences.py:29
+#: src/windowPreferences.py:30
 #, fuzzy
 msgid "Weather Preferences"
 msgstr "ปรับแต่ง"
 
-#: src/windowPreferences.py:43
+#: src/windowPreferences.py:44
 msgid "Appearance"
 msgstr "ลักษณะ"
 
-#: src/windowPreferences.py:57
+#: src/windowPreferences.py:59
 msgid "Advanced"
 msgstr ""
 
-#: src/windowPreferences.py:62
+#: src/windowPreferences.py:64
 msgid "Logging &amp; Debugging"
 msgstr ""
 
-#: src/windowPreferences.py:72
+#: src/windowPreferences.py:74
+msgid "Icon Theme"
+msgstr ""
+
+#: src/windowPreferences.py:75
+msgid "Choose between Default and Material design weather icons"
+msgstr ""
+
+#: src/windowPreferences.py:85
+msgid "Default"
+msgstr ""
+
+#: src/windowPreferences.py:90
+msgid "Material"
+msgstr ""
+
+#: src/windowPreferences.py:105
 msgid "Dynamic Background"
 msgstr "พื้นหลังแบบไดนามิก"
 
-#: src/windowPreferences.py:74
+#: src/windowPreferences.py:107
 #, fuzzy
 msgid "App background changes based on current weather conditions"
 msgstr "การเปลี่ยนแปลงพื้นหลังแอปขึ้นอยู่กับสภาพอากาศในปัจจุบัน (ต้องเริ่มใหม่)"
 
-#: src/windowPreferences.py:88
+#: src/windowPreferences.py:121
 msgid "Time Format"
 msgstr "รูปแบบเวลา"
 
-#: src/windowPreferences.py:89
+#: src/windowPreferences.py:122
 #, fuzzy
 msgid "Weather time format"
 msgstr "รูปแบบเวลาของสภาพอากาศ (จำเป็นต้องรีเฟรช)"
 
-#: src/windowPreferences.py:99
+#: src/windowPreferences.py:132
 msgid "24 Hour"
 msgstr "24 ชั่วโมง"
 
-#: src/windowPreferences.py:104
+#: src/windowPreferences.py:137
 msgid "AM / PM"
 msgstr "AM / PM"
 
-#: src/windowPreferences.py:120
+#: src/windowPreferences.py:153
 msgid "Auto Refresh"
 msgstr ""
 
-#: src/windowPreferences.py:121
+#: src/windowPreferences.py:154
 msgid "Automatically refresh weather data at a set interval"
 msgstr ""
 
-#: src/windowPreferences.py:138
+#: src/windowPreferences.py:171
 #, fuzzy
 msgid "Show Notifications"
 msgstr "ตำแหน่งที่ตั้ง"
 
-#: src/windowPreferences.py:139
+#: src/windowPreferences.py:172
 msgid "Show notification when weather is refreshed automatically"
 msgstr ""
 
-#: src/windowPreferences.py:154
+#: src/windowPreferences.py:187
 msgid "Units &amp; Measurements"
 msgstr "หน่วยและการวัด"
 
-#: src/windowPreferences.py:159
+#: src/windowPreferences.py:192
 msgid "System Unit"
 msgstr ""
 
-#: src/windowPreferences.py:160
+#: src/windowPreferences.py:193
 msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
 msgstr ""
 
-#: src/windowPreferences.py:171
+#: src/windowPreferences.py:204
 msgid "Metric"
 msgstr ""
 
-#: src/windowPreferences.py:176
+#: src/windowPreferences.py:209
 msgid "Imperial"
 msgstr ""
 
-#: src/windowPreferences.py:194
+#: src/windowPreferences.py:227
 msgid "Precipitation in inches"
 msgstr "หน่วยปริมาณน้ำฝนเป็นนิ้ว"
 
-#: src/windowPreferences.py:195
+#: src/windowPreferences.py:228
 #, fuzzy
 msgid "This option works better in heavy precipitation"
 msgstr "ตัวเลือกนี้จะทำงานได้ดีขึ้นในกรณีที่มีฝนตกหนัก (ต้องรีเฟรช)"
 
-#: src/windowPreferences.py:209
+#: src/windowPreferences.py:242
 msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:214
+#: src/windowPreferences.py:247
 msgid "Reset to Default"
 msgstr ""
 
-#: src/windowPreferences.py:215
+#: src/windowPreferences.py:248
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/windowPreferences.py:218
+#: src/windowPreferences.py:251
 msgid "Reset…"
 msgstr ""
 
-#: src/windowPreferences.py:227
+#: src/windowPreferences.py:260
 msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:228
+#: src/windowPreferences.py:261
 msgid "Enable verbose logging and console output"
 msgstr ""
 
-#: src/windowPreferences.py:241
+#: src/windowPreferences.py:274
 msgid "Open Logs Folder"
 msgstr ""
 
-#: src/windowPreferences.py:242
+#: src/windowPreferences.py:275
 msgid "Access the application log files"
 msgstr ""
 
-#: src/windowPreferences.py:255
+#: src/windowPreferences.py:288
 msgid "Clear Log File"
 msgstr ""
 
-#: src/windowPreferences.py:256
+#: src/windowPreferences.py:289
 msgid "Delete all contents of the current log file"
 msgstr ""
 
-#: src/windowPreferences.py:305
+#: src/windowPreferences.py:340
+msgid "Icon theme changed to {}"
+msgstr ""
+
+#: src/windowPreferences.py:349
 msgid "Switched to - {}"
 msgstr ""
 
-#: src/windowPreferences.py:324
+#: src/windowPreferences.py:368
 msgid "Logs cleared"
 msgstr ""
 
-#: src/windowPreferences.py:326
+#: src/windowPreferences.py:370
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/windowPreferences.py:337
+#: src/windowPreferences.py:381
 msgid "Auto refresh disabled"
 msgstr ""
 
-#: src/windowPreferences.py:339
+#: src/windowPreferences.py:383
 msgid "Auto refresh every {} min"
 msgstr ""
 
-#: src/windowPreferences.py:346
+#: src/windowPreferences.py:390
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:348
+#: src/windowPreferences.py:392
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:352
+#: src/windowPreferences.py:396
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:353
+#: src/windowPreferences.py:397
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:388
+#: src/windowPreferences.py:438
 msgid "Preferences have been reset"
 msgstr ""
 
@@ -959,6 +1017,24 @@ msgstr "รีเฟรชสภาพอากาศ"
 #, fuzzy
 msgid "Navigation"
 msgstr "การนำทาง"
+
+#~ msgid ""
+#~ "Utilizes graphical representations, such as temperature , precipitation "
+#~ "graphs and wind-speed with direction to provide an hourly forecast for "
+#~ "the next 24 hours"
+#~ msgstr ""
+#~ "ใช้การแสดงกราฟิก เช่น กราฟอุณหภูมิ ปริมาณน้ำฝน และความเร็วลมพร้อมทิศทาง "
+#~ "เพื่อให้การพยากรณ์รายชั่วโมงสำหรับ 24 ชั่วโมงข้างหน้า"
+
+#~ msgid "Clear Sky - day"
+#~ msgstr "ท้องฟ้าแจ่มใส - กลางวัน"
+
+#, fuzzy
+#~ msgid "Snowfall - day"
+#~ msgstr "หิมะตก - กลางวัน"
+
+#~ msgid "Clear Sky - night"
+#~ msgstr "ท้องฟ้าแจ่มใส - กลางคืน"
 
 #~ msgid "United States AQI standard"
 #~ msgstr "มาตรฐาน AQI ของสหรัฐอเมริกา"
