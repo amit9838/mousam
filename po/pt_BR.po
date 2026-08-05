@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-05 12:03-0300\n"
-"PO-Revision-Date: 2026-07-29 13:21-0300\n"
+"PO-Revision-Date: 2026-08-05 12:13-0300\n"
 "Last-Translator: Nelson K. Hennemann Filho <nelsonhf@outlook.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -49,52 +49,50 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid "Comprehensive Air Quality Index and air pollutants data"
-msgstr ""
+msgstr "Índice de Qualidade do Ar e dados de poluentes do ar detalhados"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgstr "Modo de clima compacto para uma visualização focada e minimalista"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
 msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Também fornece previsões para amanhã e 7 dias"
+msgstr "A cada hora, amanhã, e previsão detalhada para 7 dias"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
 msgid "Visual graphs for sun and moon positions and day/night cycles"
-msgstr ""
+msgstr "Gráficos visuais para posições do sol e lua e ciclos dia/noite"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
 msgid "Hourly temperature, wind direction and precipitation tracking"
 msgstr ""
+"Temperatura a cada hora, direção do vento e monitoramento de precipitação"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
 msgid "Dynamic background styling that adapts to weather conditions"
-msgstr "Mudança de fundo é baseada na condição climática atual"
+msgstr "Estilo dinâmico de fundo que se adapta as condições climáticas"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
 msgid "System notifications for weather updates with configurable preferences"
 msgstr ""
+"Notificações do sistema para atualizações de clima com preferências "
+"configuráveis"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
 msgid "Support for both metric and imperial measurement systems"
-msgstr "Ver previsões em sistema métrico ou imperial"
+msgstr "Suporte para ambos sistemas de medidas métrico e imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:26
 msgid "Main dashboard showing current weather and hourly forecast"
-msgstr ""
+msgstr "Painel principal mostrando o clima atual e previsão a cada hora"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
 msgid "Detailed weather conditions during rain"
-msgstr "Condições de Clima atual e previsões."
+msgstr "Condições de clima detalhadas durante chuva"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:34
-#, fuzzy
 msgid "Night mode view"
-msgstr "Modo claro"
+msgstr "Vista de modo noturno"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:43
 msgid "Amit Chaudhary"
@@ -185,13 +183,15 @@ msgstr "Habilita log detalhado e saída do console."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
 msgid "Icon theme"
-msgstr ""
+msgstr "Tema de ícones"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Conjunto de ícones de clima: \"padrão\" (ícones padrão do mousam) ou "
+"\"material\" (ícones material design do Google)"
 
 #: src/configs.py:33
 msgid "Off"
@@ -539,19 +539,17 @@ msgstr "Amanhecer"
 msgid "Sunset"
 msgstr "Pôr do Sol"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
-#: src/UI_HourlyDetails.py:52
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285 src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr "Vento"
 
 #: src/UI_HourlyDetails.py:51
 msgid "Hourly"
-msgstr "Por Hora"
+msgstr "24 Horas"
 
-#: src/UI_HourlyDetails.py:53
-#, fuzzy
+#:  src/UI_HourlyDetails.py:53
 msgid "Precipitation"
-msgstr "Precipitação em polegadas"
+msgstr "Precipitação"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
@@ -820,21 +818,19 @@ msgstr "Log &amp; Depuração"
 
 #: src/windowPreferences.py:74
 msgid "Icon Theme"
-msgstr ""
+msgstr "Tema de Ícones"
 
 #: src/windowPreferences.py:75
 msgid "Choose between Default and Material design weather icons"
-msgstr ""
+msgstr "Escolha entre ícones de clima Padrão e Material design"
 
 #: src/windowPreferences.py:85
-#, fuzzy
 msgid "Default"
-msgstr "Recarregar os Padrões"
+msgstr "Padrão"
 
 #: src/windowPreferences.py:90
-#, fuzzy
 msgid "Material"
-msgstr "Imperial"
+msgstr "Material"
 
 #: src/windowPreferences.py:105
 msgid "Dynamic Background"
@@ -947,7 +943,7 @@ msgstr "Apaga todo o conteúdo do arquivo de log atual"
 
 #: src/windowPreferences.py:340
 msgid "Icon theme changed to {}"
-msgstr ""
+msgstr "Tema de ícones alterado para {}"
 
 #: src/windowPreferences.py:349
 msgid "Switched to - {}"
