@@ -34,7 +34,7 @@ msgstr ""
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 #, fuzzy
 msgid "Current Weather conditions and forecasts."
-msgstr "Condiciones actuales y prevision del Clima"
+msgstr "Condiciones actuales y previsión del Clima"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -45,8 +45,8 @@ msgid ""
 "Displays real-time temperature, humidity, wind speed, UV index, pressure and "
 "more"
 msgstr ""
-"Muestra la tempteratura, humedad, velocidad del viento, indice UV, presion y "
-"mas en tiempo real"
+"Muestra la temperatura, humedad, velocidad del viento, índice UV, presión y "
+"más en tiempo real"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid ""
@@ -55,17 +55,17 @@ msgid ""
 "next 24 hours"
 msgstr ""
 "Utiliza representaciones graficas, tales como temperatura, precipitacion "
-"graficos y velocidad del viento con direccion para proveer un prevision hora "
+"gráficos y velocidad del viento con dirección para proveer un previsión hora "
 "a hora de las siguiente 24 horas"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 #, fuzzy
 msgid "Also provides tomorrow and 7-day forecasts"
-msgstr "Tambien provee la prevision de mañana y de los 7 dias siguientes"
+msgstr "Tambien provee la previsión de mañana y de los 7 días siguientes"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
 msgid "See conditions in metric or imperial systems"
-msgstr "Muestra las condiciones en sistema metrico o imperial"
+msgstr "Muestra las condiciones en sistema métrico o imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 #, fuzzy
@@ -146,11 +146,11 @@ msgstr ""
 #: data/io.github.amit9838.mousam.gschema.xml:47
 #, fuzzy
 msgid "Measurement system to use - metric,imperial"
-msgstr "Sistemas de medicion a usar - metrico,imperial"
+msgstr "Sistemas de medición a usar - métrico,imperial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "metrico(km, °C), imperial(milla, °F)"
+msgstr "métrico(km, °C), imperial(milla, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
@@ -528,7 +528,7 @@ msgstr "Humedad"
 
 #: src/UI_CardSquare.py:33
 msgid "UV Index"
-msgstr "Indice UV"
+msgstr "Índice UV"
 
 #: src/UI_CardSquare.py:209 src/UI_CardSquare.py:217
 msgid "North"
@@ -573,7 +573,7 @@ msgstr ""
 #: src/UI_CompactWeather.py:295
 #, fuzzy
 msgid "Pres."
-msgstr "Presion"
+msgstr "Presión"
 
 #: src/UI_CompactWeather.py:299
 msgid "AQI"
@@ -612,7 +612,7 @@ msgstr "Hoy"
 #, fuzzy
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Maxima de hoy"
+msgstr "Máxima de hoy"
 
 #: src/UI_HourlyDetails.py:157
 #, fuzzy
@@ -624,7 +624,7 @@ msgstr "Vientos"
 #, fuzzy
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Precipitacion Maxima"
+msgstr "Precipitacion Máxima"
 
 #: src/UI_HourlyDetails.py:243
 msgid "Now"
@@ -640,11 +640,11 @@ msgstr "No hay precipitaciones para hoy!"
 
 #: src/UI_HourlyDetails.py:290
 msgid "Anticipate a precipitation-free day !"
-msgstr "Anticipate un dia sin precipitaciones !"
+msgstr "Anticipate un día sin precipitaciones !"
 
 #: src/UI_HourlyDetails.py:291
 msgid "Enjoy a rain-free day today!"
-msgstr "Disfruta un dia sin lluvias!"
+msgstr "Disfruta un día sin lluvias!"
 
 #: src/UI_HourlyDetails.py:292
 msgid "Umbrella status: resting. No precipitation in sight !"
@@ -698,11 +698,11 @@ msgstr "Salir"
 #: src/mousam.py:279
 #, fuzzy
 msgid "Direction"
-msgstr "Precipitacion"
+msgstr "Precipitación"
 
 #: src/mousam.py:293
 msgid "Dewpoint"
-msgstr "Punto de Rocio"
+msgstr "Punto de Rocío"
 
 #: src/mousam.py:345
 msgid "Please check your connection."
@@ -729,7 +729,7 @@ msgstr "Añade mas ubicaciones para elimarla!"
 #: src/mousam.py:373
 #, fuzzy
 msgid "Add Location"
-msgstr "Añadir Nueva Ubicacion"
+msgstr "Añadir Nueva Ubicación"
 
 #: src/mousam.py:387
 msgid "Retry"
@@ -746,7 +746,7 @@ msgstr "creditos_traduccion"
 
 #: src/windowLocations.py:54
 msgid "Add New Location"
-msgstr "Añadir Nueva Ubicacion"
+msgstr "Añadir Nueva Ubicación"
 
 #: src/windowLocations.py:70
 msgid "Search for a city"
@@ -774,7 +774,7 @@ msgstr "Añadir"
 #: src/windowLocations.py:201
 #, fuzzy
 msgid "Location already exists"
-msgstr "Ubicacion ya agregada!"
+msgstr "Ubicación ya agregada!"
 
 #: src/windowLocations.py:223
 msgid "Switched to {}"
@@ -871,7 +871,7 @@ msgstr "Mostrar precipitacion en pulgadas"
 #, fuzzy
 msgid "This option works better in heavy precipitation"
 msgstr ""
-"Esta opcion funciona mejor con precipitacion fuerte (Reinicio requerido)"
+"Esta opción funciona mejor con precipitacion fuerte (Reinicio requerido)"
 
 #: src/windowPreferences.py:209
 msgid "Data Management"
@@ -994,7 +994,7 @@ msgstr "Navegacion"
 
 #, fuzzy
 #~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "Sistema METRICO con unidades celsius, km/h, kilometros"
+#~ msgstr "Sistema MÉTRICO con unidades celsius, km/h, kilómetros"
 
 #, fuzzy
 #~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
@@ -1005,7 +1005,7 @@ msgstr "Navegacion"
 #~ msgstr "Cambiar durante 2 segundos es ignorado!"
 
 #~ msgid "Location"
-#~ msgstr "Ubicacion"
+#~ msgstr "Ubicación"
 
 #~ msgid "Could not fetch data from API"
 #~ msgstr "No se pudo obtener los datos de la API"
@@ -1020,7 +1020,7 @@ msgstr "Navegacion"
 #~ msgstr "Actualizando..."
 
 #~ msgid "Remove location"
-#~ msgstr "Eliminar Ubicacion"
+#~ msgstr "Eliminar Ubicación"
 
 #~ msgid "Switch city within 2 seconds is ignored!"
 #~ msgstr "Cambiar ciudad dentro de 2 segundos es ignorado!"
