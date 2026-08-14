@@ -70,7 +70,7 @@ msgstr "Muestra las condiciones en sistema métrico o imperial"
 #: data/io.github.amit9838.mousam.appdata.xml.in:21
 #, fuzzy
 msgid "Clear Sky - day"
-msgstr "Cielo despejado - imperial"
+msgstr "Cielo despejado - día"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:25
 msgid "Snowfall - day"
@@ -79,7 +79,7 @@ msgstr ""
 #: data/io.github.amit9838.mousam.appdata.xml.in:29
 #, fuzzy
 msgid "Clear Sky - night"
-msgstr "Cielo despejado - imperial"
+msgstr "Cielo despejado - noche"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:38
 msgid "Amit Chaudhary"
