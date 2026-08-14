@@ -415,7 +415,7 @@ msgstr "millas"
 
 #: src/UI_CardAirPollution.py:93
 msgid "Air Pollution"
-msgstr "Polucion del Aire"
+msgstr "Contaminación del Aire"
 
 #: src/UI_CardAirPollution.py:105
 msgid "Air Quality Components"
@@ -468,12 +468,12 @@ msgstr ""
 #: src/UI_CardAirPollution.py:190
 #, fuzzy
 msgid "Alder Pollen"
-msgstr "Polucion del Aire"
+msgstr "Contaminación del Aire"
 
 #: src/UI_CardAirPollution.py:191
 #, fuzzy
 msgid "Birch Pollen"
-msgstr "Polucion del Aire"
+msgstr "Contaminación del Aire"
 
 #: src/UI_CardAirPollution.py:192
 msgid "Grass Pollen"
@@ -520,7 +520,7 @@ msgstr "Viento"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
-msgstr "Presion"
+msgstr "Presión"
 
 #: src/UI_CardSquare.py:32
 msgid "Humidity"
@@ -698,7 +698,7 @@ msgstr "Salir"
 #: src/mousam.py:279
 #, fuzzy
 msgid "Direction"
-msgstr "Precipitación"
+msgstr "Dirección"
 
 #: src/mousam.py:293
 msgid "Dewpoint"
@@ -791,7 +791,7 @@ msgstr "Apariencia"
 
 #: src/windowPreferences.py:57
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: src/windowPreferences.py:62
 msgid "Logging &amp; Debugging"
@@ -847,19 +847,19 @@ msgstr "Unidades &amp; Medidas"
 
 #: src/windowPreferences.py:159
 msgid "System Unit"
-msgstr ""
+msgstr "Sistema Métrico"
 
 #: src/windowPreferences.py:160
 msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
+msgstr "Métrico (C, mm, km/h) o Imperial (F, pulgadas, mpg) [requiere reiniciar]"
 
 #: src/windowPreferences.py:171
 msgid "Metric"
-msgstr ""
+msgstr "Métrico"
 
 #: src/windowPreferences.py:176
 msgid "Imperial"
-msgstr ""
+msgstr "Imperial"
 
 #: src/windowPreferences.py:194
 #, fuzzy
@@ -869,8 +869,7 @@ msgstr "Mostrar precipitación en pulgadas"
 #: src/windowPreferences.py:195
 #, fuzzy
 msgid "This option works better in heavy precipitation"
-msgstr ""
-"Esta opción funciona mejor con precipitación fuerte (Reinicio requerido)"
+msgstr "Esta opción funciona mejor con precipitación fuerte (Reinicio requerido)"
 
 #: src/windowPreferences.py:209
 msgid "Data Management"
@@ -878,27 +877,27 @@ msgstr ""
 
 #: src/windowPreferences.py:214
 msgid "Reset to Default"
-msgstr ""
+msgstr "Restaurar valores por defecto"
 
 #: src/windowPreferences.py:215
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Borra todos los ajustes y restaura los valores por defecto"
 
 #: src/windowPreferences.py:218
 msgid "Reset…"
-msgstr ""
+msgstr "Restaurar…"
 
 #: src/windowPreferences.py:227
 msgid "Debug Mode"
-msgstr ""
+msgstr "Modo de depuración"
 
 #: src/windowPreferences.py:228
 msgid "Enable verbose logging and console output"
-msgstr ""
+msgstr "Habilita el registro detallado y la salida por consola"
 
 #: src/windowPreferences.py:241
 msgid "Open Logs Folder"
-msgstr ""
+msgstr "Abrir carpeta de registros"
 
 #: src/windowPreferences.py:242
 msgid "Access the application log files"
@@ -906,11 +905,11 @@ msgstr ""
 
 #: src/windowPreferences.py:255
 msgid "Clear Log File"
-msgstr ""
+msgstr "Limpiar archivo de registros"
 
 #: src/windowPreferences.py:256
 msgid "Delete all contents of the current log file"
-msgstr ""
+msgstr "Borra todos los contenidos del archivo de registros"
 
 #: src/windowPreferences.py:305
 msgid "Switched to - {}"
@@ -1042,7 +1041,7 @@ msgstr "Navegacion"
 #~ msgstr "Presiona enter para buscar"
 
 #~ msgid "Overcast day"
-#~ msgstr "Dia nublado"
+#~ msgstr "Día nublado"
 
 #~ msgid "Dark mode"
 #~ msgstr "Modo oscuro"
