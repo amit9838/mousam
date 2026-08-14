@@ -25,7 +25,7 @@ msgstr ""
 #: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
 msgid "Weather at a glance"
-msgstr "Un vistazo del clima"
+msgstr "Un vistazo del Tiempo"
 
 #: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
@@ -34,7 +34,7 @@ msgstr ""
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 #, fuzzy
 msgid "Current Weather conditions and forecasts."
-msgstr "Condiciones actuales y previsión del Clima"
+msgstr "Condiciones actuales y previsión del Tiempo"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -113,7 +113,7 @@ msgid ""
 "Apply gradient background on main window corresponding to weather condition"
 msgstr ""
 "Aplicar fondo gradiente en la ventana principal correspondiente a las "
-"condiciones del clima"
+"condiciones del tiempo"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
@@ -669,7 +669,7 @@ msgstr ""
 #: src/mousam.py:125
 #, fuzzy
 msgid "Refresh weather"
-msgstr "Actualizar Clima"
+msgstr "Actualizar Tiempo"
 
 #: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
 msgid "Locations"
@@ -714,7 +714,7 @@ msgstr ""
 
 #: src/mousam.py:364
 msgid "Getting Weather Data"
-msgstr "Obteniendo Datos del Clima"
+msgstr "Obteniendo Datos del Tiempo"
 
 #: src/mousam.py:371
 #, fuzzy
@@ -799,13 +799,12 @@ msgstr ""
 
 #: src/windowPreferences.py:72
 msgid "Dynamic Background"
-msgstr "Fondo Dinamico"
+msgstr "Fondo Dinámico"
 
 #: src/windowPreferences.py:74
 #, fuzzy
 msgid "App background changes based on current weather conditions"
-msgstr ""
-"Cambios en segundo plano basados en las condiciones actuales del clima "
+msgstr "Cambios en el fondo basados en las condiciones actuales "
 "(Reinicio requerido)"
 
 #: src/windowPreferences.py:88
@@ -815,7 +814,7 @@ msgstr "Formato de Tiempo"
 #: src/windowPreferences.py:89
 #, fuzzy
 msgid "Weather time format"
-msgstr "Formato de tiempo del clima (Reinicio requerido)"
+msgstr "Formato de tiempo (Reinicio requerido)"
 
 #: src/windowPreferences.py:99
 msgid "24 Hour"
@@ -827,16 +826,16 @@ msgstr "AM / PM"
 
 #: src/windowPreferences.py:120
 msgid "Auto Refresh"
-msgstr ""
+msgstr "Recargar automáticamente"
 
 #: src/windowPreferences.py:121
 msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+msgstr "Automáticamente recargar datos del tiempo en un intervalo de tiempo"
 
 #: src/windowPreferences.py:138
 #, fuzzy
 msgid "Show Notifications"
-msgstr "Ubicaciones"
+msgstr "Mostrar Notificaciones"
 
 #: src/windowPreferences.py:139
 msgid "Show notification when weather is refreshed automatically"
@@ -961,7 +960,7 @@ msgstr "General"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
-msgstr "Actualizar Clima"
+msgstr "Actualizar Tiempo"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
