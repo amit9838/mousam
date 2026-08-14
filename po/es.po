@@ -54,7 +54,7 @@ msgid ""
 "graphs and wind-speed with direction to provide an hourly forecast for the "
 "next 24 hours"
 msgstr ""
-"Utiliza representaciones graficas, tales como temperatura, precipitacion "
+"Utiliza representaciones graficas, tales como temperatura, precipitación "
 "gráficos y velocidad del viento con dirección para proveer un previsión hora "
 "a hora de las siguiente 24 horas"
 
@@ -117,7 +117,7 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
-msgstr "Usar pulgadas para la precipitacion"
+msgstr "Usar pulgadas para la precipitación"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
@@ -624,7 +624,7 @@ msgstr "Vientos"
 #, fuzzy
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Precipitacion Máxima"
+msgstr "Precipitación Máxima"
 
 #: src/UI_HourlyDetails.py:243
 msgid "Now"
@@ -865,13 +865,13 @@ msgstr ""
 #: src/windowPreferences.py:194
 #, fuzzy
 msgid "Precipitation in inches"
-msgstr "Mostrar precipitacion en pulgadas"
+msgstr "Mostrar precipitación en pulgadas"
 
 #: src/windowPreferences.py:195
 #, fuzzy
 msgid "This option works better in heavy precipitation"
 msgstr ""
-"Esta opción funciona mejor con precipitacion fuerte (Reinicio requerido)"
+"Esta opción funciona mejor con precipitación fuerte (Reinicio requerido)"
 
 #: src/windowPreferences.py:209
 msgid "Data Management"
