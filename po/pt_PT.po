@@ -2,20 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Bruno Miguel, 2026.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-05 12:03-0300\n"
-"PO-Revision-Date: 2026-06-30 22:20+0100\n"
-"Last-Translator: Bruno Miguel\n"
+"PO-Revision-Date: 2026-08-23 19:40+0100\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
@@ -45,56 +46,59 @@ msgid ""
 "more"
 msgstr ""
 "Exibe, em tempo real, temperatura, humidade e velocidade do vento, índice U."
-"V.,  pressão atmosférica e mais"
+"V., pressão atmosférica e mais"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid "Comprehensive Air Quality Index and air pollutants data"
 msgstr ""
+"Dados abrangentes sobre o Índice de Qualidade do Ar e os poluentes "
+"atmosféricos"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgstr "Modo meteorológico compacto para uma visualização minimalista e focada"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
 msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Também fornece previsões para amanhã e para os próximos 7 dias"
+msgstr "Previsões por hora, para amanhã e detalhadas para os próximos 7 dias"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
 msgid "Visual graphs for sun and moon positions and day/night cycles"
 msgstr ""
+"Gráficos ilustrativos das posições do sol e da lua e dos ciclos de dia e "
+"noite"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
 msgid "Hourly temperature, wind direction and precipitation tracking"
 msgstr ""
+"Acompanhamento da temperatura por hora, da direção do vento e da precipitação"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
 msgid "Dynamic background styling that adapts to weather conditions"
-msgstr "A mudança do fundo é baseada nas condições climatéricas atuais"
+msgstr "Estilo dinâmico do fundo que se adapta às condições meteorológicas"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
 msgid "System notifications for weather updates with configurable preferences"
 msgstr ""
+"Notificações do sistema sobre atualizações meteorológicas com preferências "
+"configuráveis"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
 msgid "Support for both metric and imperial measurement systems"
-msgstr "Ver previsões no sistema métrico ou imperial"
+msgstr "Suporte para os sistemas de medidas métrico e imperial"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:26
 msgid "Main dashboard showing current weather and hourly forecast"
 msgstr ""
+"Painel principal com informações meteorológicas atuais e previsão por hora"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
 msgid "Detailed weather conditions during rain"
-msgstr "Condições atuais e previsões do estado do tempo."
+msgstr "Condições meteorológicas detalhadas durante a chuva"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:34
-#, fuzzy
 msgid "Night mode view"
-msgstr "Modo claro"
+msgstr "Visualização no modo noturno"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:43
 msgid "Amit Chaudhary"
@@ -108,8 +112,8 @@ msgstr "Lista de cidades e respetivas coordenadas."
 msgid ""
 "Stores locations added by user in json stringified string format in string"
 msgstr ""
-"Armazena localizações adicionados pelo utilizador num formato de string "
-"'JSON'"
+"Armazena localizações adicionadas pelo utilizador no formato JSON, "
+"convertidas em cadeia de caracteres"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -178,7 +182,7 @@ msgstr "Mostrar uma notificação quando a previsão é atualizada."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
 msgid "Enable debug mode"
-msgstr "Ativar modo de 'debug'"
+msgstr "Ativar modo de depuração"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
 msgid "Enables detailed logging and console output."
@@ -186,13 +190,15 @@ msgstr "Ativa registo detalhado e 'output' para o terminal."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
 msgid "Icon theme"
-msgstr ""
+msgstr "Tema de ícones"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Conjunto de ícones meteorológicos: \"padrão\" (ícones padrão do Mousam) ou "
+"\"material\" (ícones do Material Design da Google)"
 
 #: src/configs.py:33
 msgid "Off"
@@ -340,7 +346,7 @@ msgstr "Moderado"
 
 #: src/CORE_weatherData.py:156
 msgid "Poor"
-msgstr "Ruim"
+msgstr "Pobre"
 
 #: src/CORE_weatherData.py:157
 msgid "Unhealthy"
@@ -493,27 +499,27 @@ msgstr "CH₄"
 
 #: src/UI_CardAirPollution.py:190
 msgid "Alder Pollen"
-msgstr "Pólen de alnos"
+msgstr "Pólen de amieiro"
 
 #: src/UI_CardAirPollution.py:191
 msgid "Birch Pollen"
-msgstr "Pólen de bétulas"
+msgstr "Pólen de bétula"
 
 #: src/UI_CardAirPollution.py:192
 msgid "Grass Pollen"
-msgstr "Polén de gramas"
+msgstr "Pólen de relva"
 
 #: src/UI_CardAirPollution.py:193
 msgid "Mugwort Pollen"
-msgstr "Pólen de artemísias"
+msgstr "Pólen de artemísia"
 
 #: src/UI_CardAirPollution.py:194
 msgid "Olive Pollen"
-msgstr "Pólen de oliveiras"
+msgstr "Pólen de oliveira"
 
 #: src/UI_CardAirPollution.py:195
 msgid "Ragweed Pollen"
-msgstr "Pólen de ambrósias"
+msgstr "Pólen de ambrósia"
 
 #: src/UI_CardAirPollution.py:215
 #, python-brace-format
@@ -550,9 +556,8 @@ msgid "Hourly"
 msgstr "Por Hora"
 
 #: src/UI_HourlyDetails.py:53
-#, fuzzy
 msgid "Precipitation"
-msgstr "Precipitação em polegadas"
+msgstr "Precipitação"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
@@ -688,7 +693,7 @@ msgstr "Sem chuva à vista para hoje!"
 
 #: src/mousam.py:83
 msgid "Debug Mode Enabled"
-msgstr "Modo 'debug' ativado"
+msgstr "Modo de depuração ativado"
 
 #: src/mousam.py:84
 msgid "View Logs"
@@ -696,7 +701,7 @@ msgstr "Ver registos"
 
 #: src/mousam.py:88
 msgid "Debug Mode Disabled"
-msgstr "Modo 'debug' desativo"
+msgstr "Modo de depuração desativado"
 
 #: src/mousam.py:125
 msgid "Refresh weather"
@@ -712,7 +717,7 @@ msgstr "Modo compacto"
 
 #: src/mousam.py:172 src/shortcutsDialog.ui:45
 msgid "Preferences"
-msgstr "Configurações"
+msgstr "Preferências"
 
 #: src/mousam.py:173 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
@@ -720,7 +725,7 @@ msgstr "Teclas de atalho"
 
 #: src/mousam.py:174
 msgid "About Mousam"
-msgstr "Sobre Mousam"
+msgstr "Acerca do Mousam"
 
 #: src/mousam.py:175 src/shortcutsDialog.ui:57
 msgid "Quit"
@@ -728,7 +733,7 @@ msgstr "Sair"
 
 #: src/mousam.py:279
 msgid "Direction"
-msgstr "Direçao"
+msgstr "Direção"
 
 #: src/mousam.py:293
 msgid "Dewpoint"
@@ -736,7 +741,7 @@ msgstr "Ponto de orvalho"
 
 #: src/mousam.py:345
 msgid "Please check your connection."
-msgstr "Por favor verifique a sua ligação."
+msgstr "Verifique a sua ligação."
 
 #: src/mousam.py:350
 msgid "Fetch Error"
@@ -744,11 +749,11 @@ msgstr "Erro ao obter dados"
 
 #: src/mousam.py:364
 msgid "Getting Weather Data"
-msgstr "A obter dados metereológicos"
+msgstr "A obter dados meteorológicos"
 
 #: src/mousam.py:371
 msgid "Welcome to Mousam"
-msgstr "Sobre Mousam"
+msgstr "Bem-vindo ao Mousam"
 
 #: src/mousam.py:372
 msgid "Add a location to get started."
@@ -764,11 +769,13 @@ msgstr "Tentar novamente"
 
 #: src/windowAbout.py:20
 msgid "Copyright © 2024 Mousam Developers"
-msgstr "Copyright © 2024 Mousam Developers"
+msgstr "Direitos de autor © 2024 Os programadores do Mousam"
 
 #: src/windowAbout.py:24
 msgid "translator-credits"
-msgstr "créditos-tradução"
+msgstr ""
+"Bruno Miguel \n"
+"Hugo Carvalho"
 
 #: src/windowLocations.py:54
 msgid "Add New Location"
@@ -804,7 +811,7 @@ msgstr "Trocou para {}"
 
 #: src/windowPreferences.py:30
 msgid "Weather Preferences"
-msgstr "Configurações da previsão do tempo"
+msgstr "Preferências da previsão do tempo"
 
 #: src/windowPreferences.py:44
 msgid "Appearance"
@@ -816,25 +823,23 @@ msgstr "Avançado"
 
 #: src/windowPreferences.py:64
 msgid "Logging &amp; Debugging"
-msgstr "Registo &amp; 'Debugging'"
+msgstr "Registo e depuração"
 
 #: src/windowPreferences.py:74
 msgid "Icon Theme"
-msgstr ""
+msgstr "Tema de ícones"
 
 #: src/windowPreferences.py:75
 msgid "Choose between Default and Material design weather icons"
-msgstr ""
+msgstr "Escolha entre os ícones meteorológicos Padrão e Material Design"
 
 #: src/windowPreferences.py:85
-#, fuzzy
 msgid "Default"
-msgstr "Repôr pré-definições"
+msgstr "Padrão"
 
 #: src/windowPreferences.py:90
-#, fuzzy
 msgid "Material"
-msgstr "Imperial"
+msgstr "Material"
 
 #: src/windowPreferences.py:105
 msgid "Dynamic Background"
@@ -880,7 +885,7 @@ msgstr ""
 
 #: src/windowPreferences.py:187
 msgid "Units &amp; Measurements"
-msgstr "Unidades &amp; de Medida"
+msgstr "Unidades e medidas"
 
 #: src/windowPreferences.py:192
 msgid "System Unit"
@@ -916,23 +921,23 @@ msgstr "Gestão de dados"
 
 #: src/windowPreferences.py:247
 msgid "Reset to Default"
-msgstr "Repôr pré-definições"
+msgstr "Repor predefinições"
 
 #: src/windowPreferences.py:248
 msgid "Clear all preferences and restore default values"
-msgstr "Remove todas as configurações e restaura os valores padrão"
+msgstr "Remove todas as preferências e restaura os valores padrão"
 
 #: src/windowPreferences.py:251
 msgid "Reset…"
-msgstr "Repôr…"
+msgstr "Repor…"
 
 #: src/windowPreferences.py:260
 msgid "Debug Mode"
-msgstr "Modo 'debug'"
+msgstr "Modo de depuração"
 
 #: src/windowPreferences.py:261
 msgid "Enable verbose logging and console output"
-msgstr "Ativa registo verboso e 'output' para o terminal"
+msgstr "Ativa o registo detalhado e o resultado para o terminal"
 
 #: src/windowPreferences.py:274
 msgid "Open Logs Folder"
@@ -952,7 +957,7 @@ msgstr "Remover todo o conteúdo do ficheiro de registo atual"
 
 #: src/windowPreferences.py:340
 msgid "Icon theme changed to {}"
-msgstr ""
+msgstr "O tema dos ícones foi alterado para {}"
 
 #: src/windowPreferences.py:349
 msgid "Switched to - {}"
@@ -960,11 +965,11 @@ msgstr "Trocou para - {}"
 
 #: src/windowPreferences.py:368
 msgid "Logs cleared"
-msgstr "Ficheiros de registo limpos"
+msgstr "Registos eliminados"
 
 #: src/windowPreferences.py:370
 msgid "Failed to clear logs"
-msgstr "Falha na limpeza dos ficheiros de registo"
+msgstr "Falha na limpeza dos registos"
 
 #: src/windowPreferences.py:381
 msgid "Auto refresh disabled"
@@ -976,15 +981,15 @@ msgstr "Atualizar automaticamente a cada {} min"
 
 #: src/windowPreferences.py:390
 msgid "Reset Settings?"
-msgstr "Repôr configurações?"
+msgstr "Repor definições?"
 
 #: src/windowPreferences.py:392
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
-"Isto irá repôr todas configurações para os valores padrão e remover as suas "
-"cidades guardadas.Esta ação é irreversível."
+"Isto irá repor todas as definições para os valores padrão e remover as suas "
+"cidades guardadas. Esta ação é irreversível."
 
 #: src/windowPreferences.py:396
 msgid "Cancel"
@@ -992,11 +997,11 @@ msgstr "Cancelar"
 
 #: src/windowPreferences.py:397
 msgid "Reset"
-msgstr "Repôr"
+msgstr "Repor"
 
 #: src/windowPreferences.py:438
 msgid "Preferences have been reset"
-msgstr "As configurações foram repostas"
+msgstr "As preferências foram repostas"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
