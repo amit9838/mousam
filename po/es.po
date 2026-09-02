@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-05 12:03-0300\n"
-"PO-Revision-Date: 2023-06-18 11:17+0300\n"
+"PO-Revision-Date: 2026-09-02 12:00+0200\n"
 "Last-Translator: capitantrueno\n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -29,7 +29,9 @@ msgstr "El tiempo de un vistazo"
 
 #: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr "Tiempo;Meteorología;Mousam;Lluvia;Nube;Previsión;GTK4;Python;temperatura;"
+msgstr ""
+"Tiempo;Meteorología;Mousam;Lluvia;Nube;Previsión;Pronóstico;GTK4;Python;"
+"temperatura;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
 msgid "Current Weather conditions and forecasts."
@@ -53,24 +55,12 @@ msgstr ""
 "Índice de calidad del aire completo y datos de contaminantes atmosféricos"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Also provides tomorrow and 7-day forecasts"
-msgstr "También ofrece previsiones para mañana y para los próximos 7 días"
+msgid "Compact weather mode for a minimal, focused view"
+msgstr "Modo de tiempo compacto para una vista mínima y centrada"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "See conditions in metric or imperial systems"
-msgstr "Muestra las condiciones en sistema métrico o imperial"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:21
-msgid "Clear Sky - day"
-msgstr "Cielo despejado - día"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snowfall - day"
-msgstr "Nevada - día"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "Clear Sky - night"
-msgstr "Cielo despejado - noche"
+msgid "Hourly, tomorrow, and 7-day detailed forecasts"
+msgstr "Previsiones detalladas por horas, para mañana y a 7 días"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
 msgid "Visual graphs for sun and moon positions and day/night cycles"
@@ -947,7 +937,7 @@ msgstr "Habilita el registro detallado y la salida por consola"
 
 #: src/windowPreferences.py:274
 msgid "Open Logs Folder"
-msgstr "Abrir carpeta de registros"
+msgstr "Abrir la carpeta de registros"
 
 #: src/windowPreferences.py:275
 msgid "Access the application log files"
@@ -955,7 +945,7 @@ msgstr "Accede a los archivos de registro de la aplicación"
 
 #: src/windowPreferences.py:288
 msgid "Clear Log File"
-msgstr "Limpiar archivo de registros"
+msgstr "Vaciar el archivo de registro"
 
 #: src/windowPreferences.py:289
 msgid "Delete all contents of the current log file"
@@ -1020,96 +1010,3 @@ msgstr "Actualizar el tiempo"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Navegación"
-
-#~ msgid ""
-#~ "Utilizes graphical representations, such as temperature , precipitation "
-#~ "graphs and wind-speed with direction to provide an hourly forecast for "
-#~ "the next 24 hours"
-#~ msgstr ""
-#~ "Utiliza representaciones graficas, tales como temperatura, precipitacion "
-#~ "graficos y velocidad del viento con direccion para proveer un prevision "
-#~ "hora a hora de las siguiente 24 horas"
-
-#~ msgid "United States AQI standard"
-#~ msgstr "Estandar AQI de los Estados Unidos"
-
-#~ msgid "From"
-#~ msgstr "De"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgctxt "pressure card"
-#~ msgid "High"
-#~ msgstr "Alto"
-
-#~ msgctxt "pressure card"
-#~ msgid "Low"
-#~ msgstr "Bajo"
-
-#~ msgctxt "uvindex card"
-#~ msgid "High"
-#~ msgstr "Alto"
-
-#~ msgctxt "uvindex card"
-#~ msgid "Low"
-#~ msgstr "Bajo"
-
-#, fuzzy
-#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "Sistema MÉTRICO con unidades celsius, km/h, kilómetros"
-
-#, fuzzy
-#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
-#~ msgstr "Sistema IMPERIAL con unidades Farenheit, mph, millas"
-
-#, fuzzy
-#~ msgid "Switching locations within 2 seconds is ignored"
-#~ msgstr "Cambiar durante 2 segundos es ignorado!"
-
-#~ msgid "Location"
-#~ msgstr "Ubicación"
-
-#~ msgid "Could not fetch data from API"
-#~ msgstr "No se pudo obtener los datos de la API"
-
-#~ msgid "Refreshed Successfully"
-#~ msgstr "Actualizado Correctamente"
-
-#~ msgid "Refresh within 5 seconds is ignored!"
-#~ msgstr "Actualizar detro de 5 segundos es ignorado!"
-
-#~ msgid "Refreshing..."
-#~ msgstr "Actualizando..."
-
-#~ msgid "Remove location"
-#~ msgstr "Eliminar Ubicación"
-
-#~ msgid "Switch city within 2 seconds is ignored!"
-#~ msgstr "Cambiar ciudad dentro de 2 segundos es ignorado!"
-
-#~ msgid "Selected - {}"
-#~ msgstr "Seleccionado - {}"
-
-#~ msgid "Search"
-#~ msgstr "Buscar"
-
-#, python-brace-format
-#~ msgid "Added - {0}"
-#~ msgstr "Añadido - {0}"
-
-#, python-brace-format
-#~ msgid "Deleted - {0}"
-#~ msgstr "Eliminada - {0}"
-
-#~ msgid "Press enter to search"
-#~ msgstr "Presiona enter para buscar"
-
-#~ msgid "Overcast day"
-#~ msgstr "Día nublado"
-
-#~ msgid "Dark mode"
-#~ msgstr "Modo oscuro"
-
-#~ msgid "Horizon"
-#~ msgstr "Horizonte"
