@@ -1,0 +1,1007 @@
+# Catalan translation for Mousam.
+# Copyright (C) 2024 Mousam Developers
+# This file is distributed under the same license as the mousam package.
+# Mario Rodrigo Solaz, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"PO-Revision-Date: 2026-09-02 12:00+0200\n"
+"Last-Translator: capitantrueno\n"
+"Language-Team: Catalan\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.appdata.xml.in:6
+msgid "Mousam"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+msgid "Weather at a glance"
+msgstr "El temps d'un cop d'ull"
+
+#: data/io.github.amit9838.mousam.desktop.in:10
+msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgstr ""
+"Temps;Meteorologia;Mousam;Pluja;Núvol;Previsió;Pronòstic;GTK4;Python;"
+"temperatura;"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:9
+msgid "Current Weather conditions and forecasts."
+msgstr "Condicions meteorològiques actuals i previsions."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:10
+msgid "Features:"
+msgstr "Característiques:"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:12
+msgid ""
+"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
+"more"
+msgstr ""
+"Mostra en temps real la temperatura, la humitat, la velocitat del vent, "
+"l'índex UV, la pressió i molt més"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:13
+msgid "Comprehensive Air Quality Index and air pollutants data"
+msgstr ""
+"Índex de qualitat de l'aire complet i dades de contaminants atmosfèrics"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:14
+msgid "Compact weather mode for a minimal, focused view"
+msgstr "Mode de temps compacte per a una vista mínima i centrada"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:15
+msgid "Hourly, tomorrow, and 7-day detailed forecasts"
+msgstr "Previsions detallades per hores, per a demà i a 7 dies"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:16
+msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgstr ""
+"Gràfics visuals de les posicions del sol i la lluna i dels cicles dia/nit"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:17
+msgid "Hourly temperature, wind direction and precipitation tracking"
+msgstr ""
+"Seguiment per hores de la temperatura, la direcció del vent i la precipitació"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:18
+msgid "Dynamic background styling that adapts to weather conditions"
+msgstr "Estil de fons dinàmic que s'adapta a les condicions meteorològiques"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:19
+msgid "System notifications for weather updates with configurable preferences"
+msgstr ""
+"Notificacions del sistema per a les actualitzacions del temps amb "
+"preferències configurables"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:20
+msgid "Support for both metric and imperial measurement systems"
+msgstr "Compatible amb els sistemes de mesura mètric i imperial"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:26
+msgid "Main dashboard showing current weather and hourly forecast"
+msgstr "Tauler principal amb el temps actual i la previsió per hores"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:30
+msgid "Detailed weather conditions during rain"
+msgstr "Condicions meteorològiques detallades durant la pluja"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:34
+msgid "Night mode view"
+msgstr "Vista en mode nocturn"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:43
+msgid "Amit Chaudhary"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:7
+msgid "List of cities and their coordinates."
+msgstr "Llista de ciutats i les seves coordenades."
+
+#: data/io.github.amit9838.mousam.gschema.xml:8
+msgid ""
+"Stores locations added by user in json stringified string format in string"
+msgstr ""
+"Desa les ubicacions afegides per l'usuari en format de cadena JSON"
+
+#: data/io.github.amit9838.mousam.gschema.xml:12
+msgid "Selected city"
+msgstr "Ciutat seleccionada"
+
+#: data/io.github.amit9838.mousam.gschema.xml:13
+msgid "Selected city cords"
+msgstr "Coordenades de la ciutat seleccionada"
+
+#: data/io.github.amit9838.mousam.gschema.xml:17
+msgid "Use Gradient Background"
+msgstr "Usa un fons degradat"
+
+#: data/io.github.amit9838.mousam.gschema.xml:18
+msgid ""
+"Apply gradient background on main window corresponding to weather condition"
+msgstr ""
+"Aplica un fons degradat a la finestra principal segons les condicions "
+"meteorològiques"
+
+#: data/io.github.amit9838.mousam.gschema.xml:22
+msgid "Use Inch for precipitation"
+msgstr "Usa polzades per a la precipitació"
+
+#: data/io.github.amit9838.mousam.gschema.xml:26
+msgid "Use 24h hour clock"
+msgstr "Usa el rellotge de 24 hores"
+
+#: data/io.github.amit9838.mousam.gschema.xml:30
+msgid "Main window width"
+msgstr "Amplada de la finestra principal"
+
+#: data/io.github.amit9838.mousam.gschema.xml:34
+msgid "Main window height"
+msgstr "Alçada de la finestra principal"
+
+#: data/io.github.amit9838.mousam.gschema.xml:38
+msgid "Launch the app in maximized mode."
+msgstr "Inicia l'aplicació maximitzada."
+
+#: data/io.github.amit9838.mousam.gschema.xml:42
+msgid "Auto-refresh interval in minutes"
+msgstr "Interval d'actualització automàtica en minuts"
+
+#: data/io.github.amit9838.mousam.gschema.xml:43
+msgid "Interval for automatic weather refresh. 0 means disabled."
+msgstr ""
+"Interval d'actualització automàtica del temps. 0 significa desactivat."
+
+#: data/io.github.amit9838.mousam.gschema.xml:47
+msgid "Measurement system to use - metric,imperial"
+msgstr "Sistema de mesura que s'utilitzarà: mètric, imperial"
+
+#: data/io.github.amit9838.mousam.gschema.xml:48
+msgid "metric(km, °C), imperial(mile, °F)"
+msgstr "mètric (km, °C), imperial (milla, °F)"
+
+#: data/io.github.amit9838.mousam.gschema.xml:52
+msgid "Show weather update notifications"
+msgstr "Mostra les notificacions d'actualització del temps"
+
+#: data/io.github.amit9838.mousam.gschema.xml:53
+msgid "Show a notification when weather data is updated."
+msgstr "Mostra una notificació quan s'actualitzen les dades meteorològiques."
+
+#: data/io.github.amit9838.mousam.gschema.xml:57
+msgid "Enable debug mode"
+msgstr "Activa el mode de depuració"
+
+#: data/io.github.amit9838.mousam.gschema.xml:58
+msgid "Enables detailed logging and console output."
+msgstr "Activa el registre detallat i la sortida per consola."
+
+#: data/io.github.amit9838.mousam.gschema.xml:62
+msgid "Icon theme"
+msgstr "Tema d'icones"
+
+#: data/io.github.amit9838.mousam.gschema.xml:63
+msgid ""
+"Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
+"material design icons)"
+msgstr ""
+"Conjunt d'icones meteorològiques: «default» (icones predeterminades del "
+"Mousam) o «material» (icones de Google Material Design)"
+
+#: src/configs.py:33
+msgid "Off"
+msgstr "Desactivat"
+
+#: src/configs.py:34
+msgid "Every 15 minutes"
+msgstr "Cada 15 minuts"
+
+#: src/configs.py:35
+msgid "Every 30 minutes"
+msgstr "Cada 30 minuts"
+
+#: src/configs.py:36
+msgid "Every hour"
+msgstr "Cada hora"
+
+#: src/configs.py:37
+msgid "Every 2 hours"
+msgstr "Cada 2 hores"
+
+#: src/CORE_GTKUtils.py:66
+msgid "Unknown"
+msgstr "Desconegut"
+
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+msgid "Unknown City"
+msgstr "Ciutat desconeguda"
+
+#: src/CORE_Icons.py:261
+msgid "Clear sky"
+msgstr "Cel serè"
+
+#: src/CORE_Icons.py:262
+msgid "Few Clouds"
+msgstr "Alguns núvols"
+
+#: src/CORE_Icons.py:263
+msgid "Partly Cloudy"
+msgstr "Parcialment ennuvolat"
+
+#: src/CORE_Icons.py:264
+msgid "Overcast"
+msgstr "Cobert"
+
+#: src/CORE_Icons.py:265
+msgid "Fog"
+msgstr "Boira"
+
+#: src/CORE_Icons.py:266
+msgid "Mist"
+msgstr "Boirina"
+
+#: src/CORE_Icons.py:267
+msgid "Light Drizzle"
+msgstr "Plugim feble"
+
+#: src/CORE_Icons.py:268
+msgid "Moderate Drizzle"
+msgstr "Plugim moderat"
+
+#: src/CORE_Icons.py:269
+msgid "Heavy Intensity Drizzle"
+msgstr "Plugim intens"
+
+#: src/CORE_Icons.py:270
+msgid "Light Freezing Drizzle"
+msgstr "Plugim gelant feble"
+
+#: src/CORE_Icons.py:271
+msgid "Heavy Freezing Drizzle"
+msgstr "Plugim gelant intens"
+
+#: src/CORE_Icons.py:272
+msgid "Light Rain"
+msgstr "Pluja feble"
+
+#: src/CORE_Icons.py:273
+msgid "Moderate Rain"
+msgstr "Pluja moderada"
+
+#: src/CORE_Icons.py:274
+msgid "Heavy Rain"
+msgstr "Pluja forta"
+
+#: src/CORE_Icons.py:275
+msgid "Light Freezing Rain"
+msgstr "Pluja gelant feble"
+
+#: src/CORE_Icons.py:276
+msgid "Heavy Freezing Rain"
+msgstr "Pluja gelant intensa"
+
+#: src/CORE_Icons.py:277
+msgid "Light Snow Fall"
+msgstr "Nevada feble"
+
+#: src/CORE_Icons.py:278
+msgid "Moderate Snow Fall"
+msgstr "Nevada moderada"
+
+#: src/CORE_Icons.py:279
+msgid "Heavy Snow Fall"
+msgstr "Nevada intensa"
+
+#: src/CORE_Icons.py:280
+msgid "Snow grains"
+msgstr "Grans de neu"
+
+#: src/CORE_Icons.py:281
+msgid "Light Rain Showers"
+msgstr "Ruixats febles"
+
+#: src/CORE_Icons.py:282
+msgid "Moderate Rain Showers"
+msgstr "Ruixats moderats"
+
+#: src/CORE_Icons.py:283
+msgid "Heavy Rain Showers"
+msgstr "Ruixats forts"
+
+#: src/CORE_Icons.py:284
+msgid "Light Snow Showers"
+msgstr "Ruixats de neu febles"
+
+#: src/CORE_Icons.py:285
+msgid "Heavy Snow Showers "
+msgstr "Ruixats de neu intensos"
+
+#: src/CORE_Icons.py:286
+msgid "Thunderstorm"
+msgstr "Tempesta"
+
+#: src/CORE_Icons.py:287
+msgid "Thunderstorm with Hail"
+msgstr "Tempesta amb calamarsa"
+
+#: src/CORE_weatherData.py:154
+msgid "Good"
+msgstr "Bona"
+
+#: src/CORE_weatherData.py:155
+msgid "Moderate"
+msgstr "Moderada"
+
+#: src/CORE_weatherData.py:156
+msgid "Poor"
+msgstr "Dolenta"
+
+#: src/CORE_weatherData.py:157
+msgid "Unhealthy"
+msgstr "Insalubre"
+
+#: src/CORE_weatherData.py:158
+msgid "Severe"
+msgstr "Molt dolenta"
+
+#: src/CORE_weatherData.py:159
+msgid "Hazardous"
+msgstr "Perillosa"
+
+#: src/CORE_weatherData.py:163
+msgctxt "uvindex"
+msgid "Low"
+msgstr "Baix"
+
+#: src/CORE_weatherData.py:164
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/CORE_weatherData.py:165
+msgctxt "uvindex"
+msgid "High"
+msgstr "Alt"
+
+#: src/CORE_weatherData.py:166
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "Molt alt"
+
+#: src/CORE_weatherData.py:167
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "Extrem"
+
+#: src/CORE_weatherData.py:171
+msgctxt "humidity"
+msgid "Low"
+msgstr "Baixa"
+
+#: src/CORE_weatherData.py:172
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "Moderada"
+
+#: src/CORE_weatherData.py:173
+msgctxt "humidity"
+msgid "High"
+msgstr "Alta"
+
+#: src/CORE_weatherData.py:180
+msgctxt "pressure"
+msgid "Low"
+msgstr "Baixa"
+
+#: src/CORE_weatherData.py:181
+msgctxt "pressure"
+msgid "Normal"
+msgstr "Normal"
+
+#: src/CORE_weatherData.py:182
+msgctxt "pressure"
+msgid "High"
+msgstr "Alta"
+
+#: src/CORE_weatherData.py:186
+msgid "Calm"
+msgstr "En calma"
+
+#: src/CORE_weatherData.py:187
+msgid "Light"
+msgstr "Fluix"
+
+#: src/CORE_weatherData.py:188
+msgctxt "wind"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/CORE_weatherData.py:189
+msgid "Strong"
+msgstr "Fort"
+
+#: src/CORE_weatherData.py:190
+msgctxt "wind"
+msgid "Extreme"
+msgstr "Extrem"
+
+#: src/CORE_weatherData.py:194
+msgid "km"
+msgstr ""
+
+#: src/CORE_weatherData.py:196
+msgid "miles"
+msgstr "milles"
+
+#: src/UI_CardAirPollution.py:93
+msgid "Air Pollution"
+msgstr "Contaminació de l'aire"
+
+#: src/UI_CardAirPollution.py:105
+msgid "Air Quality Components"
+msgstr "Components de la qualitat de l'aire"
+
+#: src/UI_CardAirPollution.py:153
+msgid "Air Quality Index"
+msgstr "Índex de qualitat de l'aire"
+
+#: src/UI_CardAirPollution.py:180
+msgid "PM2.5"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:181
+msgid "PM10"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:182
+msgid "CO"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:183
+msgid "CO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:184
+msgid "NO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:185
+msgid "SO₂"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:186
+msgid "O₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:187
+msgid "Dust"
+msgstr "Pols"
+
+#: src/UI_CardAirPollution.py:188
+msgid "NH₃"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:189
+msgid "CH₄"
+msgstr ""
+
+#: src/UI_CardAirPollution.py:190
+msgid "Alder Pollen"
+msgstr "Pol·len de vern"
+
+#: src/UI_CardAirPollution.py:191
+msgid "Birch Pollen"
+msgstr "Pol·len de bedoll"
+
+#: src/UI_CardAirPollution.py:192
+msgid "Grass Pollen"
+msgstr "Pol·len de gramínies"
+
+#: src/UI_CardAirPollution.py:193
+msgid "Mugwort Pollen"
+msgstr "Pol·len d'artemísia"
+
+#: src/UI_CardAirPollution.py:194
+msgid "Olive Pollen"
+msgstr "Pol·len d'olivera"
+
+#: src/UI_CardAirPollution.py:195
+msgid "Ragweed Pollen"
+msgstr "Pol·len d'ambròsia"
+
+#: src/UI_CardAirPollution.py:215
+#, python-brace-format
+msgid "Safe limit: ≤ {0} {1}"
+msgstr "Límit segur: ≤ {0} {1}"
+
+#: src/UI_CardAirPollution.py:243
+msgid ""
+"AQI: US EPA Standard\n"
+"Pollutant limits: WHO Guidelines (2021)"
+msgstr ""
+"ICA: estàndard de la US EPA\n"
+"Límits de contaminants: directrius de l'OMS (2021)"
+
+#: src/UI_CardDayNight.py:76
+msgid "Sunrise & Sunset"
+msgstr "Sortida i posta del sol"
+
+#: src/UI_CardDayNight.py:87
+msgid "Sunrise"
+msgstr "Sortida del sol"
+
+#: src/UI_CardDayNight.py:100
+msgid "Sunset"
+msgstr "Posta del sol"
+
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
+#: src/UI_HourlyDetails.py:52
+msgid "Wind"
+msgstr "Vent"
+
+#: src/UI_HourlyDetails.py:51
+msgid "Hourly"
+msgstr "Per hores"
+
+#: src/UI_HourlyDetails.py:53
+msgid "Precipitation"
+msgstr "Precipitació"
+
+#: src/UI_CardSquare.py:31
+msgid "Pressure"
+msgstr "Pressió"
+
+#: src/UI_CardSquare.py:32
+msgid "Humidity"
+msgstr "Humitat"
+
+#: src/UI_CardSquare.py:33
+msgid "UV Index"
+msgstr "Índex UV"
+
+#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+msgid "North"
+msgstr "Nord"
+
+#: src/UI_CardSquare.py:209
+msgid "Northeast"
+msgstr "Nord-est"
+
+#: src/UI_CardSquare.py:210
+msgid "East"
+msgstr "Est"
+
+#: src/UI_CardSquare.py:211
+msgid "Southeast"
+msgstr "Sud-est"
+
+#: src/UI_CardSquare.py:212
+msgid "South"
+msgstr "Sud"
+
+#: src/UI_CardSquare.py:213
+msgid "Southwest"
+msgstr "Sud-oest"
+
+#: src/UI_CardSquare.py:214
+msgid "West"
+msgstr "Oest"
+
+#: src/UI_CardSquare.py:215
+msgid "Northwest"
+msgstr "Nord-oest"
+
+#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+msgid "No Internet"
+msgstr "Sense connexió a Internet"
+
+#: src/UI_CompactWeather.py:289
+msgid "Hum."
+msgstr "Hum."
+
+#: src/UI_CompactWeather.py:293
+msgid "Pres."
+msgstr "Pres."
+
+#: src/UI_CompactWeather.py:297
+msgid "AQI"
+msgstr "ICA"
+
+#: src/UI_CompactWeather.py:350
+msgid "Mousam Compact"
+msgstr "Mousam compacte"
+
+#: src/UI_CompDrawDayNight.py:154
+msgid "Day"
+msgstr "Dia"
+
+#: src/UI_CompDrawDayNight.py:154
+msgid "Night"
+msgstr "Nit"
+
+#: src/UI_CurrentCond.py:96
+#, python-brace-format
+msgid "Feels like • <b> {0} {1}</b>"
+msgstr "Sensació tèrmica • <b> {0} {1}</b>"
+
+#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
+msgid "Tomorrow"
+msgstr "Demà"
+
+#: src/UI_Forecast.py:147
+msgid "Weekly"
+msgstr "Setmanal"
+
+#: src/UI_Forecast.py:316
+msgid "Today"
+msgstr "Avui"
+
+#: src/UI_HourlyDetails.py:151
+msgctxt "temperature"
+msgid "Day Max •"
+msgstr "Màx. del dia •"
+
+#: src/UI_HourlyDetails.py:157
+msgctxt "wind"
+msgid "Day High •"
+msgstr "Màx. del dia •"
+
+#: src/UI_HourlyDetails.py:168
+msgctxt "precipitation"
+msgid "Day High •"
+msgstr "Màx. del dia •"
+
+#: src/UI_HourlyDetails.py:243
+msgid "Now"
+msgstr "Ara"
+
+#: src/UI_HourlyDetails.py:285
+msgid "No precipitation today !"
+msgstr "Avui no hi ha precipitacions!"
+
+#: src/UI_HourlyDetails.py:286
+msgid "No precipitation expected today!"
+msgstr "No s'esperen precipitacions per a avui!"
+
+#: src/UI_HourlyDetails.py:287
+msgid "Anticipate a precipitation-free day !"
+msgstr "Prepara't per a un dia sense precipitacions."
+
+#: src/UI_HourlyDetails.py:288
+msgid "Enjoy a rain-free day today!"
+msgstr "Gaudeix avui d'un dia sense pluja!"
+
+#: src/UI_HourlyDetails.py:289
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "Estat del paraigua: en repòs. No hi ha precipitacions a la vista!"
+
+#: src/UI_HourlyDetails.py:290
+msgid "No rain in sight today!"
+msgstr "Avui no es preveu pluja!"
+
+#: src/mousam.py:83
+msgid "Debug Mode Enabled"
+msgstr "Mode de depuració activat"
+
+#: src/mousam.py:84
+msgid "View Logs"
+msgstr "Mostra els registres"
+
+#: src/mousam.py:88
+msgid "Debug Mode Disabled"
+msgstr "Mode de depuració desactivat"
+
+#: src/mousam.py:125
+msgid "Refresh weather"
+msgstr "Actualitza el temps"
+
+#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+msgid "Locations"
+msgstr "Ubicacions"
+
+#: src/mousam.py:146
+msgid "Compact Mode"
+msgstr "Mode compacte"
+
+#: src/mousam.py:172 src/shortcutsDialog.ui:45
+msgid "Preferences"
+msgstr "Preferències"
+
+#: src/mousam.py:173 src/shortcutsDialog.ui:63
+msgid "Keyboard Shortcuts"
+msgstr "Dreceres de teclat"
+
+#: src/mousam.py:174
+msgid "About Mousam"
+msgstr "Quant al Mousam"
+
+#: src/mousam.py:175 src/shortcutsDialog.ui:57
+msgid "Quit"
+msgstr "Surt"
+
+#: src/mousam.py:279
+msgid "Direction"
+msgstr "Direcció"
+
+#: src/mousam.py:293
+msgid "Dewpoint"
+msgstr "Punt de rosada"
+
+#: src/mousam.py:345
+msgid "Please check your connection."
+msgstr "Comproveu la connexió."
+
+#: src/mousam.py:350
+msgid "Fetch Error"
+msgstr "Error en obtenir les dades"
+
+#: src/mousam.py:364
+msgid "Getting Weather Data"
+msgstr "S'estan obtenint les dades meteorològiques"
+
+#: src/mousam.py:371
+msgid "Welcome to Mousam"
+msgstr "Us donem la benvinguda al Mousam"
+
+#: src/mousam.py:372
+msgid "Add a location to get started."
+msgstr "Afegiu una ubicació per començar."
+
+#: src/mousam.py:373
+msgid "Add Location"
+msgstr "Afegeix una ubicació"
+
+#: src/mousam.py:387
+msgid "Retry"
+msgstr "Torna-ho a provar"
+
+#: src/windowAbout.py:20
+msgid "Copyright © 2024 Mousam Developers"
+msgstr "Copyright © 2024 Desenvolupadors del Mousam"
+
+#: src/windowAbout.py:24
+msgid "translator-credits"
+msgstr "Mario Rodrigo Solaz"
+
+#: src/windowLocations.py:54
+msgid "Add New Location"
+msgstr "Afegeix una ubicació nova"
+
+#: src/windowLocations.py:70
+msgid "Search for a city"
+msgstr "Cerca una ciutat"
+
+#: src/windowLocations.py:84
+msgid "Search for your city..."
+msgstr "Cerqueu la vostra ciutat…"
+
+#: src/windowLocations.py:106
+msgid "No cities found."
+msgstr "No s'ha trobat cap ciutat."
+
+#: src/windowLocations.py:144
+msgid "Saved Locations"
+msgstr "Ubicacions desades"
+
+#: src/windowLocations.py:146
+msgid "Add"
+msgstr "Afegeix"
+
+#: src/windowLocations.py:201
+msgid "Location already exists"
+msgstr "La ubicació ja existeix"
+
+#: src/windowLocations.py:223
+msgid "Switched to {}"
+msgstr "S'ha canviat a {}"
+
+#: src/windowPreferences.py:30
+msgid "Weather Preferences"
+msgstr "Preferències del temps"
+
+#: src/windowPreferences.py:44
+msgid "Appearance"
+msgstr "Aparença"
+
+#: src/windowPreferences.py:59
+msgid "Advanced"
+msgstr "Avançat"
+
+#: src/windowPreferences.py:64
+msgid "Logging &amp; Debugging"
+msgstr "Registre i depuració"
+
+#: src/windowPreferences.py:74
+msgid "Icon Theme"
+msgstr "Tema d'icones"
+
+#: src/windowPreferences.py:75
+msgid "Choose between Default and Material design weather icons"
+msgstr "Trieu entre les icones meteorològiques Default i Material Design"
+
+#: src/windowPreferences.py:85
+msgid "Default"
+msgstr "Predeterminat"
+
+#: src/windowPreferences.py:90
+msgid "Material"
+msgstr ""
+
+#: src/windowPreferences.py:105
+msgid "Dynamic Background"
+msgstr "Fons dinàmic"
+
+#: src/windowPreferences.py:107
+msgid "App background changes based on current weather conditions"
+msgstr ""
+"El fons de l'aplicació canvia segons les condicions meteorològiques actuals"
+
+#: src/windowPreferences.py:121
+msgid "Time Format"
+msgstr "Format de l'hora"
+
+#: src/windowPreferences.py:122
+msgid "Weather time format"
+msgstr "Format de l'hora del temps"
+
+#: src/windowPreferences.py:132
+msgid "24 Hour"
+msgstr "24 hores"
+
+#: src/windowPreferences.py:137
+msgid "AM / PM"
+msgstr "AM / PM"
+
+#: src/windowPreferences.py:153
+msgid "Auto Refresh"
+msgstr "Actualització automàtica"
+
+#: src/windowPreferences.py:154
+msgid "Automatically refresh weather data at a set interval"
+msgstr ""
+"Actualitza automàticament les dades meteorològiques en un interval definit"
+
+#: src/windowPreferences.py:171
+msgid "Show Notifications"
+msgstr "Mostra les notificacions"
+
+#: src/windowPreferences.py:172
+msgid "Show notification when weather is refreshed automatically"
+msgstr "Mostra una notificació quan el temps s'actualitza automàticament"
+
+#: src/windowPreferences.py:187
+msgid "Units &amp; Measurements"
+msgstr "Unitats i mesures"
+
+#: src/windowPreferences.py:192
+msgid "System Unit"
+msgstr "Sistema d'unitats"
+
+#: src/windowPreferences.py:193
+msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
+msgstr ""
+"Mètric (C, mm, km/h) o imperial (F, polzades, mph) [cal reiniciar]"
+
+#: src/windowPreferences.py:204
+msgid "Metric"
+msgstr "Mètric"
+
+#: src/windowPreferences.py:209
+msgid "Imperial"
+msgstr "Imperial"
+
+#: src/windowPreferences.py:227
+msgid "Precipitation in inches"
+msgstr "Precipitació en polzades"
+
+#: src/windowPreferences.py:228
+msgid "This option works better in heavy precipitation"
+msgstr "Aquesta opció funciona millor amb precipitació intensa"
+
+#: src/windowPreferences.py:242
+msgid "Data Management"
+msgstr "Gestió de dades"
+
+#: src/windowPreferences.py:247
+msgid "Reset to Default"
+msgstr "Restableix els valors predeterminats"
+
+#: src/windowPreferences.py:248
+msgid "Clear all preferences and restore default values"
+msgstr "Esborra totes les preferències i restaura els valors predeterminats"
+
+#: src/windowPreferences.py:251
+msgid "Reset…"
+msgstr "Restableix…"
+
+#: src/windowPreferences.py:260
+msgid "Debug Mode"
+msgstr "Mode de depuració"
+
+#: src/windowPreferences.py:261
+msgid "Enable verbose logging and console output"
+msgstr "Activa el registre detallat i la sortida per consola"
+
+#: src/windowPreferences.py:274
+msgid "Open Logs Folder"
+msgstr "Obre la carpeta de registres"
+
+#: src/windowPreferences.py:275
+msgid "Access the application log files"
+msgstr "Accediu als fitxers de registre de l'aplicació"
+
+#: src/windowPreferences.py:288
+msgid "Clear Log File"
+msgstr "Buida el fitxer de registre"
+
+#: src/windowPreferences.py:289
+msgid "Delete all contents of the current log file"
+msgstr "Esborra tot el contingut del fitxer de registre actual"
+
+#: src/windowPreferences.py:340
+msgid "Icon theme changed to {}"
+msgstr "S'ha canviat el tema d'icones a {}"
+
+#: src/windowPreferences.py:349
+msgid "Switched to - {}"
+msgstr "S'ha canviat a - {}"
+
+#: src/windowPreferences.py:368
+msgid "Logs cleared"
+msgstr "S'han esborrat els registres"
+
+#: src/windowPreferences.py:370
+msgid "Failed to clear logs"
+msgstr "No s'han pogut esborrar els registres"
+
+#: src/windowPreferences.py:381
+msgid "Auto refresh disabled"
+msgstr "Actualització automàtica desactivada"
+
+#: src/windowPreferences.py:383
+msgid "Auto refresh every {} min"
+msgstr "Actualització automàtica cada {} min"
+
+#: src/windowPreferences.py:390
+msgid "Reset Settings?"
+msgstr "Voleu restablir la configuració?"
+
+#: src/windowPreferences.py:392
+msgid ""
+"This will restore all settings to default and will clear your saved cities. "
+"This action cannot be undone."
+msgstr ""
+"Això restaurarà tota la configuració als valors predeterminats i esborrarà "
+"les ciutats desades. Aquesta acció no es pot desfer."
+
+#: src/windowPreferences.py:396
+msgid "Cancel"
+msgstr "Cancel·la"
+
+#: src/windowPreferences.py:397
+msgid "Reset"
+msgstr "Restableix"
+
+#: src/windowPreferences.py:438
+msgid "Preferences have been reset"
+msgstr "S'han restablert les preferències"
+
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "General"
+
+#: src/shortcutsDialog.ui:33
+msgid "Refresh Weather"
+msgstr "Actualitza el temps"
+
+#: src/shortcutsDialog.ui:53
+msgid "Navigation"
+msgstr "Navegació"
