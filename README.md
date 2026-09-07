@@ -50,11 +50,31 @@ sudo snap install mousam
 
 ### **Debian** (Unofficial)
 
-<a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download on SnapCraft' src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg' style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
+<a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download the .deb package' src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg' style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
 
-Thanks to @hsbasu for maintaining Debian package
+Thanks to @hsbasu for maintaining the Debian package
 
 [Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
+
+### **Arch** (Unofficial)
+
+<a href='https://aur.archlinux.org/packages/mousam'><img width='240' alt='Download on the Arch User Repository' src='https://aur.archlinux.org/static/css/archnavbar/aurlogo.png'></a>
+
+Thanks to @begin-theadventure for maintaining the AUR package
+
+```
+sudo yay -S mousam
+```
+
+### **Void Linux**
+
+<a href='https://github.com/void-linux/void-packages/blob/master/srcpkgs/mousam/template'><img width='100' alt='Download on Void Linux' src='https://avatars.githubusercontent.com/u/37247796?s=200&v=4'></a>
+
+```
+sudo xbps-install -S mousam
+```
+
+
 
 ## Build
 
