@@ -1,16 +1,20 @@
 import json
+import threading
 import time
 from typing import List, Dict, Optional
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, GLib
 
 from .CORE_Helpers import create_toast
 from .API_FindCity import find_city
 from .settings import settings
+from .CORE_Logging import get_logger
 from gettext import gettext as _, pgettext as C_
+
+logger = get_logger("locations")
 
 # --- Data Layer Utilities ---
 
@@ -53,7 +57,10 @@ class CitySearchDialog(Adw.PreferencesWindow):
         super().__init__(transient_for=parent, default_width=350, default_height=500)
         self.set_title(_("Add New Location"))
         self.callback = on_selection_callback
-        self.results_rows = []
+        self.result_widgets = []  # placeholder, spinner or result rows currently shown
+        self._search_id = 0  # bumped per search; stale results are dropped
+        self._closed = False
+        self.connect("close-request", self._on_close_request)
         self._init_ui()
 
     def _init_ui(self):
@@ -83,28 +90,55 @@ class CitySearchDialog(Adw.PreferencesWindow):
         group.add(self.results_group)
         self._set_placeholder(_("Search for your city..."))
 
-    def _set_placeholder(self, text):
-        self.placeholder = Gtk.Label(label=text, margin_top=40)
-        self.placeholder.add_css_class("dim-label")
-        self.results_group.add(self.placeholder)
+    def _on_close_request(self, _window) -> bool:
+        self._closed = True
+        return False
 
-    def _perform_search(self, _widget):
+    def _clear_results(self) -> None:
+        for widget in self.result_widgets:
+            self.results_group.remove(widget)
+        self.result_widgets.clear()
+
+    def _show_result_widget(self, widget: Gtk.Widget) -> None:
+        self.results_group.add(widget)
+        self.result_widgets.append(widget)
+
+    def _set_placeholder(self, text: str) -> None:
+        placeholder = Gtk.Label(label=text, margin_top=40)
+        placeholder.add_css_class("dim-label")
+        self._show_result_widget(placeholder)
+
+    def _perform_search(self, _widget) -> None:
         query = self.search_entry.get_text().strip()
         if not query:
             return
 
-        # Logic to clear results
-        if hasattr(self, "placeholder"):
-            self.results_group.remove(self.placeholder)
-        for row in self.results_rows:
-            self.results_group.remove(row)
-        self.results_rows.clear()
+        self._search_id += 1
+        search_id = self._search_id
 
-        cities = find_city(query, 5)  # Returns list of dicts
+        self._clear_results()
+        spinner = Adw.Spinner(margin_top=40, halign=Gtk.Align.CENTER)
+        spinner.set_size_request(32, 32)
+        self._show_result_widget(spinner)
 
+        # Geocoding is not weather data, so it gets its own thread rather than
+        # fetch_all_weather_data_async. Results return to the main thread.
+        def _worker():
+            cities = find_city(query, 5)
+            GLib.idle_add(self._on_search_done, search_id, cities)
+
+        threading.Thread(target=_worker, name="city_search", daemon=True).start()
+
+    def _on_search_done(self, search_id: int, cities: List[Dict]) -> bool:
+        """Show results on the main thread, unless a newer search or a close superseded them."""
+        if self._closed or search_id != self._search_id:
+            logger.debug(f"Dropping stale city search results (id {search_id})")
+            return GLib.SOURCE_REMOVE
+
+        self._clear_results()
         if not cities:
             self._set_placeholder(_("No cities found."))
-            return
+            return GLib.SOURCE_REMOVE
 
         for city in cities:
             display = LocationData.format_display_name(city)
@@ -115,12 +149,12 @@ class CitySearchDialog(Adw.PreferencesWindow):
             row.set_activatable(True)
             # Store the raw dict on the row object for easy retrieval
             row.connect("activated", self._on_row_selected, city)
-            self.results_group.add(row)
-            self.results_rows.append(row)
+            self._show_result_widget(row)
+        return GLib.SOURCE_REMOVE
 
     def _on_row_selected(self, row, city_data):
         self.callback(city_data)
-        self.destroy()
+        self.close()
 
 
 # --- Main Application Window ---
