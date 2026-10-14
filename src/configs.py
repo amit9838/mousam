@@ -37,6 +37,14 @@ AUTO_REFRESH_OPTIONS = [
     (120, _("Every 2 hours")),
 ]
 
+# Settings that only change how data is drawn; a change re-renders, never refetches
+RERENDER_SETTING_KEYS = (
+    "use-gradient-bg",
+    "icon-theme",
+    "use-24h-clock",
+    "use-inch-for-prec",
+)
+
 
 # Thresholds based on WHO Global Air Quality Guidelines 2021 (in µg/m³)
 THRESHOLDS = {

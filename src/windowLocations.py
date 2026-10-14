@@ -204,7 +204,6 @@ class WeatherLocations(Adw.PreferencesWindow):
 
         # Update settings
         settings.added_cities = [*settings.added_cities, json_str]
-        self.application.added_cities = settings.added_cities
 
         self._refresh_list()
 
@@ -227,10 +226,6 @@ class WeatherLocations(Adw.PreferencesWindow):
         json_str = LocationData.to_storage_string(city_data)
         new_list = [item for item in settings.added_cities if item != json_str]
         settings.added_cities = new_list
-        self.application.added_cities = settings.added_cities
-
-        if len(self.application.added_cities) == 0:
-            self.application._start_data_refresh()
 
         # Reset selection if we deleted the active city
         if settings.selected_city == coords_to_remove and new_list:

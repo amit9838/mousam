@@ -16,6 +16,7 @@ from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
 from .CORE_Logging import get_logger
+from .configs import RERENDER_SETTING_KEYS
 
 logger = get_logger("ui")
 
@@ -42,8 +43,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self.connect("destroy", self._on_window_destroy)
 
         # State Tracking
-        self.added_cities = settings.added_cities
         self._needs_render = False
+        self._rerender_pending = False
 
         # --- UI Construction ---
         self._setup_actions()
@@ -70,6 +71,39 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             "changed::selected-city",
             self._on_selected_city_changed,
         )
+        settings.connect(
+            "changed::added-cities",
+            self._on_added_cities_changed,
+        )
+        settings.subscribe(RERENDER_SETTING_KEYS, self._on_render_setting_changed)
+
+    def _on_render_setting_changed(self, _settings, key: str) -> None:
+        """Queue one re-render for any burst of display-setting changes (e.g. a reset)."""
+        logger.debug(f"Display setting changed: {key}")
+        if not self._rerender_pending:
+            self._rerender_pending = True
+            GLib.idle_add(self._rerender_if_ready)
+
+    def _rerender_if_ready(self) -> bool:
+        """Rebuild the content grid from the data already held; never refetches."""
+        from .CORE_weatherData import weather_manager
+        self._rerender_pending = False
+        if not weather_manager.is_ready:
+            # A fetch is in progress (or failed); it renders with the new settings itself
+            return GLib.SOURCE_REMOVE
+        if not self.get_visible():
+            self._needs_render = True
+            return GLib.SOURCE_REMOVE
+
+        showing_content = self.main_stack.get_visible_child_name() == "content"
+        self._render_weather_grid()
+        if showing_content:
+            self.main_stack.set_visible_child_name("content")
+        return GLib.SOURCE_REMOVE
+
+    def _on_added_cities_changed(self, *args):
+        if not settings.added_cities:
+            self._update_view_state("welcome")
 
     def _on_selected_city_changed(self, *args):
         from .CORE_Helpers import get_selected_city_name
@@ -181,16 +215,14 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self._update_view_state("welcome")
             return
 
+        if not settings.added_cities or not settings.selected_city:
+            self._update_view_state("welcome")
+            return
+
         # Force internet check if manually triggered
         if not check_internet_connection(force=not is_auto):
             self._update_view_state("error_no_internet")
             return
-
-
-        if not self.added_cities:
-            self._update_view_state("welcome")
-            return
-
 
         self._update_view_state("loader")
         fetch_all_weather_data_async(
@@ -455,10 +487,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             app.main_window = None
 
     def present(self):
-        if getattr(self, "_needs_render", False):
-            self._render_weather_grid()
-            self._needs_render = False
         super().present()
+        if getattr(self, "_needs_render", False):
+            self._needs_render = False
+            self._rerender_if_ready()
 
     # --- Callbacks ---
     def _on_action_refresh(self, action, param):

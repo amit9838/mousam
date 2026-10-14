@@ -27,6 +27,15 @@ class Settings:
         """Disconnect from a signal on the underlying Gio.Settings object."""
         self.settings.disconnect(handler_id)
 
+    def subscribe(self, keys, callback):
+        """Call `callback(settings, key)` when any of `keys` changes. Returns handler ids."""
+        return [self.settings.connect(f"changed::{key}", callback) for key in keys]
+
+    def unsubscribe(self, handler_ids):
+        """Disconnect handlers returned by `subscribe`."""
+        for handler_id in handler_ids:
+            self.settings.disconnect(handler_id)
+
     @property
     def added_cities(self):
         return self.settings.get_strv("added-cities")

@@ -3,6 +3,7 @@ from gi.repository import Gtk, Adw, GLib
 from .settings import settings
 from .CORE_Icons import get_icon_path, condition, bg_css, create_weather_icon
 from .CORE_Helpers import check_internet_connection
+from .configs import RERENDER_SETTING_KEYS
 from gettext import gettext as _
 
 gi.require_version("Gtk", "4.0")
@@ -352,6 +353,10 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         self.set_resizable(False)
 
         self.connect("destroy", self._on_window_destroy)
+        self._rerender_pending = False
+        self._settings_handlers = settings.subscribe(
+            RERENDER_SETTING_KEYS, self._on_render_setting_changed
+        )
 
         handle = Gtk.WindowHandle()
         self.set_content(handle)
@@ -392,7 +397,28 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         if hasattr(self, "compact_view"):
             self.compact_view._start_polling()
 
+    def _on_render_setting_changed(self, _settings, _key: str) -> None:
+        """Queue one rebuild for any burst of display-setting changes."""
+        if not self._rerender_pending:
+            self._rerender_pending = True
+            GLib.idle_add(self._rerender_if_ready)
+
+    def _rerender_if_ready(self) -> bool:
+        """Rebuild the compact view from the data already held; never refetches."""
+        from .CORE_weatherData import weather_manager
+        self._rerender_pending = False
+        if settings.is_using_dynamic_bg:
+            self.add_css_class("bg-dark-overlay")
+        else:
+            for cls in set(self.get_css_classes()) & (set(bg_css.values()) | {"bg-dark-overlay"}):
+                self.remove_css_class(cls)
+        if weather_manager.is_ready:
+            self.compact_view._build_ui()
+        return GLib.SOURCE_REMOVE
+
     def _on_window_destroy(self, *args):
+        settings.unsubscribe(self._settings_handlers)
+        self._settings_handlers = []
         app = self.get_application()
         if app and hasattr(app, "compact_window"):
             app.compact_window = None

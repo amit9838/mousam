@@ -1,4 +1,3 @@
-import threading
 import time
 from enum import IntEnum
 
@@ -333,16 +332,13 @@ class WeatherPreferences(Adw.PreferencesWindow):
     # ------------------------------------------------------------------
     def _on_dynamic_bg_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_dynamic_bg = state
-        self._start_refresh_thread()
 
     def _on_icon_theme_toggled(self, button: Gtk.ToggleButton, theme: str) -> None:
         settings.icon_theme = theme
         self.add_toast(create_toast(_("Icon theme changed to {}").format(theme.capitalize()), 1))
-        self._start_refresh_thread()
 
     def _on_24h_clock_toggled(self, button: Gtk.ToggleButton, use_24h: bool) -> None:
         settings.is_using_24h_clock = use_24h
-        self._start_refresh_thread()
 
     def _on_unit_toggled(self, button: Gtk.ToggleButton, unit: str) -> None:
         settings.unit = unit
@@ -351,7 +347,6 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_precip_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.is_using_inch_for_prec = state
-        self._start_refresh_thread()
 
     def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.show_notifications = state
@@ -436,15 +431,3 @@ class WeatherPreferences(Adw.PreferencesWindow):
             self._icon_theme_btn_default.set_active(True)
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))
-
-        # Force a refresh of weather data (showing welcome screen)
-        self._start_refresh_thread()
-
-
-    def _start_refresh_thread(self):
-        thread = threading.Thread(
-            target=self.application._start_data_refresh,
-            name="refresh_after_unit_change"
-        )
-        thread.daemon = True
-        thread.start()
