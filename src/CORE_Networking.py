@@ -6,28 +6,52 @@ from .CORE_Logging import get_logger
 
 logger = get_logger("networking")
 
+# (on_success, on_error) pairs waiting for the fetch in progress
 _fetch_callbacks = []
+_fetch_running = False
 _fetch_lock = Lock()
+
+
+def _finish_fetch(error=None):
+    """Take every waiting callback, mark the fetch done, and dispatch on the main thread.
+
+    Taking the callbacks and clearing `_fetch_running` happen under one lock, so a
+    caller arriving at any moment either joins this fetch or starts a new one.
+    """
+    global _fetch_running
+    with _fetch_lock:
+        callbacks = _fetch_callbacks[:]
+        _fetch_callbacks.clear()
+        _fetch_running = False
+
+    for on_success, on_error in callbacks:
+        if error is None:
+            if on_success:
+                GLib.idle_add(on_success)
+        elif on_error:
+            GLib.idle_add(on_error, str(error))
+
 
 def fetch_all_weather_data_async(on_success=None, on_error=None):
     """
     Fetches all weather data in a thread-safe manner.
+
+    If a fetch is already running, the callbacks join it instead of starting
+    another one. Every caller gets exactly one of on_success or on_error.
     """
+    global _fetch_running
     from .CORE_weatherData import weather_manager
 
     with _fetch_lock:
-        if on_success:
-            _fetch_callbacks.append(on_success)
-        if any(t.name == "fetch_all_worker" for t in threading.enumerate()):
+        _fetch_callbacks.append((on_success, on_error))
+        if _fetch_running:
             return
+        _fetch_running = True
 
     def _worker():
         from .CORE_Helpers import TIMEOUT
         logger.info("Starting background fetch for all weather data")
-        
-        # Reset ready state before starting fresh fetch
-        weather_manager.clear()
-        
+
         error_container = []
 
         def wrap_target(target, *args):
@@ -40,6 +64,9 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 error_container.append(e)
 
         try:
+            # Reset ready state before starting fresh fetch
+            weather_manager.clear()
+
             cwd = threading.Thread(target=wrap_target, args=(weather_manager.update_current_weather,), name="cwt")
             cwd.start()
             cwd.join(timeout=TIMEOUT)
@@ -70,16 +97,10 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 raise error_container[0]
             
             logger.info("All background fetch targets completed successfully")
-            with _fetch_lock:
-                callbacks = _fetch_callbacks[:]
-                _fetch_callbacks.clear()
-            
-            for cb in callbacks:
-                GLib.idle_add(cb)
-                
+            _finish_fetch()
+
         except Exception as e:
             logger.error(f"Error fetching data: {e}")
-            if on_error:
-                GLib.idle_add(on_error, str(e))
+            _finish_fetch(e)
 
     threading.Thread(target=_worker, name="fetch_all_worker", daemon=True).start()
