@@ -201,24 +201,25 @@ class WeatherLocations(Adw.PreferencesWindow):
             self.add_toast(Adw.Toast(title=_("Location already exists")))
             return
 
-
         # Update settings
         settings.added_cities = [*settings.added_cities, json_str]
 
         self._refresh_list()
 
         if len(settings.added_cities) == 1:
-            self._handle_city_switched(None, city_dict)
+            # Write even if equal: a stale selection from an older version must still
+            # trigger a refresh, and GSettings emits "changed" on every write.
+            self._select_city(city_dict)
 
     def _handle_city_switched(self, _row, city_dict: Dict):
-        new_coords = LocationData.get_coords_key(city_dict)
-
-        if settings.selected_city == new_coords and not len(settings.added_cities):
+        if settings.selected_city == LocationData.get_coords_key(city_dict):
             return
+        self._select_city(city_dict)
 
-        settings.selected_city = new_coords
+    def _select_city(self, city_dict: Dict):
+        # The main window subscribes to selected-city and refreshes itself
+        settings.selected_city = LocationData.get_coords_key(city_dict)
         self._refresh_list()
-        self.application._start_data_refresh()
         self.add_toast(Adw.Toast(title=_("Switched to {}").format(city_dict.get("name"))))
 
     def _handle_city_removed(self, _btn, city_data: str):
@@ -227,11 +228,12 @@ class WeatherLocations(Adw.PreferencesWindow):
         new_list = [item for item in settings.added_cities if item != json_str]
         settings.added_cities = new_list
 
-        # Reset selection if we deleted the active city
-        if settings.selected_city == coords_to_remove and new_list:
-            first_city = LocationData.from_storage_string(new_list[0])
-            settings.selected_city = LocationData.get_coords_key(first_city)
-
-            self.application._start_data_refresh()
+        # Reset selection if we deleted the active city; subscribers refresh
+        if settings.selected_city == coords_to_remove:
+            if new_list:
+                first_city = LocationData.from_storage_string(new_list[0])
+                settings.selected_city = LocationData.get_coords_key(first_city)
+            else:
+                settings.selected_city = ""
 
         self._refresh_list()
