@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Jonáš Loskot <jonas@jonasloskot.cz>, 2025.
+# Jonáš Loskot <jonas@jonasloskot.cz>, 2025-2026.
+# seja-arctic-fox <seja.czstudio@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-05 12:03-0300\n"
-"PO-Revision-Date: 2025-02-11 15:09+0100\n"
-"Last-Translator: Jonáš Loskot <jonas@jonasloskot.cz>\n"
+"PO-Revision-Date: 2026-10-27 21:25+0100\n"
+"Last-Translator: seja-arctic-fox <seja.czstudio@gmail.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 47.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Gtranslator 51.0\n"
 
 #: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
@@ -33,9 +34,8 @@ msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr "Počasí;Mousam;Déšť;Mraky;Předpověď;GTK4;Python;teplota;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-#, fuzzy
 msgid "Current Weather conditions and forecasts."
-msgstr "Aktuální počasí a předpověď."
+msgstr "Aktuální počasí a předpovědi."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -51,52 +51,47 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
 msgid "Comprehensive Air Quality Index and air pollutants data"
-msgstr ""
+msgstr "Přehledné zobrazení dat o kvalitě a znečištění ovzduší"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
 msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgstr "Kompaktní režim počasí pro minimalistický a soustředěný pohled"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
 msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Také poskytuje předpověď na další den a 7 dní"
+msgstr "Podrobné předpovědi po hodinách, na další den a na dalších 7 dní"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
 msgid "Visual graphs for sun and moon positions and day/night cycles"
-msgstr ""
+msgstr "Vizuální grafy pozic slunce a měsíce a cyklů dne/noci"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
 msgid "Hourly temperature, wind direction and precipitation tracking"
-msgstr ""
+msgstr "Sledování hodinových teplot, směru větru a srážek"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
 msgid "Dynamic background styling that adapts to weather conditions"
-msgstr ""
-"Pozadí aplikace se změní v závislosti na aktuálním počasí (vyžadován restart)"
+msgstr "Dynamický styl pozadí, který se přizpůsobí stavu počasí"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
 msgid "System notifications for weather updates with configurable preferences"
-msgstr ""
+msgstr "Systémová oznámení pro aktualizace počasí s nastavitelnými předvolbami"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
 msgid "Support for both metric and imperial measurement systems"
-msgstr "Zobrazení podmínek v metrických nebo imperiálních systémech"
+msgstr "Podpora pro metrický i imperiální měrný systém"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:26
 msgid "Main dashboard showing current weather and hourly forecast"
-msgstr ""
+msgstr "Hlavní panel ukazující současné počasí a hodinovou předpověď"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
 msgid "Detailed weather conditions during rain"
-msgstr "Aktuální počasí a předpověď."
+msgstr "Detailní stav počasí při dešti"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:34
 msgid "Night mode view"
-msgstr ""
+msgstr "Pohled v nočním režimu"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:43
 msgid "Amit Chaudhary"
@@ -109,7 +104,7 @@ msgstr "Seznam měst a jejich souřadnic."
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr "Ukládá lokace přidané uživatelem ve formátu JSON-stringified v řetězci"
+msgstr "Ukládá místa přidaná uživatelem jako řetězec ve formátu JSON"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -151,11 +146,11 @@ msgstr "Spustit aplikaci v maximalizovaném režimu."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "Interval automatického obnovení v minutách"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
-msgstr ""
+msgstr "Interval pro automatické obnovení počasí. 0 znamená zakázáno."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
@@ -163,61 +158,63 @@ msgstr "Měrný systém k použití – metrický,imperiální"
 
 #: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "metrický(km, ˚C), imperiální(míle, ˚F)"
+msgstr "metrický (km, °C), imperiální (míle, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "Zobrazit oznámení o aktualizaci počasí"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "Zobrazit oznámení, když jsou aktualizována data o počasí."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
 msgid "Enable debug mode"
-msgstr ""
+msgstr "Povolit režim ladění"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
 msgid "Enables detailed logging and console output."
-msgstr ""
+msgstr "Povolit detailní záznamy a výstup do konzole."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
 msgid "Icon theme"
-msgstr ""
+msgstr "Téma ikon"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Nastavení ikon počasí: „výchozí“ (výchozí ikony mousam) nebo „material“ "
+"(ikony materiálního designu od Google)"
 
 #: src/configs.py:33
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #: src/configs.py:34
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "Každých 15 minut"
 
 #: src/configs.py:35
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "Každých 30 minut"
 
 #: src/configs.py:36
 msgid "Every hour"
-msgstr ""
+msgstr "Každou hodinu"
 
 #: src/configs.py:37
 msgid "Every 2 hours"
-msgstr ""
+msgstr "Každé 2 hodiny"
 
 #: src/CORE_GTKUtils.py:66
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámý"
 
 #: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
 msgid "Unknown City"
-msgstr ""
+msgstr "Neznámé město"
 
 #: src/CORE_Icons.py:261
 msgid "Clear sky"
@@ -225,11 +222,11 @@ msgstr "Jasno"
 
 #: src/CORE_Icons.py:262
 msgid "Few Clouds"
-msgstr "Místy oblačno"
+msgstr "Skoro jasno"
 
 #: src/CORE_Icons.py:263
 msgid "Partly Cloudy"
-msgstr "Částečně oblačno"
+msgstr "Polojasno"
 
 #: src/CORE_Icons.py:264
 msgid "Overcast"
@@ -317,7 +314,7 @@ msgstr "Lehké sněhové přeháňky"
 
 #: src/CORE_Icons.py:285
 msgid "Heavy Snow Showers "
-msgstr "Silné sněhové přeháňky"
+msgstr "Silné sněhové přeháňky "
 
 #: src/CORE_Icons.py:286
 msgid "Thunderstorm"
@@ -442,88 +439,88 @@ msgstr "Znečištění ovzduší"
 
 #: src/UI_CardAirPollution.py:105
 msgid "Air Quality Components"
-msgstr ""
+msgstr "Komponenty kvality ovzduší"
 
 #: src/UI_CardAirPollution.py:153
 msgid "Air Quality Index"
-msgstr ""
+msgstr "Index kvality ovzduší"
 
 #: src/UI_CardAirPollution.py:180
 msgid "PM2.5"
-msgstr ""
+msgstr "PM2.5"
 
 #: src/UI_CardAirPollution.py:181
 msgid "PM10"
-msgstr ""
+msgstr "PM10"
 
 #: src/UI_CardAirPollution.py:182
 msgid "CO"
-msgstr ""
+msgstr "CO"
 
 #: src/UI_CardAirPollution.py:183
 msgid "CO₂"
-msgstr ""
+msgstr "CO₂"
 
 #: src/UI_CardAirPollution.py:184
 msgid "NO₂"
-msgstr ""
+msgstr "NO₂"
 
 #: src/UI_CardAirPollution.py:185
 msgid "SO₂"
-msgstr ""
+msgstr "SO₂"
 
 #: src/UI_CardAirPollution.py:186
 msgid "O₃"
-msgstr ""
+msgstr "O₃"
 
 #: src/UI_CardAirPollution.py:187
 msgid "Dust"
-msgstr ""
+msgstr "Prach"
 
 #: src/UI_CardAirPollution.py:188
 msgid "NH₃"
-msgstr ""
+msgstr "NH₃"
 
 #: src/UI_CardAirPollution.py:189
 msgid "CH₄"
-msgstr ""
+msgstr "CH₄"
 
 #: src/UI_CardAirPollution.py:190
-#, fuzzy
 msgid "Alder Pollen"
-msgstr "Znečištění ovzduší"
+msgstr "Pyl olše"
 
 #: src/UI_CardAirPollution.py:191
-#, fuzzy
 msgid "Birch Pollen"
-msgstr "Znečištění ovzduší"
+msgstr "Pyl břízy"
 
 #: src/UI_CardAirPollution.py:192
 msgid "Grass Pollen"
-msgstr ""
+msgstr "Pyl travin"
 
 #: src/UI_CardAirPollution.py:193
 msgid "Mugwort Pollen"
-msgstr ""
+msgstr "Pyl pelyňku"
 
 #: src/UI_CardAirPollution.py:194
 msgid "Olive Pollen"
-msgstr ""
+msgstr "Pyl olivovníku"
 
 #: src/UI_CardAirPollution.py:195
 msgid "Ragweed Pollen"
-msgstr ""
+msgstr "Pyl ambrózie"
 
 #: src/UI_CardAirPollution.py:215
 #, python-brace-format
 msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
+msgstr "Bezpečný limit: ≤ {0} {1}"
 
 #: src/UI_CardAirPollution.py:243
 msgid ""
 "AQI: US EPA Standard\n"
 "Pollutant limits: WHO Guidelines (2021)"
 msgstr ""
+"IKO: Standard US EPA\n"
+"Limity znečištění: WHO Guidelines (2021)"
 
 #: src/UI_CardDayNight.py:76
 msgid "Sunrise & Sunset"
@@ -543,14 +540,12 @@ msgid "Wind"
 msgstr "Vítr"
 
 #: src/UI_HourlyDetails.py:51
-#, fuzzy
 msgid "Hourly"
-msgstr "24hodinový"
+msgstr "Po hodinách"
 
 #: src/UI_HourlyDetails.py:53
-#, fuzzy
 msgid "Precipitation"
-msgstr "Srážky v palcích"
+msgstr "Srážky"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
@@ -602,25 +597,23 @@ msgstr "Bez internetu"
 
 #: src/UI_CompactWeather.py:289
 msgid "Hum."
-msgstr ""
+msgstr "Vlh."
 
 #: src/UI_CompactWeather.py:293
-#, fuzzy
 msgid "Pres."
 msgstr "Tlak"
 
 #: src/UI_CompactWeather.py:297
 msgid "AQI"
-msgstr ""
+msgstr "IKO"
 
 #: src/UI_CompactWeather.py:350
-#, fuzzy
 msgid "Mousam Compact"
-msgstr "Mousam"
+msgstr "Mousam (kompaktní)"
 
 #: src/UI_CompDrawDayNight.py:154
 msgid "Day"
-msgstr ""
+msgstr "Den"
 
 #: src/UI_CompDrawDayNight.py:154
 msgid "Night"
@@ -688,28 +681,27 @@ msgstr "Dnes nebude pršet!"
 
 #: src/mousam.py:83
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "Režim ladění povolen"
 
 #: src/mousam.py:84
 msgid "View Logs"
-msgstr ""
+msgstr "Zobrazit záznamy"
 
 #: src/mousam.py:88
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "Režim ladění zakázán"
 
 #: src/mousam.py:125
-#, fuzzy
 msgid "Refresh weather"
 msgstr "Obnovit počasí"
 
 #: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
 msgid "Locations"
-msgstr "Lokace"
+msgstr "Místa"
 
 #: src/mousam.py:146
 msgid "Compact Mode"
-msgstr ""
+msgstr "Kompaktní režim"
 
 #: src/mousam.py:172 src/shortcutsDialog.ui:45
 msgid "Preferences"
@@ -729,7 +721,7 @@ msgstr "Ukončit"
 
 #: src/mousam.py:279
 msgid "Direction"
-msgstr ""
+msgstr "Směr"
 
 #: src/mousam.py:293
 msgid "Dewpoint"
@@ -737,11 +729,11 @@ msgstr "Rosný bod"
 
 #: src/mousam.py:345
 msgid "Please check your connection."
-msgstr ""
+msgstr "Zkontrolujte prosím své připojení."
 
 #: src/mousam.py:350
 msgid "Fetch Error"
-msgstr ""
+msgstr "Chyba načítání"
 
 #: src/mousam.py:364
 msgid "Getting Weather Data"
@@ -753,66 +745,61 @@ msgstr "Vítejte v aplikaci Mousam"
 
 #: src/mousam.py:372
 msgid "Add a location to get started."
-msgstr ""
+msgstr "Začněte přidáním místa."
 
 #: src/mousam.py:373
-#, fuzzy
 msgid "Add Location"
-msgstr "Přidat novou lokaci"
+msgstr "Přidat místo"
 
 #: src/mousam.py:387
 msgid "Retry"
-msgstr ""
+msgstr "Zkusit znovu"
 
 #: src/windowAbout.py:20
 msgid "Copyright © 2024 Mousam Developers"
 msgstr "Copyright © 2024 vývojáři Mousam"
 
 #: src/windowAbout.py:24
-#, fuzzy
 msgid "translator-credits"
-msgstr "Jonáš Loskot <jonas@jonasloskot.cz>"
+msgstr ""
+"Jonáš Loskot <jonas@jonasloskot.cz>\n"
+"seja-arctic-fox <seja.czstudio@gmail.com>"
 
 #: src/windowLocations.py:54
 msgid "Add New Location"
-msgstr "Přidat novou lokaci"
+msgstr "Přidat nové místo"
 
 #: src/windowLocations.py:70
 msgid "Search for a city"
 msgstr "Hledat město"
 
 #: src/windowLocations.py:84
-#, fuzzy
 msgid "Search for your city..."
-msgstr "Hledat město"
+msgstr "Hledat své město..."
 
 #: src/windowLocations.py:106
-#, fuzzy
 msgid "No cities found."
-msgstr "Nenalezeny žádné výsledky!"
+msgstr "Nenalezena žádná města."
 
 #: src/windowLocations.py:144
-#, fuzzy
 msgid "Saved Locations"
-msgstr "Lokace"
+msgstr "Uložená místa"
 
 #: src/windowLocations.py:146
 msgid "Add"
 msgstr "Přidat"
 
 #: src/windowLocations.py:201
-#, fuzzy
 msgid "Location already exists"
-msgstr "Lokace již byla přidána!"
+msgstr "Místo již bylo přidáno"
 
 #: src/windowLocations.py:223
 msgid "Switched to {}"
 msgstr "Přepnuto na {}"
 
 #: src/windowPreferences.py:30
-#, fuzzy
 msgid "Weather Preferences"
-msgstr "Předvolby"
+msgstr "Předvolby počasí"
 
 #: src/windowPreferences.py:44
 msgid "Appearance"
@@ -820,46 +807,43 @@ msgstr "Vzhled"
 
 #: src/windowPreferences.py:59
 msgid "Advanced"
-msgstr ""
+msgstr "Pokročilé"
 
 #: src/windowPreferences.py:64
 msgid "Logging &amp; Debugging"
-msgstr ""
+msgstr "Záznamy a ladění"
 
 #: src/windowPreferences.py:74
 msgid "Icon Theme"
-msgstr ""
+msgstr "Téma ikon"
 
 #: src/windowPreferences.py:75
 msgid "Choose between Default and Material design weather icons"
-msgstr ""
+msgstr "Vybrat mezi Výchozím a Material designem ikon počasí"
 
 #: src/windowPreferences.py:85
 msgid "Default"
-msgstr ""
+msgstr "Výchozí"
 
 #: src/windowPreferences.py:90
 msgid "Material"
-msgstr ""
+msgstr "Material"
 
 #: src/windowPreferences.py:105
 msgid "Dynamic Background"
 msgstr "Dynamické pozadí"
 
 #: src/windowPreferences.py:107
-#, fuzzy
 msgid "App background changes based on current weather conditions"
-msgstr ""
-"Pozadí aplikace se změní v závislosti na aktuálním počasí (vyžadován restart)"
+msgstr "Pozadí aplikace se změní podle aktuálního stavu počasí"
 
 #: src/windowPreferences.py:121
 msgid "Time Format"
 msgstr "Formát času"
 
 #: src/windowPreferences.py:122
-#, fuzzy
 msgid "Weather time format"
-msgstr "Formát času počasí (vyžadován restart)"
+msgstr "Formát času počasí"
 
 #: src/windowPreferences.py:132
 msgid "24 Hour"
@@ -871,20 +855,19 @@ msgstr "dop. / odp."
 
 #: src/windowPreferences.py:153
 msgid "Auto Refresh"
-msgstr ""
+msgstr "Automatické obnovení"
 
 #: src/windowPreferences.py:154
 msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+msgstr "Automaticky obnovit data o počasí v určeném intervalu"
 
 #: src/windowPreferences.py:171
-#, fuzzy
 msgid "Show Notifications"
-msgstr "Lokace"
+msgstr "Zobrazit oznámení"
 
 #: src/windowPreferences.py:172
 msgid "Show notification when weather is refreshed automatically"
-msgstr ""
+msgstr "Zobrazit oznámení při automatickém obnovení počasí"
 
 #: src/windowPreferences.py:187
 msgid "Units &amp; Measurements"
@@ -892,72 +875,72 @@ msgstr "Jednotky a míry"
 
 #: src/windowPreferences.py:192
 msgid "System Unit"
-msgstr ""
+msgstr "Měrný systém"
 
 #: src/windowPreferences.py:193
 msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
 msgstr ""
+"Metrické (C, mm, km/h) nebo imperiální (F, palce, mph) [vyžadován restart]"
 
 #: src/windowPreferences.py:204
 msgid "Metric"
-msgstr ""
+msgstr "Metrické"
 
 #: src/windowPreferences.py:209
 msgid "Imperial"
-msgstr ""
+msgstr "Imperiální"
 
 #: src/windowPreferences.py:227
 msgid "Precipitation in inches"
 msgstr "Srážky v palcích"
 
 #: src/windowPreferences.py:228
-#, fuzzy
 msgid "This option works better in heavy precipitation"
-msgstr "Tato možnost funguje lépe u silných srážek (vyžadováno obnovení)"
+msgstr "Tato možnost funguje lépe u silných srážek"
 
 #: src/windowPreferences.py:242
 msgid "Data Management"
-msgstr ""
+msgstr "Správa dat"
 
 #: src/windowPreferences.py:247
 msgid "Reset to Default"
-msgstr ""
+msgstr "Obnovit výchozí"
 
 #: src/windowPreferences.py:248
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Vymazat všechny předvolby a obnovit výchozí hodnoty"
 
 #: src/windowPreferences.py:251
 msgid "Reset…"
-msgstr ""
+msgstr "Resetovat…"
 
 #: src/windowPreferences.py:260
 msgid "Debug Mode"
-msgstr ""
+msgstr "Režim ladění"
 
 #: src/windowPreferences.py:261
 msgid "Enable verbose logging and console output"
-msgstr ""
+msgstr "Povolit podrobné záznamy a výstup do konzole"
 
 #: src/windowPreferences.py:274
 msgid "Open Logs Folder"
-msgstr ""
+msgstr "Otevřít složku se záznamy"
 
 #: src/windowPreferences.py:275
 msgid "Access the application log files"
-msgstr ""
+msgstr "Přistoupit k souborům záznamů aplikace"
 
 #: src/windowPreferences.py:288
 msgid "Clear Log File"
-msgstr ""
+msgstr "Vymazat soubor záznamů"
 
 #: src/windowPreferences.py:289
 msgid "Delete all contents of the current log file"
-msgstr ""
+msgstr "Vymazat veškerý obsah současného souboru záznamů"
 
 #: src/windowPreferences.py:340
 msgid "Icon theme changed to {}"
-msgstr ""
+msgstr "Téma ikon změněno na {}"
 
 #: src/windowPreferences.py:349
 msgid "Switched to - {}"
@@ -965,41 +948,43 @@ msgstr "Přepnuto na – {}"
 
 #: src/windowPreferences.py:368
 msgid "Logs cleared"
-msgstr ""
+msgstr "Záznamy vymazány"
 
 #: src/windowPreferences.py:370
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "Nepodařilo se vymazat záznamy"
 
 #: src/windowPreferences.py:381
 msgid "Auto refresh disabled"
-msgstr ""
+msgstr "Automatické obnovení zakázáno"
 
 #: src/windowPreferences.py:383
 msgid "Auto refresh every {} min"
-msgstr ""
+msgstr "Automatické obnovení každých {} minut"
 
 #: src/windowPreferences.py:390
 msgid "Reset Settings?"
-msgstr ""
+msgstr "Resetovat nastavení?"
 
 #: src/windowPreferences.py:392
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
+"Toto obnoví všechna nastavení na výchozí možnosti a vymaže vaše uložená "
+"města. Tuto akci nelze vrátit zpět."
 
 #: src/windowPreferences.py:396
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: src/windowPreferences.py:397
 msgid "Reset"
-msgstr ""
+msgstr "Resetovat"
 
 #: src/windowPreferences.py:438
 msgid "Preferences have been reset"
-msgstr ""
+msgstr "Předvolby byly vyresetovány"
 
 #: src/shortcutsDialog.ui:29
 msgid "General"
