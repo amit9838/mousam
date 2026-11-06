@@ -15,7 +15,7 @@ from .CORE_Helpers import (  # noqa: E402
     get_selected_city_name,
     get_timezone_from_selected_city,
 )
-from gettext import gettext as _  # noqa: E402
+from gettext import gettext as _, pgettext as C_  # noqa: E402
 
 # Space between the content and the window edge
 MARGIN = 25
@@ -35,6 +35,13 @@ def wind_direction_name(degrees: Optional[float]) -> str:
     if degrees is None:
         return "--"
     return WIND_DIRECTIONS[int((degrees + 11.25) / 22.5) % 16]
+
+
+def format_pressure(value: Optional[float], unit: str) -> str:
+    """Pressure rounded for a glance: whole hPa, or two decimals for inHg."""
+    if value is None:
+        return "--"
+    return f"{value:.2f} {unit}" if unit == "inHg" else f"{value:.0f} {unit}"
 
 
 def _label(text: str, css_classes: list, halign: Gtk.Align = Gtk.Align.START) -> Gtk.Label:
@@ -62,6 +69,9 @@ class CompactWeather(Gtk.Overlay):
 
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        # Size to the visible page, so the window shrinks back after an error
+        self.stack.set_hhomogeneous(False)
+        self.stack.set_vhomogeneous(False)
         self.set_child(self.stack)
         self._setup_back_button()
 
@@ -107,20 +117,26 @@ class CompactWeather(Gtk.Overlay):
                 spinner.set_size_request(32, 32)
                 self.stack.add_named(spinner, "loader")
             elif name == "error":
-                icon = Gtk.Image(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER, pixel_size=64, opacity=0.5)
-                # Click the icon to retry
-                click = Gtk.GestureClick()
-                click.connect("pressed", lambda *_: self.refresh())
-                icon.add_controller(click)
-                self.stack.add_named(icon, "error")
+                retry = Gtk.Button(label=_("Retry"), halign=Gtk.Align.CENTER)
+                retry.add_css_class("pill")
+                retry.add_css_class("suggested-action")
+                retry.connect("clicked", lambda *_: self.refresh())
+                page = Adw.StatusPage(child=retry)
+                page.add_css_class("compact")
+                self.stack.add_named(page, "error")
         self.stack.set_visible_child_name(name)
 
     def _show_error(self, message: str) -> bool:
         self._show_page("error")
-        icon = self.stack.get_child_by_name("error")
-        is_net_error = str(message) == _("No Internet")
-        icon.set_from_icon_name("network-error-symbolic" if is_net_error else "computer-fail-symbolic")
-        icon.set_tooltip_text(str(message))
+        page = self.stack.get_child_by_name("error")
+        if str(message) == _("No Internet"):
+            page.set_icon_name("network-error-symbolic")
+            page.set_title(_("No Internet"))
+            page.set_description(_("Please check your connection."))
+        else:
+            page.set_icon_name("computer-fail-symbolic")
+            page.set_title(_("Fetch Error"))
+            page.set_description(str(message))
         return GLib.SOURCE_REMOVE
 
     def _build_content(self) -> None:
@@ -184,21 +200,22 @@ class CompactWeather(Gtk.Overlay):
         details = Gtk.Grid(column_spacing=8, hexpand=True, halign=Gtk.Align.END, valign=Gtk.Align.START)
         details.set_margin_top(15)
 
-        self.lbl_time = _label("", ["compact-detail-value", "compact-time-value"], Gtk.Align.END)
+        self.lbl_time = _label("", ["compact-time-value"], Gtk.Align.END)
         self.lbl_time.set_margin_bottom(5)
         details.attach(self.lbl_time, 0, 0, 2, 1)
         self._start_clock()
 
+        from .CORE_weatherData import weather_manager
         wind = data.windspeed_10m
-        wind_str = f"{wind.data} {wind.unit}" if wind.data is not None else "--"
+        wind_str = f"{wind.data:.0f} {wind.unit}" if wind.data is not None else "--"
         hum = data.relativehumidity_2m.data
-        pres = data.surface_pressure
-        aqi = aq_data.current_us_aqi if aq_data and aq_data.current_us_aqi is not None else "--"
+        aqi = aq_data.current_us_aqi if aq_data else None
         rows = [
             (_("Wind"), f"{wind_str} • {wind_direction_name(data.winddirection_10m.data)}"),
-            (_("Hum."), f"{hum} %" if hum is not None else "-- %"),
-            (_("Pres."), f"{pres.data:.1f} {pres.unit}" if pres.data is not None else "--"),
-            (_("AQI"), str(aqi)),
+            (_("Humidity"), f"{hum} %" if hum is not None else "-- %"),
+            (_("Pressure"), format_pressure(data.surface_pressure.data, data.surface_pressure.unit)),
+            # A level word with the number: "202 • Severe"
+            (_("AQI"), f"{aqi} • {weather_manager.classify_aqi(aqi)}" if aqi is not None else "--"),
         ]
         for row, (name, value) in enumerate(rows, start=1):
             details.attach(_label(name, ["compact-detail-label"]), 0, row, 1, 1)
@@ -227,8 +244,10 @@ class CompactWeather(Gtk.Overlay):
 
     def _update_clock(self) -> bool:
         now = datetime.datetime.now(self._timezone)
-        time_format = "%H:%M" if settings.is_using_24h_clock else "%I:%M %p"
-        self.lbl_time.set_label(f"{now.strftime('%d %B')} • {now.strftime(time_format)}")
+        # Translators: strftime format of the date in compact mode ("6 November")
+        date_format = C_("compact date", "%-d %B")
+        time_format = "%H:%M" if settings.is_using_24h_clock else "%-I:%M %p"
+        self.lbl_time.set_label(f"{now.strftime(date_format)} • {now.strftime(time_format)}")
         return GLib.SOURCE_CONTINUE
 
     def _stop_clock(self) -> None:
@@ -239,7 +258,9 @@ class CompactWeather(Gtk.Overlay):
     # ---------- Back button ----------
 
     def _setup_back_button(self) -> None:
-        self.btn_back = Gtk.Button(icon_name="view-fullscreen-symbolic", visible=False)
+        self.btn_back = Gtk.Button(
+            icon_name="view-fullscreen-symbolic", tooltip_text=_("Leave Compact Mode"), visible=False
+        )
         self.btn_back.add_css_class("flat")
         self.btn_back.add_css_class("circular")
         self.btn_back.set_halign(Gtk.Align.END)
@@ -273,6 +294,13 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         # Not resizable: the window takes the size of its content
         self.set_resizable(False)
         self.connect("destroy", self._on_window_destroy)
+
+        # Esc goes back to the normal window, so it works without a mouse
+        shortcuts = Gtk.ShortcutController()
+        shortcuts.add_shortcut(Gtk.Shortcut.new(
+            Gtk.ShortcutTrigger.parse_string("Escape"), Gtk.NamedAction.new("app.show-normal")
+        ))
+        self.add_controller(shortcuts)
 
         self.compact_view = CompactWeather(on_back_clicked=self._on_back)
         handle = Gtk.WindowHandle(child=self.compact_view)
