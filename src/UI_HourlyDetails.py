@@ -172,7 +172,10 @@ class HourlyDetails(Gtk.Grid):
     def _build_hourly_list(self, page_name, hourly_data):
         """Builds the horizontally scrollable list of hourly items."""
         scrolled_window = Gtk.ScrolledWindow(hexpand=True, margin_top=4, margin_bottom=4)
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
+        # Scroll horizontally only. ALWAYS (not AUTOMATIC) makes GTK reserve
+        # room for a classic, non-overlay scrollbar; with AUTOMATIC it took its
+        # height from the tiles and cut off the temperatures.
+        scrolled_window.set_policy(Gtk.PolicyType.ALWAYS, Gtk.PolicyType.NEVER)
         scrolled_window.set_kinetic_scrolling(True)
         self.scrolled_window = scrolled_window
 
