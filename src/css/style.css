@@ -685,3 +685,66 @@
 .app-body {
     padding: 20px;
 }
+/* ------------------------------------------
+   CURRENT CONDITIONS (top section)
+------------------------------------------ */
+/* Digits have no descenders: trim the empty space the big font leaves
+   above and below them */
+.current-temp {
+    line-height: 1;
+    margin-top: -0.5rem;
+    margin-bottom: -0.75rem;
+}
+
+/* The bar is only tinted while the message is open; closed, the info
+   button stands alone. The tint lets the background show through. */
+.current-overview {
+    margin-top: -0.5rem;
+    padding: 0.25rem;
+    border-radius: 9999px;
+    transition: background 200ms;
+}
+
+.current-overview.open {
+    background: alpha(currentColor, 0.06);
+}
+
+/* Same tint over the weather gradients, with readable text */
+.current-overview.on-dynamic-bg {
+    color: white;
+}
+
+.current-overview.on-dynamic-bg.open {
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/* Ghost button: just the icon, dim until used; a round fill shows on hover */
+.current-overview-button {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    padding: 0;
+    border-radius: 9999px;
+    background: none;
+    box-shadow: none;
+    opacity: 0.55;
+    transition: background 150ms, opacity 150ms;
+}
+
+.current-overview-button:hover {
+    background: alpha(currentColor, 0.1);
+}
+
+/* Bright while hovered, focused or while the message is shown */
+.current-overview-button:hover,
+.current-overview-button:focus-visible,
+.current-overview.open .current-overview-button {
+    opacity: 1;
+}
+
+.current-overview-button:active {
+    background: alpha(currentColor, 0.18);
+}
+
+.current-overview-heading {
+    letter-spacing: 0.08em;
+}
