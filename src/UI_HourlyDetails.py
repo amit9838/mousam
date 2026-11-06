@@ -48,14 +48,14 @@ class HourlyDetails(Gtk.Grid):
         style_buttons_box.set_valign(Gtk.Align.CENTER)
 
         button_data = [
-            ("Hourly", "hourly"),
-            ("Wind", "wind"),
-            ("Precipitation", "prec"),
+            (_("Hourly"), "hourly"),
+            (_("Wind"), "wind"),
+            (_("Precipitation"), "prec"),
         ]
 
         first_btn = None
         for label, page_name in button_data:
-            button = Gtk.ToggleButton.new_with_label(_(label))
+            button = Gtk.ToggleButton.new_with_label(label)
             button.set_size_request(80, 16)
             button.set_css_classes(["btn-sm"])
             if first_btn is None:
