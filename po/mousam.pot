@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 22:46+0530\n"
+"POT-Creation-Date: 2026-11-07 00:47+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,6 +179,14 @@ msgstr ""
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:71
+msgid "Forecast page"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
 #: src/configs.py:33
@@ -575,19 +583,19 @@ msgid "Northwest"
 msgstr ""
 
 #: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
-#: src/UI_CompactWeather.py:134 src/mousam.py:345
+#: src/UI_CompactWeather.py:134 src/mousam.py:346
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:387
+#: src/UI_CompactWeather.py:120 src/mousam.py:388
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:345
+#: src/UI_CompactWeather.py:135 src/mousam.py:346
 msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:138 src/mousam.py:350
+#: src/UI_CompactWeather.py:138 src/mousam.py:351
 msgid "Fetch Error"
 msgstr ""
 
@@ -621,24 +629,48 @@ msgstr ""
 msgid "Max {max} · Min {min}"
 msgstr ""
 
-#: src/UI_CurrentCond.py:96
+#: src/UI_CurrentCond.py:115
 #, python-brace-format
-msgid "Feels like • <b> {0} {1}</b>"
+msgid "Feels like {0}"
 msgstr ""
 
-#: src/UI_Forecast.py:149 src/UI_Forecast.py:403
-msgid "Tomorrow"
+#: src/UI_CurrentCond.py:129
+#, python-brace-format
+msgid "High {high} · Low {low}"
 msgstr ""
 
-#: src/UI_Forecast.py:157
-msgid "Weekly"
+#: src/UI_CurrentCond.py:186
+msgid "Show Overview"
 msgstr ""
 
-#: src/UI_Forecast.py:401
+#: src/UI_CurrentCond.py:202
+msgctxt "overview heading"
+msgid "Tonight"
+msgstr ""
+
+#: src/UI_CurrentCond.py:204
+msgctxt "overview heading"
 msgid "Today"
 msgstr ""
 
-#: src/UI_Forecast.py:424
+#: src/UI_CurrentCond.py:267
+msgctxt "current date"
+msgid "%A, %-d %b"
+msgstr ""
+
+#: src/UI_Forecast.py:153 src/UI_Forecast.py:409
+msgid "Tomorrow"
+msgstr ""
+
+#: src/UI_Forecast.py:161
+msgid "Weekly"
+msgstr ""
+
+#: src/UI_Forecast.py:407
+msgid "Today"
+msgstr ""
+
+#: src/UI_Forecast.py:428
 #, python-brace-format
 msgid "Chance of rain: {percent}%"
 msgstr ""
@@ -734,32 +766,32 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/mousam.py:290
+#: src/mousam.py:291
 msgid "Direction (from)"
 msgstr ""
 
-#: src/mousam.py:293
+#: src/mousam.py:294
 msgctxt "compass"
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:304
+#: src/mousam.py:305
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:364
+#: src/mousam.py:365
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:371
+#: src/mousam.py:372
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:372
+#: src/mousam.py:373
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:373
+#: src/mousam.py:374
 msgid "Add Location"
 msgstr ""
 
