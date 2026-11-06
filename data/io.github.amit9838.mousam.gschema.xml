@@ -52,6 +52,11 @@
       <summary>Show weather update notifications</summary>
       <description>Show a notification when weather data is updated.</description>
     </key>
+    <key name="show-overview" type="b">
+      <default>true</default>
+      <summary>Show the weather overview</summary>
+      <description>Show a short summary of the coming hours under the current conditions.</description>
+    </key>
     <key name="debug-mode" type="b">
       <default>false</default>
       <summary>Enable debug mode</summary>

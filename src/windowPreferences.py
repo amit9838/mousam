@@ -51,6 +51,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._add_dynamic_background_row(general_group)
         self._add_icon_theme_row(general_group)
         self._add_notification_row(general_group)
+        self._add_overview_row(general_group)
         self._add_time_format_row(general_group)
         self._add_auto_refresh_row(general_group)
         self._add_units_and_measurements_group(general_group)
@@ -178,6 +179,21 @@ class WeatherPreferences(Adw.PreferencesWindow):
         switch.connect("state-set", self._on_notifications_toggled)
         row.add_suffix(switch)
         self._notification_switch = switch
+        parent.add(row)
+
+    def _add_overview_row(self, parent: Adw.PreferencesGroup) -> None:
+        row = Adw.ActionRow(
+            title=_("Weather Overview"),
+            subtitle=_("Show a short summary of the coming hours"),
+            icon_name="dialog-information-symbolic",
+            activatable=True,
+        )
+        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
+        switch.set_active(settings.show_overview)
+        switch.connect("state-set", self._on_overview_toggled)
+        row.add_suffix(switch)
+        row.set_activatable_widget(switch)
+        self._overview_switch = switch
         parent.add(row)
 
     def _add_units_and_measurements_group(self, parent: Adw.PreferencesGroup) -> None:
@@ -322,6 +338,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
         # Notifications
         self._notification_switch.set_active(settings.show_notifications)
 
+        # Overview
+        self._overview_switch.set_active(settings.show_overview)
+
         # Icon theme
         if settings.icon_theme == "material":
             self._icon_theme_btn_material.set_active(True)
@@ -355,6 +374,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
     def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.show_notifications = state
+
+    def _on_overview_toggled(self, switch: Gtk.Switch, state: bool) -> None:
+        # The overview engine and section follow the setting themselves
+        settings.show_overview = state
 
     def _on_debug_mode_toggled(self, switch: Gtk.Switch, state: bool) -> None:
         settings.debug_mode = state
@@ -413,6 +436,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
         self._precip_switch.set_active(settings.is_using_inch_for_prec)
         self._notification_switch.set_active(settings.show_notifications)
+        self._overview_switch.set_active(settings.show_overview)
 
         # Auto refresh combo
         self._auto_refresh_row.set_selected(0) # 0 is always OFF in our list
