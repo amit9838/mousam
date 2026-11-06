@@ -13,14 +13,11 @@ from gettext import gettext as _, pgettext as C_  # noqa: E402
 from .CORE_GTKUtils import weak_connect  # noqa: E402
 from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city  # noqa: E402
 from .CORE_Icons import condition, create_weather_icon  # noqa: E402
+from .CORE_Overview import overview_engine  # noqa: E402
 from .settings import settings  # noqa: E402
 
-# TODO: placeholder until the overview is generated from the forecast.
-# Kept out of _() so translators don't get a throwaway string.
-PLACEHOLDER_OVERVIEW = "Clear and calm. Cooling to 14° by 6 AM, with haze likely at sunrise."
-
-# How long the overview stays open after the info button is clicked
-OVERVIEW_SHOW_SECONDS = 5
+# Heading colour for each insight severity (libadwaita style classes)
+SEVERITY_CSS = {"info": "accent", "warning": "warning", "error": "error"}
 
 
 class CurrentCondition(Gtk.Box):
@@ -32,11 +29,15 @@ class CurrentCondition(Gtk.Box):
         self.set_hexpand(True)
         self._clock_id = 0
         self._overview_hide_id = 0
+        self._overview_handler_id = 0
+        self._overview_setting_id = 0
+        self._overview_insight = None
         self._timezone = self._city_timezone()
         self.paint_ui()
 
-        # The clock only ticks while the section is on screen
-        weak_connect(self, "map", self._start_clock)
+        # The clock ticks, and the overview is followed, only while the
+        # section is on screen
+        weak_connect(self, "map", self._on_map)
         weak_connect(self, "unmap", self._on_unmap)
 
     def paint_ui(self) -> None:
@@ -67,7 +68,7 @@ class CurrentCondition(Gtk.Box):
         # The location takes the rest of the line, pushing it to the right
         top.get_child_at_index(1).set_hexpand(True)
 
-        self.append(self._build_overview(data.is_day.data))
+        self.append(self._build_overview())
 
     # ---------- Conditions (left) ----------
 
@@ -173,10 +174,17 @@ class CurrentCondition(Gtk.Box):
 
     # ---------- Overview bar ----------
 
-    def _build_overview(self, is_day: int) -> Gtk.Box:
-        # Sized to its text, on the left under the conditions. Only the
-        # info button shows until it is clicked.
-        bar = Gtk.Box(margin_top=0, margin_start=3, margin_end=3, halign=Gtk.Align.START)
+    def _build_overview(self) -> Gtk.Box:
+        # Sized to its text, on the left under the conditions. While the
+        # overview is enabled the info button is always there (it keeps the
+        # space), but it only works once the engine has an insight.
+        bar = Gtk.Box(
+            margin_top=0,
+            margin_start=3,
+            margin_end=3,
+            halign=Gtk.Align.START,
+            visible=settings.show_overview,
+        )
         bar.add_css_class("current-overview")
         if settings.is_using_dynamic_bg:
             bar.add_css_class("on-dynamic-bg")
@@ -191,6 +199,7 @@ class CurrentCondition(Gtk.Box):
         button.set_css_classes(["flat", "circular", "current-overview-button"])
         weak_connect(button, "clicked", self._on_overview_clicked)
         bar.append(button)
+        self._overview_button = button
 
         self._overview_revealer = Gtk.Revealer(
             transition_type=Gtk.RevealerTransitionType.SLIDE_RIGHT,
@@ -201,39 +210,71 @@ class CurrentCondition(Gtk.Box):
         content = Gtk.Box(spacing=12, margin_start=8, margin_end=12)
         self._overview_revealer.set_child(content)
 
-        if is_day == 0:
-            heading = C_("overview heading", "Tonight")
-        else:
-            heading = C_("overview heading", "Today")
-        heading_label = Gtk.Label(label=heading.upper(), valign=Gtk.Align.CENTER)
-        heading_label.set_css_classes(["text-xs", "font-bold", "accent", "current-overview-heading"])
-        content.append(heading_label)
+        self._overview_heading = Gtk.Label(valign=Gtk.Align.CENTER)
+        content.append(self._overview_heading)
 
         content.append(Gtk.Separator(orientation=Gtk.Orientation.VERTICAL))
 
+        # The insight's icon, just before the message (hidden when it has none)
+        message_box = Gtk.Box(spacing=6)
+        content.append(message_box)
+        self._overview_icon = Gtk.Image(valign=Gtk.Align.CENTER, visible=False)
+        self._overview_icon.add_css_class("opacity-75")
+        message_box.append(self._overview_icon)
+
         # One line, as wide as its text; once the box spans the whole
         # section the text is ellipsized (the full text is in the tooltip)
-        message = Gtk.Label(
-            label=PLACEHOLDER_OVERVIEW,
-            tooltip_text=PLACEHOLDER_OVERVIEW,
-            xalign=0,
-            ellipsize=Pango.EllipsizeMode.END,
-        )
-        message.set_css_classes(["text-sm", "opacity-75"])
-        content.append(message)
+        self._overview_label = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END)
+        self._overview_label.set_css_classes(["text-sm", "opacity-75"])
+        message_box.append(self._overview_label)
 
         return bar
 
-    def _on_overview_clicked(self, _button: Gtk.Button) -> None:
-        """Show the overview for a few seconds; a second click hides it."""
-        self._cancel_overview_hide()
-        if self._overview_revealer.get_reveal_child():
-            self._overview_revealer.set_reveal_child(False)
+    def _set_overview(self, insight, heading: Optional[str]) -> None:
+        """Show the engine's insight; without one the button does nothing."""
+        self._overview_insight = insight
+        self._overview_button.set_sensitive(insight is not None)
+        if insight is None:
+            self._close_overview()
             return
+
+        # The heading's colour follows the severity, always with words
+        self._overview_heading.set_label((heading or "").upper())
+        self._overview_heading.set_css_classes(
+            ["text-xs", "font-bold", "current-overview-heading", SEVERITY_CSS.get(insight.severity, "accent")]
+        )
+        self._overview_icon.set_visible(insight.icon is not None)
+        if insight.icon:
+            self._overview_icon.set_from_icon_name(insight.icon)
+        self._overview_label.set_label(insight.message)
+        self._overview_label.set_tooltip_text(insight.message)
+
+    def _on_overview_setting_changed(self, *_args) -> None:
+        self._overview_bar.set_visible(settings.show_overview)
+
+    def _on_overview_changed(self, engine, announce: bool) -> None:
+        # New text always; open it only when the engine announces it
+        insight = engine.current()
+        self._set_overview(insight, engine.heading)
+        if announce and insight is not None:
+            self._open_overview()
+
+    def _on_overview_clicked(self, _button: Gtk.Button) -> None:
+        """Show the overview for a while; a second click hides it."""
+        if self._overview_revealer.get_reveal_child():
+            self._close_overview()
+        else:
+            self._open_overview()
+
+    def _open_overview(self) -> None:
+        if self._overview_insight is None:
+            return
+        self._cancel_overview_hide()
         self._overview_bar.add_css_class("open")
         self._overview_revealer.set_reveal_child(True)
+        # Severe insights stay open longer
         self._overview_hide_id = GLib.timeout_add_seconds(
-            OVERVIEW_SHOW_SECONDS, self._hide_overview
+            self._overview_insight.show_seconds, self._hide_overview
         )
 
     def _on_overview_revealed(self, revealer: Gtk.Revealer, _pspec) -> None:
@@ -246,16 +287,41 @@ class CurrentCondition(Gtk.Box):
         self._overview_revealer.set_reveal_child(False)
         return GLib.SOURCE_REMOVE
 
+    def _close_overview(self) -> None:
+        self._cancel_overview_hide()
+        self._overview_revealer.set_reveal_child(False)
+
     def _cancel_overview_hide(self) -> None:
         if self._overview_hide_id:
             GLib.source_remove(self._overview_hide_id)
             self._overview_hide_id = 0
 
+    def _on_map(self, *_args) -> None:
+        self._start_clock()
+        # Subscribe to the overview; it may already have an insight
+        self._set_overview(overview_engine.current(), overview_engine.heading)
+        if not self._overview_handler_id:
+            self._overview_handler_id = weak_connect(
+                overview_engine, "overview-changed", self._on_overview_changed
+            )
+        # Follow the preference too, so the button comes and goes at once
+        self._on_overview_setting_changed()
+        if not self._overview_setting_id:
+            self._overview_setting_id = weak_connect(
+                settings, "changed::show-overview", self._on_overview_setting_changed
+            )
+
     def _on_unmap(self, *_args) -> None:
-        # Timers must not outlive the section (it is rebuilt on refresh)
+        # Timers and the engine's handler must not outlive the section
+        # (it is rebuilt on refresh)
         self._stop_clock()
-        self._cancel_overview_hide()
-        self._overview_revealer.set_reveal_child(False)
+        self._close_overview()
+        if self._overview_handler_id:
+            overview_engine.disconnect(self._overview_handler_id)
+            self._overview_handler_id = 0
+        if self._overview_setting_id:
+            settings.disconnect(self._overview_setting_id)
+            self._overview_setting_id = 0
 
     # ---------- Clock ----------
 
