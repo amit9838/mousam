@@ -289,7 +289,7 @@ class CompactWeather(Gtk.Overlay):
         add_detail_row(_("Hum."), hum_str, 2)
 
         pres = data.surface_pressure.data
-        pres_str = f"{pres} {data.surface_pressure.unit}" if pres is not None else "--"
+        pres_str = f"{pres:.1f} {data.surface_pressure.unit}" if pres is not None else "--"
         add_detail_row(_("Pres."), pres_str, 3)
 
         # AQI (data is guaranteed ready)

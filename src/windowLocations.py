@@ -130,7 +130,7 @@ class WeatherLocations(Adw.PreferencesWindow):
     def __init__(self, application, **kwargs):
         super().__init__(**kwargs)
         self.application = application
-        self.row_map = {}  # Track rows to prevent full UI rebuilds
+        self.location_rows = []
 
         self.set_title(_("Locations"))
         self.set_transient_for(application)
@@ -155,12 +155,9 @@ class WeatherLocations(Adw.PreferencesWindow):
 
     def _refresh_list(self):
         """Clears and re-populates the location rows."""
-        # Senior move: Clear rows efficiently
-        while child := self.location_grp.get_row(0):
-            if isinstance(child, Adw.ActionRow):
-                self.location_grp.remove(child)
-            else:
-                break  # Keep the header suffix if it's there
+        for row in self.location_rows:
+            self.location_grp.remove(row)
+        self.location_rows.clear()
 
         for city_str in settings.added_cities:
             if not city_str:
@@ -169,6 +166,7 @@ class WeatherLocations(Adw.PreferencesWindow):
             city_data = LocationData.from_storage_string(city_str)
             row = self._create_row(city_data)
             self.location_grp.add(row)
+            self.location_rows.append(row)
 
     def _create_row(self, data: Dict) -> Adw.ActionRow:
         display_name = LocationData.format_display_name(data)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-26 18:09+0530\n"
+"POT-Creation-Date: 2026-08-05 12:03-0300\n"
 "PO-Revision-Date: 2026-02-02 02:49+0200\n"
 "Last-Translator: Juha Antikainen <jussi.antikainen@gmail.com>\n"
 "Language-Team: Suomi\n"
@@ -19,17 +19,17 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:2
+#: data/io.github.amit9838.mousam.desktop.in:3
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:15
+#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
 msgid "Weather at a glance"
 msgstr "Sääkatsaus"
 
-#: data/io.github.amit9838.mousam.desktop.in:9
+#: data/io.github.amit9838.mousam.desktop.in:10
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr "Sää;Mousam;Sade;Pilvi;Ennuste;GTK4;Python;lämpötila;"
 
@@ -51,37 +51,56 @@ msgstr ""
 "indeksin, ilmanpaineen ja paljon muuta"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid ""
-"Utilizes graphical representations, such as temperature , precipitation "
-"graphs and wind-speed with direction to provide an hourly forecast for the "
-"next 24 hours"
+msgid "Comprehensive Air Quality Index and air pollutants data"
 msgstr ""
-"Käyttää selkeitä graafeja, kuten lämpötila- ja sadekuntokäyriä sekä tuulen "
-"nopeutta ja suuntaa, tarjotakseen tuntikohtaisen ennusteen seuraaville 24 "
-"tunnille"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-#, fuzzy
-msgid "Also provides tomorrow and 7-day forecasts"
-msgstr "Sisältää myös huomisen sään ja 7 päivän ennusteen"
+msgid "Compact weather mode for a minimal, focused view"
+msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "See conditions in metric or imperial systems"
+#, fuzzy
+msgid "Hourly, tomorrow, and 7-day detailed forecasts"
+msgstr "Sisältää myös huomisen sään ja 7 päivän ennusteen"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:16
+msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:17
+msgid "Hourly temperature, wind direction and precipitation tracking"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:18
+#, fuzzy
+msgid "Dynamic background styling that adapts to weather conditions"
+msgstr ""
+"Taustakuva päivittyy sääolosuhteiden perusteella (uudelleenkäynnistys "
+"vaaditaan)."
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:19
+msgid "System notifications for weather updates with configurable preferences"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:20
+#, fuzzy
+msgid "Support for both metric and imperial measurement systems"
 msgstr "Tarkastele säätietoja metrisinä tai imperiaalisina yksikköinä"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:21
-msgid "Clear Sky - day"
-msgstr "Selkeä - päivä"
+#: data/io.github.amit9838.mousam.appdata.xml.in:26
+msgid "Main dashboard showing current weather and hourly forecast"
+msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:25
-msgid "Snowfall - day"
-msgstr "Lumisade - päivä"
+#: data/io.github.amit9838.mousam.appdata.xml.in:30
+#, fuzzy
+msgid "Detailed weather conditions during rain"
+msgstr "Tämän hetken säätilanne ja ennuste."
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:29
-msgid "Clear Sky - night"
-msgstr "Selkeä - yö"
+#: data/io.github.amit9838.mousam.appdata.xml.in:34
+msgid "Night mode view"
+msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:38
+#: data/io.github.amit9838.mousam.appdata.xml.in:43
 msgid "Amit Chaudhary"
 msgstr "Amit Chaudhary"
 
@@ -165,6 +184,16 @@ msgstr ""
 msgid "Enables detailed logging and console output."
 msgstr ""
 
+#: data/io.github.amit9838.mousam.gschema.xml:62
+msgid "Icon theme"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:63
+msgid ""
+"Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
+"material design icons)"
+msgstr ""
+
 #: src/configs.py:33
 msgid "Off"
 msgstr ""
@@ -193,111 +222,111 @@ msgstr ""
 msgid "Unknown City"
 msgstr ""
 
-#: src/CORE_Icons.py:134
+#: src/CORE_Icons.py:261
 msgid "Clear sky"
 msgstr "Selkeä"
 
-#: src/CORE_Icons.py:135
+#: src/CORE_Icons.py:262
 msgid "Few Clouds"
 msgstr "Melkein selkeä"
 
-#: src/CORE_Icons.py:136
+#: src/CORE_Icons.py:263
 msgid "Partly Cloudy"
 msgstr "Puolipilvinen"
 
-#: src/CORE_Icons.py:137
+#: src/CORE_Icons.py:264
 msgid "Overcast"
 msgstr "Pilvinen"
 
-#: src/CORE_Icons.py:138
+#: src/CORE_Icons.py:265
 msgid "Fog"
 msgstr "Sumua"
 
-#: src/CORE_Icons.py:139
+#: src/CORE_Icons.py:266
 msgid "Mist"
 msgstr "Utua"
 
-#: src/CORE_Icons.py:140
+#: src/CORE_Icons.py:267
 msgid "Light Drizzle"
 msgstr "Kevyt Tihkusade"
 
-#: src/CORE_Icons.py:141
+#: src/CORE_Icons.py:268
 msgid "Moderate Drizzle"
 msgstr "Kohtalainen Tihkusade"
 
-#: src/CORE_Icons.py:142
+#: src/CORE_Icons.py:269
 msgid "Heavy Intensity Drizzle"
 msgstr "Voimakas Tihkusade"
 
-#: src/CORE_Icons.py:143
+#: src/CORE_Icons.py:270
 msgid "Light Freezing Drizzle"
 msgstr "Kevyt Jäätävä Tihkusade"
 
-#: src/CORE_Icons.py:144
+#: src/CORE_Icons.py:271
 msgid "Heavy Freezing Drizzle"
 msgstr "Voimakas Jäätävä Tihkusade"
 
-#: src/CORE_Icons.py:145
+#: src/CORE_Icons.py:272
 msgid "Light Rain"
 msgstr "Kevyt Sade"
 
-#: src/CORE_Icons.py:146
+#: src/CORE_Icons.py:273
 msgid "Moderate Rain"
 msgstr "Kohtalainen Sade"
 
-#: src/CORE_Icons.py:147
+#: src/CORE_Icons.py:274
 msgid "Heavy Rain"
 msgstr "Voimakas Sade"
 
-#: src/CORE_Icons.py:148
+#: src/CORE_Icons.py:275
 msgid "Light Freezing Rain"
 msgstr "Kevyt Jäätävä Sade"
 
-#: src/CORE_Icons.py:149
+#: src/CORE_Icons.py:276
 msgid "Heavy Freezing Rain"
 msgstr "Voimakas Jäätävä Sade"
 
-#: src/CORE_Icons.py:150
+#: src/CORE_Icons.py:277
 msgid "Light Snow Fall"
 msgstr "Kevyt Lumisade"
 
-#: src/CORE_Icons.py:151
+#: src/CORE_Icons.py:278
 msgid "Moderate Snow Fall"
 msgstr "Kohtalainen Lumisade"
 
-#: src/CORE_Icons.py:152
+#: src/CORE_Icons.py:279
 msgid "Heavy Snow Fall"
 msgstr "Voimakas Lumisade"
 
-#: src/CORE_Icons.py:153
+#: src/CORE_Icons.py:280
 msgid "Snow grains"
 msgstr "Lumijyväsiä"
 
-#: src/CORE_Icons.py:154
+#: src/CORE_Icons.py:281
 msgid "Light Rain Showers"
 msgstr "Kevyitä Sadekuuroja"
 
-#: src/CORE_Icons.py:155
+#: src/CORE_Icons.py:282
 msgid "Moderate Rain Showers"
 msgstr "Kohtalaisia Sadekuuroja"
 
-#: src/CORE_Icons.py:156
+#: src/CORE_Icons.py:283
 msgid "Heavy Rain Showers"
 msgstr "Voimakkaita Sadekuuroja"
 
-#: src/CORE_Icons.py:157
+#: src/CORE_Icons.py:284
 msgid "Light Snow Showers"
 msgstr "Kevyitä Lumikuuroja"
 
-#: src/CORE_Icons.py:158
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Showers "
 msgstr "Voimakkaita Lumikuuroja "
 
-#: src/CORE_Icons.py:159
+#: src/CORE_Icons.py:286
 msgid "Thunderstorm"
 msgstr "Ukkosmyrsky"
 
-#: src/CORE_Icons.py:160
+#: src/CORE_Icons.py:287
 msgid "Thunderstorm with Hail"
 msgstr "Ukkosmyrsky ja rakeita"
 
@@ -511,9 +540,20 @@ msgstr "Nousee"
 msgid "Sunset"
 msgstr "Laskee"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:287
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
+#: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr "Tuuli"
+
+#: src/UI_HourlyDetails.py:51
+#, fuzzy
+msgid "Hourly"
+msgstr "24 Tuntia"
+
+#: src/UI_HourlyDetails.py:53
+#, fuzzy
+msgid "Precipitation"
+msgstr "Sademäärä tuumina"
 
 #: src/UI_CardSquare.py:31
 msgid "Pressure"
@@ -527,35 +567,35 @@ msgstr "Kosteus"
 msgid "UV Index"
 msgstr "UV Indeksi"
 
-#: src/UI_CardSquare.py:209 src/UI_CardSquare.py:217
+#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
 msgid "North"
 msgstr "Pohjoinen"
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:209
 msgid "Northeast"
 msgstr "Koillinen"
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:210
 msgid "East"
 msgstr "Itä"
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:211
 msgid "Southeast"
 msgstr "Kaakko"
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:212
 msgid "South"
 msgstr "Etelä"
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:213
 msgid "Southwest"
 msgstr "Lounas"
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:214
 msgid "West"
 msgstr "Länsi"
 
-#: src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:215
 msgid "Northwest"
 msgstr "Luode"
 
@@ -563,20 +603,20 @@ msgstr "Luode"
 msgid "No Internet"
 msgstr "Ei Internet yhteyttä"
 
-#: src/UI_CompactWeather.py:291
+#: src/UI_CompactWeather.py:289
 msgid "Hum."
 msgstr ""
 
-#: src/UI_CompactWeather.py:295
+#: src/UI_CompactWeather.py:293
 #, fuzzy
 msgid "Pres."
 msgstr "Ilmanpaine"
 
-#: src/UI_CompactWeather.py:299
+#: src/UI_CompactWeather.py:297
 msgid "AQI"
 msgstr ""
 
-#: src/UI_CompactWeather.py:352
+#: src/UI_CompactWeather.py:350
 #, fuzzy
 msgid "Mousam Compact"
 msgstr "Mousam"
@@ -589,20 +629,20 @@ msgstr ""
 msgid "Night"
 msgstr "Yö"
 
-#: src/UI_CurrentCond.py:98
+#: src/UI_CurrentCond.py:96
 #, python-brace-format
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr "Tuntuu kuin • <b> {0} {1}</b>"
 
-#: src/UI_Forecast.py:140 src/UI_Forecast.py:319
+#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
 msgid "Tomorrow"
 msgstr "Huomenna"
 
-#: src/UI_Forecast.py:148
+#: src/UI_Forecast.py:147
 msgid "Weekly"
 msgstr "Viikoittain"
 
-#: src/UI_Forecast.py:317
+#: src/UI_Forecast.py:316
 msgid "Today"
 msgstr "Tänään"
 
@@ -625,27 +665,27 @@ msgstr "Päivän Korkein •"
 msgid "Now"
 msgstr "Nyt"
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:285
 msgid "No precipitation today !"
 msgstr "Tänään ei sada!"
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:286
 msgid "No precipitation expected today!"
 msgstr "Tänään ei odoteta sadetta!"
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:287
 msgid "Anticipate a precipitation-free day !"
 msgstr "Luvassa on sateeton päivä!"
 
-#: src/UI_HourlyDetails.py:291
+#: src/UI_HourlyDetails.py:288
 msgid "Enjoy a rain-free day today!"
 msgstr "Nauti päivästäsi ilman sadetta!"
 
-#: src/UI_HourlyDetails.py:292
+#: src/UI_HourlyDetails.py:289
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "Sateenvarjo saa levätä. Ei sadetta näköpiirissä!"
 
-#: src/UI_HourlyDetails.py:293
+#: src/UI_HourlyDetails.py:290
 msgid "No rain in sight today!"
 msgstr "Ei sadetta näkyvissä tänään!"
 
@@ -727,11 +767,11 @@ msgstr "Lisää Uusi Paikka"
 msgid "Retry"
 msgstr ""
 
-#: src/windowAbout.py:18
+#: src/windowAbout.py:20
 msgid "Copyright © 2024 Mousam Developers"
 msgstr "Tekijänoikeus © 2024 Mousam Kehittäjät"
 
-#: src/windowAbout.py:22
+#: src/windowAbout.py:24
 #, fuzzy
 msgid "translator-credits"
 msgstr "juha antikainen <jussi.antikainen@gmail.com>"
@@ -772,177 +812,197 @@ msgstr "Paikka on jo lisätty!"
 msgid "Switched to {}"
 msgstr "Vaihdettu {}"
 
-#: src/windowPreferences.py:29
+#: src/windowPreferences.py:30
 #, fuzzy
 msgid "Weather Preferences"
 msgstr "Asetukset"
 
-#: src/windowPreferences.py:43
+#: src/windowPreferences.py:44
 msgid "Appearance"
 msgstr "Ulkoasu"
 
-#: src/windowPreferences.py:57
+#: src/windowPreferences.py:59
 msgid "Advanced"
 msgstr ""
 
-#: src/windowPreferences.py:62
+#: src/windowPreferences.py:64
 msgid "Logging &amp; Debugging"
 msgstr ""
 
-#: src/windowPreferences.py:72
+#: src/windowPreferences.py:74
+msgid "Icon Theme"
+msgstr ""
+
+#: src/windowPreferences.py:75
+msgid "Choose between Default and Material design weather icons"
+msgstr ""
+
+#: src/windowPreferences.py:85
+msgid "Default"
+msgstr ""
+
+#: src/windowPreferences.py:90
+msgid "Material"
+msgstr ""
+
+#: src/windowPreferences.py:105
 msgid "Dynamic Background"
 msgstr "Dynaaminen Tausta"
 
-#: src/windowPreferences.py:74
+#: src/windowPreferences.py:107
 #, fuzzy
 msgid "App background changes based on current weather conditions"
 msgstr ""
 "Taustakuva päivittyy sääolosuhteiden perusteella (uudelleenkäynnistys "
 "vaaditaan)."
 
-#: src/windowPreferences.py:88
+#: src/windowPreferences.py:121
 msgid "Time Format"
 msgstr "Aika Formaatti"
 
-#: src/windowPreferences.py:89
+#: src/windowPreferences.py:122
 #, fuzzy
 msgid "Weather time format"
 msgstr "Sään aikamuoto (Päivitys vaaditaan)"
 
-#: src/windowPreferences.py:99
+#: src/windowPreferences.py:132
 msgid "24 Hour"
 msgstr "24 Tuntia"
 
-#: src/windowPreferences.py:104
+#: src/windowPreferences.py:137
 msgid "AM / PM"
 msgstr "AM / PM"
 
-#: src/windowPreferences.py:120
+#: src/windowPreferences.py:153
 msgid "Auto Refresh"
 msgstr ""
 
-#: src/windowPreferences.py:121
+#: src/windowPreferences.py:154
 msgid "Automatically refresh weather data at a set interval"
 msgstr ""
 
-#: src/windowPreferences.py:138
+#: src/windowPreferences.py:171
 #, fuzzy
 msgid "Show Notifications"
 msgstr "Paikat"
 
-#: src/windowPreferences.py:139
+#: src/windowPreferences.py:172
 msgid "Show notification when weather is refreshed automatically"
 msgstr ""
 
-#: src/windowPreferences.py:154
+#: src/windowPreferences.py:187
 msgid "Units &amp; Measurements"
 msgstr "Yksiköt &amp; Mittaukset"
 
-#: src/windowPreferences.py:159
+#: src/windowPreferences.py:192
 msgid "System Unit"
 msgstr ""
 
-#: src/windowPreferences.py:160
+#: src/windowPreferences.py:193
 msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
 msgstr ""
 
-#: src/windowPreferences.py:171
+#: src/windowPreferences.py:204
 msgid "Metric"
 msgstr ""
 
-#: src/windowPreferences.py:176
+#: src/windowPreferences.py:209
 msgid "Imperial"
 msgstr ""
 
-#: src/windowPreferences.py:194
+#: src/windowPreferences.py:227
 msgid "Precipitation in inches"
 msgstr "Sademäärä tuumina"
 
-#: src/windowPreferences.py:195
+#: src/windowPreferences.py:228
 #, fuzzy
 msgid "This option works better in heavy precipitation"
 msgstr ""
 "Tämä valinta toimii paremmin runsailla sademäärillä (Päivitys tarpeellinen)"
 
-#: src/windowPreferences.py:209
+#: src/windowPreferences.py:242
 msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:214
+#: src/windowPreferences.py:247
 msgid "Reset to Default"
 msgstr ""
 
-#: src/windowPreferences.py:215
+#: src/windowPreferences.py:248
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/windowPreferences.py:218
+#: src/windowPreferences.py:251
 msgid "Reset…"
 msgstr ""
 
-#: src/windowPreferences.py:227
+#: src/windowPreferences.py:260
 msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:228
+#: src/windowPreferences.py:261
 msgid "Enable verbose logging and console output"
 msgstr ""
 
-#: src/windowPreferences.py:241
+#: src/windowPreferences.py:274
 msgid "Open Logs Folder"
 msgstr ""
 
-#: src/windowPreferences.py:242
+#: src/windowPreferences.py:275
 msgid "Access the application log files"
 msgstr ""
 
-#: src/windowPreferences.py:255
+#: src/windowPreferences.py:288
 msgid "Clear Log File"
 msgstr ""
 
-#: src/windowPreferences.py:256
+#: src/windowPreferences.py:289
 msgid "Delete all contents of the current log file"
 msgstr ""
 
-#: src/windowPreferences.py:305
+#: src/windowPreferences.py:340
+msgid "Icon theme changed to {}"
+msgstr ""
+
+#: src/windowPreferences.py:349
 msgid "Switched to - {}"
 msgstr "Vaihdettu - {}"
 
-#: src/windowPreferences.py:324
+#: src/windowPreferences.py:368
 msgid "Logs cleared"
 msgstr ""
 
-#: src/windowPreferences.py:326
+#: src/windowPreferences.py:370
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/windowPreferences.py:337
+#: src/windowPreferences.py:381
 msgid "Auto refresh disabled"
 msgstr ""
 
-#: src/windowPreferences.py:339
+#: src/windowPreferences.py:383
 msgid "Auto refresh every {} min"
 msgstr ""
 
-#: src/windowPreferences.py:346
+#: src/windowPreferences.py:390
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:348
+#: src/windowPreferences.py:392
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:352
+#: src/windowPreferences.py:396
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:353
+#: src/windowPreferences.py:397
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:388
+#: src/windowPreferences.py:438
 msgid "Preferences have been reset"
 msgstr ""
 
@@ -957,6 +1017,24 @@ msgstr "Päivitä Sää"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Valikko"
+
+#~ msgid ""
+#~ "Utilizes graphical representations, such as temperature , precipitation "
+#~ "graphs and wind-speed with direction to provide an hourly forecast for "
+#~ "the next 24 hours"
+#~ msgstr ""
+#~ "Käyttää selkeitä graafeja, kuten lämpötila- ja sadekuntokäyriä sekä "
+#~ "tuulen nopeutta ja suuntaa, tarjotakseen tuntikohtaisen ennusteen "
+#~ "seuraaville 24 tunnille"
+
+#~ msgid "Clear Sky - day"
+#~ msgstr "Selkeä - päivä"
+
+#~ msgid "Snowfall - day"
+#~ msgstr "Lumisade - päivä"
+
+#~ msgid "Clear Sky - night"
+#~ msgstr "Selkeä - yö"
 
 #~ msgid "United States AQI standard"
 #~ msgstr "Yhdysvaltain AQI-standardi"
