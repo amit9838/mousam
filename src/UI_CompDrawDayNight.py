@@ -21,10 +21,10 @@ class DrawDayNight:
         self.drawing_area.set_size_request(self.width + 20, self.height + 20)
         self.drawing_area.set_css_classes(["drawing-padding"])
         from .CORE_GTKUtils import safe_set_draw_func
+        # Don't keep a parent container on self: the drawing area keeps self
+        # alive (safe_set_draw_func), so self holding its parent would form a
+        # cycle Python can't collect, and leak the card on every refresh.
         safe_set_draw_func(self.drawing_area, self, "on_draw")
-
-        self.img_box = Gtk.Box()
-        self.img_box.append(self.drawing_area)
 
     def on_draw(self, widget, cr, width, height, data):
         context = cr

@@ -64,7 +64,7 @@ class HourlyDetails(Gtk.Grid):
                 button.set_group(first_btn)
             style_buttons_box.append(button)
             button._page_name = page_name  # store for use in handler
-            button.connect("clicked", self._on_btn_clicked)
+            weak_connect(button, "clicked", self._on_btn_clicked)
 
         # Initialize with first tab
         if first_btn:
@@ -181,7 +181,7 @@ class HourlyDetails(Gtk.Grid):
 
         controller = Gtk.EventControllerScroll.new(Gtk.EventControllerScrollFlags.BOTH_AXES)
         scrolled_window.add_controller(controller)
-        controller.connect("scroll", self.on_scroll)
+        weak_connect(controller, "scroll", self.on_scroll)
 
         graphic_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         scrolled_window.set_child(graphic_container)
