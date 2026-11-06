@@ -94,8 +94,9 @@ class CitySearchDialog(Adw.PreferencesWindow):
             return
 
         # Logic to clear results
-        if hasattr(self, "placeholder"):
+        if getattr(self, "placeholder", None) is not None:
             self.results_group.remove(self.placeholder)
+            self.placeholder = None
         for row in self.results_rows:
             self.results_group.remove(row)
         self.results_rows.clear()
