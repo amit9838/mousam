@@ -9,6 +9,7 @@ from gi.repository import Gtk, Adw
 from .CORE_Icons import get_icon_path, ARROW_CENTER
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
+from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
 from .UI_CompDrawImageIcon import DrawImage
 
 # Standardizing CSS classes for reuse
@@ -158,7 +159,11 @@ class CardSquare:
 
         # The Graphic (Canvas)
         graphic_widget = self._create_visual_widget()
-        if graphic_widget:
+        if graphic_widget and self.title_key == "pressure":
+            # The tick gauge is horizontal: it runs under the text, full width
+            graphic_widget.set_margin_top(8)
+            card_box.append(graphic_widget)
+        elif graphic_widget:
             visual_box.append(graphic_widget)
 
         # Lower Text
@@ -195,7 +200,7 @@ class CardSquare:
                 high *= 0.02953
 
             level = (val - low) / (high - low)
-            return DrawLevelBar(max(0.0, min(level, 1.0)), rounded_cap=True).dw
+            return DrawTickGauge(level).dw
 
         elif self.title_key == "uv index":
             # UV Level (Assuming Max 12)
