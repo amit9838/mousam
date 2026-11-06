@@ -450,6 +450,28 @@
 }
 
 
+/* Rain chance: blue mixed with the text colour, so it is lighter on dark
+   cards and deeper on light ones */
+.text-rain {
+    color: mix(@blue_3, @card_fg_color, 0.25);
+}
+
+.bg-dark-overlay .text-rain {
+    color: rgb(97, 179, 255);
+}
+
+/* Rain drops overlap, each a little to the right of the one before. A thin
+   edge in the card's colour on its left keeps each drop apart. */
+.rain-drops > image + image {
+    margin-left: -5px;
+    -gtk-icon-shadow: -1px 0 @card_bg_color;
+}
+
+/* On dynamic backgrounds the card is see-through: a dark edge instead */
+.bg-dark-overlay .rain-drops > image + image {
+    -gtk-icon-shadow: -1px 0 rgba(0, 0, 0, 0.5);
+}
+
 .card-forecast-item {
     padding: 0 1.1rem;
     border-radius: 0.7rem;

@@ -6,8 +6,10 @@ Provides a GTK widget that displays weather forecasts in two modes:
 - Weekly: Daily forecast for the next 7 days.
 """
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from enum import Enum, auto
+import math
 from gettext import gettext as _
 from typing import Any, Dict, List, Optional, Union
 
@@ -22,6 +24,8 @@ from .CORE_Icons import get_icon_path, create_weather_icon
 from .settings import settings
 from .CORE_weatherData import weather_manager
 from .CORE_GTKUtils import weak_connect
+from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
+from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402
 
 
 
@@ -61,6 +65,12 @@ class Forecast(Gtk.Grid):
     FORECAST_ITEM_MARGIN: int = 4
     LABEL_BOX_WIDTH: int = 80
     LABEL_BOX_HEIGHT: int = 60
+
+    RAIN_ICON_SIZE: int = 12
+    RAIN_DROPS: int = 4  # each drop stands for 25 % chance of rain
+
+    # Below this width (in sp) the weekly range bars are hidden
+    WEEKLY_BAR_MIN_WIDTH: int = 360
 
     # Data range constants
     DAILY_ITEMS: int = 7
@@ -231,9 +241,10 @@ class Forecast(Gtk.Grid):
             margin_top=0,
             margin_bottom=0,
         )
-        scrolled.set_child(items_container)
 
         # Determine data source and range
+        # Weekly only: what each row changes when the card is narrow
+        narrow_setters: List[tuple] = []
         if page == ForecastPage.WEEKLY:
             data_source = daily_forecast_data
             count = self.DAILY_ITEMS
@@ -245,27 +256,47 @@ class Forecast(Gtk.Grid):
 
         # Build forecast items
         for idx in range(count):
-            item_widget = self._create_forecast_item(
-                page=page,
-                data_source=data_source,
-                index=idx + offset,
-                hourly_data=hourly_forecast_data,  # needed for night/day detection
-            )
+            if page == ForecastPage.WEEKLY:
+                item_widget = self._create_weekly_item(data_source, idx, narrow_setters)
+            else:
+                item_widget = self._create_forecast_item(
+                    data_source=data_source,
+                    index=idx + offset,
+                    hourly_data=hourly_forecast_data,  # needed for night/day detection
+                )
             items_container.append(item_widget)
+
+        if page != ForecastPage.WEEKLY:
+            scrolled.set_child(items_container)
+            return
+
+        # The seven rows share the page's height evenly. This doesn't use
+        # vexpand, which would also stretch the main grid around the card.
+        items_container.set_homogeneous(True)
+
+        # When the card is too narrow for the range bars, rows show the high
+        # over the low beside the icon instead
+        breakpoint_bin = Adw.BreakpointBin(child=items_container)
+        breakpoint_bin.set_size_request(self.SCROLLED_WINDOW_WIDTH, self.SCROLLED_WINDOW_HEIGHT)
+        narrow = Adw.Breakpoint.new(
+            Adw.BreakpointCondition.parse(f"max-width: {self.WEEKLY_BAR_MIN_WIDTH}sp")
+        )
+        for widget, prop, value in narrow_setters:
+            narrow.add_setter(widget, prop, value)
+        breakpoint_bin.add_breakpoint(narrow)
+        scrolled.set_child(breakpoint_bin)
 
     def _create_forecast_item(
         self,
-        page: ForecastPage,
         data_source: Any,
         index: int,
         hourly_data: Any,
     ) -> Gtk.Grid:
         """
-        Create a single forecast item widget.
+        Create a single hourly forecast item widget.
 
         Args:
-            page: The page type (determines data fields to use).
-            data_source: The data object (daily or hourly forecast).
+            data_source: The hourly forecast data.
             index: The index into the data arrays.
             hourly_data: Hourly forecast data (used for is_day flag).
 
@@ -275,32 +306,81 @@ class Forecast(Gtk.Grid):
         grid = Gtk.Grid(hexpand=True, margin_top=self.FORECAST_ITEM_MARGIN)
         grid.set_css_classes(["bg-light-gray", "card-forecast-item"])
 
-        # Extract common data
-        timestamp = data_source.time.data[index]
-        dt = datetime.fromtimestamp(timestamp)
-
-        # Prepare label and temperatures
-        if page == ForecastPage.WEEKLY:
-            label_text = self._format_weekly_label(dt)
-            temp_max = data_source.temperature_2m_max.data[index]
-            temp_min = data_source.temperature_2m_min.data[index]
-            weather_code = data_source.weathercode.data[index]
-        else:  # TOMORROW
-            label_text = self._format_hourly_label(dt)
-            temp_max = data_source.temperature_2m.data[index]
-            temp_min = None  # No min temp for hourly
-            weather_code = data_source.weathercode.data[index]
-            # Adjust for night if needed
-            if hourly_data.is_day.data[index] == 0:
-                weather_code = f"{weather_code}n"
+        dt = datetime.fromtimestamp(data_source.time.data[index])
+        label_text = self._format_hourly_label(dt)
+        temp_max = data_source.temperature_2m.data[index]
+        weather_code = data_source.weathercode.data[index]
+        # Adjust for night if needed
+        if hourly_data.is_day.data[index] == 0:
+            weather_code = f"{weather_code}n"
 
         # Build the grid columns
         self._add_label_column(grid, label_text)
         self._add_icon_column(grid, weather_code)
         self._add_placeholder_column(grid)
-        self._add_temperature_column(grid, temp_max, temp_min)
+        self._add_temperature_column(grid, temp_max, None)
 
         return grid
+
+    def _create_weekly_item(self, daily: Any, index: int, narrow_setters: List[tuple]) -> Gtk.Grid:
+        """
+        Create one day of the weekly forecast.
+
+        The day and its rain chance on the left; on the right the low, range
+        bar and high, then the icon. Ending at the icon, the bars line up from
+        row to row. When the card is too narrow for the bar, the high over the
+        low shows beside the icon instead.
+
+        Args:
+            daily: The daily forecast data.
+            index: The day's index into the data arrays.
+            narrow_setters: Gets the (widget, property, value) to set when
+                the card is too narrow for the range bar.
+        """
+        # Daily times are midnights in GMT, so read their date in UTC
+        day = datetime.fromtimestamp(daily.time.data[index], timezone.utc).date()
+        temp_max = daily.temperature_2m_max.data[index]
+        temp_min = daily.temperature_2m_min.data[index]
+        rain = getattr(daily, "precipitation_probability_max", None)
+        rain_chance = rain.data[index] if rain else None
+
+        row = Gtk.Grid(hexpand=True, margin_top=self.FORECAST_ITEM_MARGIN)
+        row.set_css_classes(["bg-light-gray", "card-forecast-item"])
+        self._add_label_column(row, self._format_weekly_label(day), rain_chance)
+        # The day takes the free space, so the bar stays next to the icon
+        row.get_child_at(0, 0).set_hexpand(True)
+
+        range_box = Gtk.Box(spacing=6, valign=Gtk.Align.CENTER, margin_start=8, margin_end=12)
+        low = Gtk.Label(label=f"{temp_min:.0f}°", xalign=1, width_chars=3)
+        low.set_css_classes(["text-base", "opacity-70"])
+        range_box.append(low)
+        range_box.append(DrawTempRange(
+            temp_min,
+            temp_max,
+            min(daily.temperature_2m_min.data[:self.DAILY_ITEMS]),
+            max(daily.temperature_2m_max.data[:self.DAILY_ITEMS]),
+        ).dw)
+        high = Gtk.Label(label=f"{temp_max:.0f}°", xalign=0, width_chars=3)
+        high.set_css_classes(["text-base", "font-semibold"])
+        range_box.append(high)
+
+        # Columns: day (0), range (1), icon (2), high over low (3)
+        self._add_icon_column(row, daily.weathercode.data[index])
+        temps = self._add_temperature_column(row, temp_max, temp_min)
+        row.insert_column(1)
+        row.attach(range_box, 1, 0, 1, 1)
+        row.get_child_at(2, 0).set_hexpand(False)  # only the day takes free space
+        temps.set_visible(False)
+
+        # Fill the row's height (the list shares the page's height out
+        # evenly), with the content centred in it
+        row.set_row_homogeneous(True)
+
+        narrow_setters.extend([
+            (range_box, "visible", False),
+            (temps, "visible", True),
+        ])
+        return row
 
     def _format_hourly_label(self, dt: datetime) -> str:
         """Format datetime for hourly forecast (time only)."""
@@ -308,24 +388,50 @@ class Forecast(Gtk.Grid):
             return dt.strftime("%H:%M")
         return dt.strftime("%I:%M %p")
 
-    def _format_weekly_label(self, dt: datetime) -> str:
-        """Format datetime for weekly forecast (day name, with Today/Tomorrow)."""
-        today = datetime.today().date()
-        tomorrow = (datetime.today() + timedelta(days=1)).date()
-        if dt.date() == today:
-            return _("Today")
-        if dt.date() == tomorrow:
-            return _("Tomorrow")
-        return dt.strftime("%A")
+    def _format_weekly_label(self, day: date) -> str:
+        """Format a date for weekly forecast (day name, with Today/Tomorrow).
 
-    def _add_label_column(self, grid: Gtk.Grid, text: str) -> None:
-        """Add the time/date label column (col 0)."""
-        box = Gtk.Box()
+        Today is the selected city's today, which may differ from the system's.
+        """
+        try:
+            today = datetime.now(ZoneInfo(get_timezone_from_selected_city())).date()
+        except (ZoneInfoNotFoundError, ValueError):
+            today = datetime.now().date()
+        if day == today:
+            return _("Today")
+        if day == today + timedelta(days=1):
+            return _("Tomorrow")
+        return day.strftime("%A")
+
+    def _add_label_column(self, grid: Gtk.Grid, text: str, rain_chance: Optional[float] = None) -> None:
+        """Add the time/date label column (col 0), with the rain chance when there is one."""
+        box = Gtk.Box(spacing=6)
         box.set_size_request(self.LABEL_BOX_WIDTH, self.LABEL_BOX_HEIGHT)
         label = Gtk.Label(label=text, halign=Gtk.Align.START)
         label.set_css_classes(["text-base", "font-normal", "opacity-90"])
         box.append(label)
+        if rain_chance:
+            box.append(self._create_rain_drops(rain_chance))
         grid.attach(box, 0, 0, 1, 1)
+
+    def _create_rain_drops(self, rain_chance: float) -> Gtk.Box:
+        """Show the chance of rain as one to four overlapping drops, each 25 %.
+
+        The exact chance is in the tooltip and the accessible label.
+        """
+        text = _("Chance of rain: {percent}%").format(percent=f"{rain_chance:.0f}")
+        drops = Gtk.Box(valign=Gtk.Align.CENTER, tooltip_text=text)
+        drops.set_css_classes(["text-rain", "rain-drops"])
+        drops.update_property([Gtk.AccessibleProperty.LABEL], [text])
+        for _i in range(self.rain_drop_count(rain_chance)):
+            drops.append(Gtk.Image(icon_name="mousam-raindrop-symbolic", pixel_size=self.RAIN_ICON_SIZE))
+        return drops
+
+    @classmethod
+    def rain_drop_count(cls, rain_chance: float) -> int:
+        """How many drops to show: 1 to 25 % is one, 76 to 100 % all four."""
+        step = 100 / cls.RAIN_DROPS
+        return max(0, min(cls.RAIN_DROPS, math.ceil(rain_chance / step)))
 
     def _add_icon_column(self, grid: Gtk.Grid, weather_code: Union[int, str]) -> None:
         """Add the weather icon column (col 1)."""
@@ -344,7 +450,7 @@ class Forecast(Gtk.Grid):
         grid: Gtk.Grid,
         temp_max: float,
         temp_min: Optional[float],
-    ) -> None:
+    ) -> Gtk.Grid:
         """Add the temperature column (col 3)."""
         temp_grid = Gtk.Grid(valign=Gtk.Align.CENTER)
         grid.attach(temp_grid, 2, 0, 1, 1)
@@ -359,6 +465,7 @@ class Forecast(Gtk.Grid):
             min_label = Gtk.Label(label=f" {temp_min:.0f}°", margin_top=5)
             min_label.set_css_classes(["opacity-70"])
             temp_grid.attach(min_label, 1, 1, 1, 1)
+        return temp_grid
 
     @staticmethod
     def _get_next_midnight_timestamp() -> float:
