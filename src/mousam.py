@@ -44,6 +44,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # State Tracking
         self.added_cities = settings.added_cities
         self._needs_render = False
+        self._rendered_weather = None  # current_weather object the grid was built from
 
         # --- UI Construction ---
         self._setup_actions()
@@ -55,7 +56,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # Centralized Data Handling
         from .CORE_weatherData import weather_manager
-        weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
+        self._ready_handler_id = weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
         
         # Settings setup
         settings.connect(
@@ -201,10 +202,19 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # _worker_fetch_data moved to utils.fetch_all_weather_data_async
 
     def _on_weather_manager_ready(self, *args):
-        """Called when data ready state changes."""
+        """Called when data ready state changes.
+
+        notify::is-ready is emitted from the fetch worker threads, once per
+        update_* call, so hand over to the main loop before touching GTK.
+        """
+        GLib.idle_add(self._render_new_data)
+
+    def _render_new_data(self) -> bool:
+        """Render the grid once per fetch, even if is-ready fires several times."""
         from .CORE_weatherData import weather_manager
-        if weather_manager.is_ready:
-            GLib.idle_add(self._render_weather_grid)
+        if weather_manager.is_ready and weather_manager.current_weather is not self._rendered_weather:
+            self._render_weather_grid()
+        return GLib.SOURCE_REMOVE
 
     def _on_data_fetch_success(self, is_auto=False):
         """Called on Main Thread after the worker has populated weatherData."""
@@ -225,8 +235,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         from .CORE_weatherData import weather_manager
         if not weather_manager.is_ready:
             return
-        
+
         cw_data = weather_manager.current_weather
+        self._rendered_weather = cw_data
 
         # Dynamic Background
         w_code = cw_data.weathercode.data
@@ -450,6 +461,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         settings.window_maximized = window.is_maximized()
 
     def _on_window_destroy(self, *args):
+        # weather_manager outlives this window (e.g. switching to compact mode)
+        from .CORE_weatherData import weather_manager
+        weather_manager.disconnect(self._ready_handler_id)
+
         app = self.get_application()
         if app and hasattr(app, "main_window"):
             app.main_window = None
