@@ -26,6 +26,13 @@
 - **Architecture**: Asynchronous data loading and refined state management for peak performance
 - See conditions in metric or imperial systems
 
+
+#### Up Next [next release]:
+- [x] Introducing Smart Forecast/Overview of the day.
+- [x] Improved 7d forecast with new indicators.
+- [x] Improved Cards UI.
+- [x] New icon set (old included) 
+- [ ] Improve location page with features like reorder, maybe show current temp icon. 
 ## Installation
 
 ### **Flatpak:**
