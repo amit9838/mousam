@@ -1,36 +1,47 @@
 import gi
-
-from gi.repository import Gtk
 import cairo
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
+from gi.repository import Gtk  # noqa: E402
+
+from .CORE_GTKUtils import safe_set_draw_func, theme_rgba  # noqa: E402
+
+BAR_WIDTH = 10
+PADDING_Y = 10
 
 
 class DrawBar:
-    def __init__(self,value, rgb_color=[0.38, 0.7, 1]):
+    """A small vertical bar in a faint track (the hourly precipitation amount).
 
-        self.ht = 40
+    value is the share of the day's highest amount, from 0 to 1. Every hour
+    shows the track, so dry hours and wet hours read on the same scale.
+    """
+
+    def __init__(self, value: float, rgb_color=(0.38, 0.7, 1)):
+        self.value = max(0.0, min(value, 1.0))
+        self.rgb = tuple(rgb_color)
+
         self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(50, self.ht+20)
-        from .CORE_GTKUtils import safe_set_draw_func; safe_set_draw_func(self.dw, self, "draw")
-        self.value = self.ht*value
-        self.rgb = rgb_color
+        self.dw.set_size_request(50, 60)
+        safe_set_draw_func(self.dw, self, "draw")
 
-    def draw(self, area, ctx, h, w, data):
+    def draw(self, area, ctx, width, height, data):
+        x = width / 2
+        top = PADDING_Y + BAR_WIDTH / 2
+        bottom = height - PADDING_Y - BAR_WIDTH / 2
 
-        if self.value == 0:
-            return
-
-        x_offset = 25
-        y_offset=10
-
-        self.value = self.value
-        ctx.set_source_rgba(*self.rgb, 0.8)
-        ctx.set_line_width(15)
+        ctx.set_line_width(BAR_WIDTH)
         ctx.set_line_cap(cairo.LINE_CAP_ROUND)
 
-        x,y2 = x_offset,self.ht - self.value + y_offset
-        ctx.move_to(x, y2)
-        ctx.rel_line_to(0, self.ht-y2+y_offset)
+        ctx.set_source_rgba(*theme_rgba(area, 0.08))
+        ctx.move_to(x, top)
+        ctx.line_to(x, bottom)
+        ctx.stroke()
+
+        if self.value <= 0:
+            return
+
+        ctx.set_source_rgba(*self.rgb, 0.9)
+        ctx.move_to(x, bottom)
+        ctx.line_to(x, bottom - (bottom - top) * self.value)
         ctx.stroke()

@@ -1,46 +1,69 @@
 import gi
-import cairo 
-from gi.repository import Gtk
+import cairo
 
-gi.require_version('Gtk', '4.0')
-gi.require_version('Adw', '1')
+gi.require_version("Gtk", "4.0")
+from gi.repository import Gtk  # noqa: E402
+
+from .CORE_GTKUtils import safe_set_draw_func, draw_knob  # noqa: E402
+
+HEIGHT = 40
+TRACK_HEIGHT = 8
+KNOB_RADIUS = 7
+
+# The bar spans US AQI 0 to 350. One colour per AQI band, placed in the middle
+# of the band (the bands match WeatherDataManager.classify_aqi), in
+# libadwaita's palette.
+AQI_SCALE = 350
+AQI_BAND_COLORS = [
+    (25, (0.20, 0.82, 0.48)),   # Good (0-50), green 3
+    (75, (0.96, 0.83, 0.18)),   # Moderate (51-100), yellow 3
+    (125, (1.00, 0.47, 0.00)),  # Poor (101-150), orange 3
+    (175, (0.88, 0.11, 0.14)),  # Unhealthy (151-200), red 3
+    (250, (0.57, 0.25, 0.67)),  # Severe (201-300), purple 3
+    (325, (0.65, 0.11, 0.18)),  # Hazardous (301+), red 5
+]
+STOPS = [(aqi / AQI_SCALE, rgb) for aqi, rgb in AQI_BAND_COLORS]
+
+
+def color_at(pos: float):
+    """The bar's colour at pos (0 to 1), blended between the two nearest stops."""
+    if pos <= STOPS[0][0]:
+        return STOPS[0][1]
+    for (p1, c1), (p2, c2) in zip(STOPS, STOPS[1:]):
+        if pos <= p2:
+            t = (pos - p1) / (p2 - p1)
+            return tuple(a + (b - a) * t for a, b in zip(c1, c2))
+    return STOPS[-1][1]
+
 
 class PollutionBar(Gtk.DrawingArea):
-    def __init__(self,pos):
-        super(PollutionBar, self).__init__()
-        width = self.get_allocated_width()
-        height = 40
+    """The AQI scale, coloured by band, with a knob at the current AQI.
+
+    pos is the AQI as a share of AQI_SCALE, from 0 to 1.
+    """
+
+    def __init__(self, pos: float):
+        super().__init__()
+        self.pos = max(0.0, min(pos, 1.0))
+        self.knob_rgb = color_at(self.pos)
         self.set_hexpand(True)
-        self.slider_pos = pos  # Initial position of the slider
-        from .CORE_GTKUtils import safe_set_draw_func; safe_set_draw_func(self, self, "on_draw")
-        self.set_size_request(width,height)
+        self.set_size_request(-1, HEIGHT)
+        safe_set_draw_func(self, self, "on_draw")
 
-    def on_draw(self, area, cr, h, w, data):
-        width = self.get_width()
-        height = 40
+    def on_draw(self, area, cr, width, height, data):
+        # Leave room for the knob's ring and shadow at both ends
+        start = KNOB_RADIUS + 4
+        end = width - KNOB_RADIUS - 4
+        y = height / 2
 
-        gradient = cairo.LinearGradient(0, 0, 250, 0)
-        # Add color stops to the gradient (position, R, G, B, A)
-        gradient.add_color_stop_rgba(0, 0, 1, 0, 1)  # Green
-        gradient.add_color_stop_rgba(0.3, 1, 1, 0, 1)  # Yellow
-        gradient.add_color_stop_rgba(0.6, 1, 1, 0, 1)  # Yellow
-        gradient.add_color_stop_rgba(1, 1, 0, 0, 1)  # Red
+        gradient = cairo.LinearGradient(start, 0, end, 0)
+        for stop, rgb in STOPS:
+            gradient.add_color_stop_rgb(stop, *rgb)
         cr.set_source(gradient)
-
-        # cr.set_source_rgba(0.8, 0.8, 0.8, 1)
-        cr.set_line_width(6)
-        cr.move_to(10, height / 2)
-        cr.line_to(width - 5, height / 2)
+        cr.set_line_width(TRACK_HEIGHT)
         cr.set_line_cap(cairo.LINE_CAP_ROUND)
+        cr.move_to(start, y)
+        cr.line_to(end, y)
         cr.stroke()
 
-        # Draw the circular slider
-        slider_x = 10 + (width - 20) * self.slider_pos
-        slider_y = height / 2
-        cr.set_source_rgba(.9, 0.9, 0.9, 1)
-        cr.arc(slider_x, slider_y, 6, 0, 2 * 3.14159)
-        cr.fill()
-        cr.arc(slider_x, slider_y, 7, 0, 2 * 3.14159)
-        cr.set_line_width(4)
-        cr.set_source_rgba(0.4, 0.4, 0.4, .7)
-        cr.stroke()
+        draw_knob(cr, start + (end - start) * self.pos, y, KNOB_RADIUS, self.knob_rgb)

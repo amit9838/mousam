@@ -1,159 +1,124 @@
 import gi
 import math
-
-from gi.repository import Gtk
 import cairo
-from datetime import datetime
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
+from gi.repository import Gtk  # noqa: E402
+
+from .CORE_GTKUtils import safe_set_draw_func, theme_rgba, draw_text  # noqa: E402
+
+ORBIT_RADIUS = 38
+BODY_RADIUS = 6.5
+SUN_GLOW_RADIUS = 15
+MOON_GLOW_RADIUS = 12
+
+SUNRISE_RGB = (1.0, 0.47, 0.0)   # orange 3
+NOON_RGB = (0.96, 0.83, 0.18)    # yellow 3
+NIGHT_RGB = (0.55, 0.65, 1.0)
+MOON_RGB = (0.92, 0.94, 1.0)
 
 
 class DrawDayNight:
-    def __init__(self, angle, time_str, width, height):
-        self.angle_degrees = angle
+    """The sun or moon on its way round a circle: day above the horizon, night below.
+
+    angle is in degrees on the circle: 180 → 360 is sunrise → sunset through
+    the top, 0 → 180 is sunset → sunrise through the bottom.
+    """
+
+    def __init__(self, angle: float, time_str: str, width: int, height: int):
+        self.angle = angle
+        self.is_day = 180 <= angle <= 360
         self.time_str = time_str
-        self.width = width
-        self.height = height
+        self.status = _("Day") if self.is_day else _("Night")
+
+        # 0 on the horizon, 1 at the top: the sun is orange low and yellow high
+        height_factor = abs(math.sin(math.radians(self.angle))) if self.is_day else 0
+        self.sun_rgb = tuple(a + (b - a) * height_factor for a, b in zip(SUNRISE_RGB, NOON_RGB))
 
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(self.width + 20, self.height + 20)
-        self.drawing_area.set_css_classes(["drawing-padding"])
-        from .CORE_GTKUtils import safe_set_draw_func
+        self.drawing_area.set_size_request(width + 20, height + 20)
         # Don't keep a parent container on self: the drawing area keeps self
         # alive (safe_set_draw_func), so self holding its parent would form a
         # cycle Python can't collect, and leak the card on every refresh.
         safe_set_draw_func(self.drawing_area, self, "on_draw")
 
-    def on_draw(self, widget, cr, width, height, data):
-        context = cr
-        outer_radius = 40
-        center_x, center_y = width // 2, height // 2
-        sun_angle = self.angle_degrees
-        sun_radius = 7
-        ray_length = 5
-        num_rays = 10
+    def on_draw(self, area, cr, width, height, data):
+        cx, cy = width / 2, height / 2 - 6
+        r = ORBIT_RADIUS
+        rad = math.radians(self.angle)
+        body_x, body_y = cx + r * math.cos(rad), cy + r * math.sin(rad)
 
-        # 1. Background Stars (for the Night half)
-        # We use a fixed seed for consistent star positions
-        import random
-        random.seed(42)
-        for i in range(15):
-            sx = random.uniform(center_x - outer_radius, center_x + outer_radius)
-            sy = random.uniform(center_y + 5, center_y + outer_radius + 5)
-            # Only draw if inside the bottom arc
-            dist = math.sqrt((sx - center_x)**2 + (sy - center_y)**2)
-            if dist < outer_radius - 2:
-                opacity = random.uniform(0.1, 0.4)
-                context.set_source_rgba(1, 1, 1, opacity)
-                context.arc(sx, sy, 0.7, 0, 2 * math.pi)
-                context.fill()
+        cr.set_line_cap(cairo.LINE_CAP_ROUND)
 
-        # 2. Arcs with Gradients
-        context.set_line_width(2.5)
-        context.set_line_cap(cairo.LINE_CAP_ROUND)
+        # The orbit: day half solid, night half dotted
+        cr.set_line_width(2)
+        cr.set_source_rgba(*theme_rgba(area, 0.16))
+        cr.arc(cx, cy, r, math.pi, 2 * math.pi)
+        cr.stroke()
+        cr.set_dash([1, 4])
+        cr.set_source_rgba(*theme_rgba(area, 0.22))
+        cr.arc(cx, cy, r, 0, math.pi)
+        cr.stroke()
+        cr.set_dash([])
 
-        is_day = (180 <= sun_angle <= 360)
-        day_arc_opacity = 1.0 if is_day else 0.2
-
-        # Day Arc (Upper) - Warm Gradient
-        day_grad = cairo.LinearGradient(center_x - outer_radius, 0, center_x + outer_radius, 0)
-        day_grad.add_color_stop_rgba(0.0, 1.0, 0.4, 0.2, 0.7 * day_arc_opacity) # Sunrise
-        day_grad.add_color_stop_rgba(0.5, 1.0, 0.9, 0.3, 0.9 * day_arc_opacity) # Noon
-        day_grad.add_color_stop_rgba(1.0, 1.0, 0.4, 0.2, 0.7 * day_arc_opacity) # Sunset
-        
-        context.set_source(day_grad)
-        context.arc(center_x, center_y, outer_radius, math.pi, 2 * math.pi)
-        context.stroke()
-
-        # Night Arc (Lower) - Deep Blue Dash
-        context.set_source_rgba(0.4, 0.5, 0.8, 0.3)
-        context.set_dash([3, 5])
-        context.arc(center_x, center_y, outer_radius, 0, math.pi)
-        context.stroke()
-        context.set_dash([]) # Reset dash
-
-        # 3. Horizon Line (Subtle)
-        context.set_line_width(1.5)
-        context.set_source_rgba(1, 1, 1, 0.15)
-        context.move_to(center_x - outer_radius - 10, center_y)
-        context.line_to(center_x + outer_radius + 10, center_y)
-        context.stroke()
-
-        # 4. Celestial Body (Sun/Moon)
-        sun_angle_rad = math.radians(sun_angle)
-        disk_x = center_x + outer_radius * math.cos(sun_angle_rad)
-        disk_y = center_y + outer_radius * math.sin(sun_angle_rad)
-
-        if 180 <= sun_angle <= 360:
-            # SUN DESIGN
-            # Dynamic color based on height (sine of angle)
-            # 0 at horizon (180/360), 1 at zenith (270)
-            h_factor = abs(math.sin(math.radians(sun_angle)))
-            
-            # Interpolate: Horizon (1, 0.5, 0.2) -> Zenith (1, 1, 0.8)
-            r = 1.0
-            g = 0.5 + (0.5 * h_factor)
-            b = 0.2 + (0.6 * h_factor)
-            dynamic_sun_color = (r, g, b)
-
-            # Radial Glow
-            glow = cairo.RadialGradient(disk_x, disk_y, 2, disk_x, disk_y, sun_radius + 10)
-            glow.add_color_stop_rgba(0, *dynamic_sun_color, 0.6)
-            glow.add_color_stop_rgba(1, dynamic_sun_color[0], dynamic_sun_color[1]*0.5, 0, 0)
-            context.set_source(glow)
-            context.arc(disk_x, disk_y, sun_radius + 10, 0, 2 * math.pi)
-            context.fill()
-
-            # Core
-            context.set_source_rgba(*dynamic_sun_color, 1)
-            context.arc(disk_x, disk_y, sun_radius, 0, 2 * math.pi)
-            context.fill()
-
-            # Rays
-            context.set_line_width(1.5)
-            context.set_source_rgba(*dynamic_sun_color, 0.8)
-            for i in range(num_rays):
-                angle = i * (2 * math.pi / num_rays)
-                x1 = disk_x + (sun_radius + 3) * math.cos(angle)
-                y1 = disk_y + (sun_radius + 3) * math.sin(angle)
-                x2 = disk_x + (sun_radius + ray_length + 2) * math.cos(angle)
-                y2 = disk_y + (sun_radius + ray_length + 2) * math.sin(angle)
-                context.move_to(x1, y1)
-                context.line_to(x2, y2)
-                context.stroke()
+        # The part of today's (or tonight's) path already travelled
+        cr.set_line_width(3)
+        if self.is_day:
+            gradient = cairo.LinearGradient(cx - r, 0, cx + r, 0)
+            gradient.add_color_stop_rgb(0, *SUNRISE_RGB)
+            gradient.add_color_stop_rgb(0.5, *NOON_RGB)
+            gradient.add_color_stop_rgb(1, *SUNRISE_RGB)
+            cr.set_source(gradient)
+            cr.arc(cx, cy, r, math.pi, rad)
         else:
-            # MOON DESIGN
-            # Radial Glow
-            glow = cairo.RadialGradient(disk_x, disk_y, 2, disk_x, disk_y, sun_radius + 6)
-            glow.add_color_stop_rgba(0, 0.8, 0.9, 1.0, 0.5)
-            glow.add_color_stop_rgba(1, 0.4, 0.5, 1.0, 0)
-            context.set_source(glow)
-            context.arc(disk_x, disk_y, sun_radius + 6, 0, 2 * math.pi)
-            context.fill()
+            cr.set_source_rgba(*NIGHT_RGB, 0.8)
+            cr.arc(cx, cy, r, 0, rad)
+        cr.stroke()
 
-            # Core
-            context.set_source_rgba(0.9, 0.9, 1, 1)
-            context.arc(disk_x, disk_y, sun_radius - 1, 0, 2 * math.pi)
-            context.fill()
+        # Horizon
+        cr.set_line_width(1)
+        cr.set_source_rgba(*theme_rgba(area, 0.25))
+        cr.move_to(cx - r - 12, round(cy) + 0.5)
+        cr.line_to(cx + r + 12, round(cy) + 0.5)
+        cr.stroke()
 
-        # 5. Typography
-        formatted_time = self.time_str
+        if self.is_day:
+            self._draw_sun(cr, body_x, body_y)
+        else:
+            self._draw_moon(cr, body_x, body_y)
 
-        # Time Label (Centered)
-        # context.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
-        context.set_font_size(12)
-        context.set_source_rgba(1, 1, 1, 0.85)
-        
-        extents = context.text_extents(formatted_time)
-        context.move_to(center_x - extents.width / 2, center_y + 15)
-        context.show_text(formatted_time)
+        # The time just under the horizon, Day / Night under the circle
+        draw_text(area, cr, self.time_str, cx, cy + 4, size="small", bold=True, alpha=0.9)
+        draw_text(area, cr, self.status, cx, cy + r + BODY_RADIUS + 2, size="x-small", alpha=0.6)
 
-        # Day/Night Status
-        status_text = _("Day") if (180 <= sun_angle <= 360) else _("Night")
-        context.set_font_size(10)
-        context.set_source_rgba(1, 1, 1, 0.5)
-        extents = context.text_extents(status_text)
-        context.move_to(center_x - extents.width / 2, center_y + outer_radius + 12)
-        context.show_text(status_text)
+    def _draw_sun(self, cr, x, y):
+        glow = cairo.RadialGradient(x, y, BODY_RADIUS * 0.5, x, y, SUN_GLOW_RADIUS)
+        glow.add_color_stop_rgba(0, *self.sun_rgb, 0.55)
+        glow.add_color_stop_rgba(1, *self.sun_rgb, 0)
+        cr.set_source(glow)
+        cr.arc(x, y, SUN_GLOW_RADIUS, 0, 2 * math.pi)
+        cr.fill()
+
+        cr.set_source_rgb(*self.sun_rgb)
+        cr.arc(x, y, BODY_RADIUS, 0, 2 * math.pi)
+        cr.fill()
+
+    def _draw_moon(self, cr, x, y):
+        glow = cairo.RadialGradient(x, y, BODY_RADIUS * 0.5, x, y, MOON_GLOW_RADIUS)
+        glow.add_color_stop_rgba(0, *NIGHT_RGB, 0.45)
+        glow.add_color_stop_rgba(1, *NIGHT_RGB, 0)
+        cr.set_source(glow)
+        cr.arc(x, y, MOON_GLOW_RADIUS, 0, 2 * math.pi)
+        cr.fill()
+
+        # A crescent: a disc with an offset disc cut out of it
+        cr.push_group()
+        cr.set_source_rgb(*MOON_RGB)
+        cr.arc(x, y, BODY_RADIUS, 0, 2 * math.pi)
+        cr.fill()
+        cr.set_operator(cairo.OPERATOR_CLEAR)
+        cr.arc(x + BODY_RADIUS * 0.55, y - BODY_RADIUS * 0.35, BODY_RADIUS * 0.85, 0, 2 * math.pi)
+        cr.fill()
+        cr.pop_group_to_source()
+        cr.paint()
