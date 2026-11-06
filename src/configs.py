@@ -57,3 +57,58 @@ THRESHOLDS = {
     "olive_pollen": [(15, "success"), (90, "warning"), (500, "error")],
     "ragweed_pollen": [(15, "success"), (90, "warning"), (500, "error")],
 }
+
+# Overview (the one-line summary under the current conditions)
+OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stays fast
+OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
+OVERVIEW_HOURS = 12  # how far ahead the overview looks
+RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
+# When the overview opens again by itself, picked at random in (min, max)
+# minutes so it does not feel mechanical; sooner for urgent messages. Between
+# those times the text is still kept up to date, without opening.
+OVERVIEW_REPUBLISH_MINUTES = {"error": (5, 10), "warning": (10, 20), "info": (20, 40)}
+
+# Overview rules (CORE_OverviewRules.py). All thresholds are metric; rules
+# convert imperial data before comparing.
+OVERVIEW_DAY_MIN_HOURS = 3  # by day, look at least this far ahead, even near sunset
+OVERVIEW_TOMORROW_FROM_HOUR = 18  # local hour from which tomorrow is worth a mention
+OVERVIEW_RELATIVE_TOLERANCE = 300  # s a message saying "in N minutes" stays accurate
+# Approximate times ("until about 6:40 AM") are rounded more the further
+# ahead they are: (up to this many hours ahead, round to this many minutes).
+# Beyond the last one, OVERVIEW_ROUND_FAR_MINUTES.
+OVERVIEW_ROUNDING = [(3, 10), (5, 30)]
+OVERVIEW_ROUND_FAR_MINUTES = 60
+HEAVY_PRECIPITATION_MM = 7.6  # mm in an hour: heavy rain
+HEAT_FEELS_LIKE_C = 40  # feels-like °C from which heat is a warning
+COLD_FEELS_LIKE_C = -15  # feels-like °C from which cold is a warning
+UNHEALTHY_US_AQI = 151  # US AQI from which air is unhealthy
+VERY_HIGH_UV = 8
+FOG_VISIBILITY_M = 1000
+STRONG_WIND_KMH = 40  # matches "Strong" in classify_wind_speed_level
+EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
+TEMPERATURE_SWING_C = 6  # change across the window worth a mention
+TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention
+SUNSET_SOON_MINUTES = 120
+SUNRISE_SOON_MINUTES = 180
+
+# Higher wins. Safety first, then changes, then calm facts.
+OVERVIEW_PRIORITIES = {
+    "storm": 100,
+    "freezing": 95,
+    "heavy_precipitation": 90,
+    "extreme_feels": 85,
+    "air_quality": 80,
+    "uv": 75,
+    "precipitation": 60,
+    "wind": 55,
+    "fog": 50,
+    "temperature_swing": 40,
+    "tomorrow": 30,
+    "sun": 20,
+    "calm": 0,
+}
+
+# How long a message stays open: a base time, plus extra for severe ones
+# (seconds). Info 15 s, warning 22 s, error 30 s.
+OVERVIEW_SHOW_BASE_SECONDS = 15
+OVERVIEW_SHOW_EXTRA_SECONDS = {"info": 0, "warning": 7, "error": 15}
