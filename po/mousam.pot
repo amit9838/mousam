@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-06 20:33+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
 msgid "Weather at a glance"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.desktop.in:10
+#: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
 msgstr ""
 
@@ -525,24 +525,16 @@ msgstr ""
 msgid "Sunset"
 msgstr ""
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:214
 #: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:51
-msgid "Hourly"
-msgstr ""
-
-#:  src/UI_HourlyDetails.py:53
-msgid "Precipitation"
-msgstr ""
-
-#: src/UI_CardSquare.py:31
+#: src/UI_CardSquare.py:31 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr ""
 
-#: src/UI_CardSquare.py:32
+#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr ""
 
@@ -582,23 +574,37 @@ msgstr ""
 msgid "Northwest"
 msgstr ""
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:355
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
+#: src/UI_CompactWeather.py:120 src/mousam.py:397
+msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:293
-msgid "Pres."
+#: src/UI_CompactWeather.py:135 src/mousam.py:355
+msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:297
+#: src/UI_CompactWeather.py:138 src/mousam.py:360
+msgid "Fetch Error"
+msgstr ""
+
+#: src/UI_CompactWeather.py:218
 msgid "AQI"
 msgstr ""
 
-#: src/UI_CompactWeather.py:350
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr ""
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr ""
+
+#: src/UI_CompactWeather.py:293
 msgid "Mousam Compact"
 msgstr ""
 
@@ -625,6 +631,14 @@ msgstr ""
 
 #: src/UI_Forecast.py:316
 msgid "Today"
+msgstr ""
+
+#: src/UI_HourlyDetails.py:51
+msgid "Hourly"
+msgstr ""
+
+#: src/UI_HourlyDetails.py:53
+msgid "Precipitation"
 msgstr ""
 
 #: src/UI_HourlyDetails.py:151
@@ -686,7 +700,7 @@ msgstr ""
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:167 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
@@ -710,40 +724,28 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/mousam.py:279
+#: src/mousam.py:289
 msgid "Direction"
 msgstr ""
 
-#: src/mousam.py:293
+#: src/mousam.py:303
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
-msgstr ""
-
-#: src/mousam.py:364
+#: src/mousam.py:374
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:371
+#: src/mousam.py:381
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:372
+#: src/mousam.py:382
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:373
+#: src/mousam.py:383
 msgid "Add Location"
-msgstr ""
-
-#: src/mousam.py:387
-msgid "Retry"
 msgstr ""
 
 #: src/windowAbout.py:20
@@ -754,35 +756,36 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 
-#: src/windowLocations.py:54
+#: src/windowLocations.py:55
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:70
+#: src/windowLocations.py:78
 msgid "Search for a city"
 msgstr ""
 
-#: src/windowLocations.py:84
+#: src/windowLocations.py:92
 msgid "Search for your city..."
 msgstr ""
 
-#: src/windowLocations.py:106
+#: src/windowLocations.py:137
 msgid "No cities found."
 msgstr ""
 
-#: src/windowLocations.py:144
+#: src/windowLocations.py:176
 msgid "Saved Locations"
 msgstr ""
 
-#: src/windowLocations.py:146
+#: src/windowLocations.py:178
 msgid "Add"
 msgstr ""
 
-#: src/windowLocations.py:201
+#: src/windowLocations.py:231
 msgid "Location already exists"
 msgstr ""
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:253
+#, python-brace-format
 msgid "Switched to {}"
 msgstr ""
 
@@ -927,10 +930,12 @@ msgid "Delete all contents of the current log file"
 msgstr ""
 
 #: src/windowPreferences.py:340
+#, python-brace-format
 msgid "Icon theme changed to {}"
 msgstr ""
 
 #: src/windowPreferences.py:349
+#, python-brace-format
 msgid "Switched to - {}"
 msgstr ""
 
@@ -947,6 +952,7 @@ msgid "Auto refresh disabled"
 msgstr ""
 
 #: src/windowPreferences.py:383
+#, python-brace-format
 msgid "Auto refresh every {} min"
 msgstr ""
 
