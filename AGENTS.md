@@ -325,6 +325,8 @@ Use:
 - **Every request has a timeout** (`TIMEOUT` from `configs.py`), and every API function logs and returns `None` on failure instead of raising.
 - **API calls are cached** with `@cached` (TTL `DATA_CACHE_TTL`). A new API call uses it too.
 - **No leaks across refreshes.** The content grid is rebuilt on every refresh, so widgets must not be kept alive by their own handlers. Connect handlers on rebuilt widgets with `weak_connect`, set draw functions with `safe_set_draw_func`, remove `GLib.timeout_add` sources when the widget goes, and disconnect `settings` handlers you connect from short-lived widgets. Check with `test_memory_leak.py` after touching refresh or widget lifetime.
+- **Never poll the main loop.** Don't write a `GLib.idle_add` / `GLib.timeout_add` callback that returns `SOURCE_CONTINUE` while it waits for UI state (a width, a mapped widget, data). Widgets are often built hidden (the content grid is built behind the `loader` page) and may be thrown away before they are ever shown, so such a callback can spin at 100% CPU forever and keep the old widget tree alive. Wait for the signal that reports the change instead: `Gtk.Adjustment` `changed` for a scrolled size, `map` / `realize` for being shown, `notify::<property>` for data. Disconnect a one-shot handler once it has run. The only repeating timers are real clocks and intervals (the compact clock, `AutoRefreshTimer`), and they must be removed when their widget goes.
+- **Handlers must not keep widgets alive.** A closure connected to a signal keeps everything it captures. Capture plain values (an index, a string) rather than `self` or other widgets, or use `weak_connect`. Never pass widgets as extra arguments to `GLib.idle_add` / `timeout_add` for a source that can outlive them. An object passed to `safe_set_draw_func` is kept alive by its drawing area, so it must not also keep the area's parent container (no `self.box = Gtk.Box(); self.box.append(self.area)`): hand out the drawing area itself.
 - **Keep draw functions light.** They run on every frame: compute in `__init__`, only draw in `draw`.
 - **Long lists**: today's lists are short (hours of two days, 7 days). If you add one that can grow, use `Gtk.ListView` rather than appending hundreds of widgets.
 
@@ -397,6 +399,8 @@ python3 -m py_compile src/*.py
 The codebase already has ruff findings. Don't add new ones in the code you change, and don't mass-fix unrelated ones in the same change. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
 
 Then build, install and run the app, and check the change in light and dark, metric and imperial.
+
+If you touched refresh, rendering, signals or main-loop sources, also check CPU and memory across several refreshes, including quick back-to-back ones (Ctrl+R several times, or switching location): `top -p <pid>` must settle near 0% CPU once loading ends, and RSS must not keep climbing. In the Flatpak, the app process is `python3 /app/bin/mousam`, not the `bwrap` wrappers.
 
 ---
 
