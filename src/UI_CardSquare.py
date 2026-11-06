@@ -136,6 +136,9 @@ class CardSquare:
                 lbl_sub = Gtk.Label(label=self.sub_desc)
                 lbl_sub.set_css_classes(["text-lg", "font-semibold"])
                 lbl_sub.set_halign(Gtk.Align.START)
+                # A long translated direction wraps in narrow windows
+                lbl_sub.set_wrap(True)
+                lbl_sub.set_xalign(0)
                 sub_box.append(lbl_sub)
 
             info_box.append(sub_box)
@@ -143,7 +146,7 @@ class CardSquare:
         # --- Right Side: Visual/Graphic ---
         visual_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         visual_box.set_halign(Gtk.Align.END)
-        visual_box.set_valign(Gtk.Align.END)
+        visual_box.set_valign(Gtk.Align.CENTER)
         content_box.append(visual_box)
 
         # Upper Text (N, High, etc)
@@ -203,7 +206,7 @@ class CardSquare:
         return None
 
     def _get_wind_direction_str(self, angle: float) -> str:
-        """Converts degrees to cardinal direction."""
+        """Converts degrees to cardinal direction (where the wind comes from)."""
         directions = [
             _("North"),
             _("Northeast"),
@@ -213,7 +216,6 @@ class CardSquare:
             _("Southwest"),
             _("West"),
             _("Northwest"),
-            _("North"),
         ]
         index = round(angle % 360 / 45) % 8
         return directions[index]

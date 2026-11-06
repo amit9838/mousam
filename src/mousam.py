@@ -286,10 +286,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             main_val=cw_data.windspeed_10m.data,
             main_val_unit=cw_data.windspeed_10m.unit,
             desc=cw_data.windspeed_10m.level_str,
-            sub_desc_heading=_("Direction"),
+            # Translators: wind direction is where the wind blows from
+            sub_desc_heading=_("Direction (from)"),
             sub_desc=str(cw_data.winddirection_10m.data) + "°",
-            text_up="90",
-            text_low="0",
+            # Translators: "North" on the wind direction compass, as short as possible
+            text_up=C_("compass", "N"),
             visual_data=cw_data.winddirection_10m.data
         ).card
         add_card(wind_card, 0, 0)
@@ -302,25 +303,16 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             desc=cw_data.relativehumidity_2m.level_str,
             sub_desc_heading=_("Dewpoint"),
             sub_desc=f"{cw_data.dewpoint_2m.data} {cw_data.dewpoint_2m.unit}",
-            text_up="100",
-            text_low="0",
             visual_data=cw_data.relativehumidity_2m.data
         ).card
         add_card(hum_card, 1, 0)
 
         # Pressure
-        low = 872.0
-        high = 1080.0
-        if settings.unit == 'imperial':
-            low *= 0.02953
-            high *= 0.02953
         pres_card = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.data,
             main_val_unit=cw_data.surface_pressure.unit,
             desc=cw_data.surface_pressure.level_str,
-            text_up=str(int(high)),
-            text_low=str(int(low)),
             visual_data=cw_data.surface_pressure.data
         ).card
         add_card(pres_card, 0, 1)
@@ -331,8 +323,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             main_val=cw_data.uv_index.data,
             main_val_unit="",
             desc=cw_data.uv_index.level_str,
-            text_up="14",
-            text_low="0",
             visual_data=cw_data.uv_index.data,
         ).card
         add_card(uv_card, 1, 1)
