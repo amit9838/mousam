@@ -62,5 +62,14 @@
       <summary>Icon theme</summary>
       <description>Weather icon set: "default" (mousam default icons) or "material" (Google material design icons)</description>
     </key>
+    <key name="forecast-page" type="s">
+      <choices>
+        <choice value="tomorrow"/>
+        <choice value="weekly"/>
+      </choices>
+      <default>"tomorrow"</default>
+      <summary>Forecast page</summary>
+      <description>The page last shown in the forecast card: "tomorrow" or "weekly".</description>
+    </key>
   </schema>
 </schemalist>

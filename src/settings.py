@@ -131,6 +131,14 @@ class Settings:
     def icon_theme(self, value):
         self.settings.set_string("icon-theme", value)
 
+    @property
+    def forecast_page(self):
+        return self.settings.get_string("forecast-page")
+
+    @forecast_page.setter
+    def forecast_page(self, value):
+        self.settings.set_string("forecast-page", value)
+
 
 def get_settings():
     return Settings()

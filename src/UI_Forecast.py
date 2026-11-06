@@ -129,8 +129,12 @@ class Forecast(Gtk.Grid):
         self._forecast_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.attach(self._forecast_stack, 0, 1, 1, 1)
 
-        # Load initial page (Tomorrow)
-        self._load_page(ForecastPage.TOMORROW)
+        # Load the page chosen last (saved, so it survives refreshes and restarts)
+        self._load_page(self._saved_page())
+
+    def _saved_page(self) -> ForecastPage:
+        """The page last chosen, Tomorrow if none is saved."""
+        return self._PAGE_NAME_MAP.get(settings.forecast_page, ForecastPage.TOMORROW)
 
     def _create_button_bar(self) -> Gtk.Box:
         """
@@ -149,7 +153,7 @@ class Forecast(Gtk.Grid):
         tomorrow_btn = Gtk.ToggleButton.new_with_label(_("Tomorrow"))
         tomorrow_btn.set_size_request(self.ITEM_WIDTH_REQUEST, self.ITEM_HEIGHT_REQUEST)
         tomorrow_btn.set_css_classes(["btn-sm"])
-        tomorrow_btn.set_active(True)
+        tomorrow_btn.set_active(self._saved_page() == ForecastPage.TOMORROW)
         weak_connect(tomorrow_btn, "clicked", self._on_tomorrow_clicked)
         button_bar.append(tomorrow_btn)
 
@@ -158,6 +162,7 @@ class Forecast(Gtk.Grid):
         weekly_btn.set_size_request(self.ITEM_WIDTH_REQUEST, self.ITEM_HEIGHT_REQUEST)
         weekly_btn.set_css_classes(["btn-sm"])
         weekly_btn.set_group(tomorrow_btn)
+        weekly_btn.set_active(self._saved_page() == ForecastPage.WEEKLY)
         weak_connect(weekly_btn, "clicked", self._on_weekly_clicked)
         button_bar.append(weekly_btn)
 
@@ -180,6 +185,7 @@ class Forecast(Gtk.Grid):
             page: The ForecastPage enum value to switch to.
         """
         page_name = page.name.lower()
+        settings.forecast_page = page_name
         if self._forecast_stack.get_child_by_name(page_name):
             self._forecast_stack.set_visible_child_name(page_name)
         else:
