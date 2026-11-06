@@ -73,34 +73,41 @@ class CurrentCondition(Gtk.Box):
     # ---------- Conditions (left) ----------
 
     def _build_conditions(self, data, daily) -> Gtk.Box:
-        box = Gtk.Box(spacing=24, valign=Gtk.Align.CENTER)
+        box = Gtk.Box(spacing=12, valign=Gtk.Align.CENTER)
 
         condition_code = str(data.weathercode.data)
         if data.is_day.data == 0:
             condition_code += "n"
-        icon = create_weather_icon(condition_code, settings.icon_theme, 96)
+        icon = create_weather_icon(condition_code, settings.icon_theme, 80)
         icon.set_valign(Gtk.Align.CENTER)
         box.append(icon)
 
-        # Temperature, with the unit raised beside it
-        temp_box = Gtk.Box(valign=Gtk.Align.CENTER)
-        box.append(temp_box)
+        reading_box = Gtk.Box(spacing=12, valign=Gtk.Align.CENTER)
+        box.append(reading_box)
 
-        temp_label = Gtk.Label(label="{0:.0f}".format(data.temperature_2m.data))
-        temp_label.set_css_classes(["text-8xl", "font-bold", "current-temp"])
+        # Temperature, with the unit beside it on the same baseline
+        temp_box = Gtk.Box(valign=Gtk.Align.CENTER, spacing=1)
+        temp_box.add_css_class("current-temp-box")
+        reading_box.append(temp_box)
+
+        temp_label = Gtk.Label(
+            label="{0:.0f}".format(data.temperature_2m.data),
+            valign=Gtk.Align.BASELINE_FILL,
+        )
+        temp_label.set_css_classes(["font-bold", "current-temp"])
         temp_box.append(temp_label)
 
         unit_label = Gtk.Label(
-            label=data.temperature_2m.unit, valign=Gtk.Align.START, margin_top=14
+            label=data.temperature_2m.unit, valign=Gtk.Align.BASELINE_FILL
         )
         unit_label.set_css_classes(["text-4xl", "font-medium", "opacity-90"])
         temp_box.append(unit_label)
 
-        # Condition, feels like, today's high and low
+        # Condition, today's high and low, feels like
         desc_box = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL, spacing=4, valign=Gtk.Align.CENTER
+            orientation=Gtk.Orientation.VERTICAL, spacing=6, valign=Gtk.Align.CENTER
         )
-        box.append(desc_box)
+        reading_box.append(desc_box)
 
         cond_label = Gtk.Label(
             label=condition[str(data.weathercode.data)],
@@ -108,34 +115,44 @@ class CurrentCondition(Gtk.Box):
             xalign=0,
             wrap=True,
         )
-        cond_label.set_css_classes(["text-2xl", "font-bold"])
+        cond_label.set_css_classes(["text-4xl", "font-bold"])
         desc_box.append(cond_label)
 
-        feels_label = Gtk.Label(
-            # Translators: {0} is a temperature, like "22°"
-            label=_("Feels like {0}").format(
-                self._degrees(data.apparent_temperature.data)
-            ),
-            halign=Gtk.Align.START,
-            xalign=0,
-            wrap=True,
-        )
-        feels_label.set_css_classes(["text-sm", "opacity-80"])
-        desc_box.append(feels_label)
+        # Today's high and low, then feels like, on one line
+        details_box = Gtk.Box(spacing=12, halign=Gtk.Align.START)
+        desc_box.append(details_box)
 
         high_low = self._today_high_low(daily)
         if high_low:
             high_low_label = Gtk.Label(
-                # Translators: today's highest and lowest temperatures, like "29°" and "14°"
-                label=_("High {high} · Low {low}").format(
-                    high=self._degrees(high_low[0]), low=self._degrees(high_low[1])
+                # Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
+                label=GLib.markup_escape_text(_("H {high} · L {low}")).format(
+                    high=self._bold_degrees(high_low[0]),
+                    low=self._bold_degrees(high_low[1]),
                 ),
-                halign=Gtk.Align.START,
+                use_markup=True,
                 xalign=0,
                 wrap=True,
             )
             high_low_label.set_css_classes(["text-sm", "opacity-80"])
-            desc_box.append(high_low_label)
+            details_box.append(high_low_label)
+
+            separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL)
+            separator.set_margin_top(3)
+            separator.set_margin_bottom(3)
+            details_box.append(separator)
+
+        feels_label = Gtk.Label(
+            # Translators: {0} is a temperature, like "22°"
+            label=GLib.markup_escape_text(_("Feels like {0}")).format(
+                self._bold_degrees(data.apparent_temperature.data)
+            ),
+            use_markup=True,
+            xalign=0,
+            wrap=True,
+        )
+        feels_label.set_css_classes(["text-sm", "opacity-80"])
+        details_box.append(feels_label)
 
         return box
 
@@ -156,10 +173,10 @@ class CurrentCondition(Gtk.Box):
 
         # Cities saved by older versions have no state
         region = ", ".join(p for p in (city.get("state"), city.get("country")) if p)
-        region_label = Gtk.Label(label=region, margin_top=4)
+        region_label = Gtk.Label(label=region)
         region_label.set_css_classes(["text-base", "opacity-80"])
 
-        self._time_label = Gtk.Label(margin_top=4)
+        self._time_label = Gtk.Label(margin_top=2)
         self._time_label.set_css_classes(["text-sm", "opacity-70"])
         self._update_clock()
 
@@ -179,7 +196,7 @@ class CurrentCondition(Gtk.Box):
         # overview is enabled the info button is always there (it keeps the
         # space), but it only works once the engine has an insight.
         bar = Gtk.Box(
-            margin_top=0,
+            margin_top=12,
             margin_start=3,
             margin_end=3,
             halign=Gtk.Align.START,
@@ -349,6 +366,11 @@ class CurrentCondition(Gtk.Box):
     @staticmethod
     def _degrees(value: float) -> str:
         return "{0:.0f}°".format(value)
+
+    @classmethod
+    def _bold_degrees(cls, value: float) -> str:
+        """A temperature as Pango markup, in bold."""
+        return "<b>{0}</b>".format(cls._degrees(value))
 
     @staticmethod
     def _city_timezone() -> Optional[ZoneInfo]:

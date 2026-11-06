@@ -691,7 +691,13 @@
 /* Digits have no descenders: trim the empty space the big font leaves
    above and below them */
 .current-temp {
+    font-size: 5.25rem;
     line-height: 1;
+}
+
+/* Trimmed on the box, not the number, so the unit's baseline still
+   matches the number's */
+.current-temp-box {
     margin-top: -0.5rem;
     margin-bottom: -0.75rem;
 }
