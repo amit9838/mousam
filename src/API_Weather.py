@@ -148,6 +148,7 @@ class Weather:
             "uv_index_max",
             "precipitation_sum",
             "windspeed_10m_max",
+            "precipitation_probability_max",
         ]
 
         return self.forecast_daily(lat, lon, daily=daily_args, timezone="GMT")
