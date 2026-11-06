@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 20:33+0530\n"
+"POT-Creation-Date: 2026-11-06 21:45+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -201,7 +201,7 @@ msgstr ""
 msgid "Every 2 hours"
 msgstr ""
 
-#: src/CORE_GTKUtils.py:66
+#: src/CORE_GTKUtils.py:135
 msgid "Unknown"
 msgstr ""
 
@@ -209,111 +209,111 @@ msgstr ""
 msgid "Unknown City"
 msgstr ""
 
-#: src/CORE_Icons.py:261
+#: src/CORE_Icons.py:267
 msgid "Clear sky"
 msgstr ""
 
-#: src/CORE_Icons.py:262
+#: src/CORE_Icons.py:268
 msgid "Few Clouds"
 msgstr ""
 
-#: src/CORE_Icons.py:263
+#: src/CORE_Icons.py:269
 msgid "Partly Cloudy"
 msgstr ""
 
-#: src/CORE_Icons.py:264
+#: src/CORE_Icons.py:270
 msgid "Overcast"
 msgstr ""
 
-#: src/CORE_Icons.py:265
+#: src/CORE_Icons.py:271
 msgid "Fog"
 msgstr ""
 
-#: src/CORE_Icons.py:266
+#: src/CORE_Icons.py:272
 msgid "Mist"
 msgstr ""
 
-#: src/CORE_Icons.py:267
+#: src/CORE_Icons.py:273
 msgid "Light Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:268
+#: src/CORE_Icons.py:274
 msgid "Moderate Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:269
+#: src/CORE_Icons.py:275
 msgid "Heavy Intensity Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:270
+#: src/CORE_Icons.py:276
 msgid "Light Freezing Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:271
+#: src/CORE_Icons.py:277
 msgid "Heavy Freezing Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:272
+#: src/CORE_Icons.py:278
 msgid "Light Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:273
+#: src/CORE_Icons.py:279
 msgid "Moderate Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:274
+#: src/CORE_Icons.py:280
 msgid "Heavy Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:275
+#: src/CORE_Icons.py:281
 msgid "Light Freezing Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:276
+#: src/CORE_Icons.py:282
 msgid "Heavy Freezing Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:277
+#: src/CORE_Icons.py:283
 msgid "Light Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:278
+#: src/CORE_Icons.py:284
 msgid "Moderate Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:279
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:280
+#: src/CORE_Icons.py:286
 msgid "Snow grains"
 msgstr ""
 
-#: src/CORE_Icons.py:281
+#: src/CORE_Icons.py:287
 msgid "Light Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:282
+#: src/CORE_Icons.py:288
 msgid "Moderate Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:283
+#: src/CORE_Icons.py:289
 msgid "Heavy Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:284
+#: src/CORE_Icons.py:290
 msgid "Light Snow Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:285
+#: src/CORE_Icons.py:291
 msgid "Heavy Snow Showers "
 msgstr ""
 
-#: src/CORE_Icons.py:286
+#: src/CORE_Icons.py:292
 msgid "Thunderstorm"
 msgstr ""
 
-#: src/CORE_Icons.py:287
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
 msgstr ""
 
@@ -542,52 +542,52 @@ msgstr ""
 msgid "UV Index"
 msgstr ""
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:211
 msgid "North"
 msgstr ""
 
-#: src/UI_CardSquare.py:209
+#: src/UI_CardSquare.py:212
 msgid "Northeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:213
 msgid "East"
 msgstr ""
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:214
 msgid "Southeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:215
 msgid "South"
 msgstr ""
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:216
 msgid "Southwest"
 msgstr ""
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:217
 msgid "West"
 msgstr ""
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:218
 msgid "Northwest"
 msgstr ""
 
 #: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
-#: src/UI_CompactWeather.py:134 src/mousam.py:355
+#: src/UI_CompactWeather.py:134 src/mousam.py:345
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:397
+#: src/UI_CompactWeather.py:120 src/mousam.py:387
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:355
+#: src/UI_CompactWeather.py:135 src/mousam.py:345
 msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:138 src/mousam.py:360
+#: src/UI_CompactWeather.py:138 src/mousam.py:350
 msgid "Fetch Error"
 msgstr ""
 
@@ -608,12 +608,17 @@ msgstr ""
 msgid "Mousam Compact"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:33
 msgid "Day"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:33
 msgid "Night"
+msgstr ""
+
+#: src/UI_CompDrawLineGraph.py:43
+#, python-brace-format
+msgid "Max {max} · Min {min}"
 msgstr ""
 
 #: src/UI_CurrentCond.py:96
@@ -656,31 +661,31 @@ msgctxt "precipitation"
 msgid "Day High •"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:246
 msgid "Now"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:285
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation today !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:286
+#: src/UI_HourlyDetails.py:289
 msgid "No precipitation expected today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:287
+#: src/UI_HourlyDetails.py:290
 msgid "Anticipate a precipitation-free day !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:291
 msgid "Enjoy a rain-free day today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:292
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:293
 msgid "No rain in sight today!"
 msgstr ""
 
@@ -724,27 +729,32 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/mousam.py:289
-msgid "Direction"
+#: src/mousam.py:290
+msgid "Direction (from)"
 msgstr ""
 
-#: src/mousam.py:303
+#: src/mousam.py:293
+msgctxt "compass"
+msgid "N"
+msgstr ""
+
+#: src/mousam.py:304
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:374
+#: src/mousam.py:364
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:381
+#: src/mousam.py:371
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:382
+#: src/mousam.py:372
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:383
+#: src/mousam.py:373
 msgid "Add Location"
 msgstr ""
 
