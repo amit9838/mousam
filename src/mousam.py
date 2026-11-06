@@ -43,7 +43,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # State Tracking
         self.added_cities = settings.added_cities
-        self._needs_render = False
         self._rendered_weather = None  # current_weather object the grid was built from
 
         # --- UI Construction ---
@@ -468,12 +467,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         app = self.get_application()
         if app and hasattr(app, "main_window"):
             app.main_window = None
-
-    def present(self):
-        if getattr(self, "_needs_render", False):
-            self._render_weather_grid()
-            self._needs_render = False
-        super().present()
 
     # --- Callbacks ---
     def _on_action_refresh(self, action, param):
