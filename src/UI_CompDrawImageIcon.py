@@ -17,7 +17,9 @@ class DrawImage:
     (GNOME Builder), while Gtk.Image renders them itself.
     """
 
-    def __init__(self, path: str, angle: float, width: int, height: int):
+    def __init__(self, path: str, angle: float, width: int, height: int, center=(0.5, 0.5)):
+        """center is the point of the image, as a share of its width and
+        height, that is rotated around and placed in the middle."""
         image = Gtk.Image.new_from_file(path)
         image.set_size_request(width, height)
         image.set_pixel_size(max(width, height))
@@ -26,12 +28,12 @@ class DrawImage:
         fixed.set_size_request(width + 2 * PADDING, height + 2 * PADDING)
         fixed.put(image, 0, 0)
 
-        # Move to the image's centre, rotate, then move back
+        # Put the image's center point in the middle of the box, and rotate around it
         transform = (
             Gsk.Transform.new()
             .translate(Graphene.Point().init(PADDING + width / 2, PADDING + height / 2))
             .rotate(angle)
-            .translate(Graphene.Point().init(-width / 2, -height / 2))
+            .translate(Graphene.Point().init(-width * center[0], -height * center[1]))
         )
         fixed.set_child_transform(image, transform)
 

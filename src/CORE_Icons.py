@@ -196,6 +196,12 @@ def create_weather_icon(code: str, theme: str, pixel_size: int) -> Gtk.Image:
 
 
 # --- Background CSS ---
+# Where the wind arrow looks centred in arrow.svg (both themes), as a share of
+# the image's width and height. It's a dart, so most of it is behind the tip:
+# its centroid sits below the middle. Rotating around this point keeps the
+# arrow centred whatever the wind direction.
+ARROW_CENTER = (0.5, 0.61)
+
 bg_css = {
     "0": "bg-weather-clear-sky",
     "1": "bg-weather-few-clouds",
