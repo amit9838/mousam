@@ -110,7 +110,7 @@ msgstr "Liste et coordonnées des villes ."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
-"Stores locations added by user in json stringified string format in string"
+"Stores locations added by user in json stringified string format in string"  
 msgstr ""
 "Stocke les emplacements ajoutés par l'utilisateur dans un fichier texte au "
 "format JSON"
