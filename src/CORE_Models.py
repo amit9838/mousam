@@ -76,6 +76,7 @@ class DailyWeather:
     uv_index_max: WeatherField
     precipitation_sum: WeatherField
     windspeed_10m_max: WeatherField
+    precipitation_probability_max: WeatherField
 
     def __init__(self, data: Dict[str, Any]):
         daily = data.get("daily", {})

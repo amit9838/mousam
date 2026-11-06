@@ -31,6 +31,9 @@ mousam_sources = [
   'mousam.py',
   'CORE_Models.py',
   'CORE_weatherData.py',
+  'CORE_Overview.py',
+  'CORE_OverviewMessages.py',
+  'CORE_OverviewRules.py',
   'CORE_Icons.py',
   'CORE_Logging.py',
 
@@ -52,6 +55,7 @@ mousam_sources = [
   'UI_CompDrawPollutionBar.py',
   'UI_CompDrawLineGraph.py',
   'UI_CompDrawTickGauge.py',
+  'UI_CompDrawTempRange.py',
   'UI_CompactWeather.py',
 
   'configs.py',

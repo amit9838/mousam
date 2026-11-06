@@ -14,12 +14,13 @@ The app lets users:
 
 - search for and save locations, and switch between them
 - see current conditions: temperature, feels like, humidity, wind, pressure, UV index, dew point, visibility
+- read a one-line overview of the coming hours ("Rain likely around 5:00 PM (70% chance).") behind the info button under the current conditions
 - browse hourly (temperature, wind, precipitation), tomorrow and 7-day forecasts with graphs
 - check air quality (US / EU AQI, pollutants, pollen) with WHO-based levels
 - follow the sun and moon through the day/night card
 - switch to a compact window
 - get a desktop notification when data refreshes
-- set preferences: metric or imperial, 12/24h clock, precipitation in inches, dynamic backgrounds, icon theme (default or Material), auto-refresh interval, debug mode
+- set preferences: metric or imperial, 12/24h clock, precipitation in inches, dynamic backgrounds, icon theme (default or Material), weather overview on/off, auto-refresh interval, debug mode
 
 All weather data comes from the free [Open-Meteo](https://open-meteo.com/) APIs. There is no account and no backend of our own.
 
@@ -138,6 +139,9 @@ src/
   UI_*.py                 sections and cards: CurrentCond, HourlyDetails, Forecast, CardSquare, CardDayNight, CardAirPollution, CompactWeather
   UI_CompDraw*.py         small Cairo-drawn pieces used by the cards
   CORE_weatherData.py     WeatherDataManager: the one holder of fetched data, level classification, signals
+  CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
+  CORE_OverviewRules.py   the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook (no GTK)
+  CORE_OverviewMessages.py the overview wordings: several per message key, picked by MessageBook (no GTK)
   CORE_Networking.py      fetch_all_weather_data_async: runs every fetch on worker threads
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
@@ -153,6 +157,7 @@ src/
 data/                     gschema, .desktop, appdata, icons (default_icons, material_icons), Flatpak dependency
 po/                       translations (POTFILES, LINGUAS, mousam.pot, *.po)
 build-aux/, snap/, debian/ packaging
+docs/                     overview-rules.md (source of truth for the overview rules); local *-plan.md files
 website/                  the project website (React + Vite + Tailwind), separate from the app
 screenshots/              images for README and appdata
 ```
@@ -162,7 +167,7 @@ screenshots/              images for README and appdata
 Each layer may import only the ones below it:
 
 ```txt
-main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_Logging → settings, configs
+main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
 ```
 
 - UI code never calls `API_*` directly. It reads `weather_manager` (from `CORE_weatherData`) and asks for a refresh through `fetch_all_weather_data_async`. The one exception is the city search in `windowLocations.py`, which calls `find_city`.
@@ -217,8 +222,21 @@ When unsure, ask:
 | Loading, empty, error page | `Adw.StatusPage`, as `_update_view_state` in `mousam.py` builds them |
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
 | A Cairo draw function | `safe_set_draw_func(area, self, "draw")` |
+| A one-line summary of the coming hours | `overview_engine` (`CORE_Overview`): read `current()` and `heading`, listen to `overview-changed` |
+| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `CORE_OverviewRules` |
 
 Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`"61n"`). A code must be in `icons_default`, `icons_material`, `bg_css` and `condition` together.
+
+### Overview
+
+The overview is the pill under the current conditions. Its rules are written in plain English in [docs/overview-rules.md](docs/overview-rules.md), the **source of truth**: change that file first, then the code and the numbers to match. If the two disagree, the code is wrong.
+
+- **Wordings** (`CORE_OverviewMessages.py`): a map of message key → several wordings (4–5 for common messages, 2 for rare safety ones). Rules only use keys (`ctx.messages.say("rain.start", time=…, chance=…)`, `say_count` for plurals). All wordings of a key say the same thing with the same placeholders.
+- **Rules** (`CORE_OverviewRules.py`, no GTK) look at an `OverviewContext` and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
+- **Engine** (`CORE_Overview.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the current insight stops being true (silent text update), and announces (opens the pill) on a new kind of insight or after a random `OVERVIEW_REPUBLISH_MINUTES` interval, sooner for severe ones. Each announcement draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
+- **Section** (`UI_CurrentCond.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
+- **Numbers** (thresholds, priorities, open times, republish intervals) live in `configs.py` under "Overview", in metric; rules convert imperial data before comparing.
+- Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`.
 
 ---
 
@@ -357,6 +375,8 @@ Use:
 ## Translation Rules
 
 - Wrap every user-visible string in `_()`. When a word is ambiguous out of context ("Low", "Moderate"), use `C_("context", "...")`, as the level classifiers do.
+- Counts use plural forms: `ngettext("{n} minute", "{n} minutes", n)` (extracted by `./update-pot` and the Meson `glib` preset).
+- Add a `# Translators:` comment right above a string with placeholders, saying what each one holds.
 - Never translate **Mousam**.
 - Don't build sentences by joining translated pieces; translate the whole sentence with placeholders.
 - After adding or changing strings, run `./update-pot`. Don't edit `po/*.po` files by hand or machine-translate them: translators maintain them (including through Weblate).

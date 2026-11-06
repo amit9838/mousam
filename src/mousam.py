@@ -255,7 +255,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         grid.set_hexpand(True)
 
         # --- Top Section ---
-        current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=200)
+        # No tightening, so the section lines up with the cards below
+        current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=1400)
         curr_cond = CurrentCondition()
         curr_cond.set_size_request(-1, 100)
         current_clamp.set_child(curr_cond)

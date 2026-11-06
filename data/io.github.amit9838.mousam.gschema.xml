@@ -52,6 +52,11 @@
       <summary>Show weather update notifications</summary>
       <description>Show a notification when weather data is updated.</description>
     </key>
+    <key name="show-overview" type="b">
+      <default>true</default>
+      <summary>Show the weather overview</summary>
+      <description>Show a short summary of the coming hours under the current conditions.</description>
+    </key>
     <key name="debug-mode" type="b">
       <default>false</default>
       <summary>Enable debug mode</summary>
@@ -61,6 +66,15 @@
       <default>"default"</default>
       <summary>Icon theme</summary>
       <description>Weather icon set: "default" (mousam default icons) or "material" (Google material design icons)</description>
+    </key>
+    <key name="forecast-page" type="s">
+      <choices>
+        <choice value="tomorrow"/>
+        <choice value="weekly"/>
+      </choices>
+      <default>"tomorrow"</default>
+      <summary>Forecast page</summary>
+      <description>The page last shown in the forecast card: "tomorrow" or "weekly".</description>
     </key>
   </schema>
 </schemalist>

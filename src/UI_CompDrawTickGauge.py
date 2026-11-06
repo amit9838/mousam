@@ -6,7 +6,7 @@ from gi.repository import Gtk  # noqa: E402
 from .CORE_GTKUtils import safe_set_draw_func, theme_rgba  # noqa: E402
 
 TICKS = 35
-HEIGHT = 24
+HEIGHT = 22
 TICK_WIDTH_RATIO = 0.5  # tick width as a share of the space between ticks
 
 # Default colour of the filled ticks: the app's blue, (r, g, b) from 0 to 1

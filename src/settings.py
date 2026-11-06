@@ -116,6 +116,14 @@ class Settings:
         self.settings.set_boolean("show-notifications", value)
 
     @property
+    def show_overview(self):
+        return self.settings.get_boolean("show-overview")
+
+    @show_overview.setter
+    def show_overview(self, value):
+        self.settings.set_boolean("show-overview", value)
+
+    @property
     def debug_mode(self):
         return self.settings.get_boolean("debug-mode")
 
@@ -130,6 +138,14 @@ class Settings:
     @icon_theme.setter
     def icon_theme(self, value):
         self.settings.set_string("icon-theme", value)
+
+    @property
+    def forecast_page(self):
+        return self.settings.get_string("forecast-page")
+
+    @forecast_page.setter
+    def forecast_page(self, value):
+        self.settings.set_string("forecast-page", value)
 
 
 def get_settings():
