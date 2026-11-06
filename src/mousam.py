@@ -43,7 +43,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # State Tracking
         self.added_cities = settings.added_cities
-        self._needs_render = False
+        self._rendered_weather = None  # current_weather object the grid was built from
 
         # --- UI Construction ---
         self._setup_actions()
@@ -55,7 +55,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # Centralized Data Handling
         from .CORE_weatherData import weather_manager
-        weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
+        self._ready_handler_id = weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
         
         # Settings setup
         settings.connect(
@@ -201,10 +201,19 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # _worker_fetch_data moved to utils.fetch_all_weather_data_async
 
     def _on_weather_manager_ready(self, *args):
-        """Called when data ready state changes."""
+        """Called when data ready state changes.
+
+        notify::is-ready is emitted from the fetch worker threads, once per
+        update_* call, so hand over to the main loop before touching GTK.
+        """
+        GLib.idle_add(self._render_new_data)
+
+    def _render_new_data(self) -> bool:
+        """Render the grid once per fetch, even if is-ready fires several times."""
         from .CORE_weatherData import weather_manager
-        if weather_manager.is_ready:
-            GLib.idle_add(self._render_weather_grid)
+        if weather_manager.is_ready and weather_manager.current_weather is not self._rendered_weather:
+            self._render_weather_grid()
+        return GLib.SOURCE_REMOVE
 
     def _on_data_fetch_success(self, is_auto=False):
         """Called on Main Thread after the worker has populated weatherData."""
@@ -225,8 +234,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         from .CORE_weatherData import weather_manager
         if not weather_manager.is_ready:
             return
-        
+
         cw_data = weather_manager.current_weather
+        self._rendered_weather = cw_data
 
         # Dynamic Background
         w_code = cw_data.weathercode.data
@@ -276,10 +286,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             main_val=cw_data.windspeed_10m.data,
             main_val_unit=cw_data.windspeed_10m.unit,
             desc=cw_data.windspeed_10m.level_str,
-            sub_desc_heading=_("Direction"),
+            # Translators: wind direction is where the wind blows from
+            sub_desc_heading=_("Direction (from)"),
             sub_desc=str(cw_data.winddirection_10m.data) + "°",
-            text_up="90",
-            text_low="0",
+            # Translators: "North" on the wind direction compass, as short as possible
+            text_up=C_("compass", "N"),
             visual_data=cw_data.winddirection_10m.data
         ).card
         add_card(wind_card, 0, 0)
@@ -292,25 +303,16 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             desc=cw_data.relativehumidity_2m.level_str,
             sub_desc_heading=_("Dewpoint"),
             sub_desc=f"{cw_data.dewpoint_2m.data} {cw_data.dewpoint_2m.unit}",
-            text_up="100",
-            text_low="0",
             visual_data=cw_data.relativehumidity_2m.data
         ).card
         add_card(hum_card, 1, 0)
 
         # Pressure
-        low = 872.0
-        high = 1080.0
-        if settings.unit == 'imperial':
-            low *= 0.02953
-            high *= 0.02953
         pres_card = CardSquare(
             title="Pressure",
             main_val=cw_data.surface_pressure.data,
             main_val_unit=cw_data.surface_pressure.unit,
             desc=cw_data.surface_pressure.level_str,
-            text_up=str(int(high)),
-            text_low=str(int(low)),
             visual_data=cw_data.surface_pressure.data
         ).card
         add_card(pres_card, 0, 1)
@@ -321,8 +323,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             main_val=cw_data.uv_index.data,
             main_val_unit="",
             desc=cw_data.uv_index.level_str,
-            text_up="14",
-            text_low="0",
             visual_data=cw_data.uv_index.data,
         ).card
         add_card(uv_card, 1, 1)
@@ -450,15 +450,13 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         settings.window_maximized = window.is_maximized()
 
     def _on_window_destroy(self, *args):
+        # weather_manager outlives this window (e.g. switching to compact mode)
+        from .CORE_weatherData import weather_manager
+        weather_manager.disconnect(self._ready_handler_id)
+
         app = self.get_application()
         if app and hasattr(app, "main_window"):
             app.main_window = None
-
-    def present(self):
-        if getattr(self, "_needs_render", False):
-            self._render_weather_grid()
-            self._needs_render = False
-        super().present()
 
     # --- Callbacks ---
     def _on_action_refresh(self, action, param):

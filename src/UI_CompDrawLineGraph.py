@@ -1,165 +1,141 @@
 import gi
-from gi.repository import Gtk
 import cairo
 from datetime import datetime
+from gettext import gettext as _
 from zoneinfo import ZoneInfo
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
+from gi.repository import Gtk  # noqa: E402
+
+from .CORE_GTKUtils import safe_set_draw_func, theme_rgba, draw_text, text_layout, draw_knob  # noqa: E402
+
+PAD_X = 6
+HEADER_HEIGHT = 26  # Max / Min line, and room for the current value above the curve
+FOOTER_HEIGHT = 18  # weekday labels
+KNOB_RADIUS = 4
+
 
 class LineGraph:
-    def __init__(self, values, times=None, current_idx=None, color=[0.38, 0.7, 1], tz=None):
-        self.values = values
-        self.times = times
-        self.current_idx = current_idx
-        self.color = color
-        self.tz = tz if tz else ZoneInfo("UTC")
+    """A line graph of hourly values with a "now" marker (the AQI trend).
+
+    The past is drawn solid and the forecast dashed. Days are split by faint
+    lines at midnight (in the city's time zone), labelled with the weekday.
+    """
+
+    def __init__(self, values, times=None, current_idx=None, color=(0.38, 0.7, 1), tz=None):
+        self.color = tuple(color)
         self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(260, 120) # Increased height for date labels
-        
-        from .CORE_GTKUtils import safe_set_draw_func
+        self.dw.set_size_request(260, 120)
         safe_set_draw_func(self.dw, self, "draw")
 
+        # Everything that doesn't depend on the widget's size is worked out here,
+        # so draw() only scales it.
+        self.points = []
+        valid = [v for v in values if v is not None] if values else []
+        if len(values or []) < 2 or not valid:
+            return
+
+        low, high = min(valid), max(valid)
+        span = (high - low) or 1
+        # Missing values sit on the minimum line
+        self.points = [((v if v is not None else low) - low) / span for v in values]
+        # Translators: lowest and highest value of the air quality graph
+        self.range_text = _("Max {max} · Min {min}").format(max=int(high), min=int(low))
+
+        self.current_idx = None
+        self.current_text = None
+        if current_idx is not None and 0 <= current_idx < len(values):
+            self.current_idx = current_idx
+            if values[current_idx] is not None:
+                self.current_text = str(int(values[current_idx]))
+
+        # Midnights, as (index, weekday name)
+        self.days = []
+        if times and len(times) == len(values):
+            tz = tz or ZoneInfo("UTC")
+            for i, ts in enumerate(times):
+                dt = datetime.fromtimestamp(ts, tz=tz)
+                if dt.hour == 0:
+                    self.days.append((i, dt.strftime("%a")))
+
     def draw(self, area, ctx, width, height, data):
-        if not self.values or len(self.values) < 2:
+        if not self.points:
             return
 
-        # Padding
-        padding_top = 25
-        padding_bottom = 15
-        padding_left = 10
-        padding_right = 10
-        
-        draw_width = width - padding_left - padding_right
-        draw_height = height - padding_top - padding_bottom
-        
-        # Filter out None values for range calculation
-        valid_values = [v for v in self.values if v is not None]
-        if not valid_values:
-            return
+        left, right = PAD_X, width - PAD_X
+        top, bottom = HEADER_HEIGHT, height - FOOTER_HEIGHT
+        step = (right - left) / (len(self.points) - 1)
 
-        max_val = max(valid_values)
-        min_val = min(valid_values)
-        val_range = max_val - min_val if max_val != min_val else 1
-        
-        num_points = len(self.values)
-        step_x = draw_width / (num_points - 1)
-        
-        def get_coords(i):
-            val = self.values[i]
-            if val is None:
-                val = min_val # Default to min_val for missing data
-            x = padding_left + i * step_x
-            y = height - padding_bottom - ((val - min_val) / val_range * draw_height)
-            return x, y
+        def x_of(i):
+            return left + i * step
 
-        # 1. Draw the gradient fill
-        ctx.move_to(padding_left, height - padding_bottom)
-        for i in range(num_points):
-            ctx.line_to(*get_coords(i))
-        ctx.line_to(padding_left + draw_width, height - padding_bottom)
+        def y_of(i):
+            return bottom - self.points[i] * (bottom - top)
+
+        # Max / Min, top left
+        draw_text(area, ctx, self.range_text, left, 0, size="x-small", alpha=0.6, align=0)
+
+        # Day dividers and weekday labels
+        ctx.set_line_width(1)
+        for i, name in self.days:
+            x = x_of(i)
+            ctx.set_source_rgba(*theme_rgba(area, 0.1))
+            ctx.move_to(round(x) + 0.5, top - 4)
+            ctx.line_to(round(x) + 0.5, bottom)
+            ctx.stroke()
+            label_width = text_layout(area, name, "x-small").get_pixel_size()[0]
+            if x + 4 + label_width <= right:
+                draw_text(area, ctx, name, x + 4, bottom + 3, size="x-small", alpha=0.55, align=0)
+
+        # Area under the curve
+        ctx.move_to(left, bottom)
+        for i in range(len(self.points)):
+            ctx.line_to(x_of(i), y_of(i))
+        ctx.line_to(right, bottom)
         ctx.close_path()
-        
-        gradient = cairo.LinearGradient(0, padding_top, 0, height - padding_bottom)
-        gradient.add_color_stop_rgba(0, *self.color, 0.4)
-        gradient.add_color_stop_rgba(1, *self.color, 0.0)
+        gradient = cairo.LinearGradient(0, top, 0, bottom)
+        gradient.add_color_stop_rgba(0, *self.color, 0.3)
+        gradient.add_color_stop_rgba(1, *self.color, 0.02)
         ctx.set_source(gradient)
         ctx.fill()
 
-        # 2. Draw the main line
+        # The line: solid up to now, dashed and lighter for the forecast
         ctx.set_line_width(2.5)
         ctx.set_line_cap(cairo.LINE_CAP_ROUND)
         ctx.set_line_join(cairo.LINE_JOIN_ROUND)
-        
-        if self.current_idx is not None and 0 <= self.current_idx < num_points - 1:
-            # Draw past and current as solid
-            ctx.set_source_rgba(*self.color, 1.0)
-            ctx.move_to(*get_coords(0))
-            for i in range(1, self.current_idx + 1):
-                ctx.line_to(*get_coords(i))
+        last = len(self.points) - 1
+        now = self.current_idx if self.current_idx is not None else last
+
+        ctx.set_source_rgba(*self.color, 1)
+        ctx.move_to(x_of(0), y_of(0))
+        for i in range(1, now + 1):
+            ctx.line_to(x_of(i), y_of(i))
+        ctx.stroke()
+
+        if now < last:
+            ctx.set_source_rgba(*self.color, 0.55)
+            ctx.set_dash([3, 4])
+            ctx.move_to(x_of(now), y_of(now))
+            for i in range(now + 1, last + 1):
+                ctx.line_to(x_of(i), y_of(i))
             ctx.stroke()
-            
-            # Draw future as dashed and dimmed
-            ctx.set_source_rgba(*self.color, 0.4)
-            ctx.set_dash([4.0, 4.0])
-            ctx.move_to(*get_coords(self.current_idx))
-            for i in range(self.current_idx + 1, num_points):
-                ctx.line_to(*get_coords(i))
-            ctx.stroke()
-            ctx.set_dash([]) # Reset dash
-        else:
-            ctx.set_source_rgba(*self.color, 1.0)
-            ctx.move_to(*get_coords(0))
-            for i in range(1, num_points):
-                ctx.line_to(*get_coords(i))
-            ctx.stroke()
+            ctx.set_dash([])
 
-        # 3. Draw current point indicator if provided
-        if self.current_idx is not None and 0 <= self.current_idx < num_points:
-            curr_x, curr_y = get_coords(self.current_idx)
-            
-            # Glow effect
-            ctx.set_source_rgba(*self.color, 0.3)
-            ctx.arc(curr_x, curr_y, 8, 0, 2 * 3.14159)
-            ctx.fill()
-            
-            # Outer circle
-            ctx.set_source_rgba(1, 1, 1, 1)
-            ctx.set_line_width(2)
-            ctx.arc(curr_x, curr_y, 4, 0, 2 * 3.14159)
-            ctx.stroke()
-            
-            # Inner circle
-            ctx.set_source_rgba(*self.color, 1)
-            ctx.arc(curr_x, curr_y, 3, 0, 2 * 3.14159)
-            ctx.fill()
+        if self.current_idx is None:
+            return
 
-            # 4. Draw labels (Min, Max, Current)
-            ctx.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_BOLD)
-            ctx.set_font_size(10)
-            
-            # Current value label
-            curr_val = self.values[self.current_idx]
-            if curr_val is not None:
-                ctx.set_source_rgba(1, 1, 1, 0.9)
-                text = str(int(curr_val))
-                extents = ctx.text_extents(text)
-                ctx.move_to(curr_x - extents.width / 2, curr_y - 12)
-                ctx.show_text(text)
+        # Now: a guide down to the axis, the knob and the value above it
+        x, y = x_of(now), y_of(now)
+        ctx.set_line_width(1)
+        ctx.set_source_rgba(*theme_rgba(area, 0.25))
+        ctx.move_to(round(x) + 0.5, y)
+        ctx.line_to(round(x) + 0.5, bottom)
+        ctx.stroke()
 
-        # Max label
-        ctx.set_font_size(9)
-        ctx.set_source_rgba(1, 1, 1, 0.5)
-        max_text = f"MAX: {int(max_val)}"
-        ctx.move_to(padding_left, 15)
-        ctx.show_text(max_text)
+        draw_knob(ctx, x, y, KNOB_RADIUS, self.color)
 
-        # Min label
-        min_text = f"MIN: {int(min_val)}"
-        ctx.move_to(padding_left, height - padding_bottom - 4)
-        ctx.show_text(min_text)
-
-        # 5. Draw daily time labels and date checkpoints
-        if self.times and len(self.times) == num_points:
-            ctx.set_font_size(8)
-            
-            for i, ts in enumerate(self.times):
-                dt = datetime.fromtimestamp(ts, tz=self.tz)
-                # Draw a label at midnight of each day
-                if dt.hour == 0:
-                    x, y = get_coords(i)
-                    # Small dot on the curve
-                    ctx.set_source_rgba(1, 1, 1, 0.8)
-                    ctx.arc(x, y, 2.5, 0, 2 * 3.14159)
-                    ctx.fill()
-                    ctx.set_source_rgba(1, 1, 1, 0.4)
-                    date_str = dt.strftime("%d %b")
-                    x, _ = get_coords(i)
-                    extents = ctx.text_extents(date_str)
-                    
-                    # Prevent clipping at the edges
-                    x_pos = x - extents.width / 2
-                    x_pos = max(padding_left, min(x_pos, width - padding_right - extents.width))
-                    
-                    ctx.move_to(x_pos, height - 2)
-                    ctx.show_text(date_str)
+        if self.current_text:
+            text_width, text_height = text_layout(area, self.current_text, "small", True).get_pixel_size()
+            text_x = max(left + text_width / 2, min(x, right - text_width / 2))
+            draw_text(area, ctx, self.current_text, text_x, y - KNOB_RADIUS - 5 - text_height,
+                      size="small", bold=True)

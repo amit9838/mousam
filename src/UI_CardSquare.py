@@ -6,9 +6,10 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
-from .CORE_Icons import get_icon_path
+from .CORE_Icons import get_icon_path, ARROW_CENTER
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
+from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
 from .UI_CompDrawImageIcon import DrawImage
 
 # Standardizing CSS classes for reuse
@@ -136,6 +137,9 @@ class CardSquare:
                 lbl_sub = Gtk.Label(label=self.sub_desc)
                 lbl_sub.set_css_classes(["text-lg", "font-semibold"])
                 lbl_sub.set_halign(Gtk.Align.START)
+                # A long translated direction wraps in narrow windows
+                lbl_sub.set_wrap(True)
+                lbl_sub.set_xalign(0)
                 sub_box.append(lbl_sub)
 
             info_box.append(sub_box)
@@ -143,7 +147,7 @@ class CardSquare:
         # --- Right Side: Visual/Graphic ---
         visual_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         visual_box.set_halign(Gtk.Align.END)
-        visual_box.set_valign(Gtk.Align.END)
+        visual_box.set_valign(Gtk.Align.CENTER)
         content_box.append(visual_box)
 
         # Upper Text (N, High, etc)
@@ -155,7 +159,11 @@ class CardSquare:
 
         # The Graphic (Canvas)
         graphic_widget = self._create_visual_widget()
-        if graphic_widget:
+        if graphic_widget and self.title_key == "pressure":
+            # The tick gauge is horizontal: it runs under the text, full width
+            graphic_widget.set_margin_top(8)
+            card_box.append(graphic_widget)
+        elif graphic_widget:
             visual_box.append(graphic_widget)
 
         # Lower Text
@@ -176,13 +184,11 @@ class CardSquare:
 
         if self.title_key == "wind":
             # Arrow Icon
-            return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35).img_box
+            return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35, ARROW_CENTER).img_box
 
         elif self.title_key == "humidity":
-            # Level Bar (0.0 - 1.0)
-            return DrawLevelBar(
-                val / 100.0, rounded_cap=True, rgb_color=[0.588, 0.937, 1]
-            ).dw
+            # Level Bar (0.0 - 1.0), in a bright ocean blue (#219eed)
+            return DrawLevelBar(val / 100.0, rounded_cap=True, rgb_color=(0.13, 0.62, 0.93)).dw
 
         elif self.title_key == "pressure":
             # Pressure Calculation
@@ -192,18 +198,16 @@ class CardSquare:
                 high *= 0.02953
 
             level = (val - low) / (high - low)
-            return DrawLevelBar(max(0.0, min(level, 1.0)), rounded_cap=True).dw
+            return DrawTickGauge(level).dw
 
         elif self.title_key == "uv index":
-            # UV Level (Assuming Max 12)
-            return DrawLevelBar(
-                val / 12.0, rounded_cap=True, rgb_color=[0.408, 0.494, 1.000]
-            ).dw
+            # UV Level (Assuming Max 12), in a bright violet-blue (#5c66ff)
+            return DrawLevelBar(val / 12.0, rounded_cap=True, rgb_color=(0.36, 0.40, 1.0)).dw
 
         return None
 
     def _get_wind_direction_str(self, angle: float) -> str:
-        """Converts degrees to cardinal direction."""
+        """Converts degrees to cardinal direction (where the wind comes from)."""
         directions = [
             _("North"),
             _("Northeast"),
@@ -213,7 +217,6 @@ class CardSquare:
             _("Southwest"),
             _("West"),
             _("Northwest"),
-            _("North"),
         ]
         index = round(angle % 360 / 45) % 8
         return directions[index]

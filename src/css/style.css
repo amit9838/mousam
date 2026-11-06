@@ -486,6 +486,8 @@
 .compact-temp {
     font-size: 5rem;
     font-weight: 800;
+    /* The font's line box leaves extra space under the digits */
+    line-height: 0.9;
 }
 
 .compact-city {
@@ -516,8 +518,9 @@
 
 .compact-time-value {
     font-size: 0.9rem;
+    font-weight: 400;
     margin-left: 10px;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 .compact-date {

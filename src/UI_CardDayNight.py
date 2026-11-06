@@ -116,7 +116,7 @@ class CardDayNight:
         card.attach(card_icon, 1, 2, 2, 1)
 
         obj = DrawDayNight(self.degree, self.current_time, 120, 90)
-        card_icon.attach(obj.img_box, 0, 1, 1, 1)
+        card_icon.attach(obj.drawing_area, 0, 1, 1, 1)
 
     # Sun Rotation
     def _calculate_sun_rotation(self, target_dt, sunrise_dt, sunset_dt):

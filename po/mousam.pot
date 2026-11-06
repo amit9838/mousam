@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-06 21:45+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.desktop.in:5
+#: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
 msgid "Weather at a glance"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.desktop.in:10
+#: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
 msgstr ""
 
@@ -201,119 +201,119 @@ msgstr ""
 msgid "Every 2 hours"
 msgstr ""
 
-#: src/CORE_GTKUtils.py:66
+#: src/CORE_GTKUtils.py:135
 msgid "Unknown"
 msgstr ""
 
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
 msgstr ""
 
-#: src/CORE_Icons.py:261
+#: src/CORE_Icons.py:267
 msgid "Clear sky"
 msgstr ""
 
-#: src/CORE_Icons.py:262
+#: src/CORE_Icons.py:268
 msgid "Few Clouds"
 msgstr ""
 
-#: src/CORE_Icons.py:263
+#: src/CORE_Icons.py:269
 msgid "Partly Cloudy"
 msgstr ""
 
-#: src/CORE_Icons.py:264
+#: src/CORE_Icons.py:270
 msgid "Overcast"
 msgstr ""
 
-#: src/CORE_Icons.py:265
+#: src/CORE_Icons.py:271
 msgid "Fog"
 msgstr ""
 
-#: src/CORE_Icons.py:266
+#: src/CORE_Icons.py:272
 msgid "Mist"
 msgstr ""
 
-#: src/CORE_Icons.py:267
+#: src/CORE_Icons.py:273
 msgid "Light Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:268
+#: src/CORE_Icons.py:274
 msgid "Moderate Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:269
+#: src/CORE_Icons.py:275
 msgid "Heavy Intensity Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:270
+#: src/CORE_Icons.py:276
 msgid "Light Freezing Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:271
+#: src/CORE_Icons.py:277
 msgid "Heavy Freezing Drizzle"
 msgstr ""
 
-#: src/CORE_Icons.py:272
+#: src/CORE_Icons.py:278
 msgid "Light Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:273
+#: src/CORE_Icons.py:279
 msgid "Moderate Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:274
+#: src/CORE_Icons.py:280
 msgid "Heavy Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:275
+#: src/CORE_Icons.py:281
 msgid "Light Freezing Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:276
+#: src/CORE_Icons.py:282
 msgid "Heavy Freezing Rain"
 msgstr ""
 
-#: src/CORE_Icons.py:277
+#: src/CORE_Icons.py:283
 msgid "Light Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:278
+#: src/CORE_Icons.py:284
 msgid "Moderate Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:279
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Fall"
 msgstr ""
 
-#: src/CORE_Icons.py:280
+#: src/CORE_Icons.py:286
 msgid "Snow grains"
 msgstr ""
 
-#: src/CORE_Icons.py:281
+#: src/CORE_Icons.py:287
 msgid "Light Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:282
+#: src/CORE_Icons.py:288
 msgid "Moderate Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:283
+#: src/CORE_Icons.py:289
 msgid "Heavy Rain Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:284
+#: src/CORE_Icons.py:290
 msgid "Light Snow Showers"
 msgstr ""
 
-#: src/CORE_Icons.py:285
+#: src/CORE_Icons.py:291
 msgid "Heavy Snow Showers "
 msgstr ""
 
-#: src/CORE_Icons.py:286
+#: src/CORE_Icons.py:292
 msgid "Thunderstorm"
 msgstr ""
 
-#: src/CORE_Icons.py:287
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
 msgstr ""
 
@@ -525,24 +525,16 @@ msgstr ""
 msgid "Sunset"
 msgstr ""
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
+#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:214
 #: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:51
-msgid "Hourly"
-msgstr ""
-
-#:  src/UI_HourlyDetails.py:53
-msgid "Precipitation"
-msgstr ""
-
-#: src/UI_CardSquare.py:31
+#: src/UI_CardSquare.py:31 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr ""
 
-#: src/UI_CardSquare.py:32
+#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr ""
 
@@ -550,64 +542,83 @@ msgstr ""
 msgid "UV Index"
 msgstr ""
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:211
 msgid "North"
 msgstr ""
 
-#: src/UI_CardSquare.py:209
+#: src/UI_CardSquare.py:212
 msgid "Northeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:213
 msgid "East"
 msgstr ""
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:214
 msgid "Southeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:215
 msgid "South"
 msgstr ""
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:216
 msgid "Southwest"
 msgstr ""
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:217
 msgid "West"
 msgstr ""
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:218
 msgid "Northwest"
 msgstr ""
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:345
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
+#: src/UI_CompactWeather.py:120 src/mousam.py:387
+msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:293
-msgid "Pres."
+#: src/UI_CompactWeather.py:135 src/mousam.py:345
+msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:297
+#: src/UI_CompactWeather.py:138 src/mousam.py:350
+msgid "Fetch Error"
+msgstr ""
+
+#: src/UI_CompactWeather.py:218
 msgid "AQI"
 msgstr ""
 
-#: src/UI_CompactWeather.py:350
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr ""
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr ""
+
+#: src/UI_CompactWeather.py:293
 msgid "Mousam Compact"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:33
 msgid "Day"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:33
 msgid "Night"
+msgstr ""
+
+#: src/UI_CompDrawLineGraph.py:43
+#, python-brace-format
+msgid "Max {max} · Min {min}"
 msgstr ""
 
 #: src/UI_CurrentCond.py:96
@@ -627,6 +638,14 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
+#: src/UI_HourlyDetails.py:51
+msgid "Hourly"
+msgstr ""
+
+#: src/UI_HourlyDetails.py:53
+msgid "Precipitation"
+msgstr ""
+
 #: src/UI_HourlyDetails.py:151
 msgctxt "temperature"
 msgid "Day Max •"
@@ -642,31 +661,31 @@ msgctxt "precipitation"
 msgid "Day High •"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:246
 msgid "Now"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:285
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation today !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:286
+#: src/UI_HourlyDetails.py:289
 msgid "No precipitation expected today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:287
+#: src/UI_HourlyDetails.py:290
 msgid "Anticipate a precipitation-free day !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:291
 msgid "Enjoy a rain-free day today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:292
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:293
 msgid "No rain in sight today!"
 msgstr ""
 
@@ -686,7 +705,7 @@ msgstr ""
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:167 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
@@ -710,20 +729,17 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/mousam.py:279
-msgid "Direction"
+#: src/mousam.py:290
+msgid "Direction (from)"
 msgstr ""
 
 #: src/mousam.py:293
+msgctxt "compass"
+msgid "N"
+msgstr ""
+
+#: src/mousam.py:304
 msgid "Dewpoint"
-msgstr ""
-
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
 msgstr ""
 
 #: src/mousam.py:364
@@ -742,10 +758,6 @@ msgstr ""
 msgid "Add Location"
 msgstr ""
 
-#: src/mousam.py:387
-msgid "Retry"
-msgstr ""
-
 #: src/windowAbout.py:20
 msgid "Copyright © 2024 Mousam Developers"
 msgstr ""
@@ -754,35 +766,36 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 
-#: src/windowLocations.py:54
+#: src/windowLocations.py:55
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:70
+#: src/windowLocations.py:78
 msgid "Search for a city"
 msgstr ""
 
-#: src/windowLocations.py:84
+#: src/windowLocations.py:92
 msgid "Search for your city..."
 msgstr ""
 
-#: src/windowLocations.py:106
+#: src/windowLocations.py:137
 msgid "No cities found."
 msgstr ""
 
-#: src/windowLocations.py:144
+#: src/windowLocations.py:176
 msgid "Saved Locations"
 msgstr ""
 
-#: src/windowLocations.py:146
+#: src/windowLocations.py:178
 msgid "Add"
 msgstr ""
 
-#: src/windowLocations.py:201
+#: src/windowLocations.py:231
 msgid "Location already exists"
 msgstr ""
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:253
+#, python-brace-format
 msgid "Switched to {}"
 msgstr ""
 
@@ -927,10 +940,12 @@ msgid "Delete all contents of the current log file"
 msgstr ""
 
 #: src/windowPreferences.py:340
+#, python-brace-format
 msgid "Icon theme changed to {}"
 msgstr ""
 
 #: src/windowPreferences.py:349
+#, python-brace-format
 msgid "Switched to - {}"
 msgstr ""
 
@@ -947,6 +962,7 @@ msgid "Auto refresh disabled"
 msgstr ""
 
 #: src/windowPreferences.py:383
+#, python-brace-format
 msgid "Auto refresh every {} min"
 msgstr ""
 

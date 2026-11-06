@@ -1,310 +1,266 @@
+import datetime
+from typing import Optional
+from zoneinfo import ZoneInfo
+
 import gi
-from gi.repository import Gtk, Adw, GLib
-from .settings import settings
-from .CORE_Icons import get_icon_path, condition, bg_css, create_weather_icon
-from .CORE_Helpers import check_internet_connection
-from gettext import gettext as _
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, GLib, Pango  # noqa: E402
 
-# ----- Helper to reset global data -----
-# Removed _reset_weather_data as it causes crashes in the main window
+from .settings import settings  # noqa: E402
+from .CORE_Icons import condition, bg_css, create_weather_icon  # noqa: E402
+from .CORE_Helpers import (  # noqa: E402
+    check_internet_connection,
+    get_selected_city_name,
+    get_timezone_from_selected_city,
+)
+from gettext import gettext as _, pgettext as C_  # noqa: E402
+
+# Space between the content and the window edge
+MARGIN = 25
+# Smallest size, used by the loading and error pages
+MIN_WIDTH, MIN_HEIGHT = 280, 220
+# Longer city names are ellipsized
+CITY_MAX_CHARS = 14
+
+WIND_DIRECTIONS = [
+    "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW",
+]
+
+
+def wind_direction_name(degrees: Optional[float]) -> str:
+    """Compass point (N, NNE, …) for a wind direction in degrees."""
+    if degrees is None:
+        return "--"
+    return WIND_DIRECTIONS[int((degrees + 11.25) / 22.5) % 16]
+
+
+def format_pressure(value: Optional[float], unit: str) -> str:
+    """Pressure rounded for a glance: whole hPa, or two decimals for inHg."""
+    if value is None:
+        return "--"
+    return f"{value:.2f} {unit}" if unit == "inHg" else f"{value:.0f} {unit}"
+
+
+def _label(text: str, css_classes: list, halign: Gtk.Align = Gtk.Align.START) -> Gtk.Label:
+    label = Gtk.Label(label=text, halign=halign)
+    for css_class in css_classes:
+        label.add_css_class(css_class)
+    return label
+
 
 class CompactWeather(Gtk.Overlay):
+    """The compact view: city, condition, temperature and a few details.
+
+    Pages live in a Gtk.Stack (loader, error, content) so the window sizes
+    itself to the visible page. The overlay only holds the hover button that
+    goes back to the normal window.
+    """
+
     def __init__(self, on_back_clicked, **kwargs):
         super().__init__(**kwargs)
         self.on_back_clicked = on_back_clicked
-        self._poll_timeout_id = None    # store timeout for cleanup
-        self._clock_timeout_id = None   # store clock timeout for cleanup
-        
-        self.add_css_class("compact-container")
-        self.set_valign(Gtk.Align.FILL)
-        self.set_halign(Gtk.Align.FILL)
-        self.set_size_request(280, 220)
+        self._clock_timeout_id = None
+        self._rendered_weather = None  # current_weather the content was built from
+
+        self.set_size_request(MIN_WIDTH, MIN_HEIGHT)
 
         self.stack = Gtk.Stack()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+        # Size to the visible page, so the window shrinks back after an error
+        self.stack.set_hhomogeneous(False)
+        self.stack.set_vhomogeneous(False)
         self.set_child(self.stack)
-
         self._setup_back_button()
-        self._start_polling()
 
+        # notify::is-ready is emitted from the fetch worker threads
+        from .CORE_weatherData import weather_manager
+        self._ready_handler_id = weather_manager.connect(
+            "notify::is-ready", lambda *_: GLib.idle_add(self._show_data_if_new)
+        )
+        self.connect("destroy", self._on_destroy)
 
-    def _cleanup_ui(self):
-        """Remove old content overlays so fresh UI can be drawn."""
-        # Collect overlays to remove (skip the back button and base stack)
-        to_remove = []
-        child = self.get_first_child()
-        while child is not None:
-            if child is not self.stack and child is not self.btn_back:
-                to_remove.append(child)
-            child = child.get_next_sibling()
-        for w in to_remove:
-            self.remove_overlay(w)
+        self.refresh()
 
-    def _trigger_fetch(self, is_auto=False):
-        from .CORE_Networking import fetch_all_weather_data_async
-        from .CORE_GTKUtils import show_notification
-        
-        def on_success():
-            if is_auto:
-                root = self.get_root()
-                if root:
-                    app = root.get_application()
-                    if app:
-                        show_notification(app)
-        
-        def on_error(err):
-            self._stop_polling()
-            self._show_error(err)
+    # ---------- Data ----------
 
-        fetch_all_weather_data_async(on_success=on_success, on_error=on_error)
-
-    def _start_polling(self, is_auto=False):
-        """Begin polling for data, store timeout id."""
+    def refresh(self) -> None:
+        """Show the current data, or fetch it if there is none yet."""
         from .CORE_weatherData import weather_manager
         if weather_manager.is_ready:
-            GLib.idle_add(self._build_ui)
-        else:
-            if not check_internet_connection(force=not is_auto):
-                self._show_error(_("No Internet"))
-                return
+            self._show_data_if_new()
+            return
 
-            self._trigger_fetch(is_auto=is_auto)
-            self._show_loader()
-            self._poll_timeout_id = GLib.timeout_add(500, self._check_all_data_ready)
+        if not check_internet_connection(force=True):
+            self._show_error(_("No Internet"))
+            return
 
-    def _show_loader(self):
-        if not self.stack.get_child_by_name("loader"):
-            spinner = Adw.Spinner()
-            spinner.set_size_request(32, 32)
-            spinner.set_halign(Gtk.Align.CENTER)
-            spinner.set_valign(Gtk.Align.CENTER)
-            self.stack.add_named(spinner, "loader")
-        self.stack.set_visible_child_name("loader")
+        self._show_page("loader")
+        from .CORE_Networking import fetch_all_weather_data_async
+        fetch_all_weather_data_async(on_error=self._show_error)
 
-
-    def _show_error(self, message):
-        is_net_error = str(message) == _("No Internet")
-        icon_name = "network-error-symbolic" if is_net_error else "computer-fail-symbolic"
-        
-        if not self.stack.get_child_by_name("error"):
-            icon = Gtk.Image.new_from_icon_name(icon_name)
-            icon.set_pixel_size(64)
-            icon.set_halign(Gtk.Align.CENTER)
-            icon.set_valign(Gtk.Align.CENTER)
-            icon.set_opacity(0.5)
-            icon.set_tooltip_text(str(message))
-            
-            # Click to retry (hidden interaction)
-            click = Gtk.GestureClick()
-            click.connect("pressed", lambda *args: self._start_polling())
-            icon.add_controller(click)
-            
-            self.stack.add_named(icon, "error")
-        else:
-            # Update icon and message if child already exists
-            icon = self.stack.get_child_by_name("error")
-            icon.set_from_icon_name(icon_name)
-            icon.set_tooltip_text(str(message))
-
-        self.stack.set_visible_child_name("error")
-
-    def _check_all_data_ready(self):
-        """Polling callback. Returns False to stop when data is ready."""
+    def _show_data_if_new(self) -> bool:
+        """Build the content once per fetch, however often is-ready fires."""
         from .CORE_weatherData import weather_manager
-        if self._poll_timeout_id is None:
-            return False   # already stopped
+        if weather_manager.is_ready and weather_manager.current_weather is not self._rendered_weather:
+            self._build_content()
+        return GLib.SOURCE_REMOVE
 
-        if not weather_manager.is_ready:
-            self._show_loader()
-            return True   # continue polling
+    # ---------- Pages ----------
 
-        # Data ready → build UI and stop polling
-        self._build_ui()
-        self._stop_polling()
-        return False
+    def _show_page(self, name: str) -> None:
+        if self.stack.get_child_by_name(name) is None:
+            if name == "loader":
+                spinner = Adw.Spinner(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER)
+                spinner.set_size_request(32, 32)
+                self.stack.add_named(spinner, "loader")
+            elif name == "error":
+                retry = Gtk.Button(label=_("Retry"), halign=Gtk.Align.CENTER)
+                retry.add_css_class("pill")
+                retry.add_css_class("suggested-action")
+                retry.connect("clicked", lambda *_: self.refresh())
+                page = Adw.StatusPage(child=retry)
+                page.add_css_class("compact")
+                self.stack.add_named(page, "error")
+        self.stack.set_visible_child_name(name)
 
-    def _stop_polling(self):
-        if self._poll_timeout_id:
-            GLib.source_remove(self._poll_timeout_id)
-            self._poll_timeout_id = None
+    def _show_error(self, message: str) -> bool:
+        self._show_page("error")
+        page = self.stack.get_child_by_name("error")
+        if str(message) == _("No Internet"):
+            page.set_icon_name("network-error-symbolic")
+            page.set_title(_("No Internet"))
+            page.set_description(_("Please check your connection."))
+        else:
+            page.set_icon_name("computer-fail-symbolic")
+            page.set_title(_("Fetch Error"))
+            page.set_description(str(message))
+        return GLib.SOURCE_REMOVE
 
-    def _build_ui(self):
-        self._cleanup_ui()
-        self._stop_clock()
+    def _build_content(self) -> None:
         from .CORE_weatherData import weather_manager
         data = weather_manager.current_weather
         aq_data = weather_manager.air_pollution
-        from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city
-        import datetime
-        from zoneinfo import ZoneInfo
+        self._rendered_weather = data
 
-        # Remove loader from stack
-        loader = self.stack.get_child_by_name("loader")
-        if loader:
-            self.stack.remove(loader)
+        weather_code = str(data.weathercode.data if data.weathercode.data is not None else 0)
+        is_night = data.is_day.data == 0
+        # On the first build the view isn't in the window yet, so wait a tick
+        GLib.idle_add(self._apply_background, weather_code + ("n" if is_night else ""))
 
-        # Apply dynamic background to root window (async)
-        if settings.is_using_dynamic_bg:
-            weather_code = data.weathercode.data if data.weathercode.data is not None else 0
-            is_day = data.is_day.data if data.is_day.data is not None else 1
-            code_key = f"{weather_code}{'n' if is_day == 0 else ''}"
-            css_class = bg_css.get(code_key, "")
-            
-            def update_root_bg():
-                root = self.get_root()
-                if root and css_class:
-                    valid_bgs = set(bg_css.values())
-                    for cls in root.get_css_classes():
-                        if cls in valid_bgs:
-                            root.remove_css_class(cls)
-                    root.add_css_class(css_class)
-                return False
-            GLib.idle_add(update_root_bg)
+        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        content.set_margin_top(MARGIN)
+        content.set_margin_bottom(MARGIN)
+        content.set_margin_start(MARGIN)
+        content.set_margin_end(MARGIN)
+        content.append(self._build_header(data, weather_code, is_night))
+        content.append(self._build_body(data, aq_data))
 
-        # ---- Content building (same as before, but without AQI spinner) ----
-        grid = Gtk.Grid()
-        grid.set_column_spacing(5)
-        grid.set_row_spacing(0)
-        grid.set_margin_start(25)
-        grid.set_margin_end(25)
-        grid.set_margin_top(25)
-        grid.set_margin_bottom(25)
+        old = self.stack.get_child_by_name("content")
+        if old is not None:
+            self.stack.remove(old)
+        self.stack.add_named(content, "content")
+        self.stack.set_visible_child_name("content")
 
-        # City
-        city_list = JsonProcessor.str_list_to_json(settings.added_cities)
-        selected_city_str = settings.selected_city
-        city_name = "Unknown"
-        for city in city_list:
-            if f"{city.get('latitude')},{city.get('longitude')}" == selected_city_str:
-                city_name = city.get("name")
-                break
-        if len(city_name) > 11:
-            city_name = city_name[:8] + "..."
+    def _build_header(self, data, weather_code: str, is_night: bool) -> Gtk.Box:
+        """City and condition on the left, the weather icon on the right."""
+        header = Gtk.Box(spacing=12)
 
-        lbl_city = Gtk.Label(label=city_name)
-        lbl_city.set_halign(Gtk.Align.START)
-        lbl_city.add_css_class("text-3xl")
-        lbl_city.add_css_class("font-bold")
-        lbl_city.add_css_class("opacity-90")
-        grid.attach(lbl_city, 0, 0, 1, 1)
+        text = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, hexpand=True)
+        city = _label(get_selected_city_name(), ["text-3xl", "font-bold", "opacity-90"])
+        city.set_ellipsize(Pango.EllipsizeMode.END)
+        city.set_max_width_chars(CITY_MAX_CHARS)
+        city.set_xalign(0)
+        text.append(city)
+        text.append(_label(condition.get(weather_code, condition["0"]), ["text-xl"]))
+        header.append(text)
 
-        # Condition
-        weather_code = data.weathercode.data
-        lbl_cond = Gtk.Label(label=condition.get(str(weather_code), condition.get("0", "Unknown")))
-        lbl_cond.set_halign(Gtk.Align.START)
-        lbl_cond.add_css_class("text-xl")
-        grid.attach(lbl_cond, 0, 1, 1, 1)
+        icon = create_weather_icon(weather_code + ("n" if is_night else ""), settings.icon_theme, 70)
+        icon.set_halign(Gtk.Align.END)
+        icon.set_valign(Gtk.Align.CENTER)
+        header.append(icon)
+        return header
 
-        # Weather Icon
-        condition_code = str(weather_code)
-        is_day_val = data.is_day.get("data", 1)
-        if is_day_val == 0:
-            condition_code = condition_code + "n"
-        img_cond = create_weather_icon(condition_code, settings.icon_theme, 70)
-        img_cond.set_halign(Gtk.Align.END)
-        img_cond.set_valign(Gtk.Align.CENTER)
-        grid.attach(img_cond, 2, 0, 1, 2)
+    def _build_body(self, data, aq_data) -> Gtk.Box:
+        """The temperature on the left, date, time and details on the right.
 
-        # Spacer
-        spacer = Gtk.Box()
-        spacer.set_vexpand(True)
-        grid.attach(spacer, 0, 2, 1, 1)
+        A Gtk.Box, not a Gtk.Grid: a grid row lines up its children's text
+        baselines, which pushes the details down and leaves a gap below them.
+        """
+        body = Gtk.Box(spacing=12)
 
-        # Temperature
-        temp_val = data.temperature_2m.data
-        temp_str = f"{temp_val:.0f}°" if temp_val is not None else "--°"
-        lbl_temp = Gtk.Label(label=temp_str)
-        lbl_temp.set_halign(Gtk.Align.START)
+        temp = data.temperature_2m.data
+        lbl_temp = _label(f"{temp:.0f}°" if temp is not None else "--°", ["compact-temp"])
         lbl_temp.set_valign(Gtk.Align.START)
         lbl_temp.set_margin_top(25)
-        lbl_temp.add_css_class("compact-temp")
-        grid.attach(lbl_temp, 0, 3, 1, 1)
+        body.append(lbl_temp)
 
-        # Details grid
-        details_grid = Gtk.Grid()
-        details_grid.set_column_spacing(8)
-        details_grid.set_row_spacing(0)
-        details_grid.set_valign(Gtk.Align.START)
-        details_grid.set_halign(Gtk.Align.END)
-        details_grid.set_margin_top(15)
-        details_grid.set_hexpand(True)
-        grid.attach(details_grid, 2, 3, 1, 1)
+        details = Gtk.Grid(column_spacing=8, hexpand=True, halign=Gtk.Align.END, valign=Gtk.Align.START)
+        details.set_margin_top(15)
 
-        def add_detail_row(label_text, value_text, row):
-            lbl_label = Gtk.Label(label=label_text)
-            lbl_label.set_halign(Gtk.Align.START)
-            lbl_label.add_css_class("compact-detail-label")
-            lbl_value = Gtk.Label(label=value_text)
-            lbl_value.set_halign(Gtk.Align.END)
-            lbl_value.add_css_class("compact-detail-value")
-            details_grid.attach(lbl_label, 0, row, 1, 1)
-            details_grid.attach(lbl_value, 1, row, 1, 1)
-            return lbl_value
+        self.lbl_time = _label("", ["compact-time-value"], Gtk.Align.END)
+        self.lbl_time.set_margin_bottom(5)
+        details.attach(self.lbl_time, 0, 0, 2, 1)
+        self._start_clock()
 
-        # Time / Date
-        self.lbl_time_val = Gtk.Label()
-        self.lbl_time_val.set_halign(Gtk.Align.END)
-        self.lbl_time_val.add_css_class("compact-detail-value")
-        self.lbl_time_val.add_css_class("compact-time-value")
-        self.lbl_time_val.set_use_markup(True)
-        self.lbl_time_val.set_margin_bottom(5)
-
-        from .CORE_Helpers import get_timezone_from_selected_city
-        self.target_tz = ZoneInfo(get_timezone_from_selected_city())
-        now = datetime.datetime.now(self.target_tz)
-        date_str = now.strftime("%d %B")
-        time_str = now.strftime("%H:%M" if settings.is_using_24h_clock else "%I:%M %p")
-        self.lbl_time_val.set_markup(f"{date_str} • {time_str}")
-        details_grid.attach(self.lbl_time_val, 0, 0, 2, 1)
-
-        def update_clock():
-            fmt = "%H:%M" if settings.is_using_24h_clock else "%I:%M %p"
-            now = datetime.datetime.now(self.target_tz)
-            d_str = now.strftime("%d %B")
-            t_str = now.strftime(fmt)
-            self.lbl_time_val.set_markup(f"{d_str} • {t_str}")
-            return True
-        self._clock_timeout_id = GLib.timeout_add_seconds(1, update_clock)
-
-        # Wind
-        def get_wind_dir(deg):
-            if deg is None:
-                return "--"
-            dirs = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-                    "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"]
-            idx = int((deg + 11.25) / 22.5) % 16
-            return dirs[idx]
-
-        wind_deg = data.winddirection_10m.data
-        wind_dir = get_wind_dir(wind_deg)
-        wind_speed = data.windspeed_10m.data
-        wind_speed_str = f"{wind_speed} {data.windspeed_10m.unit}" if wind_speed is not None else "--"
-        add_detail_row(_("Wind"), f"{wind_speed_str} • {wind_dir}", 1)
-
+        from .CORE_weatherData import weather_manager
+        wind = data.windspeed_10m
+        wind_str = f"{wind.data:.0f} {wind.unit}" if wind.data is not None else "--"
         hum = data.relativehumidity_2m.data
-        hum_str = f"{hum} %" if hum is not None else "-- %"
-        add_detail_row(_("Hum."), hum_str, 2)
+        aqi = aq_data.current_us_aqi if aq_data else None
+        rows = [
+            (_("Wind"), f"{wind_str} • {wind_direction_name(data.winddirection_10m.data)}"),
+            (_("Humidity"), f"{hum} %" if hum is not None else "-- %"),
+            (_("Pressure"), format_pressure(data.surface_pressure.data, data.surface_pressure.unit)),
+            # A level word with the number: "202 • Severe"
+            (_("AQI"), f"{aqi} • {weather_manager.classify_aqi(aqi)}" if aqi is not None else "--"),
+        ]
+        for row, (name, value) in enumerate(rows, start=1):
+            details.attach(_label(name, ["compact-detail-label"]), 0, row, 1, 1)
+            details.attach(_label(value, ["compact-detail-value"], Gtk.Align.END), 1, row, 1, 1)
 
-        pres = data.surface_pressure.data
-        pres_str = f"{pres:.1f} {data.surface_pressure.unit}" if pres is not None else "--"
-        add_detail_row(_("Pres."), pres_str, 3)
+        body.append(details)
+        return body
 
-        # AQI (data is guaranteed ready)
-        aqi_value = aq_data.current_us_aqi if aq_data and aq_data.current_us_aqi is not None else "--"
-        add_detail_row(_("AQI"), str(aqi_value), 4)
+    def _apply_background(self, code: str) -> bool:
+        """Put the condition's background on the window (dynamic backgrounds)."""
+        root = self.get_root()
+        css_class = bg_css.get(code, "")
+        if settings.is_using_dynamic_bg and root is not None and css_class:
+            for cls in set(root.get_css_classes()) & set(bg_css.values()):
+                root.remove_css_class(cls)
+            root.add_css_class(css_class)
+        return GLib.SOURCE_REMOVE
 
-        # Show content
-        self.add_overlay(grid)
-        loader = self.stack.get_child_by_name("loader")
-        if loader:
-            loader.set_visible(False)
+    # ---------- Clock ----------
 
-    def _setup_back_button(self):
-        self.btn_back = Gtk.Button()
-        self.btn_back.set_icon_name("view-fullscreen-symbolic")
+    def _start_clock(self) -> None:
+        self._stop_clock()
+        self._timezone = ZoneInfo(get_timezone_from_selected_city())
+        self._update_clock()
+        self._clock_timeout_id = GLib.timeout_add_seconds(1, self._update_clock)
+
+    def _update_clock(self) -> bool:
+        now = datetime.datetime.now(self._timezone)
+        # Translators: strftime format of the date in compact mode ("6 November")
+        date_format = C_("compact date", "%-d %B")
+        time_format = "%H:%M" if settings.is_using_24h_clock else "%-I:%M %p"
+        self.lbl_time.set_label(f"{now.strftime(date_format)} • {now.strftime(time_format)}")
+        return GLib.SOURCE_CONTINUE
+
+    def _stop_clock(self) -> None:
+        if self._clock_timeout_id:
+            GLib.source_remove(self._clock_timeout_id)
+            self._clock_timeout_id = None
+
+    # ---------- Back button ----------
+
+    def _setup_back_button(self) -> None:
+        self.btn_back = Gtk.Button(
+            icon_name="view-fullscreen-symbolic", tooltip_text=_("Leave Compact Mode"), visible=False
+        )
         self.btn_back.add_css_class("flat")
         self.btn_back.add_css_class("circular")
         self.btn_back.set_halign(Gtk.Align.END)
@@ -312,35 +268,22 @@ class CompactWeather(Gtk.Overlay):
         self.btn_back.set_margin_top(5)
         self.btn_back.set_margin_end(5)
         self.btn_back.connect("clicked", self._on_back_clicked)
-        self.btn_back.set_visible(False)
         self.add_overlay(self.btn_back)
 
-        motion_ctrl = Gtk.EventControllerMotion()
-        motion_ctrl.connect("enter", self._on_hover_enter)
-        motion_ctrl.connect("leave", self._on_hover_leave)
-        self.add_controller(motion_ctrl)
+        # Show the button only while the pointer is over the window
+        motion = Gtk.EventControllerMotion()
+        motion.connect("enter", lambda *_: self.btn_back.set_visible(True))
+        motion.connect("leave", lambda *_: self.btn_back.set_visible(False))
+        self.add_controller(motion)
 
-    def _on_back_clicked(self, button):
-        # Stop polling before calling the callback
-        self._stop_polling()
+    def _on_back_clicked(self, _button) -> None:
         if self.on_back_clicked:
             self.on_back_clicked()
 
-    def _on_hover_enter(self, controller, x, y):
-        self.btn_back.set_visible(True)
-
-    def _on_hover_leave(self, controller):
-        self.btn_back.set_visible(False)
-
-    def _stop_clock(self):
-        if self._clock_timeout_id:
-            GLib.source_remove(self._clock_timeout_id)
-            self._clock_timeout_id = None
-
-    def dispose(self):
-        self._stop_polling()
+    def _on_destroy(self, *_args) -> None:
         self._stop_clock()
-        super().dispose()
+        from .CORE_weatherData import weather_manager
+        weather_manager.disconnect(self._ready_handler_id)
 
 
 class CompactWeatherWindow(Adw.ApplicationWindow):
@@ -348,51 +291,44 @@ class CompactWeatherWindow(Adw.ApplicationWindow):
         super().__init__(application=app, **kwargs)
         self.on_back_to_normal = on_back_to_normal
         self.set_title(_("Mousam Compact"))
-        self.set_default_size(280, 220)
+        # Not resizable: the window takes the size of its content
         self.set_resizable(False)
-
         self.connect("destroy", self._on_window_destroy)
 
-        handle = Gtk.WindowHandle()
-        self.set_content(handle)
+        # Esc goes back to the normal window, so it works without a mouse
+        shortcuts = Gtk.ShortcutController()
+        shortcuts.add_shortcut(Gtk.Shortcut.new(
+            Gtk.ShortcutTrigger.parse_string("Escape"), Gtk.NamedAction.new("app.show-normal")
+        ))
+        self.add_controller(shortcuts)
 
         self.compact_view = CompactWeather(on_back_clicked=self._on_back)
-        handle.set_child(self.compact_view)
-        
+        handle = Gtk.WindowHandle(child=self.compact_view)
+        self.set_content(handle)
+
         self.update_bg(bg_classes)
 
-    def update_bg(self, bg_classes):
-        if settings.is_using_dynamic_bg:
-            self.add_css_class("bg-dark-overlay")
-            valid_bgs = set(bg_css.values())
-            
-            # Remove existing weather backgrounds
-            for cls in list(self.get_css_classes()):
-                if cls in valid_bgs:
-                    self.remove_css_class(cls)
-                    
-            # Add new ones
-            if bg_classes:
-                for cls in bg_classes:
-                    if cls in valid_bgs:
-                        self.add_css_class(cls)
-        
-        # Trigger a refresh of the compact view data/UI
-        if hasattr(self, "compact_view"):
-            self.compact_view._start_polling()
+    def update_bg(self, bg_classes) -> None:
+        """Use the main window's weather background (dynamic backgrounds)."""
+        if not settings.is_using_dynamic_bg:
+            return
+        self.add_css_class("bg-dark-overlay")
+        valid_bgs = set(bg_css.values())
+        for cls in set(self.get_css_classes()) & valid_bgs:
+            self.remove_css_class(cls)
+        for cls in bg_classes or []:
+            if cls in valid_bgs:
+                self.add_css_class(cls)
 
-    def _on_back(self):
-        # Trigger the show-normal action on the application
+    def update_ui(self) -> None:
+        self.compact_view.refresh()
+
+    def _on_back(self) -> None:
         app = self.get_application()
         if app:
             app.activate_action("show-normal", None)
 
-    def update_ui(self):
-        # Re-trigger polling/build
-        if hasattr(self, "compact_view"):
-            self.compact_view._start_polling()
-
-    def _on_window_destroy(self, *args):
+    def _on_window_destroy(self, *_args) -> None:
         app = self.get_application()
         if app and hasattr(app, "compact_window"):
             app.compact_window = None

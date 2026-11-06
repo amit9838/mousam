@@ -6,7 +6,7 @@ from gi.repository import Gtk, GLib, Adw
 import threading
 from gettext import gettext as _, pgettext as C_
 
-from .CORE_Icons import get_icon_path, create_weather_icon
+from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
@@ -48,14 +48,14 @@ class HourlyDetails(Gtk.Grid):
         style_buttons_box.set_valign(Gtk.Align.CENTER)
 
         button_data = [
-            ("Hourly", "hourly"),
-            ("Wind", "wind"),
-            ("Precipitation", "prec"),
+            (_("Hourly"), "hourly"),
+            (_("Wind"), "wind"),
+            (_("Precipitation"), "prec"),
         ]
 
         first_btn = None
         for label, page_name in button_data:
-            button = Gtk.ToggleButton.new_with_label(_(label))
+            button = Gtk.ToggleButton.new_with_label(label)
             button.set_size_request(80, 16)
             button.set_css_classes(["btn-sm"])
             if first_btn is None:
@@ -64,7 +64,7 @@ class HourlyDetails(Gtk.Grid):
                 button.set_group(first_btn)
             style_buttons_box.append(button)
             button._page_name = page_name  # store for use in handler
-            button.connect("clicked", self._on_btn_clicked)
+            weak_connect(button, "clicked", self._on_btn_clicked)
 
         # Initialize with first tab
         if first_btn:
@@ -172,13 +172,16 @@ class HourlyDetails(Gtk.Grid):
     def _build_hourly_list(self, page_name, hourly_data):
         """Builds the horizontally scrollable list of hourly items."""
         scrolled_window = Gtk.ScrolledWindow(hexpand=True, margin_top=4, margin_bottom=4)
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.NEVER)
+        # Scroll horizontally only. ALWAYS (not AUTOMATIC) makes GTK reserve
+        # room for a classic, non-overlay scrollbar; with AUTOMATIC it took its
+        # height from the tiles and cut off the temperatures.
+        scrolled_window.set_policy(Gtk.PolicyType.ALWAYS, Gtk.PolicyType.NEVER)
         scrolled_window.set_kinetic_scrolling(True)
         self.scrolled_window = scrolled_window
 
         controller = Gtk.EventControllerScroll.new(Gtk.EventControllerScrollFlags.BOTH_AXES)
         scrolled_window.add_controller(controller)
-        controller.connect("scroll", self.on_scroll)
+        weak_connect(controller, "scroll", self.on_scroll)
 
         graphic_container = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         scrolled_window.set_child(graphic_container)
@@ -194,7 +197,7 @@ class HourlyDetails(Gtk.Grid):
             item = self._create_hour_item(page_name, i, hourly_data, nearest_idx, max_prec)
             graphic_container.append(item)
 
-        GLib.idle_add(self._scroll_to_now, scrolled_window, graphic_container, nearest_idx)
+        self._scroll_to_now_once_sized(scrolled_window, nearest_idx)
         return scrolled_window
 
     def _create_hour_item(self, page_name, index, hourly_data, nearest_idx, max_prec):
@@ -261,7 +264,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_text(str(speed))
         val_label.set_margin_top(0)
         
-        icon_box.append(DrawImage(get_icon_path("arrow", settings.icon_theme), direction + 180, 32, 32).img_box)
+        icon_box.append(DrawImage(get_icon_path("arrow", settings.icon_theme), direction + 180, 32, 32, ARROW_CENTER).img_box)
         icon_box.set_margin_top(5)
         icon_box.set_margin_bottom(5)
 
@@ -303,14 +306,25 @@ class HourlyDetails(Gtk.Grid):
                 return i
         return 0
 
-    def _scroll_to_now(self, scrolled, container, index):
-        width = container.get_width()
-        if width > 0:
-            offset = (width / 24) * (index - 1)
-            offset = max(0, offset)
-            scrolled.get_hadjustment().set_value(offset)
-            return GLib.SOURCE_REMOVE
-        return GLib.SOURCE_CONTINUE
+    @staticmethod
+    def _scroll_to_now_once_sized(scrolled: Gtk.ScrolledWindow, index: int) -> None:
+        """Scroll to the current hour as soon as GTK gives the list its width.
+
+        The list is often built while it is hidden (behind the loader), so it
+        has no width yet. Wait for the adjustment's first real size instead of
+        polling: a list that is never shown then costs nothing.
+        """
+        adjustment = scrolled.get_hadjustment()
+
+        def on_changed(adj: Gtk.Adjustment) -> None:
+            if adj.get_upper() <= 0:
+                return
+            adj.disconnect(handler_id)
+            adj.set_value(max(0, adj.get_upper() / 24 * (index - 1)))
+
+        # The handler only holds the index, not a widget, so it can't keep
+        # the rebuilt grid alive.
+        handler_id = adjustment.connect("changed", on_changed)
 
 
     def on_scroll(self, controller, dx, dy):

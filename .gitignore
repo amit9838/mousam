@@ -29,3 +29,5 @@ dist-ssr
 *.sw?
 dist
 test*
+# Local plan documents
+*-plan.md

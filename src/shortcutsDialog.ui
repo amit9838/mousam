@@ -63,6 +63,12 @@ along with Mousam.  If not, see <http://www.gnu.org/licenses/>.
                 <property name="title" translatable="yes">Keyboard Shortcuts</property>
               </object>
             </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">Escape</property>
+                <property name="title" translatable="yes">Leave Compact Mode</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>
