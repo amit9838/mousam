@@ -197,7 +197,7 @@ class HourlyDetails(Gtk.Grid):
             item = self._create_hour_item(page_name, i, hourly_data, nearest_idx, max_prec)
             graphic_container.append(item)
 
-        GLib.idle_add(self._scroll_to_now, scrolled_window, graphic_container, nearest_idx)
+        self._scroll_to_now_once_sized(scrolled_window, nearest_idx)
         return scrolled_window
 
     def _create_hour_item(self, page_name, index, hourly_data, nearest_idx, max_prec):
@@ -306,14 +306,25 @@ class HourlyDetails(Gtk.Grid):
                 return i
         return 0
 
-    def _scroll_to_now(self, scrolled, container, index):
-        width = container.get_width()
-        if width > 0:
-            offset = (width / 24) * (index - 1)
-            offset = max(0, offset)
-            scrolled.get_hadjustment().set_value(offset)
-            return GLib.SOURCE_REMOVE
-        return GLib.SOURCE_CONTINUE
+    @staticmethod
+    def _scroll_to_now_once_sized(scrolled: Gtk.ScrolledWindow, index: int) -> None:
+        """Scroll to the current hour as soon as GTK gives the list its width.
+
+        The list is often built while it is hidden (behind the loader), so it
+        has no width yet. Wait for the adjustment's first real size instead of
+        polling: a list that is never shown then costs nothing.
+        """
+        adjustment = scrolled.get_hadjustment()
+
+        def on_changed(adj: Gtk.Adjustment) -> None:
+            if adj.get_upper() <= 0:
+                return
+            adj.disconnect(handler_id)
+            adj.set_value(max(0, adj.get_upper() / 24 * (index - 1)))
+
+        # The handler only holds the index, not a widget, so it can't keep
+        # the rebuilt grid alive.
+        handler_id = adjustment.connect("changed", on_changed)
 
 
     def on_scroll(self, controller, dx, dy):
