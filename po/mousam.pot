@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 21:45+0530\n"
+"POT-Creation-Date: 2026-11-06 22:46+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -525,52 +525,52 @@ msgstr ""
 msgid "Sunset"
 msgstr ""
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:214
+#: src/UI_CardSquare.py:31 src/UI_CompactWeather.py:214
 #: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr ""
 
-#: src/UI_CardSquare.py:31 src/UI_CompactWeather.py:216
+#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr ""
 
-#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:215
+#: src/UI_CardSquare.py:33 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr ""
 
-#: src/UI_CardSquare.py:33
+#: src/UI_CardSquare.py:34
 msgid "UV Index"
 msgstr ""
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:212
 msgid "North"
 msgstr ""
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:213
 msgid "Northeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:214
 msgid "East"
 msgstr ""
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:215
 msgid "Southeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:216
 msgid "South"
 msgstr ""
 
-#: src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:217
 msgid "Southwest"
 msgstr ""
 
-#: src/UI_CardSquare.py:217
+#: src/UI_CardSquare.py:218
 msgid "West"
 msgstr ""
 
-#: src/UI_CardSquare.py:218
+#: src/UI_CardSquare.py:219
 msgid "Northwest"
 msgstr ""
 
@@ -626,16 +626,21 @@ msgstr ""
 msgid "Feels like • <b> {0} {1}</b>"
 msgstr ""
 
-#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
+#: src/UI_Forecast.py:149 src/UI_Forecast.py:403
 msgid "Tomorrow"
 msgstr ""
 
-#: src/UI_Forecast.py:147
+#: src/UI_Forecast.py:157
 msgid "Weekly"
 msgstr ""
 
-#: src/UI_Forecast.py:316
+#: src/UI_Forecast.py:401
 msgid "Today"
+msgstr ""
+
+#: src/UI_Forecast.py:424
+#, python-brace-format
+msgid "Chance of rain: {percent}%"
 msgstr ""
 
 #: src/UI_HourlyDetails.py:51
