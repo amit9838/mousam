@@ -1,11 +1,12 @@
 import json
+import threading
 import time
 from typing import List, Dict, Optional
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, GLib
 
 from .CORE_Helpers import create_toast
 from .API_FindCity import find_city
@@ -54,7 +55,14 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self.set_title(_("Add New Location"))
         self.callback = on_selection_callback
         self.results_rows = []
+        self.placeholder = None
+        self._search_id = 0
         self._init_ui()
+        # Drop the results of a search still running when the dialog closes
+        self.connect("destroy", self._on_destroy)
+
+    def _on_destroy(self, _widget) -> None:
+        self._search_id += 1
 
     def _init_ui(self):
         page = Adw.PreferencesPage()
@@ -84,28 +92,50 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self._set_placeholder(_("Search for your city..."))
 
     def _set_placeholder(self, text):
-        self.placeholder = Gtk.Label(label=text, margin_top=40)
-        self.placeholder.add_css_class("dim-label")
-        self.results_group.add(self.placeholder)
+        label = Gtk.Label(label=text, margin_top=40, wrap=True, justify=Gtk.Justification.CENTER)
+        label.add_css_class("dim-label")
+        self._show_placeholder(label)
 
-    def _perform_search(self, _widget):
-        query = self.search_entry.get_text().strip()
-        if not query:
-            return
+    def _show_placeholder(self, widget: Gtk.Widget) -> None:
+        """Show a single status widget (a message or a spinner) in the results."""
+        self.placeholder = widget
+        self.results_group.add(widget)
 
-        # Logic to clear results
-        if getattr(self, "placeholder", None) is not None:
+    def _clear_results(self) -> None:
+        if self.placeholder is not None:
             self.results_group.remove(self.placeholder)
             self.placeholder = None
         for row in self.results_rows:
             self.results_group.remove(row)
         self.results_rows.clear()
 
-        cities = find_city(query, 5)  # Returns list of dicts
+    def _perform_search(self, _widget):
+        query = self.search_entry.get_text().strip()
+        if not query:
+            return
 
+        self._clear_results()
+        self._show_placeholder(Adw.Spinner(margin_top=40, height_request=32))
+
+        # The request can take up to TIMEOUT seconds, so run it off the main
+        # thread. A newer search makes the results of older ones stale.
+        self._search_id += 1
+        threading.Thread(
+            target=self._search_worker, args=(query, self._search_id), daemon=True
+        ).start()
+
+    def _search_worker(self, query: str, search_id: int) -> None:
+        cities = find_city(query, 8)  # Returns list of dicts
+        GLib.idle_add(self._show_results, search_id, cities)
+
+    def _show_results(self, search_id: int, cities: List[Dict]) -> bool:
+        if search_id != self._search_id:
+            return GLib.SOURCE_REMOVE
+
+        self._clear_results()
         if not cities:
             self._set_placeholder(_("No cities found."))
-            return
+            return GLib.SOURCE_REMOVE
 
         for city in cities:
             display = LocationData.format_display_name(city)
@@ -118,6 +148,7 @@ class CitySearchDialog(Adw.PreferencesWindow):
             row.connect("activated", self._on_row_selected, city)
             self.results_group.add(row)
             self.results_rows.append(row)
+        return GLib.SOURCE_REMOVE
 
     def _on_row_selected(self, row, city_data):
         self.callback(city_data)
