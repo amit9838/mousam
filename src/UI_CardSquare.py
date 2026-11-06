@@ -187,10 +187,8 @@ class CardSquare:
             return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35, ARROW_CENTER).img_box
 
         elif self.title_key == "humidity":
-            # Level Bar (0.0 - 1.0)
-            return DrawLevelBar(
-                val / 100.0, rounded_cap=True, rgb_color=[0.588, 0.937, 1]
-            ).dw
+            # Level Bar (0.0 - 1.0), in a bright ocean blue (#219eed)
+            return DrawLevelBar(val / 100.0, rounded_cap=True, rgb_color=(0.13, 0.62, 0.93)).dw
 
         elif self.title_key == "pressure":
             # Pressure Calculation
@@ -203,10 +201,8 @@ class CardSquare:
             return DrawTickGauge(level).dw
 
         elif self.title_key == "uv index":
-            # UV Level (Assuming Max 12)
-            return DrawLevelBar(
-                val / 12.0, rounded_cap=True, rgb_color=[0.408, 0.494, 1.000]
-            ).dw
+            # UV Level (Assuming Max 12), in a bright violet-blue (#5c66ff)
+            return DrawLevelBar(val / 12.0, rounded_cap=True, rgb_color=(0.36, 0.40, 1.0)).dw
 
         return None
 
