@@ -104,6 +104,7 @@ def get_selected_city_name():
             c_lon = float(city.get('longitude', 0))
             if abs(lat - c_lat) < 0.001 and abs(lon - c_lon) < 0.001:
                 return city.get("name", _("Unknown City"))
-    except:
-        pass
+    except (ValueError, TypeError, AttributeError) as e:
+        # Malformed selected-city or added-cities value in GSettings
+        logger.warning(f"Could not find the selected city's name: {e}")
     return _("Unknown City")

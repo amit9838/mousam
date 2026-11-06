@@ -66,10 +66,7 @@ def show_notification(app):
     cond_str = cond_map.get(w_code, _("Unknown"))
     notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
     notification.set_body(f"{cond_str}")
-    try:
-        notification.set_icon(Gio.ThemedIcon.new("weather-few-clouds-symbolic"))
-    except:
-        pass
+    notification.set_icon(Gio.ThemedIcon.new("weather-few-clouds-symbolic"))
     notification.set_default_action("app.show-normal")
     notif_id = f"mousam-upd-{int(time.time())}"
     app.send_notification(notif_id, notification)
