@@ -1,8 +1,6 @@
 import math
 import weakref
-import time
 from typing import Callable, Tuple
-from gettext import gettext as _
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("PangoCairo", "1.0")
@@ -120,23 +118,28 @@ def weak_connect(widget, signal_name, bound_method):
                 return method(*args, **kwargs)
     return widget.connect(signal_name, wrapper)
 
-def show_notification(app):
-    from .CORE_weatherData import weather_manager
-    cw_data = weather_manager.current_weather
-    if not app or not settings.show_notifications:
-        return
-    from .CORE_Icons import condition as cond_map
-    if not cw_data:
-        return
-    city_name = get_selected_city_name()
-    temp = cw_data.temperature_2m.data
-    unit = cw_data.temperature_2m.unit
-    w_code = str(cw_data.weathercode.data)
-    cond_str = cond_map.get(w_code, _("Unknown"))
-    notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
-    notification.set_body(f"{cond_str}")
-    notification.set_icon(Gio.ThemedIcon.new("weather-few-clouds-symbolic"))
+def is_on_screen(window) -> bool:
+    """Whether a window can be seen: shown, and not suspended (minimized, on
+    another workspace, or covered by other windows)."""
+    return window is not None and window.get_visible() and not window.is_suspended()
+
+
+# Notification priority for each overview insight severity
+NOTIFICATION_PRIORITY = {
+    "info": Gio.NotificationPriority.LOW,
+    "warning": Gio.NotificationPriority.NORMAL,
+    "error": Gio.NotificationPriority.HIGH,
+}
+
+
+def show_overview_notification(app, insight) -> None:
+    """Send an overview insight as a desktop notification: the city as the
+    title, the message as the body. It always replaces the previous one, so
+    they never pile up; clicking it opens the main window."""
+    notification = Gio.Notification.new(get_selected_city_name())
+    notification.set_body(insight.message)
+    notification.set_icon(Gio.ThemedIcon.new(insight.icon or "dialog-information-symbolic"))
+    notification.set_priority(NOTIFICATION_PRIORITY.get(insight.severity, Gio.NotificationPriority.NORMAL))
     notification.set_default_action("app.show-normal")
-    notif_id = f"mousam-upd-{int(time.time())}"
-    app.send_notification(notif_id, notification)
-    logger.info(f"Notification sent for {city_name}: {temp}{unit}, {cond_str}")
+    app.send_notification("overview", notification)
+    logger.info(f"Overview notification sent: {insight.message}")

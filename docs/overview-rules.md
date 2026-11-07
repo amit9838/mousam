@@ -120,6 +120,24 @@ true, the most important remaining one takes its place, also without opening.
 **Clicking the info button** shows the current insight, and counts as its
 turn.
 
+**Where it is shown: one place at a time.**
+
+- While the main window can be seen, the overview opens in it.
+- While the window is minimized, hidden by compact mode, or otherwise out of
+  sight, the same announcement is sent as a desktop notification instead
+  (the city as its title, the message as its body). A new one replaces the
+  last, so they never pile up; clicking it opens the main window.
+
+Either can be turned off in Preferences: *Weather Overview* and *Show
+Notifications*. The forecast is only worked out while at least one is on.
+
+| Overview | Notifications | Window in sight | Window out of sight |
+| --- | --- | --- | --- |
+| on | on | overview | notification |
+| on | off | overview | nothing |
+| off | on | nothing | notification |
+| off | off | nothing (no processing) | nothing |
+
 **Refreshes don't count.** A refresh (Ctrl+R, auto-refresh, changing units,
 clock or icons) keeps what has been shown and when it opens next, so it
 neither opens the overview nor resets the turns. Switching location, or

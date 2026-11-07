@@ -55,6 +55,11 @@ class WeatherApplication(Adw.Application):
         
         self.connect("window-removed", self._on_window_removed)
 
+        # Overview announcements: shown in the main window's overview while it
+        # can be seen, otherwise sent as a notification (never both)
+        from .CORE_Overview import overview_engine
+        overview_engine.connect("overview-changed", self._on_overview_changed)
+
     def do_shutdown(self):
         self.auto_refresh.stop()
         Adw.Application.do_shutdown(self)
@@ -83,12 +88,22 @@ class WeatherApplication(Adw.Application):
         self.main_window.present()
         self.auto_refresh.setup()
 
+    def _on_overview_changed(self, engine, announce: bool) -> None:
+        """Send the announcement as a notification when the main window can't
+        be seen (minimized, or compact mode); otherwise its overview shows it."""
+        from .CORE_GTKUtils import is_on_screen, show_overview_notification
+
+        insight = engine.current()
+        if not announce or insight is None or not settings.show_notifications:
+            return
+        if is_on_screen(self.main_window):
+            return
+        show_overview_notification(self, insight)
+
     def _on_auto_refresh_tick(self):
         from .CORE_Networking import fetch_all_weather_data_async
-        from .CORE_GTKUtils import show_notification
-        
+
         def on_success():
-            show_notification(self)
             # Notify all windows to refresh UI
             if self.main_window:
                 self.main_window._on_data_fetch_success(is_auto=True)

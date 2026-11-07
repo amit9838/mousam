@@ -170,7 +170,7 @@ class WeatherPreferences(Adw.PreferencesWindow):
     def _add_notification_row(self, parent: Adw.PreferencesGroup) -> None:
         row = Adw.ActionRow(
             title=_("Show Notifications"),
-            subtitle=_("Show notification when weather is refreshed automatically"),
+            subtitle=_("Show the weather overview as a notification while the window is minimized or in compact mode"),
             icon_name="preferences-system-notifications-symbolic",
             activatable=True,
         )

@@ -21,8 +21,11 @@ The engine adds the timing around them:
 - Varied wording: each opening draws a new seed, which picks one of the
   message's wordings (CORE_OverviewMessages.py). Silent updates keep the
   seed, so the wording stays put while only the values change.
-- Only while the "show-overview" setting is on: when it is off nothing is
+- Only while it has somewhere to go: the overview ("show-overview") or
+  notifications ("show-notifications") is on. With both off nothing is
   scheduled or worked out.
+- Where it goes is up to the subscribers: the main window's overview while
+  the window can be seen, a notification (sent by the app) otherwise.
 
 Publish / subscribe: the engine emits "overview-changed" with `announce`
 (open the overview, or just update its text). Widgets connect to it and read
@@ -70,6 +73,7 @@ class OverviewEngine(GObject.Object):
         self._seed = 0  # picks the wordings; new on each opening
         weather_manager.connect("notify::is-ready", self._on_ready_changed)
         settings.connect("changed::show-overview", self._on_enabled_changed)
+        settings.connect("changed::show-notifications", self._on_enabled_changed)
 
     # ---------- Reading ----------
 
@@ -80,6 +84,12 @@ class OverviewEngine(GObject.Object):
             return None
         return self.insight
 
+    @staticmethod
+    def enabled() -> bool:
+        """Whether the overview has somewhere to go: the overview or the
+        notifications are on."""
+        return settings.show_overview or settings.show_notifications
+
     def note_shown(self) -> None:
         """The user opened the overview: that counts as the insight's turn."""
         if self.insight is not None:
@@ -88,7 +98,7 @@ class OverviewEngine(GObject.Object):
     # ---------- Scheduling ----------
 
     def _on_enabled_changed(self, *_args) -> None:
-        if settings.show_overview:
+        if self.enabled():
             self._schedule()
         else:
             self._reset()
@@ -98,7 +108,7 @@ class OverviewEngine(GObject.Object):
         GLib.idle_add(self._schedule)
 
     def _schedule(self) -> bool:
-        if not settings.show_overview:
+        if not self.enabled():
             return GLib.SOURCE_REMOVE
 
         if not weather_manager.is_ready:
@@ -132,7 +142,7 @@ class OverviewEngine(GObject.Object):
     def _run(self) -> bool:
         self._timer_id = 0
         self._first_built = True
-        if not settings.show_overview or not weather_manager.is_ready:
+        if not self.enabled() or not weather_manager.is_ready:
             return GLib.SOURCE_REMOVE
 
         now = time.time()
@@ -202,7 +212,8 @@ class OverviewEngine(GObject.Object):
             self.emit("overview-changed", announce)
 
     def _reset(self) -> None:
-        """Start over: another city, or the overview was turned off."""
+        """Start over: another city, or both overview and notifications were
+        turned off."""
         self._cancel()
         self._scheduled_for = None
         self._planner.forget()
