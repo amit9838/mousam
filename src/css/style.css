@@ -460,9 +460,11 @@
     color: rgb(97, 179, 255);
 }
 
-/* Rain drops: dimmer than the text, so they don't pull the eye from the day */
-.rain-drops {
-    opacity: 0.7;
+/* Rain drops: dimmer than the text, so they don't pull the eye from the day.
+   Each drop is translucent on its own, so where they overlap the one
+   behind shows through. */
+.rain-drops > image {
+    opacity: 0.6;
 }
 
 /* Rain drops overlap, each a little to the right of the one before. A thin
