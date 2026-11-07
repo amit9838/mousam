@@ -63,10 +63,15 @@ OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stay
 OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
 OVERVIEW_HOURS = 12  # how far ahead the overview looks
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
-# When the overview opens again by itself, picked at random in (min, max)
-# minutes so it does not feel mechanical; sooner for urgent messages. Between
-# those times the text is still kept up to date, without opening.
-OVERVIEW_REPUBLISH_MINUTES = {"error": (5, 10), "warning": (10, 20), "info": (20, 40)}
+# When the overview opens again by itself: BASE ÷ (1 + score), where the
+# score adds up the priorities (÷ 100) of everything worth saying, so a busy
+# forecast opens it more often. Kept between MIN and MAX minutes, then spread
+# at random by ± SPREAD so it does not feel mechanical. MIN is also the
+# shortest gap before something that just turned severe opens it again.
+OVERVIEW_ANNOUNCE_BASE_MINUTES = 40
+OVERVIEW_ANNOUNCE_MIN_MINUTES = 5
+OVERVIEW_ANNOUNCE_MAX_MINUTES = 40
+OVERVIEW_ANNOUNCE_SPREAD = 0.2
 
 # Overview rules (CORE_OverviewRules.py). All thresholds are metric; rules
 # convert imperial data before comparing.

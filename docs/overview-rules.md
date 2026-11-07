@@ -69,14 +69,61 @@ If a rule fails, for example on missing or odd data, it says nothing. The
 other rules still run, so one broken rule never breaks the overview. The
 failure is logged in debug mode only.
 
-### Which insight wins
+### Which insights are there
 
 Every rule runs. Insights that are no longer true are dropped, and the rest
 are sorted by priority, highest first. The calm rule always speaks, so there
-is always at least one insight.
+is always at least one insight. Nothing is thrown away: the insights take
+turns (below).
 
-How the app picks from that list and when it shows it (timing, repeats) is
-decided by the overview engine, not by the rules.
+### When the overview opens, and with what
+
+Code: `AnnouncePlanner` in `CORE_OverviewRules.py`; the numbers are the
+`OVERVIEW_ANNOUNCE_*` values in `configs.py`.
+
+**Calm takes no turn** while anything else is worth saying; it is shown only
+when it is the only insight.
+
+**How often: a busier forecast opens it more often.** Add up the priorities
+of the insights, divided by 100: that is the **score** (storm 1.0, rain 0.6,
+temperature swing 0.4, sunset 0.2, calm 0). The next opening is
+
+> **40 minutes ÷ (1 + score)**, kept between **5** and **40** minutes, then
+> moved at random by up to **±20%** so it does not feel mechanical.
+
+| Insights | Score | Next opening in about |
+| --- | --- | --- |
+| calm only | 0 | 40 min |
+| rain | 0.6 | 25 min |
+| storm | 1.0 | 20 min |
+| storm, rain, temperature swing, sunset | 2.2 | 12 min |
+| 4 or more | | 5 min (the shortest) |
+
+As insights stop being true the score falls, and openings space out.
+
+**What: the insight whose turn it is.** Never-shown insights go first, most
+important first. After that, the turn goes to the highest **priority ×
+minutes since it was last shown**: important ones come back more often, and
+the others still get their turn.
+
+**Escalation.** When something more severe than before turns up (info →
+warning → error, say a storm), it opens at once, without waiting, unless:
+
+- it was already shown in the last 40 minutes (one that comes and goes
+  counts once), or
+- the overview opened less than 5 minutes ago.
+
+**Between openings** the text on screen is kept up to date without opening
+(the values change, the wording stays). When the shown insight stops being
+true, the most important remaining one takes its place, also without opening.
+
+**Clicking the info button** shows the current insight, and counts as its
+turn.
+
+**Refreshes don't count.** A refresh (Ctrl+R, auto-refresh, changing units,
+clock or icons) keeps what has been shown and when it opens next, so it
+neither opens the overview nor resets the turns. Switching location, or
+turning the overview off, starts over.
 
 ### How long a message stays open
 

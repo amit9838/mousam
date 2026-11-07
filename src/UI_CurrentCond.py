@@ -282,6 +282,8 @@ class CurrentCondition(Gtk.Box):
             self._close_overview()
         else:
             self._open_overview()
+            # Seen now, so the engine gives the next opening to another insight
+            overview_engine.note_shown()
 
     def _open_overview(self) -> None:
         if self._overview_insight is None:
