@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 00:15+0530\n"
+"POT-Creation-Date: 2026-11-08 00:29+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgid "Mousam"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:34
 msgid "Weather at a glance"
 msgstr ""
 
@@ -198,23 +198,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:44
+#: src/configs.py:60
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:45
+#: src/configs.py:61
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:46
+#: src/configs.py:62
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:47
+#: src/configs.py:63
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:48
+#: src/configs.py:64
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1515,12 +1515,55 @@ msgstr ""
 msgid "Add Location"
 msgstr ""
 
-#: src/windowAbout.py:20
-msgid "Copyright © 2024 Mousam Developers"
+#: src/windowAbout.py:36
+msgid "Copyright © 2023–2026 Mousam Developers"
 msgstr ""
 
-#: src/windowAbout.py:24
+#. Translators: replace with your name (and email or link), one per line
+#: src/windowAbout.py:38
 msgid "translator-credits"
+msgstr ""
+
+#: src/windowAbout.py:42
+msgid "Source Code"
+msgstr ""
+
+#: src/windowAbout.py:43
+msgid "Contributors"
+msgstr ""
+
+#: src/windowAbout.py:44
+msgid "Help Translate"
+msgstr ""
+
+#: src/windowAbout.py:45
+msgid "Buy Me a Coffee"
+msgstr ""
+
+#: src/windowAbout.py:48 src/windowAbout.py:59
+msgid "Weather Data"
+msgstr ""
+
+#: src/windowAbout.py:51 src/windowPreferences.py:95
+msgid "Weather Icons"
+msgstr ""
+
+#. Translators: {open_meteo} and {license} are links, keep the tags as they are
+#: src/windowAbout.py:63
+#, python-brace-format
+msgid "Weather data by {open_meteo}, licensed under {license}."
+msgstr ""
+
+#: src/windowAbout.py:69
+msgid "Default Weather Icons"
+msgstr ""
+
+#: src/windowAbout.py:75
+msgid "Material Weather Icons"
+msgstr ""
+
+#: src/windowAbout.py:78
+msgid "All rights belong to Google. Collected by Darren Griffin."
 msgstr ""
 
 #: src/windowLocations.py:55
@@ -1616,10 +1659,6 @@ msgstr ""
 
 #: src/windowPreferences.py:87
 msgid "Change the background to match the current weather"
-msgstr ""
-
-#: src/windowPreferences.py:95
-msgid "Weather Icons"
 msgstr ""
 
 #: src/windowPreferences.py:97
