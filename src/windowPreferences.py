@@ -1,36 +1,27 @@
 import threading
-import time
-from enum import IntEnum
+from typing import Callable
 
 import gi
 from gi.repository import Adw, Gtk
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 
 from .settings import settings
 from .CORE_Helpers import create_toast
 from .configs import AUTO_REFRESH_OPTIONS
 from .CORE_Logging import log_manager
-from .CORE_Icons import get_icon_path
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
-# Using centralized constants from .configs
 
+class WeatherPreferences(Adw.PreferencesDialog):
+    """Preferences dialog, shown over the main window with present(window)."""
 
-class WeatherPreferences(Adw.PreferencesWindow):
-    """Preferences window for weather application."""
-
-    def __init__(self, application: Adw.Application, **kwargs):
+    def __init__(self, window: Adw.ApplicationWindow, **kwargs):
         super().__init__(**kwargs)
-        self.application = application
-        self.set_transient_for(application)
-        self.set_default_size(600, 500)
-        self.set_title(_("Weather Preferences"))
-
-        # Internal state
-        self._last_unit_switch_time: float = time.time()
+        self.window = window
+        self.set_title(_("Preferences"))
 
         self._build_ui()
         self._bind_settings_to_ui()
@@ -40,120 +31,176 @@ class WeatherPreferences(Adw.PreferencesWindow):
     # ------------------------------------------------------------------
     def _build_ui(self) -> None:
         """Create all preference pages and groups."""
-        appearance_page = Adw.PreferencesPage()
-        appearance_page.set_title(_("Appearance"))
-        appearance_page.set_icon_name("applications-graphics-symbolic")
-        self.add(appearance_page)
+        general_page = Adw.PreferencesPage()
+        general_page.set_title(_("General"))
+        general_page.set_icon_name("preferences-system-symbolic")
+        self.add(general_page)
 
-        general_group = Adw.PreferencesGroup()
-        appearance_page.add(general_group)
-
-        self._add_dynamic_background_row(general_group)
-        self._add_icon_theme_row(general_group)
-        self._add_notification_row(general_group)
-        self._add_overview_row(general_group)
-        self._add_time_format_row(general_group)
-        self._add_auto_refresh_row(general_group)
-        self._add_units_and_measurements_group(general_group)
+        general_page.add(self._build_general_group())
+        general_page.add(self._build_appearance_group())
+        general_page.add(self._build_overview_group())
 
         advanced_page = Adw.PreferencesPage()
         advanced_page.set_title(_("Advanced"))
-        advanced_page.set_icon_name("preferences-system-symbolic")
+        advanced_page.set_icon_name("applications-engineering-symbolic")
         self.add(advanced_page)
 
-        debug_group = Adw.PreferencesGroup()
-        debug_group.set_title(_("Logging &amp; Debugging"))
-        advanced_page.add(debug_group)
+        advanced_page.add(self._build_debug_group())
+        advanced_page.add(self._build_reset_group())
 
-        self._add_debug_mode_row(debug_group)
-        self._add_open_logs_row(debug_group)
-        self._add_clear_logs_row(debug_group)
-        self._add_reset_row(advanced_page)
+    def _build_general_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("General"))
 
-    def _add_icon_theme_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Icon Theme"),
-            subtitle=_("Choose between Default and Material design weather icons"),
-            icon_name="applications-graphics-symbolic",
-            activatable=True,
+        self._unit_btn_celsius, self._unit_btn_fahrenheit = self._add_toggle_row(
+            group,
+            _("Units"),
+            _("Metric (°C, km/h) or Imperial (°F, mph)"),
+            (_("Metric"), _("Imperial")),
+            self._on_unit_toggled,
+            ("metric", "imperial"),
         )
-        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        button_box.add_css_class("linked")
-        button_box.set_margin_start(2)
-        button_box.set_valign(Gtk.Align.CENTER)
-        row.add_suffix(button_box)
+        self._precip_btn_mm, self._precip_btn_inch = self._add_toggle_row(
+            group,
+            _("Precipitation"),
+            _("Unit of the hourly precipitation graph"),
+            # Translators: short unit names for millimetres and inches
+            (_("mm"), _("in")),
+            self._on_precip_unit_toggled,
+            (False, True),
+        )
+        self._time_btn_24h, self._time_btn_12h = self._add_toggle_row(
+            group,
+            _("Time Format"),
+            None,
+            (_("24-hour"), _("AM/PM")),
+            self._on_24h_clock_toggled,
+            (True, False),
+        )
+        self._add_auto_refresh_row(group)
+        return group
 
-        btn_default = Gtk.ToggleButton.new_with_label(_("Default"))
-        btn_default.set_size_request(80, 20)
-        btn_default.set_css_classes(["btn-sm"])
-        btn_default.connect("clicked", self._on_icon_theme_toggled, "default")
+    def _build_appearance_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Appearance"))
 
-        btn_material = Gtk.ToggleButton.new_with_label(_("Material"))
-        btn_material.set_size_request(80, 20)
-        btn_material.set_css_classes(["btn-sm"])
-        btn_material.set_group(btn_default)
-        btn_material.connect("clicked", self._on_icon_theme_toggled, "material")
-
-        button_box.append(btn_default)
-        button_box.append(btn_material)
-
-        self._icon_theme_btn_default = btn_default
-        self._icon_theme_btn_material = btn_material
-        parent.add(row)
-
-    def _add_dynamic_background_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
+        self._dynamic_bg_switch = Adw.SwitchRow(
             title=_("Dynamic Background"),
-            subtitle=_(
-                "App background changes based on current weather conditions"
-            ),
-            icon_name="preferences-color-symbolic",
-            activatable=True,
+            subtitle=_("Change the background to match the current weather"),
         )
-        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
-        switch.set_active(settings.is_using_dynamic_bg)
-        switch.connect("state-set", self._on_dynamic_bg_toggled)
-        row.add_suffix(switch)
-        self._dynamic_bg_switch = switch
-        parent.add(row)
+        self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
+        self._dynamic_bg_switch.connect("notify::active", self._on_dynamic_bg_toggled)
+        group.add(self._dynamic_bg_switch)
 
-    def _add_time_format_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Time Format"),
-            subtitle=_("Weather time format"),
-            icon_name="preferences-system-time-symbolic",
+        self._icon_theme_btn_default, self._icon_theme_btn_material = self._add_toggle_row(
+            group,
+            _("Weather Icons"),
+            None,
+            (_("Default"), _("Material")),
+            self._on_icon_theme_toggled,
+            ("default", "material"),
+        )
+        return group
+
+    def _build_overview_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Weather Overview"))
+
+        self._overview_switch = Adw.SwitchRow(
+            title=_("Show Overview"),
+            subtitle=_("A short summary of the coming hours"),
+        )
+        self._overview_switch.set_active(settings.show_overview)
+        self._overview_switch.connect("notify::active", self._on_overview_toggled)
+        group.add(self._overview_switch)
+
+        self._notification_switch = Adw.SwitchRow(
+            title=_("Notifications"),
+            subtitle=_("Send the overview as a notification while the window is minimized or in compact mode"),
+        )
+        self._notification_switch.set_active(settings.show_notifications)
+        self._notification_switch.connect("notify::active", self._on_notifications_toggled)
+        group.add(self._notification_switch)
+        return group
+
+    def _build_debug_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Logging and Debugging"))
+
+        self._debug_switch = Adw.SwitchRow(
+            title=_("Debug Mode"),
+            subtitle=_("Enable verbose logging and console output"),
+        )
+        self._debug_switch.set_active(settings.debug_mode)
+        self._debug_switch.connect("notify::active", self._on_debug_mode_toggled)
+        group.add(self._debug_switch)
+
+        open_logs_row = Adw.ActionRow(
+            title=_("Open Logs Folder"),
             activatable=True,
         )
+        open_logs_row.add_suffix(Gtk.Image(icon_name="folder-open-symbolic"))
+        open_logs_row.connect("activated", self._on_open_logs_clicked)
+        group.add(open_logs_row)
+
+        clear_logs_row = Adw.ActionRow(
+            title=_("Clear Log File"),
+            subtitle=_("Delete all contents of the current log file"),
+        )
+        clear_btn = Gtk.Button(label=_("Clear"), valign=Gtk.Align.CENTER)
+        clear_btn.connect("clicked", self._on_clear_logs_clicked)
+        clear_logs_row.add_suffix(clear_btn)
+        group.add(clear_logs_row)
+        return group
+
+    def _build_reset_group(self) -> Adw.PreferencesGroup:
+        group = Adw.PreferencesGroup(title=_("Data Management"))
+
+        row = Adw.ActionRow(
+            title=_("Reset to Default"),
+            subtitle=_("Clear all preferences and restore default values"),
+        )
+        reset_btn = Gtk.Button.new_with_label(_("Reset…"))
+        reset_btn.set_valign(Gtk.Align.CENTER)
+        reset_btn.add_css_class("destructive-action")
+        reset_btn.connect("clicked", self._on_reset_clicked)
+        row.add_suffix(reset_btn)
+        group.add(row)
+        return group
+
+    def _add_toggle_row(
+        self,
+        group: Adw.PreferencesGroup,
+        title: str,
+        subtitle: str | None,
+        labels: tuple[str, str],
+        handler: Callable,
+        values: tuple,
+    ) -> tuple[Gtk.ToggleButton, Gtk.ToggleButton]:
+        """A row with two linked toggle buttons; returns the two buttons."""
+        row = Adw.ActionRow(title=title)
+        if subtitle:
+            row.set_subtitle(subtitle)
+
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         button_box.add_css_class("linked")
-        button_box.set_margin_start(2)
         button_box.set_valign(Gtk.Align.CENTER)
         row.add_suffix(button_box)
 
-        btn_24h = Gtk.ToggleButton.new_with_label(_("24 Hour"))
-        btn_24h.set_size_request(80, 20)
-        btn_24h.set_css_classes(["btn-sm"])
-        btn_24h.connect("clicked", self._on_24h_clock_toggled, True)
+        buttons = []
+        for label, value in zip(labels, values):
+            button = Gtk.ToggleButton.new_with_label(label)
+            button.set_size_request(80, -1)
+            button.set_css_classes(["btn-sm"])
+            if buttons:
+                button.set_group(buttons[0])
+            button.connect("clicked", handler, value)
+            button_box.append(button)
+            buttons.append(button)
 
-        btn_12h = Gtk.ToggleButton.new_with_label(_("AM / PM"))
-        btn_12h.set_size_request(80, 20)
-        btn_12h.set_css_classes(["btn-sm"])
-        btn_12h.set_group(btn_24h)
-        btn_12h.connect("clicked", self._on_24h_clock_toggled, False)
-
-        button_box.append(btn_24h)
-        button_box.append(btn_12h)
-
-        self._time_btn_24h = btn_24h
-        self._time_btn_12h = btn_12h
-        parent.add(row)
+        group.add(row)
+        return buttons[0], buttons[1]
 
     def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
         labels = Gtk.StringList.new([opt[1] for opt in AUTO_REFRESH_OPTIONS])
         row = Adw.ComboRow(
             title=_("Auto Refresh"),
-            subtitle=_("Automatically refresh weather data at a set interval"),
-            icon_name="view-refresh-symbolic",
             model=labels,
         )
         current = settings.auto_refresh_interval
@@ -167,181 +214,33 @@ class WeatherPreferences(Adw.PreferencesWindow):
         self._auto_refresh_row = row
         parent.add(row)
 
-    def _add_notification_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Show Notifications"),
-            subtitle=_("Show the weather overview as a notification while the window is minimized or in compact mode"),
-            icon_name="preferences-system-notifications-symbolic",
-            activatable=True,
-        )
-        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
-        switch.set_active(settings.show_notifications)
-        switch.connect("state-set", self._on_notifications_toggled)
-        row.add_suffix(switch)
-        self._notification_switch = switch
-        parent.add(row)
-
-    def _add_overview_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Weather Overview"),
-            subtitle=_("Show a short summary of the coming hours"),
-            icon_name="dialog-information-symbolic",
-            activatable=True,
-        )
-        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
-        switch.set_active(settings.show_overview)
-        switch.connect("state-set", self._on_overview_toggled)
-        row.add_suffix(switch)
-        row.set_activatable_widget(switch)
-        self._overview_switch = switch
-        parent.add(row)
-
-    def _add_units_and_measurements_group(self, parent: Adw.PreferencesGroup) -> None:
-        """Units selection: Celsius / Fahrenheit as linked toggle buttons."""
-        group = Adw.PreferencesGroup()
-        group.set_margin_top(20)
-        group.set_title(_("Units &amp; Measurements"))
-        parent.add(group)
-
-        # Create a single row for temperature unit selection
-        unit_row = Adw.ActionRow(
-            title=_("System Unit"),
-            subtitle=_("Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"),
-            icon_name="power-profile-balanced-symbolic",
-            activatable=True,
-        )
-
-        # Linked buttons container
-        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        button_box.add_css_class("linked")
-        button_box.set_margin_start(2)
-        button_box.set_valign(Gtk.Align.CENTER)
-
-        btn_celsius = Gtk.ToggleButton.new_with_label(_("Metric"))
-        btn_celsius.set_size_request(80, 20)
-        btn_celsius.set_css_classes(["btn-sm"])
-        btn_celsius.connect("clicked", self._on_unit_toggled, "metric")
-
-        btn_fahrenheit = Gtk.ToggleButton.new_with_label(_("Imperial"))
-        btn_fahrenheit.set_size_request(80, 20)
-        btn_fahrenheit.set_css_classes(["btn-sm"])
-        btn_fahrenheit.set_group(btn_celsius)
-        btn_fahrenheit.connect("clicked", self._on_unit_toggled, "imperial")
-
-        button_box.append(btn_celsius)
-        button_box.append(btn_fahrenheit)
-        unit_row.add_suffix(button_box)
-
-        group.add(unit_row)
-
-        # Store references for reset and binding
-        self._unit_btn_celsius = btn_celsius
-        self._unit_btn_fahrenheit = btn_fahrenheit
-
-        # Precipitation unit (inches/mm) - unchanged
-        prec_row = Adw.ActionRow(
-            title=_("Precipitation in inches"),
-            subtitle=_("This option works better in heavy precipitation"),
-            icon_name="function-linear-symbolic",
-            activatable=True,
-        )
-        prec_switch = Gtk.Switch(valign=Gtk.Align.CENTER)
-        prec_switch.set_active(settings.is_using_inch_for_prec)
-        prec_switch.connect("state-set", self._on_precip_unit_toggled)
-        prec_row.add_suffix(prec_switch)
-        self._precip_switch = prec_switch
-
-        group.add(prec_row)
-
-    def _add_reset_row(self, parent: Adw.PreferencesPage) -> None:
-        data_group = Adw.PreferencesGroup()
-        data_group.set_title(_("Data Management"))
-        data_group.set_margin_top(20)
-        parent.add(data_group)
-
-        row = Adw.ActionRow(
-            title=_("Reset to Default"),
-            subtitle=_("Clear all preferences and restore default values"),
-            icon_name="object-rotate-left-symbolic",
-        )
-        reset_btn = Gtk.Button.new_with_label(_("Reset…"))
-        reset_btn.set_valign(Gtk.Align.CENTER)
-        reset_btn.add_css_class("destructive-action")
-        reset_btn.connect("clicked", self._on_reset_clicked)
-        row.add_suffix(reset_btn)
-        data_group.add(row)
-
-    def _add_debug_mode_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Debug Mode"),
-            subtitle=_("Enable verbose logging and console output"),
-            icon_name="utilities-terminal-symbolic",
-            activatable=True,
-        )
-        switch = Gtk.Switch(valign=Gtk.Align.CENTER)
-        switch.set_active(settings.debug_mode)
-        switch.connect("state-set", self._on_debug_mode_toggled)
-        row.add_suffix(switch)
-        self._debug_switch = switch
-        parent.add(row)
-
-    def _add_open_logs_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Open Logs Folder"),
-            subtitle=_("Access the application log files"),
-            icon_name="folder-open-symbolic",
-            activatable=True,
-        )
-        btn = Gtk.Button(icon_name="folder-open-symbolic")
-        btn.set_valign(Gtk.Align.CENTER)
-        btn.add_css_class("flat")
-        btn.connect("clicked", self._on_open_logs_clicked)
-        row.add_suffix(btn)
-        parent.add(row)
-
-    def _add_clear_logs_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ActionRow(
-            title=_("Clear Log File"),
-            subtitle=_("Delete all contents of the current log file"),
-            icon_name="edit-clear-all-symbolic",
-            activatable=True,
-        )
-        btn = Gtk.Button(icon_name="edit-clear-all-symbolic")
-        btn.set_valign(Gtk.Align.CENTER)
-        btn.add_css_class("flat")
-        btn.connect("clicked", self._on_clear_logs_clicked)
-        row.add_suffix(btn)
-        parent.add(row)
-
     # ------------------------------------------------------------------
     # UI Binding & Initial State
     # ------------------------------------------------------------------
     def _bind_settings_to_ui(self) -> None:
         """Set initial UI state from current settings."""
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
+        self._notification_switch.set_active(settings.show_notifications)
+        self._overview_switch.set_active(settings.show_overview)
+        self._set_toggle_buttons()
 
-        # Time format
-        if settings.is_using_24h_clock:
-            self._time_btn_24h.set_active(True)
-        else:
-            self._time_btn_12h.set_active(True)
-
-        # Temperature unit
+    def _set_toggle_buttons(self) -> None:
+        """Select the toggle button that matches each setting."""
         if settings.unit == "metric":
             self._unit_btn_celsius.set_active(True)
         else:
             self._unit_btn_fahrenheit.set_active(True)
 
-        # Precipitation unit
-        self._precip_switch.set_active(settings.is_using_inch_for_prec)
+        if settings.is_using_inch_for_prec:
+            self._precip_btn_inch.set_active(True)
+        else:
+            self._precip_btn_mm.set_active(True)
 
-        # Notifications
-        self._notification_switch.set_active(settings.show_notifications)
+        if settings.is_using_24h_clock:
+            self._time_btn_24h.set_active(True)
+        else:
+            self._time_btn_12h.set_active(True)
 
-        # Overview
-        self._overview_switch.set_active(settings.show_overview)
-
-        # Icon theme
         if settings.icon_theme == "material":
             self._icon_theme_btn_material.set_active(True)
         else:
@@ -350,40 +249,46 @@ class WeatherPreferences(Adw.PreferencesWindow):
     # ------------------------------------------------------------------
     # Signal Handlers
     # ------------------------------------------------------------------
-    def _on_dynamic_bg_toggled(self, switch: Gtk.Switch, state: bool) -> None:
-        settings.is_using_dynamic_bg = state
+    def _on_dynamic_bg_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
+        settings.is_using_dynamic_bg = row.get_active()
         self._start_refresh_thread()
 
     def _on_icon_theme_toggled(self, button: Gtk.ToggleButton, theme: str) -> None:
+        if settings.icon_theme == theme:
+            return
         settings.icon_theme = theme
-        self.add_toast(create_toast(_("Icon theme changed to {}").format(theme.capitalize()), 1))
         self._start_refresh_thread()
 
     def _on_24h_clock_toggled(self, button: Gtk.ToggleButton, use_24h: bool) -> None:
+        if settings.is_using_24h_clock == use_24h:
+            return
         settings.is_using_24h_clock = use_24h
         self._start_refresh_thread()
 
     def _on_unit_toggled(self, button: Gtk.ToggleButton, unit: str) -> None:
+        if settings.unit == unit:
+            return
         settings.unit = unit
-        self.add_toast(create_toast(_("Switched to - {}").format(unit.capitalize()), 1))
-
-
-    def _on_precip_unit_toggled(self, switch: Gtk.Switch, state: bool) -> None:
-        settings.is_using_inch_for_prec = state
         self._start_refresh_thread()
 
-    def _on_notifications_toggled(self, switch: Gtk.Switch, state: bool) -> None:
-        settings.show_notifications = state
+    def _on_precip_unit_toggled(self, button: Gtk.ToggleButton, use_inch: bool) -> None:
+        if settings.is_using_inch_for_prec == use_inch:
+            return
+        settings.is_using_inch_for_prec = use_inch
+        self._start_refresh_thread()
 
-    def _on_overview_toggled(self, switch: Gtk.Switch, state: bool) -> None:
+    def _on_notifications_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
+        settings.show_notifications = row.get_active()
+
+    def _on_overview_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         # The overview engine and section follow the setting themselves
-        settings.show_overview = state
+        settings.show_overview = row.get_active()
 
-    def _on_debug_mode_toggled(self, switch: Gtk.Switch, state: bool) -> None:
-        settings.debug_mode = state
+    def _on_debug_mode_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
+        settings.debug_mode = row.get_active()
         log_manager.update_level()
 
-    def _on_open_logs_clicked(self, _button: Gtk.Button) -> None:
+    def _on_open_logs_clicked(self, _row: Adw.ActionRow) -> None:
         log_manager.open_log_folder()
 
     def _on_clear_logs_clicked(self, _button: Gtk.Button) -> None:
@@ -396,20 +301,10 @@ class WeatherPreferences(Adw.PreferencesWindow):
         idx = combo.get_selected()
         if idx >= len(AUTO_REFRESH_OPTIONS):
             return
-
-        interval_val, interval_label = AUTO_REFRESH_OPTIONS[idx]
-        settings.auto_refresh_interval = interval_val
-
-        if interval_val == 0:
-            msg = _("Auto refresh disabled")
-        else:
-            msg = _("Auto refresh every {} min").format(interval_val)
-
-        self.add_toast(create_toast(msg, 1))
+        settings.auto_refresh_interval = AUTO_REFRESH_OPTIONS[idx][0]
 
     def _on_reset_clicked(self, _button: Gtk.Button) -> None:
-        dialog = Adw.MessageDialog.new(
-            self,
+        dialog = Adw.AlertDialog.new(
             _("Reset Settings?"),
             _(
                 "This will restore all settings to default and will clear your saved cities. "
@@ -422,9 +317,9 @@ class WeatherPreferences(Adw.PreferencesWindow):
         dialog.set_default_response("cancel")
         dialog.set_close_response("cancel")
         dialog.connect("response", self._on_reset_dialog_response)
-        dialog.present()
+        dialog.present(self)
 
-    def _on_reset_dialog_response(self, dialog: Adw.MessageDialog, response: str) -> None:
+    def _on_reset_dialog_response(self, dialog: Adw.AlertDialog, response: str) -> None:
         if response == "reset":
             self._perform_reset()
 
@@ -434,41 +329,21 @@ class WeatherPreferences(Adw.PreferencesWindow):
 
         # Update UI widgets
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
-        self._precip_switch.set_active(settings.is_using_inch_for_prec)
         self._notification_switch.set_active(settings.show_notifications)
         self._overview_switch.set_active(settings.show_overview)
-
-        # Auto refresh combo
-        self._auto_refresh_row.set_selected(0) # 0 is always OFF in our list
-
-        # Temperature unit buttons
-        if settings.unit == "metric":
-            self._unit_btn_celsius.set_active(True)
-        else:
-            self._unit_btn_fahrenheit.set_active(True)
-
-        # Time format buttons
-        if settings.is_using_24h_clock:
-            self._time_btn_24h.set_active(True)
-        else:
-            self._time_btn_12h.set_active(True)
-
-        # Icon theme buttons
-        if settings.icon_theme == "material":
-            self._icon_theme_btn_material.set_active(True)
-        else:
-            self._icon_theme_btn_default.set_active(True)
+        self._debug_switch.set_active(settings.debug_mode)
+        self._auto_refresh_row.set_selected(0)  # 0 is always OFF in our list
+        self._set_toggle_buttons()
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))
 
         # Force a refresh of weather data (showing welcome screen)
         self._start_refresh_thread()
 
-
     def _start_refresh_thread(self):
         thread = threading.Thread(
-            target=self.application._start_data_refresh,
-            name="refresh_after_unit_change"
+            target=self.window._start_data_refresh,
+            name="refresh_after_preferences_change"
         )
         thread.daemon = True
         thread.start()

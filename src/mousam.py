@@ -471,8 +471,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self.get_application().activate_action("show-compact", None)
 
     def _on_action_preferences(self, action, param):
-        win = WeatherPreferences(self)
-        win.present()
+        WeatherPreferences(self).present(self)
 
     def _on_action_shortcuts(self, action, param):
         ShortcutsDialog(self).present()
