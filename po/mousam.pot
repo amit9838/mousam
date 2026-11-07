@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-07 22:19+0530\n"
+"POT-Creation-Date: 2026-11-07 22:39+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,23 +198,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:33
+#: src/configs.py:44
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:34
+#: src/configs.py:45
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:35
+#: src/configs.py:46
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:36
+#: src/configs.py:47
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:37
+#: src/configs.py:48
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1245,52 +1245,63 @@ msgstr ""
 msgid "Sunset"
 msgstr ""
 
-#: src/UI_CardSquare.py:31 src/UI_CompactWeather.py:214
+#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:214
 #: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr ""
 
-#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:216
+#: src/UI_CardSquare.py:33 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr ""
 
-#: src/UI_CardSquare.py:33 src/UI_CompactWeather.py:215
+#: src/UI_CardSquare.py:34 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr ""
 
-#: src/UI_CardSquare.py:34
+#: src/UI_CardSquare.py:35
 msgid "UV Index"
 msgstr ""
 
-#: src/UI_CardSquare.py:212
-msgid "North"
-msgstr ""
-
+#. Translators: the low and high ends of the pressure gauge
 #: src/UI_CardSquare.py:213
-msgid "Northeast"
+msgctxt "pressure gauge"
+msgid "Min"
 msgstr ""
 
 #: src/UI_CardSquare.py:214
+msgctxt "pressure gauge"
+msgid "Max"
+msgstr ""
+
+#: src/UI_CardSquare.py:225
+msgid "North"
+msgstr ""
+
+#: src/UI_CardSquare.py:226
+msgid "Northeast"
+msgstr ""
+
+#: src/UI_CardSquare.py:227
 msgid "East"
 msgstr ""
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:228
 msgid "Southeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:216
+#: src/UI_CardSquare.py:229
 msgid "South"
 msgstr ""
 
-#: src/UI_CardSquare.py:217
+#: src/UI_CardSquare.py:230
 msgid "Southwest"
 msgstr ""
 
-#: src/UI_CardSquare.py:218
+#: src/UI_CardSquare.py:231
 msgid "West"
 msgstr ""
 
-#: src/UI_CardSquare.py:219
+#: src/UI_CardSquare.py:232
 msgid "Northwest"
 msgstr ""
 
