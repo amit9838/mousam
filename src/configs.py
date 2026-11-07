@@ -4,6 +4,19 @@ from gettext import gettext as _
 APP_ID = "io.github.amit9838.mousam"
 VERSION = "2.0.2"
 
+# --- Project links (About dialog) ---
+WEBSITE_URL = "https://amit9838.github.io/mousam/"
+SOURCE_CODE_URL = "https://github.com/amit9838/mousam"
+ISSUE_URL = "https://github.com/amit9838/mousam/issues"
+CONTRIBUTORS_URL = "https://github.com/amit9838/mousam/graphs/contributors"
+BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/ami9838"
+
+# --- Credits (About dialog) ---
+OPEN_METEO_URL = "https://open-meteo.com/"
+CC_BY_4_0_URL = "https://creativecommons.org/licenses/by/4.0/"
+METEOCONS_URL = "https://github.com/basmilius/meteocons"
+GOOGLE_WEATHER_ICONS_URL = "https://github.com/mrdarrengriffin/google-weather-icons"
+
 # --- Networking & Timeout ---
 TIMEOUT = 15
 INTERNET_CACHE_TTL = 120
