@@ -7,6 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 from .CORE_Icons import get_icon_path, ARROW_CENTER
+from .configs import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
@@ -160,9 +161,11 @@ class CardSquare:
         # The Graphic (Canvas)
         graphic_widget = self._create_visual_widget()
         if graphic_widget and self.title_key == "pressure":
-            # The tick gauge is horizontal: it runs under the text, full width
+            # The tick gauge is horizontal: it runs under the text, full width,
+            # with "Min" and "Max" under its two ends
             graphic_widget.set_margin_top(8)
             card_box.append(graphic_widget)
+            card_box.append(self._pressure_range_labels())
         elif graphic_widget:
             visual_box.append(graphic_widget)
 
@@ -191,13 +194,10 @@ class CardSquare:
             return DrawLevelBar(val / 100.0, rounded_cap=True, rgb_color=(0.13, 0.62, 0.93)).dw
 
         elif self.title_key == "pressure":
-            # Pressure Calculation
-            low, high = 872.0, 1080.0
+            # Centred on standard pressure: 0.5 is best, 0 and 1 the extremes
             if settings.unit == "imperial":
-                low *= 0.02953
-                high *= 0.02953
-
-            level = (val - low) / (high - low)
+                val /= HPA_TO_INHG
+            level = 0.5 + (val - PRESSURE_GAUGE_CENTER) / (2 * PRESSURE_GAUGE_SPAN)
             return DrawTickGauge(level).dw
 
         elif self.title_key == "uv index":
@@ -205,6 +205,19 @@ class CardSquare:
             return DrawLevelBar(val / 12.0, rounded_cap=True, rgb_color=(0.36, 0.40, 1.0)).dw
 
         return None
+
+    def _pressure_range_labels(self) -> Gtk.Widget:
+        """"Min" and "Max" under the two ends of the pressure gauge."""
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        # Translators: the low and high ends of the pressure gauge
+        for text, halign in ((C_("pressure gauge", "Min"), Gtk.Align.START),
+                             (C_("pressure gauge", "Max"), Gtk.Align.END)):
+            label = Gtk.Label(label=text)
+            label.set_css_classes(["text-xs", "opacity-70"])
+            label.set_halign(halign)
+            label.set_hexpand(True)
+            row.append(label)
+        return row
 
     def _get_wind_direction_str(self, angle: float) -> str:
         """Converts degrees to cardinal direction (where the wind comes from)."""

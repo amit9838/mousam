@@ -29,6 +29,12 @@ DATA_MAX_ENTRIES = 128
 HPA_TO_INHG = 0.02953
 
 # --- Pressure (sea-level pressure, hPa) ---
+# The pressure card's gauge is centred on the standard sea-level pressure
+# (ICAO Standard Atmosphere) and reaches the edges this far below and above
+# it; values beyond stay at the edge. For scale, the WMO records are 870 hPa
+# (lowest) and about 1084 hPa (highest, below 750 m).
+PRESSURE_GAUGE_CENTER = 1013.25
+PRESSURE_GAUGE_SPAN = 50
 # Below LOW is "Low", above HIGH is "High", between is "Normal"
 PRESSURE_LOW = 1000
 PRESSURE_HIGH = 1026
