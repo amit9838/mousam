@@ -2,13 +2,16 @@ from gettext import gettext as _
 
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
-VERSION = "2.0.2"
+# Filled in by Meson from the project version in meson.build
+VERSION = "@VERSION@"
+APPDATA_RESOURCE = "/io/github/amit9838/mousam/io.github.amit9838.mousam.appdata.xml"
 
 # --- Project links (About dialog) ---
 WEBSITE_URL = "https://amit9838.github.io/mousam/"
 SOURCE_CODE_URL = "https://github.com/amit9838/mousam"
 ISSUE_URL = "https://github.com/amit9838/mousam/issues"
 CONTRIBUTORS_URL = "https://github.com/amit9838/mousam/graphs/contributors"
+TRANSLATE_URL = "https://github.com/amit9838/mousam/tree/master/po"
 BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/ami9838"
 
 # --- Credits (About dialog) ---

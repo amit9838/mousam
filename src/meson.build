@@ -2,9 +2,12 @@ pkgdatadir = join_paths(get_option('prefix'), get_option('datadir'), meson.proje
 moduledir = join_paths(pkgdatadir, 'mousam')
 gnome = import('gnome')
 
+# The appdata is generated in data/, so look for it there too
 gnome.compile_resources('mousam',
   'mousam.gresource.xml',
   gresource_bundle: true,
+  source_dir: [meson.current_source_dir(), meson.project_build_root() / 'data'],
+  dependencies: [appstream_file],
   install: true,
   install_dir: pkgdatadir,
 )
@@ -76,6 +79,7 @@ install_data(mousam_sources, install_dir: moduledir)
 
 icon_conf = configuration_data()
 icon_conf.set('icon_location', get_option('prefix'))
+icon_conf.set('VERSION', meson.project_version())
 
 configure_file(
   input: 'configs.py',

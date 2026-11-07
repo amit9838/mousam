@@ -3,6 +3,7 @@
   <gresource prefix="/io/github/amit9838/mousam">
     <file>css/style.css</file>
     <file preprocess="xml-stripblanks">shortcutsDialog.ui</file>
+    <file preprocess="xml-stripblanks">io.github.amit9838.mousam.appdata.xml</file>
     <file preprocess="xml-stripblanks">icons/scalable/actions/mousam-raindrop-symbolic.svg</file>
   </gresource>
 </gresources>
