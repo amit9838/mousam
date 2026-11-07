@@ -42,9 +42,9 @@ class Weather:
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             if settings.unit == "imperial":
-                inHg = data['current']['surface_pressure'] * HPA_TO_INHG
-                data['current']['surface_pressure'] = inHg
-                data['current_units']['surface_pressure'] = 'inHg'
+                inHg = data['current']['pressure_msl'] * HPA_TO_INHG
+                data['current']['pressure_msl'] = inHg
+                data['current_units']['pressure_msl'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to fetch current weather data: {e}")
@@ -58,7 +58,7 @@ class Weather:
             "uv_index",
             "precipitation",
             "weathercode",
-            "surface_pressure",
+            "pressure_msl",
             "windspeed_10m",
             "winddirection_10m",
         ]
@@ -81,10 +81,10 @@ class Weather:
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
             if settings.unit == "imperial":
-                for i in range(len(data['hourly']['surface_pressure'])):
-                    inHg = data['hourly']['surface_pressure'][i] * HPA_TO_INHG
-                    data['hourly']['surface_pressure'][i] = inHg
-                data['hourly_units']['surface_pressure'] = 'inHg'
+                for i in range(len(data['hourly']['pressure_msl'])):
+                    inHg = data['hourly']['pressure_msl'][i] * HPA_TO_INHG
+                    data['hourly']['pressure_msl'][i] = inHg
+                data['hourly_units']['pressure_msl'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to fetch data: {e}")
@@ -98,7 +98,7 @@ class Weather:
             "weathercode",
             "precipitation",
             "precipitation_probability",
-            "surface_pressure",
+            "pressure_msl",
             "visibility",
             "windspeed_10m",
             "wind_direction_10m",

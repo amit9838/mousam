@@ -4,7 +4,7 @@ from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
-from .configs import HPA_TO_INHG
+from .configs import HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from .CORE_Logging import get_logger
@@ -61,7 +61,7 @@ class WeatherDataManager(GObject.Object):
         data = CurrentWeather(raw_data)
         data.relativehumidity_2m.level_str = self.classify_humidity_level(data.relativehumidity_2m.data)
         data.windspeed_10m.level_str = self.classify_wind_speed_level(data.windspeed_10m.data)
-        data.surface_pressure.level_str = self.classify_presssure_level(data.surface_pressure.data)
+        data.pressure_msl.level_str = self.classify_presssure_level(data.pressure_msl.data)
         
         with self._lock:
             self.current_weather = data
@@ -174,11 +174,11 @@ class WeatherDataManager(GObject.Object):
 
     @staticmethod
     def classify_presssure_level(p):
-        low, normal = 940, 1010
+        low, high = PRESSURE_LOW, PRESSURE_HIGH
         if settings.unit == "imperial":
-            low, normal = low * HPA_TO_INHG, normal * HPA_TO_INHG
+            low, high = low * HPA_TO_INHG, high * HPA_TO_INHG
         if p < low: return C_("pressure", "Low")
-        if p <= normal: return C_("pressure", "Normal")
+        if p <= high: return C_("pressure", "Normal")
         return C_("pressure", "High")
 
     @staticmethod

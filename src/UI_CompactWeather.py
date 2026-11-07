@@ -213,7 +213,7 @@ class CompactWeather(Gtk.Overlay):
         rows = [
             (_("Wind"), f"{wind_str} • {wind_direction_name(data.winddirection_10m.data)}"),
             (_("Humidity"), f"{hum} %" if hum is not None else "-- %"),
-            (_("Pressure"), format_pressure(data.surface_pressure.data, data.surface_pressure.unit)),
+            (_("Pressure"), format_pressure(data.pressure_msl.data, data.pressure_msl.unit)),
             # A level word with the number: "202 • Severe"
             (_("AQI"), f"{aqi} • {weather_manager.classify_aqi(aqi)}" if aqi is not None else "--"),
         ]

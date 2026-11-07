@@ -28,6 +28,11 @@ DATA_MAX_ENTRIES = 128
 # --- Unit Conversion ---
 HPA_TO_INHG = 0.02953
 
+# --- Pressure (sea-level pressure, hPa) ---
+# Below LOW is "Low", above HIGH is "High", between is "Normal"
+PRESSURE_LOW = 1000
+PRESSURE_HIGH = 1026
+
 # --- Application Preferences ---
 AUTO_REFRESH_OPTIONS = [
     (0, _("Off")),

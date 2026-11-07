@@ -311,10 +311,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # Pressure
         pres_card = CardSquare(
             title="Pressure",
-            main_val=cw_data.surface_pressure.data,
-            main_val_unit=cw_data.surface_pressure.unit,
-            desc=cw_data.surface_pressure.level_str,
-            visual_data=cw_data.surface_pressure.data
+            main_val=cw_data.pressure_msl.data,
+            main_val_unit=cw_data.pressure_msl.unit,
+            desc=cw_data.pressure_msl.level_str,
+            visual_data=cw_data.pressure_msl.data
         ).card
         add_card(pres_card, 0, 1)
 
