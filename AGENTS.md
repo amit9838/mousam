@@ -19,7 +19,7 @@ The app lets users:
 - check air quality (US / EU AQI, pollutants, pollen) with WHO-based levels
 - follow the sun and moon through the day/night card
 - switch to a compact window
-- get a desktop notification when data refreshes
+- get the overview as a desktop notification while the window is minimized or in compact mode
 - set preferences: metric or imperial, 12/24h clock, precipitation in inches, dynamic backgrounds, icon theme (default or Material), weather overview on/off, auto-refresh interval, debug mode
 
 All weather data comes from the free [Open-Meteo](https://open-meteo.com/) APIs. There is no account and no backend of our own.
@@ -145,7 +145,7 @@ src/
   CORE_Networking.py      fetch_all_weather_data_async: runs every fetch on worker threads
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
-  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, show_notification
+  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, is_on_screen, show_overview_notification
   CORE_Helpers.py         internet check, coordinates and timezone of the selected city, toasts, JSON helpers
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager and get_logger
@@ -235,6 +235,7 @@ The overview is the pill under the current conditions. Its rules are written in 
 - **Rules** (`CORE_OverviewRules.py`, no GTK) look at an `OverviewContext` and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
 - **Planner** (`AnnouncePlanner` in `CORE_OverviewRules.py`, no GTK): decides which insight to show and when the pill opens. The next opening is `OVERVIEW_ANNOUNCE_BASE_MINUTES ÷ (1 + score)` (score = sum of priorities ÷ 100), so a busy forecast opens it more often; each opening shows the insight whose turn it is (priority × time since last shown), so none is thrown away; something turning severe opens at once (once, not on every flicker).
 - **Engine** (`CORE_Overview.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the shown insight stops being true (silent text update) or when the planner's next opening is due. Its memory survives refreshes (a refresh never opens the pill or resets the turns); only a location change or turning the setting off starts over. Each opening draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
+- **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`main.py`) sends it as a notification (`show_overview_notification`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
 - **Section** (`UI_CurrentCond.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
 - **Numbers** (thresholds, priorities, open times, republish intervals) live in `configs.py` under "Overview", in metric; rules convert imperial data before comparing.
 - Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`.
