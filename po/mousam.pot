@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-07 03:24+0530\n"
+"POT-Creation-Date: 2026-11-07 03:49+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1026,17 +1026,17 @@ msgstr ""
 msgid "The weather should hold steady until about {time}."
 msgstr ""
 
-#: src/CORE_OverviewRules.py:244
+#: src/CORE_OverviewRules.py:248
 msgctxt "overview heading"
 msgid "Today"
 msgstr ""
 
-#: src/CORE_OverviewRules.py:245
+#: src/CORE_OverviewRules.py:249
 msgctxt "overview heading"
 msgid "Tonight"
 msgstr ""
 
-#: src/CORE_OverviewRules.py:674
+#: src/CORE_OverviewRules.py:678
 msgctxt "overview heading"
 msgid "Tomorrow"
 msgstr ""
@@ -1348,23 +1348,23 @@ msgid "Max {max} · Min {min}"
 msgstr ""
 
 #. Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
-#: src/UI_CurrentCond.py:122
+#: src/UI_CurrentCond.py:129
 #, python-brace-format
 msgid "H {high} · L {low}"
 msgstr ""
 
 #. Translators: {0} is a temperature, like "22°"
-#: src/UI_CurrentCond.py:140
+#: src/UI_CurrentCond.py:147
 #, python-brace-format
 msgid "Feels like {0}"
 msgstr ""
 
-#: src/UI_CurrentCond.py:205
+#: src/UI_CurrentCond.py:212
 msgid "Show Overview"
 msgstr ""
 
 #. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
-#: src/UI_CurrentCond.py:352
+#: src/UI_CurrentCond.py:361
 msgctxt "current date"
 msgid "%A, %-d %b"
 msgstr ""
