@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-07 22:39+0530\n"
+"POT-Creation-Date: 2026-11-08 00:15+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1366,7 +1366,7 @@ msgstr ""
 msgid "Feels like {0}"
 msgstr ""
 
-#: src/UI_CurrentCond.py:212
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:107
 msgid "Show Overview"
 msgstr ""
 
@@ -1397,7 +1397,7 @@ msgstr ""
 msgid "Hourly"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:53
+#: src/UI_HourlyDetails.py:53 src/windowPreferences.py:64
 msgid "Precipitation"
 msgstr ""
 
@@ -1468,7 +1468,7 @@ msgstr ""
 msgid "Compact Mode"
 msgstr ""
 
-#: src/mousam.py:172 src/shortcutsDialog.ui:45
+#: src/mousam.py:172 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
@@ -1556,207 +1556,174 @@ msgstr ""
 msgid "Switched to {}"
 msgstr ""
 
-#: src/windowPreferences.py:30
-msgid "Weather Preferences"
+#: src/windowPreferences.py:35 src/windowPreferences.py:52
+#: src/shortcutsDialog.ui:29
+msgid "General"
 msgstr ""
 
 #: src/windowPreferences.py:44
-msgid "Appearance"
-msgstr ""
-
-#: src/windowPreferences.py:60
 msgid "Advanced"
 msgstr ""
 
-#: src/windowPreferences.py:65
-msgid "Logging &amp; Debugging"
+#: src/windowPreferences.py:56
+msgid "Units"
 msgstr ""
 
-#: src/windowPreferences.py:75
-msgid "Icon Theme"
+#: src/windowPreferences.py:57
+msgid "Metric (°C, km/h) or Imperial (°F, mph)"
 msgstr ""
 
-#: src/windowPreferences.py:76
-msgid "Choose between Default and Material design weather icons"
-msgstr ""
-
-#: src/windowPreferences.py:86
-msgid "Default"
-msgstr ""
-
-#: src/windowPreferences.py:91
-msgid "Material"
-msgstr ""
-
-#: src/windowPreferences.py:106
-msgid "Dynamic Background"
-msgstr ""
-
-#: src/windowPreferences.py:108
-msgid "App background changes based on current weather conditions"
-msgstr ""
-
-#: src/windowPreferences.py:122
-msgid "Time Format"
-msgstr ""
-
-#: src/windowPreferences.py:123
-msgid "Weather time format"
-msgstr ""
-
-#: src/windowPreferences.py:133
-msgid "24 Hour"
-msgstr ""
-
-#: src/windowPreferences.py:138
-msgid "AM / PM"
-msgstr ""
-
-#: src/windowPreferences.py:154
-msgid "Auto Refresh"
-msgstr ""
-
-#: src/windowPreferences.py:155
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
-
-#: src/windowPreferences.py:172
-msgid "Show Notifications"
-msgstr ""
-
-#: src/windowPreferences.py:173
-msgid ""
-"Show the weather overview as a notification while the window is minimized or "
-"in compact mode"
-msgstr ""
-
-#: src/windowPreferences.py:186
-msgid "Weather Overview"
-msgstr ""
-
-#: src/windowPreferences.py:187
-msgid "Show a short summary of the coming hours"
-msgstr ""
-
-#: src/windowPreferences.py:203
-msgid "Units &amp; Measurements"
-msgstr ""
-
-#: src/windowPreferences.py:208
-msgid "System Unit"
-msgstr ""
-
-#: src/windowPreferences.py:209
-msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
-
-#: src/windowPreferences.py:220
+#: src/windowPreferences.py:58
 msgid "Metric"
 msgstr ""
 
-#: src/windowPreferences.py:225
+#: src/windowPreferences.py:58
 msgid "Imperial"
 msgstr ""
 
-#: src/windowPreferences.py:243
-msgid "Precipitation in inches"
+#: src/windowPreferences.py:65
+msgid "Unit of the hourly precipitation graph"
 msgstr ""
 
-#: src/windowPreferences.py:244
-msgid "This option works better in heavy precipitation"
+#. Translators: short unit names for millimetres and inches
+#: src/windowPreferences.py:67
+msgid "mm"
 msgstr ""
 
-#: src/windowPreferences.py:258
-msgid "Data Management"
+#: src/windowPreferences.py:67
+msgid "in"
 msgstr ""
 
-#: src/windowPreferences.py:263
-msgid "Reset to Default"
+#: src/windowPreferences.py:73
+msgid "Time Format"
 msgstr ""
 
-#: src/windowPreferences.py:264
-msgid "Clear all preferences and restore default values"
+#: src/windowPreferences.py:75
+msgid "24-hour"
 msgstr ""
 
-#: src/windowPreferences.py:267
-msgid "Reset…"
+#: src/windowPreferences.py:75
+msgid "AM/PM"
 msgstr ""
 
-#: src/windowPreferences.py:276
+#: src/windowPreferences.py:83
+msgid "Appearance"
+msgstr ""
+
+#: src/windowPreferences.py:86
+msgid "Dynamic Background"
+msgstr ""
+
+#: src/windowPreferences.py:87
+msgid "Change the background to match the current weather"
+msgstr ""
+
+#: src/windowPreferences.py:95
+msgid "Weather Icons"
+msgstr ""
+
+#: src/windowPreferences.py:97
+msgid "Default"
+msgstr ""
+
+#: src/windowPreferences.py:97
+msgid "Material"
+msgstr ""
+
+#: src/windowPreferences.py:104
+msgid "Weather Overview"
+msgstr ""
+
+#: src/windowPreferences.py:108
+msgid "A short summary of the coming hours"
+msgstr ""
+
+#: src/windowPreferences.py:115
+msgid "Notifications"
+msgstr ""
+
+#: src/windowPreferences.py:116
+msgid ""
+"Send the overview as a notification while the window is minimized or in "
+"compact mode"
+msgstr ""
+
+#: src/windowPreferences.py:124
+msgid "Logging and Debugging"
+msgstr ""
+
+#: src/windowPreferences.py:127
 msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:277
+#: src/windowPreferences.py:128
 msgid "Enable verbose logging and console output"
 msgstr ""
 
-#: src/windowPreferences.py:290
+#: src/windowPreferences.py:135
 msgid "Open Logs Folder"
 msgstr ""
 
-#: src/windowPreferences.py:291
-msgid "Access the application log files"
-msgstr ""
-
-#: src/windowPreferences.py:304
+#: src/windowPreferences.py:143
 msgid "Clear Log File"
 msgstr ""
 
-#: src/windowPreferences.py:305
+#: src/windowPreferences.py:144
 msgid "Delete all contents of the current log file"
 msgstr ""
 
-#: src/windowPreferences.py:359
-#, python-brace-format
-msgid "Icon theme changed to {}"
+#: src/windowPreferences.py:146
+msgid "Clear"
 msgstr ""
 
-#: src/windowPreferences.py:368
-#, python-brace-format
-msgid "Switched to - {}"
+#: src/windowPreferences.py:153
+msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:391
+#: src/windowPreferences.py:156
+msgid "Reset to Default"
+msgstr ""
+
+#: src/windowPreferences.py:157
+msgid "Clear all preferences and restore default values"
+msgstr ""
+
+#: src/windowPreferences.py:159
+msgid "Reset…"
+msgstr ""
+
+#: src/windowPreferences.py:203
+msgid "Auto Refresh"
+msgstr ""
+
+#: src/windowPreferences.py:296
 msgid "Logs cleared"
 msgstr ""
 
-#: src/windowPreferences.py:393
+#: src/windowPreferences.py:298
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/windowPreferences.py:404
-msgid "Auto refresh disabled"
-msgstr ""
-
-#: src/windowPreferences.py:406
-#, python-brace-format
-msgid "Auto refresh every {} min"
-msgstr ""
-
-#: src/windowPreferences.py:413
+#: src/windowPreferences.py:308
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:415
+#: src/windowPreferences.py:310
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:419
+#: src/windowPreferences.py:314
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:420
+#: src/windowPreferences.py:315
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:462
+#: src/windowPreferences.py:338
 msgid "Preferences have been reset"
-msgstr ""
-
-#: src/shortcutsDialog.ui:29
-msgid "General"
 msgstr ""
 
 #: src/shortcutsDialog.ui:33
