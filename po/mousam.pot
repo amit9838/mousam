@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-07 03:49+0530\n"
+"POT-Creation-Date: 2026-11-07 22:19+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,10 +216,6 @@ msgstr ""
 
 #: src/configs.py:37
 msgid "Every 2 hours"
-msgstr ""
-
-#: src/CORE_GTKUtils.py:135
-msgid "Unknown"
 msgstr ""
 
 #: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
@@ -1364,7 +1360,7 @@ msgid "Show Overview"
 msgstr ""
 
 #. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
-#: src/UI_CurrentCond.py:361
+#: src/UI_CurrentCond.py:362
 msgctxt "current date"
 msgid "%A, %-d %b"
 msgstr ""
@@ -1618,7 +1614,9 @@ msgid "Show Notifications"
 msgstr ""
 
 #: src/windowPreferences.py:173
-msgid "Show notification when weather is refreshed automatically"
+msgid ""
+"Show the weather overview as a notification while the window is minimized or "
+"in compact mode"
 msgstr ""
 
 #: src/windowPreferences.py:186
