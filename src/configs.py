@@ -17,6 +17,7 @@ BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/ami9838"
 # --- Credits (About dialog) ---
 OPEN_METEO_URL = "https://open-meteo.com/"
 CC_BY_4_0_URL = "https://creativecommons.org/licenses/by/4.0/"
+MIT_LICENSE_URL = "https://opensource.org/license/mit"
 METEOCONS_URL = "https://github.com/basmilius/meteocons"
 GOOGLE_WEATHER_ICONS_URL = "https://github.com/mrdarrengriffin/google-weather-icons"
 

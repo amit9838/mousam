@@ -11,6 +11,7 @@ from .configs import (
     CONTRIBUTORS_URL,
     GOOGLE_WEATHER_ICONS_URL,
     METEOCONS_URL,
+    MIT_LICENSE_URL,
     OPEN_METEO_URL,
     SOURCE_CODE_URL,
     TRANSLATE_URL,
@@ -55,30 +56,56 @@ def show_about_window(parent_window: Gtk.Widget | None = None) -> None:
         ],
     )
 
+    # Translators: {owner} is a name, {license} a link, keep the tag as it is
+    licensed_by = _("© {owner}, licensed under {license}")
     about.add_legal_section(
         _("Weather Data"),
-        "© Open-Meteo.com",
+        None,
         Gtk.License.CUSTOM,
-        # Translators: {open_meteo} and {license} are links, keep the tags as they are
-        _("Weather data by {open_meteo}, licensed under {license}.").format(
-            open_meteo=f'<a href="{OPEN_METEO_URL}">Open-Meteo.com</a>',
-            license=f'<a href="{CC_BY_4_0_URL}">CC BY 4.0</a>',
+        _legal_entry(
+            _link("Open-Meteo", OPEN_METEO_URL),
+            licensed_by.format(
+                owner="Open-Meteo.com",
+                license=_link("CC BY 4.0", CC_BY_4_0_URL),
+            ),
         ),
     )
     about.add_legal_section(
-        _("Default Weather Icons"),
-        "© Bas Milius",
-        Gtk.License.MIT_X11,
+        _("Weather Icons"),
         None,
-    )
-    about.add_legal_section(
-        _("Material Weather Icons"),
-        "© Google",
         Gtk.License.CUSTOM,
-        _("All rights belong to Google. Collected by Darren Griffin."),
+        "\n\n".join([
+            _legal_entry(
+                # Translators: {name} is the name of an icon set, as a link
+                _("Default icons: {name}").format(
+                    name=_link("Meteocons", METEOCONS_URL)
+                ),
+                licensed_by.format(
+                    owner="Bas Milius",
+                    license=_link("MIT", MIT_LICENSE_URL),
+                ),
+            ),
+            _legal_entry(
+                # Translators: {name} is the name of an icon set, as a link
+                _("Material icons: {name}").format(
+                    name=_link("Google Weather Icons", GOOGLE_WEATHER_ICONS_URL)
+                ),
+                _("All rights belong to Google. Collected by Darren Griffin."),
+            ),
+        ]),
     )
 
     about.present(parent_window)
+
+
+def _link(text: str, url: str) -> str:
+    """Pango markup for a link."""
+    return f'<a href="{url}">{text}</a>'
+
+
+def _legal_entry(name: str, details: str) -> str:
+    """Pango markup for one credit: its name, with dimmed details below."""
+    return f'{name}\n<span alpha="70%">{details}</span>'
 
 
 def build_debug_info() -> str:
