@@ -1,5 +1,5 @@
 import requests
-from typing import List
+from typing import List, Optional
 from requests.exceptions import RequestException
 from .CORE_Cache import cached
 from .configs import GEOCODING_BASE_URL, TIMEOUT
@@ -12,7 +12,7 @@ logger = get_logger("API_FindCity")
 
 
 @cached(5)
-def find_city(city: str, count: int = 3) -> List[dict]:
+def find_city(city: str, count: int = 3) -> Optional[List[dict]]:
     """
     Fetches city location data from the Open-Meteo Geocoding API.
 
@@ -21,7 +21,8 @@ def find_city(city: str, count: int = 3) -> List[dict]:
         count: The maximum number of results to return.
 
     Returns:
-        A list of Location model instances.
+        A list of city dicts (empty if nothing matches), or None if the
+        request failed. None is not cached, so a retry reaches the network.
     """
     params = {"name": city, "language": "en", "format": "json", "count": count}
 
@@ -53,4 +54,4 @@ def find_city(city: str, count: int = 3) -> List[dict]:
     except RequestException as e:
         # Log the error with context instead of printing
         logger.error(f"Failed to fetch city data for '{city}': {e}")
-        return []
+        return None
