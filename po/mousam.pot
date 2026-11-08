@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 00:29+0530\n"
+"POT-Creation-Date: 2026-11-08 04:26+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgid "Mousam"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:4
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:34
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:35
 msgid "Weather at a glance"
 msgstr ""
 
@@ -198,23 +198,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:60
+#: src/configs.py:61
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:61
+#: src/configs.py:62
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:62
+#: src/configs.py:63
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:63
+#: src/configs.py:64
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:64
+#: src/configs.py:65
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1515,54 +1515,58 @@ msgstr ""
 msgid "Add Location"
 msgstr ""
 
-#: src/windowAbout.py:36
+#: src/windowAbout.py:37
 msgid "Copyright © 2023–2026 Mousam Developers"
 msgstr ""
 
 #. Translators: replace with your name (and email or link), one per line
-#: src/windowAbout.py:38
+#: src/windowAbout.py:39
 msgid "translator-credits"
 msgstr ""
 
-#: src/windowAbout.py:42
+#: src/windowAbout.py:43
 msgid "Source Code"
 msgstr ""
 
-#: src/windowAbout.py:43
+#: src/windowAbout.py:44
 msgid "Contributors"
 msgstr ""
 
-#: src/windowAbout.py:44
+#: src/windowAbout.py:45
 msgid "Help Translate"
 msgstr ""
 
-#: src/windowAbout.py:45
+#: src/windowAbout.py:46
 msgid "Buy Me a Coffee"
 msgstr ""
 
-#: src/windowAbout.py:48 src/windowAbout.py:59
+#: src/windowAbout.py:49 src/windowAbout.py:62
 msgid "Weather Data"
 msgstr ""
 
-#: src/windowAbout.py:51 src/windowPreferences.py:95
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:95
 msgid "Weather Icons"
 msgstr ""
 
-#. Translators: {open_meteo} and {license} are links, keep the tags as they are
-#: src/windowAbout.py:63
+#. Translators: {owner} is a name, {license} a link, keep the tag as it is
+#: src/windowAbout.py:60
 #, python-brace-format
-msgid "Weather data by {open_meteo}, licensed under {license}."
+msgid "© {owner}, licensed under {license}"
 msgstr ""
 
-#: src/windowAbout.py:69
-msgid "Default Weather Icons"
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:80
+#, python-brace-format
+msgid "Default icons: {name}"
 msgstr ""
 
-#: src/windowAbout.py:75
-msgid "Material Weather Icons"
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:90
+#, python-brace-format
+msgid "Material icons: {name}"
 msgstr ""
 
-#: src/windowAbout.py:78
+#: src/windowAbout.py:93
 msgid "All rights belong to Google. Collected by Darren Griffin."
 msgstr ""
 
