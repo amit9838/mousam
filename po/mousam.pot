@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 04:26+0530\n"
+"POT-Creation-Date: 2026-11-08 14:48+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,23 +198,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:61
+#: src/configs.py:68
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:62
+#: src/configs.py:69
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:63
+#: src/configs.py:70
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:64
+#: src/configs.py:71
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:65
+#: src/configs.py:72
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1037,112 +1037,112 @@ msgctxt "overview heading"
 msgid "Tomorrow"
 msgstr ""
 
-#: src/CORE_weatherData.py:154
+#: src/CORE_weatherData.py:165
 msgid "Good"
 msgstr ""
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:166
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:156
+#: src/CORE_weatherData.py:167
 msgid "Poor"
 msgstr ""
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:168
 msgid "Unhealthy"
 msgstr ""
 
-#: src/CORE_weatherData.py:158
+#: src/CORE_weatherData.py:169
 msgid "Severe"
 msgstr ""
 
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:170
 msgid "Hazardous"
 msgstr ""
 
-#: src/CORE_weatherData.py:163
+#: src/CORE_weatherData.py:174
 msgctxt "uvindex"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:164
+#: src/CORE_weatherData.py:175
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:176
 msgctxt "uvindex"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:166
+#: src/CORE_weatherData.py:177
 msgctxt "uvindex"
 msgid "Very High"
 msgstr ""
 
-#: src/CORE_weatherData.py:167
+#: src/CORE_weatherData.py:178
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:171
+#: src/CORE_weatherData.py:182
 msgctxt "humidity"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:172
+#: src/CORE_weatherData.py:183
 msgctxt "humidity"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:173
+#: src/CORE_weatherData.py:184
 msgctxt "humidity"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:180
+#: src/CORE_weatherData.py:191
 msgctxt "pressure"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:181
+#: src/CORE_weatherData.py:192
 msgctxt "pressure"
 msgid "Normal"
 msgstr ""
 
-#: src/CORE_weatherData.py:182
+#: src/CORE_weatherData.py:193
 msgctxt "pressure"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:186
+#: src/CORE_weatherData.py:197
 msgid "Calm"
 msgstr ""
 
-#: src/CORE_weatherData.py:187
+#: src/CORE_weatherData.py:198
 msgid "Light"
 msgstr ""
 
-#: src/CORE_weatherData.py:188
+#: src/CORE_weatherData.py:199
 msgctxt "wind"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:189
+#: src/CORE_weatherData.py:200
 msgid "Strong"
 msgstr ""
 
-#: src/CORE_weatherData.py:190
+#: src/CORE_weatherData.py:201
 msgctxt "wind"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:194
+#: src/CORE_weatherData.py:205
 msgid "km"
 msgstr ""
 
-#: src/CORE_weatherData.py:196
+#: src/CORE_weatherData.py:207
 msgid "miles"
 msgstr ""
 
@@ -1310,7 +1310,7 @@ msgstr ""
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:388
+#: src/UI_CompactWeather.py:120 src/mousam.py:388 src/windowLocations.py:183
 msgid "Retry"
 msgstr ""
 
@@ -1460,7 +1460,7 @@ msgstr ""
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:140 src/windowLocations.py:167 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:279 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
@@ -1511,7 +1511,7 @@ msgstr ""
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:374
+#: src/mousam.py:374 src/windowLocations.py:305
 msgid "Add Location"
 msgstr ""
 
@@ -1570,35 +1570,43 @@ msgstr ""
 msgid "All rights belong to Google. Collected by Darren Griffin."
 msgstr ""
 
-#: src/windowLocations.py:55
+#: src/windowLocations.py:119
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:78
-msgid "Search for a city"
+#: src/windowLocations.py:145
+msgid "Search cities, e.g. Kochi"
 msgstr ""
 
-#: src/windowLocations.py:92
+#: src/windowLocations.py:157 src/windowLocations.py:215
 msgid "Search for your city..."
 msgstr ""
 
-#: src/windowLocations.py:137
-msgid "No cities found."
-msgstr ""
-
-#: src/windowLocations.py:176
-msgid "Saved Locations"
-msgstr ""
-
 #: src/windowLocations.py:178
-msgid "Add"
-msgstr ""
-
-#: src/windowLocations.py:231
-msgid "Location already exists"
+msgid "Couldn't search for cities. Please check your connection."
 msgstr ""
 
 #: src/windowLocations.py:253
+msgid "No cities found."
+msgstr ""
+
+#: src/windowLocations.py:302
+msgid "Saved Locations"
+msgstr ""
+
+#: src/windowLocations.py:376
+msgid "Remove"
+msgstr ""
+
+#: src/windowLocations.py:422
+msgid "Drag to reorder, or press Alt+Up / Alt+Down"
+msgstr ""
+
+#: src/windowLocations.py:494
+msgid "Location already exists"
+msgstr ""
+
+#: src/windowLocations.py:512
 #, python-brace-format
 msgid "Switched to {}"
 msgstr ""
