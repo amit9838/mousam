@@ -118,6 +118,23 @@ def weak_connect(widget, signal_name, bound_method):
                 return method(*args, **kwargs)
     return widget.connect(signal_name, wrapper)
 
+def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
+    """Remove GTK's own drop target from a window that reorders things by drag.
+
+    Every Gtk.Window has one, for a format this app never uses. GTK leaves it
+    holding the previous drop, so each later drag logs a warning from
+    gtk_drop_target_async_handle_crossing. Safe to call more than once.
+    """
+    controllers = window.observe_controllers()
+    found = [
+        controllers.get_item(index)
+        for index in range(controllers.get_n_items())
+        if controllers.get_item(index).get_name() == "gtk-window-rootwindow-drop"
+    ]
+    for controller in found:
+        window.remove_controller(controller)
+
+
 def is_on_screen(window) -> bool:
     """Whether a window can be seen: shown, and not suspended (minimized, on
     another workspace, or covered by other windows)."""

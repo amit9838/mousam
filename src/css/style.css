@@ -756,3 +756,18 @@
 .current-overview-heading {
     letter-spacing: 0.08em;
 }
+
+/* Delete button of a saved location: dim until used */
+.location-delete-button {
+    opacity: 0.55;
+    transition: opacity 150ms, color 150ms;
+}
+
+.location-delete-button:hover,
+.location-delete-button:focus-visible {
+    opacity: 1;
+}
+
+.location-delete-button:hover {
+    color: @destructive_color;
+}

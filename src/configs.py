@@ -38,6 +38,13 @@ OPEN_METEO_BASE_URL = "https://api.open-meteo.com/v1/forecast"
 AIR_QUALITY_BASE_URL = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
+# --- City search ---
+# How long to wait after the last keypress before searching (ms)
+CITY_SEARCH_DELAY_MS = 500
+# Open-Meteo returns nothing for shorter names
+CITY_SEARCH_MIN_CHARS = 2
+CITY_SEARCH_MAX_RESULTS = 8
+
 # --- Cache Settings ---
 DATA_CACHE_TTL = 60
 DATA_MAX_ENTRIES = 128

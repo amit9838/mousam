@@ -464,8 +464,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
     def _on_action_locations(self, action, param):
-        win = WeatherLocations(self)
-        win.present()
+        WeatherLocations(self).present(self)
 
     def _on_action_compact(self, action, param):
         self.get_application().activate_action("show-compact", None)
