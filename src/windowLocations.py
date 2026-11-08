@@ -427,6 +427,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         add_btn = Gtk.Button(
             child=Adw.ButtonContent(icon_name="list-add-symbolic", label=_("Add Location"))
         )
+        add_btn.add_css_class("flat")
         add_btn.connect("clicked", self._on_add_clicked)
 
         self.location_grp.set_header_suffix(add_btn)
