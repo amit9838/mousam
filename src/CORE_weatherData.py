@@ -31,6 +31,8 @@ class WeatherDataManager(GObject.Object):
     def __init__(self):
         super().__init__()
         self._lock = threading.Lock()
+        # Current weather of the saved locations, by their "lat,lon" key
+        self.saved_locations_weather = {}
 
     @GObject.Property(type=bool, default=False)
     def is_ready(self):
@@ -68,6 +70,15 @@ class WeatherDataManager(GObject.Object):
         self.emit("data-updated")
         self.notify("is-ready")
         return data
+
+    def update_saved_locations_weather(self, coords: list) -> None:
+        """Fetches every given "lat,lon" in one request; failed ones become None."""
+        raw_data = Weather()._get_current_for_locations(coords) or []
+        results = {key: CurrentWeather(raw) for key, raw in zip(coords, raw_data)}
+
+        with self._lock:
+            for key in coords:
+                self.saved_locations_weather[key] = results.get(key)
 
     def update_hourly_forecast(self):
         obj = Weather()

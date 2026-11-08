@@ -65,6 +65,35 @@ class Weather:
         ]
         return self.current_weather(lat, lon, unit=settings.unit, current=current_args)
 
+    # Current Weather of several places ===========================
+    @classmethod
+    @cached()
+    def current_for_locations(cls, latitudes: str, longitudes: str, unit: str = "metric"):
+        """Current conditions of several places in one request, in the order given."""
+        url = (
+            OPEN_METEO_BASE_URL
+            + f"?latitude={latitudes}&longitude={longitudes}"
+            + "&current=temperature_2m,weathercode,is_day"
+            + "&timeformat=unixtime"
+            + unit_params(unit)
+        )
+
+        try:
+            response = requests.get(url, timeout=TIMEOUT)
+            response.raise_for_status()
+            data = response.json()
+            # A single place comes back as one object instead of a list
+            return data if isinstance(data, list) else [data]
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to fetch weather of saved locations: {e}")
+
+    def _get_current_for_locations(self, coords: list):
+        """Takes a list of "lat,lon" strings."""
+        latitudes, longitudes = zip(*(item.split(",") for item in coords))
+        return self.current_for_locations(
+            ",".join(latitudes), ",".join(longitudes), unit=settings.unit
+        )
+
     # Hourly Forecast ==============================================
     @classmethod
     @cached()
