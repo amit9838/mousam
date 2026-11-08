@@ -771,3 +771,13 @@
 .location-delete-button:hover {
     color: @destructive_color;
 }
+
+/* City search messages: the icon and text are dimmed, a Retry button isn't */
+.search-status .title,
+.search-status .description {
+    opacity: 0.55;
+}
+
+.search-status .icon {
+    opacity: 0.3;
+}

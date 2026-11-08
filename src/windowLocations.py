@@ -19,6 +19,7 @@ from .configs import (  # noqa: E402
     CITY_SEARCH_DELAY_MS,
     CITY_SEARCH_MAX_RESULTS,
     CITY_SEARCH_MIN_CHARS,
+    CITY_SEARCH_PAGE_SIZE,
 )
 from .settings import settings  # noqa: E402
 from gettext import gettext as _  # noqa: E402
@@ -49,11 +50,28 @@ class LocationData:
         return ", ".join(filter(None, parts))
 
     @staticmethod
+    def format_place(data: Dict, with_region: bool = False) -> str:
+        """Creates the '[Region,] State, Country' line under a city's name."""
+        name = data.get("name")
+        # A state named like its city (Delhi, Delhi) adds nothing
+        state = data.get("state") if data.get("state") != name else None
+        region = data.get("region") if with_region else None
+        if region in (name, state):
+            region = None
+        return ", ".join(filter(None, [region, state, data.get("country")]))
+
+    @staticmethod
+    def format_place_and_coords(data: Dict) -> str:
+        """Creates the 'Region, State, Country · 9.93, 76.26' line of a search result."""
+        place = LocationData.format_place(data, with_region=True)
+        latitude, longitude = data.get("latitude"), data.get("longitude")
+        coords = f"{latitude:.2f}, {longitude:.2f}" if None not in (latitude, longitude) else ""
+        return " · ".join(filter(None, [place, coords]))
+
+    @staticmethod
     def format_place_and_time(data: Dict) -> str:
         """Creates the 'State, Country · 9:14 PM' line of a saved city."""
-        # A state named like its city (Delhi, Delhi) adds nothing
-        state = data.get("state") if data.get("state") != data.get("name") else None
-        place = ", ".join(filter(None, [state, data.get("country")]))
+        place = LocationData.format_place(data)
         return " · ".join(filter(None, [place, LocationData.format_local_time(data)]))
 
     @staticmethod
@@ -72,6 +90,12 @@ class LocationData:
     def get_coords_key(data: Dict) -> str:
         """Returns a unique coordinate string used for selection tracking."""
         return f"{data.get('latitude')},{data.get('longitude')}"
+
+    @staticmethod
+    def saved_coords() -> set:
+        """The coordinate keys of every saved city."""
+        cities = [LocationData.from_storage_string(item) for item in settings.added_cities if item]
+        return {LocationData.get_coords_key(city) for city in cities if city}
 
 
 # --- Components ---
@@ -114,11 +138,16 @@ class CitySearchDialog(Adw.PreferencesWindow):
 
     def __init__(self, parent, on_selection_callback):
         super().__init__(
-            transient_for=parent, modal=True, default_width=350, default_height=500
+            transient_for=parent,
+            modal=True,
+            default_width=350,
+            default_height=500,
+            search_enabled=False,
         )
         self.set_title(_("Add New Location"))
         self.callback = on_selection_callback
         self.results_rows = []
+        self.cities: List[Dict] = []  # Every result of the search, shown or not
         self.placeholder = None
         self._search_id = 0
         self._last_query = ""
@@ -129,6 +158,11 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self._init_ui()
         # Drop the results of a search still running when the dialog closes
         self.connect("destroy", self._on_destroy)
+
+        # Capture phase: the search field would otherwise keep Escape for itself
+        key_controller = Gtk.EventControllerKey(propagation_phase=Gtk.PropagationPhase.CAPTURE)
+        key_controller.connect("key-pressed", self._on_window_key_pressed)
+        self.add_controller(key_controller)
 
     def _on_destroy(self, _widget) -> None:
         self._search_id += 1
@@ -144,61 +178,112 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self.search_entry = Gtk.SearchEntry(
             placeholder_text=_("Search cities, e.g. Kochi"),
             hexpand=True,
-            margin_bottom=10,
             search_delay=CITY_SEARCH_DELAY_MS,
         )
         self.search_entry.connect("search-changed", self._on_search_requested)
-        self.search_entry.connect("activate", self._on_search_requested)
-        group.add(self.search_entry)
+        self.search_entry.connect("activate", self._on_entry_activated)
+        key_controller = Gtk.EventControllerKey(propagation_phase=Gtk.PropagationPhase.CAPTURE)
+        key_controller.connect("key-pressed", self._on_entry_key_pressed)
+        self.search_entry.add_controller(key_controller)
+
+        # Sits inside the field, so results don't move while it spins
+        self.spinner = Adw.Spinner(
+            visible=False,
+            can_target=False,
+            halign=Gtk.Align.END,
+            valign=Gtk.Align.CENTER,
+            margin_end=32,
+        )
+        entry_overlay = Gtk.Overlay(child=self.search_entry, margin_bottom=10)
+        entry_overlay.add_overlay(self.spinner)
+        group.add(entry_overlay)
 
         # Results List
         self.results_group = Adw.PreferencesGroup()
         group.add(self.results_group)
-        self._set_placeholder(_("Search for your city..."))
+
+        # The last row of the list; only added while there is more to show
+        self.more_row = Adw.ButtonRow(
+            title=_("Show More"), start_icon_name="pan-down-symbolic"
+        )
+        self.more_row.connect("activated", self._on_show_more)
+
+        self._show_prompt()
         self.search_entry.grab_focus()
 
-    def _set_placeholder(self, text):
-        label = Gtk.Label(label=text, margin_top=40, wrap=True, justify=Gtk.Justification.CENTER)
-        label.add_css_class("dim-label")
-        self._show_placeholder(label)
+    def _show_status(
+        self, icon_name: str, title: str, description: str = "", child: Optional[Gtk.Widget] = None
+    ) -> None:
+        """Show a single status page in place of the results."""
+        status = Adw.StatusPage(
+            icon_name=icon_name, title=title, description=description, child=child
+        )
+        status.add_css_class("compact")
+        status.add_css_class("search-status")
+        self.placeholder = status
+        self.results_group.add(status)
 
-    def _show_placeholder(self, widget: Gtk.Widget) -> None:
-        """Show a single status widget (a message or a spinner) in the results."""
-        self.placeholder = widget
-        self.results_group.add(widget)
+    def _show_prompt(self) -> None:
+        self._show_status("system-search-symbolic", _("Search for Your City"))
 
     def _show_error(self) -> None:
-        box = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=12,
-            margin_top=40,
-            halign=Gtk.Align.CENTER,
-        )
-        label = Gtk.Label(
-            label=_("Couldn't search for cities. Please check your connection."),
-            wrap=True,
-            justify=Gtk.Justification.CENTER,
-        )
-        label.add_css_class("dim-label")
         retry_btn = Gtk.Button(label=_("Retry"), halign=Gtk.Align.CENTER)
         retry_btn.add_css_class("pill")
         retry_btn.add_css_class("suggested-action")
         retry_btn.connect("clicked", self._on_retry)
-        box.append(label)
-        box.append(retry_btn)
-        self._show_placeholder(box)
+        self._show_status(
+            "network-offline-symbolic",
+            _("Couldn't Search for Cities"),
+            _("Please check your connection."),
+            retry_btn,
+        )
 
-    def _clear_results(self) -> None:
+    def _clear_placeholder(self) -> None:
         if self.placeholder is not None:
             self.results_group.remove(self.placeholder)
             self.placeholder = None
+
+    def _clear_results(self) -> None:
+        self._clear_placeholder()
         for row in self.results_rows:
             self.results_group.remove(row)
         self.results_rows.clear()
+        self.cities = []
+        self._remove_more_row()
 
     def _on_retry(self, _button) -> None:
         self._last_query = ""
         self._on_search_requested(self.search_entry)
+
+    def _first_selectable_row(self) -> Optional[Adw.ActionRow]:
+        return next((row for row in self.results_rows if row.get_activatable()), None)
+
+    def _on_entry_activated(self, entry: Gtk.SearchEntry) -> None:
+        """Enter adds the top result once it is up to date, or else searches now."""
+        row = self._first_selectable_row()
+        is_current = entry.get_text().strip() == self._last_query
+        if row is not None and is_current and not self.spinner.get_visible():
+            row.activate()
+        else:
+            self._on_search_requested(entry)
+
+    def _on_window_key_pressed(self, _controller, keyval, _keycode, _state) -> bool:
+        if keyval == Gdk.KEY_Escape:
+            self.close()
+            return True
+        return False
+
+    def _on_entry_key_pressed(self, _controller, keyval, _keycode, _state) -> bool:
+        if keyval == Gdk.KEY_Down and self.results_rows:
+            self.results_rows[0].grab_focus()
+            return True
+        return False
+
+    def _on_first_row_key_pressed(self, _controller, keyval, _keycode, _state) -> bool:
+        if keyval == Gdk.KEY_Up:
+            self.search_entry.grab_focus()
+            return True
+        return False
 
     def _on_search_requested(self, _entry) -> None:
         query = self.search_entry.get_text().strip()
@@ -209,13 +294,16 @@ class CitySearchDialog(Adw.PreferencesWindow):
         # A newer query makes the results of older ones stale
         self._search_id += 1
         self._waiting_query = None
-        self._clear_results()
 
         if len(query) < CITY_SEARCH_MIN_CHARS:
-            self._set_placeholder(_("Search for your city..."))
+            self.spinner.set_visible(False)
+            self._clear_results()
+            self._show_prompt()
             return
 
-        self._show_placeholder(Adw.Spinner(margin_top=40, height_request=32))
+        # The current results stay until the new ones are here, so nothing flickers
+        self._clear_placeholder()
+        self.spinner.set_visible(True)
         if self._is_searching:
             self._waiting_query = query
         else:
@@ -239,6 +327,7 @@ class CitySearchDialog(Adw.PreferencesWindow):
             self._start_search(query)
             return GLib.SOURCE_REMOVE
 
+        self.spinner.set_visible(False)
         if search_id != self._search_id:
             return GLib.SOURCE_REMOVE
 
@@ -250,21 +339,55 @@ class CitySearchDialog(Adw.PreferencesWindow):
             return GLib.SOURCE_REMOVE
 
         if not cities:
-            self._set_placeholder(_("No cities found."))
+            self._show_status(
+                "system-search-symbolic",
+                _("No Cities Found"),
+                _("Check the spelling or try a nearby city."),
+            )
             return GLib.SOURCE_REMOVE
 
-        for city in cities:
-            display = LocationData.format_display_name(city)
-            row = Adw.ActionRow(
-                title=display,
-                subtitle=f"{city.get('latitude')}, {city.get('longitude')}",
-            )
+        self.cities = cities
+        self._show_next_page()
+        key_controller = Gtk.EventControllerKey()
+        key_controller.connect("key-pressed", self._on_first_row_key_pressed)
+        self.results_rows[0].add_controller(key_controller)
+        return GLib.SOURCE_REMOVE
+
+    def _show_next_page(self) -> None:
+        self._remove_more_row()
+        saved_coords = LocationData.saved_coords()
+        start = len(self.results_rows)
+        for city in self.cities[start:start + CITY_SEARCH_PAGE_SIZE]:
+            self._add_result_row(city, LocationData.get_coords_key(city) in saved_coords)
+        if len(self.results_rows) < len(self.cities):
+            self.results_group.add(self.more_row)
+
+    def _remove_more_row(self) -> None:
+        if self.more_row.get_parent() is not None:
+            self.results_group.remove(self.more_row)
+
+    def _on_show_more(self, _row) -> None:
+        first_new = len(self.results_rows)
+        self._show_next_page()
+        self.results_rows[first_new].grab_focus()
+
+    def _add_result_row(self, city: Dict, is_saved: bool) -> None:
+        row = Adw.ActionRow(
+            title=city.get("name") or "",
+            subtitle=LocationData.format_place_and_coords(city),
+            use_markup=False,
+        )
+        if is_saved:
+            saved_icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
+            saved_icon.add_css_class("accent")
+            saved_icon.set_tooltip_text(_("Already saved"))
+            row.add_suffix(saved_icon)
+        else:
             row.set_activatable(True)
             # Store the raw dict on the row object for easy retrieval
             row.connect("activated", self._on_row_selected, city)
-            self.results_group.add(row)
-            self.results_rows.append(row)
-        return GLib.SOURCE_REMOVE
+        self.results_group.add(row)
+        self.results_rows.append(row)
 
     def _on_row_selected(self, row, city_data):
         self.callback(city_data)
@@ -490,7 +613,7 @@ class WeatherLocations(Adw.PreferencesDialog):
     def _handle_city_added(self, city_dict: Dict):
         json_str = LocationData.to_storage_string(city_dict)
 
-        if json_str in settings.added_cities:
+        if LocationData.get_coords_key(city_dict) in LocationData.saved_coords():
             self.add_toast(create_toast(_("Location already exists")))
             return
 

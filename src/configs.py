@@ -43,7 +43,9 @@ GEOCODING_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 CITY_SEARCH_DELAY_MS = 500
 # Open-Meteo returns nothing for shorter names
 CITY_SEARCH_MIN_CHARS = 2
-CITY_SEARCH_MAX_RESULTS = 8
+# The API has no paging, so one request fetches them all and they are shown a page at a time
+CITY_SEARCH_MAX_RESULTS = 18
+CITY_SEARCH_PAGE_SIZE = 6
 
 # --- Cache Settings ---
 DATA_CACHE_TTL = 60
