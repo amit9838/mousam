@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 14:48+0530\n"
+"POT-Creation-Date: 2026-11-08 16:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,23 +198,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:68
+#: src/configs.py:70
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:69
+#: src/configs.py:71
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:70
+#: src/configs.py:72
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:71
+#: src/configs.py:73
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:72
+#: src/configs.py:74
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1310,11 +1310,11 @@ msgstr ""
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:388 src/windowLocations.py:183
+#: src/UI_CompactWeather.py:120 src/mousam.py:388 src/windowLocations.py:230
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:346
+#: src/UI_CompactWeather.py:135 src/mousam.py:346 src/windowLocations.py:237
 msgid "Please check your connection."
 msgstr ""
 
@@ -1460,7 +1460,7 @@ msgstr ""
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:140 src/windowLocations.py:279 src/shortcutsDialog.ui:39
+#: src/mousam.py:140 src/windowLocations.py:402 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
@@ -1511,7 +1511,7 @@ msgstr ""
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:374 src/windowLocations.py:305
+#: src/mousam.py:374 src/windowLocations.py:428
 msgid "Add Location"
 msgstr ""
 
@@ -1570,43 +1570,55 @@ msgstr ""
 msgid "All rights belong to Google. Collected by Darren Griffin."
 msgstr ""
 
-#: src/windowLocations.py:119
+#: src/windowLocations.py:147
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:145
+#: src/windowLocations.py:179
 msgid "Search cities, e.g. Kochi"
 msgstr ""
 
-#: src/windowLocations.py:157 src/windowLocations.py:215
-msgid "Search for your city..."
+#: src/windowLocations.py:207
+msgid "Show More"
 msgstr ""
 
-#: src/windowLocations.py:178
-msgid "Couldn't search for cities. Please check your connection."
+#: src/windowLocations.py:227
+msgid "Search for Your City"
 msgstr ""
 
-#: src/windowLocations.py:253
-msgid "No cities found."
+#: src/windowLocations.py:236
+msgid "Couldn't Search for Cities"
 msgstr ""
 
-#: src/windowLocations.py:302
+#: src/windowLocations.py:344
+msgid "No Cities Found"
+msgstr ""
+
+#: src/windowLocations.py:345
+msgid "Check the spelling or try a nearby city."
+msgstr ""
+
+#: src/windowLocations.py:383
+msgid "Already saved"
+msgstr ""
+
+#: src/windowLocations.py:425
 msgid "Saved Locations"
 msgstr ""
 
-#: src/windowLocations.py:376
+#: src/windowLocations.py:499
 msgid "Remove"
 msgstr ""
 
-#: src/windowLocations.py:422
+#: src/windowLocations.py:545
 msgid "Drag to reorder, or press Alt+Up / Alt+Down"
 msgstr ""
 
-#: src/windowLocations.py:494
+#: src/windowLocations.py:617
 msgid "Location already exists"
 msgstr ""
 
-#: src/windowLocations.py:512
+#: src/windowLocations.py:635
 #, python-brace-format
 msgid "Switched to {}"
 msgstr ""
