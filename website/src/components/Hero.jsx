@@ -43,11 +43,13 @@ export default function Hero() {
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
               <Button
+                className="gap-2"
                 onClick={() => {
                   const element = document.getElementById("installation");
                   element.scrollIntoView({ behavior: "smooth" });
                 }}
               >
+                <i className="fa-solid fa-download" aria-hidden="true"></i>
                 Install Now
               </Button>
 
@@ -55,7 +57,9 @@ export default function Hero() {
                 href="https://github.com/amit9838/mousam"
                 target="_blank"
                 variant="secondary"
+                className="gap-2"
               >
+                <i className="fa-brands fa-github" aria-hidden="true"></i>
                 View Source
               </Button>
             </div>
