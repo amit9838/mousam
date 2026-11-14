@@ -51,6 +51,15 @@ CITY_SEARCH_PAGE_SIZE = 6
 DATA_CACHE_TTL = 60
 DATA_MAX_ENTRIES = 128
 
+# --- Sunrise & Sunset card ---
+# How often the sun or moon moves along its path while the card is shown (s).
+# The path is about 120 px for 24 hours, so this is under half a pixel a step.
+DAY_NIGHT_UPDATE_SECONDS = 300
+# A known new moon (6 Jan 2000, 18:14 UTC) and the mean length of the moon's
+# cycle in days: the moon's phase is how far we are into the current cycle
+NEW_MOON_REFERENCE = 947182440
+LUNAR_CYCLE_DAYS = 29.530588853
+
 # --- Unit Conversion ---
 HPA_TO_INHG = 0.02953
 

@@ -8,7 +8,7 @@ from gettext import gettext as _, pgettext as C_
 from .UI_CompDrawDayNight import DrawDayNight
 from .UI_CardSquare import CSS_TEXT_TITLE, CSS_TEXT_VALUE
 from .settings import settings
-from .CORE_Helpers import get_time_difference
+from .CORE_Helpers import get_cords, get_time_difference
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -21,13 +21,11 @@ class CardDayNight:
         self.create_card()
 
     def get_sun_times(self):
-        """Set the sunrise and sunset texts, and where the sun is now."""
+        """Find today's sunrise and sunset, and set their texts."""
         from .CORE_weatherData import weather_manager
         daily_data = weather_manager.daily_forecast
 
-        t_data = get_time_difference()
-        target_time = t_data.get("target_time")
-        timezone_str = t_data.get("timezone", "UTC")
+        timezone_str = get_time_difference().get("timezone", "UTC")
         tz = ZoneInfo(timezone_str)
 
         sunrise_ts, sunset_ts = 0, 0
@@ -40,17 +38,14 @@ class CardDayNight:
                 sunset_ts = daily_data.sunset.data[i]
                 break
 
-        target_dt = datetime.fromtimestamp(target_time, tz=tz)
         sunrise_dt = datetime.fromtimestamp(sunrise_ts, tz=tz)
         sunset_dt = datetime.fromtimestamp(sunset_ts, tz=tz)
 
         time_format = "%H:%M" if settings.is_using_24h_clock else "%I:%M %p"
         self.sun_rise = sunrise_dt.strftime(time_format)
         self.sun_set = sunset_dt.strftime(time_format)
-
-        self.is_day, self.progress = self._calculate_sun_progress(target_dt, sunrise_dt, sunset_dt)
-        # Share of the 24 hours the sun is up: sets the horizon's height
-        self.day_fraction = (sunset_ts - sunrise_ts) / (24 * 3600)
+        self.sunrise_ts = sunrise_ts
+        self.sunset_ts = sunset_ts
 
     def create_card(self):
         card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -88,25 +83,7 @@ class CardDayNight:
             time_box.append(lbl_time)
             times_box.append(time_box)
 
-        sun_path = DrawDayNight(self.is_day, self.progress, self.day_fraction, 120, 90).drawing_area
+        southern = get_cords()[0] < 0
+        sun_path = DrawDayNight(self.sunrise_ts, self.sunset_ts, southern, 120, 90).drawing_area
         sun_path.set_valign(Gtk.Align.CENTER)
         content_box.append(sun_path)
-
-    # How far the sun (by day) or the moon (by night) is along its way
-    @staticmethod
-    def _calculate_sun_progress(target_dt, sunrise_dt, sunset_dt) -> tuple:
-        """Return (is_day, progress), progress from 0 (sunrise / sunset) to 1 (sunset / sunrise)."""
-        target_ctime_hr = target_dt.hour + (target_dt.minute / 60)
-        target_sunrise_hr = sunrise_dt.hour + (sunrise_dt.minute / 60)
-        target_sunset_hr = sunset_dt.hour + (sunset_dt.minute / 60)
-
-        # Day
-        if target_sunrise_hr < target_ctime_hr < target_sunset_hr:
-            progress = (target_ctime_hr - target_sunrise_hr) / (target_sunset_hr - target_sunrise_hr)
-            return True, progress
-
-        # Night
-        if target_ctime_hr < target_sunrise_hr:
-            target_ctime_hr += 24  # Adjust for times after midnight
-        progress = (target_ctime_hr - target_sunset_hr) / (24 - (target_sunset_hr - target_sunrise_hr))
-        return False, progress
