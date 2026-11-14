@@ -363,6 +363,9 @@ class Forecast(Gtk.Grid):
         row.get_child_at(0, 0).set_hexpand(True)
 
         range_box = Gtk.Box(spacing=6, valign=Gtk.Align.CENTER, margin_start=8, margin_end=12)
+        # Translators: tooltip on the day's temperature range bar; {low} and
+        # {high} are temperatures with their unit sign, like "15°"
+        range_box.set_tooltip_text(_("Low {low}, high {high}").format(low=f"{temp_min:.0f}°", high=f"{temp_max:.0f}°"))
         low = Gtk.Label(label=f"{temp_min:.0f}°", xalign=1, width_chars=3)
         low.set_css_classes(["text-base", "opacity-70"])
         range_box.append(low)
