@@ -9,7 +9,7 @@ platforms:
 
 parts:
   python-deps:
-    # requests from the Ubuntu archive, as in the Debian package. The python
+    # requests from the Ubuntu archive. The python
     # plugin can't find an interpreter on core26 with the gnome extension.
     plugin: nil
     stage-packages:

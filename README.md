@@ -55,14 +55,6 @@ flatpak install flathub io.github.amit9838.mousam
 sudo snap install mousam
 ```
 
-### **Debian** (Unofficial)
-
-<a href='https://github.com/amit9838/mousam/discussions/68'><img width='240' alt='Download on SnapCraft' src='https://www.m5hosting.com/wp-content/uploads/2021/07/debian-dedicated-server.jpg' style="border-radius:5px; padding:3px 8px; background-color:white;"></a>
-
-Thanks to @hsbasu for maintaining Debian package
-
-[Installation Instruction](https://github.com/amit9838/mousam/discussions/68)
-
 ## Build
 
 ### Dependances
