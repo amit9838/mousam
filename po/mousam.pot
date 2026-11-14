@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:18+0530\n"
+"POT-Creation-Date: 2026-11-14 13:37+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,23 +206,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:70
+#: src/configs.py:79
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:71
+#: src/configs.py:80
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:72
+#: src/configs.py:81
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:73
+#: src/configs.py:82
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:74
+#: src/configs.py:83
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1241,15 +1241,15 @@ msgid ""
 "Pollutant limits: WHO Guidelines (2021)"
 msgstr ""
 
-#: src/UI_CardDayNight.py:76
+#: src/UI_CardDayNight.py:60
 msgid "Sunrise & Sunset"
 msgstr ""
 
-#: src/UI_CardDayNight.py:87
+#: src/UI_CardDayNight.py:74
 msgid "Sunrise"
 msgstr ""
 
-#: src/UI_CardDayNight.py:100
+#: src/UI_CardDayNight.py:74
 msgid "Sunset"
 msgstr ""
 
@@ -1348,11 +1348,16 @@ msgstr ""
 msgid "Mousam Compact"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:33
+#. Translators: the line in the sun's path where the sun rises and sets
+#: src/UI_CompDrawDayNight.py:124
+msgid "Horizon"
+msgstr ""
+
+#: src/UI_CompDrawDayNight.py:187
 msgid "Day"
 msgstr ""
 
-#: src/UI_CompDrawDayNight.py:33
+#: src/UI_CompDrawDayNight.py:187
 msgid "Night"
 msgstr ""
 
