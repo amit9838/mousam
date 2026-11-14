@@ -80,6 +80,15 @@ class WeatherPreferences(Adw.PreferencesDialog):
             (True, False),
         )
         self._add_auto_refresh_row(group)
+
+        self._background_switch = Adw.SwitchRow(
+            title=_("Run in Background"),
+            subtitle=_("Keep Mousam running when its window is closed"),
+        )
+        self._add_prefix_icon(self._background_switch, "application-x-executable-symbolic")
+        self._background_switch.set_active(settings.run_in_background)
+        self._background_switch.connect("notify::active", self._on_run_in_background_toggled)
+        group.add(self._background_switch)
         return group
 
     def _build_appearance_group(self) -> Adw.PreferencesGroup:
@@ -241,6 +250,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
         self._notification_switch.set_active(settings.show_notifications)
         self._overview_switch.set_active(settings.show_overview)
+        self._background_switch.set_active(settings.run_in_background)
         self._set_toggle_buttons()
 
     def _set_toggle_buttons(self) -> None:
@@ -303,6 +313,10 @@ class WeatherPreferences(Adw.PreferencesDialog):
         # The overview engine and section follow the setting themselves
         settings.show_overview = row.get_active()
 
+    def _on_run_in_background_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
+        # The main window follows the setting itself
+        settings.run_in_background = row.get_active()
+
     def _on_debug_mode_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         settings.debug_mode = row.get_active()
         log_manager.update_level()
@@ -350,6 +364,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
         self._notification_switch.set_active(settings.show_notifications)
         self._overview_switch.set_active(settings.show_overview)
+        self._background_switch.set_active(settings.run_in_background)
         self._debug_switch.set_active(settings.debug_mode)
         self._auto_refresh_row.set_selected(0)  # 0 is always OFF in our list
         self._set_toggle_buttons()

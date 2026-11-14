@@ -65,22 +65,37 @@ class WeatherApplication(Adw.Application):
         Adw.Application.do_shutdown(self)
 
     def _on_window_removed(self, app, window):
-        # If any of the main windows are closed, quit the application
-        if window == self.main_window or window == self.compact_window:
+        # If any of the main windows are closed, quit the application, unless
+        # it runs in the background: then the hidden main window keeps it alive
+        if window == self.compact_window:
+            # Closed for good: forget it, so compact mode builds a new one
+            self.compact_window = None
+            if settings.run_in_background:
+                return
+            self.quit()
+        elif window == self.main_window:
             self.quit()
 
     def do_activate(self):
         logger.info("Application activated")
-        CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
-        css_provider = Gtk.CssProvider()
-        Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        with open(CSS_PATH+'style.css', 'r') as css_file:
-            css = bytes(css_file.read(), 'utf-8')
-        css_provider.load_from_data(css,len(css))
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
 
+        # Activated again when launched while running in the background: the
+        # styles and the main window already exist then
         if not self.main_window:
+            CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
+            css_provider = Gtk.CssProvider()
+            Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            with open(CSS_PATH+'style.css', 'r') as css_file:
+                css = bytes(css_file.read(), 'utf-8')
+            css_provider.load_from_data(css,len(css))
+            Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
+
             self.main_window = WeatherMainWindow(application=self)
+
+        # Launched again while in compact mode: bring the compact window back
+        if self.compact_window and self.compact_window.get_visible():
+            self.compact_window.present()
+            return
 
         if settings.window_maximized:
             self.main_window.maximize()

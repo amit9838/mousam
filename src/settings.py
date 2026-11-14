@@ -124,6 +124,14 @@ class Settings:
         self.settings.set_boolean("show-overview", value)
 
     @property
+    def run_in_background(self):
+        return self.settings.get_boolean("run-in-background")
+
+    @run_in_background.setter
+    def run_in_background(self, value):
+        self.settings.set_boolean("run-in-background", value)
+
+    @property
     def debug_mode(self):
         return self.settings.get_boolean("debug-mode")
 

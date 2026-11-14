@@ -71,6 +71,13 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self._on_selected_city_changed,
         )
 
+        # Run in background: closing the window hides it, so the app keeps running
+        self.set_hide_on_close(settings.run_in_background)
+        settings.connect(
+            "changed::run-in-background",
+            lambda *_: self.set_hide_on_close(settings.run_in_background),
+        )
+
     def _on_selected_city_changed(self, *args):
         from .CORE_Helpers import get_selected_city_name
         city = get_selected_city_name()
