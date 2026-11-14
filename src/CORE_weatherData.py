@@ -4,7 +4,7 @@ from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
-from .configs import HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH
+from .configs import HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH, THRESHOLDS
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from .CORE_Logging import get_logger
@@ -168,6 +168,82 @@ class WeatherDataManager(GObject.Object):
         if aqi_value <= 200: return _("Unhealthy")
         if aqi_value <= 300: return _("Severe")
         return _("Hazardous")
+
+    @staticmethod
+    def aqi_level_class(aqi_value) -> str:
+        """The colour class for a US AQI: good, raised, or unhealthy and worse."""
+        if aqi_value <= 50:
+            return "success"
+        if aqi_value <= 150:
+            return "warning"
+        return "error"
+
+    @staticmethod
+    def aqi_advice(aqi_value) -> str:
+        """What to do at this US AQI, after the US EPA's advice for each band."""
+        if aqi_value <= 50:
+            return _("Air quality is good. A fine time to be outside.")
+        if aqi_value <= 100:
+            return _("Unusually sensitive people should cut back on long or intense outdoor activity.")
+        if aqi_value <= 150:
+            return _("Sensitive groups should cut back on long or intense outdoor activity.")
+        if aqi_value <= 200:
+            return _("Everyone should cut back on long or intense outdoor activity; sensitive groups should avoid it.")
+        if aqi_value <= 300:
+            return _("Everyone should avoid long or intense outdoor activity; sensitive groups should stay indoors.")
+        return _("Everyone should avoid all outdoor activity.")
+
+    @staticmethod
+    def classify_eu_aqi(aqi_value) -> str:
+        """The European AQI's own level names."""
+        if aqi_value <= 20:
+            return C_("european aqi", "Good")
+        if aqi_value <= 40:
+            return C_("european aqi", "Fair")
+        if aqi_value <= 60:
+            return C_("european aqi", "Moderate")
+        if aqi_value <= 80:
+            return C_("european aqi", "Poor")
+        if aqi_value <= 100:
+            return C_("european aqi", "Very Poor")
+        return C_("european aqi", "Extremely Poor")
+
+    @staticmethod
+    def classify_pollutant(key: str, value) -> tuple:
+        """A pollutant's level against the WHO guidelines: (word, colour class)."""
+        level = "error"
+        for threshold, css_class in THRESHOLDS.get(key, ()):
+            if value <= threshold:
+                level = css_class
+                break
+        words = {
+            "success": C_("pollutant level", "Good"),
+            "warning": C_("pollutant level", "High"),
+            "error": C_("pollutant level", "Very High"),
+        }
+        return words[level], level
+
+    @staticmethod
+    def classify_pollen(value) -> tuple:
+        """A pollen count's level (grains/m³): (word, colour class)."""
+        if value <= 15:
+            return C_("pollen level", "Low"), "success"
+        if value <= 90:
+            return C_("pollen level", "Moderate"), "warning"
+        if value <= 500:
+            return C_("pollen level", "High"), "error"
+        return C_("pollen level", "Very High"), "error"
+
+    @staticmethod
+    def main_pollutant(values: dict):
+        """The pollutant furthest above (or nearest to) its WHO limit, from
+        {key: value}; None when there is none to compare."""
+        ratios = {
+            key: value / THRESHOLDS[key][0][0]
+            for key, value in values.items()
+            if value is not None and key in THRESHOLDS
+        }
+        return max(ratios, key=ratios.get) if ratios else None
 
     @staticmethod
     def classify_uv_index(uv):
