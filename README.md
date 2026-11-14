@@ -19,7 +19,7 @@
 ## Features
 
 - **Current conditions**: temperature, feels like, humidity, wind, pressure, UV index, dew point and visibility, each with a clear level
-- **Weather Overview**: a one-line summary of the coming hours ("Rain likely around 5:00 PM (70% chance)."), also sent as a desktop notification while the window is minimized, in compact mode or closed
+- **Smart Weather Overview**: a one-line summary of the coming hours ("Rain likely around 5:00 PM (70% chance)."), also sent as a desktop notification while the window is minimized, in compact mode or closed. Read more about the rules here [Overview Rules](https://github.com/amit9838/mousam/blob/master/docs/overview-rules.md)
 - **Detailed Forecasts**: hourly graphs for temperature, wind and precipitation, plus tomorrow and 7-day forecasts with temperature ranges and the chance of rain and snow
 - **Air Quality**: US and EU AQI with pollutants, pollen and health advice, based on WHO guidelines
 - **Sun and Moon**: the sun's path through the day, moon phase and twilight
