@@ -215,6 +215,7 @@ When unsure, ask:
 | Rotated icon (wind direction) | `DrawImage` |
 | Day/night arc | `DrawDayNight` |
 | Pollutant level bar | `PollutionBar` |
+| Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class) |
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
 | A condition's name | `condition[code]` in `CORE_Icons` |
 | A background for a condition | `bg_css[code]` (append `n` to the code at night) |

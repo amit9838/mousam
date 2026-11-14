@@ -460,25 +460,6 @@
     color: rgb(97, 179, 255);
 }
 
-/* Rain drops: dimmer than the text, so they don't pull the eye from the day.
-   Each drop is translucent on its own, so where they overlap the one
-   behind shows through. */
-.rain-drops > image {
-    opacity: 0.6;
-}
-
-/* Rain drops overlap, each a little to the right of the one before. A thin
-   edge in the card's colour on its left keeps each drop apart. */
-.rain-drops > image + image {
-    margin-left: -5px;
-    -gtk-icon-shadow: -1px 0 @card_bg_color;
-}
-
-/* On dynamic backgrounds the card is see-through: a dark edge instead */
-.bg-dark-overlay .rain-drops > image + image {
-    -gtk-icon-shadow: -1px 0 rgba(0, 0, 0, 0.5);
-}
-
 .card-forecast-item {
     padding: 0 1.1rem;
     border-radius: 0.7rem;

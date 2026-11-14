@@ -59,6 +59,7 @@ mousam_sources = [
   'UI_CompDrawLineGraph.py',
   'UI_CompDrawTickGauge.py',
   'UI_CompDrawTempRange.py',
+  'UI_CompDrawRainDrop.py',
   'UI_CompactWeather.py',
 
   'configs.py',

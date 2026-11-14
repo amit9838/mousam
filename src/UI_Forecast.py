@@ -9,7 +9,6 @@ Provides a GTK widget that displays weather forecasts in two modes:
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 from enum import Enum, auto
-import math
 from gettext import gettext as _
 from typing import Any, Dict, List, Optional, Union
 
@@ -26,6 +25,7 @@ from .CORE_weatherData import weather_manager
 from .CORE_GTKUtils import weak_connect
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402
+from .UI_CompDrawRainDrop import DrawRainDrops  # noqa: E402
 
 
 
@@ -66,8 +66,11 @@ class Forecast(Gtk.Grid):
     LABEL_BOX_WIDTH: int = 80
     LABEL_BOX_HEIGHT: int = 60
 
-    RAIN_ICON_SIZE: int = 12
-    RAIN_DROPS: int = 4  # each drop stands for 25 % chance of rain
+    RAIN_DROP_HEIGHT: int = 14
+    # Below this chance of rain (%) no drops are shown
+    RAIN_MIN_CHANCE: int = 10
+    # Chances of rain (%) from which a second, third, then fourth drop joins the first
+    RAIN_MORE_DROPS_FROM = (50, 80, 90)
 
     # Below this width (in sp) the weekly range bars are hidden
     WEEKLY_BAR_MIN_WIDTH: int = 360
@@ -416,28 +419,29 @@ class Forecast(Gtk.Grid):
         label = Gtk.Label(label=text, halign=Gtk.Align.START)
         label.set_css_classes(["text-base", "font-normal", "opacity-90"])
         box.append(label)
-        if rain_chance:
+        # A small chance shows nothing, so drops only stand out when rain is a real prospect
+        if rain_chance and rain_chance >= self.RAIN_MIN_CHANCE:
             box.append(self._create_rain_drops(rain_chance))
         grid.attach(box, 0, 0, 1, 1)
 
-    def _create_rain_drops(self, rain_chance: float) -> Gtk.Box:
-        """Show the chance of rain as one to four overlapping drops, each 25 %.
+    def _create_rain_drops(self, rain_chance: float) -> Gtk.Widget:
+        """Show the chance of rain as one to four drops: more drops, more likely.
 
         The exact chance is in the tooltip and the accessible label.
         """
         text = _("Chance of rain: {percent}%").format(percent=f"{rain_chance:.0f}")
-        drops = Gtk.Box(valign=Gtk.Align.CENTER, tooltip_text=text)
-        drops.set_css_classes(["text-rain", "rain-drops"])
-        drops.update_property([Gtk.AccessibleProperty.LABEL], [text])
-        for _i in range(self.rain_drop_count(rain_chance)):
-            drops.append(Gtk.Image(icon_name="mousam-raindrop-symbolic", pixel_size=self.RAIN_ICON_SIZE))
-        return drops
+        drop = DrawRainDrops(self.rain_drop_count(rain_chance), self.RAIN_DROP_HEIGHT).drawing_area
+        drop.set_valign(Gtk.Align.CENTER)
+        drop.set_tooltip_text(text)
+        # The outline takes the rain colour, which follows the theme
+        drop.set_css_classes(["text-rain"])
+        drop.update_property([Gtk.AccessibleProperty.LABEL], [text])
+        return drop
 
     @classmethod
     def rain_drop_count(cls, rain_chance: float) -> int:
-        """How many drops to show: 1 to 25 % is one, 76 to 100 % all four."""
-        step = 100 / cls.RAIN_DROPS
-        return max(0, min(cls.RAIN_DROPS, math.ceil(rain_chance / step)))
+        """How many drops to show: one, then one more from each RAIN_MORE_DROPS_FROM."""
+        return 1 + sum(rain_chance >= chance for chance in cls.RAIN_MORE_DROPS_FROM)
 
     def _add_icon_column(self, grid: Gtk.Grid, weather_code: Union[int, str]) -> None:
         """Add the weather icon column (col 1)."""
