@@ -10,7 +10,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Gdk, Adw, GLib, GObject, Pango  # noqa: E402
 
 from .API_FindCity import find_city  # noqa: E402
-from .CORE_GTKUtils import remove_rootwindow_drop_target  # noqa: E402
+from .CORE_GTKUtils import remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Helpers import create_toast  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
 from .CORE_Networking import fetch_saved_locations_weather_async  # noqa: E402
@@ -133,18 +133,20 @@ class RowWeather(Gtk.Stack):
         self.set_visible_child_name("weather")
 
 
-class CitySearchDialog(Adw.PreferencesWindow):
-    """Encapsulated search UI."""
+class CitySearchDialog(Adw.PreferencesDialog):
+    """Encapsulated search UI.
 
-    def __init__(self, parent, on_selection_callback):
+    A dialog is closed, not destroyed, so every handler here is connected with
+    weak_connect: a strong one would keep the dialog alive after it closes.
+    """
+
+    def __init__(self, on_selection_callback):
         super().__init__(
-            transient_for=parent,
-            modal=True,
-            default_width=350,
-            default_height=500,
+            title=_("Add New Location"),
+            content_width=350,
+            content_height=500,
             search_enabled=False,
         )
-        self.set_title(_("Add New Location"))
         self.callback = on_selection_callback
         self.results_rows = []
         self.cities: List[Dict] = []  # Every result of the search, shown or not
@@ -157,14 +159,14 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self._waiting_query: Optional[str] = None
         self._init_ui()
         # Drop the results of a search still running when the dialog closes
-        self.connect("destroy", self._on_destroy)
+        weak_connect(self, "closed", self._on_closed)
 
         # Capture phase: the search field would otherwise keep Escape for itself
         key_controller = Gtk.EventControllerKey(propagation_phase=Gtk.PropagationPhase.CAPTURE)
-        key_controller.connect("key-pressed", self._on_window_key_pressed)
+        weak_connect(key_controller, "key-pressed", self._on_dialog_key_pressed)
         self.add_controller(key_controller)
 
-    def _on_destroy(self, _widget) -> None:
+    def _on_closed(self, _dialog) -> None:
         self._search_id += 1
         self._waiting_query = None
 
@@ -180,10 +182,10 @@ class CitySearchDialog(Adw.PreferencesWindow):
             hexpand=True,
             search_delay=CITY_SEARCH_DELAY_MS,
         )
-        self.search_entry.connect("search-changed", self._on_search_requested)
-        self.search_entry.connect("activate", self._on_entry_activated)
+        weak_connect(self.search_entry, "search-changed", self._on_search_requested)
+        weak_connect(self.search_entry, "activate", self._on_entry_activated)
         key_controller = Gtk.EventControllerKey(propagation_phase=Gtk.PropagationPhase.CAPTURE)
-        key_controller.connect("key-pressed", self._on_entry_key_pressed)
+        weak_connect(key_controller, "key-pressed", self._on_entry_key_pressed)
         self.search_entry.add_controller(key_controller)
 
         # Sits inside the field, so results don't move while it spins
@@ -206,10 +208,10 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self.more_row = Adw.ButtonRow(
             title=_("Show More"), start_icon_name="pan-down-symbolic"
         )
-        self.more_row.connect("activated", self._on_show_more)
+        weak_connect(self.more_row, "activated", self._on_show_more)
 
         self._show_prompt()
-        self.search_entry.grab_focus()
+        self.set_focus(self.search_entry)
 
     def _show_status(
         self, icon_name: str, title: str, description: str = "", child: Optional[Gtk.Widget] = None
@@ -230,7 +232,7 @@ class CitySearchDialog(Adw.PreferencesWindow):
         retry_btn = Gtk.Button(label=_("Retry"), halign=Gtk.Align.CENTER)
         retry_btn.add_css_class("pill")
         retry_btn.add_css_class("suggested-action")
-        retry_btn.connect("clicked", self._on_retry)
+        weak_connect(retry_btn, "clicked", self._on_retry)
         self._show_status(
             "network-offline-symbolic",
             _("Couldn't Search for Cities"),
@@ -267,7 +269,7 @@ class CitySearchDialog(Adw.PreferencesWindow):
         else:
             self._on_search_requested(entry)
 
-    def _on_window_key_pressed(self, _controller, keyval, _keycode, _state) -> bool:
+    def _on_dialog_key_pressed(self, _controller, keyval, _keycode, _state) -> bool:
         if keyval == Gdk.KEY_Escape:
             self.close()
             return True
@@ -349,7 +351,7 @@ class CitySearchDialog(Adw.PreferencesWindow):
         self.cities = cities
         self._show_next_page()
         key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self._on_first_row_key_pressed)
+        weak_connect(key_controller, "key-pressed", self._on_first_row_key_pressed)
         self.results_rows[0].add_controller(key_controller)
         return GLib.SOURCE_REMOVE
 
@@ -385,13 +387,13 @@ class CitySearchDialog(Adw.PreferencesWindow):
         else:
             row.set_activatable(True)
             # Store the raw dict on the row object for easy retrieval
-            row.connect("activated", self._on_row_selected, city)
+            weak_connect(row, "activated", self._on_row_selected, city)
         self.results_group.add(row)
         self.results_rows.append(row)
 
     def _on_row_selected(self, row, city_data):
         self.callback(city_data)
-        self.destroy()
+        self.close()
 
 
 # --- Main Application Window ---
@@ -435,7 +437,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         self.add(page)
 
     def _on_add_clicked(self, _button) -> None:
-        CitySearchDialog(self.application, self._handle_city_added).present()
+        CitySearchDialog(self._handle_city_added).present(self)
 
     def _load_weather(self) -> None:
         """Fetch the weather of every saved city, in a single request."""

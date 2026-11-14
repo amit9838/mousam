@@ -53,7 +53,7 @@ Widgets get deprecated and replaced between libadwaita releases (`Adw.Preference
    - Open-Meteo: https://open-meteo.com/en/docs (and its air-quality and geocoding pages)
 3. Follow the [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/) for layout, wording and patterns.
 
-Existing windows still use `Adw.PreferencesWindow`, which is deprecated. Don't spread it to new dialogs; ask before migrating the existing ones.
+Dialogs use `Adw.Dialog` and its subclasses (`Adw.PreferencesDialog`, `Adw.AboutDialog`), shown with `present(parent)`. They are closed, not destroyed, so handlers on their widgets must not keep them alive: connect them with `weak_connect`, or let go of those widgets on `closed`.
 
 ---
 
