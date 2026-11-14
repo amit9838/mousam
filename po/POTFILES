@@ -32,6 +32,7 @@ src/UI_HourlyDetails.py
 src/main.py
 src/mousam.in
 src/mousam.py
+src/windowAirQuality.py
 src/windowAbout.py
 src/windowLocations.py
 src/windowPreferences.py

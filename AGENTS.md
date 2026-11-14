@@ -134,7 +134,7 @@ src/
   main.py                 WeatherApplication (Adw.Application): actions, CSS, auto-refresh, normal ↔ compact switching
   mousam.py               WeatherMainWindow: header bar, view states (loader, welcome, errors, content), the card grid
   mousam.in               launcher script (Meson fills in paths, sets up gettext, loads the GResource)
-  window*.py              secondary windows: Locations (+ city search), Preferences, About
+  window*.py              secondary windows: Locations (+ city search), Preferences, About, Air Quality (details)
   shortcutsDialog.py/.ui  keyboard shortcuts (Gtk.Template from the GResource)
   UI_*.py                 sections and cards: CurrentCond, HourlyDetails, Forecast, CardSquare, CardDayNight, CardAirPollution, CompactWeather
   UI_CompDraw*.py         small Cairo-drawn pieces used by the cards

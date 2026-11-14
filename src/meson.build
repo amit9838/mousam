@@ -71,6 +71,7 @@ mousam_sources = [
   'windowAbout.py',
   'windowPreferences.py',
   'windowLocations.py',
+  'windowAirQuality.py',
   'shortcutsDialog.py'
 ]
 

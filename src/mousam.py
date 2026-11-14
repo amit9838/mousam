@@ -15,6 +15,7 @@ from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
+from .windowAirQuality import AirQualityDialog  # noqa: E402
 from .CORE_Logging import get_logger
 
 logger = get_logger("ui")
@@ -166,6 +167,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             ("shortcuts", self._on_action_shortcuts, ["<Control>question"]),
             ("about", self._on_action_about, None),
             ("open-logs", self._on_action_open_logs, None),
+            ("air-quality", self._on_action_air_quality, None),
         ]
 
         for name, callback, accel in actions:
@@ -484,6 +486,12 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _on_action_about(self, action, param):
         show_about_window(self)
+
+    def _on_action_air_quality(self, action, param):
+        from .CORE_weatherData import weather_manager
+        if weather_manager.air_pollution is None:
+            return
+        AirQualityDialog().present(self)
 
     def _on_action_open_logs(self, action, param):
         from .CORE_Logging import log_manager
