@@ -1,3 +1,7 @@
+# NOTE: Some strings in this file are machine translated. Human review is required.
+#
+# TODO: Remove the NOTE above once the translation has been reviewed.
+#
 # Korean translation for Weather.
 # Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the the io.github.amit9838.weather package.
@@ -7,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-14 19:44+0530\n"
 "PO-Revision-Date: 2023-09-19 17:00+0900\n"
 "Last-Translator: 동헌희 <hunhee@kakao.com>\n"
 "Language-Team: \n"
@@ -15,1183 +19,2032 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
-msgstr ""
+msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:5
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+#: data/io.github.amit9838.mousam.desktop.in:4
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:35
 msgid "Weather at a glance"
-msgstr ""
+msgstr "한눈에 보는 날씨"
 
-#: data/io.github.amit9838.mousam.desktop.in:10
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr ""
+#: data/io.github.amit9838.mousam.desktop.in:9
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
+msgstr "날씨;예보;기온;비;바람;대기질;GTK4;Python;Mousam;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-msgid "Current Weather conditions and forecasts."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
 msgstr ""
+"Mousam은 관심 있는 지역의 현재 날씨와 예보를 시간별 및 7일 그래프, 대기질, 앞"
+"으로 몇 시간에 대한 간단한 개요와 함께 보여 줍니다. 모든 데이터는 Open-Meteo"
+"에서 제공되며 계정이 필요 없습니다."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
-msgstr ""
+msgstr "기능:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
-msgstr ""
+"Current temperature, feels like, humidity, wind, pressure, UV index, dew "
+"point and visibility"
+msgstr "현재 기온, 체감 온도, 습도, 바람, 기압, 자외선 지수, 이슬점, 가시거리"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid "Comprehensive Air Quality Index and air pollutants data"
+msgid ""
+"A one-line overview of the coming hours, such as when rain starts, also sent "
+"as a notification while the window is out of sight"
 msgstr ""
+"비가 언제 시작되는지 등 앞으로 몇 시간에 대한 한 줄 개요. 창이 보이지 않을 때"
+"는 알림으로도 전송됩니다"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgid "Hourly temperature, wind and precipitation graphs"
+msgstr "기온, 바람, 강수량의 시간별 그래프"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr ""
+msgid ""
+"Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow"
+msgstr "기온 범위, 비와 눈이 올 확률이 포함된 내일 및 7일 예보"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
-msgid "Visual graphs for sun and moon positions and day/night cycles"
-msgstr ""
+msgid "Air quality (US and EU AQI) with pollutants, pollen and health advice"
+msgstr "오염 물질, 꽃가루, 건강 조언이 포함된 대기질(미국 및 EU AQI)"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
-msgid "Hourly temperature, wind direction and precipitation tracking"
-msgstr ""
+msgid "The sun's path through the day, moon phase and twilight"
+msgstr "하루 동안의 태양 경로, 달의 위상, 박명"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
-msgid "Dynamic background styling that adapts to weather conditions"
-msgstr "배경이 현재 날씨에 따라 바뀝니다 (재시작 팔요)"
+msgid ""
+"Saved locations with their weather and local time, in the order you choose"
+msgstr "날씨와 현지 시각이 표시되는 저장된 위치, 원하는 순서대로"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
-msgid "System notifications for weather updates with configurable preferences"
-msgstr ""
+msgid "Compact mode for a minimal, focused view"
+msgstr "최소한의 집중된 보기를 위한 컴팩트 모드"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-msgid "Support for both metric and imperial measurement systems"
-msgstr ""
+msgid "Option to keep running in the background when the window is closed"
+msgstr "창을 닫아도 백그라운드에서 계속 실행하는 옵션"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:26
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid ""
+"Dynamic backgrounds that follow the weather, and a choice of default or "
+"Material icons"
+msgstr "날씨에 따라 바뀌는 동적 배경, 기본 또는 Material 아이콘 선택"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:22
+msgid "Metric and imperial units, and 12- or 24-hour clock"
+msgstr "미터법과 야드파운드법 단위, 12시간 또는 24시간 시계"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:28
 msgid "Main dashboard showing current weather and hourly forecast"
-msgstr ""
+msgstr "현재 날씨와 시간별 예보를 보여 주는 메인 대시보드"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:30
+#: data/io.github.amit9838.mousam.appdata.xml.in:32
 msgid "Detailed weather conditions during rain"
-msgstr ""
+msgstr "비가 올 때의 상세 날씨 상태"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:34
+#: data/io.github.amit9838.mousam.appdata.xml.in:36
 msgid "Night mode view"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
-msgstr ""
+msgstr "야간 모드 보기"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr ""
+msgstr "도시와 좌표 목록입니다."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr ""
+msgstr "사용자가 추가한 위치를 JSON 문자열 형식으로 저장합니다"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
-#, fuzzy
 msgid "Selected city"
-msgstr "{} 선택"
+msgstr "선택한 도시"
 
 #: data/io.github.amit9838.mousam.gschema.xml:13
-#, fuzzy
 msgid "Selected city cords"
-msgstr "{} 선택"
+msgstr "선택한 도시의 좌표"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
-#, fuzzy
 msgid "Use Gradient Background"
-msgstr "동적 배경"
+msgstr "그라데이션 배경 사용"
 
 #: data/io.github.amit9838.mousam.gschema.xml:18
 msgid ""
 "Apply gradient background on main window corresponding to weather condition"
-msgstr ""
+msgstr "날씨 상태에 맞춰 메인 창에 그라데이션 배경을 적용합니다"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
-msgstr ""
+msgstr "강수량에 인치 사용"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr ""
+msgstr "24시간제 시계 사용"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr ""
+msgstr "메인 창 너비"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr ""
+msgstr "메인 창 높이"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr ""
+msgstr "앱을 최대화한 상태로 실행합니다."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "자동 새로 고침 간격(분)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
-msgstr ""
+msgstr "날씨를 자동으로 새로 고치는 간격입니다. 0은 사용 안 함을 뜻합니다."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
-msgstr ""
+msgstr "사용할 측정 체계 - 미터법, 야드파운드법"
 
 #: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr ""
+msgstr "미터법(km, °C), 야드파운드법(마일, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "날씨 업데이트 알림 표시"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "날씨 데이터가 업데이트되면 알림을 표시합니다."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
-msgid "Enable debug mode"
-msgstr ""
+msgid "Show the weather overview"
+msgstr "날씨 개요 표시"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
-msgid "Enables detailed logging and console output."
-msgstr ""
+msgid "Show a short summary of the coming hours under the current conditions."
+msgstr "현재 상태 아래에 앞으로 몇 시간에 대한 간단한 요약을 표시합니다."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
-msgid "Icon theme"
-msgstr ""
+msgid "Run in background"
+msgstr "백그라운드에서 실행"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
+msgid "Keep the app running when its window is closed."
+msgstr "창을 닫아도 앱을 계속 실행합니다."
+
+#: data/io.github.amit9838.mousam.gschema.xml:67
+msgid "Enable debug mode"
+msgstr "디버그 모드 사용"
+
+#: data/io.github.amit9838.mousam.gschema.xml:68
+msgid "Enables detailed logging and console output."
+msgstr "상세 로깅과 콘솔 출력을 사용합니다."
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "Icon theme"
+msgstr "아이콘 테마"
+
+#: data/io.github.amit9838.mousam.gschema.xml:73
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"날씨 아이콘 세트: “default”(Mousam 기본 아이콘) 또는 “material”(Google 머티리"
+"얼 디자인 아이콘)"
 
-#: src/configs.py:33
+#: data/io.github.amit9838.mousam.gschema.xml:81
+msgid "Forecast page"
+msgstr "예보 페이지"
+
+#: data/io.github.amit9838.mousam.gschema.xml:82
+msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
+msgstr "예보 카드에 마지막으로 표시된 페이지: “tomorrow” 또는 “weekly”."
+
+#: src/configs.py:98
 msgid "Off"
-msgstr ""
+msgstr "끔"
 
-#: src/configs.py:34
+#: src/configs.py:99
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "15분마다"
 
-#: src/configs.py:35
+#: src/configs.py:100
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30분마다"
 
-#: src/configs.py:36
+#: src/configs.py:101
 msgid "Every hour"
-msgstr ""
+msgstr "매시간"
 
-#: src/configs.py:37
+#: src/configs.py:102
 msgid "Every 2 hours"
-msgstr ""
+msgstr "2시간마다"
 
-#: src/CORE_GTKUtils.py:66
-msgid "Unknown"
-msgstr ""
-
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
-msgstr ""
-
-#: src/CORE_Icons.py:261
-msgid "Clear sky"
-msgstr ""
-
-#: src/CORE_Icons.py:262
-msgid "Few Clouds"
-msgstr ""
-
-#: src/CORE_Icons.py:263
-msgid "Partly Cloudy"
-msgstr ""
-
-#: src/CORE_Icons.py:264
-msgid "Overcast"
-msgstr ""
-
-#: src/CORE_Icons.py:265
-msgid "Fog"
-msgstr ""
-
-#: src/CORE_Icons.py:266
-msgid "Mist"
-msgstr ""
+msgstr "알 수 없는 도시"
 
 #: src/CORE_Icons.py:267
-msgid "Light Drizzle"
-msgstr ""
+msgid "Clear sky"
+msgstr "맑음"
 
 #: src/CORE_Icons.py:268
-msgid "Moderate Drizzle"
-msgstr ""
+msgid "Few Clouds"
+msgstr "구름 조금"
 
 #: src/CORE_Icons.py:269
-msgid "Heavy Intensity Drizzle"
-msgstr ""
+msgid "Partly Cloudy"
+msgstr "구름 많음"
 
 #: src/CORE_Icons.py:270
-msgid "Light Freezing Drizzle"
-msgstr ""
+msgid "Overcast"
+msgstr "흐림"
 
 #: src/CORE_Icons.py:271
-msgid "Heavy Freezing Drizzle"
-msgstr ""
+msgid "Fog"
+msgstr "안개"
 
 #: src/CORE_Icons.py:272
-msgid "Light Rain"
-msgstr ""
+msgid "Mist"
+msgstr "옅은 안개"
 
 #: src/CORE_Icons.py:273
-msgid "Moderate Rain"
-msgstr ""
+msgid "Light Drizzle"
+msgstr "약한 이슬비"
 
 #: src/CORE_Icons.py:274
-msgid "Heavy Rain"
-msgstr ""
+msgid "Moderate Drizzle"
+msgstr "보통 이슬비"
 
 #: src/CORE_Icons.py:275
-msgid "Light Freezing Rain"
-msgstr ""
+msgid "Heavy Intensity Drizzle"
+msgstr "강한 이슬비"
 
 #: src/CORE_Icons.py:276
-msgid "Heavy Freezing Rain"
-msgstr ""
+msgid "Light Freezing Drizzle"
+msgstr "약한 어는 이슬비"
 
 #: src/CORE_Icons.py:277
-msgid "Light Snow Fall"
-msgstr ""
+msgid "Heavy Freezing Drizzle"
+msgstr "강한 어는 이슬비"
 
 #: src/CORE_Icons.py:278
-msgid "Moderate Snow Fall"
-msgstr ""
+msgid "Light Rain"
+msgstr "약한 비"
 
 #: src/CORE_Icons.py:279
-msgid "Heavy Snow Fall"
-msgstr ""
+msgid "Moderate Rain"
+msgstr "보통 비"
 
 #: src/CORE_Icons.py:280
-msgid "Snow grains"
-msgstr ""
+msgid "Heavy Rain"
+msgstr "강한 비"
 
 #: src/CORE_Icons.py:281
-msgid "Light Rain Showers"
-msgstr ""
+msgid "Light Freezing Rain"
+msgstr "약한 어는 비"
 
 #: src/CORE_Icons.py:282
-msgid "Moderate Rain Showers"
-msgstr ""
+msgid "Heavy Freezing Rain"
+msgstr "강한 어는 비"
 
 #: src/CORE_Icons.py:283
-msgid "Heavy Rain Showers"
-msgstr ""
+msgid "Light Snow Fall"
+msgstr "약한 눈"
 
 #: src/CORE_Icons.py:284
-msgid "Light Snow Showers"
-msgstr ""
+msgid "Moderate Snow Fall"
+msgstr "보통 눈"
 
 #: src/CORE_Icons.py:285
-msgid "Heavy Snow Showers "
-msgstr ""
+msgid "Heavy Snow Fall"
+msgstr "강한 눈"
 
 #: src/CORE_Icons.py:286
-msgid "Thunderstorm"
-msgstr ""
+msgid "Snow grains"
+msgstr "싸락눈"
 
 #: src/CORE_Icons.py:287
+msgid "Light Rain Showers"
+msgstr "약한 소나기"
+
+#: src/CORE_Icons.py:288
+msgid "Moderate Rain Showers"
+msgstr "보통 소나기"
+
+#: src/CORE_Icons.py:289
+msgid "Heavy Rain Showers"
+msgstr "강한 소나기"
+
+#: src/CORE_Icons.py:290
+msgid "Light Snow Showers"
+msgstr "약한 소낙눈"
+
+#: src/CORE_Icons.py:291
+msgid "Heavy Snow Showers "
+msgstr "강한 소낙눈 "
+
+#: src/CORE_Icons.py:292
+msgid "Thunderstorm"
+msgstr "뇌우"
+
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
-msgstr ""
+msgstr "우박을 동반한 뇌우"
 
-#: src/CORE_weatherData.py:154
-msgid "Good"
-msgstr ""
+#: src/CORE_OverviewMessages.py:31
+msgid "Thunderstorms are likely right now. Stay indoors if you can."
+msgstr "지금 천둥번개가 칠 가능성이 높습니다. 가능하면 실내에 계세요."
 
-#: src/CORE_weatherData.py:155
-msgid "Moderate"
-msgstr ""
+#: src/CORE_OverviewMessages.py:32
+msgid "Expect thunderstorms right now. Stay indoors if you can."
+msgstr "지금 천둥번개가 예상됩니다. 가능하면 실내에 계세요."
 
-#: src/CORE_weatherData.py:156
-msgid "Poor"
-msgstr ""
-
-#: src/CORE_weatherData.py:157
-msgid "Unhealthy"
-msgstr ""
-
-#: src/CORE_weatherData.py:158
-msgid "Severe"
-msgstr ""
-
-#: src/CORE_weatherData.py:159
-msgid "Hazardous"
-msgstr ""
-
-#: src/CORE_weatherData.py:163
-msgctxt "uvindex"
-msgid "Low"
-msgstr ""
-
-#: src/CORE_weatherData.py:164
-msgctxt "uvindex"
-msgid "Moderate"
-msgstr ""
-
-#: src/CORE_weatherData.py:165
-msgctxt "uvindex"
-msgid "High"
-msgstr ""
-
-#: src/CORE_weatherData.py:166
-msgctxt "uvindex"
-msgid "Very High"
-msgstr ""
-
-#: src/CORE_weatherData.py:167
-msgctxt "uvindex"
-msgid "Extreme"
-msgstr ""
-
-#: src/CORE_weatherData.py:171
-msgctxt "humidity"
-msgid "Low"
-msgstr ""
-
-#: src/CORE_weatherData.py:172
-msgctxt "humidity"
-msgid "Moderate"
-msgstr ""
-
-#: src/CORE_weatherData.py:173
-msgctxt "humidity"
-msgid "High"
-msgstr ""
-
-#: src/CORE_weatherData.py:180
-msgctxt "pressure"
-msgid "Low"
-msgstr ""
-
-#: src/CORE_weatherData.py:181
-msgctxt "pressure"
-msgid "Normal"
-msgstr ""
-
-#: src/CORE_weatherData.py:182
-msgctxt "pressure"
-msgid "High"
-msgstr ""
-
-#: src/CORE_weatherData.py:186
-msgid "Calm"
-msgstr ""
-
-#: src/CORE_weatherData.py:187
-msgid "Light"
-msgstr ""
-
-#: src/CORE_weatherData.py:188
-msgctxt "wind"
-msgid "Moderate"
-msgstr ""
-
-#: src/CORE_weatherData.py:189
-msgid "Strong"
-msgstr ""
-
-#: src/CORE_weatherData.py:190
-msgctxt "wind"
-msgid "Extreme"
-msgstr ""
-
-#: src/CORE_weatherData.py:194
-msgid "km"
-msgstr ""
-
-#: src/CORE_weatherData.py:196
-msgid "miles"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:93
-msgid "Air Pollution"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:105
-#, fuzzy
-msgid "Air Quality Components"
-msgstr "공기질"
-
-#: src/UI_CardAirPollution.py:153
-#, fuzzy
-msgid "Air Quality Index"
-msgstr "공기질"
-
-#: src/UI_CardAirPollution.py:180
-msgid "PM2.5"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:181
-msgid "PM10"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:182
-msgid "CO"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:183
-msgid "CO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:184
-msgid "NO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:185
-msgid "SO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:186
-msgid "O₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:187
-msgid "Dust"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:188
-msgid "NH₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:189
-msgid "CH₄"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:190
-msgid "Alder Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:191
-msgid "Birch Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:192
-msgid "Grass Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:193
-msgid "Mugwort Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:194
-msgid "Olive Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:195
-msgid "Ragweed Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:215
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:36
 #, python-brace-format
-msgid "Safe limit: ≤ {0} {1}"
+msgid "Thunderstorms are likely around {time}. Plan to be indoors by then."
 msgstr ""
+"{time}경 천둥번개가 칠 가능성이 높습니다. 그때까지 실내에 계시도록 계획하세"
+"요."
 
-#: src/UI_CardAirPollution.py:243
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:38
+#, python-brace-format
+msgid "Expect thunderstorms around {time}. Plan to be indoors by then."
+msgstr "{time}경 천둥번개가 예상됩니다. 그때까지 실내에 계시도록 계획하세요."
+
+#: src/CORE_OverviewMessages.py:41
+msgid "Freezing rain is likely right now. Roads and paths may be icy."
+msgstr ""
+"지금 어는 비가 내릴 가능성이 높습니다. 도로와 길이 얼어 있을 수 있습니다."
+
+#: src/CORE_OverviewMessages.py:42
+msgid "Expect freezing rain right now. Watch for icy roads and paths."
+msgstr "지금 어는 비가 예상됩니다. 얼어붙은 도로와 길을 조심하세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:46
+#, python-brace-format
+msgid "Freezing rain is likely around {time}. Roads and paths may turn icy."
+msgstr ""
+"{time}경 어는 비가 내릴 가능성이 높습니다. 도로와 길이 얼어붙을 수 있습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:48
+#, python-brace-format
+msgid "Expect freezing rain around {time}. Roads may turn icy."
+msgstr "{time}경 어는 비가 예상됩니다. 도로가 얼어붙을 수 있습니다."
+
+#: src/CORE_OverviewMessages.py:51
+msgid "Heavy rain is likely right now. Expect puddles and slow roads."
+msgstr "지금 폭우가 내릴 가능성이 높습니다. 물웅덩이와 느린 교통에 대비하세요."
+
+#: src/CORE_OverviewMessages.py:52
+msgid "Expect heavy rain right now. Allow extra travel time."
+msgstr "지금 폭우가 예상됩니다. 이동 시간을 넉넉히 잡으세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:56
+#, python-brace-format
+msgid "Heavy rain is likely around {time}. Keep an umbrella close."
+msgstr "{time}경 폭우가 내릴 가능성이 높습니다. 우산을 가까이에 두세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:58
+#, python-brace-format
+msgid "Expect heavy rain around {time}. Allow extra travel time."
+msgstr "{time}경 폭우가 예상됩니다. 이동 시간을 넉넉히 잡으세요."
+
+#: src/CORE_OverviewMessages.py:61
+msgid "Heavy snow is likely right now. Travel may be slow."
+msgstr "지금 폭설이 내릴 가능성이 높습니다. 이동이 느려질 수 있습니다."
+
+#: src/CORE_OverviewMessages.py:62
+msgid "Expect heavy snow right now. Allow extra travel time."
+msgstr "지금 폭설이 예상됩니다. 이동 시간을 넉넉히 잡으세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:66
+#, python-brace-format
+msgid "Heavy snow is likely around {time}. Travel may be slow after that."
+msgstr ""
+"{time}경 폭설이 내릴 가능성이 높습니다. 그 이후에는 이동이 느려질 수 있습니"
+"다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:68
+#, python-brace-format
+msgid "Expect heavy snow around {time}. Allow extra travel time."
+msgstr "{time}경 폭설이 예상됩니다. 이동 시간을 넉넉히 잡으세요."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:72
+#, python-brace-format
+msgid "It feels like {temp} right now. Stay hydrated and seek shade."
+msgstr "지금 체감 온도는 {temp}입니다. 수분을 충분히 섭취하고 그늘을 찾으세요."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:74
+#, python-brace-format
+msgid "It feels as hot as {temp} right now. Drink water and stay cool."
+msgstr "지금 체감 온도 {temp}, 매우 덥습니다. 물을 마시고 시원하게 지내세요."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:78
+#, python-brace-format
 msgid ""
-"AQI: US EPA Standard\n"
-"Pollutant limits: WHO Guidelines (2021)"
+"It will feel like {temp} by around {time}. Stay hydrated and seek shade."
 msgstr ""
+"{time}경 체감 온도 {temp} 예상. 수분을 충분히 섭취하고 그늘을 찾으세요."
 
-#: src/UI_CardDayNight.py:76
-msgid "Sunrise & Sunset"
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:80
+#, python-brace-format
+msgid ""
+"Expect it to feel like {temp} by around {time}. Drink water and stay cool."
+msgstr "{time}경 체감 온도 {temp} 예상. 물을 마시고 시원하게 지내세요."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:84
+#, python-brace-format
+msgid "It feels like {temp} right now. Dress warmly, in layers."
+msgstr "지금 체감 온도는 {temp}입니다. 따뜻하게, 겹쳐 입으세요."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:86
+#, python-brace-format
+msgid "It feels as cold as {temp} right now. Bundle up."
+msgstr "지금 체감 온도 {temp}, 매우 춥습니다. 따뜻하게 입으세요."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:90
+#, python-brace-format
+msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
+msgstr "{time}경 체감 온도 {temp} 예상. 따뜻하게, 겹쳐 입으세요."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:92
+#, python-brace-format
+msgid "Expect it to feel like {temp} by around {time}. Bundle up."
+msgstr "{time}경 체감 온도 {temp} 예상. 따뜻하게 입으세요."
+
+#: src/CORE_OverviewMessages.py:95
+msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
+msgstr "지금 대기질이 건강에 해롭습니다. 가능하면 야외 활동을 줄이세요."
+
+#: src/CORE_OverviewMessages.py:96
+msgid "The air is unhealthy right now. Consider staying indoors."
+msgstr "지금 공기가 건강에 해롭습니다. 실내에 머무는 것을 고려하세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:100
+#, python-brace-format
+msgid ""
+"Air quality turns unhealthy around {time}. Consider limiting time outdoors."
 msgstr ""
+"{time}경 대기질이 건강에 해로워집니다. 야외 활동을 줄이는 것을 고려하세요."
 
-#: src/UI_CardDayNight.py:87
-msgid "Sunrise"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:102
+#, python-brace-format
+msgid "Expect unhealthy air from around {time}. Limit time outdoors."
+msgstr "{time}경부터 건강에 해로운 공기가 예상됩니다. 야외 활동을 줄이세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:106
+#, python-brace-format
+msgid "UV is very high until about {time}. Use sunscreen and cover up."
 msgstr ""
+"{time}경까지 자외선이 매우 강합니다. 자외선 차단제를 바르고 몸을 가리세요."
 
-#: src/UI_CardDayNight.py:100
-msgid "Sunset"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:108
+#, python-brace-format
+msgid ""
+"The sun is very strong until about {time}. Use sunscreen and seek shade."
 msgstr ""
+"{time}경까지 햇볕이 매우 강합니다. 자외선 차단제를 바르고 그늘을 찾으세요."
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
-#: src/UI_HourlyDetails.py:52
-msgid "Wind"
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:112
+#, python-brace-format
+msgid ""
+"UV will be very high from about {start} to {end}. Use sunscreen outdoors."
 msgstr ""
+"{start}경부터 {end}경까지 자외선이 매우 강할 것입니다. 야외에서는 자외선 차단"
+"제를 바르세요."
 
-#: src/UI_HourlyDetails.py:51
-msgid "Hourly"
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:114
+#, python-brace-format
+msgid "Expect very high UV from about {start} to {end}. Cover up outdoors."
 msgstr ""
+"{start}경부터 {end}경까지 매우 강한 자외선이 예상됩니다. 야외에서는 몸을 가리"
+"세요."
 
-#: src/UI_HourlyDetails.py:53
-msgid "Precipitation"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:119
+#, python-brace-format
+msgid "Rain is likely to start around {time} with {chance}% chance."
+msgstr "{time}경 비가 시작될 가능성이 높으며, 확률은 {chance}%입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:121
+#, python-brace-format
+msgid "Expect rain from around {time}, with {chance}% chance."
+msgstr "{time}경부터 비가 예상되며, 확률은 {chance}%입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:123
+#, python-brace-format
+msgid "Rain may move in around {time} with {chance}% chance."
+msgstr "{time}경 비가 올 수 있으며, 확률은 {chance}%입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:125
+#, python-brace-format
+msgid ""
+"Showers could begin around {time} with {chance}% chance. Keep an umbrella "
+"handy."
 msgstr ""
+"{time}경 소나기가 시작될 수 있으며, 확률은 {chance}%입니다. 우산을 가까이에 "
+"두세요."
 
-#: src/UI_CardSquare.py:31
-msgid "Pressure"
-msgstr "압력"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:127
+#, python-brace-format
+msgid "There is {chance}% chance of rain starting around {time}."
+msgstr "{time}경 비가 시작될 확률은 {chance}%입니다."
 
-#: src/UI_CardSquare.py:32
-msgid "Humidity"
-msgstr "습도"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:131
+#, python-brace-format
+msgid "Snow is likely to start around {time} with {chance}% chance."
+msgstr "{time}경 눈이 시작될 가능성이 높으며, 확률은 {chance}%입니다."
 
-#: src/UI_CardSquare.py:33
-msgid "UV Index"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:133
+#, python-brace-format
+msgid "Expect snow from around {time}, with {chance}% chance."
+msgstr "{time}경부터 눈이 예상되며, 확률은 {chance}%입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:135
+#, python-brace-format
+msgid "Snow may move in around {time} with {chance}% chance."
+msgstr "{time}경 눈이 올 수 있으며, 확률은 {chance}%입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:137
+#, python-brace-format
+msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
 msgstr ""
+"{time}경 눈이 시작될 수 있으며, 확률은 {chance}%입니다. 따뜻하게 입으세요."
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
-msgid "North"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:141
+#, python-brace-format
+msgid "Rain is likely right now, easing off around {time}."
+msgstr "지금 비가 올 가능성이 높으며, {time}경 잦아들 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:143
+#, python-brace-format
+msgid "Rain should ease off around {time}."
+msgstr "비는 {time}경 잦아들 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:145
+#, python-brace-format
+msgid "Expect rain for now, clearing around {time}."
+msgstr "당분간 비가 예상되며, {time}경 맑아집니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:147
+#, python-brace-format
+msgid "It is wet for now, but the rain should stop around {time}."
+msgstr "당분간 젖어 있겠지만, 비는 {time}경 그칠 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:151
+#, python-brace-format
+msgid "Snow is likely right now, easing off around {time}."
+msgstr "지금 눈이 올 가능성이 높으며, {time}경 잦아들 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:153
+#, python-brace-format
+msgid "Snow should ease off around {time}."
+msgstr "눈은 {time}경 잦아들 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:155
+#, python-brace-format
+msgid "Expect snow for now, clearing around {time}."
+msgstr "당분간 눈이 예상되며, {time}경 맑아집니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:157
+#, python-brace-format
+msgid "It is snowy for now, but it should stop around {time}."
+msgstr "당분간 눈이 오겠지만, {time}경 그칠 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:161
+#, python-brace-format
+msgid "Rain is likely to keep falling until about {time}."
+msgstr "{time}경까지 비가 계속 내릴 가능성이 높습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:163
+#, python-brace-format
+msgid "Expect rain on and off until about {time}."
+msgstr "{time}경까지 비가 오락가락할 것으로 예상됩니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:165
+#, python-brace-format
+msgid "It looks wet until about {time}. Keep an umbrella close."
+msgstr "{time}경까지 비가 올 것 같습니다. 우산을 가까이에 두세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:167
+#, python-brace-format
+msgid "Rain should stick around until about {time}."
+msgstr "비는 {time}경까지 이어질 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:171
+#, python-brace-format
+msgid "Snow is likely to keep falling until about {time}."
+msgstr "{time}경까지 눈이 계속 내릴 가능성이 높습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:173
+#, python-brace-format
+msgid "Expect snow on and off until about {time}."
+msgstr "{time}경까지 눈이 오락가락할 것으로 예상됩니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:175
+#, python-brace-format
+msgid "It looks snowy until about {time}. Travel may be slow."
+msgstr "{time}경까지 눈이 올 것 같습니다. 이동이 느려질 수 있습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:177
+#, python-brace-format
+msgid "Snow should stick around until about {time}."
+msgstr "눈은 {time}경까지 이어질 것입니다."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:182
+#, python-brace-format
+msgid "Strong wind right now, around {speed}. Secure loose items outdoors."
 msgstr ""
+"지금 강한 바람이 불고 있습니다. 약 {speed}입니다. 야외의 느슨한 물건을 단단"
+"히 고정하세요."
 
-#: src/UI_CardSquare.py:209
-msgid "Northeast"
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:184
+#, python-brace-format
+msgid "It is windy right now, around {speed}. Hold on to your hat."
+msgstr "지금 바람이 불고 있습니다. 약 {speed}입니다. 모자를 꼭 잡으세요."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:186
+#, python-brace-format
+msgid "Wind is strong right now, around {speed}."
+msgstr "지금 바람이 강합니다. 약 {speed}입니다."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:188
+#, python-brace-format
+msgid ""
+"Expect strong wind for now, around {speed}. Secure loose items outdoors."
 msgstr ""
+"당분간 강한 바람이 예상됩니다. 약 {speed}입니다. 야외의 느슨한 물건을 단단히 "
+"고정하세요."
 
-#: src/UI_CardSquare.py:210
-msgid "East"
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:192
+#, python-brace-format
+msgid "Wind picks up to {speed} around {time}. Secure loose items outdoors."
 msgstr ""
+"{time}경 바람이 {speed}까지 강해집니다. 야외의 느슨한 물건을 단단히 고정하세"
+"요."
 
-#: src/UI_CardSquare.py:211
-msgid "Southeast"
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:194
+#, python-brace-format
+msgid "Expect stronger wind, up to {speed}, around {time}."
+msgstr "{time}경 최대 {speed}의 더 강한 바람이 예상됩니다."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:196
+#, python-brace-format
+msgid "It gets windy around {time}, up to {speed}."
+msgstr "{time}경 바람이 불며, 최대 {speed}입니다."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:198
+#, python-brace-format
+msgid "Wind should strengthen to {speed} around {time}."
+msgstr "바람은 {time}경 {speed}까지 강해질 것입니다."
+
+#: src/CORE_OverviewMessages.py:201
+msgid "It is foggy right now, with low visibility. Drive with care."
+msgstr "지금 안개가 끼어 시야가 좋지 않습니다. 조심해서 운전하세요."
+
+#: src/CORE_OverviewMessages.py:202
+msgid "Fog is cutting visibility right now. Take it slow on the roads."
+msgstr "지금 안개로 시야가 줄었습니다. 도로에서는 천천히 가세요."
+
+#: src/CORE_OverviewMessages.py:203
+msgid "Visibility is low in the fog right now. Drive with care."
+msgstr "지금 안개 속에서 시야가 좋지 않습니다. 조심해서 운전하세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:207
+#, python-brace-format
+msgid "Fog is likely around {time}, with low visibility. Drive with care."
 msgstr ""
+"{time}경 안개가 낄 가능성이 높으며 시야가 좋지 않습니다. 조심해서 운전하세요."
 
-#: src/UI_CardSquare.py:212
-msgid "South"
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:209
+#, python-brace-format
+msgid "Expect fog around {time}. Visibility may drop."
+msgstr "{time}경 안개가 예상됩니다. 시야가 줄어들 수 있습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:211
+#, python-brace-format
+msgid "Fog may roll in around {time}. Take care on the roads."
+msgstr "{time}경 안개가 밀려올 수 있습니다. 도로에서 주의하세요."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:213
+#, python-brace-format
+msgid "Visibility could drop in fog around {time}."
+msgstr "{time}경 안개로 시야가 줄어들 수 있습니다."
+
+#: src/CORE_OverviewMessages.py:216
+msgid "Fog is likely around sunrise, with low visibility. Drive with care."
 msgstr ""
+"일출 무렵 안개가 낄 가능성이 높으며 시야가 좋지 않습니다. 조심해서 운전하세"
+"요."
 
-#: src/UI_CardSquare.py:213
-msgid "Southwest"
+#: src/CORE_OverviewMessages.py:217
+msgid "Expect fog around sunrise. Visibility may drop."
+msgstr "일출 무렵 안개가 예상됩니다. 시야가 줄어들 수 있습니다."
+
+#: src/CORE_OverviewMessages.py:218
+msgid "A foggy start is likely around sunrise. Take care on the roads."
 msgstr ""
+"일출 무렵 안개 낀 아침이 시작될 가능성이 높습니다. 도로에서 주의하세요."
 
-#: src/UI_CardSquare.py:214
-msgid "West"
+#: src/CORE_OverviewMessages.py:219
+msgid "Fog may form around sunrise, cutting visibility."
+msgstr "일출 무렵 안개가 생겨 시야가 줄어들 수 있습니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:224
+#, python-brace-format
+msgid "Expect it to warm up to {temp} by around {time}."
+msgstr "{time}경 기온이 {temp}까지 오를 것으로 예상됩니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:226
+#, python-brace-format
+msgid "Temperatures climb to {temp} by around {time}."
+msgstr "{time}경 기온이 {temp}까지 올라갑니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:228
+#, python-brace-format
+msgid "It should reach {temp} by around {time}."
+msgstr "{time}경 {temp}에 이를 것입니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:230
+#, python-brace-format
+msgid "Warming up to {temp} by around {time}."
+msgstr "{time}경 {temp}까지 따뜻해집니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:234
+#, python-brace-format
+msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
 msgstr ""
+"{time}경 기온이 {temp}까지 내려갈 것으로 예상됩니다. 겉옷을 한 겹 더 준비하세"
+"요."
 
-#: src/UI_CardSquare.py:215
-msgid "Northwest"
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:236
+#, python-brace-format
+msgid "Temperatures drop to {temp} by around {time}."
+msgstr "{time}경 기온이 {temp}까지 내려갑니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:238
+#, python-brace-format
+msgid "It should cool to {temp} by around {time}. A jacket may help."
+msgstr "{time}경 {temp}까지 쌀쌀해질 것입니다. 재킷이 도움이 될 수 있습니다."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:240
+#, python-brace-format
+msgid "Cooling down to {temp} by around {time}."
+msgstr "{time}경 {temp}까지 서늘해집니다."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:245
+#, python-brace-format
+msgid "Rain is likely tomorrow with {chance}% chance, so plan ahead."
 msgstr ""
+"내일은 비가 올 가능성이 높으며 확률은 {chance}%입니다. 미리 계획하세요."
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
-#, fuzzy
-msgid "No Internet"
-msgstr "인터넷 연결 없음!"
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:247
+#, python-brace-format
+msgid "Tomorrow looks wet, with {chance}% chance of rain."
+msgstr "내일은 비가 오겠으며, 비 올 확률은 {chance}%입니다."
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
-msgstr ""
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:249
+#, python-brace-format
+msgid "Expect rain tomorrow, with {chance}% chance. Keep an umbrella ready."
+msgstr "내일 비가 예상되며 확률은 {chance}%입니다. 우산을 준비하세요."
 
-#: src/UI_CompactWeather.py:293
-#, fuzzy
-msgid "Pres."
-msgstr "압력"
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:251
+#, python-brace-format
+msgid "There is {chance}% chance of rain tomorrow."
+msgstr "내일 비 올 확률은 {chance}%입니다."
 
-#: src/UI_CompactWeather.py:297
-msgid "AQI"
-msgstr ""
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:255
+#, python-brace-format
+msgid "Tomorrow will be warmer than today, with a high of {temp}."
+msgstr "내일은 오늘보다 따뜻하며, 최고 기온은 {temp}입니다."
 
-#: src/UI_CompactWeather.py:350
-msgid "Mousam Compact"
-msgstr ""
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:257
+#, python-brace-format
+msgid "A warmer day tomorrow, reaching {temp}."
+msgstr "내일은 더 따뜻한 날로, {temp}까지 오릅니다."
 
-#: src/UI_CompDrawDayNight.py:154
-#, fuzzy
-msgid "Day"
-msgstr "5일"
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:259
+#, python-brace-format
+msgid "Tomorrow heats up, with a high of {temp}."
+msgstr "내일은 기온이 오르며, 최고 기온은 {temp}입니다."
 
-#: src/UI_CompDrawDayNight.py:154
-msgid "Night"
-msgstr ""
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:261
+#, python-brace-format
+msgid "Expect a warmer tomorrow, up to {temp}."
+msgstr "내일은 더 따뜻한 날이 예상되며, 최대 {temp}입니다."
 
-#: src/UI_CurrentCond.py:96
-#, fuzzy, python-brace-format
-msgid "Feels like • <b> {0} {1}</b>"
-msgstr "체감온도 {0:.1f}{1}"
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:265
+#, python-brace-format
+msgid "Tomorrow will be cooler than today, with a high of {temp}."
+msgstr "내일은 오늘보다 선선하며, 최고 기온은 {temp}입니다."
 
-#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
-msgid "Tomorrow"
-msgstr "내일"
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:267
+#, python-brace-format
+msgid "A cooler day tomorrow, reaching only {temp}."
+msgstr "내일은 더 선선한 날로, {temp}까지만 오릅니다."
 
-#: src/UI_Forecast.py:147
-msgid "Weekly"
-msgstr ""
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:269
+#, python-brace-format
+msgid "Tomorrow cools off, with a high of {temp}."
+msgstr "내일은 기온이 내려가며, 최고 기온은 {temp}입니다."
 
-#: src/UI_Forecast.py:316
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:271
+#, python-brace-format
+msgid "Expect a cooler tomorrow, topping out at {temp}."
+msgstr "내일은 더 선선한 날이 예상되며, 최고 기온은 {temp}입니다."
+
+#: src/CORE_OverviewMessages.py:277
+#, python-brace-format
+msgid "The sun sets in about {n} minute."
+msgid_plural "The sun sets in about {n} minutes."
+msgstr[0] "약 {n}분 후에 해가 집니다."
+
+#: src/CORE_OverviewMessages.py:283
+#, python-brace-format
+msgid "Sunset is about {n} minute away."
+msgid_plural "Sunset is about {n} minutes away."
+msgstr[0] "일몰까지 약 {n}분 남았습니다."
+
+#: src/CORE_OverviewMessages.py:289
+#, python-brace-format
+msgid "About {n} minute of daylight left."
+msgid_plural "About {n} minutes of daylight left."
+msgstr[0] "일광이 약 {n}분 남았습니다."
+
+#: src/CORE_OverviewMessages.py:295
+#, python-brace-format
+msgid "The sun goes down in about {n} minute."
+msgid_plural "The sun goes down in about {n} minutes."
+msgstr[0] "약 {n}분 후에 해가 넘어갑니다."
+
+#: src/CORE_OverviewMessages.py:303
+#, python-brace-format
+msgid "The sun rises in about {n} minute."
+msgid_plural "The sun rises in about {n} minutes."
+msgstr[0] "약 {n}분 후에 해가 뜹니다."
+
+#: src/CORE_OverviewMessages.py:309
+#, python-brace-format
+msgid "Sunrise is about {n} minute away."
+msgid_plural "Sunrise is about {n} minutes away."
+msgstr[0] "일출까지 약 {n}분 남았습니다."
+
+#: src/CORE_OverviewMessages.py:315
+#, python-brace-format
+msgid "Daylight returns in about {n} minute."
+msgid_plural "Daylight returns in about {n} minutes."
+msgstr[0] "약 {n}분 후에 일광이 돌아옵니다."
+
+#: src/CORE_OverviewMessages.py:321
+#, python-brace-format
+msgid "The sun comes up in about {n} minute."
+msgid_plural "The sun comes up in about {n} minutes."
+msgstr[0] "약 {n}분 후에 해가 떠오릅니다."
+
+#: src/CORE_OverviewMessages.py:329
+#, python-brace-format
+msgid "The sun sets in about {n} hour, at {time}."
+msgid_plural "The sun sets in about {n} hours, at {time}."
+msgstr[0] "약 {n}시간 후인 {time}에 해가 집니다."
+
+#: src/CORE_OverviewMessages.py:335
+#, python-brace-format
+msgid "Sunset is about {n} hour away, at {time}."
+msgid_plural "Sunset is about {n} hours away, at {time}."
+msgstr[0] "일몰까지 약 {n}시간 남았습니다 ({time})."
+
+#: src/CORE_OverviewMessages.py:341
+#, python-brace-format
+msgid "About {n} hour of daylight left. Sunset is at {time}."
+msgid_plural "About {n} hours of daylight left. Sunset is at {time}."
+msgstr[0] "일광이 약 {n}시간 남았습니다. 일몰은 {time}입니다."
+
+#: src/CORE_OverviewMessages.py:347
+#, python-brace-format
+msgid "The sun goes down at {time}, in about {n} hour."
+msgid_plural "The sun goes down at {time}, in about {n} hours."
+msgstr[0] "{time}에 해가 넘어갑니다. 약 {n}시간 후입니다."
+
+#: src/CORE_OverviewMessages.py:355
+#, python-brace-format
+msgid "The sun rises in about {n} hour, at {time}."
+msgid_plural "The sun rises in about {n} hours, at {time}."
+msgstr[0] "약 {n}시간 후인 {time}에 해가 뜹니다."
+
+#: src/CORE_OverviewMessages.py:361
+#, python-brace-format
+msgid "Sunrise is about {n} hour away, at {time}."
+msgid_plural "Sunrise is about {n} hours away, at {time}."
+msgstr[0] "일출까지 약 {n}시간 남았습니다 ({time})."
+
+#: src/CORE_OverviewMessages.py:367
+#, python-brace-format
+msgid "Daylight returns at {time}, in about {n} hour."
+msgid_plural "Daylight returns at {time}, in about {n} hours."
+msgstr[0] "{time}에 일광이 돌아옵니다. 약 {n}시간 후입니다."
+
+#: src/CORE_OverviewMessages.py:373
+#, python-brace-format
+msgid "The sun comes up at {time}, in about {n} hour."
+msgid_plural "The sun comes up at {time}, in about {n} hours."
+msgstr[0] "{time}에 해가 떠오릅니다. 약 {n}시간 후입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:381
+#, python-brace-format
+msgid "Conditions should stay steady until about {time}."
+msgstr "{time}경까지 상태가 안정적으로 유지될 것입니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:383
+#, python-brace-format
+msgid "No big changes expected until about {time}."
+msgstr "{time}경까지 큰 변화는 예상되지 않습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:385
+#, python-brace-format
+msgid "A quiet spell ahead, with little change until about {time}."
+msgstr "{time}경까지 변화가 거의 없는 조용한 시간이 이어집니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:387
+#, python-brace-format
+msgid "Things look settled until about {time}."
+msgstr "{time}경까지 안정적일 것 같습니다."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:389
+#, python-brace-format
+msgid "The weather should hold steady until about {time}."
+msgstr "날씨는 {time}경까지 안정적으로 유지될 것입니다."
+
+#: src/CORE_OverviewRules.py:248
+msgctxt "overview heading"
 msgid "Today"
 msgstr "오늘"
 
-#: src/UI_HourlyDetails.py:151
+#: src/CORE_OverviewRules.py:249
+msgctxt "overview heading"
+msgid "Tonight"
+msgstr "오늘 밤"
+
+#: src/CORE_OverviewRules.py:678
+msgctxt "overview heading"
+msgid "Tomorrow"
+msgstr "내일"
+
+#: src/CORE_weatherData.py:167
+msgid "Good"
+msgstr "좋음"
+
+#: src/CORE_weatherData.py:168
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:169
+msgid "Poor"
+msgstr "나쁨"
+
+#: src/CORE_weatherData.py:170
+msgid "Unhealthy"
+msgstr "건강에 해로움"
+
+#: src/CORE_weatherData.py:171
+msgid "Severe"
+msgstr "매우 나쁨"
+
+#: src/CORE_weatherData.py:172
+msgid "Hazardous"
+msgstr "위험"
+
+#: src/CORE_weatherData.py:187
+msgid "Air quality is good. A fine time to be outside."
+msgstr "대기질이 좋습니다. 야외에서 보내기 좋은 때입니다."
+
+#: src/CORE_weatherData.py:189
+msgid ""
+"Unusually sensitive people should cut back on long or intense outdoor "
+"activity."
+msgstr "특히 민감한 사람은 길거나 격렬한 야외 활동을 줄이세요."
+
+#: src/CORE_weatherData.py:191
+msgid "Sensitive groups should cut back on long or intense outdoor activity."
+msgstr "민감군은 길거나 격렬한 야외 활동을 줄이세요."
+
+#: src/CORE_weatherData.py:193
+msgid ""
+"Everyone should cut back on long or intense outdoor activity; sensitive "
+"groups should avoid it."
+msgstr "모든 사람이 길거나 격렬한 야외 활동을 줄이고, 민감군은 피하세요."
+
+#: src/CORE_weatherData.py:195
+msgid ""
+"Everyone should avoid long or intense outdoor activity; sensitive groups "
+"should stay indoors."
+msgstr ""
+"모든 사람이 길거나 격렬한 야외 활동을 피하고, 민감군은 실내에 머무르세요."
+
+#: src/CORE_weatherData.py:196
+msgid "Everyone should avoid all outdoor activity."
+msgstr "모든 사람이 모든 야외 활동을 피하세요."
+
+#: src/CORE_weatherData.py:202
+msgctxt "european aqi"
+msgid "Good"
+msgstr "좋음"
+
+#: src/CORE_weatherData.py:204
+msgctxt "european aqi"
+msgid "Fair"
+msgstr "양호"
+
+#: src/CORE_weatherData.py:206
+msgctxt "european aqi"
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:208
+msgctxt "european aqi"
+msgid "Poor"
+msgstr "나쁨"
+
+#: src/CORE_weatherData.py:210
+msgctxt "european aqi"
+msgid "Very Poor"
+msgstr "매우 나쁨"
+
+#: src/CORE_weatherData.py:211
+msgctxt "european aqi"
+msgid "Extremely Poor"
+msgstr "극도로 나쁨"
+
+#: src/CORE_weatherData.py:222
+msgctxt "pollutant level"
+msgid "Good"
+msgstr "좋음"
+
+#: src/CORE_weatherData.py:223
+msgctxt "pollutant level"
+msgid "High"
+msgstr "높음"
+
+#: src/CORE_weatherData.py:224
+msgctxt "pollutant level"
+msgid "Very High"
+msgstr "매우 높음"
+
+#: src/CORE_weatherData.py:242
+msgctxt "pollen level"
+msgid "Low"
+msgstr "낮음"
+
+#: src/CORE_weatherData.py:244
+msgctxt "pollen level"
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:246
+msgctxt "pollen level"
+msgid "High"
+msgstr "높음"
+
+#: src/CORE_weatherData.py:247
+msgctxt "pollen level"
+msgid "Very High"
+msgstr "매우 높음"
+
+#: src/CORE_weatherData.py:262
+msgctxt "uvindex"
+msgid "Low"
+msgstr "낮음"
+
+#: src/CORE_weatherData.py:263
+msgctxt "uvindex"
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:264
+msgctxt "uvindex"
+msgid "High"
+msgstr "높음"
+
+#: src/CORE_weatherData.py:265
+msgctxt "uvindex"
+msgid "Very High"
+msgstr "매우 높음"
+
+#: src/CORE_weatherData.py:266
+msgctxt "uvindex"
+msgid "Extreme"
+msgstr "극심"
+
+#: src/CORE_weatherData.py:270
+msgctxt "humidity"
+msgid "Low"
+msgstr "낮음"
+
+#: src/CORE_weatherData.py:271
+msgctxt "humidity"
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:272
+msgctxt "humidity"
+msgid "High"
+msgstr "높음"
+
+#: src/CORE_weatherData.py:279
+msgctxt "pressure"
+msgid "Low"
+msgstr "낮음"
+
+#: src/CORE_weatherData.py:280
+msgctxt "pressure"
+msgid "Normal"
+msgstr "정상"
+
+#: src/CORE_weatherData.py:281
+msgctxt "pressure"
+msgid "High"
+msgstr "높음"
+
+#: src/CORE_weatherData.py:285
+msgid "Calm"
+msgstr "고요"
+
+#: src/CORE_weatherData.py:286
+msgid "Light"
+msgstr "약함"
+
+#: src/CORE_weatherData.py:287
+msgctxt "wind"
+msgid "Moderate"
+msgstr "보통"
+
+#: src/CORE_weatherData.py:288
+msgid "Strong"
+msgstr "강함"
+
+#: src/CORE_weatherData.py:289
+msgctxt "wind"
+msgid "Extreme"
+msgstr "극심"
+
+#: src/CORE_weatherData.py:293
+msgid "km"
+msgstr "km"
+
+#: src/CORE_weatherData.py:295
+msgid "miles"
+msgstr "마일"
+
+#: src/UI_CardAirPollution.py:61
+msgid "Air Pollution"
+msgstr "대기 오염"
+
+#: src/UI_CardAirPollution.py:72
+msgid "Air Quality Details"
+msgstr "대기질 상세 정보"
+
+#: src/UI_CardDayNight.py:60
+msgid "Sunrise & Sunset"
+msgstr "일출 및 일몰"
+
+#: src/UI_CardDayNight.py:74
+msgid "Sunrise"
+msgstr "일출"
+
+#: src/UI_CardDayNight.py:74
+msgid "Sunset"
+msgstr "일몰"
+
+#: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
+#: src/UI_HourlyDetails.py:51
+msgid "Wind"
+msgstr "바람"
+
+#: src/UI_CardSquare.py:38 src/UI_CompactWeather.py:216
+msgid "Pressure"
+msgstr "압력"
+
+#: src/UI_CardSquare.py:39 src/UI_CompactWeather.py:215
+msgid "Humidity"
+msgstr "습도"
+
+#: src/UI_CardSquare.py:40
+msgid "UV Index"
+msgstr "자외선 지수"
+
+#. Translators: the high and low ends of the humidity, UV index and pressure gauges
+#: src/UI_CardSquare.py:66 src/UI_CardSquare.py:223
+msgctxt "level gauge"
+msgid "High"
+msgstr "높음"
+
+#: src/UI_CardSquare.py:67 src/UI_CardSquare.py:222
+msgctxt "level gauge"
+msgid "Low"
+msgstr "낮음"
+
+#: src/UI_CardSquare.py:234
+msgid "North"
+msgstr "북"
+
+#: src/UI_CardSquare.py:235
+msgid "Northeast"
+msgstr "북동"
+
+#: src/UI_CardSquare.py:236
+msgid "East"
+msgstr "동"
+
+#: src/UI_CardSquare.py:237
+msgid "Southeast"
+msgstr "남동"
+
+#: src/UI_CardSquare.py:238
+msgid "South"
+msgstr "남"
+
+#: src/UI_CardSquare.py:239
+msgid "Southwest"
+msgstr "남서"
+
+#: src/UI_CardSquare.py:240
+msgid "West"
+msgstr "서"
+
+#: src/UI_CardSquare.py:241
+msgid "Northwest"
+msgstr "북서"
+
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
+msgid "No Internet"
+msgstr "인터넷 연결 없음"
+
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:232
+msgid "Retry"
+msgstr "다시 시도"
+
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:239
+msgid "Please check your connection."
+msgstr "연결을 확인하세요."
+
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
+msgid "Fetch Error"
+msgstr "가져오기 오류"
+
+#: src/UI_CompactWeather.py:218
+msgid "AQI"
+msgstr "AQI"
+
+#. Translators: strftime format of the date in compact mode ("6 November")
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr "%B %-d일"
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr "컴팩트 모드 나가기"
+
+#: src/UI_CompactWeather.py:293
+msgid "Mousam Compact"
+msgstr "Mousam 컴팩트"
+
+#. Translators: the line in the sun's path where the sun rises and sets
+#: src/UI_CompDrawDayNight.py:124
+msgid "Horizon"
+msgstr "지평선"
+
+#: src/UI_CompDrawDayNight.py:187
+msgid "Day"
+msgstr "낮"
+
+#: src/UI_CompDrawDayNight.py:187
+msgid "Night"
+msgstr "밤"
+
+#. Translators: lowest and highest value of the air quality graph
+#: src/UI_CompDrawLineGraph.py:43
+#, python-brace-format
+msgid "Max {max} · Min {min}"
+msgstr "최고 {max} · 최저 {min}"
+
+#. Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
+#: src/UI_CurrentCond.py:129
+#, python-brace-format
+msgid "H {high} · L {low}"
+msgstr "최고 {high} · 최저 {low}"
+
+#. Translators: {0} is a temperature, like "22°"
+#: src/UI_CurrentCond.py:147
+#, python-brace-format
+msgid "Feels like {0}"
+msgstr "체감 {0}"
+
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:121
+msgid "Show Overview"
+msgstr "개요 표시"
+
+#. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
+#: src/UI_CurrentCond.py:362
+msgctxt "current date"
+msgid "%A, %-d %b"
+msgstr "%A, %b %-d일"
+
+#: src/UI_Forecast.py:158 src/UI_Forecast.py:426
+msgid "Tomorrow"
+msgstr "내일"
+
+#: src/UI_Forecast.py:166
+msgid "Weekly"
+msgstr "주간"
+
+#. Translators: tooltip on the day's temperature range bar; {low} and
+#. {high} are temperatures with their unit sign, like "15°"
+#: src/UI_Forecast.py:376
+#, python-brace-format
+msgid "Low {low}, high {high}"
+msgstr "최저 {low}, 최고 {high}"
+
+#: src/UI_Forecast.py:424
+msgid "Today"
+msgstr "오늘"
+
+#: src/UI_Forecast.py:448
+#, python-brace-format
+msgid "Chance of snow: {percent}%"
+msgstr "눈 올 확률: {percent}%"
+
+#: src/UI_Forecast.py:450
+#, python-brace-format
+msgid "Chance of rain: {percent}%"
+msgstr "비 올 확률: {percent}%"
+
+#: src/UI_Forecast.py:481
+#, python-brace-format
+msgid "Light snow: {amount}"
+msgstr "약한 눈: {amount}"
+
+#: src/UI_Forecast.py:482
+#, python-brace-format
+msgid "Moderate snow: {amount}"
+msgstr "보통 눈: {amount}"
+
+#: src/UI_Forecast.py:483
+#, python-brace-format
+msgid "Heavy snow: {amount}"
+msgstr "강한 눈: {amount}"
+
+#: src/UI_Forecast.py:484
+#, python-brace-format
+msgid "Very heavy snow: {amount}"
+msgstr "매우 강한 눈: {amount}"
+
+#: src/UI_Forecast.py:501
+#, python-brace-format
+msgid "Light rain: {amount}"
+msgstr "약한 비: {amount}"
+
+#: src/UI_Forecast.py:502
+#, python-brace-format
+msgid "Moderate rain: {amount}"
+msgstr "보통 비: {amount}"
+
+#: src/UI_Forecast.py:503
+#, python-brace-format
+msgid "Heavy rain: {amount}"
+msgstr "강한 비: {amount}"
+
+#: src/UI_Forecast.py:504
+#, python-brace-format
+msgid "Violent rain: {amount}"
+msgstr "폭우: {amount}"
+
+#: src/UI_HourlyDetails.py:50
+msgid "Hourly"
+msgstr "시간별"
+
+#: src/UI_HourlyDetails.py:52 src/windowPreferences.py:65
+msgid "Precipitation"
+msgstr "강수량"
+
+#: src/UI_HourlyDetails.py:150
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr ""
+msgstr "일 최고 •"
 
-#: src/UI_HourlyDetails.py:157
+#: src/UI_HourlyDetails.py:156
 msgctxt "wind"
 msgid "Day High •"
-msgstr ""
+msgstr "일 최고 •"
 
-#: src/UI_HourlyDetails.py:168
+#: src/UI_HourlyDetails.py:167
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr ""
+msgstr "일 최고 •"
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:245
 msgid "Now"
-msgstr ""
-
-#: src/UI_HourlyDetails.py:285
-msgid "No precipitation today !"
-msgstr ""
-
-#: src/UI_HourlyDetails.py:286
-msgid "No precipitation expected today!"
-msgstr ""
+msgstr "지금"
 
 #: src/UI_HourlyDetails.py:287
-msgid "Anticipate a precipitation-free day !"
-msgstr ""
+msgid "No precipitation today !"
+msgstr "오늘은 강수가 없습니다!"
 
 #: src/UI_HourlyDetails.py:288
-msgid "Enjoy a rain-free day today!"
-msgstr ""
+msgid "No precipitation expected today!"
+msgstr "오늘은 강수가 예상되지 않습니다!"
 
 #: src/UI_HourlyDetails.py:289
-msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr ""
+msgid "Anticipate a precipitation-free day !"
+msgstr "강수 없는 하루가 예상됩니다!"
 
 #: src/UI_HourlyDetails.py:290
+msgid "Enjoy a rain-free day today!"
+msgstr "오늘은 비 없는 하루를 즐기세요!"
+
+#: src/UI_HourlyDetails.py:291
+msgid "Umbrella status: resting. No precipitation in sight !"
+msgstr "우산 상태: 휴식 중. 강수 소식이 없습니다!"
+
+#: src/UI_HourlyDetails.py:292
 msgid "No rain in sight today!"
-msgstr ""
+msgstr "오늘은 비 소식이 없습니다!"
 
-#: src/mousam.py:83
+#: src/mousam.py:89
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "디버그 모드 켜짐"
 
-#: src/mousam.py:84
+#: src/mousam.py:90
 msgid "View Logs"
-msgstr ""
+msgstr "로그 보기"
 
-#: src/mousam.py:88
+#: src/mousam.py:94
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "디버그 모드 꺼짐"
 
-#: src/mousam.py:125
-#, fuzzy
+#: src/mousam.py:131
 msgid "Refresh weather"
-msgstr "새로고침"
+msgstr "날씨 새로 고침"
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:146 src/windowLocations.py:404 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "위치"
 
-#: src/mousam.py:146
+#: src/mousam.py:152
 msgid "Compact Mode"
-msgstr ""
+msgstr "컴팩트 모드"
 
-#: src/mousam.py:172 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "설정"
 
-#: src/mousam.py:173 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "키보드 단축키"
 
-#: src/mousam.py:174
+#: src/mousam.py:181
 msgid "About Mousam"
-msgstr ""
+msgstr "Mousam 정보"
 
-#: src/mousam.py:175 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
-msgstr ""
+msgstr "종료"
 
-#: src/mousam.py:279
-msgid "Direction"
-msgstr ""
+#. Translators: wind direction is where the wind blows from
+#: src/mousam.py:298
+msgid "Direction (from)"
+msgstr "풍향 (불어오는 방향)"
 
-#: src/mousam.py:293
+#. Translators: "North" on the wind direction compass, as short as possible
+#: src/mousam.py:301
+msgctxt "compass"
+msgid "N"
+msgstr "북"
+
+#: src/mousam.py:312
 msgid "Dewpoint"
-msgstr ""
-
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
-msgstr ""
-
-#: src/mousam.py:364
-msgid "Getting Weather Data"
-msgstr ""
-
-#: src/mousam.py:371
-msgid "Welcome to Mousam"
-msgstr ""
+msgstr "이슬점"
 
 #: src/mousam.py:372
+msgid "Getting Weather Data"
+msgstr "날씨 데이터를 가져오는 중"
+
+#: src/mousam.py:379
+msgid "Welcome to Mousam"
+msgstr "Mousam에 오신 것을 환영합니다"
+
+#: src/mousam.py:380
 msgid "Add a location to get started."
-msgstr ""
+msgstr "시작하려면 위치를 추가하세요."
 
-#: src/mousam.py:373
-#, fuzzy
+#: src/mousam.py:381 src/windowLocations.py:430
 msgid "Add Location"
-msgstr "새로운 위치 추가"
+msgstr "위치 추가"
 
-#: src/mousam.py:387
-msgid "Retry"
+#: src/windowAirQuality.py:19
+msgid "PM2.5"
+msgstr "PM2.5"
+
+#: src/windowAirQuality.py:20
+msgid "PM10"
+msgstr "PM10"
+
+#: src/windowAirQuality.py:21
+msgid "NO₂"
+msgstr "NO₂"
+
+#: src/windowAirQuality.py:22
+msgid "O₃"
+msgstr "O₃"
+
+#: src/windowAirQuality.py:23
+msgid "SO₂"
+msgstr "SO₂"
+
+#: src/windowAirQuality.py:24
+msgid "CO"
+msgstr "CO"
+
+#: src/windowAirQuality.py:28
+msgid "CO₂"
+msgstr "CO₂"
+
+#: src/windowAirQuality.py:29
+msgid "CH₄"
+msgstr "CH₄"
+
+#: src/windowAirQuality.py:30
+msgid "NH₃"
+msgstr "NH₃"
+
+#: src/windowAirQuality.py:31
+msgid "Dust"
+msgstr "먼지"
+
+#: src/windowAirQuality.py:34
+msgid "Alder"
+msgstr "오리나무"
+
+#: src/windowAirQuality.py:35
+msgid "Birch"
+msgstr "자작나무"
+
+#: src/windowAirQuality.py:36
+msgid "Grass"
+msgstr "잔디"
+
+#: src/windowAirQuality.py:37
+msgid "Mugwort"
+msgstr "쑥"
+
+#: src/windowAirQuality.py:38
+msgid "Olive"
+msgstr "올리브"
+
+#: src/windowAirQuality.py:39
+msgid "Ragweed"
+msgstr "돼지풀"
+
+#: src/windowAirQuality.py:71 src/windowAirQuality.py:80
+msgid "Air Quality"
+msgstr "대기질"
+
+#: src/windowAirQuality.py:101
+msgid ""
+"AQI by the US EPA; limits from the WHO guidelines (2021). Data by Open-Meteo."
 msgstr ""
+"미국 EPA 기준 AQI, 한도는 WHO 지침(2021) 기준. 데이터 제공: Open-Meteo."
 
-#: src/windowAbout.py:20
-#, fuzzy
-msgid "Copyright © 2024 Mousam Developers"
-msgstr "Copyright © 2023 Weather Developers"
+#: src/windowAirQuality.py:152
+msgid "No air quality data for now."
+msgstr "현재 대기질 데이터가 없습니다."
 
-#: src/windowAbout.py:24
+#. Translators: the European AQI beside the US one; {aqi} is its
+#. value and {level} its level name ("Fair")
+#: src/windowAirQuality.py:167
+#, python-brace-format
+msgid "US AQI · EU AQI {aqi}, {level}"
+msgstr "미국 AQI · EU AQI {aqi}, {level}"
+
+#: src/windowAirQuality.py:170
+msgid "US AQI"
+msgstr "미국 AQI"
+
+#. Translators: {name} is a pollutant, like "PM2.5"
+#: src/windowAirQuality.py:177
+#, python-brace-format
+msgid "Main pollutant: {name}"
+msgstr "주요 오염 물질: {name}"
+
+#: src/windowAirQuality.py:191
+msgid "Trend"
+msgstr "추세"
+
+#: src/windowAirQuality.py:191
+msgid "Last 3 days and next 3 days"
+msgstr "최근 3일 및 향후 3일"
+
+#: src/windowAirQuality.py:205
+msgid "Pollutants"
+msgstr "오염 물질"
+
+#: src/windowAirQuality.py:214
+msgid "More Pollutants"
+msgstr "기타 오염 물질"
+
+#: src/windowAirQuality.py:227
+msgid "Pollen"
+msgstr "꽃가루"
+
+#. Translators: the WHO guideline for a pollutant; {limit} is a
+#. number and {unit} its unit, like "μg/m³"
+#: src/windowAirQuality.py:246
+#, python-brace-format
+msgid "WHO limit {limit} {unit}"
+msgstr "WHO 한도 {limit} {unit}"
+
+#: src/windowAbout.py:37
+msgid "Copyright © 2023–2026 Mousam Developers"
+msgstr "저작권 © 2023–2026 Mousam 개발자"
+
+#. Translators: replace with your name (and email or link), one per line
+#: src/windowAbout.py:39
 msgid "translator-credits"
 msgstr ""
 
-#: src/windowLocations.py:54
+#: src/windowAbout.py:43
+msgid "Source Code"
+msgstr "소스 코드"
+
+#: src/windowAbout.py:44
+msgid "Contributors"
+msgstr "기여자"
+
+#: src/windowAbout.py:45
+msgid "Help Translate"
+msgstr "번역 돕기"
+
+#: src/windowAbout.py:46
+msgid "Buy Me a Coffee"
+msgstr "커피 한 잔 사 주기"
+
+#: src/windowAbout.py:49 src/windowAbout.py:62
+msgid "Weather Data"
+msgstr "날씨 데이터"
+
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:108
+msgid "Weather Icons"
+msgstr "날씨 아이콘"
+
+#. Translators: {owner} is a name, {license} a link, keep the tag as it is
+#: src/windowAbout.py:60
+#, python-brace-format
+msgid "© {owner}, licensed under {license}"
+msgstr "© {owner}, {license} 라이선스"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:80
+#, python-brace-format
+msgid "Default icons: {name}"
+msgstr "기본 아이콘: {name}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:90
+#, python-brace-format
+msgid "Material icons: {name}"
+msgstr "Material 아이콘: {name}"
+
+#: src/windowAbout.py:93
+msgid "All rights belong to Google. Collected by Darren Griffin."
+msgstr "모든 권리는 Google에 있습니다. Darren Griffin이 수집했습니다."
+
+#: src/windowLocations.py:145
 msgid "Add New Location"
 msgstr "새로운 위치 추가"
 
-#: src/windowLocations.py:70
-msgid "Search for a city"
-msgstr "도시 검색"
+#: src/windowLocations.py:181
+msgid "Search cities, e.g. Kochi"
+msgstr "도시 검색(예: Kochi)"
 
-#: src/windowLocations.py:84
-#, fuzzy
-msgid "Search for your city..."
-msgstr "도시 검색"
+#: src/windowLocations.py:209
+msgid "Show More"
+msgstr "더 보기"
 
-#: src/windowLocations.py:106
-#, fuzzy
-msgid "No cities found."
-msgstr "결과가 없습니다!"
+#: src/windowLocations.py:229
+msgid "Search for Your City"
+msgstr "도시를 검색하세요"
 
-#: src/windowLocations.py:144
-#, fuzzy
+#: src/windowLocations.py:238
+msgid "Couldn't Search for Cities"
+msgstr "도시를 검색할 수 없습니다"
+
+#: src/windowLocations.py:346
+msgid "No Cities Found"
+msgstr "도시를 찾을 수 없습니다"
+
+#: src/windowLocations.py:347
+msgid "Check the spelling or try a nearby city."
+msgstr "철자를 확인하거나 근처 도시를 시도해 보세요."
+
+#: src/windowLocations.py:385
+msgid "Already saved"
+msgstr "이미 저장됨"
+
+#: src/windowLocations.py:427
 msgid "Saved Locations"
-msgstr "위치"
+msgstr "저장된 위치"
 
-#: src/windowLocations.py:146
-msgid "Add"
-msgstr "추가"
+#: src/windowLocations.py:502
+msgid "Remove"
+msgstr "제거"
 
-#: src/windowLocations.py:201
-#, fuzzy
+#: src/windowLocations.py:548
+msgid "Drag to reorder, or press Alt+Up / Alt+Down"
+msgstr "끌어서 순서를 바꾸거나 Alt+위쪽 / Alt+아래쪽을 누르세요"
+
+#: src/windowLocations.py:620
 msgid "Location already exists"
-msgstr "도시가 이미 추가되어있습니다!"
+msgstr "이미 있는 위치입니다"
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:638
+#, python-brace-format
 msgid "Switched to {}"
-msgstr ""
+msgstr "전환됨: {}"
 
-#: src/windowPreferences.py:30
-#, fuzzy
-msgid "Weather Preferences"
-msgstr "설정"
+#: src/windowPreferences.py:35 src/windowPreferences.py:52
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "일반"
 
 #: src/windowPreferences.py:44
+msgid "Advanced"
+msgstr "고급"
+
+#: src/windowPreferences.py:56
+msgid "Units"
+msgstr "단위"
+
+#: src/windowPreferences.py:57
+msgid "Metric (°C, km/h) or Imperial (°F, mph)"
+msgstr "미터법(°C, km/h) 또는 야드파운드법(°F, mph)"
+
+#: src/windowPreferences.py:59
+msgid "Metric"
+msgstr "미터법"
+
+#: src/windowPreferences.py:59
+msgid "Imperial"
+msgstr "야드파운드법"
+
+#: src/windowPreferences.py:66
+msgid "Unit of the hourly precipitation graph"
+msgstr "시간별 강수량 그래프의 단위"
+
+#. Translators: short unit names for millimetres and inches
+#: src/windowPreferences.py:69
+msgid "mm"
+msgstr "mm"
+
+#: src/windowPreferences.py:69
+msgid "in"
+msgstr "in"
+
+#: src/windowPreferences.py:75
+msgid "Time Format"
+msgstr "시간 형식"
+
+#: src/windowPreferences.py:78
+msgid "24-hour"
+msgstr "24시간"
+
+#: src/windowPreferences.py:78
+msgid "AM/PM"
+msgstr "AM/PM"
+
+#: src/windowPreferences.py:85
+msgid "Run in Background"
+msgstr "백그라운드에서 실행"
+
+#: src/windowPreferences.py:86
+msgid "Keep Mousam running when its window is closed"
+msgstr "창을 닫아도 Mousam을 계속 실행"
+
+#: src/windowPreferences.py:95
 msgid "Appearance"
 msgstr "모양"
 
-#: src/windowPreferences.py:59
-msgid "Advanced"
-msgstr ""
-
-#: src/windowPreferences.py:64
-msgid "Logging &amp; Debugging"
-msgstr ""
-
-#: src/windowPreferences.py:74
-msgid "Icon Theme"
-msgstr ""
-
-#: src/windowPreferences.py:75
-msgid "Choose between Default and Material design weather icons"
-msgstr ""
-
-#: src/windowPreferences.py:85
-msgid "Default"
-msgstr ""
-
-#: src/windowPreferences.py:90
-msgid "Material"
-msgstr ""
-
-#: src/windowPreferences.py:105
+#: src/windowPreferences.py:98
 msgid "Dynamic Background"
 msgstr "동적 배경"
 
-#: src/windowPreferences.py:107
-#, fuzzy
-msgid "App background changes based on current weather conditions"
-msgstr "배경이 현재 날씨에 따라 바뀝니다 (재시작 팔요)"
+#: src/windowPreferences.py:99
+msgid "Change the background to match the current weather"
+msgstr "현재 날씨에 맞게 배경 바꾸기"
 
-#: src/windowPreferences.py:121
-msgid "Time Format"
-msgstr ""
+#: src/windowPreferences.py:111
+msgid "Default"
+msgstr "기본"
+
+#: src/windowPreferences.py:111
+msgid "Material"
+msgstr "Material"
+
+#: src/windowPreferences.py:118
+msgid "Weather Overview"
+msgstr "날씨 개요"
 
 #: src/windowPreferences.py:122
-msgid "Weather time format"
-msgstr ""
+msgid "A short summary of the coming hours"
+msgstr "앞으로 몇 시간에 대한 간단한 요약"
 
-#: src/windowPreferences.py:132
-msgid "24 Hour"
-msgstr ""
+#: src/windowPreferences.py:130
+msgid "Notifications"
+msgstr "알림"
 
-#: src/windowPreferences.py:137
-msgid "AM / PM"
-msgstr ""
+#: src/windowPreferences.py:131
+msgid ""
+"Send the overview as a notification while the window is minimized or in "
+"compact mode"
+msgstr "창이 최소화되었거나 컴팩트 모드일 때 개요를 알림으로 보내기"
 
-#: src/windowPreferences.py:153
-msgid "Auto Refresh"
-msgstr ""
+#: src/windowPreferences.py:140
+msgid "Logging and Debugging"
+msgstr "로깅 및 디버깅"
 
-#: src/windowPreferences.py:154
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+#: src/windowPreferences.py:143
+msgid "Debug Mode"
+msgstr "디버그 모드"
 
-#: src/windowPreferences.py:171
-#, fuzzy
-msgid "Show Notifications"
-msgstr "위치"
+#: src/windowPreferences.py:144
+msgid "Enable verbose logging and console output"
+msgstr "상세 로깅과 콘솔 출력 사용"
+
+#: src/windowPreferences.py:152
+msgid "Open Logs Folder"
+msgstr "로그 폴더 열기"
+
+#: src/windowPreferences.py:161
+msgid "Clear Log File"
+msgstr "로그 파일 지우기"
+
+#: src/windowPreferences.py:162
+msgid "Delete all contents of the current log file"
+msgstr "현재 로그 파일의 모든 내용 삭제"
+
+#: src/windowPreferences.py:165
+msgid "Clear"
+msgstr "지우기"
 
 #: src/windowPreferences.py:172
-msgid "Show notification when weather is refreshed automatically"
-msgstr ""
-
-#: src/windowPreferences.py:187
-msgid "Units &amp; Measurements"
-msgstr "단위"
-
-#: src/windowPreferences.py:192
-msgid "System Unit"
-msgstr ""
-
-#: src/windowPreferences.py:193
-msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
-
-#: src/windowPreferences.py:204
-msgid "Metric"
-msgstr ""
-
-#: src/windowPreferences.py:209
-msgid "Imperial"
-msgstr ""
-
-#: src/windowPreferences.py:227
-msgid "Precipitation in inches"
-msgstr ""
-
-#: src/windowPreferences.py:228
-msgid "This option works better in heavy precipitation"
-msgstr ""
-
-#: src/windowPreferences.py:242
 msgid "Data Management"
-msgstr ""
+msgstr "데이터 관리"
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:175
 msgid "Reset to Default"
-msgstr ""
+msgstr "기본값으로 재설정"
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:176
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "모든 설정을 지우고 기본값으로 복원"
 
-#: src/windowPreferences.py:251
+#: src/windowPreferences.py:179
 msgid "Reset…"
-msgstr ""
+msgstr "재설정…"
 
-#: src/windowPreferences.py:260
-msgid "Debug Mode"
-msgstr ""
+#: src/windowPreferences.py:230
+msgid "Auto Refresh"
+msgstr "자동 새로 고침"
 
-#: src/windowPreferences.py:261
-msgid "Enable verbose logging and console output"
-msgstr ""
-
-#: src/windowPreferences.py:274
-msgid "Open Logs Folder"
-msgstr ""
-
-#: src/windowPreferences.py:275
-msgid "Access the application log files"
-msgstr ""
-
-#: src/windowPreferences.py:288
-msgid "Clear Log File"
-msgstr ""
-
-#: src/windowPreferences.py:289
-msgid "Delete all contents of the current log file"
-msgstr ""
-
-#: src/windowPreferences.py:340
-msgid "Icon theme changed to {}"
-msgstr ""
-
-#: src/windowPreferences.py:349
-#, fuzzy
-msgid "Switched to - {}"
-msgstr "{} 선택"
-
-#: src/windowPreferences.py:368
+#: src/windowPreferences.py:329
 msgid "Logs cleared"
-msgstr ""
+msgstr "로그를 지웠습니다"
 
-#: src/windowPreferences.py:370
+#: src/windowPreferences.py:331
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "로그를 지우지 못했습니다"
 
-#: src/windowPreferences.py:381
-msgid "Auto refresh disabled"
-msgstr ""
-
-#: src/windowPreferences.py:383
-msgid "Auto refresh every {} min"
-msgstr ""
-
-#: src/windowPreferences.py:390
+#: src/windowPreferences.py:341
 msgid "Reset Settings?"
-msgstr ""
+msgstr "설정을 재설정할까요?"
 
-#: src/windowPreferences.py:392
+#: src/windowPreferences.py:343
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
+"모든 설정이 기본값으로 복원되고 저장된 도시가 삭제됩니다. 이 작업은 되돌릴 "
+"수 없습니다."
 
-#: src/windowPreferences.py:396
+#: src/windowPreferences.py:347
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
-#: src/windowPreferences.py:397
+#: src/windowPreferences.py:348
 msgid "Reset"
-msgstr ""
+msgstr "재설정"
 
-#: src/windowPreferences.py:438
+#: src/windowPreferences.py:372
 msgid "Preferences have been reset"
-msgstr ""
-
-#: src/shortcutsDialog.ui:29
-msgid "General"
-msgstr ""
+msgstr "설정이 재설정되었습니다"
 
 #: src/shortcutsDialog.ui:33
-#, fuzzy
 msgid "Refresh Weather"
-msgstr "새로고침"
+msgstr "날씨 새로 고침"
 
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
-msgstr ""
-
-#~ msgid "N"
-#~ msgstr "북"
-
-#~ msgid "°C"
-#~ msgstr "°C"
-
-#, fuzzy
-#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "섭씨, km/h, 킬로미터 단위를 사용하는 미터법"
-
-#~ msgid "°F"
-#~ msgstr "°F"
-
-#, fuzzy
-#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
-#~ msgstr "화씨, mph, 마일 단위를 사용하는 야드파운드법"
-
-#, fuzzy
-#~ msgid "Switching locations within 2 seconds is ignored"
-#~ msgstr "5초 이내 새로고침 무시!"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "위치"
-
-#, fuzzy
-#~ msgid "Refreshed Successfully"
-#~ msgstr "저장 성공"
-
-#~ msgid "Refresh within 5 seconds is ignored!"
-#~ msgstr "5초 이내 새로고침 무시!"
-
-#~ msgid "Refreshing..."
-#~ msgstr "새로고침 중…"
-
-#~ msgid "Remove location"
-#~ msgstr "위치 제거"
-
-#, fuzzy
-#~ msgid "Switch city within 2 seconds is ignored!"
-#~ msgstr "5초 이내 새로고침 무시!"
-
-#~ msgid "Selected - {}"
-#~ msgstr "{} 선택"
-
-#~ msgid "Search"
-#~ msgstr "검색"
-
-#, python-brace-format
-#~ msgid "Added - {0}"
-#~ msgstr "{0}추가"
-
-#, fuzzy, python-brace-format
-#~ msgid "Deleted - {0}"
-#~ msgstr "{} 선택"
-
-#, python-brace-format
-#~ msgid "{0}%"
-#~ msgstr "{0}%"
-
-#, python-brace-format
-#~ msgid "{0} hPa"
-#~ msgstr "{0} hPa"
-
-#~ msgid "Wind speed"
-#~ msgstr "풍속"
-
-#, python-brace-format
-#~ msgid "{0:.1f} {1} {2}"
-#~ msgstr "{0:.1f} {1} {2}"
-
-#~ msgid "Visibility"
-#~ msgstr "가시거리"
-
-#~ msgid "rain in next 1 hour"
-#~ msgstr "1시간 이내 비"
-
-#~ msgid "snow in next 1 hour"
-#~ msgstr "1시간 이내 눈"
-
-#~ msgid "No snow for atleast 1 hour"
-#~ msgstr "1시간 이내 눈 없음"
-
-#~ msgid "No rain/snow for atleast 1 hour"
-#~ msgstr "1시간 이내 비나 눈 없음"
-
-#~ msgid "No rain for atleast 1 hour"
-#~ msgstr "1시간 이내 비 없음"
-
-#~ msgid "AM"
-#~ msgstr "오전"
-
-#~ msgid "PM"
-#~ msgstr "오후"
-
-#, python-brace-format
-#~ msgid "{0:.1f} {1}"
-#~ msgstr "{0:.1f} {1}"
-
-#, python-brace-format
-#~ msgid "{0:.0f}°"
-#~ msgstr "{0:.0f}°"
-
-#~ msgid "Request timeout!"
-#~ msgstr "요청시간 초과!"
-
-#~ msgid "No internet connection!"
-#~ msgstr "인터넷 연결 없음!"
-
-#~ msgid "NNE"
-#~ msgstr "북북동"
-
-#~ msgid "NE"
-#~ msgstr "북동"
-
-#~ msgid "ENE"
-#~ msgstr "동북동"
-
-#~ msgid "E"
-#~ msgstr "동"
-
-#~ msgid "ESE"
-#~ msgstr "동남동"
-
-#~ msgid "SE"
-#~ msgstr "남동"
-
-#~ msgid "SSE"
-#~ msgstr "남남동"
-
-#~ msgid "S"
-#~ msgstr "남"
-
-#~ msgid "SSW"
-#~ msgstr "남남서"
-
-#~ msgid "SW"
-#~ msgstr "남서"
-
-#~ msgid "WSW"
-#~ msgstr "서남서"
-
-#~ msgid "W"
-#~ msgstr "서"
-
-#~ msgid "WNW"
-#~ msgstr "서북서"
-
-#~ msgid "NW"
-#~ msgstr "북서"
-
-#~ msgid "NNW"
-#~ msgstr "북북서"
-
-#~ msgid "About Weather"
-#~ msgstr "날씨에 대해"
-
-#~ msgid "Weather"
-#~ msgstr "날씨"
-
-#~ msgid "Beautiful and light weight weather app build using Gtk and python"
-#~ msgstr "Gtk와 python으로 만들어진 아름답고 가벼운 날씨 앱"
-
-#~ msgid "Misc"
-#~ msgstr "기타"
-
-#~ msgid "Personal API Key"
-#~ msgstr "개인 API 키"
-
-#~ msgid "Use your personal api key from openweathermap.org (Restart Required)"
-#~ msgstr "openweathermap.org의 개인 API 키를 사용 (재시작 필요)"
-
-#~ msgid "API Key"
-#~ msgstr "API 키"
-
-#~ msgid "Save"
-#~ msgstr "저장"
-
-#~ msgid "Enter your api-key"
-#~ msgstr "api 키 입력"
-
-#~ msgid "Active"
-#~ msgstr "활성"
-
-#~ msgid "Invalid Key"
-#~ msgstr "유효하지 않은 키"
-
-#, python-brace-format
-#~ msgid "Removed - {0}"
-#~ msgstr "{0} 제거"
+msgstr "탐색"

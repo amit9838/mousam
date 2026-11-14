@@ -1,14 +1,17 @@
+# NOTE: Some strings in this file are machine translated. Human review is required.
+#
+# TODO: Remove the NOTE above once the translation has been reviewed.
+#
 # Romanian translation for Mousam.
 # Copyright (C) 2023 io.github.amit9838.weather'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # George Scutelnicu <george.v.scutelnicu@gmail.com>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-14 19:44+0530\n"
 "PO-Revision-Date: 2024-05-15 14:04+0000\n"
 "Last-Translator: Scutelnicu George <george.v.scutelnicu@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -16,26 +19,35 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);\n"
+"20)) ? 1 : 2);\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:5
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+#: data/io.github.amit9838.mousam.desktop.in:4
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:35
 msgid "Weather at a glance"
-msgstr ""
+msgstr "Vremea dintr-o privire"
 
-#: data/io.github.amit9838.mousam.desktop.in:10
-#, fuzzy
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr "Vreme;Mousam;Ploaie;Nor;Prognoză"
+#: data/io.github.amit9838.mousam.desktop.in:9
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
+msgstr ""
+"Vreme;Prognoză;Temperatură;Ploaie;Vânt;Calitatea aerului;GTK4;Python;Mousam;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-#, fuzzy
-msgid "Current Weather conditions and forecasts."
-msgstr "Condițiile meteorologice actuale și prognoze."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
+msgstr ""
+"Mousam afișează vremea actuală și prognozele pentru locurile care contează "
+"pentru dumneavoastră, cu grafice orare și pe 7 zile, calitatea aerului și o "
+"scurtă prezentare a orelor următoare. Toate datele provin de la Open-Meteo, "
+"fără niciun cont."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -43,65 +55,78 @@ msgstr "Caracteristici:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
+"Current temperature, feels like, humidity, wind, pressure, UV index, dew "
+"point and visibility"
 msgstr ""
-"Afișează temperatura în timp real, umiditatea, viteza vântului, indicele UV, "
-"presiunea și multe altele"
+"Temperatură actuală, temperatură resimțită, umiditate, vânt, presiune, "
+"indice UV, punct de rouă și vizibilitate"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid "Comprehensive Air Quality Index and air pollutants data"
+msgid ""
+"A one-line overview of the coming hours, such as when rain starts, also sent "
+"as a notification while the window is out of sight"
 msgstr ""
+"O prezentare pe un singur rând a orelor următoare, de exemplu când începe "
+"ploaia, trimisă și ca notificare când fereastra nu este vizibilă"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgid "Hourly temperature, wind and precipitation graphs"
+msgstr "Grafice orare pentru temperatură, vânt și precipitații"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
-msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Oferă prognoze pentru ziua următoare și pentru următoarele 7 zile"
+msgid ""
+"Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow"
+msgstr ""
+"Prognoze pentru mâine și pe 7 zile, cu intervale de temperatură și șanse de "
+"ploaie și ninsoare"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
-msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgid "Air quality (US and EU AQI) with pollutants, pollen and health advice"
 msgstr ""
+"Calitatea aerului (AQI american și european) cu poluanți, polen și sfaturi "
+"pentru sănătate"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
-msgid "Hourly temperature, wind direction and precipitation tracking"
-msgstr ""
+msgid "The sun's path through the day, moon phase and twilight"
+msgstr "Traseul soarelui în timpul zilei, faza lunii și crepusculul"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
-msgid "Dynamic background styling that adapts to weather conditions"
+msgid ""
+"Saved locations with their weather and local time, in the order you choose"
 msgstr ""
-"Schimbări de fundal în funcție de starea vremii actuale (Repornire necesară)"
+"Locații salvate, cu vremea și ora locală, în ordinea aleasă de dumneavoastră"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
-msgid "System notifications for weather updates with configurable preferences"
-msgstr ""
+msgid "Compact mode for a minimal, focused view"
+msgstr "Mod compact pentru o vizualizare minimă și concentrată"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
-msgid "Support for both metric and imperial measurement systems"
-msgstr "Vezi condițiile în sistemul metric sau imperial"
+msgid "Option to keep running in the background when the window is closed"
+msgstr "Opțiune de a rămâne în execuție în fundal când fereastra este închisă"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:26
-msgid "Main dashboard showing current weather and hourly forecast"
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid ""
+"Dynamic backgrounds that follow the weather, and a choice of default or "
+"Material icons"
 msgstr ""
+"Fundaluri dinamice care urmează vremea și alegere între pictogramele "
+"implicite sau Material"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
+#: data/io.github.amit9838.mousam.appdata.xml.in:22
+msgid "Metric and imperial units, and 12- or 24-hour clock"
+msgstr "Unități metrice și imperiale, și ceas de 12 sau 24 de ore"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:28
+msgid "Main dashboard showing current weather and hourly forecast"
+msgstr "Panoul principal cu vremea actuală și prognoza orară"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:32
 msgid "Detailed weather conditions during rain"
-msgstr "Condițiile meteorologice actuale și prognoze."
+msgstr "Condiții meteo detaliate în timpul ploii"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:34
-#, fuzzy
+#: data/io.github.amit9838.mousam.appdata.xml.in:36
 msgid "Night mode view"
-msgstr "Mod luminos"
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
-msgstr "Amit Chaudhary"
+msgstr "Vizualizare în modul noapte"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
@@ -139,15 +164,15 @@ msgstr "Folosește inchi pentru precipitații"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr ""
+msgstr "Folosește ceasul de 24 de ore"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr ""
+msgstr "Lățimea ferestrei principale"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr ""
+msgstr "Înălțimea ferestrei principale"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
@@ -155,16 +180,16 @@ msgstr "Deschide aplicația în modul maximizat."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "Intervalul de reîmprospătare automată, în minute"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
 msgstr ""
+"Intervalul pentru reîmprospătarea automată a vremii. 0 înseamnă dezactivat."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
-#, fuzzy
 msgid "Measurement system to use - metric,imperial"
-msgstr "Sistemul de măsurare de utilizat - metric,imperial"
+msgstr "Sistemul de măsură de folosit: metric, imperial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "metric(km, °C), imperial(mile, °F)"
@@ -172,856 +197,1973 @@ msgstr "metric(km, °C), imperial(mile, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "Afișează notificările de actualizare a vremii"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "Afișează o notificare când datele meteo sunt actualizate."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
-msgid "Enable debug mode"
-msgstr ""
+msgid "Show the weather overview"
+msgstr "Afișează prezentarea vremii"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
-msgid "Enables detailed logging and console output."
-msgstr ""
+msgid "Show a short summary of the coming hours under the current conditions."
+msgstr "Afișează un scurt rezumat al orelor următoare sub condițiile actuale."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
-msgid "Icon theme"
-msgstr ""
+msgid "Run in background"
+msgstr "Rulează în fundal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
+msgid "Keep the app running when its window is closed."
+msgstr "Păstrează aplicația în execuție când fereastra ei este închisă."
+
+#: data/io.github.amit9838.mousam.gschema.xml:67
+msgid "Enable debug mode"
+msgstr "Activează modul de depanare"
+
+#: data/io.github.amit9838.mousam.gschema.xml:68
+msgid "Enables detailed logging and console output."
+msgstr "Activează jurnalizarea detaliată și ieșirea în consolă."
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "Icon theme"
+msgstr "Tema pictogramelor"
+
+#: data/io.github.amit9838.mousam.gschema.xml:73
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Setul de pictograme meteo: „default” (pictogramele implicite Mousam) sau "
+"„material” (pictogramele Material Design de la Google)"
 
-#: src/configs.py:33
+#: data/io.github.amit9838.mousam.gschema.xml:81
+msgid "Forecast page"
+msgstr "Pagina de prognoză"
+
+#: data/io.github.amit9838.mousam.gschema.xml:82
+msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
+msgstr "Ultima pagină afișată în cardul de prognoză: „tomorrow” sau „weekly”."
+
+#: src/configs.py:98
 msgid "Off"
-msgstr ""
+msgstr "Dezactivat"
 
-#: src/configs.py:34
+#: src/configs.py:99
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "La fiecare 15 minute"
 
-#: src/configs.py:35
+#: src/configs.py:100
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "La fiecare 30 de minute"
 
-#: src/configs.py:36
+#: src/configs.py:101
 msgid "Every hour"
-msgstr ""
+msgstr "În fiecare oră"
 
-#: src/configs.py:37
+#: src/configs.py:102
 msgid "Every 2 hours"
-msgstr ""
+msgstr "La fiecare 2 ore"
 
-#: src/CORE_GTKUtils.py:66
-msgid "Unknown"
-msgstr ""
-
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
-msgstr ""
+msgstr "Oraș necunoscut"
 
-#: src/CORE_Icons.py:261
+#: src/CORE_Icons.py:267
 msgid "Clear sky"
 msgstr "Cer senin"
 
-#: src/CORE_Icons.py:262
+#: src/CORE_Icons.py:268
 msgid "Few Clouds"
 msgstr "Câțiva nori"
 
-#: src/CORE_Icons.py:263
+#: src/CORE_Icons.py:269
 msgid "Partly Cloudy"
 msgstr "Parțial noros"
 
-#: src/CORE_Icons.py:264
+#: src/CORE_Icons.py:270
 msgid "Overcast"
 msgstr "înnorat"
 
-#: src/CORE_Icons.py:265
+#: src/CORE_Icons.py:271
 msgid "Fog"
 msgstr "Ceață densă"
 
-#: src/CORE_Icons.py:266
+#: src/CORE_Icons.py:272
 msgid "Mist"
 msgstr "Ceață"
 
-#: src/CORE_Icons.py:267
+#: src/CORE_Icons.py:273
 msgid "Light Drizzle"
 msgstr "Burniță ușoară"
 
-#: src/CORE_Icons.py:268
+#: src/CORE_Icons.py:274
 msgid "Moderate Drizzle"
 msgstr "Burniță moderată"
 
-#: src/CORE_Icons.py:269
+#: src/CORE_Icons.py:275
 msgid "Heavy Intensity Drizzle"
 msgstr "Burniță abundentă"
 
-#: src/CORE_Icons.py:270
+#: src/CORE_Icons.py:276
 msgid "Light Freezing Drizzle"
 msgstr "Burniță înghețată ușoară"
 
-#: src/CORE_Icons.py:271
+#: src/CORE_Icons.py:277
 msgid "Heavy Freezing Drizzle"
 msgstr "Burniță înghețată abundentă"
 
-#: src/CORE_Icons.py:272
+#: src/CORE_Icons.py:278
 msgid "Light Rain"
 msgstr "Ploaie ușoară"
 
-#: src/CORE_Icons.py:273
+#: src/CORE_Icons.py:279
 msgid "Moderate Rain"
 msgstr "Ploaie moderată"
 
-#: src/CORE_Icons.py:274
+#: src/CORE_Icons.py:280
 msgid "Heavy Rain"
 msgstr "Ploaie abundentă"
 
-#: src/CORE_Icons.py:275
+#: src/CORE_Icons.py:281
 msgid "Light Freezing Rain"
 msgstr "Ploaie înghețată ușoară"
 
-#: src/CORE_Icons.py:276
+#: src/CORE_Icons.py:282
 msgid "Heavy Freezing Rain"
 msgstr "Ploaie înghețată abundentă"
 
-#: src/CORE_Icons.py:277
+#: src/CORE_Icons.py:283
 msgid "Light Snow Fall"
 msgstr "Cădere ușoară de zăpadă"
 
-#: src/CORE_Icons.py:278
+#: src/CORE_Icons.py:284
 msgid "Moderate Snow Fall"
 msgstr "Cădere moderată de zăpadă"
 
-#: src/CORE_Icons.py:279
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Fall"
 msgstr "Ninsoare abundentă"
 
-#: src/CORE_Icons.py:280
+#: src/CORE_Icons.py:286
 msgid "Snow grains"
 msgstr "Grindină"
 
-#: src/CORE_Icons.py:281
+#: src/CORE_Icons.py:287
 msgid "Light Rain Showers"
 msgstr "Averse de ploaie uşoară"
 
-#: src/CORE_Icons.py:282
+#: src/CORE_Icons.py:288
 msgid "Moderate Rain Showers"
 msgstr "Averse moderate de ploaie"
 
-#: src/CORE_Icons.py:283
+#: src/CORE_Icons.py:289
 msgid "Heavy Rain Showers"
 msgstr "Averse puternice de ploaie"
 
-#: src/CORE_Icons.py:284
+#: src/CORE_Icons.py:290
 msgid "Light Snow Showers"
 msgstr "Averse uşoare de zăpadă"
 
-#: src/CORE_Icons.py:285
+#: src/CORE_Icons.py:291
 msgid "Heavy Snow Showers "
 msgstr "Averse abundente de zăpadă"
 
-#: src/CORE_Icons.py:286
+#: src/CORE_Icons.py:292
 msgid "Thunderstorm"
 msgstr "Furtună cu descărcări electrice"
 
-#: src/CORE_Icons.py:287
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
 msgstr "Furtună cu descărcări electrice și grindină"
 
-#: src/CORE_weatherData.py:154
+#: src/CORE_OverviewMessages.py:31
+msgid "Thunderstorms are likely right now. Stay indoors if you can."
+msgstr "Sunt probabile furtuni chiar acum. Rămâneți înăuntru dacă puteți."
+
+#: src/CORE_OverviewMessages.py:32
+msgid "Expect thunderstorms right now. Stay indoors if you can."
+msgstr ""
+"Vă puteți aștepta la furtuni chiar acum. Rămâneți înăuntru dacă puteți."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:36
+#, python-brace-format
+msgid "Thunderstorms are likely around {time}. Plan to be indoors by then."
+msgstr ""
+"Sunt probabile furtuni în jurul orei {time}. Planificați să fiți la adăpost "
+"până atunci."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:38
+#, python-brace-format
+msgid "Expect thunderstorms around {time}. Plan to be indoors by then."
+msgstr ""
+"Vă puteți aștepta la furtuni în jurul orei {time}. Planificați să fiți la "
+"adăpost până atunci."
+
+#: src/CORE_OverviewMessages.py:41
+msgid "Freezing rain is likely right now. Roads and paths may be icy."
+msgstr ""
+"Este probabilă ploaie înghețată chiar acum. Drumurile și potecile pot fi "
+"înghețate."
+
+#: src/CORE_OverviewMessages.py:42
+msgid "Expect freezing rain right now. Watch for icy roads and paths."
+msgstr ""
+"Vă puteți aștepta la ploaie înghețată chiar acum. Atenție la drumurile și "
+"potecile înghețate."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:46
+#, python-brace-format
+msgid "Freezing rain is likely around {time}. Roads and paths may turn icy."
+msgstr ""
+"Este probabilă ploaie înghețată în jurul orei {time}. Drumurile și potecile "
+"pot îngheța."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:48
+#, python-brace-format
+msgid "Expect freezing rain around {time}. Roads may turn icy."
+msgstr ""
+"Vă puteți aștepta la ploaie înghețată în jurul orei {time}. Drumurile pot "
+"îngheța."
+
+#: src/CORE_OverviewMessages.py:51
+msgid "Heavy rain is likely right now. Expect puddles and slow roads."
+msgstr ""
+"Este probabilă ploaie abundentă chiar acum. Vă puteți aștepta la bălți și "
+"trafic lent."
+
+#: src/CORE_OverviewMessages.py:52
+msgid "Expect heavy rain right now. Allow extra travel time."
+msgstr ""
+"Vă puteți aștepta la ploaie abundentă chiar acum. Prevedeți mai mult timp "
+"pentru deplasări."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:56
+#, python-brace-format
+msgid "Heavy rain is likely around {time}. Keep an umbrella close."
+msgstr ""
+"Este probabilă ploaie abundentă în jurul orei {time}. Țineți o umbrelă la "
+"îndemână."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:58
+#, python-brace-format
+msgid "Expect heavy rain around {time}. Allow extra travel time."
+msgstr ""
+"Vă puteți aștepta la ploaie abundentă în jurul orei {time}. Prevedeți mai "
+"mult timp pentru deplasări."
+
+#: src/CORE_OverviewMessages.py:61
+msgid "Heavy snow is likely right now. Travel may be slow."
+msgstr ""
+"Este probabilă ninsoare abundentă chiar acum. Deplasările pot fi lente."
+
+#: src/CORE_OverviewMessages.py:62
+msgid "Expect heavy snow right now. Allow extra travel time."
+msgstr ""
+"Vă puteți aștepta la ninsoare abundentă chiar acum. Prevedeți mai mult timp "
+"pentru deplasări."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:66
+#, python-brace-format
+msgid "Heavy snow is likely around {time}. Travel may be slow after that."
+msgstr ""
+"Este probabilă ninsoare abundentă în jurul orei {time}. După aceea, "
+"deplasările pot fi lente."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:68
+#, python-brace-format
+msgid "Expect heavy snow around {time}. Allow extra travel time."
+msgstr ""
+"Vă puteți aștepta la ninsoare abundentă în jurul orei {time}. Prevedeți mai "
+"mult timp pentru deplasări."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:72
+#, python-brace-format
+msgid "It feels like {temp} right now. Stay hydrated and seek shade."
+msgstr "Se simte ca de {temp} chiar acum. Hidratați-vă și căutați umbră."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:74
+#, python-brace-format
+msgid "It feels as hot as {temp} right now. Drink water and stay cool."
+msgstr ""
+"Se simte o căldură de {temp} chiar acum. Beți apă și rămâneți la răcoare."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:78
+#, python-brace-format
+msgid ""
+"It will feel like {temp} by around {time}. Stay hydrated and seek shade."
+msgstr ""
+"Se va simți ca de {temp} în jurul orei {time}. Hidratați-vă și căutați umbră."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:80
+#, python-brace-format
+msgid ""
+"Expect it to feel like {temp} by around {time}. Drink water and stay cool."
+msgstr ""
+"Vă puteți aștepta la o temperatură resimțită de {temp} în jurul orei {time}. "
+"Beți apă și rămâneți la răcoare."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:84
+#, python-brace-format
+msgid "It feels like {temp} right now. Dress warmly, in layers."
+msgstr "Se simte ca de {temp} chiar acum. Îmbrăcați-vă gros, în straturi."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:86
+#, python-brace-format
+msgid "It feels as cold as {temp} right now. Bundle up."
+msgstr "Se simte un frig de {temp} chiar acum. Îmbrăcați-vă bine."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:90
+#, python-brace-format
+msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
+msgstr ""
+"Se va simți ca de {temp} în jurul orei {time}. Îmbrăcați-vă gros, în "
+"straturi."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:92
+#, python-brace-format
+msgid "Expect it to feel like {temp} by around {time}. Bundle up."
+msgstr ""
+"Vă puteți aștepta la o temperatură resimțită de {temp} în jurul orei {time}. "
+"Îmbrăcați-vă bine."
+
+#: src/CORE_OverviewMessages.py:95
+msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
+msgstr ""
+"Calitatea aerului este nesănătoasă chiar acum. Limitați timpul petrecut "
+"afară, dacă puteți."
+
+#: src/CORE_OverviewMessages.py:96
+msgid "The air is unhealthy right now. Consider staying indoors."
+msgstr ""
+"Aerul este nesănătos chiar acum. Luați în considerare să rămâneți înăuntru."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:100
+#, python-brace-format
+msgid ""
+"Air quality turns unhealthy around {time}. Consider limiting time outdoors."
+msgstr ""
+"Calitatea aerului devine nesănătoasă în jurul orei {time}. Luați în "
+"considerare limitarea timpului petrecut afară."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:102
+#, python-brace-format
+msgid "Expect unhealthy air from around {time}. Limit time outdoors."
+msgstr ""
+"Vă puteți aștepta la aer nesănătos începând cu aproximativ {time}. Limitați "
+"timpul petrecut afară."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:106
+#, python-brace-format
+msgid "UV is very high until about {time}. Use sunscreen and cover up."
+msgstr ""
+"Indicele UV este foarte ridicat până în jurul orei {time}. Folosiți cremă de "
+"protecție solară și acoperiți-vă."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:108
+#, python-brace-format
+msgid ""
+"The sun is very strong until about {time}. Use sunscreen and seek shade."
+msgstr ""
+"Soarele este foarte puternic până în jurul orei {time}. Folosiți cremă de "
+"protecție solară și căutați umbră."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:112
+#, python-brace-format
+msgid ""
+"UV will be very high from about {start} to {end}. Use sunscreen outdoors."
+msgstr ""
+"Indicele UV va fi foarte ridicat aproximativ între {start} și {end}. "
+"Folosiți cremă de protecție solară afară."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:114
+#, python-brace-format
+msgid "Expect very high UV from about {start} to {end}. Cover up outdoors."
+msgstr ""
+"Vă puteți aștepta la un indice UV foarte ridicat aproximativ între {start} "
+"și {end}. Acoperiți-vă afară."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:119
+#, python-brace-format
+msgid "Rain is likely to start around {time} with {chance}% chance."
+msgstr ""
+"Probabil va începe să plouă în jurul orei {time}, cu o șansă de {chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:121
+#, python-brace-format
+msgid "Expect rain from around {time}, with {chance}% chance."
+msgstr ""
+"Vă puteți aștepta la ploaie începând cu aproximativ {time}, cu o șansă de "
+"{chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:123
+#, python-brace-format
+msgid "Rain may move in around {time} with {chance}% chance."
+msgstr "Ploaia poate sosi în jurul orei {time}, cu o șansă de {chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:125
+#, python-brace-format
+msgid ""
+"Showers could begin around {time} with {chance}% chance. Keep an umbrella "
+"handy."
+msgstr ""
+"Averse ar putea începe în jurul orei {time}, cu o șansă de {chance}%. Țineți "
+"o umbrelă la îndemână."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:127
+#, python-brace-format
+msgid "There is {chance}% chance of rain starting around {time}."
+msgstr "Există o șansă de {chance}% să înceapă ploaia în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:131
+#, python-brace-format
+msgid "Snow is likely to start around {time} with {chance}% chance."
+msgstr ""
+"Probabil va începe să ningă în jurul orei {time}, cu o șansă de {chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:133
+#, python-brace-format
+msgid "Expect snow from around {time}, with {chance}% chance."
+msgstr ""
+"Vă puteți aștepta la ninsoare începând cu aproximativ {time}, cu o șansă de "
+"{chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:135
+#, python-brace-format
+msgid "Snow may move in around {time} with {chance}% chance."
+msgstr "Ninsoarea poate sosi în jurul orei {time}, cu o șansă de {chance}%."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:137
+#, python-brace-format
+msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
+msgstr ""
+"Ninsoarea ar putea începe în jurul orei {time}, cu o șansă de {chance}%. "
+"Îmbrăcați-vă gros."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:141
+#, python-brace-format
+msgid "Rain is likely right now, easing off around {time}."
+msgstr ""
+"Probabil plouă chiar acum, iar ploaia se va domoli în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:143
+#, python-brace-format
+msgid "Rain should ease off around {time}."
+msgstr "Ploaia ar trebui să se domolească în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:145
+#, python-brace-format
+msgid "Expect rain for now, clearing around {time}."
+msgstr ""
+"Deocamdată vă puteți aștepta la ploaie, cu înseninare în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:147
+#, python-brace-format
+msgid "It is wet for now, but the rain should stop around {time}."
+msgstr ""
+"Deocamdată este umed, dar ploaia ar trebui să înceteze în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:151
+#, python-brace-format
+msgid "Snow is likely right now, easing off around {time}."
+msgstr ""
+"Probabil ninge chiar acum, iar ninsoarea se va domoli în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:153
+#, python-brace-format
+msgid "Snow should ease off around {time}."
+msgstr "Ninsoarea ar trebui să se domolească în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:155
+#, python-brace-format
+msgid "Expect snow for now, clearing around {time}."
+msgstr ""
+"Deocamdată vă puteți aștepta la ninsoare, cu înseninare în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:157
+#, python-brace-format
+msgid "It is snowy for now, but it should stop around {time}."
+msgstr "Deocamdată ninge, dar ar trebui să înceteze în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:161
+#, python-brace-format
+msgid "Rain is likely to keep falling until about {time}."
+msgstr "Ploaia va continua probabil până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:163
+#, python-brace-format
+msgid "Expect rain on and off until about {time}."
+msgstr "Vă puteți aștepta la ploaie cu intermitențe până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:165
+#, python-brace-format
+msgid "It looks wet until about {time}. Keep an umbrella close."
+msgstr "Pare umed până în jurul orei {time}. Țineți o umbrelă la îndemână."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:167
+#, python-brace-format
+msgid "Rain should stick around until about {time}."
+msgstr "Ploaia ar trebui să persiste până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:171
+#, python-brace-format
+msgid "Snow is likely to keep falling until about {time}."
+msgstr "Ninsoarea va continua probabil până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:173
+#, python-brace-format
+msgid "Expect snow on and off until about {time}."
+msgstr ""
+"Vă puteți aștepta la ninsoare cu intermitențe până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:175
+#, python-brace-format
+msgid "It looks snowy until about {time}. Travel may be slow."
+msgstr "Pare înzăpezit până în jurul orei {time}. Deplasările pot fi lente."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:177
+#, python-brace-format
+msgid "Snow should stick around until about {time}."
+msgstr "Ninsoarea ar trebui să persiste până în jurul orei {time}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:182
+#, python-brace-format
+msgid "Strong wind right now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Vânt puternic chiar acum, de aproximativ {speed}. Asigurați obiectele "
+"nefixate de afară."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:184
+#, python-brace-format
+msgid "It is windy right now, around {speed}. Hold on to your hat."
+msgstr "Este vânt chiar acum, de aproximativ {speed}. Țineți-vă pălăria."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:186
+#, python-brace-format
+msgid "Wind is strong right now, around {speed}."
+msgstr "Vântul este puternic chiar acum, de aproximativ {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:188
+#, python-brace-format
+msgid ""
+"Expect strong wind for now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Deocamdată vă puteți aștepta la vânt puternic, de aproximativ {speed}. "
+"Asigurați obiectele nefixate de afară."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:192
+#, python-brace-format
+msgid "Wind picks up to {speed} around {time}. Secure loose items outdoors."
+msgstr ""
+"Vântul se intensifică până la {speed} în jurul orei {time}. Asigurați "
+"obiectele nefixate de afară."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:194
+#, python-brace-format
+msgid "Expect stronger wind, up to {speed}, around {time}."
+msgstr ""
+"Vă puteți aștepta la vânt mai puternic, de până la {speed}, în jurul orei "
+"{time}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:196
+#, python-brace-format
+msgid "It gets windy around {time}, up to {speed}."
+msgstr "În jurul orei {time} va fi vânt, de până la {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:198
+#, python-brace-format
+msgid "Wind should strengthen to {speed} around {time}."
+msgstr ""
+"Vântul ar trebui să se intensifice până la {speed} în jurul orei {time}."
+
+#: src/CORE_OverviewMessages.py:201
+msgid "It is foggy right now, with low visibility. Drive with care."
+msgstr "Este ceață chiar acum, cu vizibilitate redusă. Conduceți cu grijă."
+
+#: src/CORE_OverviewMessages.py:202
+msgid "Fog is cutting visibility right now. Take it slow on the roads."
+msgstr "Ceața reduce vizibilitatea chiar acum. Mergeți încet pe drumuri."
+
+#: src/CORE_OverviewMessages.py:203
+msgid "Visibility is low in the fog right now. Drive with care."
+msgstr "Vizibilitatea este redusă în ceață chiar acum. Conduceți cu grijă."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:207
+#, python-brace-format
+msgid "Fog is likely around {time}, with low visibility. Drive with care."
+msgstr ""
+"Este probabilă ceață în jurul orei {time}, cu vizibilitate redusă. Conduceți "
+"cu grijă."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:209
+#, python-brace-format
+msgid "Expect fog around {time}. Visibility may drop."
+msgstr ""
+"Vă puteți aștepta la ceață în jurul orei {time}. Vizibilitatea poate scădea."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:211
+#, python-brace-format
+msgid "Fog may roll in around {time}. Take care on the roads."
+msgstr "Ceața poate sosi în jurul orei {time}. Fiți atenți pe drumuri."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:213
+#, python-brace-format
+msgid "Visibility could drop in fog around {time}."
+msgstr "Vizibilitatea ar putea scădea din cauza ceții în jurul orei {time}."
+
+#: src/CORE_OverviewMessages.py:216
+msgid "Fog is likely around sunrise, with low visibility. Drive with care."
+msgstr ""
+"Este probabilă ceață în jurul răsăritului, cu vizibilitate redusă. Conduceți "
+"cu grijă."
+
+#: src/CORE_OverviewMessages.py:217
+msgid "Expect fog around sunrise. Visibility may drop."
+msgstr ""
+"Vă puteți aștepta la ceață în jurul răsăritului. Vizibilitatea poate scădea."
+
+#: src/CORE_OverviewMessages.py:218
+msgid "A foggy start is likely around sunrise. Take care on the roads."
+msgstr ""
+"Este probabilă o dimineață cețoasă în jurul răsăritului. Fiți atenți pe "
+"drumuri."
+
+#: src/CORE_OverviewMessages.py:219
+msgid "Fog may form around sunrise, cutting visibility."
+msgstr "În jurul răsăritului se poate forma ceață, reducând vizibilitatea."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:224
+#, python-brace-format
+msgid "Expect it to warm up to {temp} by around {time}."
+msgstr "Vă puteți aștepta la încălzire până la {temp} în jurul orei {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:226
+#, python-brace-format
+msgid "Temperatures climb to {temp} by around {time}."
+msgstr "Temperaturile cresc până la {temp} în jurul orei {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:228
+#, python-brace-format
+msgid "It should reach {temp} by around {time}."
+msgstr "Ar trebui să ajungă la {temp} în jurul orei {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:230
+#, python-brace-format
+msgid "Warming up to {temp} by around {time}."
+msgstr "Încălzire până la {temp} în jurul orei {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:234
+#, python-brace-format
+msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
+msgstr ""
+"Vă puteți aștepta la răcire până la {temp} în jurul orei {time}. Țineți un "
+"strat în plus la îndemână."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:236
+#, python-brace-format
+msgid "Temperatures drop to {temp} by around {time}."
+msgstr "Temperaturile scad până la {temp} în jurul orei {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:238
+#, python-brace-format
+msgid "It should cool to {temp} by around {time}. A jacket may help."
+msgstr ""
+"Ar trebui să se răcească până la {temp} în jurul orei {time}. O jachetă "
+"poate ajuta."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:240
+#, python-brace-format
+msgid "Cooling down to {temp} by around {time}."
+msgstr "Răcire până la {temp} în jurul orei {time}."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:245
+#, python-brace-format
+msgid "Rain is likely tomorrow with {chance}% chance, so plan ahead."
+msgstr ""
+"Mâine este probabilă ploaie, cu o șansă de {chance}%, deci planificați din "
+"timp."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:247
+#, python-brace-format
+msgid "Tomorrow looks wet, with {chance}% chance of rain."
+msgstr "Mâine pare o zi ploioasă, cu o șansă de ploaie de {chance}%."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:249
+#, python-brace-format
+msgid "Expect rain tomorrow, with {chance}% chance. Keep an umbrella ready."
+msgstr ""
+"Vă puteți aștepta la ploaie mâine, cu o șansă de {chance}%. Țineți umbrela "
+"pregătită."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:251
+#, python-brace-format
+msgid "There is {chance}% chance of rain tomorrow."
+msgstr "Mâine există o șansă de ploaie de {chance}%."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:255
+#, python-brace-format
+msgid "Tomorrow will be warmer than today, with a high of {temp}."
+msgstr "Mâine va fi mai cald decât azi, cu o maximă de {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:257
+#, python-brace-format
+msgid "A warmer day tomorrow, reaching {temp}."
+msgstr "O zi mai caldă mâine, de până la {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:259
+#, python-brace-format
+msgid "Tomorrow heats up, with a high of {temp}."
+msgstr "Mâine se încălzește, cu o maximă de {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:261
+#, python-brace-format
+msgid "Expect a warmer tomorrow, up to {temp}."
+msgstr "Vă puteți aștepta la o zi de mâine mai caldă, de până la {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:265
+#, python-brace-format
+msgid "Tomorrow will be cooler than today, with a high of {temp}."
+msgstr "Mâine va fi mai răcoare decât azi, cu o maximă de {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:267
+#, python-brace-format
+msgid "A cooler day tomorrow, reaching only {temp}."
+msgstr "O zi mai răcoroasă mâine, de numai {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:269
+#, python-brace-format
+msgid "Tomorrow cools off, with a high of {temp}."
+msgstr "Mâine se răcește, cu o maximă de {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:271
+#, python-brace-format
+msgid "Expect a cooler tomorrow, topping out at {temp}."
+msgstr ""
+"Vă puteți aștepta la o zi de mâine mai răcoroasă, cu o maximă de {temp}."
+
+#: src/CORE_OverviewMessages.py:277
+#, python-brace-format
+msgid "The sun sets in about {n} minute."
+msgid_plural "The sun sets in about {n} minutes."
+msgstr[0] "Soarele apune în aproximativ {n} minut."
+msgstr[1] "Soarele apune în aproximativ {n} minute."
+msgstr[2] "Soarele apune în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:283
+#, python-brace-format
+msgid "Sunset is about {n} minute away."
+msgid_plural "Sunset is about {n} minutes away."
+msgstr[0] "Apusul este în aproximativ {n} minut."
+msgstr[1] "Apusul este în aproximativ {n} minute."
+msgstr[2] "Apusul este în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:289
+#, python-brace-format
+msgid "About {n} minute of daylight left."
+msgid_plural "About {n} minutes of daylight left."
+msgstr[0] "Mai rămâne aproximativ {n} minut de lumină."
+msgstr[1] "Mai rămân aproximativ {n} minute de lumină."
+msgstr[2] "Mai rămân aproximativ {n} de minute de lumină."
+
+#: src/CORE_OverviewMessages.py:295
+#, python-brace-format
+msgid "The sun goes down in about {n} minute."
+msgid_plural "The sun goes down in about {n} minutes."
+msgstr[0] "Soarele va coborî în aproximativ {n} minut."
+msgstr[1] "Soarele va coborî în aproximativ {n} minute."
+msgstr[2] "Soarele va coborî în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:303
+#, python-brace-format
+msgid "The sun rises in about {n} minute."
+msgid_plural "The sun rises in about {n} minutes."
+msgstr[0] "Soarele răsare în aproximativ {n} minut."
+msgstr[1] "Soarele răsare în aproximativ {n} minute."
+msgstr[2] "Soarele răsare în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:309
+#, python-brace-format
+msgid "Sunrise is about {n} minute away."
+msgid_plural "Sunrise is about {n} minutes away."
+msgstr[0] "Răsăritul este în aproximativ {n} minut."
+msgstr[1] "Răsăritul este în aproximativ {n} minute."
+msgstr[2] "Răsăritul este în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:315
+#, python-brace-format
+msgid "Daylight returns in about {n} minute."
+msgid_plural "Daylight returns in about {n} minutes."
+msgstr[0] "Lumina zilei revine în aproximativ {n} minut."
+msgstr[1] "Lumina zilei revine în aproximativ {n} minute."
+msgstr[2] "Lumina zilei revine în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:321
+#, python-brace-format
+msgid "The sun comes up in about {n} minute."
+msgid_plural "The sun comes up in about {n} minutes."
+msgstr[0] "Soarele va apărea în aproximativ {n} minut."
+msgstr[1] "Soarele va apărea în aproximativ {n} minute."
+msgstr[2] "Soarele va apărea în aproximativ {n} de minute."
+
+#: src/CORE_OverviewMessages.py:329
+#, python-brace-format
+msgid "The sun sets in about {n} hour, at {time}."
+msgid_plural "The sun sets in about {n} hours, at {time}."
+msgstr[0] "Soarele apune în aproximativ {n} oră, la {time}."
+msgstr[1] "Soarele apune în aproximativ {n} ore, la {time}."
+msgstr[2] "Soarele apune în aproximativ {n} de ore, la {time}."
+
+#: src/CORE_OverviewMessages.py:335
+#, python-brace-format
+msgid "Sunset is about {n} hour away, at {time}."
+msgid_plural "Sunset is about {n} hours away, at {time}."
+msgstr[0] "Apusul este în aproximativ {n} oră, la {time}."
+msgstr[1] "Apusul este în aproximativ {n} ore, la {time}."
+msgstr[2] "Apusul este în aproximativ {n} de ore, la {time}."
+
+#: src/CORE_OverviewMessages.py:341
+#, python-brace-format
+msgid "About {n} hour of daylight left. Sunset is at {time}."
+msgid_plural "About {n} hours of daylight left. Sunset is at {time}."
+msgstr[0] "Mai rămâne aproximativ {n} oră de lumină. Apusul este la {time}."
+msgstr[1] "Mai rămân aproximativ {n} ore de lumină. Apusul este la {time}."
+msgstr[2] "Mai rămân aproximativ {n} de ore de lumină. Apusul este la {time}."
+
+#: src/CORE_OverviewMessages.py:347
+#, python-brace-format
+msgid "The sun goes down at {time}, in about {n} hour."
+msgid_plural "The sun goes down at {time}, in about {n} hours."
+msgstr[0] "Soarele coboară la {time}, în aproximativ {n} oră."
+msgstr[1] "Soarele coboară la {time}, în aproximativ {n} ore."
+msgstr[2] "Soarele coboară la {time}, în aproximativ {n} de ore."
+
+#: src/CORE_OverviewMessages.py:355
+#, python-brace-format
+msgid "The sun rises in about {n} hour, at {time}."
+msgid_plural "The sun rises in about {n} hours, at {time}."
+msgstr[0] "Soarele răsare în aproximativ {n} oră, la {time}."
+msgstr[1] "Soarele răsare în aproximativ {n} ore, la {time}."
+msgstr[2] "Soarele răsare în aproximativ {n} de ore, la {time}."
+
+#: src/CORE_OverviewMessages.py:361
+#, python-brace-format
+msgid "Sunrise is about {n} hour away, at {time}."
+msgid_plural "Sunrise is about {n} hours away, at {time}."
+msgstr[0] "Răsăritul este în aproximativ {n} oră, la {time}."
+msgstr[1] "Răsăritul este în aproximativ {n} ore, la {time}."
+msgstr[2] "Răsăritul este în aproximativ {n} de ore, la {time}."
+
+#: src/CORE_OverviewMessages.py:367
+#, python-brace-format
+msgid "Daylight returns at {time}, in about {n} hour."
+msgid_plural "Daylight returns at {time}, in about {n} hours."
+msgstr[0] "Lumina zilei revine la {time}, în aproximativ {n} oră."
+msgstr[1] "Lumina zilei revine la {time}, în aproximativ {n} ore."
+msgstr[2] "Lumina zilei revine la {time}, în aproximativ {n} de ore."
+
+#: src/CORE_OverviewMessages.py:373
+#, python-brace-format
+msgid "The sun comes up at {time}, in about {n} hour."
+msgid_plural "The sun comes up at {time}, in about {n} hours."
+msgstr[0] "Soarele apare la {time}, în aproximativ {n} oră."
+msgstr[1] "Soarele apare la {time}, în aproximativ {n} ore."
+msgstr[2] "Soarele apare la {time}, în aproximativ {n} de ore."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:381
+#, python-brace-format
+msgid "Conditions should stay steady until about {time}."
+msgstr "Condițiile ar trebui să rămână stabile până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:383
+#, python-brace-format
+msgid "No big changes expected until about {time}."
+msgstr "Nu sunt așteptate schimbări mari până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:385
+#, python-brace-format
+msgid "A quiet spell ahead, with little change until about {time}."
+msgstr ""
+"Urmează o perioadă liniștită, cu puține schimbări până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:387
+#, python-brace-format
+msgid "Things look settled until about {time}."
+msgstr "Totul pare stabil până în jurul orei {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:389
+#, python-brace-format
+msgid "The weather should hold steady until about {time}."
+msgstr "Vremea ar trebui să rămână stabilă până în jurul orei {time}."
+
+#: src/CORE_OverviewRules.py:248
+msgctxt "overview heading"
+msgid "Today"
+msgstr "Azi"
+
+#: src/CORE_OverviewRules.py:249
+msgctxt "overview heading"
+msgid "Tonight"
+msgstr "Diseară"
+
+#: src/CORE_OverviewRules.py:678
+msgctxt "overview heading"
+msgid "Tomorrow"
+msgstr "Mâine"
+
+#: src/CORE_weatherData.py:167
 msgid "Good"
 msgstr "Bun"
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:168
 msgid "Moderate"
 msgstr "Moderat"
 
-#: src/CORE_weatherData.py:156
+#: src/CORE_weatherData.py:169
 msgid "Poor"
 msgstr "Slab"
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:170
 msgid "Unhealthy"
 msgstr "Nesănătos"
 
-#: src/CORE_weatherData.py:158
+#: src/CORE_weatherData.py:171
 msgid "Severe"
 msgstr "Sever"
 
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:172
 msgid "Hazardous"
 msgstr "Riscant"
 
-#: src/CORE_weatherData.py:163
+#: src/CORE_weatherData.py:187
+msgid "Air quality is good. A fine time to be outside."
+msgstr "Calitatea aerului este bună. Un moment potrivit pentru a fi afară."
+
+#: src/CORE_weatherData.py:189
+msgid ""
+"Unusually sensitive people should cut back on long or intense outdoor "
+"activity."
+msgstr ""
+"Persoanele neobișnuit de sensibile ar trebui să reducă activitățile lungi "
+"sau intense în aer liber."
+
+#: src/CORE_weatherData.py:191
+msgid "Sensitive groups should cut back on long or intense outdoor activity."
+msgstr ""
+"Grupurile sensibile ar trebui să reducă activitățile lungi sau intense în "
+"aer liber."
+
+#: src/CORE_weatherData.py:193
+msgid ""
+"Everyone should cut back on long or intense outdoor activity; sensitive "
+"groups should avoid it."
+msgstr ""
+"Toată lumea ar trebui să reducă activitățile lungi sau intense în aer liber; "
+"grupurile sensibile ar trebui să le evite."
+
+#: src/CORE_weatherData.py:195
+msgid ""
+"Everyone should avoid long or intense outdoor activity; sensitive groups "
+"should stay indoors."
+msgstr ""
+"Toată lumea ar trebui să evite activitățile lungi sau intense în aer liber; "
+"grupurile sensibile ar trebui să rămână înăuntru."
+
+#: src/CORE_weatherData.py:196
+msgid "Everyone should avoid all outdoor activity."
+msgstr "Toată lumea ar trebui să evite orice activitate în aer liber."
+
+#: src/CORE_weatherData.py:202
+msgctxt "european aqi"
+msgid "Good"
+msgstr "Bun"
+
+#: src/CORE_weatherData.py:204
+msgctxt "european aqi"
+msgid "Fair"
+msgstr "Acceptabil"
+
+#: src/CORE_weatherData.py:206
+msgctxt "european aqi"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/CORE_weatherData.py:208
+msgctxt "european aqi"
+msgid "Poor"
+msgstr "Slab"
+
+#: src/CORE_weatherData.py:210
+msgctxt "european aqi"
+msgid "Very Poor"
+msgstr "Foarte slab"
+
+#: src/CORE_weatherData.py:211
+msgctxt "european aqi"
+msgid "Extremely Poor"
+msgstr "Extrem de slab"
+
+#: src/CORE_weatherData.py:222
+msgctxt "pollutant level"
+msgid "Good"
+msgstr "Bun"
+
+#: src/CORE_weatherData.py:223
+msgctxt "pollutant level"
+msgid "High"
+msgstr "Ridicat"
+
+#: src/CORE_weatherData.py:224
+msgctxt "pollutant level"
+msgid "Very High"
+msgstr "Foarte ridicat"
+
+#: src/CORE_weatherData.py:242
+msgctxt "pollen level"
+msgid "Low"
+msgstr "Scăzut"
+
+#: src/CORE_weatherData.py:244
+msgctxt "pollen level"
+msgid "Moderate"
+msgstr "Moderat"
+
+#: src/CORE_weatherData.py:246
+msgctxt "pollen level"
+msgid "High"
+msgstr "Ridicat"
+
+#: src/CORE_weatherData.py:247
+msgctxt "pollen level"
+msgid "Very High"
+msgstr "Foarte ridicat"
+
+#: src/CORE_weatherData.py:262
 msgctxt "uvindex"
 msgid "Low"
 msgstr "Scăzut"
 
-#: src/CORE_weatherData.py:164
+#: src/CORE_weatherData.py:263
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "Moderat"
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:264
 msgctxt "uvindex"
 msgid "High"
 msgstr "Ridicat"
 
-#: src/CORE_weatherData.py:166
+#: src/CORE_weatherData.py:265
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "Foarte ridicat"
 
-#: src/CORE_weatherData.py:167
+#: src/CORE_weatherData.py:266
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "Extrem"
 
-#: src/CORE_weatherData.py:171
+#: src/CORE_weatherData.py:270
 msgctxt "humidity"
 msgid "Low"
 msgstr "Scăzută"
 
-#: src/CORE_weatherData.py:172
+#: src/CORE_weatherData.py:271
 msgctxt "humidity"
 msgid "Moderate"
 msgstr "Moderată"
 
-#: src/CORE_weatherData.py:173
+#: src/CORE_weatherData.py:272
 msgctxt "humidity"
 msgid "High"
 msgstr "Ridicată"
 
-#: src/CORE_weatherData.py:180
+#: src/CORE_weatherData.py:279
 msgctxt "pressure"
 msgid "Low"
 msgstr "Scăzută"
 
-#: src/CORE_weatherData.py:181
+#: src/CORE_weatherData.py:280
 msgctxt "pressure"
 msgid "Normal"
 msgstr "Normală"
 
-#: src/CORE_weatherData.py:182
+#: src/CORE_weatherData.py:281
 msgctxt "pressure"
 msgid "High"
 msgstr "Ridicată"
 
-#: src/CORE_weatherData.py:186
+#: src/CORE_weatherData.py:285
 msgid "Calm"
 msgstr "Calm"
 
-#: src/CORE_weatherData.py:187
+#: src/CORE_weatherData.py:286
 msgid "Light"
 msgstr "Ușor"
 
-#: src/CORE_weatherData.py:188
+#: src/CORE_weatherData.py:287
 msgctxt "wind"
 msgid "Moderate"
 msgstr "Moderat"
 
-#: src/CORE_weatherData.py:189
+#: src/CORE_weatherData.py:288
 msgid "Strong"
 msgstr "Puternic"
 
-#: src/CORE_weatherData.py:190
+#: src/CORE_weatherData.py:289
 msgctxt "wind"
 msgid "Extreme"
 msgstr "Extrem"
 
-#: src/CORE_weatherData.py:194
+#: src/CORE_weatherData.py:293
 msgid "km"
 msgstr "km"
 
-#: src/CORE_weatherData.py:196
+#: src/CORE_weatherData.py:295
 msgid "miles"
 msgstr "mile"
 
-#: src/UI_CardAirPollution.py:93
+#: src/UI_CardAirPollution.py:61
 msgid "Air Pollution"
 msgstr "Poluarea Aerului"
 
-#: src/UI_CardAirPollution.py:105
-msgid "Air Quality Components"
-msgstr ""
+#: src/UI_CardAirPollution.py:72
+msgid "Air Quality Details"
+msgstr "Detalii despre calitatea aerului"
 
-#: src/UI_CardAirPollution.py:153
-msgid "Air Quality Index"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:180
-msgid "PM2.5"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:181
-msgid "PM10"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:182
-msgid "CO"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:183
-msgid "CO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:184
-msgid "NO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:185
-msgid "SO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:186
-msgid "O₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:187
-msgid "Dust"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:188
-msgid "NH₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:189
-msgid "CH₄"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:190
-#, fuzzy
-msgid "Alder Pollen"
-msgstr "Poluarea Aerului"
-
-#: src/UI_CardAirPollution.py:191
-#, fuzzy
-msgid "Birch Pollen"
-msgstr "Poluarea Aerului"
-
-#: src/UI_CardAirPollution.py:192
-msgid "Grass Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:193
-msgid "Mugwort Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:194
-msgid "Olive Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:195
-msgid "Ragweed Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:215
-#, python-brace-format
-msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:243
-msgid ""
-"AQI: US EPA Standard\n"
-"Pollutant limits: WHO Guidelines (2021)"
-msgstr ""
-
-#: src/UI_CardDayNight.py:76
+#: src/UI_CardDayNight.py:60
 msgid "Sunrise & Sunset"
 msgstr "Răsărit & Apus"
 
-#: src/UI_CardDayNight.py:87
+#: src/UI_CardDayNight.py:74
 msgid "Sunrise"
 msgstr "Răsărit"
 
-#: src/UI_CardDayNight.py:100
+#: src/UI_CardDayNight.py:74
 msgid "Sunset"
 msgstr "Apus"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
-#: src/UI_HourlyDetails.py:52
+#: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
+#: src/UI_HourlyDetails.py:51
 msgid "Wind"
 msgstr "Vânt"
 
-#: src/UI_HourlyDetails.py:51
-#, fuzzy
-msgid "Hourly"
-msgstr "Pe ore"
-
-#: src/UI_HourlyDetails.py:53
-#, fuzzy
-msgid "Precipitation"
-msgstr "Arată precipitațiile în inchi"
-
-#: src/UI_CardSquare.py:31
+#: src/UI_CardSquare.py:38 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr "Presiune"
 
-#: src/UI_CardSquare.py:32
+#: src/UI_CardSquare.py:39 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr "Umiditate"
 
-#: src/UI_CardSquare.py:33
+#: src/UI_CardSquare.py:40
 msgid "UV Index"
 msgstr "Indice UV"
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+#. Translators: the high and low ends of the humidity, UV index and pressure gauges
+#: src/UI_CardSquare.py:66 src/UI_CardSquare.py:223
+msgctxt "level gauge"
+msgid "High"
+msgstr "Ridicat"
+
+#: src/UI_CardSquare.py:67 src/UI_CardSquare.py:222
+msgctxt "level gauge"
+msgid "Low"
+msgstr "Scăzut"
+
+#: src/UI_CardSquare.py:234
 msgid "North"
 msgstr "Nord"
 
-#: src/UI_CardSquare.py:209
+#: src/UI_CardSquare.py:235
 msgid "Northeast"
 msgstr "Nord-Est"
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:236
 msgid "East"
 msgstr "Est"
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:237
 msgid "Southeast"
 msgstr "Sud-Est"
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:238
 msgid "South"
 msgstr "Sud"
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:239
 msgid "Southwest"
 msgstr "Sud-Vest"
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:240
 msgid "West"
 msgstr "Vest"
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:241
 msgid "Northwest"
 msgstr "Nord-Vest"
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
 msgid "No Internet"
 msgstr "Fără conexiune la internet"
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
-msgstr ""
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:232
+msgid "Retry"
+msgstr "Reîncearcă"
+
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:239
+msgid "Please check your connection."
+msgstr "Verificați conexiunea."
+
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
+msgid "Fetch Error"
+msgstr "Eroare la preluare"
+
+#: src/UI_CompactWeather.py:218
+msgid "AQI"
+msgstr "AQI"
+
+#. Translators: strftime format of the date in compact mode ("6 November")
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr "%-d %B"
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr "Părăsiți modul compact"
 
 #: src/UI_CompactWeather.py:293
-#, fuzzy
-msgid "Pres."
-msgstr "Presiune"
-
-#: src/UI_CompactWeather.py:297
-msgid "AQI"
-msgstr ""
-
-#: src/UI_CompactWeather.py:350
-#, fuzzy
 msgid "Mousam Compact"
-msgstr "Mousam"
+msgstr "Mousam compact"
 
-#: src/UI_CompDrawDayNight.py:154
+#. Translators: the line in the sun's path where the sun rises and sets
+#: src/UI_CompDrawDayNight.py:124
+msgid "Horizon"
+msgstr "Orizont"
+
+#: src/UI_CompDrawDayNight.py:187
 msgid "Day"
-msgstr ""
+msgstr "Zi"
 
-#: src/UI_CompDrawDayNight.py:154
-#, fuzzy
+#: src/UI_CompDrawDayNight.py:187
 msgid "Night"
-msgstr "Ușor"
+msgstr "Noapte"
 
-#: src/UI_CurrentCond.py:96
-#, fuzzy, python-brace-format
-msgid "Feels like • <b> {0} {1}</b>"
-msgstr "Temperatura resimțită • <b> {0} {1}</b>"
+#. Translators: lowest and highest value of the air quality graph
+#: src/UI_CompDrawLineGraph.py:43
+#, python-brace-format
+msgid "Max {max} · Min {min}"
+msgstr "Max. {max} · Min. {min}"
 
-#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
+#. Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
+#: src/UI_CurrentCond.py:129
+#, python-brace-format
+msgid "H {high} · L {low}"
+msgstr "Max. {high} · Min. {low}"
+
+#. Translators: {0} is a temperature, like "22°"
+#: src/UI_CurrentCond.py:147
+#, python-brace-format
+msgid "Feels like {0}"
+msgstr "Se simte ca {0}"
+
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:121
+msgid "Show Overview"
+msgstr "Afișează prezentarea"
+
+#. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
+#: src/UI_CurrentCond.py:362
+msgctxt "current date"
+msgid "%A, %-d %b"
+msgstr "%A, %-d %b"
+
+#: src/UI_Forecast.py:158 src/UI_Forecast.py:426
 msgid "Tomorrow"
 msgstr "Mâine"
 
-#: src/UI_Forecast.py:147
+#: src/UI_Forecast.py:166
 msgid "Weekly"
 msgstr "Săptămânal"
 
-#: src/UI_Forecast.py:316
+#. Translators: tooltip on the day's temperature range bar; {low} and
+#. {high} are temperatures with their unit sign, like "15°"
+#: src/UI_Forecast.py:376
+#, python-brace-format
+msgid "Low {low}, high {high}"
+msgstr "Min. {low}, max. {high}"
+
+#: src/UI_Forecast.py:424
 msgid "Today"
 msgstr "Azi"
 
-#: src/UI_HourlyDetails.py:151
-#, fuzzy
+#: src/UI_Forecast.py:448
+#, python-brace-format
+msgid "Chance of snow: {percent}%"
+msgstr "Șansă de ninsoare: {percent}%"
+
+#: src/UI_Forecast.py:450
+#, python-brace-format
+msgid "Chance of rain: {percent}%"
+msgstr "Șansă de ploaie: {percent}%"
+
+#: src/UI_Forecast.py:481
+#, python-brace-format
+msgid "Light snow: {amount}"
+msgstr "Ninsoare slabă: {amount}"
+
+#: src/UI_Forecast.py:482
+#, python-brace-format
+msgid "Moderate snow: {amount}"
+msgstr "Ninsoare moderată: {amount}"
+
+#: src/UI_Forecast.py:483
+#, python-brace-format
+msgid "Heavy snow: {amount}"
+msgstr "Ninsoare abundentă: {amount}"
+
+#: src/UI_Forecast.py:484
+#, python-brace-format
+msgid "Very heavy snow: {amount}"
+msgstr "Ninsoare foarte abundentă: {amount}"
+
+#: src/UI_Forecast.py:501
+#, python-brace-format
+msgid "Light rain: {amount}"
+msgstr "Ploaie slabă: {amount}"
+
+#: src/UI_Forecast.py:502
+#, python-brace-format
+msgid "Moderate rain: {amount}"
+msgstr "Ploaie moderată: {amount}"
+
+#: src/UI_Forecast.py:503
+#, python-brace-format
+msgid "Heavy rain: {amount}"
+msgstr "Ploaie abundentă: {amount}"
+
+#: src/UI_Forecast.py:504
+#, python-brace-format
+msgid "Violent rain: {amount}"
+msgstr "Ploaie torențială: {amount}"
+
+#: src/UI_HourlyDetails.py:50
+msgid "Hourly"
+msgstr "Pe oră"
+
+#: src/UI_HourlyDetails.py:52 src/windowPreferences.py:65
+msgid "Precipitation"
+msgstr "Precipitații"
+
+#: src/UI_HourlyDetails.py:150
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Maxima Zilei"
+msgstr "Maxima zilei •"
 
-#: src/UI_HourlyDetails.py:157
-#, fuzzy
+#: src/UI_HourlyDetails.py:156
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Maxima Zilei"
+msgstr "Maxima zilei •"
 
-#: src/UI_HourlyDetails.py:168
-#, fuzzy
+#: src/UI_HourlyDetails.py:167
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Maxima Zilei"
+msgstr "Maxima zilei •"
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:245
 msgid "Now"
 msgstr "Acum"
 
-#: src/UI_HourlyDetails.py:285
+#: src/UI_HourlyDetails.py:287
 msgid "No precipitation today !"
 msgstr "Fără precipitații astăzi!"
 
-#: src/UI_HourlyDetails.py:286
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation expected today!"
 msgstr "Nu se așteaptă precipitații astăzi!"
 
-#: src/UI_HourlyDetails.py:287
+#: src/UI_HourlyDetails.py:289
 msgid "Anticipate a precipitation-free day !"
 msgstr "Anticipați o zi fără precipitații!"
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:290
 msgid "Enjoy a rain-free day today!"
 msgstr "Bucurați-vă de o zi fără ploaie astăzi!"
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:291
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "Starea umbrelei: în repaus. Nu se prevăd precipitații în apropiere!"
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:292
 msgid "No rain in sight today!"
 msgstr "Nu se prevăd ploi astăzi!"
 
-#: src/mousam.py:83
+#: src/mousam.py:89
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "Modul de depanare activat"
 
-#: src/mousam.py:84
+#: src/mousam.py:90
 msgid "View Logs"
-msgstr ""
+msgstr "Vezi jurnalele"
 
-#: src/mousam.py:88
+#: src/mousam.py:94
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "Modul de depanare dezactivat"
 
-#: src/mousam.py:125
-#, fuzzy
+#: src/mousam.py:131
 msgid "Refresh weather"
-msgstr "Actualizează vremea"
+msgstr "Reîmprospătează vremea"
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:146 src/windowLocations.py:404 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "Locații"
 
-#: src/mousam.py:146
+#: src/mousam.py:152
 msgid "Compact Mode"
-msgstr ""
+msgstr "Mod compact"
 
-#: src/mousam.py:172 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "Preferințe"
 
-#: src/mousam.py:173 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "Comenzi rapide"
 
-#: src/mousam.py:174
+#: src/mousam.py:181
 msgid "About Mousam"
 msgstr "Despre Mousam"
 
-#: src/mousam.py:175 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "Închide"
 
-#: src/mousam.py:279
-#, fuzzy
-msgid "Direction"
-msgstr "Precipitații"
+#. Translators: wind direction is where the wind blows from
+#: src/mousam.py:298
+msgid "Direction (from)"
+msgstr "Direcție (dinspre)"
 
-#: src/mousam.py:293
+#. Translators: "North" on the wind direction compass, as short as possible
+#: src/mousam.py:301
+msgctxt "compass"
+msgid "N"
+msgstr "N"
+
+#: src/mousam.py:312
 msgid "Dewpoint"
 msgstr "Punct de rouă"
 
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
-msgstr ""
-
-#: src/mousam.py:364
+#: src/mousam.py:372
 msgid "Getting Weather Data"
 msgstr "Se obțin datele meteo"
 
-#: src/mousam.py:371
-#, fuzzy
+#: src/mousam.py:379
 msgid "Welcome to Mousam"
-msgstr "Despre Mousam"
+msgstr "Bun venit în Mousam"
 
-#: src/mousam.py:372
-#, fuzzy
+#: src/mousam.py:380
 msgid "Add a location to get started."
-msgstr "Adăugați mai multe locații de șters!"
+msgstr "Adăugați o locație pentru a începe."
 
-#: src/mousam.py:373
-#, fuzzy
+#: src/mousam.py:381 src/windowLocations.py:430
 msgid "Add Location"
-msgstr "Adaugă o locație nouă"
+msgstr "Adaugă o locație"
 
-#: src/mousam.py:387
-msgid "Retry"
+#: src/windowAirQuality.py:19
+msgid "PM2.5"
+msgstr "PM2.5"
+
+#: src/windowAirQuality.py:20
+msgid "PM10"
+msgstr "PM10"
+
+#: src/windowAirQuality.py:21
+msgid "NO₂"
+msgstr "NO₂"
+
+#: src/windowAirQuality.py:22
+msgid "O₃"
+msgstr "O₃"
+
+#: src/windowAirQuality.py:23
+msgid "SO₂"
+msgstr "SO₂"
+
+#: src/windowAirQuality.py:24
+msgid "CO"
+msgstr "CO"
+
+#: src/windowAirQuality.py:28
+msgid "CO₂"
+msgstr "CO₂"
+
+#: src/windowAirQuality.py:29
+msgid "CH₄"
+msgstr "CH₄"
+
+#: src/windowAirQuality.py:30
+msgid "NH₃"
+msgstr "NH₃"
+
+#: src/windowAirQuality.py:31
+msgid "Dust"
+msgstr "Praf"
+
+#: src/windowAirQuality.py:34
+msgid "Alder"
+msgstr "Arin"
+
+#: src/windowAirQuality.py:35
+msgid "Birch"
+msgstr "Mesteacăn"
+
+#: src/windowAirQuality.py:36
+msgid "Grass"
+msgstr "Iarbă"
+
+#: src/windowAirQuality.py:37
+msgid "Mugwort"
+msgstr "Pelin"
+
+#: src/windowAirQuality.py:38
+msgid "Olive"
+msgstr "Măslin"
+
+#: src/windowAirQuality.py:39
+msgid "Ragweed"
+msgstr "Ambrozie"
+
+#: src/windowAirQuality.py:71 src/windowAirQuality.py:80
+msgid "Air Quality"
+msgstr "Calitatea aerului"
+
+#: src/windowAirQuality.py:101
+msgid ""
+"AQI by the US EPA; limits from the WHO guidelines (2021). Data by Open-Meteo."
 msgstr ""
+"AQI conform EPA din SUA; limite din ghidurile OMS (2021). Date de la Open-"
+"Meteo."
 
-#: src/windowAbout.py:20
-msgid "Copyright © 2024 Mousam Developers"
-msgstr "Drepturi de Autor © 2024 Mousam Developers"
+#: src/windowAirQuality.py:152
+msgid "No air quality data for now."
+msgstr "Momentan nu există date despre calitatea aerului."
 
-#: src/windowAbout.py:24
+#. Translators: the European AQI beside the US one; {aqi} is its
+#. value and {level} its level name ("Fair")
+#: src/windowAirQuality.py:167
+#, python-brace-format
+msgid "US AQI · EU AQI {aqi}, {level}"
+msgstr "AQI american · AQI european {aqi}, {level}"
+
+#: src/windowAirQuality.py:170
+msgid "US AQI"
+msgstr "AQI american"
+
+#. Translators: {name} is a pollutant, like "PM2.5"
+#: src/windowAirQuality.py:177
+#, python-brace-format
+msgid "Main pollutant: {name}"
+msgstr "Poluant principal: {name}"
+
+#: src/windowAirQuality.py:191
+msgid "Trend"
+msgstr "Tendință"
+
+#: src/windowAirQuality.py:191
+msgid "Last 3 days and next 3 days"
+msgstr "Ultimele 3 zile și următoarele 3 zile"
+
+#: src/windowAirQuality.py:205
+msgid "Pollutants"
+msgstr "Poluanți"
+
+#: src/windowAirQuality.py:214
+msgid "More Pollutants"
+msgstr "Mai mulți poluanți"
+
+#: src/windowAirQuality.py:227
+msgid "Pollen"
+msgstr "Polen"
+
+#. Translators: the WHO guideline for a pollutant; {limit} is a
+#. number and {unit} its unit, like "μg/m³"
+#: src/windowAirQuality.py:246
+#, python-brace-format
+msgid "WHO limit {limit} {unit}"
+msgstr "Limita OMS {limit} {unit}"
+
+#: src/windowAbout.py:37
+msgid "Copyright © 2023–2026 Mousam Developers"
+msgstr "Copyright © 2023–2026 Dezvoltatorii Mousam"
+
+#. Translators: replace with your name (and email or link), one per line
+#: src/windowAbout.py:39
 #, fuzzy
 msgid "translator-credits"
 msgstr "Mulțumiri Traducător"
 
-#: src/windowLocations.py:54
+#: src/windowAbout.py:43
+msgid "Source Code"
+msgstr "Cod sursă"
+
+#: src/windowAbout.py:44
+msgid "Contributors"
+msgstr "Contribuitori"
+
+#: src/windowAbout.py:45
+msgid "Help Translate"
+msgstr "Ajutați la traducere"
+
+#: src/windowAbout.py:46
+msgid "Buy Me a Coffee"
+msgstr "Cumpărați-mi o cafea"
+
+#: src/windowAbout.py:49 src/windowAbout.py:62
+msgid "Weather Data"
+msgstr "Date meteo"
+
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:108
+msgid "Weather Icons"
+msgstr "Pictograme meteo"
+
+#. Translators: {owner} is a name, {license} a link, keep the tag as it is
+#: src/windowAbout.py:60
+#, python-brace-format
+msgid "© {owner}, licensed under {license}"
+msgstr "© {owner}, licențiat sub {license}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:80
+#, python-brace-format
+msgid "Default icons: {name}"
+msgstr "Pictograme implicite: {name}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:90
+#, python-brace-format
+msgid "Material icons: {name}"
+msgstr "Pictograme Material: {name}"
+
+#: src/windowAbout.py:93
+msgid "All rights belong to Google. Collected by Darren Griffin."
+msgstr "Toate drepturile aparțin Google. Colectate de Darren Griffin."
+
+#: src/windowLocations.py:145
 msgid "Add New Location"
 msgstr "Adaugă o locație nouă"
 
-#: src/windowLocations.py:70
-msgid "Search for a city"
-msgstr "Caută un oraș"
+#: src/windowLocations.py:181
+msgid "Search cities, e.g. Kochi"
+msgstr "Căutați orașe, de ex. Kochi"
 
-#: src/windowLocations.py:84
-#, fuzzy
-msgid "Search for your city..."
-msgstr "Caută un oraș"
+#: src/windowLocations.py:209
+msgid "Show More"
+msgstr "Afișează mai multe"
 
-#: src/windowLocations.py:106
-#, fuzzy
-msgid "No cities found."
-msgstr "Nu s-au găsit rezultate!"
+#: src/windowLocations.py:229
+msgid "Search for Your City"
+msgstr "Căutați-vă orașul"
 
-#: src/windowLocations.py:144
-#, fuzzy
+#: src/windowLocations.py:238
+msgid "Couldn't Search for Cities"
+msgstr "Nu s-au putut căuta orașe"
+
+#: src/windowLocations.py:346
+msgid "No Cities Found"
+msgstr "Nu s-a găsit niciun oraș"
+
+#: src/windowLocations.py:347
+msgid "Check the spelling or try a nearby city."
+msgstr "Verificați ortografia sau încercați un oraș din apropiere."
+
+#: src/windowLocations.py:385
+msgid "Already saved"
+msgstr "Deja salvat"
+
+#: src/windowLocations.py:427
 msgid "Saved Locations"
-msgstr "Locații"
+msgstr "Locații salvate"
 
-#: src/windowLocations.py:146
-msgid "Add"
-msgstr "Adaugă"
+#: src/windowLocations.py:502
+msgid "Remove"
+msgstr "Elimină"
 
-#: src/windowLocations.py:201
-#, fuzzy
+#: src/windowLocations.py:548
+msgid "Drag to reorder, or press Alt+Up / Alt+Down"
+msgstr "Trageți pentru a reordona sau apăsați Alt+Sus / Alt+Jos"
+
+#: src/windowLocations.py:620
 msgid "Location already exists"
-msgstr "Locații deja adăugate!"
+msgstr "Locația există deja"
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:638
+#, python-brace-format
 msgid "Switched to {}"
 msgstr "Schimbat cu {}"
 
-#: src/windowPreferences.py:30
-#, fuzzy
-msgid "Weather Preferences"
-msgstr "Preferințe"
+#: src/windowPreferences.py:35 src/windowPreferences.py:52
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "General"
 
 #: src/windowPreferences.py:44
+msgid "Advanced"
+msgstr "Avansat"
+
+#: src/windowPreferences.py:56
+msgid "Units"
+msgstr "Unități"
+
+#: src/windowPreferences.py:57
+msgid "Metric (°C, km/h) or Imperial (°F, mph)"
+msgstr "Metric (°C, km/h) sau imperial (°F, mph)"
+
+#: src/windowPreferences.py:59
+msgid "Metric"
+msgstr "Metric"
+
+#: src/windowPreferences.py:59
+msgid "Imperial"
+msgstr "Imperial"
+
+#: src/windowPreferences.py:66
+msgid "Unit of the hourly precipitation graph"
+msgstr "Unitatea graficului orar al precipitațiilor"
+
+#. Translators: short unit names for millimetres and inches
+#: src/windowPreferences.py:69
+msgid "mm"
+msgstr "mm"
+
+#: src/windowPreferences.py:69
+msgid "in"
+msgstr "in"
+
+#: src/windowPreferences.py:75
+msgid "Time Format"
+msgstr "Formatul orei"
+
+#: src/windowPreferences.py:78
+msgid "24-hour"
+msgstr "24 de ore"
+
+#: src/windowPreferences.py:78
+msgid "AM/PM"
+msgstr "AM/PM"
+
+#: src/windowPreferences.py:85
+msgid "Run in Background"
+msgstr "Rulează în fundal"
+
+#: src/windowPreferences.py:86
+msgid "Keep Mousam running when its window is closed"
+msgstr "Păstrează Mousam în execuție când fereastra lui este închisă"
+
+#: src/windowPreferences.py:95
 msgid "Appearance"
 msgstr "Aspect"
 
-#: src/windowPreferences.py:59
-msgid "Advanced"
-msgstr ""
-
-#: src/windowPreferences.py:64
-msgid "Logging &amp; Debugging"
-msgstr ""
-
-#: src/windowPreferences.py:74
-msgid "Icon Theme"
-msgstr ""
-
-#: src/windowPreferences.py:75
-msgid "Choose between Default and Material design weather icons"
-msgstr ""
-
-#: src/windowPreferences.py:85
-msgid "Default"
-msgstr ""
-
-#: src/windowPreferences.py:90
-msgid "Material"
-msgstr ""
-
-#: src/windowPreferences.py:105
+#: src/windowPreferences.py:98
 msgid "Dynamic Background"
 msgstr "Fundal Dinamic"
 
-#: src/windowPreferences.py:107
-#, fuzzy
-msgid "App background changes based on current weather conditions"
-msgstr ""
-"Schimbări de fundal în funcție de starea vremii actuale (Repornire necesară)"
+#: src/windowPreferences.py:99
+msgid "Change the background to match the current weather"
+msgstr "Schimbă fundalul în funcție de vremea actuală"
 
-#: src/windowPreferences.py:121
-msgid "Time Format"
-msgstr ""
+#: src/windowPreferences.py:111
+msgid "Default"
+msgstr "Implicit"
+
+#: src/windowPreferences.py:111
+msgid "Material"
+msgstr "Material"
+
+#: src/windowPreferences.py:118
+msgid "Weather Overview"
+msgstr "Prezentarea vremii"
 
 #: src/windowPreferences.py:122
-#, fuzzy
-msgid "Weather time format"
-msgstr "Lansați aplicația meteo în modul maximizat (Actualizare necesară)"
+msgid "A short summary of the coming hours"
+msgstr "Un scurt rezumat al orelor următoare"
 
-#: src/windowPreferences.py:132
-#, fuzzy
-msgid "24 Hour"
-msgstr "Pe ore"
+#: src/windowPreferences.py:130
+msgid "Notifications"
+msgstr "Notificări"
 
-#: src/windowPreferences.py:137
-msgid "AM / PM"
+#: src/windowPreferences.py:131
+msgid ""
+"Send the overview as a notification while the window is minimized or in "
+"compact mode"
 msgstr ""
+"Trimite prezentarea ca notificare când fereastra este minimizată sau în "
+"modul compact"
 
-#: src/windowPreferences.py:153
-#, fuzzy
-msgid "Auto Refresh"
-msgstr "Actualizează"
+#: src/windowPreferences.py:140
+msgid "Logging and Debugging"
+msgstr "Jurnalizare și depanare"
 
-#: src/windowPreferences.py:154
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+#: src/windowPreferences.py:143
+msgid "Debug Mode"
+msgstr "Mod de depanare"
 
-#: src/windowPreferences.py:171
-#, fuzzy
-msgid "Show Notifications"
-msgstr "Locații"
+#: src/windowPreferences.py:144
+msgid "Enable verbose logging and console output"
+msgstr "Activează jurnalizarea detaliată și ieșirea în consolă"
+
+#: src/windowPreferences.py:152
+msgid "Open Logs Folder"
+msgstr "Deschide dosarul de jurnale"
+
+#: src/windowPreferences.py:161
+msgid "Clear Log File"
+msgstr "Șterge fișierul de jurnal"
+
+#: src/windowPreferences.py:162
+msgid "Delete all contents of the current log file"
+msgstr "Șterge tot conținutul fișierului de jurnal curent"
+
+#: src/windowPreferences.py:165
+msgid "Clear"
+msgstr "Șterge"
 
 #: src/windowPreferences.py:172
-msgid "Show notification when weather is refreshed automatically"
-msgstr ""
-
-#: src/windowPreferences.py:187
-msgid "Units &amp; Measurements"
-msgstr "Unități &amp; măsurători"
-
-#: src/windowPreferences.py:192
-msgid "System Unit"
-msgstr ""
-
-#: src/windowPreferences.py:193
-msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
-
-#: src/windowPreferences.py:204
-msgid "Metric"
-msgstr ""
-
-#: src/windowPreferences.py:209
-msgid "Imperial"
-msgstr ""
-
-#: src/windowPreferences.py:227
-#, fuzzy
-msgid "Precipitation in inches"
-msgstr "Arată precipitațiile în inchi"
-
-#: src/windowPreferences.py:228
-#, fuzzy
-msgid "This option works better in heavy precipitation"
-msgstr ""
-"Această opțiune funcționează mai bine în timpul precipitațiilor abundente "
-"(Necesită actualizare)"
-
-#: src/windowPreferences.py:242
 msgid "Data Management"
-msgstr ""
+msgstr "Gestionarea datelor"
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:175
 msgid "Reset to Default"
-msgstr ""
+msgstr "Revenire la valorile implicite"
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:176
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Șterge toate preferințele și restaurează valorile implicite"
 
-#: src/windowPreferences.py:251
+#: src/windowPreferences.py:179
 msgid "Reset…"
-msgstr ""
+msgstr "Resetează…"
 
-#: src/windowPreferences.py:260
-msgid "Debug Mode"
-msgstr ""
+#: src/windowPreferences.py:230
+msgid "Auto Refresh"
+msgstr "Reîmprospătare automată"
 
-#: src/windowPreferences.py:261
-msgid "Enable verbose logging and console output"
-msgstr ""
-
-#: src/windowPreferences.py:274
-msgid "Open Logs Folder"
-msgstr ""
-
-#: src/windowPreferences.py:275
-msgid "Access the application log files"
-msgstr ""
-
-#: src/windowPreferences.py:288
-msgid "Clear Log File"
-msgstr ""
-
-#: src/windowPreferences.py:289
-msgid "Delete all contents of the current log file"
-msgstr ""
-
-#: src/windowPreferences.py:340
-msgid "Icon theme changed to {}"
-msgstr ""
-
-#: src/windowPreferences.py:349
-msgid "Switched to - {}"
-msgstr "Schimbat cu - {}"
-
-#: src/windowPreferences.py:368
+#: src/windowPreferences.py:329
 msgid "Logs cleared"
-msgstr ""
+msgstr "Jurnalele au fost șterse"
 
-#: src/windowPreferences.py:370
+#: src/windowPreferences.py:331
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "Ștergerea jurnalelor a eșuat"
 
-#: src/windowPreferences.py:381
-#, fuzzy
-msgid "Auto refresh disabled"
-msgstr "Actualizează"
-
-#: src/windowPreferences.py:383
-msgid "Auto refresh every {} min"
-msgstr ""
-
-#: src/windowPreferences.py:390
+#: src/windowPreferences.py:341
 msgid "Reset Settings?"
-msgstr ""
+msgstr "Resetați setările?"
 
-#: src/windowPreferences.py:392
+#: src/windowPreferences.py:343
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
+"Aceasta va readuce toate setările la valorile implicite și va șterge orașele "
+"salvate. Această acțiune nu poate fi anulată."
 
-#: src/windowPreferences.py:396
+#: src/windowPreferences.py:347
 msgid "Cancel"
-msgstr ""
+msgstr "Anulează"
 
-#: src/windowPreferences.py:397
+#: src/windowPreferences.py:348
 msgid "Reset"
-msgstr ""
+msgstr "Resetează"
 
-#: src/windowPreferences.py:438
+#: src/windowPreferences.py:372
 msgid "Preferences have been reset"
-msgstr ""
-
-#: src/shortcutsDialog.ui:29
-msgid "General"
-msgstr "General"
+msgstr "Preferințele au fost resetate"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
@@ -1030,124 +2172,3 @@ msgstr "Actualizează vremea"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Navigare"
-
-#~ msgid ""
-#~ "Utilizes graphical representations, such as temperature , precipitation "
-#~ "graphs and wind-speed with direction to provide an hourly forecast for "
-#~ "the next 24 hours"
-#~ msgstr ""
-#~ "Folosește reprezentări grafice, cum ar fi graficele de temperatură, "
-#~ "precipitații și viteza vântului împreună cu direcția, pentru a furniza o "
-#~ "prognoză orară pentru următoarele 24 de ore"
-
-#, fuzzy
-#~ msgid "Clear Sky - day"
-#~ msgstr "Cer senin - imperial"
-
-#, fuzzy
-#~ msgid "Clear Sky - night"
-#~ msgstr "Cer senin - imperial"
-
-#~ msgid "United States AQI standard"
-#~ msgstr "Standardul AQI al Statelor Unite"
-
-#~ msgid "From"
-#~ msgstr "Din"
-
-#~ msgid "N"
-#~ msgstr "N"
-
-#~ msgctxt "pressure card"
-#~ msgid "High"
-#~ msgstr "Ridicată"
-
-#~ msgctxt "pressure card"
-#~ msgid "Low"
-#~ msgstr "Scăzută"
-
-#~ msgctxt "uvindex card"
-#~ msgid "High"
-#~ msgstr "Ridicat"
-
-#~ msgctxt "uvindex card"
-#~ msgid "Low"
-#~ msgstr "Scăzut"
-
-#~ msgid "°C"
-#~ msgstr "°C"
-
-#, fuzzy
-#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "Unități în sistemul metric, cum ar fi Celsius, km/h, kilometri"
-
-#~ msgid "°F"
-#~ msgstr "°F"
-
-#, fuzzy
-#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
-#~ msgstr "Sistem IMPERIAL cu unități precum fahrenheit, mph, mile"
-
-#, fuzzy
-#~ msgid "Switching locations within 2 seconds is ignored"
-#~ msgstr "Schimbarea în decurs de 2 secunde este ignorată!"
-
-#, fuzzy
-#~ msgid "Location"
-#~ msgstr "Locații"
-
-#~ msgid "Could not fetch data from API"
-#~ msgstr "Nu s-au putut obține datele din API"
-
-#~ msgid "Refreshed Successfully"
-#~ msgstr "Actualizare cu succes"
-
-#~ msgid "Refresh within 5 seconds is ignored!"
-#~ msgstr "Actualizarea în decurs de 5 secunde este ignorată!"
-
-#~ msgid "Refreshing..."
-#~ msgstr "Se actualizează..."
-
-#~ msgid "Remove location"
-#~ msgstr "Șterge locația"
-
-#~ msgid "Switch city within 2 seconds is ignored!"
-#~ msgstr "Schimbarea orașului în decurs de 2 secunde este ignorată!"
-
-#~ msgid "Selected - {}"
-#~ msgstr "Selectat - {}"
-
-#~ msgid "Search"
-#~ msgstr "Caută"
-
-#, python-brace-format
-#~ msgid "Added - {0}"
-#~ msgstr "Adăugat - {0}"
-
-#, python-brace-format
-#~ msgid "Deleted - {0}"
-#~ msgstr "Șters - {0}"
-
-#~ msgid "Press enter to search"
-#~ msgstr "Apasă Enter pentru a căuta"
-
-#~ msgid "Beautiful and lightweight weather app"
-#~ msgstr "Aplicație meteo elegantă și ușor de utilizat"
-
-#~ msgid "Overcast day"
-#~ msgstr "Zi înnorată"
-
-#~ msgid "Dark mode"
-#~ msgstr "Mod întunecat"
-
-#~ msgid "Horizon"
-#~ msgstr "Orizont"
-
-#~ msgid "Midnight"
-#~ msgstr "Miezul nopţii"
-
-#~ msgid "Beautiful and light weight weather app build using Gtk and Python"
-#~ msgstr ""
-#~ "Aplicație meteo elegantă și ușor de utilizat creată folosind Gtk și Python"
-
-#~ msgid "Launch Maximized"
-#~ msgstr "Lansați Maximizat"
