@@ -55,6 +55,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             group,
             _("Units"),
             _("Metric (°C, km/h) or Imperial (°F, mph)"),
+            "preferences-desktop-locale-symbolic",
             (_("Metric"), _("Imperial")),
             self._on_unit_toggled,
             ("metric", "imperial"),
@@ -63,6 +64,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             group,
             _("Precipitation"),
             _("Unit of the hourly precipitation graph"),
+            "weather-showers-symbolic",
             # Translators: short unit names for millimetres and inches
             (_("mm"), _("in")),
             self._on_precip_unit_toggled,
@@ -72,6 +74,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             group,
             _("Time Format"),
             None,
+            "preferences-system-time-symbolic",
             (_("24-hour"), _("AM/PM")),
             self._on_24h_clock_toggled,
             (True, False),
@@ -86,6 +89,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Dynamic Background"),
             subtitle=_("Change the background to match the current weather"),
         )
+        self._add_prefix_icon(self._dynamic_bg_switch, "preferences-desktop-wallpaper-symbolic")
         self._dynamic_bg_switch.set_active(settings.is_using_dynamic_bg)
         self._dynamic_bg_switch.connect("notify::active", self._on_dynamic_bg_toggled)
         group.add(self._dynamic_bg_switch)
@@ -94,6 +98,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             group,
             _("Weather Icons"),
             None,
+            "weather-few-clouds-symbolic",
             (_("Default"), _("Material")),
             self._on_icon_theme_toggled,
             ("default", "material"),
@@ -107,6 +112,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Show Overview"),
             subtitle=_("A short summary of the coming hours"),
         )
+        self._add_prefix_icon(self._overview_switch, "dialog-information-symbolic")
         self._overview_switch.set_active(settings.show_overview)
         self._overview_switch.connect("notify::active", self._on_overview_toggled)
         group.add(self._overview_switch)
@@ -115,6 +121,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Notifications"),
             subtitle=_("Send the overview as a notification while the window is minimized or in compact mode"),
         )
+        self._add_prefix_icon(self._notification_switch, "preferences-system-notifications-symbolic")
         self._notification_switch.set_active(settings.show_notifications)
         self._notification_switch.connect("notify::active", self._on_notifications_toggled)
         group.add(self._notification_switch)
@@ -127,6 +134,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Debug Mode"),
             subtitle=_("Enable verbose logging and console output"),
         )
+        self._add_prefix_icon(self._debug_switch, "system-run-symbolic")
         self._debug_switch.set_active(settings.debug_mode)
         self._debug_switch.connect("notify::active", self._on_debug_mode_toggled)
         group.add(self._debug_switch)
@@ -135,6 +143,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Open Logs Folder"),
             activatable=True,
         )
+        self._add_prefix_icon(open_logs_row, "text-x-generic-symbolic")
         open_logs_row.add_suffix(Gtk.Image(icon_name="folder-open-symbolic"))
         open_logs_row.connect("activated", self._on_open_logs_clicked)
         group.add(open_logs_row)
@@ -143,6 +152,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Clear Log File"),
             subtitle=_("Delete all contents of the current log file"),
         )
+        self._add_prefix_icon(clear_logs_row, "edit-clear-all-symbolic")
         clear_btn = Gtk.Button(label=_("Clear"), valign=Gtk.Align.CENTER)
         clear_btn.connect("clicked", self._on_clear_logs_clicked)
         clear_logs_row.add_suffix(clear_btn)
@@ -156,6 +166,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
             title=_("Reset to Default"),
             subtitle=_("Clear all preferences and restore default values"),
         )
+        self._add_prefix_icon(row, "edit-undo-symbolic")
         reset_btn = Gtk.Button.new_with_label(_("Reset…"))
         reset_btn.set_valign(Gtk.Align.CENTER)
         reset_btn.add_css_class("destructive-action")
@@ -169,6 +180,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
         group: Adw.PreferencesGroup,
         title: str,
         subtitle: str | None,
+        icon_name: str,
         labels: tuple[str, str],
         handler: Callable,
         values: tuple,
@@ -177,6 +189,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
         row = Adw.ActionRow(title=title)
         if subtitle:
             row.set_subtitle(subtitle)
+        self._add_prefix_icon(row, icon_name)
 
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         button_box.add_css_class("linked")
@@ -197,12 +210,18 @@ class WeatherPreferences(Adw.PreferencesDialog):
         group.add(row)
         return buttons[0], buttons[1]
 
+    @staticmethod
+    def _add_prefix_icon(row: Adw.ActionRow, icon_name: str) -> None:
+        """Show a symbolic icon at the start of a row."""
+        row.add_prefix(Gtk.Image(icon_name=icon_name))
+
     def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
         labels = Gtk.StringList.new([opt[1] for opt in AUTO_REFRESH_OPTIONS])
         row = Adw.ComboRow(
             title=_("Auto Refresh"),
             model=labels,
         )
+        self._add_prefix_icon(row, "view-refresh-symbolic")
         current = settings.auto_refresh_interval
         selected_idx = 0
         for i, (val, label) in enumerate(AUTO_REFRESH_OPTIONS):
