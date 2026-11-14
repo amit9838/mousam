@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 15:22+0530\n"
+"POT-Creation-Date: 2026-11-14 16:14+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,23 +206,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/configs.py:79
+#: src/configs.py:98
 msgid "Off"
 msgstr ""
 
-#: src/configs.py:80
+#: src/configs.py:99
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/configs.py:81
+#: src/configs.py:100
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/configs.py:82
+#: src/configs.py:101
 msgid "Every hour"
 msgstr ""
 
-#: src/configs.py:83
+#: src/configs.py:102
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1045,207 +1045,207 @@ msgctxt "overview heading"
 msgid "Tomorrow"
 msgstr ""
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:167
 msgid "Good"
 msgstr ""
 
-#: src/CORE_weatherData.py:166
+#: src/CORE_weatherData.py:168
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:167
+#: src/CORE_weatherData.py:169
 msgid "Poor"
 msgstr ""
 
-#: src/CORE_weatherData.py:168
+#: src/CORE_weatherData.py:170
 msgid "Unhealthy"
 msgstr ""
 
-#: src/CORE_weatherData.py:169
+#: src/CORE_weatherData.py:171
 msgid "Severe"
 msgstr ""
 
-#: src/CORE_weatherData.py:170
+#: src/CORE_weatherData.py:172
 msgid "Hazardous"
 msgstr ""
 
-#: src/CORE_weatherData.py:185
+#: src/CORE_weatherData.py:187
 msgid "Air quality is good. A fine time to be outside."
 msgstr ""
 
-#: src/CORE_weatherData.py:187
+#: src/CORE_weatherData.py:189
 msgid ""
 "Unusually sensitive people should cut back on long or intense outdoor "
 "activity."
 msgstr ""
 
-#: src/CORE_weatherData.py:189
+#: src/CORE_weatherData.py:191
 msgid "Sensitive groups should cut back on long or intense outdoor activity."
 msgstr ""
 
-#: src/CORE_weatherData.py:191
+#: src/CORE_weatherData.py:193
 msgid ""
 "Everyone should cut back on long or intense outdoor activity; sensitive "
 "groups should avoid it."
 msgstr ""
 
-#: src/CORE_weatherData.py:193
+#: src/CORE_weatherData.py:195
 msgid ""
 "Everyone should avoid long or intense outdoor activity; sensitive groups "
 "should stay indoors."
 msgstr ""
 
-#: src/CORE_weatherData.py:194
+#: src/CORE_weatherData.py:196
 msgid "Everyone should avoid all outdoor activity."
-msgstr ""
-
-#: src/CORE_weatherData.py:200
-msgctxt "european aqi"
-msgid "Good"
 msgstr ""
 
 #: src/CORE_weatherData.py:202
 msgctxt "european aqi"
-msgid "Fair"
+msgid "Good"
 msgstr ""
 
 #: src/CORE_weatherData.py:204
 msgctxt "european aqi"
-msgid "Moderate"
+msgid "Fair"
 msgstr ""
 
 #: src/CORE_weatherData.py:206
 msgctxt "european aqi"
-msgid "Poor"
+msgid "Moderate"
 msgstr ""
 
 #: src/CORE_weatherData.py:208
 msgctxt "european aqi"
+msgid "Poor"
+msgstr ""
+
+#: src/CORE_weatherData.py:210
+msgctxt "european aqi"
 msgid "Very Poor"
 msgstr ""
 
-#: src/CORE_weatherData.py:209
+#: src/CORE_weatherData.py:211
 msgctxt "european aqi"
 msgid "Extremely Poor"
 msgstr ""
 
-#: src/CORE_weatherData.py:220
+#: src/CORE_weatherData.py:222
 msgctxt "pollutant level"
 msgid "Good"
 msgstr ""
 
-#: src/CORE_weatherData.py:221
+#: src/CORE_weatherData.py:223
 msgctxt "pollutant level"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:222
+#: src/CORE_weatherData.py:224
 msgctxt "pollutant level"
 msgid "Very High"
 msgstr ""
 
-#: src/CORE_weatherData.py:230
+#: src/CORE_weatherData.py:242
 msgctxt "pollen level"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:232
+#: src/CORE_weatherData.py:244
 msgctxt "pollen level"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:234
+#: src/CORE_weatherData.py:246
 msgctxt "pollen level"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:235
+#: src/CORE_weatherData.py:247
 msgctxt "pollen level"
 msgid "Very High"
 msgstr ""
 
-#: src/CORE_weatherData.py:250
+#: src/CORE_weatherData.py:262
 msgctxt "uvindex"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:251
+#: src/CORE_weatherData.py:263
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:252
+#: src/CORE_weatherData.py:264
 msgctxt "uvindex"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:253
+#: src/CORE_weatherData.py:265
 msgctxt "uvindex"
 msgid "Very High"
 msgstr ""
 
-#: src/CORE_weatherData.py:254
+#: src/CORE_weatherData.py:266
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:258
+#: src/CORE_weatherData.py:270
 msgctxt "humidity"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:259
+#: src/CORE_weatherData.py:271
 msgctxt "humidity"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:260
+#: src/CORE_weatherData.py:272
 msgctxt "humidity"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:267
+#: src/CORE_weatherData.py:279
 msgctxt "pressure"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:268
+#: src/CORE_weatherData.py:280
 msgctxt "pressure"
 msgid "Normal"
 msgstr ""
 
-#: src/CORE_weatherData.py:269
+#: src/CORE_weatherData.py:281
 msgctxt "pressure"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:273
+#: src/CORE_weatherData.py:285
 msgid "Calm"
 msgstr ""
 
-#: src/CORE_weatherData.py:274
+#: src/CORE_weatherData.py:286
 msgid "Light"
 msgstr ""
 
-#: src/CORE_weatherData.py:275
+#: src/CORE_weatherData.py:287
 msgctxt "wind"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:276
+#: src/CORE_weatherData.py:288
 msgid "Strong"
 msgstr ""
 
-#: src/CORE_weatherData.py:277
+#: src/CORE_weatherData.py:289
 msgctxt "wind"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:281
+#: src/CORE_weatherData.py:293
 msgid "km"
 msgstr ""
 
-#: src/CORE_weatherData.py:283
+#: src/CORE_weatherData.py:295
 msgid "miles"
 msgstr ""
 
@@ -1405,28 +1405,73 @@ msgctxt "current date"
 msgid "%A, %-d %b"
 msgstr ""
 
-#: src/UI_Forecast.py:156 src/UI_Forecast.py:418
+#: src/UI_Forecast.py:159 src/UI_Forecast.py:427
 msgid "Tomorrow"
 msgstr ""
 
-#: src/UI_Forecast.py:164
+#: src/UI_Forecast.py:167
 msgid "Weekly"
 msgstr ""
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
-#: src/UI_Forecast.py:368
+#: src/UI_Forecast.py:377
 #, python-brace-format
 msgid "Low {low}, high {high}"
 msgstr ""
 
-#: src/UI_Forecast.py:416
+#: src/UI_Forecast.py:425
 msgid "Today"
 msgstr ""
 
-#: src/UI_Forecast.py:438
+#: src/UI_Forecast.py:449
+#, python-brace-format
+msgid "Chance of snow: {percent}%"
+msgstr ""
+
+#: src/UI_Forecast.py:451
 #, python-brace-format
 msgid "Chance of rain: {percent}%"
+msgstr ""
+
+#: src/UI_Forecast.py:482
+#, python-brace-format
+msgid "Light snow: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:483
+#, python-brace-format
+msgid "Moderate snow: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:484
+#, python-brace-format
+msgid "Heavy snow: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:485
+#, python-brace-format
+msgid "Very heavy snow: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:502
+#, python-brace-format
+msgid "Light rain: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:503
+#, python-brace-format
+msgid "Moderate rain: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:504
+#, python-brace-format
+msgid "Heavy rain: {amount}"
+msgstr ""
+
+#: src/UI_Forecast.py:505
+#, python-brace-format
+msgid "Violent rain: {amount}"
 msgstr ""
 
 #: src/UI_HourlyDetails.py:51
