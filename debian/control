@@ -23,6 +23,8 @@ Architecture: all
 Depends: gir1.2-adw-1,
          gir1.2-gtk-4.0,
          python3-gi,
+         python3-gi-cairo,
+         python3-requests,
          ${python3:Depends},
 		 ${misc:Depends}
 Description: Weather for Linux
