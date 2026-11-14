@@ -323,8 +323,11 @@ class Forecast(Gtk.Grid):
         if hourly_data.is_day.data[index] == 0:
             weather_code = f"{weather_code}n"
 
+        rain = getattr(data_source, "precipitation_probability", None)
+        rain_chance = rain.data[index] if rain else None
+
         # Build the grid columns
-        self._add_label_column(grid, label_text)
+        self._add_label_column(grid, label_text, rain_chance)
         self._add_icon_column(grid, weather_code)
         self._add_placeholder_column(grid)
         self._add_temperature_column(grid, temp_max, None)
