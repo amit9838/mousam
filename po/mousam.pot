@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 16:14+0530\n"
+"POT-Creation-Date: 2026-11-14 16:42+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,14 @@ msgid "Weather at a glance"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:9
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air Quality;"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-msgid "Current Weather conditions and forecasts."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
@@ -88,10 +91,6 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:34
 msgid "Night mode view"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
