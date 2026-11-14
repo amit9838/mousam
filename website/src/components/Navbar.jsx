@@ -20,7 +20,7 @@ export default function Navbar() {
       <nav className="max-w-5xl mx-auto bg-zinc-900/70 backdrop-blur-xl border border-white/10 rounded-xl px-5 py-3 flex items-center justify-between shadow-[0_15px_40px_rgba(0,0,0,0.4)]">
         <div className="flex items-center gap-2 group cursor-pointer" onClick={() => scrollTo('home')}>
           <img src={logo} alt="logo" className="h-7 md:h-8 transition-transform group-hover:scale-110" />
-          <h1 className="text-lg md:text-xl font-bold font-['Outfit'] tracking-tight">Mousam</h1>
+          <h1 className="text-lg md:text-xl font-bold tracking-tight">Mousam</h1>
         </div>
 
         {/* Desktop Menu */}
@@ -73,7 +73,7 @@ export default function Navbar() {
               <button
                 key={item}
                 onClick={() => scrollTo(item)}
-                className="text-4xl font-bold text-white font-['Outfit'] hover:text-sky-400 transition-colors uppercase"
+                className="text-4xl font-bold text-white hover:text-sky-400 transition-colors uppercase"
               >
                 {item}
               </button>

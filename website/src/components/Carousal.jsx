@@ -90,8 +90,8 @@ const Carousel = () => {
             {/* Minimal Info & Controls */}
             <div className="mt-10 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
               <div className="max-w-xl animate-in fade-in slide-in-from-left-4 duration-700" key={`info-${currentIndex}`}>
-                <h3 className="text-2xl font-bold text-white mb-3 font-['Outfit']">{images[currentIndex].title}</h3>
-                <p className="text-base text-neutral-400 font-['Inter'] leading-relaxed">{images[currentIndex].description}</p>
+                <h3 className="text-2xl font-bold text-white mb-3">{images[currentIndex].title}</h3>
+                <p className="text-base text-neutral-400 leading-relaxed">{images[currentIndex].description}</p>
               </div>
 
               <div className="flex items-center gap-5 self-center lg:self-end bg-white/5 p-2.5 rounded-2xl border border-white/10 backdrop-blur-md">

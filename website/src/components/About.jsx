@@ -9,28 +9,39 @@ export default function About() {
 
       <div className="blueprint-col-content">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">About</h2>
-        <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed font-['Inter']">
+        <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed">
           <p>
-            Mousam is a sleek desktop-weather application offering real-time
-            weather updates and forecasts for the next{" "}
+            Mousam is a desktop weather app for Linux. It shows the current
+            conditions and forecasts for the next{" "}
             <code className={code_style}>24 hours</code> and{" "}
-            <code className={code_style}>7 days</code>. It provides comprehensive{" "}
-            <code className={code_style}>Air Quality Index</code> tracking, a one-line{" "}
-            <code className={code_style}>Overview</code> of the coming hours, a minimal{" "}
-            <code className={code_style}>Compact Mode</code>, and utilizes graphs and
-            bars to visually represent weather conditions. Supports both{" "}
-            <code className={code_style}>imperial</code> and{" "}
-            <code className={code_style}> metric </code> units for user
-            convenience.
+            <code className={code_style}>7 days</code>, plus a one-line{" "}
+            <code className={code_style}>Overview</code> of the coming hours that
+            can also arrive as a desktop notification. It tracks the{" "}
+            <code className={code_style}>Air Quality Index</code> with pollutants,
+            pollen and health advice, follows the{" "}
+            <code className={code_style}>sun and moon</code> through the day, and
+            keeps your <code className={code_style}>saved locations</code> with
+            their local time.
           </p>
           <p>
-            Developed with <code className={code_style}> Python</code> and{" "}
+            A minimal <code className={code_style}>Compact Mode</code> and the
+            option to <code className={code_style}>run in the background</code>{" "}
+            keep it out of the way, while graphs and bars make the weather easy to
+            read at a glance. It supports both{" "}
+            <code className={code_style}>metric</code> and{" "}
+            <code className={code_style}>imperial</code> units and is translated
+            into <code className={code_style}>21 languages</code>.
+          </p>
+          <p>
+            Developed with <code className={code_style}>Python</code> and{" "}
             <code className={code_style}>GTK4</code> using{" "}
             <code className={code_style}>Libadwaita</code> and{" "}
-            <code className={code_style}>Cairo</code> for graphics, Mousam fetches
-            weather data from the{" "}
-            <code className={code_style}>Open-Meteo API</code>, ensuring accurate
-            and timely information.
+            <code className={code_style}>Cairo</code> for graphics, Mousam fits in
+            with the GNOME desktop and follows its light and dark style. Weather
+            data comes from the free{" "}
+            <code className={`${code_style} whitespace-nowrap`}>Open-Meteo API</code>, with no account or
+            API key. Mousam is free software, released under the{" "}
+            <code className={`${code_style} whitespace-nowrap`}>GPL-3.0-or-later</code> licence.
           </p>
 
           <div className="pt-10 border-t border-white/5">
@@ -51,10 +62,10 @@ export default function About() {
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-white tracking-tight mb-0.5 font-['Outfit']">Amit Chaudhary</h3>
+                  <h3 className="text-2xl font-bold text-white tracking-tight mb-0.5">Amit Chaudhary</h3>
                   <p className="text-sky-400 font-semibold mb-5 tracking-wide uppercase text-[10px]">Software Engineer</p>
 
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6 font-['Inter']">
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                     I initiated Mousam as an exploration of GTK and Python.
                     I’m passionate about open-source and the collaborative spirit of
                     building tools that empower users with beautiful, intuitive interfaces.

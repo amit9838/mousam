@@ -9,15 +9,17 @@
     <p>Mousam shows the current weather and forecasts for the places you care about, with hourly and 7-day graphs, air quality and a short overview of the hours ahead. All data comes from Open-Meteo, with no account needed.</p>
     <p>Features:</p>
     <ul>
-      <li>Displays real-time temperature, humidity, wind speed, UV index, pressure and more</li>
-      <li>Comprehensive Air Quality Index and air pollutants data</li>
-      <li>Compact weather mode for a minimal, focused view</li>
-      <li>Hourly, tomorrow, and 7-day detailed forecasts</li>
-      <li>Visual graphs for sun and moon positions and day/night cycles</li>
-      <li>Hourly temperature, wind direction and precipitation tracking</li>
-      <li>Dynamic background styling that adapts to weather conditions</li>
-      <li>System notifications for weather updates with configurable preferences</li>
-      <li>Support for both metric and imperial measurement systems</li>
+      <li>Current temperature, feels like, humidity, wind, pressure, UV index, dew point and visibility</li>
+      <li>A one-line overview of the coming hours, such as when rain starts, also sent as a notification while the window is out of sight</li>
+      <li>Hourly temperature, wind and precipitation graphs</li>
+      <li>Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow</li>
+      <li>Air quality (US and EU AQI) with pollutants, pollen and health advice</li>
+      <li>The sun's path through the day, moon phase and twilight</li>
+      <li>Saved locations with their weather and local time, in the order you choose</li>
+      <li>Compact mode for a minimal, focused view</li>
+      <li>Option to keep running in the background when the window is closed</li>
+      <li>Dynamic backgrounds that follow the weather, and a choice of default or Material icons</li>
+      <li>Metric and imperial units, and 12- or 24-hour clock</li>
     </ul>
   </description>
   <screenshots>
@@ -60,6 +62,28 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="3.0.0" date="2026-11-14">
+      <description translate="no">
+        <p>A redesigned Mousam that tells you what the next hours bring</p>
+        <ul>
+          <li>New weather overview: a one-line summary of the coming hours, such as when rain starts, under the current conditions. It can be turned off in Preferences.</li>
+          <li>The overview arrives as a desktop notification while the window is minimized or in compact mode, replacing the old notification on every refresh.</li>
+          <li>New option to keep Mousam running in the background when its window is closed.</li>
+          <li>Choose between the default and Material weather icons.</li>
+          <li>Redesigned top section, gauges, bars and air quality graph.</li>
+          <li>The sunrise card draws the sun's path through the day and shows the moon phase and twilight.</li>
+          <li>The weekly forecast shows temperature ranges, the chance of rain as drops and snow as snowflakes. The tomorrow list shows how heavy the rain will be.</li>
+          <li>Air quality details open in a dialog, with the main pollutant and health advice.</li>
+          <li>Saved locations show their current weather and local time, and can be reordered by drag or with Alt+Up and Alt+Down.</li>
+          <li>Faster city search that no longer freezes the window, with a Retry button when it fails.</li>
+          <li>Compact mode spells out its details, can be left with Esc and offers Retry after an error.</li>
+          <li>Preferences regrouped into a dialog. The About dialog shows release notes and troubleshooting info.</li>
+          <li>Pressure is now sea-level pressure, so high places no longer always read "Low".</li>
+          <li>Fixed 100% CPU use and memory growth on refresh, hourly tiles cut off by the scrollbar, and old units showing right after switching between metric and imperial.</li>
+          <li>New Catalan and Portuguese (Portugal) translations, and updated Czech, French, Spanish and Brazilian Portuguese.</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.2" date="2026-04-27">
       <description translate="no">
         <p>Major Architecture Update and New Features</p>

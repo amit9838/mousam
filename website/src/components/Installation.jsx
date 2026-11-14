@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "./Button";
 import FlatpakInstallation from "./FlatpakInstallation";
 import SnapInstallation from "./SnapInstallation";
-import OthersInstallation from "./OthersInstallation";
 const tabs = [
   {
     tab_name: "flatpak",
@@ -11,10 +10,6 @@ const tabs = [
   {
     tab_name: "snap",
     content: <SnapInstallation />,
-  },
-  {
-    tab_name: "other",
-    content: <OthersInstallation />,
   },
 ];
 export default function Installation() {

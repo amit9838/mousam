@@ -2,21 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Adwaita Sans and Adwaita Mono, GNOME's fonts (SIL OFL 1.1, see fonts/LICENSE-OFL.txt).
+   Latin subsets; Adwaita Sans is variable, so one file covers every weight. */
+@font-face {
+  font-family: "Adwaita Sans";
+  src: url("./fonts/AdwaitaSans.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Adwaita Mono";
+  src: url("./fonts/AdwaitaMono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   html {
-    font-family: "Inter", "Ubuntu", sans-serif;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Outfit", sans-serif;
   }
 
   body {

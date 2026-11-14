@@ -26,7 +26,7 @@ export default function Contribute() {
       <div className="blueprint-col-content">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Contribute</h2>
         <div className="max-w-3xl">
-          <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">
+          <p className="text-base text-neutral-400 mb-8 leading-relaxed">
             Mousam is built by the community, for the community. Your contributions help ensure that everyone has access to a beautiful, open-source weather tool.
           </p>
 
@@ -36,7 +36,7 @@ export default function Contribute() {
             </a>
           </div>
 
-          <h4 className="text-xl font-bold text-white mb-6 font-['Outfit']">How you can help</h4>
+          <h4 className="text-xl font-bold text-white mb-6">How you can help</h4>
           <div className="grid gap-3">
             {askContribution.map((item) => (
               <a
