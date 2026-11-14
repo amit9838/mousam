@@ -12,7 +12,7 @@ Build-Depends-Indep: desktop-file-utils,
 					 libglib2.0-dev-bin,
 					 pkg-config,
                		 python3-all
-Standards-Version: 4.6.0
+Standards-Version: 4.7.4
 Homepage: https://amit9838.github.io/weather
 #Vcs-Browser: https://salsa.debian.org/debian/mousam
 #Vcs-Git: https://salsa.debian.org/debian/mousam.git

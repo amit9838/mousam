@@ -2,7 +2,7 @@ name: mousam
 adopt-info: mousam
 grade: stable
 confinement: strict
-base: core24
+base: core26
 platforms:
   amd64:
   arm64:
@@ -12,7 +12,7 @@ parts:
     source: .
     plugin: python
     python-packages:
-      - requests==2.30.0
+      - requests==2.34.2
     prime:
       - -usr/bin/activate*
       - -usr/bin/Activate*
@@ -24,7 +24,7 @@ parts:
       - -share
       - -pyvenv.cfg
     organize:
-      lib/python3.12/site-packages: usr/lib/python3/dist-packages
+      lib/python3.14/site-packages: usr/lib/python3/dist-packages
       bin: usr/bin
 
   mousam:
