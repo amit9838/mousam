@@ -98,7 +98,7 @@ class CardAirPollution:
 
         # Info button with Popover
         info_button = Gtk.MenuButton()
-        info_button.set_icon_name("help-about-symbolic")
+        info_button.set_icon_name("info-outline-symbolic")
         info_button.set_halign(Gtk.Align.END)
         info_button.set_valign(Gtk.Align.START)
         info_button.set_css_classes(["flat", "circular", "opacity-75"])
