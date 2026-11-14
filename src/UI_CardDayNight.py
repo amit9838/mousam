@@ -6,6 +6,7 @@ from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
 from .UI_CompDrawDayNight import DrawDayNight
+from .UI_CardSquare import CSS_TEXT_TITLE, CSS_TEXT_VALUE
 from .settings import settings
 from .CORE_Helpers import get_time_difference
 
@@ -15,11 +16,10 @@ gi.require_version("Adw", "1")
 
 class CardDayNight:
     def __init__(self):
-        sun_rise, sun_set, degree, current_time = self.get_sunset_sunrise_degree()
+        sun_rise, sun_set, degree = self.get_sunset_sunrise_degree()
         self.sun_rise = sun_rise
         self.sun_set = sun_set
         self.degree = degree
-        self.current_time = current_time
 
         self.card = None
         self.create_card()
@@ -55,68 +55,47 @@ class CardDayNight:
             sunset = sunset_dt.strftime("%H:%M")
 
         angle = self._calculate_sun_rotation(target_dt, sunrise_dt, sunset_dt)
-        
-        current_time = target_dt.strftime("%I:%M %p")
-        if settings.is_using_24h_clock:
-            current_time = target_dt.strftime("%H:%M")
-            
-        return sunrise, sunset, angle, current_time
+        return sunrise, sunset, angle
 
     def create_card(self):
-        card = Gtk.Grid(margin_top=6, margin_start=3, margin_bottom=0)
-        self.card = card
-        card.halign = Gtk.Align.FILL
-        # card.set_row_spacing(5)
+        card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        card.set_margin_top(6)
+        card.set_margin_start(3)
         card.set_css_classes(["view", "card"])
+        self.card = card
 
         if settings.is_using_dynamic_bg:
             card.add_css_class("bg-dark-overlay")
 
-        # Main title of the card
         title = Gtk.Label(label=_("Sunrise & Sunset"))
-        title.set_hexpand(True)
         title.set_halign(Gtk.Align.START)
-        title.set_css_classes(["text-lg", "opacity-80", "font-medium"])
-        card.attach(title, 0, 0, 1, 2)
+        title.set_css_classes(CSS_TEXT_TITLE)
+        card.append(title)
 
-        # Info Grid: It contains - Main value,units, short description, sub description
-        card_info = Gtk.Grid()
-        card_info.set_column_spacing(5)
-        card.attach(card_info, 0, 2, 1, 2)
+        # Times on the left, the sun's path on the right
+        content_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        card.append(content_box)
 
-        sun_rise_label = Gtk.Label(label=_("Sunrise"))
-        sun_rise_label.set_margin_top(5)
-        sun_rise_label.set_halign(Gtk.Align.START)
+        times_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        times_box.set_hexpand(True)
+        times_box.set_valign(Gtk.Align.CENTER)
+        content_box.append(times_box)
 
-        sun_rise_label.set_css_classes(["text-lg", "opacity-75"])
-        card_info.attach(sun_rise_label, 0, 1, 1, 2)
+        for label, time in ((_("Sunrise"), self.sun_rise), (_("Sunset"), self.sun_set)):
+            time_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
+            lbl_name = Gtk.Label(label=label)
+            lbl_name.set_halign(Gtk.Align.START)
+            lbl_name.set_css_classes(["text-lg", "opacity-75"])
+            lbl_time = Gtk.Label(label=time)
+            lbl_time.set_halign(Gtk.Align.START)
+            lbl_time.set_css_classes(CSS_TEXT_VALUE)
+            time_box.append(lbl_name)
+            time_box.append(lbl_time)
+            times_box.append(time_box)
 
-        sun_rise = Gtk.Label(label=self.sun_rise)
-        sun_rise.set_margin_top(5)
-        sun_rise.set_css_classes(["text-3xl", "font-medium", "opacity-90"])
-        sun_rise.set_halign(Gtk.Align.START)
-        card_info.attach(sun_rise, 0, 2, 3, 3)
-
-        sun_set_label = Gtk.Label(label=_("Sunset"))
-        sun_set_label.set_halign(Gtk.Align.START)
-        sun_set_label.set_margin_top(15)
-        sun_set_label.set_css_classes(["text-lg", "opacity-75"])
-        card_info.attach(sun_set_label, 0, 4, 1, 2)
-
-        sun_set = Gtk.Label(label=self.sun_set)
-        sun_set.set_css_classes(["text-3xl", "font-medium", "opacity-90"])
-        sun_set.set_halign(Gtk.Align.START)
-        card_info.attach(sun_set, 0, 6, 3, 3)
-
-        card_icon = Gtk.Grid()
-        card_icon.set_css_classes(["view"])
-        card_icon.add_css_class("bg-transparent")
-        # card_icon.add_css_class("card_info")
-
-        card.attach(card_icon, 1, 2, 2, 1)
-
-        obj = DrawDayNight(self.degree, self.current_time, 120, 90)
-        card_icon.attach(obj.drawing_area, 0, 1, 1, 1)
+        sun_path = DrawDayNight(self.degree, 120, 90).drawing_area
+        sun_path.set_valign(Gtk.Align.CENTER)
+        content_box.append(sun_path)
 
     # Sun Rotation
     def _calculate_sun_rotation(self, target_dt, sunrise_dt, sunset_dt):

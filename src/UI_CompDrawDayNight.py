@@ -26,10 +26,9 @@ class DrawDayNight:
     the top, 0 → 180 is sunset → sunrise through the bottom.
     """
 
-    def __init__(self, angle: float, time_str: str, width: int, height: int):
+    def __init__(self, angle: float, width: int, height: int):
         self.angle = angle
         self.is_day = 180 <= angle <= 360
-        self.time_str = time_str
         self.status = _("Day") if self.is_day else _("Night")
 
         # 0 on the horizon, 1 at the top: the sun is orange low and yellow high
@@ -88,8 +87,7 @@ class DrawDayNight:
         else:
             self._draw_moon(cr, body_x, body_y)
 
-        # The time just under the horizon, Day / Night under the circle
-        draw_text(area, cr, self.time_str, cx, cy + 4, size="small", bold=True, alpha=0.9)
+        # Day / Night under the circle
         draw_text(area, cr, self.status, cx, cy + r + BODY_RADIUS + 2, size="x-small", alpha=0.6)
 
     def _draw_sun(self, cr, x, y):
