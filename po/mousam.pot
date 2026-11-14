@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:44+0530\n"
+"POT-Creation-Date: 2026-11-14 15:22+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1069,176 +1069,192 @@ msgstr ""
 msgid "Hazardous"
 msgstr ""
 
-#: src/CORE_weatherData.py:174
+#: src/CORE_weatherData.py:185
+msgid "Air quality is good. A fine time to be outside."
+msgstr ""
+
+#: src/CORE_weatherData.py:187
+msgid ""
+"Unusually sensitive people should cut back on long or intense outdoor "
+"activity."
+msgstr ""
+
+#: src/CORE_weatherData.py:189
+msgid "Sensitive groups should cut back on long or intense outdoor activity."
+msgstr ""
+
+#: src/CORE_weatherData.py:191
+msgid ""
+"Everyone should cut back on long or intense outdoor activity; sensitive "
+"groups should avoid it."
+msgstr ""
+
+#: src/CORE_weatherData.py:193
+msgid ""
+"Everyone should avoid long or intense outdoor activity; sensitive groups "
+"should stay indoors."
+msgstr ""
+
+#: src/CORE_weatherData.py:194
+msgid "Everyone should avoid all outdoor activity."
+msgstr ""
+
+#: src/CORE_weatherData.py:200
+msgctxt "european aqi"
+msgid "Good"
+msgstr ""
+
+#: src/CORE_weatherData.py:202
+msgctxt "european aqi"
+msgid "Fair"
+msgstr ""
+
+#: src/CORE_weatherData.py:204
+msgctxt "european aqi"
+msgid "Moderate"
+msgstr ""
+
+#: src/CORE_weatherData.py:206
+msgctxt "european aqi"
+msgid "Poor"
+msgstr ""
+
+#: src/CORE_weatherData.py:208
+msgctxt "european aqi"
+msgid "Very Poor"
+msgstr ""
+
+#: src/CORE_weatherData.py:209
+msgctxt "european aqi"
+msgid "Extremely Poor"
+msgstr ""
+
+#: src/CORE_weatherData.py:220
+msgctxt "pollutant level"
+msgid "Good"
+msgstr ""
+
+#: src/CORE_weatherData.py:221
+msgctxt "pollutant level"
+msgid "High"
+msgstr ""
+
+#: src/CORE_weatherData.py:222
+msgctxt "pollutant level"
+msgid "Very High"
+msgstr ""
+
+#: src/CORE_weatherData.py:230
+msgctxt "pollen level"
+msgid "Low"
+msgstr ""
+
+#: src/CORE_weatherData.py:232
+msgctxt "pollen level"
+msgid "Moderate"
+msgstr ""
+
+#: src/CORE_weatherData.py:234
+msgctxt "pollen level"
+msgid "High"
+msgstr ""
+
+#: src/CORE_weatherData.py:235
+msgctxt "pollen level"
+msgid "Very High"
+msgstr ""
+
+#: src/CORE_weatherData.py:250
 msgctxt "uvindex"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:175
+#: src/CORE_weatherData.py:251
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:176
+#: src/CORE_weatherData.py:252
 msgctxt "uvindex"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:177
+#: src/CORE_weatherData.py:253
 msgctxt "uvindex"
 msgid "Very High"
 msgstr ""
 
-#: src/CORE_weatherData.py:178
+#: src/CORE_weatherData.py:254
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:182
+#: src/CORE_weatherData.py:258
 msgctxt "humidity"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:183
+#: src/CORE_weatherData.py:259
 msgctxt "humidity"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:184
+#: src/CORE_weatherData.py:260
 msgctxt "humidity"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:191
+#: src/CORE_weatherData.py:267
 msgctxt "pressure"
 msgid "Low"
 msgstr ""
 
-#: src/CORE_weatherData.py:192
+#: src/CORE_weatherData.py:268
 msgctxt "pressure"
 msgid "Normal"
 msgstr ""
 
-#: src/CORE_weatherData.py:193
+#: src/CORE_weatherData.py:269
 msgctxt "pressure"
 msgid "High"
 msgstr ""
 
-#: src/CORE_weatherData.py:197
+#: src/CORE_weatherData.py:273
 msgid "Calm"
 msgstr ""
 
-#: src/CORE_weatherData.py:198
+#: src/CORE_weatherData.py:274
 msgid "Light"
 msgstr ""
 
-#: src/CORE_weatherData.py:199
+#: src/CORE_weatherData.py:275
 msgctxt "wind"
 msgid "Moderate"
 msgstr ""
 
-#: src/CORE_weatherData.py:200
+#: src/CORE_weatherData.py:276
 msgid "Strong"
 msgstr ""
 
-#: src/CORE_weatherData.py:201
+#: src/CORE_weatherData.py:277
 msgctxt "wind"
 msgid "Extreme"
 msgstr ""
 
-#: src/CORE_weatherData.py:205
+#: src/CORE_weatherData.py:281
 msgid "km"
 msgstr ""
 
-#: src/CORE_weatherData.py:207
+#: src/CORE_weatherData.py:283
 msgid "miles"
 msgstr ""
 
-#: src/UI_CardAirPollution.py:93
+#: src/UI_CardAirPollution.py:61
 msgid "Air Pollution"
 msgstr ""
 
-#: src/UI_CardAirPollution.py:105
-msgid "Air Quality Components"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:153
-msgid "Air Quality Index"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:180
-msgid "PM2.5"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:181
-msgid "PM10"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:182
-msgid "CO"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:183
-msgid "CO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:184
-msgid "NO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:185
-msgid "SO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:186
-msgid "O₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:187
-msgid "Dust"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:188
-msgid "NH₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:189
-msgid "CH₄"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:190
-msgid "Alder Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:191
-msgid "Birch Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:192
-msgid "Grass Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:193
-msgid "Mugwort Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:194
-msgid "Olive Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:195
-msgid "Ragweed Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:215
-#, python-brace-format
-msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:243
-msgid ""
-"AQI: US EPA Standard\n"
-"Pollutant limits: WHO Guidelines (2021)"
+#: src/UI_CardAirPollution.py:72
+msgid "Air Quality Details"
 msgstr ""
 
 #: src/UI_CardDayNight.py:60
@@ -1314,19 +1330,19 @@ msgid "Northwest"
 msgstr ""
 
 #: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
-#: src/UI_CompactWeather.py:134 src/mousam.py:353
+#: src/UI_CompactWeather.py:134 src/mousam.py:355
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:230
+#: src/UI_CompactWeather.py:120 src/mousam.py:397 src/windowLocations.py:230
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:237
+#: src/UI_CompactWeather.py:135 src/mousam.py:355 src/windowLocations.py:237
 msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:138 src/mousam.py:358
+#: src/UI_CompactWeather.py:138 src/mousam.py:360
 msgid "Fetch Error"
 msgstr ""
 
@@ -1464,75 +1480,196 @@ msgstr ""
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/mousam.py:90
+#: src/mousam.py:91
 msgid "Debug Mode Enabled"
 msgstr ""
 
-#: src/mousam.py:91
+#: src/mousam.py:92
 msgid "View Logs"
 msgstr ""
 
-#: src/mousam.py:95
+#: src/mousam.py:96
 msgid "Debug Mode Disabled"
 msgstr ""
 
-#: src/mousam.py:132
+#: src/mousam.py:133
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:147 src/windowLocations.py:402 src/shortcutsDialog.ui:39
+#: src/mousam.py:148 src/windowLocations.py:402 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
-#: src/mousam.py:153
+#: src/mousam.py:154
 msgid "Compact Mode"
 msgstr ""
 
-#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
+#: src/mousam.py:181 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:180 src/shortcutsDialog.ui:63
+#: src/mousam.py:182 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/mousam.py:181
+#: src/mousam.py:183
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:182 src/shortcutsDialog.ui:57
+#: src/mousam.py:184 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr ""
 
 #. Translators: wind direction is where the wind blows from
-#: src/mousam.py:298
+#: src/mousam.py:300
 msgid "Direction (from)"
 msgstr ""
 
 #. Translators: "North" on the wind direction compass, as short as possible
-#: src/mousam.py:301
+#: src/mousam.py:303
 msgctxt "compass"
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:312
+#: src/mousam.py:314
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:372
+#: src/mousam.py:374
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:379
+#: src/mousam.py:381
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:380
+#: src/mousam.py:382
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:381 src/windowLocations.py:428
+#: src/mousam.py:383 src/windowLocations.py:428
 msgid "Add Location"
+msgstr ""
+
+#: src/windowAirQuality.py:19
+msgid "PM2.5"
+msgstr ""
+
+#: src/windowAirQuality.py:20
+msgid "PM10"
+msgstr ""
+
+#: src/windowAirQuality.py:21
+msgid "NO₂"
+msgstr ""
+
+#: src/windowAirQuality.py:22
+msgid "O₃"
+msgstr ""
+
+#: src/windowAirQuality.py:23
+msgid "SO₂"
+msgstr ""
+
+#: src/windowAirQuality.py:24
+msgid "CO"
+msgstr ""
+
+#: src/windowAirQuality.py:28
+msgid "CO₂"
+msgstr ""
+
+#: src/windowAirQuality.py:29
+msgid "CH₄"
+msgstr ""
+
+#: src/windowAirQuality.py:30
+msgid "NH₃"
+msgstr ""
+
+#: src/windowAirQuality.py:31
+msgid "Dust"
+msgstr ""
+
+#: src/windowAirQuality.py:34
+msgid "Alder"
+msgstr ""
+
+#: src/windowAirQuality.py:35
+msgid "Birch"
+msgstr ""
+
+#: src/windowAirQuality.py:36
+msgid "Grass"
+msgstr ""
+
+#: src/windowAirQuality.py:37
+msgid "Mugwort"
+msgstr ""
+
+#: src/windowAirQuality.py:38
+msgid "Olive"
+msgstr ""
+
+#: src/windowAirQuality.py:39
+msgid "Ragweed"
+msgstr ""
+
+#: src/windowAirQuality.py:71 src/windowAirQuality.py:80
+msgid "Air Quality"
+msgstr ""
+
+#: src/windowAirQuality.py:101
+msgid ""
+"AQI by the US EPA; limits from the WHO guidelines (2021). Data by Open-Meteo."
+msgstr ""
+
+#: src/windowAirQuality.py:152
+msgid "No air quality data for now."
+msgstr ""
+
+#. Translators: the European AQI beside the US one; {aqi} is its
+#. value and {level} its level name ("Fair")
+#: src/windowAirQuality.py:167
+#, python-brace-format
+msgid "US AQI · EU AQI {aqi}, {level}"
+msgstr ""
+
+#: src/windowAirQuality.py:170
+msgid "US AQI"
+msgstr ""
+
+#. Translators: {name} is a pollutant, like "PM2.5"
+#: src/windowAirQuality.py:177
+#, python-brace-format
+msgid "Main pollutant: {name}"
+msgstr ""
+
+#: src/windowAirQuality.py:191
+msgid "Trend"
+msgstr ""
+
+#: src/windowAirQuality.py:191
+msgid "Last 3 days and next 3 days"
+msgstr ""
+
+#: src/windowAirQuality.py:205
+msgid "Pollutants"
+msgstr ""
+
+#: src/windowAirQuality.py:214
+msgid "More Pollutants"
+msgstr ""
+
+#: src/windowAirQuality.py:227
+msgid "Pollen"
+msgstr ""
+
+#. Translators: the WHO guideline for a pollutant; {limit} is a
+#. number and {unit} its unit, like "μg/m³"
+#: src/windowAirQuality.py:246
+#, python-brace-format
+msgid "WHO limit {limit} {unit}"
 msgstr ""
 
 #: src/windowAbout.py:37
