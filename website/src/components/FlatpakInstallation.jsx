@@ -3,9 +3,9 @@ import Button from "./Button";
 export default function FlatpakInstallation() {
   const command = "flatpak install flathub io.github.amit9838.mousam";
   return (
-    <div className="space-y-8 font-['Inter']">
+    <div className="space-y-8">
       <div>
-        <h3 className="text-2xl font-bold text-white mb-4 font-['Outfit']">
+        <h3 className="text-2xl font-bold text-white mb-4">
           Download from Flathub
         </h3>
         <a 
@@ -22,7 +22,7 @@ export default function FlatpakInstallation() {
 
       <div className="space-y-8">
         <div className="flex flex-col gap-4">
-          <h4 className="text-xl font-bold text-white font-['Outfit'] flex items-center gap-2">
+          <h4 className="text-xl font-bold text-white flex items-center gap-2">
             <span className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400 text-sm">01</span>
             Setup Flatpak
           </h4>
@@ -40,7 +40,7 @@ export default function FlatpakInstallation() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <h4 className="text-xl font-bold text-white font-['Outfit'] flex items-center gap-2">
+          <h4 className="text-xl font-bold text-white flex items-center gap-2">
             <span className="w-8 h-8 rounded-lg bg-sky-500/10 flex items-center justify-center text-sky-400 text-sm">02</span>
             Install Command
           </h4>

@@ -8,7 +8,7 @@ export default function Support() {
       <div className="blueprint-col-content">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">Support</h2>
         <div className="max-w-2xl">
-          <p className="text-base text-neutral-400 mb-8 font-['Inter'] leading-relaxed">
+          <p className="text-base text-neutral-400 mb-8 leading-relaxed">
             I hope you ❤️ Mousam. If you find the application useful and would like to support its continued development, you can do so here. Your support is greatly appreciated!
           </p>
 

@@ -9,7 +9,7 @@ export default function About() {
 
       <div className="blueprint-col-content">
         <h2 className="text-4xl font-bold tracking-tight text-white/90 mb-8">About</h2>
-        <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed font-['Inter']">
+        <div className="max-w-3xl space-y-5 text-base text-neutral-400 leading-relaxed">
           <p>
             Mousam is a sleek desktop-weather application offering real-time
             weather updates and forecasts for the next{" "}
@@ -51,10 +51,10 @@ export default function About() {
                 </div>
 
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-white tracking-tight mb-0.5 font-['Outfit']">Amit Chaudhary</h3>
+                  <h3 className="text-2xl font-bold text-white tracking-tight mb-0.5">Amit Chaudhary</h3>
                   <p className="text-sky-400 font-semibold mb-5 tracking-wide uppercase text-[10px]">Software Engineer</p>
 
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6 font-['Inter']">
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                     I initiated Mousam as an exploration of GTK and Python.
                     I’m passionate about open-source and the collaborative spirit of
                     building tools that empower users with beautiful, intuitive interfaces.

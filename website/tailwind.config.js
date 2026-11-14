@@ -3,6 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Adwaita Sans"', "Cantarell", "Inter", "system-ui", "sans-serif"],
+        mono: ['"Adwaita Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
       colors: {
         primary: "#131E27",
         secondary: "#222A31",

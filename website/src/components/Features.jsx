@@ -60,7 +60,7 @@ export default function Features() {
                 <div className="w-14 h-14 flex items-center justify-center bg-white/[0.03] border border-white/5 rounded-2xl mb-4 group-hover:bg-sky-500/10 group-hover:border-sky-500/20 transition-all duration-500">
                   <i className={`fa-solid ${item.icon} text-xl text-sky-400/80 group-hover:text-sky-400 transition-colors`}></i>
                 </div>
-                <h3 className="text-sm font-medium text-neutral-400 group-hover:text-white transition-colors duration-300 font-['Inter'] leading-snug px-2">
+                <h3 className="text-sm font-medium text-neutral-400 group-hover:text-white transition-colors duration-300 leading-snug px-2">
                   {item.text}
                 </h3>
               </div>

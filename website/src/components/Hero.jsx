@@ -33,12 +33,12 @@ export default function Hero() {
               Mousam 2.0 is out
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-[1.2] tracking-tight font-['Outfit']">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-[1.2] tracking-tight">
               Elevate your <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4d94a5] to-sky-600">weather</span> experience.
             </h1>
 
-            <p className="text-base md:text-lg text-neutral-400 mb-10 max-w-lg font-['Inter'] leading-relaxed mx-auto lg:mx-0">
+            <p className="text-base md:text-lg text-neutral-400 mb-10 max-w-lg leading-relaxed mx-auto lg:mx-0">
               Displays real-time temperature, humidity, wind speed, UV index, pressure along with weather and AQI forecasts
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
