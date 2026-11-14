@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:27+0530\n"
+"POT-Creation-Date: 2026-11-14 14:44+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1389,19 +1389,26 @@ msgctxt "current date"
 msgid "%A, %-d %b"
 msgstr ""
 
-#: src/UI_Forecast.py:153 src/UI_Forecast.py:409
+#: src/UI_Forecast.py:156 src/UI_Forecast.py:418
 msgid "Tomorrow"
 msgstr ""
 
-#: src/UI_Forecast.py:161
+#: src/UI_Forecast.py:164
 msgid "Weekly"
 msgstr ""
 
-#: src/UI_Forecast.py:407
+#. Translators: tooltip on the day's temperature range bar; {low} and
+#. {high} are temperatures with their unit sign, like "15°"
+#: src/UI_Forecast.py:368
+#, python-brace-format
+msgid "Low {low}, high {high}"
+msgstr ""
+
+#: src/UI_Forecast.py:416
 msgid "Today"
 msgstr ""
 
-#: src/UI_Forecast.py:428
+#: src/UI_Forecast.py:438
 #, python-brace-format
 msgid "Chance of rain: {percent}%"
 msgstr ""
