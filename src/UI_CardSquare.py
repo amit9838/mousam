@@ -4,7 +4,7 @@ from typing import Optional, Union
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 
 from .CORE_Icons import get_icon_path, ARROW_CENTER
 from .configs import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402

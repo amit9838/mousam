@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 16:14+0530\n"
+"POT-Creation-Date: 2026-11-14 19:44+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,11 +29,14 @@ msgid "Weather at a glance"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.desktop.in:9
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-msgid "Current Weather conditions and forecasts."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
@@ -42,56 +45,66 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
+"Current temperature, feels like, humidity, wind, pressure, UV index, dew "
+"point and visibility"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid "Comprehensive Air Quality Index and air pollutants data"
+msgid ""
+"A one-line overview of the coming hours, such as when rain starts, also sent "
+"as a notification while the window is out of sight"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Compact weather mode for a minimal, focused view"
+msgid "Hourly temperature, wind and precipitation graphs"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-msgid "Hourly, tomorrow, and 7-day detailed forecasts"
+msgid ""
+"Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
-msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgid "Air quality (US and EU AQI) with pollutants, pollen and health advice"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
-msgid "Hourly temperature, wind direction and precipitation tracking"
+msgid "The sun's path through the day, moon phase and twilight"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-msgid "Dynamic background styling that adapts to weather conditions"
+msgid ""
+"Saved locations with their weather and local time, in the order you choose"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
-msgid "System notifications for weather updates with configurable preferences"
+msgid "Compact mode for a minimal, focused view"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-msgid "Support for both metric and imperial measurement systems"
+msgid "Option to keep running in the background when the window is closed"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:26
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid ""
+"Dynamic backgrounds that follow the weather, and a choice of default or "
+"Material icons"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:22
+msgid "Metric and imperial units, and 12- or 24-hour clock"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:28
 msgid "Main dashboard showing current weather and hourly forecast"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:30
+#: data/io.github.amit9838.mousam.appdata.xml.in:32
 msgid "Detailed weather conditions during rain"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:34
+#: data/io.github.amit9838.mousam.appdata.xml.in:36
 msgid "Night mode view"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
@@ -1270,7 +1283,7 @@ msgid "Sunset"
 msgstr ""
 
 #: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
-#: src/UI_HourlyDetails.py:52
+#: src/UI_HourlyDetails.py:51
 msgid "Wind"
 msgstr ""
 
@@ -1330,19 +1343,19 @@ msgid "Northwest"
 msgstr ""
 
 #: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
-#: src/UI_CompactWeather.py:134 src/mousam.py:355
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:397 src/windowLocations.py:230
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:232
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:355 src/windowLocations.py:237
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:239
 msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:138 src/mousam.py:360
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
 msgid "Fetch Error"
 msgstr ""
 
@@ -1405,194 +1418,194 @@ msgctxt "current date"
 msgid "%A, %-d %b"
 msgstr ""
 
-#: src/UI_Forecast.py:159 src/UI_Forecast.py:427
+#: src/UI_Forecast.py:158 src/UI_Forecast.py:426
 msgid "Tomorrow"
 msgstr ""
 
-#: src/UI_Forecast.py:167
+#: src/UI_Forecast.py:166
 msgid "Weekly"
 msgstr ""
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
-#: src/UI_Forecast.py:377
+#: src/UI_Forecast.py:376
 #, python-brace-format
 msgid "Low {low}, high {high}"
 msgstr ""
 
-#: src/UI_Forecast.py:425
+#: src/UI_Forecast.py:424
 msgid "Today"
 msgstr ""
 
-#: src/UI_Forecast.py:449
+#: src/UI_Forecast.py:448
 #, python-brace-format
 msgid "Chance of snow: {percent}%"
 msgstr ""
 
-#: src/UI_Forecast.py:451
+#: src/UI_Forecast.py:450
 #, python-brace-format
 msgid "Chance of rain: {percent}%"
 msgstr ""
 
-#: src/UI_Forecast.py:482
+#: src/UI_Forecast.py:481
 #, python-brace-format
 msgid "Light snow: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:483
+#: src/UI_Forecast.py:482
 #, python-brace-format
 msgid "Moderate snow: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:484
+#: src/UI_Forecast.py:483
 #, python-brace-format
 msgid "Heavy snow: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:485
+#: src/UI_Forecast.py:484
 #, python-brace-format
 msgid "Very heavy snow: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:502
+#: src/UI_Forecast.py:501
 #, python-brace-format
 msgid "Light rain: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:503
+#: src/UI_Forecast.py:502
 #, python-brace-format
 msgid "Moderate rain: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:504
+#: src/UI_Forecast.py:503
 #, python-brace-format
 msgid "Heavy rain: {amount}"
 msgstr ""
 
-#: src/UI_Forecast.py:505
+#: src/UI_Forecast.py:504
 #, python-brace-format
 msgid "Violent rain: {amount}"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:51
+#: src/UI_HourlyDetails.py:50
 msgid "Hourly"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:53 src/windowPreferences.py:65
+#: src/UI_HourlyDetails.py:52 src/windowPreferences.py:65
 msgid "Precipitation"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:151
+#: src/UI_HourlyDetails.py:150
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:157
+#: src/UI_HourlyDetails.py:156
 msgctxt "wind"
 msgid "Day High •"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:168
+#: src/UI_HourlyDetails.py:167
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:246
+#: src/UI_HourlyDetails.py:245
 msgid "Now"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:287
 msgid "No precipitation today !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation expected today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:289
 msgid "Anticipate a precipitation-free day !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:291
+#: src/UI_HourlyDetails.py:290
 msgid "Enjoy a rain-free day today!"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:292
+#: src/UI_HourlyDetails.py:291
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:293
+#: src/UI_HourlyDetails.py:292
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/mousam.py:91
+#: src/mousam.py:89
 msgid "Debug Mode Enabled"
 msgstr ""
 
-#: src/mousam.py:92
+#: src/mousam.py:90
 msgid "View Logs"
 msgstr ""
 
-#: src/mousam.py:96
+#: src/mousam.py:94
 msgid "Debug Mode Disabled"
 msgstr ""
 
-#: src/mousam.py:133
+#: src/mousam.py:131
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:148 src/windowLocations.py:402 src/shortcutsDialog.ui:39
+#: src/mousam.py:146 src/windowLocations.py:404 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
-#: src/mousam.py:154
+#: src/mousam.py:152
 msgid "Compact Mode"
 msgstr ""
 
-#: src/mousam.py:181 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:182 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/mousam.py:183
+#: src/mousam.py:181
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:184 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr ""
 
 #. Translators: wind direction is where the wind blows from
-#: src/mousam.py:300
+#: src/mousam.py:298
 msgid "Direction (from)"
 msgstr ""
 
 #. Translators: "North" on the wind direction compass, as short as possible
-#: src/mousam.py:303
+#: src/mousam.py:301
 msgctxt "compass"
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:314
+#: src/mousam.py:312
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:374
+#: src/mousam.py:372
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:381
+#: src/mousam.py:379
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:382
+#: src/mousam.py:380
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:383 src/windowLocations.py:428
+#: src/mousam.py:381 src/windowLocations.py:430
 msgid "Add Location"
 msgstr ""
 
@@ -1772,55 +1785,55 @@ msgstr ""
 msgid "All rights belong to Google. Collected by Darren Griffin."
 msgstr ""
 
-#: src/windowLocations.py:147
+#: src/windowLocations.py:145
 msgid "Add New Location"
 msgstr ""
 
-#: src/windowLocations.py:179
+#: src/windowLocations.py:181
 msgid "Search cities, e.g. Kochi"
 msgstr ""
 
-#: src/windowLocations.py:207
+#: src/windowLocations.py:209
 msgid "Show More"
 msgstr ""
 
-#: src/windowLocations.py:227
+#: src/windowLocations.py:229
 msgid "Search for Your City"
 msgstr ""
 
-#: src/windowLocations.py:236
+#: src/windowLocations.py:238
 msgid "Couldn't Search for Cities"
 msgstr ""
 
-#: src/windowLocations.py:344
+#: src/windowLocations.py:346
 msgid "No Cities Found"
 msgstr ""
 
-#: src/windowLocations.py:345
+#: src/windowLocations.py:347
 msgid "Check the spelling or try a nearby city."
 msgstr ""
 
-#: src/windowLocations.py:383
+#: src/windowLocations.py:385
 msgid "Already saved"
 msgstr ""
 
-#: src/windowLocations.py:425
+#: src/windowLocations.py:427
 msgid "Saved Locations"
 msgstr ""
 
-#: src/windowLocations.py:500
+#: src/windowLocations.py:502
 msgid "Remove"
 msgstr ""
 
-#: src/windowLocations.py:546
+#: src/windowLocations.py:548
 msgid "Drag to reorder, or press Alt+Up / Alt+Down"
 msgstr ""
 
-#: src/windowLocations.py:618
+#: src/windowLocations.py:620
 msgid "Location already exists"
 msgstr ""
 
-#: src/windowLocations.py:636
+#: src/windowLocations.py:638
 #, python-brace-format
 msgid "Switched to {}"
 msgstr ""

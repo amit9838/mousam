@@ -1,3 +1,7 @@
+# NOTE: Some strings in this file are machine translated. Human review is required.
+#
+# TODO: Remove the NOTE above once the translation has been reviewed.
+#
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -7,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-14 19:44+0530\n"
 "PO-Revision-Date: 2026-02-02 02:49+0200\n"
 "Last-Translator: Juha Antikainen <jussi.antikainen@gmail.com>\n"
 "Language-Team: Suomi\n"
@@ -19,24 +23,29 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:5
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+#: data/io.github.amit9838.mousam.desktop.in:4
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:35
 msgid "Weather at a glance"
 msgstr "Sääkatsaus"
 
-#: data/io.github.amit9838.mousam.desktop.in:10
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr "Sää;Mousam;Sade;Pilvi;Ennuste;GTK4;Python;lämpötila;"
+#: data/io.github.amit9838.mousam.desktop.in:9
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
+msgstr "Sää;Ennuste;Lämpötila;Sade;Tuuli;Ilmanlaatu;GTK4;Python;Mousam;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-#, fuzzy
-msgid "Current Weather conditions and forecasts."
-msgstr "Tämän hetken säätilanne ja ennuste."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
+msgstr ""
+"Mousam näyttää nykyisen sään ja ennusteet sinulle tärkeille paikoille, "
+"tunti- ja 7 päivän kaavioilla, ilmanlaadulla ja lyhyellä yleiskatsauksella "
+"tuleviin tunteihin. Kaikki tiedot tulevat Open-Meteolta, tiliä ei tarvita."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -44,65 +53,80 @@ msgstr "Ominaisuudet:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
+"Current temperature, feels like, humidity, wind, pressure, UV index, dew "
+"point and visibility"
 msgstr ""
-"Näyttää reaaliaikaisen lämpötilan, ilmankosteuden, tuulen nopeuden, UV-"
-"indeksin, ilmanpaineen ja paljon muuta"
+"Nykyinen lämpötila, koettu lämpötila, kosteus, tuuli, ilmanpaine, UV-"
+"indeksi, kosteuspiste ja näkyvyys"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid "Comprehensive Air Quality Index and air pollutants data"
+msgid ""
+"A one-line overview of the coming hours, such as when rain starts, also sent "
+"as a notification while the window is out of sight"
 msgstr ""
+"Yhden rivin yleiskatsaus tuleviin tunteihin, esimerkiksi milloin sade alkaa, "
+"joka lähetetään myös ilmoituksena, kun ikkuna ei ole näkyvissä"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgid "Hourly temperature, wind and precipitation graphs"
+msgstr "Tuntikohtaiset kaaviot lämpötilasta, tuulesta ja sateesta"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
-msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Sisältää myös huomisen sään ja 7 päivän ennusteen"
+msgid ""
+"Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow"
+msgstr ""
+"Huomisen ja 7 päivän ennusteet lämpötila-alueilla sekä sade- ja lumisateen "
+"todennäköisyydellä"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
-msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgid "Air quality (US and EU AQI) with pollutants, pollen and health advice"
 msgstr ""
+"Ilmanlaatu (Yhdysvaltain ja EU:n AQI) epäpuhtauksilla, siitepölyllä ja "
+"terveysneuvoilla"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
-msgid "Hourly temperature, wind direction and precipitation tracking"
-msgstr ""
+msgid "The sun's path through the day, moon phase and twilight"
+msgstr "Auringon kulku päivän aikana, kuun vaihe ja hämärä"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
-msgid "Dynamic background styling that adapts to weather conditions"
+msgid ""
+"Saved locations with their weather and local time, in the order you choose"
 msgstr ""
-"Taustakuva päivittyy sääolosuhteiden perusteella (uudelleenkäynnistys "
-"vaaditaan)."
+"Tallennetut paikat säätietoineen ja paikallisine aikoineen, valitsemassasi "
+"järjestyksessä"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
-msgid "System notifications for weather updates with configurable preferences"
-msgstr ""
+msgid "Compact mode for a minimal, focused view"
+msgstr "Kompakti tila minimaalista, keskittynyttä näkymää varten"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
-msgid "Support for both metric and imperial measurement systems"
-msgstr "Tarkastele säätietoja metrisinä tai imperiaalisina yksikköinä"
+msgid "Option to keep running in the background when the window is closed"
+msgstr "Mahdollisuus jatkaa taustalla, kun ikkuna suljetaan"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:26
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid ""
+"Dynamic backgrounds that follow the weather, and a choice of default or "
+"Material icons"
+msgstr ""
+"Säähän mukautuvat dynaamiset taustat sekä valinta oletus- tai Material-"
+"kuvakkeiden välillä"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:22
+msgid "Metric and imperial units, and 12- or 24-hour clock"
+msgstr ""
+"Metriset ja brittiläis-amerikkalaiset yksiköt sekä 12 tai 24 tunnin kello"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:28
 msgid "Main dashboard showing current weather and hourly forecast"
-msgstr ""
+msgstr "Päänäkymä, jossa nykyinen sää ja tuntiennuste"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
+#: data/io.github.amit9838.mousam.appdata.xml.in:32
 msgid "Detailed weather conditions during rain"
-msgstr "Tämän hetken säätilanne ja ennuste."
+msgstr "Yksityiskohtaiset sääolosuhteet sateen aikana"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:34
+#: data/io.github.amit9838.mousam.appdata.xml.in:36
 msgid "Night mode view"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
-msgstr "Amit Chaudhary"
+msgstr "Näkymä yötilassa"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
@@ -154,11 +178,11 @@ msgstr "Avaa sovellus koko näytölle."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "Automaattisen päivityksen aikaväli minuutteina"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
-msgstr ""
+msgstr "Sään automaattisen päivityksen aikaväli. 0 tarkoittaa pois käytöstä."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
@@ -170,845 +194,1924 @@ msgstr "metrinen(km, °C), imperiaalinen(maili, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "Näytä sääpäivitysilmoitukset"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "Näytä ilmoitus, kun säätiedot päivitetään."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
-msgid "Enable debug mode"
-msgstr ""
+msgid "Show the weather overview"
+msgstr "Näytä sääyhteenveto"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
-msgid "Enables detailed logging and console output."
+msgid "Show a short summary of the coming hours under the current conditions."
 msgstr ""
+"Näytä lyhyt yhteenveto tulevista tunneista nykyisten olosuhteiden alla."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
-msgid "Icon theme"
-msgstr ""
+msgid "Run in background"
+msgstr "Suorita taustalla"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
+msgid "Keep the app running when its window is closed."
+msgstr "Pitää sovelluksen käynnissä, kun sen ikkuna suljetaan."
+
+#: data/io.github.amit9838.mousam.gschema.xml:67
+msgid "Enable debug mode"
+msgstr "Ota virheenjäljitystila käyttöön"
+
+#: data/io.github.amit9838.mousam.gschema.xml:68
+msgid "Enables detailed logging and console output."
+msgstr "Ottaa käyttöön yksityiskohtaisen lokituksen ja konsolitulosteen."
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "Icon theme"
+msgstr "Kuvaketeema"
+
+#: data/io.github.amit9838.mousam.gschema.xml:73
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Sääkuvakkeiden sarja: ”default” (Mousamin oletuskuvakkeet) tai ”material” "
+"(Googlen Material Design -kuvakkeet)"
 
-#: src/configs.py:33
+#: data/io.github.amit9838.mousam.gschema.xml:81
+msgid "Forecast page"
+msgstr "Ennustesivu"
+
+#: data/io.github.amit9838.mousam.gschema.xml:82
+msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
+msgstr "Ennustekortissa viimeksi näytetty sivu: ”tomorrow” tai ”weekly”."
+
+#: src/configs.py:98
 msgid "Off"
-msgstr ""
+msgstr "Pois"
 
-#: src/configs.py:34
+#: src/configs.py:99
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "15 minuutin välein"
 
-#: src/configs.py:35
+#: src/configs.py:100
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30 minuutin välein"
 
-#: src/configs.py:36
+#: src/configs.py:101
 msgid "Every hour"
-msgstr ""
+msgstr "Tunnin välein"
 
-#: src/configs.py:37
+#: src/configs.py:102
 msgid "Every 2 hours"
-msgstr ""
+msgstr "2 tunnin välein"
 
-#: src/CORE_GTKUtils.py:66
-msgid "Unknown"
-msgstr ""
-
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
-msgstr ""
+msgstr "Tuntematon kaupunki"
 
-#: src/CORE_Icons.py:261
+#: src/CORE_Icons.py:267
 msgid "Clear sky"
 msgstr "Selkeä"
 
-#: src/CORE_Icons.py:262
+#: src/CORE_Icons.py:268
 msgid "Few Clouds"
 msgstr "Melkein selkeä"
 
-#: src/CORE_Icons.py:263
+#: src/CORE_Icons.py:269
 msgid "Partly Cloudy"
 msgstr "Puolipilvinen"
 
-#: src/CORE_Icons.py:264
+#: src/CORE_Icons.py:270
 msgid "Overcast"
 msgstr "Pilvinen"
 
-#: src/CORE_Icons.py:265
+#: src/CORE_Icons.py:271
 msgid "Fog"
 msgstr "Sumua"
 
-#: src/CORE_Icons.py:266
+#: src/CORE_Icons.py:272
 msgid "Mist"
 msgstr "Utua"
 
-#: src/CORE_Icons.py:267
+#: src/CORE_Icons.py:273
 msgid "Light Drizzle"
 msgstr "Kevyt Tihkusade"
 
-#: src/CORE_Icons.py:268
+#: src/CORE_Icons.py:274
 msgid "Moderate Drizzle"
 msgstr "Kohtalainen Tihkusade"
 
-#: src/CORE_Icons.py:269
+#: src/CORE_Icons.py:275
 msgid "Heavy Intensity Drizzle"
 msgstr "Voimakas Tihkusade"
 
-#: src/CORE_Icons.py:270
+#: src/CORE_Icons.py:276
 msgid "Light Freezing Drizzle"
 msgstr "Kevyt Jäätävä Tihkusade"
 
-#: src/CORE_Icons.py:271
+#: src/CORE_Icons.py:277
 msgid "Heavy Freezing Drizzle"
 msgstr "Voimakas Jäätävä Tihkusade"
 
-#: src/CORE_Icons.py:272
+#: src/CORE_Icons.py:278
 msgid "Light Rain"
 msgstr "Kevyt Sade"
 
-#: src/CORE_Icons.py:273
+#: src/CORE_Icons.py:279
 msgid "Moderate Rain"
 msgstr "Kohtalainen Sade"
 
-#: src/CORE_Icons.py:274
+#: src/CORE_Icons.py:280
 msgid "Heavy Rain"
 msgstr "Voimakas Sade"
 
-#: src/CORE_Icons.py:275
+#: src/CORE_Icons.py:281
 msgid "Light Freezing Rain"
 msgstr "Kevyt Jäätävä Sade"
 
-#: src/CORE_Icons.py:276
+#: src/CORE_Icons.py:282
 msgid "Heavy Freezing Rain"
 msgstr "Voimakas Jäätävä Sade"
 
-#: src/CORE_Icons.py:277
+#: src/CORE_Icons.py:283
 msgid "Light Snow Fall"
 msgstr "Kevyt Lumisade"
 
-#: src/CORE_Icons.py:278
+#: src/CORE_Icons.py:284
 msgid "Moderate Snow Fall"
 msgstr "Kohtalainen Lumisade"
 
-#: src/CORE_Icons.py:279
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Fall"
 msgstr "Voimakas Lumisade"
 
-#: src/CORE_Icons.py:280
+#: src/CORE_Icons.py:286
 msgid "Snow grains"
 msgstr "Lumijyväsiä"
 
-#: src/CORE_Icons.py:281
+#: src/CORE_Icons.py:287
 msgid "Light Rain Showers"
 msgstr "Kevyitä Sadekuuroja"
 
-#: src/CORE_Icons.py:282
+#: src/CORE_Icons.py:288
 msgid "Moderate Rain Showers"
 msgstr "Kohtalaisia Sadekuuroja"
 
-#: src/CORE_Icons.py:283
+#: src/CORE_Icons.py:289
 msgid "Heavy Rain Showers"
 msgstr "Voimakkaita Sadekuuroja"
 
-#: src/CORE_Icons.py:284
+#: src/CORE_Icons.py:290
 msgid "Light Snow Showers"
 msgstr "Kevyitä Lumikuuroja"
 
-#: src/CORE_Icons.py:285
+#: src/CORE_Icons.py:291
 msgid "Heavy Snow Showers "
 msgstr "Voimakkaita Lumikuuroja "
 
-#: src/CORE_Icons.py:286
+#: src/CORE_Icons.py:292
 msgid "Thunderstorm"
 msgstr "Ukkosmyrsky"
 
-#: src/CORE_Icons.py:287
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
 msgstr "Ukkosmyrsky ja rakeita"
 
-#: src/CORE_weatherData.py:154
+#: src/CORE_OverviewMessages.py:31
+msgid "Thunderstorms are likely right now. Stay indoors if you can."
+msgstr "Ukkosmyrskyt ovat todennäköisiä juuri nyt. Pysy sisällä, jos voit."
+
+#: src/CORE_OverviewMessages.py:32
+msgid "Expect thunderstorms right now. Stay indoors if you can."
+msgstr "Varaudu ukkosmyrskyihin juuri nyt. Pysy sisällä, jos voit."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:36
+#, python-brace-format
+msgid "Thunderstorms are likely around {time}. Plan to be indoors by then."
+msgstr ""
+"Ukkosmyrskyt ovat todennäköisiä noin klo {time}. Varmista, että olet silloin "
+"sisällä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:38
+#, python-brace-format
+msgid "Expect thunderstorms around {time}. Plan to be indoors by then."
+msgstr ""
+"Varaudu ukkosmyrskyihin noin klo {time}. Varmista, että olet silloin sisällä."
+
+#: src/CORE_OverviewMessages.py:41
+msgid "Freezing rain is likely right now. Roads and paths may be icy."
+msgstr ""
+"Jäätävä sade on todennäköistä juuri nyt. Tiet ja polut voivat olla jäässä."
+
+#: src/CORE_OverviewMessages.py:42
+msgid "Expect freezing rain right now. Watch for icy roads and paths."
+msgstr "Varaudu jäätävään sateeseen juuri nyt. Varo jäisiä teitä ja polkuja."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:46
+#, python-brace-format
+msgid "Freezing rain is likely around {time}. Roads and paths may turn icy."
+msgstr ""
+"Jäätävä sade on todennäköistä noin klo {time}. Tiet ja polut voivat jäätyä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:48
+#, python-brace-format
+msgid "Expect freezing rain around {time}. Roads may turn icy."
+msgstr "Varaudu jäätävään sateeseen noin klo {time}. Tiet voivat jäätyä."
+
+#: src/CORE_OverviewMessages.py:51
+msgid "Heavy rain is likely right now. Expect puddles and slow roads."
+msgstr ""
+"Voimakas sade on todennäköistä juuri nyt. Varaudu lätäköihin ja hitaaseen "
+"liikenteeseen."
+
+#: src/CORE_OverviewMessages.py:52
+msgid "Expect heavy rain right now. Allow extra travel time."
+msgstr ""
+"Varaudu voimakkaaseen sateeseen juuri nyt. Varaa matkoihin ylimääräistä "
+"aikaa."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:56
+#, python-brace-format
+msgid "Heavy rain is likely around {time}. Keep an umbrella close."
+msgstr ""
+"Voimakas sade on todennäköistä noin klo {time}. Pidä sateenvarjo lähellä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:58
+#, python-brace-format
+msgid "Expect heavy rain around {time}. Allow extra travel time."
+msgstr ""
+"Varaudu voimakkaaseen sateeseen noin klo {time}. Varaa matkoihin "
+"ylimääräistä aikaa."
+
+#: src/CORE_OverviewMessages.py:61
+msgid "Heavy snow is likely right now. Travel may be slow."
+msgstr ""
+"Runsas lumisade on todennäköistä juuri nyt. Matkustaminen voi olla hidasta."
+
+#: src/CORE_OverviewMessages.py:62
+msgid "Expect heavy snow right now. Allow extra travel time."
+msgstr ""
+"Varaudu runsaaseen lumisateeseen juuri nyt. Varaa matkoihin ylimääräistä "
+"aikaa."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:66
+#, python-brace-format
+msgid "Heavy snow is likely around {time}. Travel may be slow after that."
+msgstr ""
+"Runsas lumisade on todennäköistä noin klo {time}. Sen jälkeen matkustaminen "
+"voi olla hidasta."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:68
+#, python-brace-format
+msgid "Expect heavy snow around {time}. Allow extra travel time."
+msgstr ""
+"Varaudu runsaaseen lumisateeseen noin klo {time}. Varaa matkoihin "
+"ylimääräistä aikaa."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:72
+#, python-brace-format
+msgid "It feels like {temp} right now. Stay hydrated and seek shade."
+msgstr "Koettu lämpötila on nyt {temp}. Juo riittävästi ja hakeudu varjoon."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:74
+#, python-brace-format
+msgid "It feels as hot as {temp} right now. Drink water and stay cool."
+msgstr "Koettu lämpötila on nyt tukala {temp}. Juo vettä ja pysy viileässä."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:78
+#, python-brace-format
+msgid ""
+"It will feel like {temp} by around {time}. Stay hydrated and seek shade."
+msgstr ""
+"Koettu lämpötila on noin klo {time} {temp}. Juo riittävästi ja hakeudu "
+"varjoon."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:80
+#, python-brace-format
+msgid ""
+"Expect it to feel like {temp} by around {time}. Drink water and stay cool."
+msgstr ""
+"Varaudu koettuun lämpötilaan {temp} noin klo {time}. Juo vettä ja pysy "
+"viileässä."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:84
+#, python-brace-format
+msgid "It feels like {temp} right now. Dress warmly, in layers."
+msgstr "Koettu lämpötila on nyt {temp}. Pukeudu lämpimästi, kerroksittain."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:86
+#, python-brace-format
+msgid "It feels as cold as {temp} right now. Bundle up."
+msgstr "Koettu lämpötila on nyt purevat {temp}. Pukeudu hyvin."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:90
+#, python-brace-format
+msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
+msgstr ""
+"Koettu lämpötila on noin klo {time} {temp}. Pukeudu lämpimästi, "
+"kerroksittain."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:92
+#, python-brace-format
+msgid "Expect it to feel like {temp} by around {time}. Bundle up."
+msgstr "Varaudu koettuun lämpötilaan {temp} noin klo {time}. Pukeudu hyvin."
+
+#: src/CORE_OverviewMessages.py:95
+msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
+msgstr "Ilmanlaatu on nyt epäterveellinen. Rajoita ulkona oloa, jos voit."
+
+#: src/CORE_OverviewMessages.py:96
+msgid "The air is unhealthy right now. Consider staying indoors."
+msgstr "Ilma on nyt epäterveellistä. Harkitse sisälle jäämistä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:100
+#, python-brace-format
+msgid ""
+"Air quality turns unhealthy around {time}. Consider limiting time outdoors."
+msgstr ""
+"Ilmanlaatu muuttuu epäterveelliseksi noin klo {time}. Harkitse ulkona olon "
+"rajoittamista."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:102
+#, python-brace-format
+msgid "Expect unhealthy air from around {time}. Limit time outdoors."
+msgstr ""
+"Varaudu epäterveelliseen ilmaan noin klo {time} alkaen. Rajoita ulkona oloa."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:106
+#, python-brace-format
+msgid "UV is very high until about {time}. Use sunscreen and cover up."
+msgstr ""
+"UV-säteily on erittäin voimakasta noin klo {time} asti. Käytä aurinkosuojaa "
+"ja peitä ihosi."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:108
+#, python-brace-format
+msgid ""
+"The sun is very strong until about {time}. Use sunscreen and seek shade."
+msgstr ""
+"Aurinko on erittäin voimakas noin klo {time} asti. Käytä aurinkosuojaa ja "
+"hakeudu varjoon."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:112
+#, python-brace-format
+msgid ""
+"UV will be very high from about {start} to {end}. Use sunscreen outdoors."
+msgstr ""
+"UV-säteily on erittäin voimakasta noin klo {start}–{end}. Käytä ulkona "
+"aurinkosuojaa."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:114
+#, python-brace-format
+msgid "Expect very high UV from about {start} to {end}. Cover up outdoors."
+msgstr ""
+"Varaudu erittäin voimakkaaseen UV-säteilyyn noin klo {start}–{end}. Peitä "
+"ihosi ulkona."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:119
+#, python-brace-format
+msgid "Rain is likely to start around {time} with {chance}% chance."
+msgstr "Sade alkaa todennäköisesti noin klo {time}, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:121
+#, python-brace-format
+msgid "Expect rain from around {time}, with {chance}% chance."
+msgstr "Varaudu sateeseen noin klo {time} alkaen, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:123
+#, python-brace-format
+msgid "Rain may move in around {time} with {chance}% chance."
+msgstr "Sadetta voi tulla noin klo {time}, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:125
+#, python-brace-format
+msgid ""
+"Showers could begin around {time} with {chance}% chance. Keep an umbrella "
+"handy."
+msgstr ""
+"Kuurot voivat alkaa noin klo {time}, todennäköisyys {chance} %. Pidä "
+"sateenvarjo lähellä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:127
+#, python-brace-format
+msgid "There is {chance}% chance of rain starting around {time}."
+msgstr "Sateen alkamisen todennäköisyys noin klo {time} on {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:131
+#, python-brace-format
+msgid "Snow is likely to start around {time} with {chance}% chance."
+msgstr ""
+"Lumisade alkaa todennäköisesti noin klo {time}, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:133
+#, python-brace-format
+msgid "Expect snow from around {time}, with {chance}% chance."
+msgstr ""
+"Varaudu lumisateeseen noin klo {time} alkaen, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:135
+#, python-brace-format
+msgid "Snow may move in around {time} with {chance}% chance."
+msgstr "Lunta voi tulla noin klo {time}, todennäköisyys {chance} %."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:137
+#, python-brace-format
+msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
+msgstr ""
+"Lumisade voi alkaa noin klo {time}, todennäköisyys {chance} %. Pukeudu "
+"lämpimästi."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:141
+#, python-brace-format
+msgid "Rain is likely right now, easing off around {time}."
+msgstr "Sataa todennäköisesti juuri nyt, sade heikkenee noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:143
+#, python-brace-format
+msgid "Rain should ease off around {time}."
+msgstr "Sateen pitäisi heiketä noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:145
+#, python-brace-format
+msgid "Expect rain for now, clearing around {time}."
+msgstr "Toistaiseksi odotettavissa sadetta, noin klo {time} selkenee."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:147
+#, python-brace-format
+msgid "It is wet for now, but the rain should stop around {time}."
+msgstr "Toistaiseksi on märkää, mutta sateen pitäisi loppua noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:151
+#, python-brace-format
+msgid "Snow is likely right now, easing off around {time}."
+msgstr ""
+"Lunta sataa todennäköisesti juuri nyt, lumisade heikkenee noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:153
+#, python-brace-format
+msgid "Snow should ease off around {time}."
+msgstr "Lumisateen pitäisi heiketä noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:155
+#, python-brace-format
+msgid "Expect snow for now, clearing around {time}."
+msgstr "Toistaiseksi odotettavissa lunta, noin klo {time} selkenee."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:157
+#, python-brace-format
+msgid "It is snowy for now, but it should stop around {time}."
+msgstr "Toistaiseksi sataa lunta, mutta sen pitäisi loppua noin klo {time}."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:161
+#, python-brace-format
+msgid "Rain is likely to keep falling until about {time}."
+msgstr "Sadetta jatkuu todennäköisesti noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:163
+#, python-brace-format
+msgid "Expect rain on and off until about {time}."
+msgstr "Odotettavissa ajoittaista sadetta noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:165
+#, python-brace-format
+msgid "It looks wet until about {time}. Keep an umbrella close."
+msgstr "Näyttää märältä noin klo {time} asti. Pidä sateenvarjo lähellä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:167
+#, python-brace-format
+msgid "Rain should stick around until about {time}."
+msgstr "Sateen pitäisi jatkua noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:171
+#, python-brace-format
+msgid "Snow is likely to keep falling until about {time}."
+msgstr "Lunta sataa todennäköisesti noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:173
+#, python-brace-format
+msgid "Expect snow on and off until about {time}."
+msgstr "Odotettavissa ajoittaista lumisadetta noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:175
+#, python-brace-format
+msgid "It looks snowy until about {time}. Travel may be slow."
+msgstr ""
+"Näyttää lumiselta noin klo {time} asti. Matkustaminen voi olla hidasta."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:177
+#, python-brace-format
+msgid "Snow should stick around until about {time}."
+msgstr "Lumisateen pitäisi jatkua noin klo {time} asti."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:182
+#, python-brace-format
+msgid "Strong wind right now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Voimakas tuuli juuri nyt, noin {speed}. Kiinnitä irtonaiset tavarat ulkona."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:184
+#, python-brace-format
+msgid "It is windy right now, around {speed}. Hold on to your hat."
+msgstr "Nyt tuulee, noin {speed}. Pidä hatustasi kiinni."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:186
+#, python-brace-format
+msgid "Wind is strong right now, around {speed}."
+msgstr "Tuuli on nyt voimakas, noin {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:188
+#, python-brace-format
+msgid ""
+"Expect strong wind for now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Toistaiseksi odotettavissa voimakasta tuulta, noin {speed}. Kiinnitä "
+"irtonaiset tavarat ulkona."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:192
+#, python-brace-format
+msgid "Wind picks up to {speed} around {time}. Secure loose items outdoors."
+msgstr ""
+"Tuuli voimistuu noin klo {time} lukemaan {speed}. Kiinnitä irtonaiset "
+"tavarat ulkona."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:194
+#, python-brace-format
+msgid "Expect stronger wind, up to {speed}, around {time}."
+msgstr "Varaudu voimakkaampaan tuuleen, enintään {speed}, noin klo {time}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:196
+#, python-brace-format
+msgid "It gets windy around {time}, up to {speed}."
+msgstr "Noin klo {time} alkaa tuulla, enintään {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:198
+#, python-brace-format
+msgid "Wind should strengthen to {speed} around {time}."
+msgstr "Tuulen pitäisi voimistua noin klo {time} lukemaan {speed}."
+
+#: src/CORE_OverviewMessages.py:201
+msgid "It is foggy right now, with low visibility. Drive with care."
+msgstr "Nyt on sumuista ja näkyvyys on huono. Aja varovasti."
+
+#: src/CORE_OverviewMessages.py:202
+msgid "Fog is cutting visibility right now. Take it slow on the roads."
+msgstr "Sumu heikentää nyt näkyvyyttä. Aja hitaasti."
+
+#: src/CORE_OverviewMessages.py:203
+msgid "Visibility is low in the fog right now. Drive with care."
+msgstr "Näkyvyys on nyt huono sumun vuoksi. Aja varovasti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:207
+#, python-brace-format
+msgid "Fog is likely around {time}, with low visibility. Drive with care."
+msgstr ""
+"Sumu on todennäköistä noin klo {time}, näkyvyys on huono. Aja varovasti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:209
+#, python-brace-format
+msgid "Expect fog around {time}. Visibility may drop."
+msgstr "Varaudu sumuun noin klo {time}. Näkyvyys voi heikentyä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:211
+#, python-brace-format
+msgid "Fog may roll in around {time}. Take care on the roads."
+msgstr "Sumua voi tulla noin klo {time}. Ole varovainen teillä."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:213
+#, python-brace-format
+msgid "Visibility could drop in fog around {time}."
+msgstr "Näkyvyys voi heikentyä sumussa noin klo {time}."
+
+#: src/CORE_OverviewMessages.py:216
+msgid "Fog is likely around sunrise, with low visibility. Drive with care."
+msgstr ""
+"Sumu on todennäköistä auringonnousun aikaan, näkyvyys on huono. Aja "
+"varovasti."
+
+#: src/CORE_OverviewMessages.py:217
+msgid "Expect fog around sunrise. Visibility may drop."
+msgstr "Varaudu sumuun auringonnousun aikaan. Näkyvyys voi heikentyä."
+
+#: src/CORE_OverviewMessages.py:218
+msgid "A foggy start is likely around sunrise. Take care on the roads."
+msgstr ""
+"Sumuinen aamu on todennäköinen auringonnousun aikaan. Ole varovainen teillä."
+
+#: src/CORE_OverviewMessages.py:219
+msgid "Fog may form around sunrise, cutting visibility."
+msgstr "Auringonnousun aikaan voi muodostua sumua, joka heikentää näkyvyyttä."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:224
+#, python-brace-format
+msgid "Expect it to warm up to {temp} by around {time}."
+msgstr "Varaudu lämpenemiseen lukemaan {temp} noin klo {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:226
+#, python-brace-format
+msgid "Temperatures climb to {temp} by around {time}."
+msgstr "Lämpötila nousee lukemaan {temp} noin klo {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:228
+#, python-brace-format
+msgid "It should reach {temp} by around {time}."
+msgstr "Lämpötilan pitäisi olla {temp} noin klo {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:230
+#, python-brace-format
+msgid "Warming up to {temp} by around {time}."
+msgstr "Lämpenee lukemaan {temp} noin klo {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:234
+#, python-brace-format
+msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
+msgstr ""
+"Varaudu viilenemiseen lukemaan {temp} noin klo {time}. Pidä ylimääräinen "
+"kerros lähellä."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:236
+#, python-brace-format
+msgid "Temperatures drop to {temp} by around {time}."
+msgstr "Lämpötila laskee lukemaan {temp} noin klo {time}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:238
+#, python-brace-format
+msgid "It should cool to {temp} by around {time}. A jacket may help."
+msgstr ""
+"Lämpötilan pitäisi laskea lukemaan {temp} noin klo {time}. Takki voi olla "
+"tarpeen."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:240
+#, python-brace-format
+msgid "Cooling down to {temp} by around {time}."
+msgstr "Viilenee lukemaan {temp} noin klo {time}."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:245
+#, python-brace-format
+msgid "Rain is likely tomorrow with {chance}% chance, so plan ahead."
+msgstr ""
+"Huomenna sataa todennäköisesti, todennäköisyys {chance} %, joten varaudu "
+"etukäteen."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:247
+#, python-brace-format
+msgid "Tomorrow looks wet, with {chance}% chance of rain."
+msgstr "Huominen näyttää sateiselta, sateen todennäköisyys {chance} %."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:249
+#, python-brace-format
+msgid "Expect rain tomorrow, with {chance}% chance. Keep an umbrella ready."
+msgstr ""
+"Varaudu huomenna sateeseen, todennäköisyys {chance} %. Pidä sateenvarjo "
+"valmiina."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:251
+#, python-brace-format
+msgid "There is {chance}% chance of rain tomorrow."
+msgstr "Huomenna sateen todennäköisyys on {chance} %."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:255
+#, python-brace-format
+msgid "Tomorrow will be warmer than today, with a high of {temp}."
+msgstr "Huomenna on lämpimämpää kuin tänään, ylin lämpötila {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:257
+#, python-brace-format
+msgid "A warmer day tomorrow, reaching {temp}."
+msgstr "Huomenna on lämpimämpi päivä, ylin lämpötila {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:259
+#, python-brace-format
+msgid "Tomorrow heats up, with a high of {temp}."
+msgstr "Huomenna lämpenee, ylin lämpötila {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:261
+#, python-brace-format
+msgid "Expect a warmer tomorrow, up to {temp}."
+msgstr "Varaudu lämpimämpään huomiseen, enintään {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:265
+#, python-brace-format
+msgid "Tomorrow will be cooler than today, with a high of {temp}."
+msgstr "Huomenna on viileämpää kuin tänään, ylin lämpötila {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:267
+#, python-brace-format
+msgid "A cooler day tomorrow, reaching only {temp}."
+msgstr "Huomenna on viileämpi päivä, ylin lämpötila vain {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:269
+#, python-brace-format
+msgid "Tomorrow cools off, with a high of {temp}."
+msgstr "Huomenna viilenee, ylin lämpötila {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:271
+#, python-brace-format
+msgid "Expect a cooler tomorrow, topping out at {temp}."
+msgstr "Varaudu viileämpään huomiseen, ylin lämpötila {temp}."
+
+#: src/CORE_OverviewMessages.py:277
+#, python-brace-format
+msgid "The sun sets in about {n} minute."
+msgid_plural "The sun sets in about {n} minutes."
+msgstr[0] "Aurinko laskee noin {n} minuutin kuluttua."
+msgstr[1] "Aurinko laskee noin {n} minuutin kuluttua."
+
+#: src/CORE_OverviewMessages.py:283
+#, python-brace-format
+msgid "Sunset is about {n} minute away."
+msgid_plural "Sunset is about {n} minutes away."
+msgstr[0] "Auringonlaskuun on noin {n} minuutti."
+msgstr[1] "Auringonlaskuun on noin {n} minuuttia."
+
+#: src/CORE_OverviewMessages.py:289
+#, python-brace-format
+msgid "About {n} minute of daylight left."
+msgid_plural "About {n} minutes of daylight left."
+msgstr[0] "Päivänvaloa on jäljellä noin {n} minuutti."
+msgstr[1] "Päivänvaloa on jäljellä noin {n} minuuttia."
+
+#: src/CORE_OverviewMessages.py:295
+#, python-brace-format
+msgid "The sun goes down in about {n} minute."
+msgid_plural "The sun goes down in about {n} minutes."
+msgstr[0] "Aurinko painuu mailleen noin {n} minuutin kuluttua."
+msgstr[1] "Aurinko painuu mailleen noin {n} minuutin kuluttua."
+
+#: src/CORE_OverviewMessages.py:303
+#, python-brace-format
+msgid "The sun rises in about {n} minute."
+msgid_plural "The sun rises in about {n} minutes."
+msgstr[0] "Aurinko nousee noin {n} minuutin kuluttua."
+msgstr[1] "Aurinko nousee noin {n} minuutin kuluttua."
+
+#: src/CORE_OverviewMessages.py:309
+#, python-brace-format
+msgid "Sunrise is about {n} minute away."
+msgid_plural "Sunrise is about {n} minutes away."
+msgstr[0] "Auringonnousuun on noin {n} minuutti."
+msgstr[1] "Auringonnousuun on noin {n} minuuttia."
+
+#: src/CORE_OverviewMessages.py:315
+#, python-brace-format
+msgid "Daylight returns in about {n} minute."
+msgid_plural "Daylight returns in about {n} minutes."
+msgstr[0] "Päivänvalo palaa noin {n} minuutin kuluttua."
+msgstr[1] "Päivänvalo palaa noin {n} minuutin kuluttua."
+
+#: src/CORE_OverviewMessages.py:321
+#, python-brace-format
+msgid "The sun comes up in about {n} minute."
+msgid_plural "The sun comes up in about {n} minutes."
+msgstr[0] "Aurinko nousee taivaalle noin {n} minuutin kuluttua."
+msgstr[1] "Aurinko nousee taivaalle noin {n} minuutin kuluttua."
+
+#: src/CORE_OverviewMessages.py:329
+#, python-brace-format
+msgid "The sun sets in about {n} hour, at {time}."
+msgid_plural "The sun sets in about {n} hours, at {time}."
+msgstr[0] "Aurinko laskee noin {n} tunnin kuluttua, klo {time}."
+msgstr[1] "Aurinko laskee noin {n} tunnin kuluttua, klo {time}."
+
+#: src/CORE_OverviewMessages.py:335
+#, python-brace-format
+msgid "Sunset is about {n} hour away, at {time}."
+msgid_plural "Sunset is about {n} hours away, at {time}."
+msgstr[0] "Auringonlaskuun on noin {n} tunti, klo {time}."
+msgstr[1] "Auringonlaskuun on noin {n} tuntia, klo {time}."
+
+#: src/CORE_OverviewMessages.py:341
+#, python-brace-format
+msgid "About {n} hour of daylight left. Sunset is at {time}."
+msgid_plural "About {n} hours of daylight left. Sunset is at {time}."
+msgstr[0] "Päivänvaloa on jäljellä noin {n} tunti. Aurinko laskee klo {time}."
+msgstr[1] "Päivänvaloa on jäljellä noin {n} tuntia. Aurinko laskee klo {time}."
+
+#: src/CORE_OverviewMessages.py:347
+#, python-brace-format
+msgid "The sun goes down at {time}, in about {n} hour."
+msgid_plural "The sun goes down at {time}, in about {n} hours."
+msgstr[0] "Aurinko painuu mailleen klo {time}, noin {n} tunnin kuluttua."
+msgstr[1] "Aurinko painuu mailleen klo {time}, noin {n} tunnin kuluttua."
+
+#: src/CORE_OverviewMessages.py:355
+#, python-brace-format
+msgid "The sun rises in about {n} hour, at {time}."
+msgid_plural "The sun rises in about {n} hours, at {time}."
+msgstr[0] "Aurinko nousee noin {n} tunnin kuluttua, klo {time}."
+msgstr[1] "Aurinko nousee noin {n} tunnin kuluttua, klo {time}."
+
+#: src/CORE_OverviewMessages.py:361
+#, python-brace-format
+msgid "Sunrise is about {n} hour away, at {time}."
+msgid_plural "Sunrise is about {n} hours away, at {time}."
+msgstr[0] "Auringonnousuun on noin {n} tunti, klo {time}."
+msgstr[1] "Auringonnousuun on noin {n} tuntia, klo {time}."
+
+#: src/CORE_OverviewMessages.py:367
+#, python-brace-format
+msgid "Daylight returns at {time}, in about {n} hour."
+msgid_plural "Daylight returns at {time}, in about {n} hours."
+msgstr[0] "Päivänvalo palaa klo {time}, noin {n} tunnin kuluttua."
+msgstr[1] "Päivänvalo palaa klo {time}, noin {n} tunnin kuluttua."
+
+#: src/CORE_OverviewMessages.py:373
+#, python-brace-format
+msgid "The sun comes up at {time}, in about {n} hour."
+msgid_plural "The sun comes up at {time}, in about {n} hours."
+msgstr[0] "Aurinko nousee taivaalle klo {time}, noin {n} tunnin kuluttua."
+msgstr[1] "Aurinko nousee taivaalle klo {time}, noin {n} tunnin kuluttua."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:381
+#, python-brace-format
+msgid "Conditions should stay steady until about {time}."
+msgstr "Olosuhteiden pitäisi pysyä vakaina noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:383
+#, python-brace-format
+msgid "No big changes expected until about {time}."
+msgstr "Suuria muutoksia ei odoteta noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:385
+#, python-brace-format
+msgid "A quiet spell ahead, with little change until about {time}."
+msgstr "Rauhallinen jakso edessä, vain vähän muutoksia noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:387
+#, python-brace-format
+msgid "Things look settled until about {time}."
+msgstr "Kaikki näyttää vakaalta noin klo {time} asti."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:389
+#, python-brace-format
+msgid "The weather should hold steady until about {time}."
+msgstr "Sään pitäisi pysyä vakaana noin klo {time} asti."
+
+#: src/CORE_OverviewRules.py:248
+msgctxt "overview heading"
+msgid "Today"
+msgstr "Tänään"
+
+#: src/CORE_OverviewRules.py:249
+msgctxt "overview heading"
+msgid "Tonight"
+msgstr "Tänä iltana"
+
+#: src/CORE_OverviewRules.py:678
+msgctxt "overview heading"
+msgid "Tomorrow"
+msgstr "Huomenna"
+
+#: src/CORE_weatherData.py:167
 msgid "Good"
 msgstr "Hyvä"
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:168
 msgid "Moderate"
 msgstr "Kohtalainen"
 
-#: src/CORE_weatherData.py:156
+#: src/CORE_weatherData.py:169
 msgid "Poor"
 msgstr "Huono"
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:170
 msgid "Unhealthy"
 msgstr "Epäterveellinen"
 
-#: src/CORE_weatherData.py:158
+#: src/CORE_weatherData.py:171
 msgid "Severe"
 msgstr "Ankara"
 
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:172
 msgid "Hazardous"
 msgstr "Vaarallinen"
 
-#: src/CORE_weatherData.py:163
+#: src/CORE_weatherData.py:187
+msgid "Air quality is good. A fine time to be outside."
+msgstr "Ilmanlaatu on hyvä. Hyvä hetki olla ulkona."
+
+#: src/CORE_weatherData.py:189
+msgid ""
+"Unusually sensitive people should cut back on long or intense outdoor "
+"activity."
+msgstr ""
+"Erityisen herkkien ihmisten kannattaa vähentää pitkiä tai rasittavia "
+"ulkoaktiviteetteja."
+
+#: src/CORE_weatherData.py:191
+msgid "Sensitive groups should cut back on long or intense outdoor activity."
+msgstr ""
+"Herkkien ryhmien kannattaa vähentää pitkiä tai rasittavia ulkoaktiviteetteja."
+
+#: src/CORE_weatherData.py:193
+msgid ""
+"Everyone should cut back on long or intense outdoor activity; sensitive "
+"groups should avoid it."
+msgstr ""
+"Kaikkien kannattaa vähentää pitkiä tai rasittavia ulkoaktiviteetteja; "
+"herkkien ryhmien tulisi välttää niitä."
+
+#: src/CORE_weatherData.py:195
+msgid ""
+"Everyone should avoid long or intense outdoor activity; sensitive groups "
+"should stay indoors."
+msgstr ""
+"Kaikkien kannattaa välttää pitkiä tai rasittavia ulkoaktiviteetteja; "
+"herkkien ryhmien tulisi pysyä sisällä."
+
+#: src/CORE_weatherData.py:196
+msgid "Everyone should avoid all outdoor activity."
+msgstr "Kaikkien kannattaa välttää kaikkea ulkoilua."
+
+#: src/CORE_weatherData.py:202
+msgctxt "european aqi"
+msgid "Good"
+msgstr "Hyvä"
+
+#: src/CORE_weatherData.py:204
+msgctxt "european aqi"
+msgid "Fair"
+msgstr "Tyydyttävä"
+
+#: src/CORE_weatherData.py:206
+msgctxt "european aqi"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/CORE_weatherData.py:208
+msgctxt "european aqi"
+msgid "Poor"
+msgstr "Huono"
+
+#: src/CORE_weatherData.py:210
+msgctxt "european aqi"
+msgid "Very Poor"
+msgstr "Erittäin huono"
+
+#: src/CORE_weatherData.py:211
+msgctxt "european aqi"
+msgid "Extremely Poor"
+msgstr "Äärimmäisen huono"
+
+#: src/CORE_weatherData.py:222
+msgctxt "pollutant level"
+msgid "Good"
+msgstr "Hyvä"
+
+#: src/CORE_weatherData.py:223
+msgctxt "pollutant level"
+msgid "High"
+msgstr "Korkea"
+
+#: src/CORE_weatherData.py:224
+msgctxt "pollutant level"
+msgid "Very High"
+msgstr "Erittäin korkea"
+
+#: src/CORE_weatherData.py:242
+msgctxt "pollen level"
+msgid "Low"
+msgstr "Matala"
+
+#: src/CORE_weatherData.py:244
+msgctxt "pollen level"
+msgid "Moderate"
+msgstr "Kohtalainen"
+
+#: src/CORE_weatherData.py:246
+msgctxt "pollen level"
+msgid "High"
+msgstr "Korkea"
+
+#: src/CORE_weatherData.py:247
+msgctxt "pollen level"
+msgid "Very High"
+msgstr "Erittäin korkea"
+
+#: src/CORE_weatherData.py:262
 msgctxt "uvindex"
 msgid "Low"
 msgstr "Matala"
 
-#: src/CORE_weatherData.py:164
+#: src/CORE_weatherData.py:263
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "Kohtalainen"
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:264
 msgctxt "uvindex"
 msgid "High"
 msgstr "Korkea"
 
-#: src/CORE_weatherData.py:166
+#: src/CORE_weatherData.py:265
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "Erittäin Korkea"
 
-#: src/CORE_weatherData.py:167
+#: src/CORE_weatherData.py:266
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "Äärimmäinen"
 
-#: src/CORE_weatherData.py:171
+#: src/CORE_weatherData.py:270
 msgctxt "humidity"
 msgid "Low"
 msgstr "Matala"
 
-#: src/CORE_weatherData.py:172
+#: src/CORE_weatherData.py:271
 msgctxt "humidity"
 msgid "Moderate"
 msgstr "Kohtalainen"
 
-#: src/CORE_weatherData.py:173
+#: src/CORE_weatherData.py:272
 msgctxt "humidity"
 msgid "High"
 msgstr "Korkea"
 
-#: src/CORE_weatherData.py:180
+#: src/CORE_weatherData.py:279
 msgctxt "pressure"
 msgid "Low"
 msgstr "Matala"
 
-#: src/CORE_weatherData.py:181
+#: src/CORE_weatherData.py:280
 msgctxt "pressure"
 msgid "Normal"
 msgstr "Normaali"
 
-#: src/CORE_weatherData.py:182
+#: src/CORE_weatherData.py:281
 msgctxt "pressure"
 msgid "High"
 msgstr "Korkea"
 
-#: src/CORE_weatherData.py:186
+#: src/CORE_weatherData.py:285
 msgid "Calm"
 msgstr "Tyyni"
 
-#: src/CORE_weatherData.py:187
+#: src/CORE_weatherData.py:286
 msgid "Light"
 msgstr "Kevyt"
 
-#: src/CORE_weatherData.py:188
+#: src/CORE_weatherData.py:287
 msgctxt "wind"
 msgid "Moderate"
 msgstr "Kohtalainen"
 
-#: src/CORE_weatherData.py:189
+#: src/CORE_weatherData.py:288
 msgid "Strong"
 msgstr "Kova"
 
-#: src/CORE_weatherData.py:190
+#: src/CORE_weatherData.py:289
 msgctxt "wind"
 msgid "Extreme"
 msgstr "Äärimmäinen"
 
-#: src/CORE_weatherData.py:194
+#: src/CORE_weatherData.py:293
 msgid "km"
 msgstr "km"
 
-#: src/CORE_weatherData.py:196
+#: src/CORE_weatherData.py:295
 msgid "miles"
 msgstr "mailia"
 
-#: src/UI_CardAirPollution.py:93
+#: src/UI_CardAirPollution.py:61
 msgid "Air Pollution"
 msgstr "Ilmanlaatu"
 
-#: src/UI_CardAirPollution.py:105
-msgid "Air Quality Components"
-msgstr ""
+#: src/UI_CardAirPollution.py:72
+msgid "Air Quality Details"
+msgstr "Ilmanlaadun tiedot"
 
-#: src/UI_CardAirPollution.py:153
-msgid "Air Quality Index"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:180
-msgid "PM2.5"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:181
-msgid "PM10"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:182
-msgid "CO"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:183
-msgid "CO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:184
-msgid "NO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:185
-msgid "SO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:186
-msgid "O₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:187
-msgid "Dust"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:188
-msgid "NH₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:189
-msgid "CH₄"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:190
-#, fuzzy
-msgid "Alder Pollen"
-msgstr "Ilmanlaatu"
-
-#: src/UI_CardAirPollution.py:191
-#, fuzzy
-msgid "Birch Pollen"
-msgstr "Ilmanlaatu"
-
-#: src/UI_CardAirPollution.py:192
-msgid "Grass Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:193
-msgid "Mugwort Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:194
-msgid "Olive Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:195
-msgid "Ragweed Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:215
-#, python-brace-format
-msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:243
-msgid ""
-"AQI: US EPA Standard\n"
-"Pollutant limits: WHO Guidelines (2021)"
-msgstr ""
-
-#: src/UI_CardDayNight.py:76
+#: src/UI_CardDayNight.py:60
 msgid "Sunrise & Sunset"
 msgstr "Aurinko"
 
-#: src/UI_CardDayNight.py:87
+#: src/UI_CardDayNight.py:74
 msgid "Sunrise"
 msgstr "Nousee"
 
-#: src/UI_CardDayNight.py:100
+#: src/UI_CardDayNight.py:74
 msgid "Sunset"
 msgstr "Laskee"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
-#: src/UI_HourlyDetails.py:52
+#: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
+#: src/UI_HourlyDetails.py:51
 msgid "Wind"
 msgstr "Tuuli"
 
-#: src/UI_HourlyDetails.py:51
-#, fuzzy
-msgid "Hourly"
-msgstr "24 Tuntia"
-
-#: src/UI_HourlyDetails.py:53
-#, fuzzy
-msgid "Precipitation"
-msgstr "Sademäärä tuumina"
-
-#: src/UI_CardSquare.py:31
+#: src/UI_CardSquare.py:38 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr "Ilmanpaine"
 
-#: src/UI_CardSquare.py:32
+#: src/UI_CardSquare.py:39 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr "Kosteus"
 
-#: src/UI_CardSquare.py:33
+#: src/UI_CardSquare.py:40
 msgid "UV Index"
 msgstr "UV Indeksi"
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+#. Translators: the high and low ends of the humidity, UV index and pressure gauges
+#: src/UI_CardSquare.py:66 src/UI_CardSquare.py:223
+msgctxt "level gauge"
+msgid "High"
+msgstr "Korkea"
+
+#: src/UI_CardSquare.py:67 src/UI_CardSquare.py:222
+msgctxt "level gauge"
+msgid "Low"
+msgstr "Matala"
+
+#: src/UI_CardSquare.py:234
 msgid "North"
 msgstr "Pohjoinen"
 
-#: src/UI_CardSquare.py:209
+#: src/UI_CardSquare.py:235
 msgid "Northeast"
 msgstr "Koillinen"
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:236
 msgid "East"
 msgstr "Itä"
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:237
 msgid "Southeast"
 msgstr "Kaakko"
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:238
 msgid "South"
 msgstr "Etelä"
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:239
 msgid "Southwest"
 msgstr "Lounas"
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:240
 msgid "West"
 msgstr "Länsi"
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:241
 msgid "Northwest"
 msgstr "Luode"
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
 msgid "No Internet"
 msgstr "Ei Internet yhteyttä"
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
-msgstr ""
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:232
+msgid "Retry"
+msgstr "Yritä uudelleen"
+
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:239
+msgid "Please check your connection."
+msgstr "Tarkista yhteytesi."
+
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
+msgid "Fetch Error"
+msgstr "Noutovirhe"
+
+#: src/UI_CompactWeather.py:218
+msgid "AQI"
+msgstr "AQI"
+
+#. Translators: strftime format of the date in compact mode ("6 November")
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr "%-d. %B"
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr "Poistu kompaktista tilasta"
 
 #: src/UI_CompactWeather.py:293
-#, fuzzy
-msgid "Pres."
-msgstr "Ilmanpaine"
-
-#: src/UI_CompactWeather.py:297
-msgid "AQI"
-msgstr ""
-
-#: src/UI_CompactWeather.py:350
-#, fuzzy
 msgid "Mousam Compact"
-msgstr "Mousam"
+msgstr "Mousam Kompakti"
 
-#: src/UI_CompDrawDayNight.py:154
+#. Translators: the line in the sun's path where the sun rises and sets
+#: src/UI_CompDrawDayNight.py:124
+msgid "Horizon"
+msgstr "Horisontti"
+
+#: src/UI_CompDrawDayNight.py:187
 msgid "Day"
-msgstr ""
+msgstr "Päivä"
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:187
 msgid "Night"
 msgstr "Yö"
 
-#: src/UI_CurrentCond.py:96
+#. Translators: lowest and highest value of the air quality graph
+#: src/UI_CompDrawLineGraph.py:43
 #, python-brace-format
-msgid "Feels like • <b> {0} {1}</b>"
-msgstr "Tuntuu kuin • <b> {0} {1}</b>"
+msgid "Max {max} · Min {min}"
+msgstr "Maks. {max} · Min. {min}"
 
-#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
+#. Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
+#: src/UI_CurrentCond.py:129
+#, python-brace-format
+msgid "H {high} · L {low}"
+msgstr "Maks. {high} · Min. {low}"
+
+#. Translators: {0} is a temperature, like "22°"
+#: src/UI_CurrentCond.py:147
+#, python-brace-format
+msgid "Feels like {0}"
+msgstr "Tuntuu kuin {0}"
+
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:121
+msgid "Show Overview"
+msgstr "Näytä yhteenveto"
+
+#. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
+#: src/UI_CurrentCond.py:362
+msgctxt "current date"
+msgid "%A, %-d %b"
+msgstr "%A %-d. %b"
+
+#: src/UI_Forecast.py:158 src/UI_Forecast.py:426
 msgid "Tomorrow"
 msgstr "Huomenna"
 
-#: src/UI_Forecast.py:147
+#: src/UI_Forecast.py:166
 msgid "Weekly"
 msgstr "Viikoittain"
 
-#: src/UI_Forecast.py:316
+#. Translators: tooltip on the day's temperature range bar; {low} and
+#. {high} are temperatures with their unit sign, like "15°"
+#: src/UI_Forecast.py:376
+#, python-brace-format
+msgid "Low {low}, high {high}"
+msgstr "Alin {low}, ylin {high}"
+
+#: src/UI_Forecast.py:424
 msgid "Today"
 msgstr "Tänään"
 
-#: src/UI_HourlyDetails.py:151
+#: src/UI_Forecast.py:448
+#, python-brace-format
+msgid "Chance of snow: {percent}%"
+msgstr "Lumisateen todennäköisyys: {percent} %"
+
+#: src/UI_Forecast.py:450
+#, python-brace-format
+msgid "Chance of rain: {percent}%"
+msgstr "Sateen todennäköisyys: {percent} %"
+
+#: src/UI_Forecast.py:481
+#, python-brace-format
+msgid "Light snow: {amount}"
+msgstr "Heikko lumisade: {amount}"
+
+#: src/UI_Forecast.py:482
+#, python-brace-format
+msgid "Moderate snow: {amount}"
+msgstr "Kohtalainen lumisade: {amount}"
+
+#: src/UI_Forecast.py:483
+#, python-brace-format
+msgid "Heavy snow: {amount}"
+msgstr "Runsas lumisade: {amount}"
+
+#: src/UI_Forecast.py:484
+#, python-brace-format
+msgid "Very heavy snow: {amount}"
+msgstr "Erittäin runsas lumisade: {amount}"
+
+#: src/UI_Forecast.py:501
+#, python-brace-format
+msgid "Light rain: {amount}"
+msgstr "Heikko sade: {amount}"
+
+#: src/UI_Forecast.py:502
+#, python-brace-format
+msgid "Moderate rain: {amount}"
+msgstr "Kohtalainen sade: {amount}"
+
+#: src/UI_Forecast.py:503
+#, python-brace-format
+msgid "Heavy rain: {amount}"
+msgstr "Voimakas sade: {amount}"
+
+#: src/UI_Forecast.py:504
+#, python-brace-format
+msgid "Violent rain: {amount}"
+msgstr "Kaatosade: {amount}"
+
+#: src/UI_HourlyDetails.py:50
+msgid "Hourly"
+msgstr "Tunneittain"
+
+#: src/UI_HourlyDetails.py:52 src/windowPreferences.py:65
+msgid "Precipitation"
+msgstr "Sademäärä"
+
+#: src/UI_HourlyDetails.py:150
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr "Päivän Korkein •"
 
-#: src/UI_HourlyDetails.py:157
+#: src/UI_HourlyDetails.py:156
 msgctxt "wind"
 msgid "Day High •"
 msgstr "Päivän Korkein •"
 
-#: src/UI_HourlyDetails.py:168
+#: src/UI_HourlyDetails.py:167
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr "Päivän Korkein •"
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:245
 msgid "Now"
 msgstr "Nyt"
 
-#: src/UI_HourlyDetails.py:285
+#: src/UI_HourlyDetails.py:287
 msgid "No precipitation today !"
 msgstr "Tänään ei sada!"
 
-#: src/UI_HourlyDetails.py:286
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation expected today!"
 msgstr "Tänään ei odoteta sadetta!"
 
-#: src/UI_HourlyDetails.py:287
+#: src/UI_HourlyDetails.py:289
 msgid "Anticipate a precipitation-free day !"
 msgstr "Luvassa on sateeton päivä!"
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:290
 msgid "Enjoy a rain-free day today!"
 msgstr "Nauti päivästäsi ilman sadetta!"
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:291
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "Sateenvarjo saa levätä. Ei sadetta näköpiirissä!"
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:292
 msgid "No rain in sight today!"
 msgstr "Ei sadetta näkyvissä tänään!"
 
-#: src/mousam.py:83
+#: src/mousam.py:89
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "Virheenjäljitystila käytössä"
 
-#: src/mousam.py:84
+#: src/mousam.py:90
 msgid "View Logs"
-msgstr ""
+msgstr "Näytä lokit"
 
-#: src/mousam.py:88
+#: src/mousam.py:94
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "Virheenjäljitystila pois käytöstä"
 
-#: src/mousam.py:125
-#, fuzzy
+#: src/mousam.py:131
 msgid "Refresh weather"
-msgstr "Päivitä Sää"
+msgstr "Päivitä sää"
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:146 src/windowLocations.py:404 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "Paikat"
 
-#: src/mousam.py:146
+#: src/mousam.py:152
 msgid "Compact Mode"
-msgstr ""
+msgstr "Kompakti tila"
 
-#: src/mousam.py:172 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: src/mousam.py:173 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
-#: src/mousam.py:174
+#: src/mousam.py:181
 msgid "About Mousam"
 msgstr "Tietoja Mousamista"
 
-#: src/mousam.py:175 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "Lopeta"
 
-#: src/mousam.py:279
-msgid "Direction"
-msgstr ""
+#. Translators: wind direction is where the wind blows from
+#: src/mousam.py:298
+msgid "Direction (from)"
+msgstr "Suunta (mistä)"
 
-#: src/mousam.py:293
+#. Translators: "North" on the wind direction compass, as short as possible
+#: src/mousam.py:301
+msgctxt "compass"
+msgid "N"
+msgstr "P"
+
+#: src/mousam.py:312
 msgid "Dewpoint"
 msgstr "Kosteuspiste"
 
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
-msgstr ""
-
-#: src/mousam.py:364
+#: src/mousam.py:372
 msgid "Getting Weather Data"
 msgstr "Haetaan Säätietoja"
 
-#: src/mousam.py:371
+#: src/mousam.py:379
 msgid "Welcome to Mousam"
 msgstr "Tervetuloa Mousamiin"
 
-#: src/mousam.py:372
+#: src/mousam.py:380
 msgid "Add a location to get started."
-msgstr ""
+msgstr "Aloita lisäämällä paikka."
 
-#: src/mousam.py:373
-#, fuzzy
+#: src/mousam.py:381 src/windowLocations.py:430
 msgid "Add Location"
-msgstr "Lisää Uusi Paikka"
+msgstr "Lisää paikka"
 
-#: src/mousam.py:387
-msgid "Retry"
+#: src/windowAirQuality.py:19
+msgid "PM2.5"
+msgstr "PM2.5"
+
+#: src/windowAirQuality.py:20
+msgid "PM10"
+msgstr "PM10"
+
+#: src/windowAirQuality.py:21
+msgid "NO₂"
+msgstr "NO₂"
+
+#: src/windowAirQuality.py:22
+msgid "O₃"
+msgstr "O₃"
+
+#: src/windowAirQuality.py:23
+msgid "SO₂"
+msgstr "SO₂"
+
+#: src/windowAirQuality.py:24
+msgid "CO"
+msgstr "CO"
+
+#: src/windowAirQuality.py:28
+msgid "CO₂"
+msgstr "CO₂"
+
+#: src/windowAirQuality.py:29
+msgid "CH₄"
+msgstr "CH₄"
+
+#: src/windowAirQuality.py:30
+msgid "NH₃"
+msgstr "NH₃"
+
+#: src/windowAirQuality.py:31
+msgid "Dust"
+msgstr "Pöly"
+
+#: src/windowAirQuality.py:34
+msgid "Alder"
+msgstr "Leppä"
+
+#: src/windowAirQuality.py:35
+msgid "Birch"
+msgstr "Koivu"
+
+#: src/windowAirQuality.py:36
+msgid "Grass"
+msgstr "Heinä"
+
+#: src/windowAirQuality.py:37
+msgid "Mugwort"
+msgstr "Pujo"
+
+#: src/windowAirQuality.py:38
+msgid "Olive"
+msgstr "Oliivi"
+
+#: src/windowAirQuality.py:39
+msgid "Ragweed"
+msgstr "Ambrosia"
+
+#: src/windowAirQuality.py:71 src/windowAirQuality.py:80
+msgid "Air Quality"
+msgstr "Ilmanlaatu"
+
+#: src/windowAirQuality.py:101
+msgid ""
+"AQI by the US EPA; limits from the WHO guidelines (2021). Data by Open-Meteo."
 msgstr ""
+"AQI: Yhdysvaltain EPA; rajat WHO:n suositusten (2021) mukaan. Tiedot: Open-"
+"Meteo."
 
-#: src/windowAbout.py:20
-msgid "Copyright © 2024 Mousam Developers"
-msgstr "Tekijänoikeus © 2024 Mousam Kehittäjät"
+#: src/windowAirQuality.py:152
+msgid "No air quality data for now."
+msgstr "Ei ilmanlaatutietoja toistaiseksi."
 
-#: src/windowAbout.py:24
+#. Translators: the European AQI beside the US one; {aqi} is its
+#. value and {level} its level name ("Fair")
+#: src/windowAirQuality.py:167
+#, python-brace-format
+msgid "US AQI · EU AQI {aqi}, {level}"
+msgstr "Yhdysvaltain AQI · EU:n AQI {aqi}, {level}"
+
+#: src/windowAirQuality.py:170
+msgid "US AQI"
+msgstr "Yhdysvaltain AQI"
+
+#. Translators: {name} is a pollutant, like "PM2.5"
+#: src/windowAirQuality.py:177
+#, python-brace-format
+msgid "Main pollutant: {name}"
+msgstr "Pääasiallinen epäpuhtaus: {name}"
+
+#: src/windowAirQuality.py:191
+msgid "Trend"
+msgstr "Trendi"
+
+#: src/windowAirQuality.py:191
+msgid "Last 3 days and next 3 days"
+msgstr "Viimeiset 3 päivää ja seuraavat 3 päivää"
+
+#: src/windowAirQuality.py:205
+msgid "Pollutants"
+msgstr "Epäpuhtaudet"
+
+#: src/windowAirQuality.py:214
+msgid "More Pollutants"
+msgstr "Lisää epäpuhtauksia"
+
+#: src/windowAirQuality.py:227
+msgid "Pollen"
+msgstr "Siitepöly"
+
+#. Translators: the WHO guideline for a pollutant; {limit} is a
+#. number and {unit} its unit, like "μg/m³"
+#: src/windowAirQuality.py:246
+#, python-brace-format
+msgid "WHO limit {limit} {unit}"
+msgstr "WHO:n raja-arvo {limit} {unit}"
+
+#: src/windowAbout.py:37
+msgid "Copyright © 2023–2026 Mousam Developers"
+msgstr "Tekijänoikeus © 2023–2026 Mousamin kehittäjät"
+
+#. Translators: replace with your name (and email or link), one per line
+#: src/windowAbout.py:39
 #, fuzzy
 msgid "translator-credits"
 msgstr "juha antikainen <jussi.antikainen@gmail.com>"
 
-#: src/windowLocations.py:54
+#: src/windowAbout.py:43
+msgid "Source Code"
+msgstr "Lähdekoodi"
+
+#: src/windowAbout.py:44
+msgid "Contributors"
+msgstr "Avustajat"
+
+#: src/windowAbout.py:45
+msgid "Help Translate"
+msgstr "Auta kääntämisessä"
+
+#: src/windowAbout.py:46
+msgid "Buy Me a Coffee"
+msgstr "Tarjoa minulle kahvit"
+
+#: src/windowAbout.py:49 src/windowAbout.py:62
+msgid "Weather Data"
+msgstr "Säätiedot"
+
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:108
+msgid "Weather Icons"
+msgstr "Sääkuvakkeet"
+
+#. Translators: {owner} is a name, {license} a link, keep the tag as it is
+#: src/windowAbout.py:60
+#, python-brace-format
+msgid "© {owner}, licensed under {license}"
+msgstr "© {owner}, lisenssi {license}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:80
+#, python-brace-format
+msgid "Default icons: {name}"
+msgstr "Oletuskuvakkeet: {name}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:90
+#, python-brace-format
+msgid "Material icons: {name}"
+msgstr "Material-kuvakkeet: {name}"
+
+#: src/windowAbout.py:93
+msgid "All rights belong to Google. Collected by Darren Griffin."
+msgstr "Google omistaa kaikki oikeudet. Koonnut Darren Griffin."
+
+#: src/windowLocations.py:145
 msgid "Add New Location"
 msgstr "Lisää Uusi Paikka"
 
-#: src/windowLocations.py:70
-msgid "Search for a city"
-msgstr "Etsi kaupunkia"
+#: src/windowLocations.py:181
+msgid "Search cities, e.g. Kochi"
+msgstr "Hae kaupunkeja, esim. Kochi"
 
-#: src/windowLocations.py:84
-#, fuzzy
-msgid "Search for your city..."
-msgstr "Etsi kaupunkia"
+#: src/windowLocations.py:209
+msgid "Show More"
+msgstr "Näytä lisää"
 
-#: src/windowLocations.py:106
-#, fuzzy
-msgid "No cities found."
-msgstr "Tuloksia ei löytynyt!"
+#: src/windowLocations.py:229
+msgid "Search for Your City"
+msgstr "Hae kaupunkiasi"
 
-#: src/windowLocations.py:144
-#, fuzzy
+#: src/windowLocations.py:238
+msgid "Couldn't Search for Cities"
+msgstr "Kaupunkeja ei voitu hakea"
+
+#: src/windowLocations.py:346
+msgid "No Cities Found"
+msgstr "Kaupunkeja ei löytynyt"
+
+#: src/windowLocations.py:347
+msgid "Check the spelling or try a nearby city."
+msgstr "Tarkista oikeinkirjoitus tai kokeile lähellä olevaa kaupunkia."
+
+#: src/windowLocations.py:385
+msgid "Already saved"
+msgstr "Jo tallennettu"
+
+#: src/windowLocations.py:427
 msgid "Saved Locations"
-msgstr "Paikat"
+msgstr "Tallennetut paikat"
 
-#: src/windowLocations.py:146
-msgid "Add"
-msgstr "Lisää"
+#: src/windowLocations.py:502
+msgid "Remove"
+msgstr "Poista"
 
-#: src/windowLocations.py:201
-#, fuzzy
+#: src/windowLocations.py:548
+msgid "Drag to reorder, or press Alt+Up / Alt+Down"
+msgstr "Järjestä vetämällä tai paina Alt+Ylös / Alt+Alas"
+
+#: src/windowLocations.py:620
 msgid "Location already exists"
-msgstr "Paikka on jo lisätty!"
+msgstr "Paikka on jo olemassa"
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:638
+#, python-brace-format
 msgid "Switched to {}"
 msgstr "Vaihdettu {}"
 
-#: src/windowPreferences.py:30
-#, fuzzy
-msgid "Weather Preferences"
-msgstr "Asetukset"
+#: src/windowPreferences.py:35 src/windowPreferences.py:52
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "Yleiset"
 
 #: src/windowPreferences.py:44
-msgid "Appearance"
-msgstr "Ulkoasu"
+msgid "Advanced"
+msgstr "Lisäasetukset"
+
+#: src/windowPreferences.py:56
+msgid "Units"
+msgstr "Yksiköt"
+
+#: src/windowPreferences.py:57
+msgid "Metric (°C, km/h) or Imperial (°F, mph)"
+msgstr "Metrinen (°C, km/h) tai brittiläis-amerikkalainen (°F, mph)"
 
 #: src/windowPreferences.py:59
-msgid "Advanced"
-msgstr ""
+msgid "Metric"
+msgstr "Metrinen"
 
-#: src/windowPreferences.py:64
-msgid "Logging &amp; Debugging"
-msgstr ""
+#: src/windowPreferences.py:59
+msgid "Imperial"
+msgstr "Brittiläis-amerikkalainen"
 
-#: src/windowPreferences.py:74
-msgid "Icon Theme"
-msgstr ""
+#: src/windowPreferences.py:66
+msgid "Unit of the hourly precipitation graph"
+msgstr "Tuntikohtaisen sadekaavion yksikkö"
+
+#. Translators: short unit names for millimetres and inches
+#: src/windowPreferences.py:69
+msgid "mm"
+msgstr "mm"
+
+#: src/windowPreferences.py:69
+msgid "in"
+msgstr "in"
 
 #: src/windowPreferences.py:75
-msgid "Choose between Default and Material design weather icons"
-msgstr ""
-
-#: src/windowPreferences.py:85
-msgid "Default"
-msgstr ""
-
-#: src/windowPreferences.py:90
-msgid "Material"
-msgstr ""
-
-#: src/windowPreferences.py:105
-msgid "Dynamic Background"
-msgstr "Dynaaminen Tausta"
-
-#: src/windowPreferences.py:107
-#, fuzzy
-msgid "App background changes based on current weather conditions"
-msgstr ""
-"Taustakuva päivittyy sääolosuhteiden perusteella (uudelleenkäynnistys "
-"vaaditaan)."
-
-#: src/windowPreferences.py:121
 msgid "Time Format"
 msgstr "Aika Formaatti"
 
+#: src/windowPreferences.py:78
+msgid "24-hour"
+msgstr "24 tuntia"
+
+#: src/windowPreferences.py:78
+msgid "AM/PM"
+msgstr "AM/PM"
+
+#: src/windowPreferences.py:85
+msgid "Run in Background"
+msgstr "Suorita taustalla"
+
+#: src/windowPreferences.py:86
+msgid "Keep Mousam running when its window is closed"
+msgstr "Pidä Mousam käynnissä, kun sen ikkuna suljetaan"
+
+#: src/windowPreferences.py:95
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+#: src/windowPreferences.py:98
+msgid "Dynamic Background"
+msgstr "Dynaaminen Tausta"
+
+#: src/windowPreferences.py:99
+msgid "Change the background to match the current weather"
+msgstr "Vaihda tausta nykyisen sään mukaan"
+
+#: src/windowPreferences.py:111
+msgid "Default"
+msgstr "Oletus"
+
+#: src/windowPreferences.py:111
+msgid "Material"
+msgstr "Material"
+
+#: src/windowPreferences.py:118
+msgid "Weather Overview"
+msgstr "Sääyhteenveto"
+
 #: src/windowPreferences.py:122
-#, fuzzy
-msgid "Weather time format"
-msgstr "Sään aikamuoto (Päivitys vaaditaan)"
+msgid "A short summary of the coming hours"
+msgstr "Lyhyt yhteenveto tulevista tunneista"
 
-#: src/windowPreferences.py:132
-msgid "24 Hour"
-msgstr "24 Tuntia"
+#: src/windowPreferences.py:130
+msgid "Notifications"
+msgstr "Ilmoitukset"
 
-#: src/windowPreferences.py:137
-msgid "AM / PM"
-msgstr "AM / PM"
-
-#: src/windowPreferences.py:153
-msgid "Auto Refresh"
+#: src/windowPreferences.py:131
+msgid ""
+"Send the overview as a notification while the window is minimized or in "
+"compact mode"
 msgstr ""
+"Lähetä yhteenveto ilmoituksena, kun ikkuna on pienennetty tai kompaktissa "
+"tilassa"
 
-#: src/windowPreferences.py:154
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+#: src/windowPreferences.py:140
+msgid "Logging and Debugging"
+msgstr "Lokit ja virheenjäljitys"
 
-#: src/windowPreferences.py:171
-#, fuzzy
-msgid "Show Notifications"
-msgstr "Paikat"
+#: src/windowPreferences.py:143
+msgid "Debug Mode"
+msgstr "Virheenjäljitystila"
+
+#: src/windowPreferences.py:144
+msgid "Enable verbose logging and console output"
+msgstr "Ota käyttöön yksityiskohtainen lokitus ja konsolituloste"
+
+#: src/windowPreferences.py:152
+msgid "Open Logs Folder"
+msgstr "Avaa lokikansio"
+
+#: src/windowPreferences.py:161
+msgid "Clear Log File"
+msgstr "Tyhjennä lokitiedosto"
+
+#: src/windowPreferences.py:162
+msgid "Delete all contents of the current log file"
+msgstr "Poista nykyisen lokitiedoston koko sisältö"
+
+#: src/windowPreferences.py:165
+msgid "Clear"
+msgstr "Tyhjennä"
 
 #: src/windowPreferences.py:172
-msgid "Show notification when weather is refreshed automatically"
-msgstr ""
-
-#: src/windowPreferences.py:187
-msgid "Units &amp; Measurements"
-msgstr "Yksiköt &amp; Mittaukset"
-
-#: src/windowPreferences.py:192
-msgid "System Unit"
-msgstr ""
-
-#: src/windowPreferences.py:193
-msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
-
-#: src/windowPreferences.py:204
-msgid "Metric"
-msgstr ""
-
-#: src/windowPreferences.py:209
-msgid "Imperial"
-msgstr ""
-
-#: src/windowPreferences.py:227
-msgid "Precipitation in inches"
-msgstr "Sademäärä tuumina"
-
-#: src/windowPreferences.py:228
-#, fuzzy
-msgid "This option works better in heavy precipitation"
-msgstr ""
-"Tämä valinta toimii paremmin runsailla sademäärillä (Päivitys tarpeellinen)"
-
-#: src/windowPreferences.py:242
 msgid "Data Management"
-msgstr ""
+msgstr "Tietojen hallinta"
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:175
 msgid "Reset to Default"
-msgstr ""
+msgstr "Palauta oletukset"
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:176
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Tyhjennä kaikki asetukset ja palauta oletusarvot"
 
-#: src/windowPreferences.py:251
+#: src/windowPreferences.py:179
 msgid "Reset…"
-msgstr ""
+msgstr "Palauta…"
 
-#: src/windowPreferences.py:260
-msgid "Debug Mode"
-msgstr ""
+#: src/windowPreferences.py:230
+msgid "Auto Refresh"
+msgstr "Automaattinen päivitys"
 
-#: src/windowPreferences.py:261
-msgid "Enable verbose logging and console output"
-msgstr ""
-
-#: src/windowPreferences.py:274
-msgid "Open Logs Folder"
-msgstr ""
-
-#: src/windowPreferences.py:275
-msgid "Access the application log files"
-msgstr ""
-
-#: src/windowPreferences.py:288
-msgid "Clear Log File"
-msgstr ""
-
-#: src/windowPreferences.py:289
-msgid "Delete all contents of the current log file"
-msgstr ""
-
-#: src/windowPreferences.py:340
-msgid "Icon theme changed to {}"
-msgstr ""
-
-#: src/windowPreferences.py:349
-msgid "Switched to - {}"
-msgstr "Vaihdettu - {}"
-
-#: src/windowPreferences.py:368
+#: src/windowPreferences.py:329
 msgid "Logs cleared"
-msgstr ""
+msgstr "Lokit tyhjennetty"
 
-#: src/windowPreferences.py:370
+#: src/windowPreferences.py:331
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "Lokien tyhjennys epäonnistui"
 
-#: src/windowPreferences.py:381
-msgid "Auto refresh disabled"
-msgstr ""
-
-#: src/windowPreferences.py:383
-msgid "Auto refresh every {} min"
-msgstr ""
-
-#: src/windowPreferences.py:390
+#: src/windowPreferences.py:341
 msgid "Reset Settings?"
-msgstr ""
+msgstr "Palautetaanko asetukset?"
 
-#: src/windowPreferences.py:392
+#: src/windowPreferences.py:343
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
+"Tämä palauttaa kaikki asetukset oletusarvoihin ja tyhjentää tallennetut "
+"kaupungit. Tätä toimintoa ei voi kumota."
 
-#: src/windowPreferences.py:396
+#: src/windowPreferences.py:347
 msgid "Cancel"
-msgstr ""
+msgstr "Peruuta"
 
-#: src/windowPreferences.py:397
+#: src/windowPreferences.py:348
 msgid "Reset"
-msgstr ""
+msgstr "Palauta"
 
-#: src/windowPreferences.py:438
+#: src/windowPreferences.py:372
 msgid "Preferences have been reset"
-msgstr ""
-
-#: src/shortcutsDialog.ui:29
-msgid "General"
-msgstr "Yleiset"
+msgstr "Asetukset on palautettu"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
@@ -1017,99 +2120,3 @@ msgstr "Päivitä Sää"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Valikko"
-
-#~ msgid ""
-#~ "Utilizes graphical representations, such as temperature , precipitation "
-#~ "graphs and wind-speed with direction to provide an hourly forecast for "
-#~ "the next 24 hours"
-#~ msgstr ""
-#~ "Käyttää selkeitä graafeja, kuten lämpötila- ja sadekuntokäyriä sekä "
-#~ "tuulen nopeutta ja suuntaa, tarjotakseen tuntikohtaisen ennusteen "
-#~ "seuraaville 24 tunnille"
-
-#~ msgid "Clear Sky - day"
-#~ msgstr "Selkeä - päivä"
-
-#~ msgid "Snowfall - day"
-#~ msgstr "Lumisade - päivä"
-
-#~ msgid "Clear Sky - night"
-#~ msgstr "Selkeä - yö"
-
-#~ msgid "United States AQI standard"
-#~ msgstr "Yhdysvaltain AQI-standardi"
-
-#~ msgid "From"
-#~ msgstr "Suunnasta"
-
-#~ msgid "N"
-#~ msgstr "P"
-
-#~ msgctxt "pressure card"
-#~ msgid "High"
-#~ msgstr "Korkea"
-
-#~ msgctxt "pressure card"
-#~ msgid "Low"
-#~ msgstr "Matala"
-
-#~ msgctxt "uvindex card"
-#~ msgid "High"
-#~ msgstr "Korkea"
-
-#~ msgctxt "uvindex card"
-#~ msgid "Low"
-#~ msgstr "Matala"
-
-#~ msgid "°C"
-#~ msgstr "°C"
-
-#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "Metrinen järjestelmä yksiköillä Celsius, km/h, ja kilometri"
-
-#~ msgid "°F"
-#~ msgstr "°F"
-
-#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
-#~ msgstr "Imperiaalinen järjestelmä yksiköillä Fahrenheit, mph, ja maili"
-
-#~ msgid "Switching locations within 2 seconds is ignored"
-#~ msgstr "Sijainnin vaihtaminen alle 2 sekunnin välein ei ole mahdollista"
-
-#~ msgid "Location"
-#~ msgstr "Paikka"
-
-#~ msgid "Could not fetch data from API"
-#~ msgstr "Ei voitu hakea tietoja API:sta"
-
-#~ msgid "Refreshed Successfully"
-#~ msgstr "Päivitys Onnistui"
-
-#~ msgid "Refresh within 5 seconds is ignored!"
-#~ msgstr "Päivitys alle 5 sekunnin välein ei ole mahdollista!"
-
-#~ msgid "Refreshing..."
-#~ msgstr "Päivitetään..."
-
-#~ msgid "Remove location"
-#~ msgstr "Poista paikka"
-
-#~ msgid "Switch city within 2 seconds is ignored!"
-#~ msgstr "Kaupungin vaihtaminen 2 sekunnin välein ei ole mahdollista!"
-
-#~ msgid "Selected - {}"
-#~ msgstr "Valitut - {}"
-
-#~ msgid "Search"
-#~ msgstr "Etsi"
-
-#, python-brace-format
-#~ msgid "Added - {0}"
-#~ msgstr "Lisätty - {0}"
-
-#, python-brace-format
-#~ msgid "Deleted - {0}"
-#~ msgstr "Poistettu - {0}"
-
-#~ msgid "Press enter to search"
-#~ msgstr "Paina Enter hakeaksesi"

@@ -3,7 +3,6 @@ import random
 import time
 import gi
 from gi.repository import Gtk, GLib, Adw
-import threading
 from gettext import gettext as _, pgettext as C_
 
 from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER

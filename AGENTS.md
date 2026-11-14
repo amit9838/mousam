@@ -8,7 +8,7 @@ Think like a senior GNOME app developer, but implement like someone keeping a sm
 
 ## Project Overview
 
-**Mousam** (tagline: *Weather at a Glance*) is a desktop weather app for Linux, published on Flathub, the Snap Store and (unofficially) Debian. App ID: `io.github.amit9838.mousam`. See [README.md](README.md) for features, install and build steps, and [CONTRIBUTION_GUIDE.md](CONTRIBUTION_GUIDE.md) for the contribution process.
+**Mousam** (tagline: *Weather at a Glance*) is a desktop weather app for Linux, published on Flathub and the Snap Store. App ID: `io.github.amit9838.mousam`. See [README.md](README.md) for features, install and build steps, and [CONTRIBUTION_GUIDE.md](CONTRIBUTION_GUIDE.md) for the contribution process.
 
 The app lets users:
 
@@ -35,9 +35,9 @@ All weather data comes from the free [Open-Meteo](https://open-meteo.com/) APIs.
 - GSettings for every saved value
 - gettext for translations
 - Meson for build and install
-- Flatpak (GNOME runtime), Snap and Debian packaging
+- Flatpak (GNOME runtime) and Snap packaging
 
-Do not introduce other libraries unless there is a strong reason (see "Decision Making"). Every new Python dependency must also be packaged for Flatpak, Snap and Debian.
+Do not introduce other libraries unless there is a strong reason (see "Decision Making"). Every new Python dependency must also be packaged for Flatpak and Snap.
 
 ---
 
@@ -53,7 +53,7 @@ Widgets get deprecated and replaced between libadwaita releases (`Adw.Preference
    - Open-Meteo: https://open-meteo.com/en/docs (and its air-quality and geocoding pages)
 3. Follow the [GNOME Human Interface Guidelines](https://developer.gnome.org/hig/) for layout, wording and patterns.
 
-Existing windows still use `Adw.PreferencesWindow`, which is deprecated. Don't spread it to new dialogs; ask before migrating the existing ones.
+Dialogs use `Adw.Dialog` and its subclasses (`Adw.PreferencesDialog`, `Adw.AboutDialog`), shown with `present(parent)`. They are closed, not destroyed, so handlers on their widgets must not keep them alive: connect them with `weak_connect`, or let go of those widgets on `closed`.
 
 ---
 
@@ -72,7 +72,7 @@ flatpak-builder --user --install --force-clean .flatpak-builder/app io.github.am
 flatpak run io.github.amit9838.mousam
 
 # Checks
-ruff check <files you touched>      # lint (see "Linting and Validation")
+ruff check src                       # lint, settings in ruff.toml (see "Linting and Validation")
 python3 -m py_compile src/*.py      # syntax check
 glib-compile-schemas --strict --dry-run data/
 appstreamcli validate data/io.github.amit9838.mousam.appdata.xml.in
@@ -114,7 +114,7 @@ If something is unclear or could be improved:
 - Proactively suggest better approaches.
 - If a new library would significantly simplify or improve the implementation:
   - Recommend the library
-  - Clearly explain why it is useful, and what packaging it costs (Flatpak module, Snap part, Debian dependency)
+  - Clearly explain why it is useful, and what packaging it costs (Flatpak module, Snap part)
   - Ask the user for permission before adding it
 
 Example:
@@ -156,7 +156,7 @@ src/
   mousam.gresource.xml    files bundled into the GResource
 data/                     gschema, .desktop, appdata, icons (default_icons, material_icons), Flatpak dependency
 po/                       translations (POTFILES, LINGUAS, mousam.pot, *.po)
-build-aux/, snap/, debian/ packaging
+snap/                     Snap packaging (snapcraft.yaml)
 docs/                     overview-rules.md (source of truth for the overview rules); local *-plan.md files
 website/                  the project website (React + Vite + Tailwind), separate from the app
 screenshots/              images for README and appdata
@@ -405,7 +405,7 @@ When the user asks to build a feature:
 ## Packaging & Release Rules
 
 - The Flatpak manifest is [io.github.amit9838.mousam.json](io.github.amit9838.mousam.json); keep its sandbox permissions (`finish-args`) as small as they are. A new permission needs a strong reason and user approval.
-- Snap (`snap/snapcraft.yaml`, `build-aux/snapcraft.yaml`) and Debian (`debian/`) are maintained too; a change to dependencies or installed files must be reflected there.
+- Snap (`snap/snapcraft.yaml`, built from the checkout) is maintained too; a change to dependencies or installed files must be reflected there.
 - The version lives in two places: `meson.build` (Meson fills it into `VERSION` in `src/configs.py`) and a new `<release>` in `data/io.github.amit9838.mousam.appdata.xml.in` (with release notes, shown on the About dialog's What's New page). Change them together, and only when asked to prepare a release.
 - User-visible changes to the app's look should come with updated `screenshots/` when the user asks for it; the appdata points at them.
 
@@ -416,11 +416,11 @@ When the user asks to build a feature:
 Run before declaring any task done:
 
 ```bash
-ruff check <files you touched>
+ruff check src
 python3 -m py_compile src/*.py
 ```
 
-The codebase already has ruff findings. Don't add new ones in the code you change, and don't mass-fix unrelated ones in the same change. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
+`src/` is free of ruff findings, and the Checks workflow (`.github/workflows/checks.yml`) keeps it that way, along with `py_compile` and `meson test` (which validates the gschema, appdata and desktop file). Fix a finding rather than silencing it; change `ruff.toml` only for a rule that doesn't fit the whole codebase. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
 
 Then build, install and run the app, and check the change in light and dark, metric and imperial.
 

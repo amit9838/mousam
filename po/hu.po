@@ -1,3 +1,7 @@
+# NOTE: Some strings in this file are machine translated. Human review is required.
+#
+# TODO: Remove the NOTE above once the translation has been reviewed.
+#
 # Hungarian translation for Mousam.
 # Copyright (C) 2025 mousam's COPYRIGHT HOLDER
 # This file is distributed under the same license as the mousam package.
@@ -7,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mousam\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-05 12:03-0300\n"
+"POT-Creation-Date: 2026-11-14 19:44+0530\n"
 "PO-Revision-Date: 2025-01-17 14:11+0100\n"
 "Last-Translator: Kónya Márton <konyamarci52@proton.me>\n"
 "Language-Team: \n"
@@ -15,26 +19,32 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.5\n"
 
-#: data/io.github.amit9838.mousam.desktop.in:3
+#: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
 msgstr "Mousam"
 
-#: data/io.github.amit9838.mousam.desktop.in:5
-#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:17
+#: data/io.github.amit9838.mousam.desktop.in:4
+#: data/io.github.amit9838.mousam.appdata.xml.in:7 src/windowAbout.py:35
 msgid "Weather at a glance"
 msgstr "Tekintse meg az időjárást"
 
-#: data/io.github.amit9838.mousam.desktop.in:10
-msgid "Weather;Mousam;Rain;Cloud;Forecast;GTK4;Python;temperature;"
-msgstr "Időjárás;Mousam;Eső;Felhő;Előrejelzés;GTK4;Python;hőmérséklet;"
+#: data/io.github.amit9838.mousam.desktop.in:9
+msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
+msgstr "Időjárás;Előrejelzés;Hőmérséklet;Eső;Szél;Levegőminőség;GTK4;Python;Mousam;"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:9
-#, fuzzy
-msgid "Current Weather conditions and forecasts."
-msgstr "Aktuális időjárás és előrejelzések."
+msgid ""
+"Mousam shows the current weather and forecasts for the places you care "
+"about, with hourly and 7-day graphs, air quality and a short overview of the "
+"hours ahead. All data comes from Open-Meteo, with no account needed."
+msgstr ""
+"A Mousam megjeleníti a fontos helyek aktuális időjárását és előrejelzését "
+"órás és 7 napos grafikonokkal, levegőminőséggel és a következő órák rövid "
+"áttekintésével. Minden adat az Open-Meteótól származik, fiók nem szükséges."
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:10
 msgid "Features:"
@@ -42,67 +52,80 @@ msgstr "Jellemzők:"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:12
 msgid ""
-"Displays real-time temperature, humidity, wind speed, UV index, pressure and "
-"more"
+"Current temperature, feels like, humidity, wind, pressure, UV index, dew "
+"point and visibility"
 msgstr ""
-"Valós idejű hőmérsékletet, páratartalmat, szélsebességet, UV indexet és még "
-"többet jelenít meg"
+"Aktuális hőmérséklet, hőérzet, páratartalom, szél, légnyomás, UV-index, "
+"harmatpont és látótávolság"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:13
-msgid "Comprehensive Air Quality Index and air pollutants data"
+msgid ""
+"A one-line overview of the coming hours, such as when rain starts, also sent "
+"as a notification while the window is out of sight"
 msgstr ""
+"Egysoros áttekintés a következő órákról, például hogy mikor kezdődik az eső, "
+"amelyet értesítésként is elküld, ha az ablak nem látható"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:14
-msgid "Compact weather mode for a minimal, focused view"
-msgstr ""
+msgid "Hourly temperature, wind and precipitation graphs"
+msgstr "Óránkénti hőmérséklet-, szél- és csapadékgrafikonok"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:15
-#, fuzzy
-msgid "Hourly, tomorrow, and 7-day detailed forecasts"
-msgstr "Biztosít másnapi és 7 napos előrejelzést is"
+msgid ""
+"Tomorrow and 7-day forecasts with temperature ranges, chance of rain and snow"
+msgstr ""
+"Holnapi és 7 napos előrejelzés hőmérséklet-tartományokkal, eső- és hóesési "
+"valószínűséggel"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:16
-msgid "Visual graphs for sun and moon positions and day/night cycles"
+msgid "Air quality (US and EU AQI) with pollutants, pollen and health advice"
 msgstr ""
+"Levegőminőség (amerikai és európai AQI) szennyezőanyagokkal, pollennel és "
+"egészségügyi tanácsokkal"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:17
-msgid "Hourly temperature, wind direction and precipitation tracking"
-msgstr ""
+msgid "The sun's path through the day, moon phase and twilight"
+msgstr "A nap útja a nap folyamán, holdfázis és szürkület"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:18
-#, fuzzy
-msgid "Dynamic background styling that adapts to weather conditions"
+msgid ""
+"Saved locations with their weather and local time, in the order you choose"
 msgstr ""
-"Az alkalmazás háttere megváltozik az aktuális időjárási viszonyoknak "
-"megfelelően (újraindítás szükséges)"
+"Mentett helyszínek időjárással és helyi idővel, az Ön által választott "
+"sorrendben"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:19
-msgid "System notifications for weather updates with configurable preferences"
-msgstr ""
+msgid "Compact mode for a minimal, focused view"
+msgstr "Kompakt mód a minimális, összpontosított nézethez"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:20
-#, fuzzy
-msgid "Support for both metric and imperial measurement systems"
-msgstr ""
-"Tekintse meg az időjárási viszonyokat metrikus és angolszász "
-"mértékegységekben"
+msgid "Option to keep running in the background when the window is closed"
+msgstr "Lehetőség a háttérben való futásra az ablak bezárásakor"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:26
+#: data/io.github.amit9838.mousam.appdata.xml.in:21
+msgid ""
+"Dynamic backgrounds that follow the weather, and a choice of default or "
+"Material icons"
+msgstr ""
+"Az időjáráshoz igazodó dinamikus hátterek, és választható alapértelmezett "
+"vagy Material ikonok"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:22
+msgid "Metric and imperial units, and 12- or 24-hour clock"
+msgstr ""
+"Metrikus és angolszász mértékegységek, valamint 12 vagy 24 órás időformátum"
+
+#: data/io.github.amit9838.mousam.appdata.xml.in:28
 msgid "Main dashboard showing current weather and hourly forecast"
-msgstr ""
+msgstr "Főnézet az aktuális időjárással és az óránkénti előrejelzéssel"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:30
-#, fuzzy
+#: data/io.github.amit9838.mousam.appdata.xml.in:32
 msgid "Detailed weather conditions during rain"
-msgstr "Aktuális időjárás és előrejelzések."
+msgstr "Részletes időjárási körülmények esőzés közben"
 
-#: data/io.github.amit9838.mousam.appdata.xml.in:34
+#: data/io.github.amit9838.mousam.appdata.xml.in:36
 msgid "Night mode view"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.appdata.xml.in:43
-msgid "Amit Chaudhary"
-msgstr "Amit Chaudhary"
+msgstr "Nézet éjszakai módban"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
@@ -154,11 +177,12 @@ msgstr "Induljon teljes képernyős módban."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Auto-refresh interval in minutes"
-msgstr ""
+msgstr "Az automatikus frissítés időköze percben"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "Interval for automatic weather refresh. 0 means disabled."
 msgstr ""
+"Az automatikus időjárás-frissítés időköze. A 0 kikapcsolt állapotot jelent."
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
@@ -170,844 +194,1905 @@ msgstr "metrikus (km, °C), angolszász (mérföld, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show weather update notifications"
-msgstr ""
+msgstr "Értesítések megjelenítése az időjárás frissítéséről"
 
 #: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a notification when weather data is updated."
-msgstr ""
+msgstr "Értesítés megjelenítése az időjárási adatok frissítésekor."
 
 #: data/io.github.amit9838.mousam.gschema.xml:57
-msgid "Enable debug mode"
-msgstr ""
+msgid "Show the weather overview"
+msgstr "Időjárás-áttekintés megjelenítése"
 
 #: data/io.github.amit9838.mousam.gschema.xml:58
-msgid "Enables detailed logging and console output."
+msgid "Show a short summary of the coming hours under the current conditions."
 msgstr ""
+"Rövid összefoglaló megjelenítése a következő órákról az aktuális állapot "
+"alatt."
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
-msgid "Icon theme"
-msgstr ""
+msgid "Run in background"
+msgstr "Futtatás a háttérben"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
+msgid "Keep the app running when its window is closed."
+msgstr "Az alkalmazás tovább fut, amikor az ablaka be van zárva."
+
+#: data/io.github.amit9838.mousam.gschema.xml:67
+msgid "Enable debug mode"
+msgstr "Hibakeresési mód engedélyezése"
+
+#: data/io.github.amit9838.mousam.gschema.xml:68
+msgid "Enables detailed logging and console output."
+msgstr "Részletes naplózást és konzolkimenetet engedélyez."
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "Icon theme"
+msgstr "Ikontéma"
+
+#: data/io.github.amit9838.mousam.gschema.xml:73
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
+"Időjárási ikonkészlet: „default” (a Mousam alapértelmezett ikonjai) vagy "
+"„material” (a Google Material Design ikonjai)"
 
-#: src/configs.py:33
+#: data/io.github.amit9838.mousam.gschema.xml:81
+msgid "Forecast page"
+msgstr "Előrejelzés oldala"
+
+#: data/io.github.amit9838.mousam.gschema.xml:82
+msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
+msgstr ""
+"Az előrejelzés kártyán utoljára megjelenített oldal: „tomorrow” vagy "
+"„weekly”."
+
+#: src/configs.py:98
 msgid "Off"
-msgstr ""
+msgstr "Ki"
 
-#: src/configs.py:34
+#: src/configs.py:99
 msgid "Every 15 minutes"
-msgstr ""
+msgstr "15 percenként"
 
-#: src/configs.py:35
+#: src/configs.py:100
 msgid "Every 30 minutes"
-msgstr ""
+msgstr "30 percenként"
 
-#: src/configs.py:36
+#: src/configs.py:101
 msgid "Every hour"
-msgstr ""
+msgstr "Óránként"
 
-#: src/configs.py:37
+#: src/configs.py:102
 msgid "Every 2 hours"
-msgstr ""
+msgstr "2 óránként"
 
-#: src/CORE_GTKUtils.py:66
-msgid "Unknown"
-msgstr ""
-
-#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:109
+#: src/CORE_Helpers.py:106 src/CORE_Helpers.py:110
 msgid "Unknown City"
-msgstr ""
+msgstr "Ismeretlen város"
 
-#: src/CORE_Icons.py:261
+#: src/CORE_Icons.py:267
 msgid "Clear sky"
 msgstr "Tiszta égbolt"
 
-#: src/CORE_Icons.py:262
+#: src/CORE_Icons.py:268
 msgid "Few Clouds"
 msgstr "Ritka felhőzet"
 
-#: src/CORE_Icons.py:263
+#: src/CORE_Icons.py:269
 msgid "Partly Cloudy"
 msgstr "Részben felhős"
 
-#: src/CORE_Icons.py:264
+#: src/CORE_Icons.py:270
 msgid "Overcast"
 msgstr "Borult"
 
-#: src/CORE_Icons.py:265
+#: src/CORE_Icons.py:271
 msgid "Fog"
 msgstr "Köd"
 
-#: src/CORE_Icons.py:266
+#: src/CORE_Icons.py:272
 msgid "Mist"
 msgstr "Köd"
 
-#: src/CORE_Icons.py:267
+#: src/CORE_Icons.py:273
 msgid "Light Drizzle"
 msgstr "Enyhe szitálás"
 
-#: src/CORE_Icons.py:268
+#: src/CORE_Icons.py:274
 msgid "Moderate Drizzle"
 msgstr "Mérsékelt szitálás"
 
-#: src/CORE_Icons.py:269
+#: src/CORE_Icons.py:275
 msgid "Heavy Intensity Drizzle"
 msgstr "Erős szitálás"
 
-#: src/CORE_Icons.py:270
+#: src/CORE_Icons.py:276
 msgid "Light Freezing Drizzle"
 msgstr "Enyhe ónos szitálás"
 
-#: src/CORE_Icons.py:271
+#: src/CORE_Icons.py:277
 msgid "Heavy Freezing Drizzle"
 msgstr "Heves ónos szitálás"
 
-#: src/CORE_Icons.py:272
+#: src/CORE_Icons.py:278
 msgid "Light Rain"
 msgstr "Enyhe esőzés"
 
-#: src/CORE_Icons.py:273
+#: src/CORE_Icons.py:279
 msgid "Moderate Rain"
 msgstr "Mérsékelt esőzés"
 
-#: src/CORE_Icons.py:274
+#: src/CORE_Icons.py:280
 msgid "Heavy Rain"
 msgstr "Heves esőzés"
 
-#: src/CORE_Icons.py:275
+#: src/CORE_Icons.py:281
 msgid "Light Freezing Rain"
 msgstr "Enyhe ónos esőzés"
 
-#: src/CORE_Icons.py:276
+#: src/CORE_Icons.py:282
 msgid "Heavy Freezing Rain"
 msgstr "Heves ónos esözés"
 
-#: src/CORE_Icons.py:277
+#: src/CORE_Icons.py:283
 msgid "Light Snow Fall"
 msgstr "Enyhe hóesés"
 
-#: src/CORE_Icons.py:278
+#: src/CORE_Icons.py:284
 msgid "Moderate Snow Fall"
 msgstr "Mérsékelt hóesés"
 
-#: src/CORE_Icons.py:279
+#: src/CORE_Icons.py:285
 msgid "Heavy Snow Fall"
 msgstr "Erős hóesés"
 
-#: src/CORE_Icons.py:280
+#: src/CORE_Icons.py:286
 msgid "Snow grains"
 msgstr "Hódara"
 
-#: src/CORE_Icons.py:281
+#: src/CORE_Icons.py:287
 msgid "Light Rain Showers"
 msgstr "Enyhe zápor"
 
-#: src/CORE_Icons.py:282
+#: src/CORE_Icons.py:288
 msgid "Moderate Rain Showers"
 msgstr "Mérsékelt zápor"
 
-#: src/CORE_Icons.py:283
+#: src/CORE_Icons.py:289
 msgid "Heavy Rain Showers"
 msgstr "Heves zápor"
 
-#: src/CORE_Icons.py:284
+#: src/CORE_Icons.py:290
 msgid "Light Snow Showers"
 msgstr "Enyhe hózápor"
 
-#: src/CORE_Icons.py:285
+#: src/CORE_Icons.py:291
 msgid "Heavy Snow Showers "
 msgstr "Erős hózápor "
 
-#: src/CORE_Icons.py:286
+#: src/CORE_Icons.py:292
 msgid "Thunderstorm"
 msgstr "Zivatar"
 
-#: src/CORE_Icons.py:287
+#: src/CORE_Icons.py:293
 msgid "Thunderstorm with Hail"
 msgstr "Zivatar jégesővel"
 
-#: src/CORE_weatherData.py:154
+#: src/CORE_OverviewMessages.py:31
+msgid "Thunderstorms are likely right now. Stay indoors if you can."
+msgstr "Most valószínűleg zivatar van. Ha teheti, maradjon bent."
+
+#: src/CORE_OverviewMessages.py:32
+msgid "Expect thunderstorms right now. Stay indoors if you can."
+msgstr "Most zivatar várható. Ha teheti, maradjon bent."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:36
+#, python-brace-format
+msgid "Thunderstorms are likely around {time}. Plan to be indoors by then."
+msgstr ""
+"{time} körül valószínűleg zivatar lesz. Addigra érdemes fedett helyen lennie."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:38
+#, python-brace-format
+msgid "Expect thunderstorms around {time}. Plan to be indoors by then."
+msgstr "{time} körül zivatar várható. Addigra érdemes fedett helyen lennie."
+
+#: src/CORE_OverviewMessages.py:41
+msgid "Freezing rain is likely right now. Roads and paths may be icy."
+msgstr "Most valószínűleg ónos eső esik. Az utak és ösvények síkosak lehetnek."
+
+#: src/CORE_OverviewMessages.py:42
+msgid "Expect freezing rain right now. Watch for icy roads and paths."
+msgstr "Most ónos eső várható. Vigyázzon a jeges utakon és ösvényeken."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:46
+#, python-brace-format
+msgid "Freezing rain is likely around {time}. Roads and paths may turn icy."
+msgstr ""
+"{time} körül valószínűleg ónos eső esik. Az utak és ösvények síkossá "
+"válhatnak."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:48
+#, python-brace-format
+msgid "Expect freezing rain around {time}. Roads may turn icy."
+msgstr "{time} körül ónos eső várható. Az utak síkossá válhatnak."
+
+#: src/CORE_OverviewMessages.py:51
+msgid "Heavy rain is likely right now. Expect puddles and slow roads."
+msgstr ""
+"Most valószínűleg heves eső esik. Számítson pocsolyákra és lassú forgalomra."
+
+#: src/CORE_OverviewMessages.py:52
+msgid "Expect heavy rain right now. Allow extra travel time."
+msgstr "Most heves eső várható. Számítson hosszabb utazási időre."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:56
+#, python-brace-format
+msgid "Heavy rain is likely around {time}. Keep an umbrella close."
+msgstr "{time} körül valószínűleg heves eső esik. Tartson kéznél esernyőt."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:58
+#, python-brace-format
+msgid "Expect heavy rain around {time}. Allow extra travel time."
+msgstr "{time} körül heves eső várható. Számítson hosszabb utazási időre."
+
+#: src/CORE_OverviewMessages.py:61
+msgid "Heavy snow is likely right now. Travel may be slow."
+msgstr "Most valószínűleg erős havazás van. A közlekedés lassú lehet."
+
+#: src/CORE_OverviewMessages.py:62
+msgid "Expect heavy snow right now. Allow extra travel time."
+msgstr "Most erős havazás várható. Számítson hosszabb utazási időre."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:66
+#, python-brace-format
+msgid "Heavy snow is likely around {time}. Travel may be slow after that."
+msgstr ""
+"{time} körül valószínűleg erős havazás lesz. Utána a közlekedés lassú lehet."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:68
+#, python-brace-format
+msgid "Expect heavy snow around {time}. Allow extra travel time."
+msgstr "{time} körül erős havazás várható. Számítson hosszabb utazási időre."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:72
+#, python-brace-format
+msgid "It feels like {temp} right now. Stay hydrated and seek shade."
+msgstr "Most a hőérzet {temp}. Igyon sokat, és keressen árnyékot."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:74
+#, python-brace-format
+msgid "It feels as hot as {temp} right now. Drink water and stay cool."
+msgstr "Most a hőérzet {temp}, nagy a meleg. Igyon vizet, és maradjon hűvösön."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:78
+#, python-brace-format
+msgid ""
+"It will feel like {temp} by around {time}. Stay hydrated and seek shade."
+msgstr "{time} körül a hőérzet {temp} lesz. Igyon sokat, és keressen árnyékot."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:80
+#, python-brace-format
+msgid ""
+"Expect it to feel like {temp} by around {time}. Drink water and stay cool."
+msgstr "{time} körül {temp} hőérzet várható. Igyon vizet, és maradjon hűvösön."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:84
+#, python-brace-format
+msgid "It feels like {temp} right now. Dress warmly, in layers."
+msgstr "Most a hőérzet {temp}. Öltözzön melegen, rétegesen."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:86
+#, python-brace-format
+msgid "It feels as cold as {temp} right now. Bundle up."
+msgstr "Most a hőérzet {temp}, csípős hideg van. Öltözzön fel jól."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:90
+#, python-brace-format
+msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
+msgstr "{time} körül a hőérzet {temp} lesz. Öltözzön melegen, rétegesen."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:92
+#, python-brace-format
+msgid "Expect it to feel like {temp} by around {time}. Bundle up."
+msgstr "{time} körül {temp} hőérzet várható. Öltözzön fel jól."
+
+#: src/CORE_OverviewMessages.py:95
+msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
+msgstr ""
+"A levegő minősége most egészségtelen. Ha teheti, töltsön kevesebb időt a "
+"szabadban."
+
+#: src/CORE_OverviewMessages.py:96
+msgid "The air is unhealthy right now. Consider staying indoors."
+msgstr "A levegő most egészségtelen. Fontolja meg, hogy bent marad."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:100
+#, python-brace-format
+msgid ""
+"Air quality turns unhealthy around {time}. Consider limiting time outdoors."
+msgstr ""
+"A levegő minősége {time} körül egészségtelenné válik. Fontolja meg, hogy "
+"kevesebb időt tölt a szabadban."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:102
+#, python-brace-format
+msgid "Expect unhealthy air from around {time}. Limit time outdoors."
+msgstr ""
+"Egészségtelen levegő várható {time} körüli időponttól. Töltsön kevesebb időt "
+"a szabadban."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:106
+#, python-brace-format
+msgid "UV is very high until about {time}. Use sunscreen and cover up."
+msgstr ""
+"Az UV-sugárzás nagyon erős {time} körüli időpontig. Használjon naptejet, és "
+"fedje be magát."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:108
+#, python-brace-format
+msgid ""
+"The sun is very strong until about {time}. Use sunscreen and seek shade."
+msgstr ""
+"A nap nagyon erős {time} körüli időpontig. Használjon naptejet, és keressen "
+"árnyékot."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:112
+#, python-brace-format
+msgid ""
+"UV will be very high from about {start} to {end}. Use sunscreen outdoors."
+msgstr ""
+"Az UV-sugárzás körülbelül {start} és {end} között nagyon erős lesz. A "
+"szabadban használjon naptejet."
+
+#. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
+#: src/CORE_OverviewMessages.py:114
+#, python-brace-format
+msgid "Expect very high UV from about {start} to {end}. Cover up outdoors."
+msgstr ""
+"Körülbelül {start} és {end} között nagyon erős UV-sugárzás várható. A "
+"szabadban fedje be magát."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:119
+#, python-brace-format
+msgid "Rain is likely to start around {time} with {chance}% chance."
+msgstr "Az eső valószínűleg {time} körül kezdődik, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:121
+#, python-brace-format
+msgid "Expect rain from around {time}, with {chance}% chance."
+msgstr "Eső várható {time} körüli időponttól, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:123
+#, python-brace-format
+msgid "Rain may move in around {time} with {chance}% chance."
+msgstr "Eső érkezhet {time} körül, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:125
+#, python-brace-format
+msgid ""
+"Showers could begin around {time} with {chance}% chance. Keep an umbrella "
+"handy."
+msgstr ""
+"A zápor {time} körül kezdődhet, {chance}% eséllyel. Tartson kéznél esernyőt."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:127
+#, python-brace-format
+msgid "There is {chance}% chance of rain starting around {time}."
+msgstr "{chance}% az esélye, hogy {time} körül eső kezdődik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:131
+#, python-brace-format
+msgid "Snow is likely to start around {time} with {chance}% chance."
+msgstr "A hó valószínűleg {time} körül kezd esni, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:133
+#, python-brace-format
+msgid "Expect snow from around {time}, with {chance}% chance."
+msgstr "Hó várható {time} körüli időponttól, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:135
+#, python-brace-format
+msgid "Snow may move in around {time} with {chance}% chance."
+msgstr "Hó érkezhet {time} körül, {chance}% eséllyel."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:137
+#, python-brace-format
+msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
+msgstr ""
+"A havazás {time} körül kezdődhet, {chance}% eséllyel. Öltözzön melegen."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:141
+#, python-brace-format
+msgid "Rain is likely right now, easing off around {time}."
+msgstr "Most valószínűleg esik az eső, {time} körül enyhül."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:143
+#, python-brace-format
+msgid "Rain should ease off around {time}."
+msgstr "Az eső {time} körül enyhülni fog."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:145
+#, python-brace-format
+msgid "Expect rain for now, clearing around {time}."
+msgstr "Egyelőre eső várható, {time} körül kitisztul az ég."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:147
+#, python-brace-format
+msgid "It is wet for now, but the rain should stop around {time}."
+msgstr "Egyelőre nedves az idő, de az eső várhatóan {time} körül elmúlik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:151
+#, python-brace-format
+msgid "Snow is likely right now, easing off around {time}."
+msgstr "Most valószínűleg havazik, {time} körül enyhül."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:153
+#, python-brace-format
+msgid "Snow should ease off around {time}."
+msgstr "A havazás {time} körül enyhülni fog."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:155
+#, python-brace-format
+msgid "Expect snow for now, clearing around {time}."
+msgstr "Egyelőre havazás várható, {time} körül kitisztul az ég."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:157
+#, python-brace-format
+msgid "It is snowy for now, but it should stop around {time}."
+msgstr "Egyelőre havas az idő, de várhatóan {time} körül elmúlik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:161
+#, python-brace-format
+msgid "Rain is likely to keep falling until about {time}."
+msgstr "Az eső valószínűleg {time} körüli időpontig folytatódik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:163
+#, python-brace-format
+msgid "Expect rain on and off until about {time}."
+msgstr "{time} körüli időpontig szakaszos eső várható."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:165
+#, python-brace-format
+msgid "It looks wet until about {time}. Keep an umbrella close."
+msgstr ""
+"{time} körüli időpontig csapadékosnak tűnik az idő. Tartson kéznél esernyőt."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:167
+#, python-brace-format
+msgid "Rain should stick around until about {time}."
+msgstr "Az eső várhatóan {time} körüli időpontig kitart."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:171
+#, python-brace-format
+msgid "Snow is likely to keep falling until about {time}."
+msgstr "A havazás valószínűleg {time} körüli időpontig folytatódik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:173
+#, python-brace-format
+msgid "Expect snow on and off until about {time}."
+msgstr "{time} körüli időpontig szakaszos havazás várható."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:175
+#, python-brace-format
+msgid "It looks snowy until about {time}. Travel may be slow."
+msgstr ""
+"{time} körüli időpontig havasnak tűnik az idő. A közlekedés lassú lehet."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:177
+#, python-brace-format
+msgid "Snow should stick around until about {time}."
+msgstr "A hó várhatóan {time} körüli időpontig kitart."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:182
+#, python-brace-format
+msgid "Strong wind right now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Most erős a szél, körülbelül {speed}. Rögzítse a szabadban lévő laza "
+"tárgyakat."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:184
+#, python-brace-format
+msgid "It is windy right now, around {speed}. Hold on to your hat."
+msgstr "Most szeles az idő, körülbelül {speed}. Fogja meg a kalapját."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:186
+#, python-brace-format
+msgid "Wind is strong right now, around {speed}."
+msgstr "A szél most erős, körülbelül {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"
+#: src/CORE_OverviewMessages.py:188
+#, python-brace-format
+msgid ""
+"Expect strong wind for now, around {speed}. Secure loose items outdoors."
+msgstr ""
+"Egyelőre erős szél várható, körülbelül {speed}. Rögzítse a szabadban lévő "
+"laza tárgyakat."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:192
+#, python-brace-format
+msgid "Wind picks up to {speed} around {time}. Secure loose items outdoors."
+msgstr ""
+"A szél {time} körül {speed} sebességre erősödik. Rögzítse a szabadban lévő "
+"laza tárgyakat."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:194
+#, python-brace-format
+msgid "Expect stronger wind, up to {speed}, around {time}."
+msgstr "{time} körül erősebb szél várható, legfeljebb {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:196
+#, python-brace-format
+msgid "It gets windy around {time}, up to {speed}."
+msgstr "{time} körül szeles lesz az idő, legfeljebb {speed}."
+
+#. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:198
+#, python-brace-format
+msgid "Wind should strengthen to {speed} around {time}."
+msgstr "A szél várhatóan {time} körül {speed} sebességre erősödik."
+
+#: src/CORE_OverviewMessages.py:201
+msgid "It is foggy right now, with low visibility. Drive with care."
+msgstr "Most ködös az idő, korlátozott a látótávolság. Vezessen óvatosan."
+
+#: src/CORE_OverviewMessages.py:202
+msgid "Fog is cutting visibility right now. Take it slow on the roads."
+msgstr "A köd most korlátozza a látótávolságot. Haladjon lassan az úton."
+
+#: src/CORE_OverviewMessages.py:203
+msgid "Visibility is low in the fog right now. Drive with care."
+msgstr "A látótávolság most csekély a ködben. Vezessen óvatosan."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:207
+#, python-brace-format
+msgid "Fog is likely around {time}, with low visibility. Drive with care."
+msgstr ""
+"{time} körül valószínűleg köd lesz, korlátozott látótávolsággal. Vezessen "
+"óvatosan."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:209
+#, python-brace-format
+msgid "Expect fog around {time}. Visibility may drop."
+msgstr "{time} körül köd várható. A látótávolság csökkenhet."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:211
+#, python-brace-format
+msgid "Fog may roll in around {time}. Take care on the roads."
+msgstr "{time} körül köd érkezhet. Legyen óvatos az úton."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:213
+#, python-brace-format
+msgid "Visibility could drop in fog around {time}."
+msgstr "A látótávolság {time} körül csökkenhet a ködben."
+
+#: src/CORE_OverviewMessages.py:216
+msgid "Fog is likely around sunrise, with low visibility. Drive with care."
+msgstr ""
+"Napkelte körül valószínűleg köd lesz, korlátozott látótávolsággal. Vezessen "
+"óvatosan."
+
+#: src/CORE_OverviewMessages.py:217
+msgid "Expect fog around sunrise. Visibility may drop."
+msgstr "Napkelte körül köd várható. A látótávolság csökkenhet."
+
+#: src/CORE_OverviewMessages.py:218
+msgid "A foggy start is likely around sunrise. Take care on the roads."
+msgstr ""
+"Napkelte körül valószínűleg ködös lesz a kezdés. Legyen óvatos az úton."
+
+#: src/CORE_OverviewMessages.py:219
+msgid "Fog may form around sunrise, cutting visibility."
+msgstr "Napkelte körül köd alakulhat ki, ami csökkenti a látótávolságot."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:224
+#, python-brace-format
+msgid "Expect it to warm up to {temp} by around {time}."
+msgstr "Melegedés várható, {time} körül: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:226
+#, python-brace-format
+msgid "Temperatures climb to {temp} by around {time}."
+msgstr "A hőmérséklet {time} körül emelkedik: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:228
+#, python-brace-format
+msgid "It should reach {temp} by around {time}."
+msgstr "{time} körül várhatóan {temp} lesz."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:230
+#, python-brace-format
+msgid "Warming up to {temp} by around {time}."
+msgstr "Melegedés {time} körül: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:234
+#, python-brace-format
+msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
+msgstr ""
+"Lehűlés várható, {time} körül: {temp}. Tartson kéznél még egy réteg ruhát."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:236
+#, python-brace-format
+msgid "Temperatures drop to {temp} by around {time}."
+msgstr "A hőmérséklet {time} körül csökken: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:238
+#, python-brace-format
+msgid "It should cool to {temp} by around {time}. A jacket may help."
+msgstr "{time} körül várhatóan lehűl: {temp}. Jól jöhet egy dzseki."
+
+#. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:240
+#, python-brace-format
+msgid "Cooling down to {temp} by around {time}."
+msgstr "Lehűlés {time} körül: {temp}."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:245
+#, python-brace-format
+msgid "Rain is likely tomorrow with {chance}% chance, so plan ahead."
+msgstr "Holnap valószínűleg esik, {chance}% eséllyel, ezért tervezzen előre."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:247
+#, python-brace-format
+msgid "Tomorrow looks wet, with {chance}% chance of rain."
+msgstr "A holnapi nap csapadékosnak tűnik, {chance}% csapadékeséllyel."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:249
+#, python-brace-format
+msgid "Expect rain tomorrow, with {chance}% chance. Keep an umbrella ready."
+msgstr "Holnap eső várható, {chance}% eséllyel. Legyen kéznél az esernyő."
+
+#. Translators: {chance} is a percentage, like "70"
+#: src/CORE_OverviewMessages.py:251
+#, python-brace-format
+msgid "There is {chance}% chance of rain tomorrow."
+msgstr "Holnap {chance}% az esőesély."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:255
+#, python-brace-format
+msgid "Tomorrow will be warmer than today, with a high of {temp}."
+msgstr "Holnap melegebb lesz a mainál, a legmagasabb hőmérséklet: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:257
+#, python-brace-format
+msgid "A warmer day tomorrow, reaching {temp}."
+msgstr "Holnap melegebb nap lesz, a hőmérséklet legfeljebb {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:259
+#, python-brace-format
+msgid "Tomorrow heats up, with a high of {temp}."
+msgstr "Holnap felmelegszik, a legmagasabb hőmérséklet: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:261
+#, python-brace-format
+msgid "Expect a warmer tomorrow, up to {temp}."
+msgstr "Holnap melegebb nap várható, legfeljebb {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:265
+#, python-brace-format
+msgid "Tomorrow will be cooler than today, with a high of {temp}."
+msgstr "Holnap hűvösebb lesz a mainál, a legmagasabb hőmérséklet: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:267
+#, python-brace-format
+msgid "A cooler day tomorrow, reaching only {temp}."
+msgstr "Holnap hűvösebb nap lesz, a legmagasabb hőmérséklet mindössze {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:269
+#, python-brace-format
+msgid "Tomorrow cools off, with a high of {temp}."
+msgstr "Holnap lehűl, a legmagasabb hőmérséklet: {temp}."
+
+#. Translators: {temp} is a temperature, like "14°"
+#: src/CORE_OverviewMessages.py:271
+#, python-brace-format
+msgid "Expect a cooler tomorrow, topping out at {temp}."
+msgstr "Holnap hűvösebb nap várható, legfeljebb {temp}."
+
+#: src/CORE_OverviewMessages.py:277
+#, python-brace-format
+msgid "The sun sets in about {n} minute."
+msgid_plural "The sun sets in about {n} minutes."
+msgstr[0] "A nap körülbelül {n} perc múlva lenyugszik."
+msgstr[1] "A nap körülbelül {n} perc múlva lenyugszik."
+
+#: src/CORE_OverviewMessages.py:283
+#, python-brace-format
+msgid "Sunset is about {n} minute away."
+msgid_plural "Sunset is about {n} minutes away."
+msgstr[0] "A napnyugtáig körülbelül {n} perc van hátra."
+msgstr[1] "A napnyugtáig körülbelül {n} perc van hátra."
+
+#: src/CORE_OverviewMessages.py:289
+#, python-brace-format
+msgid "About {n} minute of daylight left."
+msgid_plural "About {n} minutes of daylight left."
+msgstr[0] "Körülbelül {n} perc nappali fény van hátra."
+msgstr[1] "Körülbelül {n} perc nappali fény van hátra."
+
+#: src/CORE_OverviewMessages.py:295
+#, python-brace-format
+msgid "The sun goes down in about {n} minute."
+msgid_plural "The sun goes down in about {n} minutes."
+msgstr[0] "A nap körülbelül {n} perc múlva lemegy."
+msgstr[1] "A nap körülbelül {n} perc múlva lemegy."
+
+#: src/CORE_OverviewMessages.py:303
+#, python-brace-format
+msgid "The sun rises in about {n} minute."
+msgid_plural "The sun rises in about {n} minutes."
+msgstr[0] "A nap körülbelül {n} perc múlva felkel."
+msgstr[1] "A nap körülbelül {n} perc múlva felkel."
+
+#: src/CORE_OverviewMessages.py:309
+#, python-brace-format
+msgid "Sunrise is about {n} minute away."
+msgid_plural "Sunrise is about {n} minutes away."
+msgstr[0] "A napkeltéig körülbelül {n} perc van hátra."
+msgstr[1] "A napkeltéig körülbelül {n} perc van hátra."
+
+#: src/CORE_OverviewMessages.py:315
+#, python-brace-format
+msgid "Daylight returns in about {n} minute."
+msgid_plural "Daylight returns in about {n} minutes."
+msgstr[0] "A nappali fény körülbelül {n} perc múlva visszatér."
+msgstr[1] "A nappali fény körülbelül {n} perc múlva visszatér."
+
+#: src/CORE_OverviewMessages.py:321
+#, python-brace-format
+msgid "The sun comes up in about {n} minute."
+msgid_plural "The sun comes up in about {n} minutes."
+msgstr[0] "A nap körülbelül {n} perc múlva előbújik."
+msgstr[1] "A nap körülbelül {n} perc múlva előbújik."
+
+#: src/CORE_OverviewMessages.py:329
+#, python-brace-format
+msgid "The sun sets in about {n} hour, at {time}."
+msgid_plural "The sun sets in about {n} hours, at {time}."
+msgstr[0] "A nap körülbelül {n} óra múlva nyugszik le ({time})."
+msgstr[1] "A nap körülbelül {n} óra múlva nyugszik le ({time})."
+
+#: src/CORE_OverviewMessages.py:335
+#, python-brace-format
+msgid "Sunset is about {n} hour away, at {time}."
+msgid_plural "Sunset is about {n} hours away, at {time}."
+msgstr[0] "A napnyugtáig körülbelül {n} óra van hátra ({time})."
+msgstr[1] "A napnyugtáig körülbelül {n} óra van hátra ({time})."
+
+#: src/CORE_OverviewMessages.py:341
+#, python-brace-format
+msgid "About {n} hour of daylight left. Sunset is at {time}."
+msgid_plural "About {n} hours of daylight left. Sunset is at {time}."
+msgstr[0] ""
+"Körülbelül {n} óra nappali fény van hátra. A napnyugta ideje: {time}."
+msgstr[1] ""
+"Körülbelül {n} óra nappali fény van hátra. A napnyugta ideje: {time}."
+
+#: src/CORE_OverviewMessages.py:347
+#, python-brace-format
+msgid "The sun goes down at {time}, in about {n} hour."
+msgid_plural "The sun goes down at {time}, in about {n} hours."
+msgstr[0] "A nap körülbelül {n} óra múlva lemegy ({time})."
+msgstr[1] "A nap körülbelül {n} óra múlva lemegy ({time})."
+
+#: src/CORE_OverviewMessages.py:355
+#, python-brace-format
+msgid "The sun rises in about {n} hour, at {time}."
+msgid_plural "The sun rises in about {n} hours, at {time}."
+msgstr[0] "A nap körülbelül {n} óra múlva kel fel ({time})."
+msgstr[1] "A nap körülbelül {n} óra múlva kel fel ({time})."
+
+#: src/CORE_OverviewMessages.py:361
+#, python-brace-format
+msgid "Sunrise is about {n} hour away, at {time}."
+msgid_plural "Sunrise is about {n} hours away, at {time}."
+msgstr[0] "A napkeltéig körülbelül {n} óra van hátra ({time})."
+msgstr[1] "A napkeltéig körülbelül {n} óra van hátra ({time})."
+
+#: src/CORE_OverviewMessages.py:367
+#, python-brace-format
+msgid "Daylight returns at {time}, in about {n} hour."
+msgid_plural "Daylight returns at {time}, in about {n} hours."
+msgstr[0] "A nappali fény körülbelül {n} óra múlva tér vissza ({time})."
+msgstr[1] "A nappali fény körülbelül {n} óra múlva tér vissza ({time})."
+
+#: src/CORE_OverviewMessages.py:373
+#, python-brace-format
+msgid "The sun comes up at {time}, in about {n} hour."
+msgid_plural "The sun comes up at {time}, in about {n} hours."
+msgstr[0] "A nap körülbelül {n} óra múlva előbújik ({time})."
+msgstr[1] "A nap körülbelül {n} óra múlva előbújik ({time})."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:381
+#, python-brace-format
+msgid "Conditions should stay steady until about {time}."
+msgstr "A körülmények várhatóan {time} körüli időpontig állandóak maradnak."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:383
+#, python-brace-format
+msgid "No big changes expected until about {time}."
+msgstr "{time} körüli időpontig nem várható nagy változás."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:385
+#, python-brace-format
+msgid "A quiet spell ahead, with little change until about {time}."
+msgstr "Nyugodt időszak következik, {time} körüli időpontig kevés változással."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:387
+#, python-brace-format
+msgid "Things look settled until about {time}."
+msgstr "{time} körüli időpontig minden stabilnak tűnik."
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/CORE_OverviewMessages.py:389
+#, python-brace-format
+msgid "The weather should hold steady until about {time}."
+msgstr "Az időjárás várhatóan {time} körüli időpontig stabil marad."
+
+#: src/CORE_OverviewRules.py:248
+msgctxt "overview heading"
+msgid "Today"
+msgstr "Ma"
+
+#: src/CORE_OverviewRules.py:249
+msgctxt "overview heading"
+msgid "Tonight"
+msgstr "Ma éjjel"
+
+#: src/CORE_OverviewRules.py:678
+msgctxt "overview heading"
+msgid "Tomorrow"
+msgstr "Holnap"
+
+#: src/CORE_weatherData.py:167
 msgid "Good"
 msgstr "Jó"
 
-#: src/CORE_weatherData.py:155
+#: src/CORE_weatherData.py:168
 msgid "Moderate"
 msgstr "Mérsékelt"
 
-#: src/CORE_weatherData.py:156
+#: src/CORE_weatherData.py:169
 msgid "Poor"
 msgstr "Egészségtelen érzékeny csoportok számára"
 
-#: src/CORE_weatherData.py:157
+#: src/CORE_weatherData.py:170
 msgid "Unhealthy"
 msgstr "Egészségtelen"
 
-#: src/CORE_weatherData.py:158
+#: src/CORE_weatherData.py:171
 msgid "Severe"
 msgstr "Nagyon egészségtelen"
 
-#: src/CORE_weatherData.py:159
+#: src/CORE_weatherData.py:172
 msgid "Hazardous"
 msgstr "Veszélyes"
 
-#: src/CORE_weatherData.py:163
+#: src/CORE_weatherData.py:187
+msgid "Air quality is good. A fine time to be outside."
+msgstr "A levegő minősége jó. Remek alkalom a szabadban töltött időre."
+
+#: src/CORE_weatherData.py:189
+msgid ""
+"Unusually sensitive people should cut back on long or intense outdoor "
+"activity."
+msgstr ""
+"A különösen érzékeny embereknek érdemes korlátozniuk a hosszú vagy "
+"megerőltető szabadtéri tevékenységeket."
+
+#: src/CORE_weatherData.py:191
+msgid "Sensitive groups should cut back on long or intense outdoor activity."
+msgstr ""
+"Az érzékeny csoportoknak érdemes korlátozniuk a hosszú vagy megerőltető "
+"szabadtéri tevékenységeket."
+
+#: src/CORE_weatherData.py:193
+msgid ""
+"Everyone should cut back on long or intense outdoor activity; sensitive "
+"groups should avoid it."
+msgstr ""
+"Mindenkinek érdemes korlátoznia a hosszú vagy megerőltető szabadtéri "
+"tevékenységeket; az érzékeny csoportok kerüljék azokat."
+
+#: src/CORE_weatherData.py:195
+msgid ""
+"Everyone should avoid long or intense outdoor activity; sensitive groups "
+"should stay indoors."
+msgstr ""
+"Mindenkinek érdemes kerülnie a hosszú vagy megerőltető szabadtéri "
+"tevékenységeket; az érzékeny csoportok maradjanak bent."
+
+#: src/CORE_weatherData.py:196
+msgid "Everyone should avoid all outdoor activity."
+msgstr "Mindenkinek érdemes kerülnie minden szabadtéri tevékenységet."
+
+#: src/CORE_weatherData.py:202
+msgctxt "european aqi"
+msgid "Good"
+msgstr "Jó"
+
+#: src/CORE_weatherData.py:204
+msgctxt "european aqi"
+msgid "Fair"
+msgstr "Elfogadható"
+
+#: src/CORE_weatherData.py:206
+msgctxt "european aqi"
+msgid "Moderate"
+msgstr "Mérsékelt"
+
+#: src/CORE_weatherData.py:208
+msgctxt "european aqi"
+msgid "Poor"
+msgstr "Rossz"
+
+#: src/CORE_weatherData.py:210
+msgctxt "european aqi"
+msgid "Very Poor"
+msgstr "Nagyon rossz"
+
+#: src/CORE_weatherData.py:211
+msgctxt "european aqi"
+msgid "Extremely Poor"
+msgstr "Rendkívül rossz"
+
+#: src/CORE_weatherData.py:222
+msgctxt "pollutant level"
+msgid "Good"
+msgstr "Jó"
+
+#: src/CORE_weatherData.py:223
+msgctxt "pollutant level"
+msgid "High"
+msgstr "Magas"
+
+#: src/CORE_weatherData.py:224
+msgctxt "pollutant level"
+msgid "Very High"
+msgstr "Nagyon magas"
+
+#: src/CORE_weatherData.py:242
+msgctxt "pollen level"
+msgid "Low"
+msgstr "Alacsony"
+
+#: src/CORE_weatherData.py:244
+msgctxt "pollen level"
+msgid "Moderate"
+msgstr "Mérsékelt"
+
+#: src/CORE_weatherData.py:246
+msgctxt "pollen level"
+msgid "High"
+msgstr "Magas"
+
+#: src/CORE_weatherData.py:247
+msgctxt "pollen level"
+msgid "Very High"
+msgstr "Nagyon magas"
+
+#: src/CORE_weatherData.py:262
 msgctxt "uvindex"
 msgid "Low"
 msgstr "Alacsony"
 
-#: src/CORE_weatherData.py:164
+#: src/CORE_weatherData.py:263
 msgctxt "uvindex"
 msgid "Moderate"
 msgstr "Mérsékelt"
 
-#: src/CORE_weatherData.py:165
+#: src/CORE_weatherData.py:264
 msgctxt "uvindex"
 msgid "High"
 msgstr "Magas"
 
-#: src/CORE_weatherData.py:166
+#: src/CORE_weatherData.py:265
 msgctxt "uvindex"
 msgid "Very High"
 msgstr "Nagyon magas"
 
-#: src/CORE_weatherData.py:167
+#: src/CORE_weatherData.py:266
 msgctxt "uvindex"
 msgid "Extreme"
 msgstr "Szélsőségesen magas"
 
-#: src/CORE_weatherData.py:171
+#: src/CORE_weatherData.py:270
 msgctxt "humidity"
 msgid "Low"
 msgstr "Alacsony"
 
-#: src/CORE_weatherData.py:172
+#: src/CORE_weatherData.py:271
 msgctxt "humidity"
 msgid "Moderate"
 msgstr "Mérsékelt"
 
-#: src/CORE_weatherData.py:173
+#: src/CORE_weatherData.py:272
 msgctxt "humidity"
 msgid "High"
 msgstr "Magas"
 
-#: src/CORE_weatherData.py:180
+#: src/CORE_weatherData.py:279
 msgctxt "pressure"
 msgid "Low"
 msgstr "Alacsony"
 
-#: src/CORE_weatherData.py:181
+#: src/CORE_weatherData.py:280
 msgctxt "pressure"
 msgid "Normal"
 msgstr "Átlagos"
 
-#: src/CORE_weatherData.py:182
+#: src/CORE_weatherData.py:281
 msgctxt "pressure"
 msgid "High"
 msgstr "Magas"
 
-#: src/CORE_weatherData.py:186
+#: src/CORE_weatherData.py:285
 msgid "Calm"
 msgstr "Nyugodt"
 
-#: src/CORE_weatherData.py:187
+#: src/CORE_weatherData.py:286
 msgid "Light"
 msgstr "Gyenge"
 
-#: src/CORE_weatherData.py:188
+#: src/CORE_weatherData.py:287
 msgctxt "wind"
 msgid "Moderate"
 msgstr "Mérsékelt"
 
-#: src/CORE_weatherData.py:189
+#: src/CORE_weatherData.py:288
 msgid "Strong"
 msgstr "Erős"
 
-#: src/CORE_weatherData.py:190
+#: src/CORE_weatherData.py:289
 msgctxt "wind"
 msgid "Extreme"
 msgstr "Szélsőséges"
 
-#: src/CORE_weatherData.py:194
+#: src/CORE_weatherData.py:293
 msgid "km"
 msgstr "km"
 
-#: src/CORE_weatherData.py:196
+#: src/CORE_weatherData.py:295
 msgid "miles"
 msgstr "mérföld"
 
-#: src/UI_CardAirPollution.py:93
+#: src/UI_CardAirPollution.py:61
 msgid "Air Pollution"
 msgstr "Légszennyezés"
 
-#: src/UI_CardAirPollution.py:105
-msgid "Air Quality Components"
-msgstr ""
+#: src/UI_CardAirPollution.py:72
+msgid "Air Quality Details"
+msgstr "A levegőminőség részletei"
 
-#: src/UI_CardAirPollution.py:153
-msgid "Air Quality Index"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:180
-msgid "PM2.5"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:181
-msgid "PM10"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:182
-msgid "CO"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:183
-msgid "CO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:184
-msgid "NO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:185
-msgid "SO₂"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:186
-msgid "O₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:187
-msgid "Dust"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:188
-msgid "NH₃"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:189
-msgid "CH₄"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:190
-#, fuzzy
-msgid "Alder Pollen"
-msgstr "Légszennyezés"
-
-#: src/UI_CardAirPollution.py:191
-#, fuzzy
-msgid "Birch Pollen"
-msgstr "Légszennyezés"
-
-#: src/UI_CardAirPollution.py:192
-msgid "Grass Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:193
-msgid "Mugwort Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:194
-msgid "Olive Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:195
-msgid "Ragweed Pollen"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:215
-#, python-brace-format
-msgid "Safe limit: ≤ {0} {1}"
-msgstr ""
-
-#: src/UI_CardAirPollution.py:243
-msgid ""
-"AQI: US EPA Standard\n"
-"Pollutant limits: WHO Guidelines (2021)"
-msgstr ""
-
-#: src/UI_CardDayNight.py:76
+#: src/UI_CardDayNight.py:60
 msgid "Sunrise & Sunset"
 msgstr "Napkelte és Napnyugta"
 
-#: src/UI_CardDayNight.py:87
+#: src/UI_CardDayNight.py:74
 msgid "Sunrise"
 msgstr "Napkelte"
 
-#: src/UI_CardDayNight.py:100
+#: src/UI_CardDayNight.py:74
 msgid "Sunset"
 msgstr "Napnyugta"
 
-#: src/UI_CardSquare.py:30 src/UI_CompactWeather.py:285
-#: src/UI_HourlyDetails.py:52
+#: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
+#: src/UI_HourlyDetails.py:51
 msgid "Wind"
 msgstr "Szél"
 
-#: src/UI_HourlyDetails.py:51
-#, fuzzy
-msgid "Hourly"
-msgstr "24 órás"
-
-#: src/UI_HourlyDetails.py:53
-#, fuzzy
-msgid "Precipitation"
-msgstr "Csapadék hüvelykben"
-
-#: src/UI_CardSquare.py:31
+#: src/UI_CardSquare.py:38 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr "Légnyomás"
 
-#: src/UI_CardSquare.py:32
+#: src/UI_CardSquare.py:39 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr "Páratartalom"
 
-#: src/UI_CardSquare.py:33
+#: src/UI_CardSquare.py:40
 msgid "UV Index"
 msgstr "UV erősség"
 
-#: src/UI_CardSquare.py:208 src/UI_CardSquare.py:216
+#. Translators: the high and low ends of the humidity, UV index and pressure gauges
+#: src/UI_CardSquare.py:66 src/UI_CardSquare.py:223
+msgctxt "level gauge"
+msgid "High"
+msgstr "Magas"
+
+#: src/UI_CardSquare.py:67 src/UI_CardSquare.py:222
+msgctxt "level gauge"
+msgid "Low"
+msgstr "Alacsony"
+
+#: src/UI_CardSquare.py:234
 msgid "North"
 msgstr "Észak"
 
-#: src/UI_CardSquare.py:209
+#: src/UI_CardSquare.py:235
 msgid "Northeast"
 msgstr "Északkelet"
 
-#: src/UI_CardSquare.py:210
+#: src/UI_CardSquare.py:236
 msgid "East"
 msgstr "Kelet"
 
-#: src/UI_CardSquare.py:211
+#: src/UI_CardSquare.py:237
 msgid "Southeast"
 msgstr "Délkelet"
 
-#: src/UI_CardSquare.py:212
+#: src/UI_CardSquare.py:238
 msgid "South"
 msgstr "Dél"
 
-#: src/UI_CardSquare.py:213
+#: src/UI_CardSquare.py:239
 msgid "Southwest"
 msgstr "Délnyugat"
 
-#: src/UI_CardSquare.py:214
+#: src/UI_CardSquare.py:240
 msgid "West"
 msgstr "Nyugat"
 
-#: src/UI_CardSquare.py:215
+#: src/UI_CardSquare.py:241
 msgid "Northwest"
 msgstr "Északnyugat"
 
-#: src/UI_CompactWeather.py:71 src/UI_CompactWeather.py:89 src/mousam.py:345
+#: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
 msgid "No Internet"
 msgstr "Nincs internet"
 
-#: src/UI_CompactWeather.py:289
-msgid "Hum."
-msgstr ""
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:232
+msgid "Retry"
+msgstr "Újrapróbálás"
+
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:239
+msgid "Please check your connection."
+msgstr "Kérjük, ellenőrizze a kapcsolatot."
+
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
+msgid "Fetch Error"
+msgstr "Lekérési hiba"
+
+#: src/UI_CompactWeather.py:218
+msgid "AQI"
+msgstr "AQI"
+
+#. Translators: strftime format of the date in compact mode ("6 November")
+#: src/UI_CompactWeather.py:248
+msgctxt "compact date"
+msgid "%-d %B"
+msgstr "%B %-d."
+
+#: src/UI_CompactWeather.py:262 src/shortcutsDialog.ui:69
+msgid "Leave Compact Mode"
+msgstr "Kilépés a kompakt módból"
 
 #: src/UI_CompactWeather.py:293
-#, fuzzy
-msgid "Pres."
-msgstr "Légnyomás"
-
-#: src/UI_CompactWeather.py:297
-msgid "AQI"
-msgstr ""
-
-#: src/UI_CompactWeather.py:350
-#, fuzzy
 msgid "Mousam Compact"
-msgstr "Mousam"
+msgstr "Mousam kompakt"
 
-#: src/UI_CompDrawDayNight.py:154
+#. Translators: the line in the sun's path where the sun rises and sets
+#: src/UI_CompDrawDayNight.py:124
+msgid "Horizon"
+msgstr "Horizont"
+
+#: src/UI_CompDrawDayNight.py:187
 msgid "Day"
-msgstr ""
+msgstr "Nappal"
 
-#: src/UI_CompDrawDayNight.py:154
+#: src/UI_CompDrawDayNight.py:187
 msgid "Night"
 msgstr "Éjszaka"
 
-#: src/UI_CurrentCond.py:96
+#. Translators: lowest and highest value of the air quality graph
+#: src/UI_CompDrawLineGraph.py:43
 #, python-brace-format
-msgid "Feels like • <b> {0} {1}</b>"
-msgstr "Hőérzet: <b> {0} {1}</b>"
+msgid "Max {max} · Min {min}"
+msgstr "Max. {max} · Min. {min}"
 
-#: src/UI_Forecast.py:139 src/UI_Forecast.py:318
+#. Translators: today's highest (H) and lowest (L) temperatures, like "29°" and "14°"
+#: src/UI_CurrentCond.py:129
+#, python-brace-format
+msgid "H {high} · L {low}"
+msgstr "Max. {high} · Min. {low}"
+
+#. Translators: {0} is a temperature, like "22°"
+#: src/UI_CurrentCond.py:147
+#, python-brace-format
+msgid "Feels like {0}"
+msgstr "Hőérzet {0}"
+
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:121
+msgid "Show Overview"
+msgstr "Áttekintés megjelenítése"
+
+#. Translators: strftime format of the date above the overview ("Saturday, 7 Nov")
+#: src/UI_CurrentCond.py:362
+msgctxt "current date"
+msgid "%A, %-d %b"
+msgstr "%b %-d., %A"
+
+#: src/UI_Forecast.py:158 src/UI_Forecast.py:426
 msgid "Tomorrow"
 msgstr "Holnap"
 
-#: src/UI_Forecast.py:147
+#: src/UI_Forecast.py:166
 msgid "Weekly"
 msgstr "Heti"
 
-#: src/UI_Forecast.py:316
+#. Translators: tooltip on the day's temperature range bar; {low} and
+#. {high} are temperatures with their unit sign, like "15°"
+#: src/UI_Forecast.py:376
+#, python-brace-format
+msgid "Low {low}, high {high}"
+msgstr "Min. {low}, max. {high}"
+
+#: src/UI_Forecast.py:424
 msgid "Today"
 msgstr "Ma"
 
-#: src/UI_HourlyDetails.py:151
+#: src/UI_Forecast.py:448
+#, python-brace-format
+msgid "Chance of snow: {percent}%"
+msgstr "Hóesés esélye: {percent}%"
+
+#: src/UI_Forecast.py:450
+#, python-brace-format
+msgid "Chance of rain: {percent}%"
+msgstr "Eső esélye: {percent}%"
+
+#: src/UI_Forecast.py:481
+#, python-brace-format
+msgid "Light snow: {amount}"
+msgstr "Gyenge havazás: {amount}"
+
+#: src/UI_Forecast.py:482
+#, python-brace-format
+msgid "Moderate snow: {amount}"
+msgstr "Mérsékelt havazás: {amount}"
+
+#: src/UI_Forecast.py:483
+#, python-brace-format
+msgid "Heavy snow: {amount}"
+msgstr "Erős havazás: {amount}"
+
+#: src/UI_Forecast.py:484
+#, python-brace-format
+msgid "Very heavy snow: {amount}"
+msgstr "Nagyon erős havazás: {amount}"
+
+#: src/UI_Forecast.py:501
+#, python-brace-format
+msgid "Light rain: {amount}"
+msgstr "Gyenge eső: {amount}"
+
+#: src/UI_Forecast.py:502
+#, python-brace-format
+msgid "Moderate rain: {amount}"
+msgstr "Mérsékelt eső: {amount}"
+
+#: src/UI_Forecast.py:503
+#, python-brace-format
+msgid "Heavy rain: {amount}"
+msgstr "Heves eső: {amount}"
+
+#: src/UI_Forecast.py:504
+#, python-brace-format
+msgid "Violent rain: {amount}"
+msgstr "Szakadó eső: {amount}"
+
+#: src/UI_HourlyDetails.py:50
+msgid "Hourly"
+msgstr "Óránként"
+
+#: src/UI_HourlyDetails.py:52 src/windowPreferences.py:65
+msgid "Precipitation"
+msgstr "Csapadék"
+
+#: src/UI_HourlyDetails.py:150
 msgctxt "temperature"
 msgid "Day Max •"
 msgstr "Napi maximum"
 
-#: src/UI_HourlyDetails.py:157
+#: src/UI_HourlyDetails.py:156
 msgctxt "wind"
 msgid "Day High •"
 msgstr "Napi csúcs"
 
-#: src/UI_HourlyDetails.py:168
+#: src/UI_HourlyDetails.py:167
 msgctxt "precipitation"
 msgid "Day High •"
 msgstr "Napi maximum"
 
-#: src/UI_HourlyDetails.py:243
+#: src/UI_HourlyDetails.py:245
 msgid "Now"
 msgstr "Most"
 
-#: src/UI_HourlyDetails.py:285
+#: src/UI_HourlyDetails.py:287
 msgid "No precipitation today !"
 msgstr "Nincs ma csapadék!"
 
-#: src/UI_HourlyDetails.py:286
+#: src/UI_HourlyDetails.py:288
 msgid "No precipitation expected today!"
 msgstr "Nem várható ma csapadék!"
 
-#: src/UI_HourlyDetails.py:287
+#: src/UI_HourlyDetails.py:289
 msgid "Anticipate a precipitation-free day !"
 msgstr "Csapadékmentes napra számíthat!"
 
-#: src/UI_HourlyDetails.py:288
+#: src/UI_HourlyDetails.py:290
 msgid "Enjoy a rain-free day today!"
 msgstr "Élvezzen az esőmentes napot ma!"
 
-#: src/UI_HourlyDetails.py:289
+#: src/UI_HourlyDetails.py:291
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr "Esernyő állapot: pihenő. Csapadék nem várható!"
 
-#: src/UI_HourlyDetails.py:290
+#: src/UI_HourlyDetails.py:292
 msgid "No rain in sight today!"
 msgstr "Ma nem várható eső!"
 
-#: src/mousam.py:83
+#: src/mousam.py:89
 msgid "Debug Mode Enabled"
-msgstr ""
+msgstr "Hibakeresési mód engedélyezve"
 
-#: src/mousam.py:84
+#: src/mousam.py:90
 msgid "View Logs"
-msgstr ""
+msgstr "Naplók megtekintése"
 
-#: src/mousam.py:88
+#: src/mousam.py:94
 msgid "Debug Mode Disabled"
-msgstr ""
+msgstr "Hibakeresési mód letiltva"
 
-#: src/mousam.py:125
-#, fuzzy
+#: src/mousam.py:131
 msgid "Refresh weather"
 msgstr "Időjárás frissítése"
 
-#: src/mousam.py:140 src/windowLocations.py:135 src/shortcutsDialog.ui:39
+#: src/mousam.py:146 src/windowLocations.py:404 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr "Helyszínek"
 
-#: src/mousam.py:146
+#: src/mousam.py:152
 msgid "Compact Mode"
-msgstr ""
+msgstr "Kompakt mód"
 
-#: src/mousam.py:172 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: src/mousam.py:173 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: src/mousam.py:174
+#: src/mousam.py:181
 msgid "About Mousam"
 msgstr "A Mousam névjegye"
 
-#: src/mousam.py:175 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr "Kilépés"
 
-#: src/mousam.py:279
-msgid "Direction"
-msgstr ""
+#. Translators: wind direction is where the wind blows from
+#: src/mousam.py:298
+msgid "Direction (from)"
+msgstr "Irány (honnan)"
 
-#: src/mousam.py:293
+#. Translators: "North" on the wind direction compass, as short as possible
+#: src/mousam.py:301
+msgctxt "compass"
+msgid "N"
+msgstr "É"
+
+#: src/mousam.py:312
 msgid "Dewpoint"
 msgstr "Harmatpont"
 
-#: src/mousam.py:345
-msgid "Please check your connection."
-msgstr ""
-
-#: src/mousam.py:350
-msgid "Fetch Error"
-msgstr ""
-
-#: src/mousam.py:364
+#: src/mousam.py:372
 msgid "Getting Weather Data"
 msgstr "Időjárás adatok beszerzése"
 
-#: src/mousam.py:371
+#: src/mousam.py:379
 msgid "Welcome to Mousam"
 msgstr "Üdvözöljük a Mousam-ban"
 
-#: src/mousam.py:372
+#: src/mousam.py:380
 msgid "Add a location to get started."
-msgstr ""
+msgstr "Kezdéshez adjon hozzá egy helyszínt."
 
-#: src/mousam.py:373
-#, fuzzy
+#: src/mousam.py:381 src/windowLocations.py:430
 msgid "Add Location"
-msgstr "Új helyszín hozzáadása"
+msgstr "Helyszín hozzáadása"
 
-#: src/mousam.py:387
-msgid "Retry"
+#: src/windowAirQuality.py:19
+msgid "PM2.5"
+msgstr "PM2.5"
+
+#: src/windowAirQuality.py:20
+msgid "PM10"
+msgstr "PM10"
+
+#: src/windowAirQuality.py:21
+msgid "NO₂"
+msgstr "NO₂"
+
+#: src/windowAirQuality.py:22
+msgid "O₃"
+msgstr "O₃"
+
+#: src/windowAirQuality.py:23
+msgid "SO₂"
+msgstr "SO₂"
+
+#: src/windowAirQuality.py:24
+msgid "CO"
+msgstr "CO"
+
+#: src/windowAirQuality.py:28
+msgid "CO₂"
+msgstr "CO₂"
+
+#: src/windowAirQuality.py:29
+msgid "CH₄"
+msgstr "CH₄"
+
+#: src/windowAirQuality.py:30
+msgid "NH₃"
+msgstr "NH₃"
+
+#: src/windowAirQuality.py:31
+msgid "Dust"
+msgstr "Por"
+
+#: src/windowAirQuality.py:34
+msgid "Alder"
+msgstr "Éger"
+
+#: src/windowAirQuality.py:35
+msgid "Birch"
+msgstr "Nyír"
+
+#: src/windowAirQuality.py:36
+msgid "Grass"
+msgstr "Fű"
+
+#: src/windowAirQuality.py:37
+msgid "Mugwort"
+msgstr "Üröm"
+
+#: src/windowAirQuality.py:38
+msgid "Olive"
+msgstr "Olajfa"
+
+#: src/windowAirQuality.py:39
+msgid "Ragweed"
+msgstr "Parlagfű"
+
+#: src/windowAirQuality.py:71 src/windowAirQuality.py:80
+msgid "Air Quality"
+msgstr "Levegőminőség"
+
+#: src/windowAirQuality.py:101
+msgid ""
+"AQI by the US EPA; limits from the WHO guidelines (2021). Data by Open-Meteo."
 msgstr ""
+"Az AQI az amerikai EPA szerint; a határértékek a WHO 2021-es irányelvei "
+"alapján. Az adatokat az Open-Meteo szolgáltatja."
 
-#: src/windowAbout.py:20
-msgid "Copyright © 2024 Mousam Developers"
-msgstr ""
+#: src/windowAirQuality.py:152
+msgid "No air quality data for now."
+msgstr "Egyelőre nincs levegőminőségi adat."
 
-#: src/windowAbout.py:24
+#. Translators: the European AQI beside the US one; {aqi} is its
+#. value and {level} its level name ("Fair")
+#: src/windowAirQuality.py:167
+#, python-brace-format
+msgid "US AQI · EU AQI {aqi}, {level}"
+msgstr "Amerikai AQI · Európai AQI {aqi}, {level}"
+
+#: src/windowAirQuality.py:170
+msgid "US AQI"
+msgstr "Amerikai AQI"
+
+#. Translators: {name} is a pollutant, like "PM2.5"
+#: src/windowAirQuality.py:177
+#, python-brace-format
+msgid "Main pollutant: {name}"
+msgstr "Fő szennyezőanyag: {name}"
+
+#: src/windowAirQuality.py:191
+msgid "Trend"
+msgstr "Trend"
+
+#: src/windowAirQuality.py:191
+msgid "Last 3 days and next 3 days"
+msgstr "Az elmúlt 3 nap és a következő 3 nap"
+
+#: src/windowAirQuality.py:205
+msgid "Pollutants"
+msgstr "Szennyezőanyagok"
+
+#: src/windowAirQuality.py:214
+msgid "More Pollutants"
+msgstr "További szennyezőanyagok"
+
+#: src/windowAirQuality.py:227
+msgid "Pollen"
+msgstr "Pollen"
+
+#. Translators: the WHO guideline for a pollutant; {limit} is a
+#. number and {unit} its unit, like "μg/m³"
+#: src/windowAirQuality.py:246
+#, python-brace-format
+msgid "WHO limit {limit} {unit}"
+msgstr "WHO határérték: {limit} {unit}"
+
+#: src/windowAbout.py:37
+msgid "Copyright © 2023–2026 Mousam Developers"
+msgstr "Copyright © 2023–2026 a Mousam fejlesztői"
+
+#. Translators: replace with your name (and email or link), one per line
+#: src/windowAbout.py:39
 #, fuzzy
 msgid "translator-credits"
 msgstr "fordító_elismerések"
 
-#: src/windowLocations.py:54
+#: src/windowAbout.py:43
+msgid "Source Code"
+msgstr "Forráskód"
+
+#: src/windowAbout.py:44
+msgid "Contributors"
+msgstr "Közreműködők"
+
+#: src/windowAbout.py:45
+msgid "Help Translate"
+msgstr "Segítsen a fordításban"
+
+#: src/windowAbout.py:46
+msgid "Buy Me a Coffee"
+msgstr "Fizessen nekem egy kávét"
+
+#: src/windowAbout.py:49 src/windowAbout.py:62
+msgid "Weather Data"
+msgstr "Időjárási adatok"
+
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:108
+msgid "Weather Icons"
+msgstr "Időjárási ikonok"
+
+#. Translators: {owner} is a name, {license} a link, keep the tag as it is
+#: src/windowAbout.py:60
+#, python-brace-format
+msgid "© {owner}, licensed under {license}"
+msgstr "© {owner}, {license} licenc alatt"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:80
+#, python-brace-format
+msgid "Default icons: {name}"
+msgstr "Alapértelmezett ikonok: {name}"
+
+#. Translators: {name} is the name of an icon set, as a link
+#: src/windowAbout.py:90
+#, python-brace-format
+msgid "Material icons: {name}"
+msgstr "Material ikonok: {name}"
+
+#: src/windowAbout.py:93
+msgid "All rights belong to Google. Collected by Darren Griffin."
+msgstr "Minden jog a Google-t illeti. Összeállította: Darren Griffin."
+
+#: src/windowLocations.py:145
 msgid "Add New Location"
 msgstr "Új helyszín hozzáadása"
 
-#: src/windowLocations.py:70
-msgid "Search for a city"
-msgstr "Város keresése"
+#: src/windowLocations.py:181
+msgid "Search cities, e.g. Kochi"
+msgstr "Városok keresése, pl. Kochi"
 
-#: src/windowLocations.py:84
-#, fuzzy
-msgid "Search for your city..."
-msgstr "Város keresése"
+#: src/windowLocations.py:209
+msgid "Show More"
+msgstr "Továbbiak megjelenítése"
 
-#: src/windowLocations.py:106
-#, fuzzy
-msgid "No cities found."
-msgstr "Nincs találat!"
+#: src/windowLocations.py:229
+msgid "Search for Your City"
+msgstr "Keresse meg a városát"
 
-#: src/windowLocations.py:144
-#, fuzzy
+#: src/windowLocations.py:238
+msgid "Couldn't Search for Cities"
+msgstr "A városokat nem sikerült megkeresni"
+
+#: src/windowLocations.py:346
+msgid "No Cities Found"
+msgstr "Nem található város"
+
+#: src/windowLocations.py:347
+msgid "Check the spelling or try a nearby city."
+msgstr "Ellenőrizze a helyesírást, vagy próbáljon egy közeli várost."
+
+#: src/windowLocations.py:385
+msgid "Already saved"
+msgstr "Már mentve"
+
+#: src/windowLocations.py:427
 msgid "Saved Locations"
-msgstr "Helyszínek"
+msgstr "Mentett helyszínek"
 
-#: src/windowLocations.py:146
-msgid "Add"
-msgstr "Hozzáadás"
+#: src/windowLocations.py:502
+msgid "Remove"
+msgstr "Eltávolítás"
 
-#: src/windowLocations.py:201
-#, fuzzy
+#: src/windowLocations.py:548
+msgid "Drag to reorder, or press Alt+Up / Alt+Down"
+msgstr ""
+"Húzással átrendezheti, vagy nyomja meg az Alt+Fel / Alt+Le billentyűket"
+
+#: src/windowLocations.py:620
 msgid "Location already exists"
-msgstr "Helyszín már korábban hozzáadva!"
+msgstr "A helyszín már létezik"
 
-#: src/windowLocations.py:223
+#: src/windowLocations.py:638
+#, python-brace-format
 msgid "Switched to {}"
 msgstr "Átváltott {}-ra/re"
 
-#: src/windowPreferences.py:30
-#, fuzzy
-msgid "Weather Preferences"
-msgstr "Beállítások"
+#: src/windowPreferences.py:35 src/windowPreferences.py:52
+#: src/shortcutsDialog.ui:29
+msgid "General"
+msgstr "Általános"
 
 #: src/windowPreferences.py:44
-msgid "Appearance"
-msgstr "Kinézet"
+msgid "Advanced"
+msgstr "Speciális"
+
+#: src/windowPreferences.py:56
+msgid "Units"
+msgstr "Mértékegységek"
+
+#: src/windowPreferences.py:57
+msgid "Metric (°C, km/h) or Imperial (°F, mph)"
+msgstr "Metrikus (°C, km/h) vagy angolszász (°F, mph)"
 
 #: src/windowPreferences.py:59
-msgid "Advanced"
-msgstr ""
+msgid "Metric"
+msgstr "Metrikus"
 
-#: src/windowPreferences.py:64
-msgid "Logging &amp; Debugging"
-msgstr ""
+#: src/windowPreferences.py:59
+msgid "Imperial"
+msgstr "Angolszász"
 
-#: src/windowPreferences.py:74
-msgid "Icon Theme"
-msgstr ""
+#: src/windowPreferences.py:66
+msgid "Unit of the hourly precipitation graph"
+msgstr "Az óránkénti csapadékgrafikon mértékegysége"
+
+#. Translators: short unit names for millimetres and inches
+#: src/windowPreferences.py:69
+msgid "mm"
+msgstr "mm"
+
+#: src/windowPreferences.py:69
+msgid "in"
+msgstr "in"
 
 #: src/windowPreferences.py:75
-msgid "Choose between Default and Material design weather icons"
-msgstr ""
-
-#: src/windowPreferences.py:85
-msgid "Default"
-msgstr ""
-
-#: src/windowPreferences.py:90
-msgid "Material"
-msgstr ""
-
-#: src/windowPreferences.py:105
-msgid "Dynamic Background"
-msgstr "Dinamikus háttér"
-
-#: src/windowPreferences.py:107
-#, fuzzy
-msgid "App background changes based on current weather conditions"
-msgstr ""
-"Az alkalmazás háttere megváltozik az aktuális időjárási viszonyoknak "
-"megfelelően (újraindítás szükséges)"
-
-#: src/windowPreferences.py:121
 msgid "Time Format"
 msgstr "Idő formátum"
 
-#: src/windowPreferences.py:122
-#, fuzzy
-msgid "Weather time format"
-msgstr "Időjárás idő formátum (frissítés szükséges)"
-
-#: src/windowPreferences.py:132
-msgid "24 Hour"
+#: src/windowPreferences.py:78
+msgid "24-hour"
 msgstr "24 órás"
 
-#: src/windowPreferences.py:137
-msgid "AM / PM"
-msgstr "De/Du"
+#: src/windowPreferences.py:78
+msgid "AM/PM"
+msgstr "AM/PM"
 
-#: src/windowPreferences.py:153
-msgid "Auto Refresh"
+#: src/windowPreferences.py:85
+msgid "Run in Background"
+msgstr "Futtatás a háttérben"
+
+#: src/windowPreferences.py:86
+msgid "Keep Mousam running when its window is closed"
+msgstr "A Mousam fusson tovább az ablak bezárásakor"
+
+#: src/windowPreferences.py:95
+msgid "Appearance"
+msgstr "Kinézet"
+
+#: src/windowPreferences.py:98
+msgid "Dynamic Background"
+msgstr "Dinamikus háttér"
+
+#: src/windowPreferences.py:99
+msgid "Change the background to match the current weather"
+msgstr "A háttér igazítása az aktuális időjáráshoz"
+
+#: src/windowPreferences.py:111
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: src/windowPreferences.py:111
+msgid "Material"
+msgstr "Material"
+
+#: src/windowPreferences.py:118
+msgid "Weather Overview"
+msgstr "Időjárás-áttekintés"
+
+#: src/windowPreferences.py:122
+msgid "A short summary of the coming hours"
+msgstr "Rövid összefoglaló a következő órákról"
+
+#: src/windowPreferences.py:130
+msgid "Notifications"
+msgstr "Értesítések"
+
+#: src/windowPreferences.py:131
+msgid ""
+"Send the overview as a notification while the window is minimized or in "
+"compact mode"
 msgstr ""
+"Az áttekintés elküldése értesítésként, ha az ablak le van kicsinyítve vagy "
+"kompakt módban van"
 
-#: src/windowPreferences.py:154
-msgid "Automatically refresh weather data at a set interval"
-msgstr ""
+#: src/windowPreferences.py:140
+msgid "Logging and Debugging"
+msgstr "Naplózás és hibakeresés"
 
-#: src/windowPreferences.py:171
-#, fuzzy
-msgid "Show Notifications"
-msgstr "Helyszínek"
+#: src/windowPreferences.py:143
+msgid "Debug Mode"
+msgstr "Hibakeresési mód"
+
+#: src/windowPreferences.py:144
+msgid "Enable verbose logging and console output"
+msgstr "Részletes naplózás és konzolkimenet engedélyezése"
+
+#: src/windowPreferences.py:152
+msgid "Open Logs Folder"
+msgstr "Naplómappa megnyitása"
+
+#: src/windowPreferences.py:161
+msgid "Clear Log File"
+msgstr "Naplófájl törlése"
+
+#: src/windowPreferences.py:162
+msgid "Delete all contents of the current log file"
+msgstr "Az aktuális naplófájl teljes tartalmának törlése"
+
+#: src/windowPreferences.py:165
+msgid "Clear"
+msgstr "Törlés"
 
 #: src/windowPreferences.py:172
-msgid "Show notification when weather is refreshed automatically"
-msgstr ""
-
-#: src/windowPreferences.py:187
-msgid "Units &amp; Measurements"
-msgstr "Mértékegységek"
-
-#: src/windowPreferences.py:192
-msgid "System Unit"
-msgstr ""
-
-#: src/windowPreferences.py:193
-msgid "Metric (C, mm, km/h) or Imperial (F, inches, mph) [restart required]"
-msgstr ""
-
-#: src/windowPreferences.py:204
-msgid "Metric"
-msgstr ""
-
-#: src/windowPreferences.py:209
-msgid "Imperial"
-msgstr ""
-
-#: src/windowPreferences.py:227
-msgid "Precipitation in inches"
-msgstr "Csapadék hüvelykben"
-
-#: src/windowPreferences.py:228
-#, fuzzy
-msgid "This option works better in heavy precipitation"
-msgstr "Ez az opció jobban működik erős csapadék esetén (frissítés szükséges)"
-
-#: src/windowPreferences.py:242
 msgid "Data Management"
-msgstr ""
+msgstr "Adatkezelés"
 
-#: src/windowPreferences.py:247
+#: src/windowPreferences.py:175
 msgid "Reset to Default"
-msgstr ""
+msgstr "Visszaállítás alapértelmezettre"
 
-#: src/windowPreferences.py:248
+#: src/windowPreferences.py:176
 msgid "Clear all preferences and restore default values"
-msgstr ""
+msgstr "Minden beállítás törlése és az alapértelmezett értékek visszaállítása"
 
-#: src/windowPreferences.py:251
+#: src/windowPreferences.py:179
 msgid "Reset…"
-msgstr ""
+msgstr "Visszaállítás…"
 
-#: src/windowPreferences.py:260
-msgid "Debug Mode"
-msgstr ""
+#: src/windowPreferences.py:230
+msgid "Auto Refresh"
+msgstr "Automatikus frissítés"
 
-#: src/windowPreferences.py:261
-msgid "Enable verbose logging and console output"
-msgstr ""
-
-#: src/windowPreferences.py:274
-msgid "Open Logs Folder"
-msgstr ""
-
-#: src/windowPreferences.py:275
-msgid "Access the application log files"
-msgstr ""
-
-#: src/windowPreferences.py:288
-msgid "Clear Log File"
-msgstr ""
-
-#: src/windowPreferences.py:289
-msgid "Delete all contents of the current log file"
-msgstr ""
-
-#: src/windowPreferences.py:340
-msgid "Icon theme changed to {}"
-msgstr ""
-
-#: src/windowPreferences.py:349
-msgid "Switched to - {}"
-msgstr "Átváltott {}-ra/re"
-
-#: src/windowPreferences.py:368
+#: src/windowPreferences.py:329
 msgid "Logs cleared"
-msgstr ""
+msgstr "Naplók törölve"
 
-#: src/windowPreferences.py:370
+#: src/windowPreferences.py:331
 msgid "Failed to clear logs"
-msgstr ""
+msgstr "A naplók törlése sikertelen"
 
-#: src/windowPreferences.py:381
-msgid "Auto refresh disabled"
-msgstr ""
-
-#: src/windowPreferences.py:383
-msgid "Auto refresh every {} min"
-msgstr ""
-
-#: src/windowPreferences.py:390
+#: src/windowPreferences.py:341
 msgid "Reset Settings?"
-msgstr ""
+msgstr "Visszaállítja a beállításokat?"
 
-#: src/windowPreferences.py:392
+#: src/windowPreferences.py:343
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
+"Ez minden beállítást alapértelmezettre állít vissza, és törli a mentett "
+"városokat. A művelet nem vonható vissza."
 
-#: src/windowPreferences.py:396
+#: src/windowPreferences.py:347
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
-#: src/windowPreferences.py:397
+#: src/windowPreferences.py:348
 msgid "Reset"
-msgstr ""
+msgstr "Visszaállítás"
 
-#: src/windowPreferences.py:438
+#: src/windowPreferences.py:372
 msgid "Preferences have been reset"
-msgstr ""
-
-#: src/shortcutsDialog.ui:29
-msgid "General"
-msgstr "Általános"
+msgstr "A beállítások vissza lettek állítva"
 
 #: src/shortcutsDialog.ui:33
 msgid "Refresh Weather"
@@ -1016,93 +2101,3 @@ msgstr "Időjárás frissítése"
 #: src/shortcutsDialog.ui:53
 msgid "Navigation"
 msgstr "Navigáció"
-
-#~ msgid ""
-#~ "Utilizes graphical representations, such as temperature , precipitation "
-#~ "graphs and wind-speed with direction to provide an hourly forecast for "
-#~ "the next 24 hours"
-#~ msgstr ""
-#~ "Grafikus megjelenítést alkalmaz, mint pl.: hőmérséklet, csapadék "
-#~ "grafikonok és szélsebesség széliránnyal, hogy óránkénti előrejelzést "
-#~ "adjon a következő 24 órára"
-
-#~ msgid "Clear Sky - day"
-#~ msgstr "Tiszta Égbolt - nappal"
-
-#~ msgid "Snowfall - day"
-#~ msgstr "Hőesés - nappal"
-
-#~ msgid "Clear Sky - night"
-#~ msgstr "Tiszta Égbolt - éjszaka"
-
-#~ msgid "United States AQI standard"
-#~ msgstr "Egyesült Államok levegőminőségi indexe alapján"
-
-#~ msgid "From"
-#~ msgstr "Irány"
-
-#~ msgid "N"
-#~ msgstr "É"
-
-#~ msgctxt "pressure card"
-#~ msgid "High"
-#~ msgstr "Magas"
-
-#~ msgctxt "pressure card"
-#~ msgid "Low"
-#~ msgstr "Alacsony"
-
-#~ msgctxt "uvindex card"
-#~ msgid "High"
-#~ msgstr "Magas"
-
-#~ msgctxt "uvindex card"
-#~ msgid "Low"
-#~ msgstr "Alacsony"
-
-#~ msgid "Metric system with units like Celsius, km/h, and kilometers"
-#~ msgstr "Metrikus rendszer, pl.: Celsius, km/h és kilométer"
-
-#~ msgid "Imperial system with units like Fahrenheit, mph, and miles"
-#~ msgstr "Angolszász rendszer, pl.: Fahrenheit, mph és mérföld"
-
-#~ msgid "Switching locations within 2 seconds is ignored"
-#~ msgstr "2 másodpercen belüli helyszín változtatás letiltva"
-
-#~ msgid "Location"
-#~ msgstr "Helyszín"
-
-#~ msgid "Could not fetch data from API"
-#~ msgstr "Nem tudtuk lekérni az adatokat API-ból"
-
-#~ msgid "Refreshed Successfully"
-#~ msgstr "Frissítés sikeres"
-
-#~ msgid "Refresh within 5 seconds is ignored!"
-#~ msgstr "5 másodpercen belüli frissítés letiltva!"
-
-#~ msgid "Refreshing..."
-#~ msgstr "Frissítés..."
-
-#~ msgid "Remove location"
-#~ msgstr "Helyszín törlése"
-
-#~ msgid "Switch city within 2 seconds is ignored!"
-#~ msgstr "2 másodpercen belüli város váltás letiltva!"
-
-#~ msgid "Selected - {}"
-#~ msgstr "Kiválasztva: {}"
-
-#~ msgid "Search"
-#~ msgstr "Keresés"
-
-#, python-brace-format
-#~ msgid "Added - {0}"
-#~ msgstr "Hozzáadva: {0}"
-
-#, python-brace-format
-#~ msgid "Deleted - {0}"
-#~ msgstr "Törölve: {0}"
-
-#~ msgid "Press enter to search"
-#~ msgstr "Nyomja meg az Enter-t a kereséshez"

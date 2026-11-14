@@ -107,7 +107,9 @@ def draw_knob(cr, x: float, y: float, radius: float, rgb) -> None:
     cr.fill()
 
 
-def weak_connect(widget, signal_name, bound_method):
+def weak_connect(widget, signal_name, bound_method, *data):
+    """Connect without the handler keeping its object alive. Extra data is
+    passed to the handler after the signal's own arguments."""
     target = bound_method.__self__
     # Since PyGObject 3.55 a GObject's Python wrapper is freed while the
     # GObject lives on, so a Python weakref to it goes dead too early:
@@ -123,7 +125,7 @@ def weak_connect(widget, signal_name, bound_method):
             method = getattr(target, func_name, None)
             if method:
                 return method(*args, **kwargs)
-    return widget.connect(signal_name, wrapper)
+    return widget.connect(signal_name, wrapper, *data)
 
 def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
     """Remove GTK's own drop target from a window that reorders things by drag.

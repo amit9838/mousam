@@ -1,0 +1,9 @@
+version: 2
+updates:
+  # Keep the actions used by the workflows up to date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "chore(ci)"

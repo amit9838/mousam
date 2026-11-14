@@ -9,7 +9,7 @@ platforms:
 
 parts:
   python-deps:
-    # requests from the Ubuntu archive, as in the Debian package. The python
+    # requests from the Ubuntu archive. The python
     # plugin can't find an interpreter on core26 with the gnome extension.
     plugin: nil
     stage-packages:
@@ -18,15 +18,14 @@ parts:
       - usr/lib/python3/dist-packages
 
   mousam:
-    source: https://github.com/amit9838/mousam.git
-    source-depth: 1
-    #source-tag: used when there will be a new release with these fixes
+    # The checkout this file is in, so CI and the store build the same code.
+    source: .
     plugin: meson
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/mousam/current/usr/bin/mousam
-    parse-info: [ usr/share/appdata/io.github.amit9838.mousam.appdata.xml ]
+    parse-info: [ usr/share/metainfo/io.github.amit9838.mousam.appdata.xml ]
     organize:
       snap/mousam/current: .
     prime:

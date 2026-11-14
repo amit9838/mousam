@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, Any, Dict
+from dataclasses import dataclass
+from typing import Optional, Any, Dict
 
 @dataclass
 class WeatherField:

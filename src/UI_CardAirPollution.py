@@ -3,7 +3,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from gi.repository import Gtk
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 from .UI_CompDrawPollutionBar import PollutionBar
 from .settings import settings

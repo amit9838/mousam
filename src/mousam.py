@@ -27,7 +27,6 @@ from .UI_Forecast import Forecast
 from .UI_CardSquare import CardSquare
 from .UI_CardDayNight import CardDayNight
 from .UI_CardAirPollution import CardAirPollution
-from .UI_CompactWeather import CompactWeatherWindow
 
 from .settings import settings
 
@@ -86,7 +85,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
     def _on_debug_mode_changed(self, *args):
-        from .CORE_Logging import log_manager
         if settings.debug_mode:
             toast = Adw.Toast.new(_("Debug Mode Enabled"))
             toast.set_button_label(_("View Logs"))

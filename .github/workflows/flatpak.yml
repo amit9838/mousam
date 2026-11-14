@@ -1,13 +1,12 @@
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-    types: [ "review_requested", "ready_for_review" ]
+    types: [ "opened", "synchronize", "reopened", "review_requested", "ready_for_review" ]
   workflow_dispatch:
 name: Test Flatpak packaging
 permissions:
-  id-token: write
   contents: read
 jobs:
   gnome-flatpak:
