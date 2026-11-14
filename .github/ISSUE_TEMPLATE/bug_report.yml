@@ -1,0 +1,68 @@
+name: Bug report
+description: Something in Mousam does not work as expected
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem. Please search the [existing issues](https://github.com/amit9838/mousam/issues?q=is%3Aissue) first.
+        The more you tell us, the faster it can be fixed.
+  - type: input
+    id: version
+    attributes:
+      label: Mousam version
+      description: Shown in the main menu → About Mousam.
+      placeholder: "3.0.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install Mousam?
+      options:
+        - Flatpak (Flathub)
+        - Snap
+        - Built from source
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Distribution and desktop
+      placeholder: "Fedora 44, GNOME 51 (Wayland)"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Locations
+        2. ...
+  - type: textarea
+    id: troubleshooting
+    attributes:
+      label: Troubleshooting information
+      description: |
+        Main menu → About Mousam → Troubleshooting. Copy the text there and paste it here.
+        It lists the version, how Mousam was installed and your settings.
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Turn on Debug Mode (Preferences → Advanced → Logging and Debugging), reproduce the problem,
+        then paste the end of `mousam.log` (use Open Logs Folder to find it).
+      render: text
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Drag images here if they help.

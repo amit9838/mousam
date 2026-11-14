@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/amit9838/mousam/discussions
+    about: Ask a question or talk about ideas before opening an issue.
+  - name: Improve a translation
+    url: https://github.com/amit9838/mousam/tree/master/po
+    about: Translations live in the po folder, see the contribution guide.

@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest an improvement or a new feature
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search the [existing issues](https://github.com/amit9838/mousam/issues?q=is%3Aissue) and [discussions](https://github.com/amit9838/mousam/discussions) first.
+        Mousam gets all its weather data from [Open-Meteo](https://open-meteo.com/), so ideas that need other data sources are harder to add.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe what you are trying to do and what gets in the way.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like to see?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups or examples
+      description: A sketch or a screenshot of another app is welcome.
