@@ -72,7 +72,7 @@ flatpak-builder --user --install --force-clean .flatpak-builder/app io.github.am
 flatpak run io.github.amit9838.mousam
 
 # Checks
-ruff check <files you touched>      # lint (see "Linting and Validation")
+ruff check src                       # lint, settings in ruff.toml (see "Linting and Validation")
 python3 -m py_compile src/*.py      # syntax check
 glib-compile-schemas --strict --dry-run data/
 appstreamcli validate data/io.github.amit9838.mousam.appdata.xml.in
@@ -416,11 +416,11 @@ When the user asks to build a feature:
 Run before declaring any task done:
 
 ```bash
-ruff check <files you touched>
+ruff check src
 python3 -m py_compile src/*.py
 ```
 
-The codebase already has ruff findings. Don't add new ones in the code you change, and don't mass-fix unrelated ones in the same change. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
+`src/` is free of ruff findings, and the Checks workflow (`.github/workflows/checks.yml`) keeps it that way, along with `py_compile` and `meson test` (which validates the gschema, appdata and desktop file). Fix a finding rather than silencing it; change `ruff.toml` only for a rule that doesn't fit the whole codebase. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
 
 Then build, install and run the app, and check the change in light and dark, metric and imperial.
 

@@ -17,6 +17,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             meson gettext libglib2.0-dev-bin appstream desktop-file-utils
+      - name: Lint (settings in ruff.toml)
+        run: pipx run 'ruff==0.15.*' check src
       - name: Check Python syntax
         run: python3 -m py_compile src/*.py
       # Validates the desktop file, appdata and gschema (see data/meson.build)

@@ -1,0 +1,9 @@
+# Ruff settings for Mousam: run `ruff check src` (CI does too).
+target-version = "py312"
+extend-exclude = ["website"]
+
+[lint]
+# Ruff's default rules (pyflakes and pycodestyle errors), except:
+#   E402  gi.require_version() has to run before importing from gi.repository
+#   E701  short "if x: return y" ladders, as in the level classifiers
+ignore = ["E402", "E701"]

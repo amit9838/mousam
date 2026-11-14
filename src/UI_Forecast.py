@@ -17,9 +17,8 @@ import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, GLib, Adw
-import threading
 
-from .CORE_Icons import get_icon_path, create_weather_icon
+from .CORE_Icons import create_weather_icon
 from .settings import settings
 from .CORE_weatherData import WeatherDataManager, weather_manager
 from .configs import (  # noqa: E402

@@ -3,7 +3,7 @@ from zoneinfo import ZoneInfo
 import gi
 
 from gi.repository import Gtk
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 from .UI_CompDrawDayNight import DrawDayNight
 from .UI_CardSquare import CSS_TEXT_TITLE, CSS_TEXT_VALUE
