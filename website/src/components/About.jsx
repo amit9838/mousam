@@ -15,7 +15,8 @@ export default function About() {
             weather updates and forecasts for the next{" "}
             <code className={code_style}>24 hours</code> and{" "}
             <code className={code_style}>7 days</code>. It provides comprehensive{" "}
-            <code className={code_style}>Air Quality Index</code> tracking, a minimal{" "}
+            <code className={code_style}>Air Quality Index</code> tracking, a one-line{" "}
+            <code className={code_style}>Overview</code> of the coming hours, a minimal{" "}
             <code className={code_style}>Compact Mode</code>, and utilizes graphs and
             bars to visually represent weather conditions. Supports both{" "}
             <code className={code_style}>imperial</code> and{" "}

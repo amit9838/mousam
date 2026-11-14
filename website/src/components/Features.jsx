@@ -1,23 +1,43 @@
 const FEATURES = [
   {
+    icon: "fa-lightbulb",
+    text: "Overview of the Coming Hours",
+  },
+  {
+    icon: "fa-bell",
+    text: "Overview Notifications",
+  },
+  {
     icon: "fa-wind",
-    text: "Air Quality Index Tracking",
+    text: "Air Quality, Pollutants & Pollen",
+  },
+  {
+    icon: "fa-sun",
+    text: "Sun, Moon & Twilight Graphs",
+  },
+  {
+    icon: "fa-location-dot",
+    text: "Saved Locations with Local Time",
   },
   {
     icon: "fa-compress",
     text: "Minimalist Compact Mode",
   },
   {
-    icon: "fa-bell",
-    text: "Smart System Notifications",
+    icon: "fa-power-off",
+    text: "Runs in the Background",
   },
   {
     icon: "fa-palette",
-    text: "Adaptive Dynamic Backgrounds",
+    text: "Dynamic Backgrounds & Icon Themes",
   },
   {
-    icon: "fa-sun",
-    text: "Celestial Position Graphs",
+    icon: "fa-ruler",
+    text: "Metric & Imperial Units",
+  },
+  {
+    icon: "fa-language",
+    text: "Translated into 21 Languages",
   },
 ];
 
