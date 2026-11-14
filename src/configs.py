@@ -66,6 +66,19 @@ RAIN_INTENSITY_FROM_MM = (2.5, 7.6, 50)
 # Below this (the forecast's smallest step) an hour shows no drops
 RAIN_MIN_AMOUNT_MM = 0.1
 
+# --- Snow intensity (cm of fresh snow in an hour) ---
+# From these amounts an hour's snow is moderate, heavy, then very heavy; about
+# 1 inch an hour (2.5 cm) is "heavy snow" for the US National Weather Service
+SNOW_INTENSITY_FROM_CM = (0.5, 2.5, 5)
+# Below this an hour shows no flakes
+SNOW_MIN_AMOUNT_CM = 0.1
+# Water in fresh snow: Open-Meteo counts 7 cm of snow as 10 mm of water. Used
+# to tell whether an hour has more rain or more snow
+SNOW_WATER_MM_PER_CM = 10 / 7
+# WMO weather codes for snow: snow fall (71, 73, 75), snow grains (77) and
+# snow showers (85, 86)
+SNOW_WEATHER_CODES = (71, 73, 75, 77, 85, 86)
+
 # --- Unit Conversion ---
 HPA_TO_INHG = 0.02953
 

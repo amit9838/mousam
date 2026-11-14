@@ -52,6 +52,9 @@ class HourlyWeather:
     weathercode: WeatherField
     precipitation: WeatherField
     precipitation_probability: WeatherField
+    rain: WeatherField  # mm, from large-scale rain
+    showers: WeatherField  # mm, from showers
+    snowfall: WeatherField  # cm of fresh snow
     pressure_msl: WeatherField
     visibility: WeatherField
     windspeed_10m: WeatherField

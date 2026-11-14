@@ -171,3 +171,108 @@ class DrawRainDrops:
         cr.set_source_rgba(*outline)
         cr.stroke()
         cr.restore()
+
+
+# The flakes around the main one sit a little further out than drops do:
+# flakes are round and wide, so in the drops' places they would crowd
+FLAKE_SPREAD = 1.2
+# Each small flake is turned a little, as if drifting (degrees)
+FLAKE_TURNS = (18, -14, 30)
+# The side branches on each arm: (where along the arm, length, line width as
+# a share of the arm's); the outer pair thinnest
+FLAKE_BRANCHES = ((0.55, 0.32, 0.7), (0.8, 0.2, 0.5))
+# How much white is mixed into the flakes' colour, so they look like snow
+FLAKE_WHITE = 0.35
+
+
+class DrawSnowflakes:
+    """One to four snowflakes, laid out like DrawRainDrops: the main one in
+    the middle, then smaller, fainter ones further away.
+
+    The flakes take the widget's colour: give the drawing area a colour class
+    (text-rain) so they follow the theme.
+    """
+
+    def __init__(self, count: int, height: int):
+        count = min(max(count, 1), 1 + len(EXTRA_DROPS))
+        self.radius = height / 2  # the main flake's radius
+
+        # Each flake as (radius, centre x, centre y, turn in radians, opacity),
+        # from the main flake's centre; drawn faintest (furthest away) first
+        self.extras = sorted(
+            ((size * self.radius, dx * height * FLAKE_SPREAD, dy * height * FLAKE_SPREAD,
+              math.radians(turn), opacity)
+             for (size, dx, dy, opacity), turn in zip(EXTRA_DROPS[:count - 1], FLAKE_TURNS)),
+            key=lambda flake: flake[4],
+        )
+
+        # The area fits every flake, with the main one centred up and down
+        xs, ys = [-self.radius, self.radius], [self.radius]
+        for radius, cx, cy, _turn, _opacity in self.extras:
+            xs += [cx - radius, cx + radius]
+            ys += [cy - radius, cy + radius]
+        reach = max(abs(min(ys)), max(ys))
+        self.origin_x = -min(xs) + PADDING
+        width = max(xs) - min(xs) + 2 * PADDING
+        self.drawing_area = Gtk.DrawingArea()
+        self.drawing_area.set_size_request(math.ceil(width), math.ceil(2 * (reach + PADDING)))
+        safe_set_draw_func(self.drawing_area, self, "draw")
+
+    def draw(self, area, cr, width, height, data):
+        # The main flake's centre on a pixel's middle, so its upright arm is crisp
+        cx, cy = math.floor(self.origin_x) + 0.5, round(height / 2) + 0.5
+        red, green, blue, alpha = theme_rgba(area, 1)
+        color = tuple(c + (1 - c) * FLAKE_WHITE for c in (red, green, blue)) + (alpha,)
+
+        if self.extras:
+            # The flakes behind, each faded by its opacity, with a clear gap
+            # cut around the main flake so they stay apart
+            cr.push_group()
+            for radius, dx, dy, turn, opacity in self.extras:
+                cr.push_group()
+                self._draw_flake(cr, cx + dx, cy + dy, radius, turn, color)
+                cr.pop_group_to_source()
+                cr.paint_with_alpha(opacity)
+            cr.set_operator(cairo.OPERATOR_CLEAR)
+            cr.arc(cx, cy, self.radius + DROP_GAP, 0, 2 * math.pi)
+            cr.fill()
+            cr.pop_group_to_source()
+            cr.paint()
+
+        self._draw_flake(cr, cx, cy, self.radius, 0, color)
+
+    @staticmethod
+    def _draw_flake(cr, cx, cy, radius, turn, color):
+        """One flake: six arms, each with two pairs of thinner side branches."""
+        arm_width = max(1.0, radius * 0.16)
+        cr.save()
+        cr.translate(cx, cy)
+        cr.rotate(turn)
+        cr.set_line_cap(cairo.LINE_CAP_ROUND)
+        cr.set_source_rgba(*color)
+
+        # The arms, full width
+        cr.set_line_width(arm_width)
+        for arm in range(6):
+            angle = arm * math.pi / 3
+            cr.move_to(0, 0)
+            cr.line_to(radius * math.sin(angle), -radius * math.cos(angle))
+        cr.stroke()
+
+        # The branches, thinner the further out
+        for along, length, share in FLAKE_BRANCHES:
+            cr.set_line_width(max(0.6, arm_width * share))
+            for arm in range(6):
+                cr.save()
+                cr.rotate(arm * math.pi / 3)
+                cr.move_to(0, -radius * along)
+                cr.line_to(-radius * length, -radius * along - radius * length * 0.9)
+                cr.move_to(0, -radius * along)
+                cr.line_to(radius * length, -radius * along - radius * length * 0.9)
+                cr.restore()
+            cr.stroke()
+
+        # A small dot where the arms meet
+        cr.arc(0, 0, arm_width * 0.9, 0, 2 * math.pi)
+        cr.fill()
+        cr.restore()
