@@ -6,6 +6,7 @@
 
 <a href = "https://github.com/amit9838/mousam/releases"><img src="https://img.shields.io/github/v/release/amit9838/mousam?style=flat&label=Latest+Release&color=%234a92ff"></a>
 <a href = "https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
+<a href = "https://amit9838.github.io/mousam/"><img alt="Visits" src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Famit9838.github.io%2Fmousam%2F&label=Visits&icon=github&color=%23198754&message=&style=flat&tz=UTC"></a>
 <a href = "COPYING"><img alt="License: GPL-3.0-or-later" src="https://img.shields.io/badge/License-GPL--3.0--or--later-blue"></a>
 <a href = "https://github.com/amit9838/mousam/actions/workflows/checks.yml"><img alt="Checks" src="https://github.com/amit9838/mousam/actions/workflows/checks.yml/badge.svg?branch=master"></a>
 
@@ -134,6 +135,8 @@ Mousam has no account, no analytics and no server of its own.
 - **Weather, air quality and city search** are requested from [Open-Meteo](https://open-meteo.com/). They are sent only the coordinates (or the search text) needed for the request.
 - **Connection check**: to tell "you are offline" from "the weather service is down", Mousam first opens a connection to `1.1.1.1` (port 53) and, only if that fails, requests the home pages of a few well-known websites. No information about you is sent in these requests, but those hosts can see that your IP address made them.
 - **Settings and saved places** stay on your computer, in GSettings.
+
+This describes the app. The [project website](https://amit9838.github.io/mousam/) counts visits with a small image from [hitscounter.dev](https://hitscounter.dev), which, like any image host, sees your IP address when the page loads.
 
 ## Contribution
 
