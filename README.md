@@ -8,7 +8,7 @@
 <a href = "https://github.com/amit9838/mousam/discussions"><img alt="GitHub Discussions" src="https://img.shields.io/github/discussions/amit9838/mousam?logo=github&color=orange"></a>
 <a href = "https://amit9838.github.io/mousam/"><img alt="Visits" src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Famit9838.github.io%2Fmousam%2F&label=Visits&icon=github&color=%23198754&message=&style=flat&tz=UTC"></a>
 <a href = "COPYING"><img alt="License: GPL-3.0-or-later" src="https://img.shields.io/badge/License-GPL--3.0--or--later-blue"></a>
-<a href = "https://github.com/amit9838/mousam/actions/workflows/checks.yml"><img alt="Checks" src="https://github.com/amit9838/mousam/actions/workflows/checks.yml/badge.svg?branch=master"></a>
+<a href = "https://t.me/mousam_app"><img alt="Mousam Telegram" src="https://telegram-badge.vercel.app/api/telegram-badge?channelId=@mousam_app"></a>
 
 </div>
 <div align="center">
