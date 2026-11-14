@@ -156,7 +156,7 @@ src/
   mousam.gresource.xml    files bundled into the GResource
 data/                     gschema, .desktop, appdata, icons (default_icons, material_icons), Flatpak dependency
 po/                       translations (POTFILES, LINGUAS, mousam.pot, *.po)
-build-aux/, snap/          packaging
+snap/                     Snap packaging (snapcraft.yaml)
 docs/                     overview-rules.md (source of truth for the overview rules); local *-plan.md files
 website/                  the project website (React + Vite + Tailwind), separate from the app
 screenshots/              images for README and appdata
@@ -405,7 +405,7 @@ When the user asks to build a feature:
 ## Packaging & Release Rules
 
 - The Flatpak manifest is [io.github.amit9838.mousam.json](io.github.amit9838.mousam.json); keep its sandbox permissions (`finish-args`) as small as they are. A new permission needs a strong reason and user approval.
-- Snap (`snap/snapcraft.yaml`, `build-aux/snapcraft.yaml`) are maintained too; a change to dependencies or installed files must be reflected there.
+- Snap (`snap/snapcraft.yaml`, built from the checkout) is maintained too; a change to dependencies or installed files must be reflected there.
 - The version lives in two places: `meson.build` (Meson fills it into `VERSION` in `src/configs.py`) and a new `<release>` in `data/io.github.amit9838.mousam.appdata.xml.in` (with release notes, shown on the About dialog's What's New page). Change them together, and only when asked to prepare a release.
 - User-visible changes to the app's look should come with updated `screenshots/` when the user asks for it; the appdata points at them.
 

@@ -18,9 +18,8 @@ parts:
       - usr/lib/python3/dist-packages
 
   mousam:
-    source: https://github.com/amit9838/mousam.git
-    source-depth: 1
-    #source-tag: used when there will be a new release with these fixes
+    # The checkout this file is in, so CI and the store build the same code.
+    source: .
     plugin: meson
     meson-parameters: [ --prefix=/snap/mousam/current/usr ]
     override-build: |

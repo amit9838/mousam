@@ -21,7 +21,6 @@ jobs:
         id: snapcraft-build
         with:
           snapcraft-args: "-v"
-          path: build-aux
       - uses: actions/upload-artifact@v7
         with:
           name: mousam-snap
