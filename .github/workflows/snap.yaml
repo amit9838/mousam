@@ -2,12 +2,9 @@ on:
   push:
     branches: [ "**" ]
   pull_request:
-    branches: [ "master" ]
-    types: [ "review_requested", "ready_for_review" ]
   workflow_dispatch:
 name: Test Snap packaging
 permissions:
-  id-token: write
   contents: read
 jobs:
   gnome-snap:
@@ -24,4 +21,4 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: mousam-snap
-          path: ${{ steps.snapcraft-build.outputs.snap }}    
+          path: ${{ steps.snapcraft-build.outputs.snap }}
