@@ -4,7 +4,7 @@ from typing import Callable, Tuple
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("PangoCairo", "1.0")
-from gi.repository import GLib, Gio, Gtk, PangoCairo  # noqa: E402
+from gi.repository import GLib, Gio, GObject, Gtk, PangoCairo  # noqa: E402
 from .settings import settings  # noqa: E402
 from .CORE_Helpers import get_selected_city_name  # noqa: E402
 from .CORE_Logging import get_logger  # noqa: E402
@@ -108,7 +108,14 @@ def draw_knob(cr, x: float, y: float, radius: float, rgb) -> None:
 
 
 def weak_connect(widget, signal_name, bound_method):
-    weak_self = weakref.ref(bound_method.__self__)
+    target = bound_method.__self__
+    # Since PyGObject 3.55 a GObject's Python wrapper is freed while the
+    # GObject lives on, so a Python weakref to it goes dead too early:
+    # GObject.Object.weak_ref() follows the GObject itself.
+    if isinstance(target, GObject.Object):
+        weak_self = target.weak_ref()
+    else:
+        weak_self = weakref.ref(target)
     func_name = bound_method.__name__
     def wrapper(*args, **kwargs):
         target = weak_self()
