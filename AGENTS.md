@@ -19,8 +19,8 @@ The app lets users:
 - check air quality (US / EU AQI, pollutants, pollen) with WHO-based levels
 - follow the sun and moon through the day/night card
 - switch to a compact window
-- get the overview as a desktop notification while the window is minimized or in compact mode
-- set preferences: metric or imperial, 12/24h clock, precipitation in inches, dynamic backgrounds, icon theme (default or Material), weather overview on/off, auto-refresh interval, debug mode
+- get the overview as a desktop notification while the window is minimized, in compact mode or closed (run in background)
+- set preferences: metric or imperial, 12/24h clock, precipitation in inches, dynamic backgrounds, icon theme (default or Material), weather overview on/off, auto-refresh interval, run in background (closing the window hides it), debug mode
 
 All weather data comes from the free [Open-Meteo](https://open-meteo.com/) APIs. There is no account and no backend of our own.
 
