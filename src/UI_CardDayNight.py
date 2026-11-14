@@ -16,15 +16,12 @@ gi.require_version("Adw", "1")
 
 class CardDayNight:
     def __init__(self):
-        sun_rise, sun_set, degree = self.get_sunset_sunrise_degree()
-        self.sun_rise = sun_rise
-        self.sun_set = sun_set
-        self.degree = degree
-
         self.card = None
+        self.get_sun_times()
         self.create_card()
 
-    def get_sunset_sunrise_degree(self):
+    def get_sun_times(self):
+        """Set the sunrise and sunset texts, and where the sun is now."""
         from .CORE_weatherData import weather_manager
         daily_data = weather_manager.daily_forecast
 
@@ -47,15 +44,13 @@ class CardDayNight:
         sunrise_dt = datetime.fromtimestamp(sunrise_ts, tz=tz)
         sunset_dt = datetime.fromtimestamp(sunset_ts, tz=tz)
 
-        sunrise = sunrise_dt.strftime("%I:%M %p")
-        sunset = sunset_dt.strftime("%I:%M %p")
+        time_format = "%H:%M" if settings.is_using_24h_clock else "%I:%M %p"
+        self.sun_rise = sunrise_dt.strftime(time_format)
+        self.sun_set = sunset_dt.strftime(time_format)
 
-        if settings.is_using_24h_clock:
-            sunrise = sunrise_dt.strftime("%H:%M")
-            sunset = sunset_dt.strftime("%H:%M")
-
-        angle = self._calculate_sun_rotation(target_dt, sunrise_dt, sunset_dt)
-        return sunrise, sunset, angle
+        self.is_day, self.progress = self._calculate_sun_progress(target_dt, sunrise_dt, sunset_dt)
+        # Share of the 24 hours the sun is up: sets the horizon's height
+        self.day_fraction = (sunset_ts - sunrise_ts) / (24 * 3600)
 
     def create_card(self):
         card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -93,34 +88,25 @@ class CardDayNight:
             time_box.append(lbl_time)
             times_box.append(time_box)
 
-        sun_path = DrawDayNight(self.degree, 120, 90).drawing_area
+        sun_path = DrawDayNight(self.is_day, self.progress, self.day_fraction, 120, 90).drawing_area
         sun_path.set_valign(Gtk.Align.CENTER)
         content_box.append(sun_path)
 
-    # Sun Rotation
-    def _calculate_sun_rotation(self, target_dt, sunrise_dt, sunset_dt):
-        angle = 0
+    # How far the sun (by day) or the moon (by night) is along its way
+    @staticmethod
+    def _calculate_sun_progress(target_dt, sunrise_dt, sunset_dt) -> tuple:
+        """Return (is_day, progress), progress from 0 (sunrise / sunset) to 1 (sunset / sunrise)."""
         target_ctime_hr = target_dt.hour + (target_dt.minute / 60)
         target_sunrise_hr = sunrise_dt.hour + (sunrise_dt.minute / 60)
         target_sunset_hr = sunset_dt.hour + (sunset_dt.minute / 60)
 
-        # day
-        if target_ctime_hr > target_sunrise_hr and target_ctime_hr < target_sunset_hr:
-            angle = (
-                (target_ctime_hr - target_sunrise_hr)
-                * 180
-                / (target_sunset_hr - target_sunrise_hr)
-            )
-            angle += 180  # Sun is above the horizon
+        # Day
+        if target_sunrise_hr < target_ctime_hr < target_sunset_hr:
+            progress = (target_ctime_hr - target_sunrise_hr) / (target_sunset_hr - target_sunrise_hr)
+            return True, progress
 
         # Night
-        else:
-            if target_ctime_hr < target_sunrise_hr:
-                target_ctime_hr += 24  # Adjust for times after midnight
-            angle = (
-                (target_ctime_hr - target_sunset_hr)
-                * 180
-                / (24 - (target_sunset_hr - target_sunrise_hr))
-            )
-
-        return angle
+        if target_ctime_hr < target_sunrise_hr:
+            target_ctime_hr += 24  # Adjust for times after midnight
+        progress = (target_ctime_hr - target_sunset_hr) / (24 - (target_sunset_hr - target_sunrise_hr))
+        return False, progress
