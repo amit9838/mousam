@@ -9,42 +9,43 @@ from .CORE_Logging import get_logger
 
 logger = get_logger("API_Weather")
 
-extend_url = ""
+
+
+def unit_params(unit: str) -> str:
+    """URL parameters that ask Open-Meteo for the given measurement system."""
+    if unit == "imperial":
+        return "&temperature_unit=fahrenheit&wind_speed_unit=mph"
+    return ""
 
 
 class Weather:
     """
     See Documentation at: https://open-meteo.com/en/docs
+
+    Every request takes the measurement system as ``unit``, so it is part of
+    the cache key: switching units never returns data cached in the old ones.
     """
-
-    def __init__(self) -> None:
-        global extend_url
-
-        if settings.unit == "imperial":
-            extend_url = "&temperature_unit=fahrenheit&wind_speed_unit=mph"
-        else:
-            extend_url = ""
 
     # Current Weather =============================================
     @classmethod
     @cached()
-    def current_weather(cls,latitude: float, longitude: float, **kwargs):
+    def current_weather(cls, latitude: float, longitude: float, unit: str = "metric", **kwargs):
         url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
 
         # Check for kwargs keyword parameters
         if "current" in kwargs:
             current_fields = ",".join(kwargs.get("current"))
-            url = url + f"&current={current_fields}" + extend_url
+            url = url + f"&current={current_fields}" + unit_params(unit)
 
         try:
             url = url + "&timeformat=unixtime"
             response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
-            if settings.unit == "imperial":
-                inHg = data['current']['surface_pressure'] * HPA_TO_INHG
-                data['current']['surface_pressure'] = inHg
-                data['current_units']['surface_pressure'] = 'inHg'
+            if unit == "imperial":
+                inHg = data['current']['pressure_msl'] * HPA_TO_INHG
+                data['current']['pressure_msl'] = inHg
+                data['current_units']['pressure_msl'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to fetch current weather data: {e}")
@@ -58,33 +59,62 @@ class Weather:
             "uv_index",
             "precipitation",
             "weathercode",
-            "surface_pressure",
+            "pressure_msl",
             "windspeed_10m",
             "winddirection_10m",
         ]
-        return self.current_weather(lat, lon, current=current_args)
+        return self.current_weather(lat, lon, unit=settings.unit, current=current_args)
+
+    # Current Weather of several places ===========================
+    @classmethod
+    @cached()
+    def current_for_locations(cls, latitudes: str, longitudes: str, unit: str = "metric"):
+        """Current conditions of several places in one request, in the order given."""
+        url = (
+            OPEN_METEO_BASE_URL
+            + f"?latitude={latitudes}&longitude={longitudes}"
+            + "&current=temperature_2m,weathercode,is_day"
+            + "&timeformat=unixtime"
+            + unit_params(unit)
+        )
+
+        try:
+            response = requests.get(url, timeout=TIMEOUT)
+            response.raise_for_status()
+            data = response.json()
+            # A single place comes back as one object instead of a list
+            return data if isinstance(data, list) else [data]
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to fetch weather of saved locations: {e}")
+
+    def _get_current_for_locations(self, coords: list):
+        """Takes a list of "lat,lon" strings."""
+        latitudes, longitudes = zip(*(item.split(",") for item in coords))
+        return self.current_for_locations(
+            ",".join(latitudes), ",".join(longitudes), unit=settings.unit
+        )
 
     # Hourly Forecast ==============================================
     @classmethod
     @cached()
-    def forecast_hourly(cls,latitude: float, longitude: float, **kwargs):
+    def forecast_hourly(cls, latitude: float, longitude: float, unit: str = "metric", **kwargs):
         url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}&timezone=auto"
 
         # Check for kwargs keyword parameters
         if "hourly" in kwargs:
             hourly_fields = ",".join(kwargs.get("hourly"))
-            url = url + f"&hourly={hourly_fields}" + extend_url
+            url = url + f"&hourly={hourly_fields}" + unit_params(unit)
 
         try:
             url = url + "&timeformat=unixtime"
             response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
-            if settings.unit == "imperial":
-                for i in range(len(data['hourly']['surface_pressure'])):
-                    inHg = data['hourly']['surface_pressure'][i] * HPA_TO_INHG
-                    data['hourly']['surface_pressure'][i] = inHg
-                data['hourly_units']['surface_pressure'] = 'inHg'
+            if unit == "imperial":
+                for i in range(len(data['hourly']['pressure_msl'])):
+                    inHg = data['hourly']['pressure_msl'][i] * HPA_TO_INHG
+                    data['hourly']['pressure_msl'][i] = inHg
+                data['hourly_units']['pressure_msl'] = 'inHg'
             return data
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to fetch data: {e}")
@@ -98,7 +128,10 @@ class Weather:
             "weathercode",
             "precipitation",
             "precipitation_probability",
-            "surface_pressure",
+            "rain",
+            "showers",
+            "snowfall",
+            "pressure_msl",
             "visibility",
             "windspeed_10m",
             "wind_direction_10m",
@@ -109,13 +142,14 @@ class Weather:
         today = datetime.datetime.today().date()
         tomorrow = today + datetime.timedelta(days=1)
         return self.forecast_hourly(
-            lat, lon, hourly=hourly_args, start_date=today, end_date=tomorrow
+            lat, lon, unit=settings.unit, hourly=hourly_args,
+            start_date=today, end_date=tomorrow,
         )
 
     # Forecast daily ====================================================
     @classmethod
     @cached()
-    def forecast_daily(cls,latitude: float, longitude: float, **kwargs):
+    def forecast_daily(cls, latitude: float, longitude: float, unit: str = "metric", **kwargs):
         url = OPEN_METEO_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
         if "daily" in kwargs:
             hourly_fields = ",".join(kwargs.get("daily"))
@@ -130,7 +164,7 @@ class Weather:
             url = url + f"&end_date={kwargs.get('end_date')}" 
 
         try:
-            url = url + "&timeformat=unixtime" + extend_url
+            url = url + "&timeformat=unixtime" + unit_params(unit)
             response = requests.get(url, timeout=TIMEOUT)
             response.raise_for_status()  # Raise an exception if the request was unsuccessful
             data = response.json()
@@ -151,4 +185,6 @@ class Weather:
             "precipitation_probability_max",
         ]
 
-        return self.forecast_daily(lat, lon, daily=daily_args, timezone="GMT")
+        return self.forecast_daily(
+            lat, lon, unit=settings.unit, daily=daily_args, timezone="GMT"
+        )

@@ -460,23 +460,6 @@
     color: rgb(97, 179, 255);
 }
 
-/* Rain drops: dimmer than the text, so they don't pull the eye from the day */
-.rain-drops {
-    opacity: 0.7;
-}
-
-/* Rain drops overlap, each a little to the right of the one before. A thin
-   edge in the card's colour on its left keeps each drop apart. */
-.rain-drops > image + image {
-    margin-left: -5px;
-    -gtk-icon-shadow: -1px 0 @card_bg_color;
-}
-
-/* On dynamic backgrounds the card is see-through: a dark edge instead */
-.bg-dark-overlay .rain-drops > image + image {
-    -gtk-icon-shadow: -1px 0 rgba(0, 0, 0, 0.5);
-}
-
 .card-forecast-item {
     padding: 0 1.1rem;
     border-radius: 0.7rem;
@@ -753,4 +736,29 @@
 
 .current-overview-heading {
     letter-spacing: 0.08em;
+}
+
+/* Delete button of a saved location: dim until used */
+.location-delete-button {
+    opacity: 0.55;
+    transition: opacity 150ms, color 150ms;
+}
+
+.location-delete-button:hover,
+.location-delete-button:focus-visible {
+    opacity: 1;
+}
+
+.location-delete-button:hover {
+    color: @destructive_color;
+}
+
+/* City search messages: the icon and text are dimmed, a Retry button isn't */
+.search-status .title,
+.search-status .description {
+    opacity: 0.55;
+}
+
+.search-status .icon {
+    opacity: 0.3;
 }

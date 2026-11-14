@@ -10,7 +10,7 @@ gi.require_version("Adw", "1")
 from gi.repository import GLib, Gtk, Pango  # noqa: E402
 from gettext import gettext as _, pgettext as C_  # noqa: E402
 
-from .CORE_GTKUtils import weak_connect  # noqa: E402
+from .CORE_GTKUtils import is_on_screen, weak_connect  # noqa: E402
 from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city  # noqa: E402
 from .CORE_Icons import condition, create_weather_icon  # noqa: E402
 from .CORE_Overview import overview_engine  # noqa: E402
@@ -270,10 +270,11 @@ class CurrentCondition(Gtk.Box):
         self._overview_bar.set_visible(settings.show_overview)
 
     def _on_overview_changed(self, engine, announce: bool) -> None:
-        # New text always; open it only when the engine announces it
+        # New text always; open it only when the engine announces it and the
+        # window can be seen (otherwise the app sends it as a notification)
         insight = engine.current()
         self._set_overview(insight, engine.heading)
-        if announce and insight is not None:
+        if announce and insight is not None and is_on_screen(self.get_root()):
             self._open_overview()
 
     def _on_overview_clicked(self, _button: Gtk.Button) -> None:
@@ -282,6 +283,8 @@ class CurrentCondition(Gtk.Box):
             self._close_overview()
         else:
             self._open_overview()
+            # Seen now, so the engine gives the next opening to another insight
+            overview_engine.note_shown()
 
     def _open_overview(self) -> None:
         if self._overview_insight is None:

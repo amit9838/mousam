@@ -55,27 +55,47 @@ class WeatherApplication(Adw.Application):
         
         self.connect("window-removed", self._on_window_removed)
 
+        # Overview announcements: shown in the main window's overview while it
+        # can be seen, otherwise sent as a notification (never both)
+        from .CORE_Overview import overview_engine
+        overview_engine.connect("overview-changed", self._on_overview_changed)
+
     def do_shutdown(self):
         self.auto_refresh.stop()
         Adw.Application.do_shutdown(self)
 
     def _on_window_removed(self, app, window):
-        # If any of the main windows are closed, quit the application
-        if window == self.main_window or window == self.compact_window:
+        # If any of the main windows are closed, quit the application, unless
+        # it runs in the background: then the hidden main window keeps it alive
+        if window == self.compact_window:
+            # Closed for good: forget it, so compact mode builds a new one
+            self.compact_window = None
+            if settings.run_in_background:
+                return
+            self.quit()
+        elif window == self.main_window:
             self.quit()
 
     def do_activate(self):
         logger.info("Application activated")
-        CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
-        css_provider = Gtk.CssProvider()
-        Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        with open(CSS_PATH+'style.css', 'r') as css_file:
-            css = bytes(css_file.read(), 'utf-8')
-        css_provider.load_from_data(css,len(css))
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
 
+        # Activated again when launched while running in the background: the
+        # styles and the main window already exist then
         if not self.main_window:
+            CSS_PATH = os.path.dirname(os.path.realpath(__file__)) + "/css/"
+            css_provider = Gtk.CssProvider()
+            Priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            with open(CSS_PATH+'style.css', 'r') as css_file:
+                css = bytes(css_file.read(), 'utf-8')
+            css_provider.load_from_data(css,len(css))
+            Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
+
             self.main_window = WeatherMainWindow(application=self)
+
+        # Launched again while in compact mode: bring the compact window back
+        if self.compact_window and self.compact_window.get_visible():
+            self.compact_window.present()
+            return
 
         if settings.window_maximized:
             self.main_window.maximize()
@@ -83,12 +103,22 @@ class WeatherApplication(Adw.Application):
         self.main_window.present()
         self.auto_refresh.setup()
 
+    def _on_overview_changed(self, engine, announce: bool) -> None:
+        """Send the announcement as a notification when the main window can't
+        be seen (minimized, or compact mode); otherwise its overview shows it."""
+        from .CORE_GTKUtils import is_on_screen, show_overview_notification
+
+        insight = engine.current()
+        if not announce or insight is None or not settings.show_notifications:
+            return
+        if is_on_screen(self.main_window):
+            return
+        show_overview_notification(self, insight)
+
     def _on_auto_refresh_tick(self):
         from .CORE_Networking import fetch_all_weather_data_async
-        from .CORE_GTKUtils import show_notification
-        
+
         def on_success():
-            show_notification(self)
             # Notify all windows to refresh UI
             if self.main_window:
                 self.main_window._on_data_fetch_success(is_auto=True)

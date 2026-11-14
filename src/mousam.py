@@ -15,6 +15,7 @@ from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
+from .windowAirQuality import AirQualityDialog  # noqa: E402
 from .CORE_Logging import get_logger
 
 logger = get_logger("ui")
@@ -69,6 +70,13 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         settings.connect(
             "changed::selected-city",
             self._on_selected_city_changed,
+        )
+
+        # Run in background: closing the window hides it, so the app keeps running
+        self.set_hide_on_close(settings.run_in_background)
+        settings.connect(
+            "changed::run-in-background",
+            lambda *_: self.set_hide_on_close(settings.run_in_background),
         )
 
     def _on_selected_city_changed(self, *args):
@@ -159,6 +167,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             ("shortcuts", self._on_action_shortcuts, ["<Control>question"]),
             ("about", self._on_action_about, None),
             ("open-logs", self._on_action_open_logs, None),
+            ("air-quality", self._on_action_air_quality, None),
         ]
 
         for name, callback, accel in actions:
@@ -311,10 +320,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # Pressure
         pres_card = CardSquare(
             title="Pressure",
-            main_val=cw_data.surface_pressure.data,
-            main_val_unit=cw_data.surface_pressure.unit,
-            desc=cw_data.surface_pressure.level_str,
-            visual_data=cw_data.surface_pressure.data
+            main_val=cw_data.pressure_msl.data,
+            main_val_unit=cw_data.pressure_msl.unit,
+            desc=cw_data.pressure_msl.level_str,
+            visual_data=cw_data.pressure_msl.data
         ).card
         add_card(pres_card, 0, 1)
 
@@ -464,21 +473,25 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
     def _on_action_locations(self, action, param):
-        win = WeatherLocations(self)
-        win.present()
+        WeatherLocations(self).present(self)
 
     def _on_action_compact(self, action, param):
         self.get_application().activate_action("show-compact", None)
 
     def _on_action_preferences(self, action, param):
-        win = WeatherPreferences(self)
-        win.present()
+        WeatherPreferences(self).present(self)
 
     def _on_action_shortcuts(self, action, param):
         ShortcutsDialog(self).present()
 
     def _on_action_about(self, action, param):
         show_about_window(self)
+
+    def _on_action_air_quality(self, action, param):
+        from .CORE_weatherData import weather_manager
+        if weather_manager.air_pollution is None:
+            return
+        AirQualityDialog().present(self)
 
     def _on_action_open_logs(self, action, param):
         from .CORE_Logging import log_manager

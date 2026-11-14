@@ -7,6 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 
 from .CORE_Icons import get_icon_path, ARROW_CENTER
+from .configs import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
@@ -18,6 +19,11 @@ CSS_TEXT_TITLE = ["text-lg", "opacity-80", "font-medium"]
 CSS_TEXT_VALUE = ["text-3xl", "font-medium"]
 CSS_TEXT_UNIT = ["text-sm", "opacity-80"]
 CSS_TEXT_DESC = ["text-base", "opacity-90", "font-semibold"]
+# "Low" / "High" at the ends of a gauge
+CSS_TEXT_GAUGE_END = ["text-xs", "opacity-70"]
+# The vertical gauges are a little shorter than DrawLevelBar's default, so
+# with "High" and "Low" around them the cards stay as tall as their row
+LEVEL_BAR_HEIGHT = 88
 
 
 class CardSquare:
@@ -54,6 +60,11 @@ class CardSquare:
         self.sub_desc = sub_desc
         self.text_up = text_up
         self.text_low = text_low
+        # The vertical level gauges show which end is which
+        if self.title_key in ("humidity", "uv index"):
+            # Translators: the high and low ends of the humidity, UV index and pressure gauges
+            self.text_up = text_up or C_("level gauge", "High")
+            self.text_low = text_low or C_("level gauge", "Low")
 
         # Data needed for the visual (Wind Degree, Pressure Value, etc.)
         # If not provided, fallback to main_val (useful for Humidity/UV)
@@ -153,23 +164,25 @@ class CardSquare:
         # Upper Text (N, High, etc)
         if self.text_up:
             lbl_up = Gtk.Label(label=self.text_up)
-            css = ["text-lg", "font-medium"] if self.title_key == "wind" else ["text-base"]
+            css = ["text-lg", "font-medium"] if self.title_key == "wind" else CSS_TEXT_GAUGE_END
             lbl_up.set_css_classes(css)
             visual_box.append(lbl_up)
 
         # The Graphic (Canvas)
         graphic_widget = self._create_visual_widget()
         if graphic_widget and self.title_key == "pressure":
-            # The tick gauge is horizontal: it runs under the text, full width
+            # The tick gauge is horizontal: it runs under the text, full width,
+            # with "Low" and "High" under its two ends
             graphic_widget.set_margin_top(8)
             card_box.append(graphic_widget)
+            card_box.append(self._pressure_range_labels())
         elif graphic_widget:
             visual_box.append(graphic_widget)
 
         # Lower Text
         if self.text_low:
             lbl_low = Gtk.Label(label=self.text_low)
-            css = ["text-lg", "font-medium"] if self.title_key == "wind" else ["text-base"]
+            css = ["text-lg", "font-medium"] if self.title_key == "wind" else CSS_TEXT_GAUGE_END
             lbl_low.set_css_classes(css)
             visual_box.append(lbl_low)
 
@@ -188,23 +201,32 @@ class CardSquare:
 
         elif self.title_key == "humidity":
             # Level Bar (0.0 - 1.0), in a bright ocean blue (#219eed)
-            return DrawLevelBar(val / 100.0, rounded_cap=True, rgb_color=(0.13, 0.62, 0.93)).dw
+            return DrawLevelBar(val / 100.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.13, 0.62, 0.93)).dw
 
         elif self.title_key == "pressure":
-            # Pressure Calculation
-            low, high = 872.0, 1080.0
+            # Centred on standard pressure: 0.5 is best, 0 and 1 the extremes
             if settings.unit == "imperial":
-                low *= 0.02953
-                high *= 0.02953
-
-            level = (val - low) / (high - low)
+                val /= HPA_TO_INHG
+            level = 0.5 + (val - PRESSURE_GAUGE_CENTER) / (2 * PRESSURE_GAUGE_SPAN)
             return DrawTickGauge(level).dw
 
         elif self.title_key == "uv index":
             # UV Level (Assuming Max 12), in a bright violet-blue (#5c66ff)
-            return DrawLevelBar(val / 12.0, rounded_cap=True, rgb_color=(0.36, 0.40, 1.0)).dw
+            return DrawLevelBar(val / 12.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.36, 0.40, 1.0)).dw
 
         return None
+
+    def _pressure_range_labels(self) -> Gtk.Widget:
+        """"Low" and "High" under the two ends of the pressure gauge."""
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        for text, halign in ((C_("level gauge", "Low"), Gtk.Align.START),
+                             (C_("level gauge", "High"), Gtk.Align.END)):
+            label = Gtk.Label(label=text)
+            label.set_css_classes(CSS_TEXT_GAUGE_END)
+            label.set_halign(halign)
+            label.set_hexpand(True)
+            row.append(label)
+        return row
 
     def _get_wind_direction_str(self, angle: float) -> str:
         """Converts degrees to cardinal direction (where the wind comes from)."""

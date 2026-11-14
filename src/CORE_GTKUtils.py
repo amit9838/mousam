@@ -1,12 +1,10 @@
 import math
 import weakref
-import time
 from typing import Callable, Tuple
-from gettext import gettext as _
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("PangoCairo", "1.0")
-from gi.repository import GLib, Gio, Gtk, PangoCairo  # noqa: E402
+from gi.repository import GLib, Gio, GObject, Gtk, PangoCairo  # noqa: E402
 from .settings import settings  # noqa: E402
 from .CORE_Helpers import get_selected_city_name  # noqa: E402
 from .CORE_Logging import get_logger  # noqa: E402
@@ -110,7 +108,14 @@ def draw_knob(cr, x: float, y: float, radius: float, rgb) -> None:
 
 
 def weak_connect(widget, signal_name, bound_method):
-    weak_self = weakref.ref(bound_method.__self__)
+    target = bound_method.__self__
+    # Since PyGObject 3.55 a GObject's Python wrapper is freed while the
+    # GObject lives on, so a Python weakref to it goes dead too early:
+    # GObject.Object.weak_ref() follows the GObject itself.
+    if isinstance(target, GObject.Object):
+        weak_self = target.weak_ref()
+    else:
+        weak_self = weakref.ref(target)
     func_name = bound_method.__name__
     def wrapper(*args, **kwargs):
         target = weak_self()
@@ -120,23 +125,45 @@ def weak_connect(widget, signal_name, bound_method):
                 return method(*args, **kwargs)
     return widget.connect(signal_name, wrapper)
 
-def show_notification(app):
-    from .CORE_weatherData import weather_manager
-    cw_data = weather_manager.current_weather
-    if not app or not settings.show_notifications:
-        return
-    from .CORE_Icons import condition as cond_map
-    if not cw_data:
-        return
-    city_name = get_selected_city_name()
-    temp = cw_data.temperature_2m.data
-    unit = cw_data.temperature_2m.unit
-    w_code = str(cw_data.weathercode.data)
-    cond_str = cond_map.get(w_code, _("Unknown"))
-    notification = Gio.Notification.new(f"{city_name} • {temp}{unit}")
-    notification.set_body(f"{cond_str}")
-    notification.set_icon(Gio.ThemedIcon.new("weather-few-clouds-symbolic"))
+def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
+    """Remove GTK's own drop target from a window that reorders things by drag.
+
+    Every Gtk.Window has one, for a format this app never uses. GTK leaves it
+    holding the previous drop, so each later drag logs a warning from
+    gtk_drop_target_async_handle_crossing. Safe to call more than once.
+    """
+    controllers = window.observe_controllers()
+    found = [
+        controllers.get_item(index)
+        for index in range(controllers.get_n_items())
+        if controllers.get_item(index).get_name() == "gtk-window-rootwindow-drop"
+    ]
+    for controller in found:
+        window.remove_controller(controller)
+
+
+def is_on_screen(window) -> bool:
+    """Whether a window can be seen: shown, and not suspended (minimized, on
+    another workspace, or covered by other windows)."""
+    return window is not None and window.get_visible() and not window.is_suspended()
+
+
+# Notification priority for each overview insight severity
+NOTIFICATION_PRIORITY = {
+    "info": Gio.NotificationPriority.LOW,
+    "warning": Gio.NotificationPriority.NORMAL,
+    "error": Gio.NotificationPriority.HIGH,
+}
+
+
+def show_overview_notification(app, insight) -> None:
+    """Send an overview insight as a desktop notification: the city as the
+    title, the message as the body. It always replaces the previous one, so
+    they never pile up; clicking it opens the main window."""
+    notification = Gio.Notification.new(get_selected_city_name())
+    notification.set_body(insight.message)
+    notification.set_icon(Gio.ThemedIcon.new(insight.icon or "dialog-information-symbolic"))
+    notification.set_priority(NOTIFICATION_PRIORITY.get(insight.severity, Gio.NotificationPriority.NORMAL))
     notification.set_default_action("app.show-normal")
-    notif_id = f"mousam-upd-{int(time.time())}"
-    app.send_notification(notif_id, notification)
-    logger.info(f"Notification sent for {city_name}: {temp}{unit}, {cond_str}")
+    app.send_notification("overview", notification)
+    logger.info(f"Overview notification sent: {insight.message}")

@@ -2,7 +2,24 @@ from gettext import gettext as _
 
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
-VERSION = "2.0.2"
+# Filled in by Meson from the project version in meson.build
+VERSION = "@VERSION@"
+APPDATA_RESOURCE = "/io/github/amit9838/mousam/io.github.amit9838.mousam.appdata.xml"
+
+# --- Project links (About dialog) ---
+WEBSITE_URL = "https://amit9838.github.io/mousam/"
+SOURCE_CODE_URL = "https://github.com/amit9838/mousam"
+ISSUE_URL = "https://github.com/amit9838/mousam/issues"
+CONTRIBUTORS_URL = "https://github.com/amit9838/mousam/graphs/contributors"
+TRANSLATE_URL = "https://github.com/amit9838/mousam/tree/master/po"
+BUY_ME_A_COFFEE_URL = "https://www.buymeacoffee.com/ami9838"
+
+# --- Credits (About dialog) ---
+OPEN_METEO_URL = "https://open-meteo.com/"
+CC_BY_4_0_URL = "https://creativecommons.org/licenses/by/4.0/"
+MIT_LICENSE_URL = "https://opensource.org/license/mit"
+METEOCONS_URL = "https://github.com/basmilius/meteocons"
+GOOGLE_WEATHER_ICONS_URL = "https://github.com/mrdarrengriffin/google-weather-icons"
 
 # --- Networking & Timeout ---
 TIMEOUT = 15
@@ -21,12 +38,60 @@ OPEN_METEO_BASE_URL = "https://api.open-meteo.com/v1/forecast"
 AIR_QUALITY_BASE_URL = "https://air-quality-api.open-meteo.com/v1/air-quality"
 GEOCODING_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 
+# --- City search ---
+# How long to wait after the last keypress before searching (ms)
+CITY_SEARCH_DELAY_MS = 500
+# Open-Meteo returns nothing for shorter names
+CITY_SEARCH_MIN_CHARS = 2
+# The API has no paging, so one request fetches them all and they are shown a page at a time
+CITY_SEARCH_MAX_RESULTS = 18
+CITY_SEARCH_PAGE_SIZE = 6
+
 # --- Cache Settings ---
 DATA_CACHE_TTL = 60
 DATA_MAX_ENTRIES = 128
 
+# --- Sunrise & Sunset card ---
+# How often the sun or moon moves along its path while the card is shown (s).
+# The path is about 120 px for 24 hours, so this is under half a pixel a step.
+DAY_NIGHT_UPDATE_SECONDS = 300
+# A known new moon (6 Jan 2000, 18:14 UTC) and the mean length of the moon's
+# cycle in days: the moon's phase is how far we are into the current cycle
+NEW_MOON_REFERENCE = 947182440
+LUNAR_CYCLE_DAYS = 29.530588853
+
+# --- Rain intensity (mm of rain in an hour; American Meteorological Society) ---
+# From these amounts an hour's rain is moderate, heavy, then violent
+RAIN_INTENSITY_FROM_MM = (2.5, 7.6, 50)
+# Below this (the forecast's smallest step) an hour shows no drops
+RAIN_MIN_AMOUNT_MM = 0.1
+
+# --- Snow intensity (cm of fresh snow in an hour) ---
+# From these amounts an hour's snow is moderate, heavy, then very heavy; about
+# 1 inch an hour (2.5 cm) is "heavy snow" for the US National Weather Service
+SNOW_INTENSITY_FROM_CM = (0.5, 2.5, 5)
+# Below this an hour shows no flakes
+SNOW_MIN_AMOUNT_CM = 0.1
+# Water in fresh snow: Open-Meteo counts 7 cm of snow as 10 mm of water. Used
+# to tell whether an hour has more rain or more snow
+SNOW_WATER_MM_PER_CM = 10 / 7
+# WMO weather codes for snow: snow fall (71, 73, 75), snow grains (77) and
+# snow showers (85, 86)
+SNOW_WEATHER_CODES = (71, 73, 75, 77, 85, 86)
+
 # --- Unit Conversion ---
 HPA_TO_INHG = 0.02953
+
+# --- Pressure (sea-level pressure, hPa) ---
+# The pressure card's gauge is centred on the standard sea-level pressure
+# (ICAO Standard Atmosphere) and reaches the edges this far below and above
+# it; values beyond stay at the edge. For scale, the WMO records are 870 hPa
+# (lowest) and about 1084 hPa (highest, below 750 m).
+PRESSURE_GAUGE_CENTER = 1013.25
+PRESSURE_GAUGE_SPAN = 50
+# Below LOW is "Low", above HIGH is "High", between is "Normal"
+PRESSURE_LOW = 1000
+PRESSURE_HIGH = 1026
 
 # --- Application Preferences ---
 AUTO_REFRESH_OPTIONS = [
@@ -63,10 +128,15 @@ OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stay
 OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
 OVERVIEW_HOURS = 12  # how far ahead the overview looks
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
-# When the overview opens again by itself, picked at random in (min, max)
-# minutes so it does not feel mechanical; sooner for urgent messages. Between
-# those times the text is still kept up to date, without opening.
-OVERVIEW_REPUBLISH_MINUTES = {"error": (5, 10), "warning": (10, 20), "info": (20, 40)}
+# When the overview opens again by itself: BASE ÷ (1 + score), where the
+# score adds up the priorities (÷ 100) of everything worth saying, so a busy
+# forecast opens it more often. Kept between MIN and MAX minutes, then spread
+# at random by ± SPREAD so it does not feel mechanical. MIN is also the
+# shortest gap before something that just turned severe opens it again.
+OVERVIEW_ANNOUNCE_BASE_MINUTES = 40
+OVERVIEW_ANNOUNCE_MIN_MINUTES = 5
+OVERVIEW_ANNOUNCE_MAX_MINUTES = 40
+OVERVIEW_ANNOUNCE_SPREAD = 0.2
 
 # Overview rules (CORE_OverviewRules.py). All thresholds are metric; rules
 # convert imperial data before comparing.

@@ -27,7 +27,7 @@ class CurrentWeather:
     is_day: WeatherField
     precipitation: WeatherField
     weathercode: WeatherField
-    surface_pressure: WeatherField
+    pressure_msl: WeatherField
     windspeed_10m: WeatherField
     winddirection_10m: WeatherField
     
@@ -52,7 +52,10 @@ class HourlyWeather:
     weathercode: WeatherField
     precipitation: WeatherField
     precipitation_probability: WeatherField
-    surface_pressure: WeatherField
+    rain: WeatherField  # mm, from large-scale rain
+    showers: WeatherField  # mm, from showers
+    snowfall: WeatherField  # cm of fresh snow
+    pressure_msl: WeatherField
     visibility: WeatherField
     windspeed_10m: WeatherField
     wind_direction_10m: WeatherField

@@ -4,7 +4,9 @@ from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
-from .configs import HPA_TO_INHG
+from .configs import (
+    HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH, RAIN_INTENSITY_FROM_MM, SNOW_INTENSITY_FROM_CM, THRESHOLDS,
+)
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from .CORE_Logging import get_logger
@@ -31,6 +33,8 @@ class WeatherDataManager(GObject.Object):
     def __init__(self):
         super().__init__()
         self._lock = threading.Lock()
+        # Current weather of the saved locations, by their "lat,lon" key
+        self.saved_locations_weather = {}
 
     @GObject.Property(type=bool, default=False)
     def is_ready(self):
@@ -61,13 +65,22 @@ class WeatherDataManager(GObject.Object):
         data = CurrentWeather(raw_data)
         data.relativehumidity_2m.level_str = self.classify_humidity_level(data.relativehumidity_2m.data)
         data.windspeed_10m.level_str = self.classify_wind_speed_level(data.windspeed_10m.data)
-        data.surface_pressure.level_str = self.classify_presssure_level(data.surface_pressure.data)
+        data.pressure_msl.level_str = self.classify_presssure_level(data.pressure_msl.data)
         
         with self._lock:
             self.current_weather = data
         self.emit("data-updated")
         self.notify("is-ready")
         return data
+
+    def update_saved_locations_weather(self, coords: list) -> None:
+        """Fetches every given "lat,lon" in one request; failed ones become None."""
+        raw_data = Weather()._get_current_for_locations(coords) or []
+        results = {key: CurrentWeather(raw) for key, raw in zip(coords, raw_data)}
+
+        with self._lock:
+            for key in coords:
+                self.saved_locations_weather[key] = results.get(key)
 
     def update_hourly_forecast(self):
         obj = Weather()
@@ -159,6 +172,92 @@ class WeatherDataManager(GObject.Object):
         return _("Hazardous")
 
     @staticmethod
+    def aqi_level_class(aqi_value) -> str:
+        """The colour class for a US AQI: good, raised, or unhealthy and worse."""
+        if aqi_value <= 50:
+            return "success"
+        if aqi_value <= 150:
+            return "warning"
+        return "error"
+
+    @staticmethod
+    def aqi_advice(aqi_value) -> str:
+        """What to do at this US AQI, after the US EPA's advice for each band."""
+        if aqi_value <= 50:
+            return _("Air quality is good. A fine time to be outside.")
+        if aqi_value <= 100:
+            return _("Unusually sensitive people should cut back on long or intense outdoor activity.")
+        if aqi_value <= 150:
+            return _("Sensitive groups should cut back on long or intense outdoor activity.")
+        if aqi_value <= 200:
+            return _("Everyone should cut back on long or intense outdoor activity; sensitive groups should avoid it.")
+        if aqi_value <= 300:
+            return _("Everyone should avoid long or intense outdoor activity; sensitive groups should stay indoors.")
+        return _("Everyone should avoid all outdoor activity.")
+
+    @staticmethod
+    def classify_eu_aqi(aqi_value) -> str:
+        """The European AQI's own level names."""
+        if aqi_value <= 20:
+            return C_("european aqi", "Good")
+        if aqi_value <= 40:
+            return C_("european aqi", "Fair")
+        if aqi_value <= 60:
+            return C_("european aqi", "Moderate")
+        if aqi_value <= 80:
+            return C_("european aqi", "Poor")
+        if aqi_value <= 100:
+            return C_("european aqi", "Very Poor")
+        return C_("european aqi", "Extremely Poor")
+
+    @staticmethod
+    def classify_pollutant(key: str, value) -> tuple:
+        """A pollutant's level against the WHO guidelines: (word, colour class)."""
+        level = "error"
+        for threshold, css_class in THRESHOLDS.get(key, ()):
+            if value <= threshold:
+                level = css_class
+                break
+        words = {
+            "success": C_("pollutant level", "Good"),
+            "warning": C_("pollutant level", "High"),
+            "error": C_("pollutant level", "Very High"),
+        }
+        return words[level], level
+
+    @staticmethod
+    def classify_rain_intensity(amount_mm: float) -> int:
+        """How heavy an hour's rain is: 1 light, 2 moderate, 3 heavy, 4 violent."""
+        return 1 + sum(amount_mm >= limit for limit in RAIN_INTENSITY_FROM_MM)
+
+    @staticmethod
+    def classify_snow_intensity(amount_cm: float) -> int:
+        """How heavy an hour's snow is: 1 light, 2 moderate, 3 heavy, 4 very heavy."""
+        return 1 + sum(amount_cm >= limit for limit in SNOW_INTENSITY_FROM_CM)
+
+    @staticmethod
+    def classify_pollen(value) -> tuple:
+        """A pollen count's level (grains/m³): (word, colour class)."""
+        if value <= 15:
+            return C_("pollen level", "Low"), "success"
+        if value <= 90:
+            return C_("pollen level", "Moderate"), "warning"
+        if value <= 500:
+            return C_("pollen level", "High"), "error"
+        return C_("pollen level", "Very High"), "error"
+
+    @staticmethod
+    def main_pollutant(values: dict):
+        """The pollutant furthest above (or nearest to) its WHO limit, from
+        {key: value}; None when there is none to compare."""
+        ratios = {
+            key: value / THRESHOLDS[key][0][0]
+            for key, value in values.items()
+            if value is not None and key in THRESHOLDS
+        }
+        return max(ratios, key=ratios.get) if ratios else None
+
+    @staticmethod
     def classify_uv_index(uv):
         if uv <= 2: return C_("uvindex", "Low")
         if uv <= 5: return C_("uvindex", "Moderate")
@@ -174,11 +273,11 @@ class WeatherDataManager(GObject.Object):
 
     @staticmethod
     def classify_presssure_level(p):
-        low, normal = 940, 1010
+        low, high = PRESSURE_LOW, PRESSURE_HIGH
         if settings.unit == "imperial":
-            low, normal = low * HPA_TO_INHG, normal * HPA_TO_INHG
+            low, high = low * HPA_TO_INHG, high * HPA_TO_INHG
         if p < low: return C_("pressure", "Low")
-        if p <= normal: return C_("pressure", "Normal")
+        if p <= high: return C_("pressure", "Normal")
         return C_("pressure", "High")
 
     @staticmethod

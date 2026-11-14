@@ -57,6 +57,11 @@
       <summary>Show the weather overview</summary>
       <description>Show a short summary of the coming hours under the current conditions.</description>
     </key>
+    <key name="run-in-background" type="b">
+      <default>false</default>
+      <summary>Run in background</summary>
+      <description>Keep the app running when its window is closed.</description>
+    </key>
     <key name="debug-mode" type="b">
       <default>false</default>
       <summary>Enable debug mode</summary>

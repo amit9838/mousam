@@ -83,3 +83,14 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 GLib.idle_add(on_error, str(e))
 
     threading.Thread(target=_worker, name="fetch_all_worker", daemon=True).start()
+
+
+def fetch_saved_locations_weather_async(coords: list, on_done) -> None:
+    """Fetches the saved locations' weather on a thread, then calls on_done on the main loop."""
+    from .CORE_weatherData import weather_manager
+
+    def _worker():
+        weather_manager.update_saved_locations_weather(coords)
+        GLib.idle_add(on_done)
+
+    threading.Thread(target=_worker, name="saved_locations_worker", daemon=True).start()

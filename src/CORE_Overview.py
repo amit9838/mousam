@@ -1,35 +1,40 @@
-"""Overview engine: decides what the overview says, and when.
+"""Overview engine: runs the overview rules and publishes what to show.
 
 What to say comes from the rules (CORE_OverviewRules.py, described in
-docs/overview-rules.md): the engine runs the rule book and takes the most
-important insight.
+docs/overview-rules.md). Which insight to show, and when the overview opens
+by itself, is the AnnouncePlanner's call (same file): a busy forecast opens
+it more often, each opening shows the insight whose turn it is, and
+something turning severe opens it at once.
 
-When:
+The engine adds the timing around them:
 
 - Lazy: nothing is worked out while the app starts. The first run is
   OVERVIEW_FIRST_DELAY seconds after the first data load, later ones
   OVERVIEW_REFRESH_DELAY seconds after each refresh.
-- Always true: the rules run again before the current insight stops being
+- Always true: the rules run again before the shown insight stops being
   true (its valid_until), so "in 40 minutes" or "around 4:00 PM" is never
   shown once it is wrong. These updates are silent.
-- Announced now and then: the overview opens by itself on the first insight,
-  when a different kind of insight takes over (say, a storm appears), and
-  again after a random number of minutes from OVERVIEW_REPUBLISH_MINUTES,
-  sooner for urgent insights.
-- Varied wording: each announcement draws a new seed, which picks one of
-  the message's wordings (CORE_OverviewMessages.py). Silent updates keep the
+- Refreshes don't count: a refresh clears the weather data for a moment, but
+  the engine keeps what it has shown and when it opens next, so Ctrl+R,
+  auto-refresh or a units change neither open the overview nor reset its
+  turns. Only a location change (or turning the overview off) starts over.
+- Varied wording: each opening draws a new seed, which picks one of the
+  message's wordings (CORE_OverviewMessages.py). Silent updates keep the
   seed, so the wording stays put while only the values change.
-- Only while the "show-overview" setting is on: when it is off nothing is
+- Only while it has somewhere to go: the overview ("show-overview") or
+  notifications ("show-notifications") is on. With both off nothing is
   scheduled or worked out.
+- Where it goes is up to the subscribers: the main window's overview while
+  the window can be seen, a notification (sent by the app) otherwise.
 
 Publish / subscribe: the engine emits "overview-changed" with `announce`
 (open the overview, or just update its text). Widgets connect to it and read
-`overview_engine.insight` and `overview_engine.heading`.
+`overview_engine.current()` and `overview_engine.heading`.
 """
 
 import random
 import time
-from typing import Optional
+from typing import List, Optional, Tuple
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import gi
@@ -38,14 +43,10 @@ gi.require_version("GLib", "2.0")
 
 from gi.repository import GLib, GObject  # noqa: E402
 
-from .configs import (  # noqa: E402
-    OVERVIEW_FIRST_DELAY,
-    OVERVIEW_REFRESH_DELAY,
-    OVERVIEW_REPUBLISH_MINUTES,
-)
+from .configs import OVERVIEW_FIRST_DELAY, OVERVIEW_REFRESH_DELAY  # noqa: E402
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .CORE_Logging import get_logger  # noqa: E402
-from .CORE_OverviewRules import Insight, OverviewContext, RuleBook  # noqa: E402
+from .CORE_OverviewRules import AnnouncePlanner, Insight, OverviewContext, RuleBook  # noqa: E402
 from .CORE_weatherData import weather_manager  # noqa: E402
 from .settings import settings  # noqa: E402
 
@@ -53,7 +54,7 @@ logger = get_logger("overview")
 
 
 class OverviewEngine(GObject.Object):
-    """Runs the rules lazily and publishes the best insight."""
+    """Runs the rules lazily and publishes the insight to show."""
 
     __gsignals__ = {
         # announce: True to open the overview, False to only update its text
@@ -67,10 +68,12 @@ class OverviewEngine(GObject.Object):
         self._timer_id = 0
         self._first_built = False
         self._scheduled_for = None  # the hourly data a run is scheduled or done for
-        self._next_announce = 0.0  # when the overview may open by itself again
-        self._seed = 0  # picks the wordings; new on each announcement
+        self._planner = AnnouncePlanner()  # what was shown when, and the next opening
+        self._location = None  # the selected city the planner's memory belongs to
+        self._seed = 0  # picks the wordings; new on each opening
         weather_manager.connect("notify::is-ready", self._on_ready_changed)
         settings.connect("changed::show-overview", self._on_enabled_changed)
+        settings.connect("changed::show-notifications", self._on_enabled_changed)
 
     # ---------- Reading ----------
 
@@ -81,10 +84,21 @@ class OverviewEngine(GObject.Object):
             return None
         return self.insight
 
+    @staticmethod
+    def enabled() -> bool:
+        """Whether the overview has somewhere to go: the overview or the
+        notifications are on."""
+        return settings.show_overview or settings.show_notifications
+
+    def note_shown(self) -> None:
+        """The user opened the overview: that counts as the insight's turn."""
+        if self.insight is not None:
+            self._planner.note_shown(self.insight.kind, time.time())
+
     # ---------- Scheduling ----------
 
     def _on_enabled_changed(self, *_args) -> None:
-        if settings.show_overview:
+        if self.enabled():
             self._schedule()
         else:
             self._reset()
@@ -94,12 +108,18 @@ class OverviewEngine(GObject.Object):
         GLib.idle_add(self._schedule)
 
     def _schedule(self) -> bool:
-        if not settings.show_overview:
+        if not self.enabled():
             return GLib.SOURCE_REMOVE
 
         if not weather_manager.is_ready:
-            # Data cleared (location switch, failed fetch): drop the old overview
-            self._reset()
+            if settings.selected_city != self._location:
+                # Another city: start over
+                self._reset()
+            else:
+                # A refresh (or a failed one): keep what was shown and when it
+                # opens next; the shown insight stays until it stops being true
+                self._cancel()
+                self._scheduled_for = None
             return GLib.SOURCE_REMOVE
 
         # is-ready fires once per update; schedule once per fetch
@@ -122,40 +142,42 @@ class OverviewEngine(GObject.Object):
     def _run(self) -> bool:
         self._timer_id = 0
         self._first_built = True
-        if not settings.show_overview or not weather_manager.is_ready:
+        if not self.enabled() or not weather_manager.is_ready:
             return GLib.SOURCE_REMOVE
 
         now = time.time()
-        insight, heading = self._best_insight(now)
+        if settings.selected_city != self._location:
+            self._planner.forget()
+            self._location = settings.selected_city
+
+        insights, window_heading = self._insights(now)
+        showing = self.insight.kind if self.current() is not None else None
+        insight, announce = self._planner.decide(insights, showing, now)
         if insight is None:
             self._set(None, None, announce=False)
             return GLib.SOURCE_REMOVE
 
-        # Open the overview for something new, or when its time has come
-        is_new = self.insight is None or insight.kind != self.insight.kind
-        announce = is_new or now >= self._next_announce
         if announce:
-            low, high = OVERVIEW_REPUBLISH_MINUTES[insight.severity]
-            self._next_announce = now + random.uniform(low, high) * 60
-            # A fresh wording for the announcement (same insight, same data)
+            # A fresh wording for the opening (same insight, same data)
             self._seed = random.getrandbits(32)
-            insight, heading = self._best_insight(now)
-            if insight is None:
-                self._set(None, None, announce=False)
-                return GLib.SOURCE_REMOVE
+            fresh, window_heading = self._insights(now)
+            insight = next((i for i in fresh if i.kind == insight.kind), insight)
 
+        heading = insight.heading or window_heading
         logger.debug(
             f"Overview {'announced' if announce else 'updated'}: {insight.message} "
-            f"(valid {int(insight.valid_until - now)}s)"
+            f"(valid {int(insight.valid_until - now)}s, "
+            f"next opening in {int(self._planner.next_announce - now)}s)"
         )
         self._set(insight, heading, announce)
 
-        # Run again before the message stops being true, or to announce it again
-        self._run_in(min(insight.valid_until, self._next_announce) - now)
+        # Run again before the message stops being true, or to open it again
+        self._run_in(min(insight.valid_until, self._planner.next_announce) - now)
         return GLib.SOURCE_REMOVE
 
-    def _best_insight(self, now: float):
-        """(the most important insight, its heading), from the latest data."""
+    def _insights(self, now: float) -> Tuple[List[Insight], Optional[str]]:
+        """(every insight true now, most important first; the window's
+        heading), from the latest data. Ignore on fail: ([], None)."""
         try:
             tz = ZoneInfo(get_timezone_from_selected_city())
         except (ZoneInfoNotFoundError, ValueError):
@@ -171,14 +193,10 @@ class OverviewEngine(GObject.Object):
                 use_24h=settings.is_using_24h_clock,
                 seed=self._seed,
             )
-            insights = RuleBook.default().run(ctx)
+            return RuleBook.default().run(ctx), ctx.window.heading
         except Exception as e:  # noqa: BLE001 - ignore on fail: no overview this time
             logger.debug(f"Overview skipped: {e!r}")
-            return None, None
-        if not insights:
-            return None, None
-        best = insights[0]
-        return best, best.heading or ctx.window.heading
+            return [], None
 
     # ---------- Publishing ----------
 
@@ -194,9 +212,12 @@ class OverviewEngine(GObject.Object):
             self.emit("overview-changed", announce)
 
     def _reset(self) -> None:
+        """Start over: another city, or both overview and notifications were
+        turned off."""
         self._cancel()
         self._scheduled_for = None
-        self._next_announce = 0.0
+        self._planner.forget()
+        self._location = None
         self._set(None, None, announce=False)
 
     def _cancel(self) -> None:
