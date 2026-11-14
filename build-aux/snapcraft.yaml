@@ -9,23 +9,13 @@ platforms:
 
 parts:
   python-deps:
-    source: .
-    plugin: python
-    python-packages:
-      - requests==2.34.2
+    # requests from the Ubuntu archive, as in the Debian package. The python
+    # plugin can't find an interpreter on core26 with the gnome extension.
+    plugin: nil
+    stage-packages:
+      - python3-requests
     prime:
-      - -usr/bin/activate*
-      - -usr/bin/Activate*
-      - -usr/bin/pip*
-      - -usr/bin/python*
-      - -include
-      - -lib
-      - -lib64
-      - -share
-      - -pyvenv.cfg
-    organize:
-      lib/python3.14/site-packages: usr/lib/python3/dist-packages
-      bin: usr/bin
+      - usr/lib/python3/dist-packages
 
   mousam:
     source: https://github.com/amit9838/mousam.git
