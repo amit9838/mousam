@@ -36,9 +36,9 @@ class WeatherPreferences(Adw.PreferencesDialog):
         general_page.set_icon_name("preferences-system-symbolic")
         self.add(general_page)
 
-        general_page.add(self._build_general_group())
         general_page.add(self._build_appearance_group())
         general_page.add(self._build_overview_group())
+        general_page.add(self._build_general_group())
 
         advanced_page = Adw.PreferencesPage()
         advanced_page.set_title(_("Advanced"))
