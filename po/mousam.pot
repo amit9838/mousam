@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-08 16:01+0530\n"
+"POT-Creation-Date: 2026-11-14 13:18+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,28 +173,36 @@ msgid "Show a short summary of the coming hours under the current conditions."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:62
-msgid "Enable debug mode"
+msgid "Run in background"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
-msgid "Enables detailed logging and console output."
+msgid "Keep the app running when its window is closed."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:67
-msgid "Icon theme"
+msgid "Enable debug mode"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:68
+msgid "Enables detailed logging and console output."
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:72
+msgid "Icon theme"
+msgstr ""
+
+#: data/io.github.amit9838.mousam.gschema.xml:73
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:76
+#: data/io.github.amit9838.mousam.gschema.xml:81
 msgid "Forecast page"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:77
+#: data/io.github.amit9838.mousam.gschema.xml:82
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
@@ -1306,19 +1314,19 @@ msgid "Northwest"
 msgstr ""
 
 #: src/UI_CompactWeather.py:97 src/UI_CompactWeather.py:132
-#: src/UI_CompactWeather.py:134 src/mousam.py:346
+#: src/UI_CompactWeather.py:134 src/mousam.py:353
 msgid "No Internet"
 msgstr ""
 
-#: src/UI_CompactWeather.py:120 src/mousam.py:388 src/windowLocations.py:230
+#: src/UI_CompactWeather.py:120 src/mousam.py:395 src/windowLocations.py:230
 msgid "Retry"
 msgstr ""
 
-#: src/UI_CompactWeather.py:135 src/mousam.py:346 src/windowLocations.py:237
+#: src/UI_CompactWeather.py:135 src/mousam.py:353 src/windowLocations.py:237
 msgid "Please check your connection."
 msgstr ""
 
-#: src/UI_CompactWeather.py:138 src/mousam.py:351
+#: src/UI_CompactWeather.py:138 src/mousam.py:358
 msgid "Fetch Error"
 msgstr ""
 
@@ -1366,7 +1374,7 @@ msgstr ""
 msgid "Feels like {0}"
 msgstr ""
 
-#: src/UI_CurrentCond.py:212 src/windowPreferences.py:107
+#: src/UI_CurrentCond.py:212 src/windowPreferences.py:121
 msgid "Show Overview"
 msgstr ""
 
@@ -1397,7 +1405,7 @@ msgstr ""
 msgid "Hourly"
 msgstr ""
 
-#: src/UI_HourlyDetails.py:53 src/windowPreferences.py:64
+#: src/UI_HourlyDetails.py:53 src/windowPreferences.py:65
 msgid "Precipitation"
 msgstr ""
 
@@ -1444,74 +1452,74 @@ msgstr ""
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/mousam.py:83
+#: src/mousam.py:90
 msgid "Debug Mode Enabled"
 msgstr ""
 
-#: src/mousam.py:84
+#: src/mousam.py:91
 msgid "View Logs"
 msgstr ""
 
-#: src/mousam.py:88
+#: src/mousam.py:95
 msgid "Debug Mode Disabled"
 msgstr ""
 
-#: src/mousam.py:125
+#: src/mousam.py:132
 msgid "Refresh weather"
 msgstr ""
 
-#: src/mousam.py:140 src/windowLocations.py:402 src/shortcutsDialog.ui:39
+#: src/mousam.py:147 src/windowLocations.py:402 src/shortcutsDialog.ui:39
 msgid "Locations"
 msgstr ""
 
-#: src/mousam.py:146
+#: src/mousam.py:153
 msgid "Compact Mode"
 msgstr ""
 
-#: src/mousam.py:172 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
+#: src/mousam.py:179 src/windowPreferences.py:24 src/shortcutsDialog.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/mousam.py:173 src/shortcutsDialog.ui:63
+#: src/mousam.py:180 src/shortcutsDialog.ui:63
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/mousam.py:174
+#: src/mousam.py:181
 msgid "About Mousam"
 msgstr ""
 
-#: src/mousam.py:175 src/shortcutsDialog.ui:57
+#: src/mousam.py:182 src/shortcutsDialog.ui:57
 msgid "Quit"
 msgstr ""
 
 #. Translators: wind direction is where the wind blows from
-#: src/mousam.py:291
+#: src/mousam.py:298
 msgid "Direction (from)"
 msgstr ""
 
 #. Translators: "North" on the wind direction compass, as short as possible
-#: src/mousam.py:294
+#: src/mousam.py:301
 msgctxt "compass"
 msgid "N"
 msgstr ""
 
-#: src/mousam.py:305
+#: src/mousam.py:312
 msgid "Dewpoint"
 msgstr ""
 
-#: src/mousam.py:365
+#: src/mousam.py:372
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/mousam.py:372
+#: src/mousam.py:379
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/mousam.py:373
+#: src/mousam.py:380
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/mousam.py:374 src/windowLocations.py:428
+#: src/mousam.py:381 src/windowLocations.py:428
 msgid "Add Location"
 msgstr ""
 
@@ -1544,7 +1552,7 @@ msgstr ""
 msgid "Weather Data"
 msgstr ""
 
-#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:95
+#: src/windowAbout.py:52 src/windowAbout.py:74 src/windowPreferences.py:108
 msgid "Weather Icons"
 msgstr ""
 
@@ -1606,19 +1614,19 @@ msgstr ""
 msgid "Saved Locations"
 msgstr ""
 
-#: src/windowLocations.py:499
+#: src/windowLocations.py:500
 msgid "Remove"
 msgstr ""
 
-#: src/windowLocations.py:545
+#: src/windowLocations.py:546
 msgid "Drag to reorder, or press Alt+Up / Alt+Down"
 msgstr ""
 
-#: src/windowLocations.py:617
+#: src/windowLocations.py:618
 msgid "Location already exists"
 msgstr ""
 
-#: src/windowLocations.py:635
+#: src/windowLocations.py:636
 #, python-brace-format
 msgid "Switched to {}"
 msgstr ""
@@ -1640,152 +1648,160 @@ msgstr ""
 msgid "Metric (°C, km/h) or Imperial (°F, mph)"
 msgstr ""
 
-#: src/windowPreferences.py:58
+#: src/windowPreferences.py:59
 msgid "Metric"
 msgstr ""
 
-#: src/windowPreferences.py:58
+#: src/windowPreferences.py:59
 msgid "Imperial"
 msgstr ""
 
-#: src/windowPreferences.py:65
+#: src/windowPreferences.py:66
 msgid "Unit of the hourly precipitation graph"
 msgstr ""
 
 #. Translators: short unit names for millimetres and inches
-#: src/windowPreferences.py:67
+#: src/windowPreferences.py:69
 msgid "mm"
 msgstr ""
 
-#: src/windowPreferences.py:67
+#: src/windowPreferences.py:69
 msgid "in"
 msgstr ""
 
-#: src/windowPreferences.py:73
+#: src/windowPreferences.py:75
 msgid "Time Format"
 msgstr ""
 
-#: src/windowPreferences.py:75
+#: src/windowPreferences.py:78
 msgid "24-hour"
 msgstr ""
 
-#: src/windowPreferences.py:75
+#: src/windowPreferences.py:78
 msgid "AM/PM"
 msgstr ""
 
-#: src/windowPreferences.py:83
-msgid "Appearance"
+#: src/windowPreferences.py:85
+msgid "Run in Background"
 msgstr ""
 
 #: src/windowPreferences.py:86
+msgid "Keep Mousam running when its window is closed"
+msgstr ""
+
+#: src/windowPreferences.py:95
+msgid "Appearance"
+msgstr ""
+
+#: src/windowPreferences.py:98
 msgid "Dynamic Background"
 msgstr ""
 
-#: src/windowPreferences.py:87
+#: src/windowPreferences.py:99
 msgid "Change the background to match the current weather"
 msgstr ""
 
-#: src/windowPreferences.py:97
+#: src/windowPreferences.py:111
 msgid "Default"
 msgstr ""
 
-#: src/windowPreferences.py:97
+#: src/windowPreferences.py:111
 msgid "Material"
 msgstr ""
 
-#: src/windowPreferences.py:104
+#: src/windowPreferences.py:118
 msgid "Weather Overview"
 msgstr ""
 
-#: src/windowPreferences.py:108
+#: src/windowPreferences.py:122
 msgid "A short summary of the coming hours"
 msgstr ""
 
-#: src/windowPreferences.py:115
+#: src/windowPreferences.py:130
 msgid "Notifications"
 msgstr ""
 
-#: src/windowPreferences.py:116
+#: src/windowPreferences.py:131
 msgid ""
 "Send the overview as a notification while the window is minimized or in "
 "compact mode"
 msgstr ""
 
-#: src/windowPreferences.py:124
+#: src/windowPreferences.py:140
 msgid "Logging and Debugging"
 msgstr ""
 
-#: src/windowPreferences.py:127
+#: src/windowPreferences.py:143
 msgid "Debug Mode"
 msgstr ""
 
-#: src/windowPreferences.py:128
+#: src/windowPreferences.py:144
 msgid "Enable verbose logging and console output"
 msgstr ""
 
-#: src/windowPreferences.py:135
+#: src/windowPreferences.py:152
 msgid "Open Logs Folder"
 msgstr ""
 
-#: src/windowPreferences.py:143
+#: src/windowPreferences.py:161
 msgid "Clear Log File"
 msgstr ""
 
-#: src/windowPreferences.py:144
+#: src/windowPreferences.py:162
 msgid "Delete all contents of the current log file"
 msgstr ""
 
-#: src/windowPreferences.py:146
+#: src/windowPreferences.py:165
 msgid "Clear"
 msgstr ""
 
-#: src/windowPreferences.py:153
+#: src/windowPreferences.py:172
 msgid "Data Management"
 msgstr ""
 
-#: src/windowPreferences.py:156
+#: src/windowPreferences.py:175
 msgid "Reset to Default"
 msgstr ""
 
-#: src/windowPreferences.py:157
+#: src/windowPreferences.py:176
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/windowPreferences.py:159
+#: src/windowPreferences.py:179
 msgid "Reset…"
 msgstr ""
 
-#: src/windowPreferences.py:203
+#: src/windowPreferences.py:230
 msgid "Auto Refresh"
 msgstr ""
 
-#: src/windowPreferences.py:296
+#: src/windowPreferences.py:329
 msgid "Logs cleared"
 msgstr ""
 
-#: src/windowPreferences.py:298
+#: src/windowPreferences.py:331
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/windowPreferences.py:308
+#: src/windowPreferences.py:341
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/windowPreferences.py:310
+#: src/windowPreferences.py:343
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/windowPreferences.py:314
+#: src/windowPreferences.py:347
 msgid "Cancel"
 msgstr ""
 
-#: src/windowPreferences.py:315
+#: src/windowPreferences.py:348
 msgid "Reset"
 msgstr ""
 
-#: src/windowPreferences.py:338
+#: src/windowPreferences.py:372
 msgid "Preferences have been reset"
 msgstr ""
 
