@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:37+0530\n"
+"POT-Creation-Date: 2026-11-14 14:27+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1253,63 +1253,63 @@ msgstr ""
 msgid "Sunset"
 msgstr ""
 
-#: src/UI_CardSquare.py:32 src/UI_CompactWeather.py:214
+#: src/UI_CardSquare.py:37 src/UI_CompactWeather.py:214
 #: src/UI_HourlyDetails.py:52
 msgid "Wind"
 msgstr ""
 
-#: src/UI_CardSquare.py:33 src/UI_CompactWeather.py:216
+#: src/UI_CardSquare.py:38 src/UI_CompactWeather.py:216
 msgid "Pressure"
 msgstr ""
 
-#: src/UI_CardSquare.py:34 src/UI_CompactWeather.py:215
+#: src/UI_CardSquare.py:39 src/UI_CompactWeather.py:215
 msgid "Humidity"
 msgstr ""
 
-#: src/UI_CardSquare.py:35
+#: src/UI_CardSquare.py:40
 msgid "UV Index"
 msgstr ""
 
-#. Translators: the low and high ends of the pressure gauge
-#: src/UI_CardSquare.py:213
-msgctxt "pressure gauge"
-msgid "Min"
+#. Translators: the high and low ends of the humidity, UV index and pressure gauges
+#: src/UI_CardSquare.py:66 src/UI_CardSquare.py:223
+msgctxt "level gauge"
+msgid "High"
 msgstr ""
 
-#: src/UI_CardSquare.py:214
-msgctxt "pressure gauge"
-msgid "Max"
+#: src/UI_CardSquare.py:67 src/UI_CardSquare.py:222
+msgctxt "level gauge"
+msgid "Low"
 msgstr ""
 
-#: src/UI_CardSquare.py:225
+#: src/UI_CardSquare.py:234
 msgid "North"
 msgstr ""
 
-#: src/UI_CardSquare.py:226
+#: src/UI_CardSquare.py:235
 msgid "Northeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:227
+#: src/UI_CardSquare.py:236
 msgid "East"
 msgstr ""
 
-#: src/UI_CardSquare.py:228
+#: src/UI_CardSquare.py:237
 msgid "Southeast"
 msgstr ""
 
-#: src/UI_CardSquare.py:229
+#: src/UI_CardSquare.py:238
 msgid "South"
 msgstr ""
 
-#: src/UI_CardSquare.py:230
+#: src/UI_CardSquare.py:239
 msgid "Southwest"
 msgstr ""
 
-#: src/UI_CardSquare.py:231
+#: src/UI_CardSquare.py:240
 msgid "West"
 msgstr ""
 
-#: src/UI_CardSquare.py:232
+#: src/UI_CardSquare.py:241
 msgid "Northwest"
 msgstr ""
 
