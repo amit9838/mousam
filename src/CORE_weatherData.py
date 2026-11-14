@@ -4,7 +4,7 @@ from gi.repository import GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
-from .configs import HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH, THRESHOLDS
+from .configs import HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH, RAIN_INTENSITY_FROM_MM, THRESHOLDS
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from .CORE_Logging import get_logger
@@ -222,6 +222,11 @@ class WeatherDataManager(GObject.Object):
             "error": C_("pollutant level", "Very High"),
         }
         return words[level], level
+
+    @staticmethod
+    def classify_rain_intensity(amount_mm: float) -> int:
+        """How heavy an hour's rain is: 1 light, 2 moderate, 3 heavy, 4 violent."""
+        return 1 + sum(amount_mm >= limit for limit in RAIN_INTENSITY_FROM_MM)
 
     @staticmethod
     def classify_pollen(value) -> tuple:

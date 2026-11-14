@@ -21,7 +21,8 @@ import threading
 
 from .CORE_Icons import get_icon_path, create_weather_icon
 from .settings import settings
-from .CORE_weatherData import weather_manager
+from .CORE_weatherData import WeatherDataManager, weather_manager
+from .configs import RAIN_MIN_AMOUNT_MM  # noqa: E402
 from .CORE_GTKUtils import weak_connect
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402
@@ -323,11 +324,11 @@ class Forecast(Gtk.Grid):
         if hourly_data.is_day.data[index] == 0:
             weather_code = f"{weather_code}n"
 
-        rain = getattr(data_source, "precipitation_probability", None)
-        rain_chance = rain.data[index] if rain else None
+        # How heavy the rain is in this hour (not how likely)
+        drops = self._create_hourly_precipitation(data_source, index)
 
         # Build the grid columns
-        self._add_label_column(grid, label_text, rain_chance)
+        self._add_label_column(grid, label_text, drops)
         self._add_icon_column(grid, weather_code)
         self._add_placeholder_column(grid)
         self._add_temperature_column(grid, temp_max, None)
@@ -358,7 +359,12 @@ class Forecast(Gtk.Grid):
 
         row = Gtk.Grid(hexpand=True, margin_top=self.FORECAST_ITEM_MARGIN)
         row.set_css_classes(["bg-light-gray", "card-forecast-item"])
-        self._add_label_column(row, self._format_weekly_label(day), rain_chance)
+        # A small chance shows nothing, so drops only stand out when rain is a
+        # real prospect
+        drops = None
+        if rain_chance and rain_chance >= self.RAIN_MIN_CHANCE:
+            drops = self._create_rain_drops(rain_chance)
+        self._add_label_column(row, self._format_weekly_label(day), drops)
         # The day takes the free space, so the bar stays next to the icon
         row.get_child_at(0, 0).set_hexpand(True)
 
@@ -418,16 +424,15 @@ class Forecast(Gtk.Grid):
             return _("Tomorrow")
         return day.strftime("%A")
 
-    def _add_label_column(self, grid: Gtk.Grid, text: str, rain_chance: Optional[float] = None) -> None:
-        """Add the time/date label column (col 0), with the rain chance when there is one."""
+    def _add_label_column(self, grid: Gtk.Grid, text: str, drops: Optional[Gtk.Widget] = None) -> None:
+        """Add the time/date label column (col 0), with rain drops when there are some."""
         box = Gtk.Box(spacing=6)
         box.set_size_request(self.LABEL_BOX_WIDTH, self.LABEL_BOX_HEIGHT)
         label = Gtk.Label(label=text, halign=Gtk.Align.START)
         label.set_css_classes(["text-base", "font-normal", "opacity-90"])
         box.append(label)
-        # A small chance shows nothing, so drops only stand out when rain is a real prospect
-        if rain_chance and rain_chance >= self.RAIN_MIN_CHANCE:
-            box.append(self._create_rain_drops(rain_chance))
+        if drops:
+            box.append(drops)
         grid.attach(box, 0, 0, 1, 1)
 
     def _create_rain_drops(self, rain_chance: float) -> Gtk.Widget:
@@ -436,7 +441,39 @@ class Forecast(Gtk.Grid):
         The exact chance is in the tooltip and the accessible label.
         """
         text = _("Chance of rain: {percent}%").format(percent=f"{rain_chance:.0f}")
-        drop = DrawRainDrops(self.rain_drop_count(rain_chance), self.RAIN_DROP_HEIGHT).drawing_area
+        return self._rain_drops(self.rain_drop_count(rain_chance), text)
+
+    def _create_hourly_precipitation(self, hourly: Any, index: int) -> Optional[Gtk.Widget]:
+        """Drops for how heavy an hour's rain is; None for a dry hour."""
+        field = getattr(hourly, "precipitation", None)
+        rain_mm = (field.data[index] or 0) if field else 0
+        if rain_mm >= RAIN_MIN_AMOUNT_MM:
+            return self._create_rain_intensity_drops(rain_mm)
+        return None
+
+    def _create_rain_intensity_drops(self, amount_mm: float) -> Gtk.Widget:
+        """Show how heavy an hour's rain is as one (light) to four (violent) drops.
+
+        The intensity and the amount are in the tooltip and the accessible label.
+        """
+        if settings.is_using_inch_for_prec:
+            amount = f"{amount_mm / 25.4:.2f} inch"
+        else:
+            amount = f"{amount_mm:.1f} mm"
+        intensity = WeatherDataManager.classify_rain_intensity(amount_mm)
+        # Translators: tooltips on the hourly rain drops; {amount} is the rain
+        # in that hour with its unit, like "3.2 mm"
+        texts = {
+            1: _("Light rain: {amount}"),
+            2: _("Moderate rain: {amount}"),
+            3: _("Heavy rain: {amount}"),
+            4: _("Violent rain: {amount}"),
+        }
+        return self._rain_drops(intensity, texts[intensity].format(amount=amount))
+
+    def _rain_drops(self, count: int, text: str) -> Gtk.Widget:
+        """One to four drops, with text as their tooltip and accessible label."""
+        drop = DrawRainDrops(count, self.RAIN_DROP_HEIGHT).drawing_area
         drop.set_valign(Gtk.Align.CENTER)
         drop.set_tooltip_text(text)
         # The outline takes the rain colour, which follows the theme

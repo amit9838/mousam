@@ -60,6 +60,12 @@ DAY_NIGHT_UPDATE_SECONDS = 300
 NEW_MOON_REFERENCE = 947182440
 LUNAR_CYCLE_DAYS = 29.530588853
 
+# --- Rain intensity (mm of rain in an hour; American Meteorological Society) ---
+# From these amounts an hour's rain is moderate, heavy, then violent
+RAIN_INTENSITY_FROM_MM = (2.5, 7.6, 50)
+# Below this (the forecast's smallest step) an hour shows no drops
+RAIN_MIN_AMOUNT_MM = 0.1
+
 # --- Unit Conversion ---
 HPA_TO_INHG = 0.02953
 
