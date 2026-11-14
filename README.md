@@ -94,20 +94,6 @@ meson install -C builddir
 mousam
 ```
 
-## Keyboard Shortcuts
-
-| Shortcut | Action |
-| --- | --- |
-| `Ctrl` + `R` | Refresh the weather |
-| `Ctrl` + `L` | Locations |
-| `Ctrl` + `M` | Switch to compact mode |
-| `Esc` | Leave compact mode |
-| `Ctrl` + `,` | Preferences |
-| `Ctrl` + `?` | Show the keyboard shortcuts |
-| `Ctrl` + `Q` | Quit |
-
-In the locations list, drag a row, or press `Alt` + `Up` / `Alt` + `Down`, to reorder it.
-
 ## Troubleshooting
 
 - **"No Internet" or "Fetch Error" page**: check your connection and press **Retry** (`Ctrl` + `R`). The weather comes from Open-Meteo, so Mousam needs network access.
@@ -135,8 +121,6 @@ Mousam has no account, no analytics and no server of its own.
 - **Weather, air quality and city search** are requested from [Open-Meteo](https://open-meteo.com/). They are sent only the coordinates (or the search text) needed for the request.
 - **Connection check**: to tell "you are offline" from "the weather service is down", Mousam first opens a connection to `1.1.1.1` (port 53) and, only if that fails, requests the home pages of a few well-known websites. No information about you is sent in these requests, but those hosts can see that your IP address made them.
 - **Settings and saved places** stay on your computer, in GSettings.
-
-This describes the app. The [project website](https://amit9838.github.io/mousam/) counts visits with a small image from [hitscounter.dev](https://hitscounter.dev), which, like any image host, sees your IP address when the page loads.
 
 ## Contribution
 
