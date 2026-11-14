@@ -3,6 +3,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    types: [ "opened", "synchronize", "reopened", "review_requested", "ready_for_review" ]
   workflow_dispatch:
 name: Checks
 permissions:
