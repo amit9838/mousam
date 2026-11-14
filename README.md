@@ -12,7 +12,7 @@
 
 </div>
 <div align="center">
-<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3.png?raw=true#gh-dark-mode-only">
+<img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png?raw=true#gh-dark-mode-only">
 <img src="https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png?raw=true#gh-light-mode-only">
 </div>
 
@@ -33,7 +33,7 @@
 ## Screenshots
 
 <div align="center">
-<img src="screenshots/ss2.png" alt="The main window during rain" width="49%">
+<img src="screenshots/ss3.png" alt="The main window during rain" width="49%">
 <img src="screenshots/preferences.png" alt="Preferences" width="49%">
 <img src="screenshots/air_pollutents.png" alt="Air quality details" width="49%">
 <img src="screenshots/compact_mode.png" alt="Compact mode" width="49%">
