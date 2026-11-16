@@ -4,9 +4,9 @@ This file is the **source of truth** for the overview: the one-line message
 under the current conditions ("Rain is likely to start around
 5:00 PM with 70% chance."). The code follows it:
 
-- the rules: [`src/CORE_OverviewRules.py`](../src/CORE_OverviewRules.py), one `Rule` per rule, collected in `RuleBook.default()`
-- the numbers: [`src/configs.py`](../src/configs.py), under "Overview rules"
-- the wordings: [`src/CORE_OverviewMessages.py`](../src/CORE_OverviewMessages.py), several per message
+- the rules: [`src/core/overview/rules.py`](../src/core/overview/rules.py), one `Rule` per rule, collected in `RuleBook.default()`
+- the numbers: [`src/config.py`](../src/config.py), under "Overview rules"
+- the wordings: [`src/core/overview/messages.py`](../src/core/overview/messages.py), several per message
 
 **To change a rule, change this file first**, then the code and the numbers
 to match. If the code and this file disagree, the code is wrong.
@@ -78,8 +78,8 @@ turns (below).
 
 ### When the overview opens, and with what
 
-Code: `AnnouncePlanner` in `CORE_OverviewRules.py`; the numbers are the
-`OVERVIEW_ANNOUNCE_*` values in `configs.py`.
+Code: `AnnouncePlanner` in `core/overview/rules.py`; the numbers are the
+`OVERVIEW_ANNOUNCE_*` values in `config.py`.
 
 **Calm takes no turn** while anything else is worth saying; it is shown only
 when it is the only insight.
@@ -311,7 +311,7 @@ say the same thing, so the overview does not read the same every time:
   extreme feels like, air quality, UV): **2 wordings**, kept plain.
 
 The examples in this file are the first wording of each message; the rest
-are in `CORE_OverviewMessages.py`.
+are in `core/overview/messages.py`.
 
 **When the wording changes.** One wording is picked at random each time the
 overview is announced (opens by itself). Between announcements the wording
@@ -362,11 +362,11 @@ stays the same, and only the values update ("about 40 minutes" becomes
 ## Adding a rule
 
 1. Describe it here: priority, severity, icon, when it applies, what it says.
-2. Add its wordings to `CORE_OverviewMessages.py` under a new key: 4–5 for
+2. Add its wordings to `core/overview/messages.py` under a new key: 4–5 for
    a common message, 2 for a rare safety one.
 3. Add its priority to `OVERVIEW_PRIORITIES` and any threshold to
-   `configs.py` (metric).
-4. In `CORE_OverviewRules.py`, build it from what is there before writing a
+   `config.py` (metric).
+4. In `core/overview/rules.py`, build it from what is there before writing a
    new class: a `FirstHourRule` with an `HourTest` (`HasCode`, `AtLeast`,
    `Below`, `AnyOf`) and a `Phrasing` covers "the first hour that …". Only
    when it needs more, subclass `Rule` and write `evaluate(ctx)`. Add it to

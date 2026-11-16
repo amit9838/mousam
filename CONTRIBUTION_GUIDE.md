@@ -46,6 +46,42 @@ After submission, your PR will be reviewed. You may receive feedback or requests
 
 ---
 
+## Finding Your Way Around the Code
+
+Mousam is a Python app built with GTK 4 and libadwaita. The code in `src/` is installed as the `mousam` package, in four layers. Each layer may use only the layers to its right:
+
+```txt
+app.py  →  ui  →  state  →  services  →  core  →  config.py
+```
+
+| Folder | What lives there | Example |
+| --- | --- | --- |
+| `src/core/` | Plain Python logic: models, levels, units, forecast decisions, the overview rules. No GTK, no network, no settings. | `core/levels.py` decides that 85% humidity is "High". |
+| `src/services/` | Talking to the outside world: the Open-Meteo APIs, the internet check, the saved settings. | `services/open_meteo.py` fetches the forecast. |
+| `src/state/` | What is loaded right now. The windows listen to it. | `state/weather_store.py` fetches a city's weather and reports `loading`, `ready` or `error`. |
+| `src/ui/` | Everything on screen: the window, sections, cards, Cairo drawings and dialogs. | `ui/cards/metric.py` draws the Wind, Humidity, Pressure and UV cards. |
+
+Where a change usually goes:
+
+* **A new threshold, URL or option**: `src/config.py`.
+* **A new weather value or level**: the request in `services/open_meteo.py`, the model in `core/models.py`, the level in `core/levels.py`, then a card in `ui/`.
+* **A change to the overview pill's messages**: describe it in `docs/overview-rules.md` first, then change `core/overview/`.
+* **A new file**: put it in the folder of its layer and list it in that folder's `meson.build`, or it won't be installed.
+
+Before opening a PR, run the checks CI runs:
+
+```bash
+ruff check src tests
+python3 -m compileall -q src
+for t in tests/test_*.py; do python3 "$t"; done
+```
+
+Then build and run the app (see [README.md](README.md)) and try your change in light and dark mode, and in metric and imperial units.
+
+[AGENTS.md](AGENTS.md) has the full set of rules: layers, threading, styling, translations and commit messages.
+
+---
+
 ## Translation Contributions 🌍
 
 We welcome translation contributions to help Mousam reach more users worldwide.

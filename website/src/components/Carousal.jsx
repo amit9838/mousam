@@ -4,41 +4,41 @@ import ImageSlide from "./ImageSlide";
 import Button from "./Button";
 
 // const images = [
-//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
-//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
-//   "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss5-overcast.png?raw=true#gh-dark-mode-only",
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss1-dark_mode.png?raw=true#gh-dark-mode-only",
+//   "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss4-light_mode.png?raw=true#gh-light-mode-only",
 // ];
 
 const images = [
   {
     title: "Main Dashboard",
     description: "Real-time weather conditions with high-fidelity icons and dynamic background.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss1.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss1.png",
   },
   {
     title: "Detailed Forecast",
     description: "Deep insights into hourly temperature, precipitation, and wind patterns.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss2.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss2.png",
   },
   {
     title: "Night Mode",
     description: "Dark mode optimized interface with celestial tracking for sun and moon.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/ss3.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/ss3.png",
   },
   {
     title: "Air Quality Index",
     description: "Comprehensive tracking of air pollutants like PM2.5, PM10, and Ozone.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/air_pollutents.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/air_pollutents.png",
   },
   {
     title: "Compact Mode",
     description: "A sleek, minimal interface for essential weather data at a glance.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/compact_mode.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/compact_mode.png",
   },
   {
     title: "Advanced Settings",
     description: "Granular control over notifications, units, and debugging tools.",
-    link: "https://raw.githubusercontent.com/amit9838/mousam/master/screenshots/preferences.png",
+    link: "https://raw.githubusercontent.com/amit9838/mousam/master/docs/screenshots/preferences.png",
   },
 ];
 
