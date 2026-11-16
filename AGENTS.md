@@ -585,7 +585,7 @@ When the user asks to build a feature:
 ## Testing
 
 - Unit tests live in `tests/`, use `unittest` (no pytest dependency) and are registered in [tests/meson.build](tests/meson.build), so `meson test` and CI run them.
-- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way. The one exception is `tests/test_api_weather.py`, which tests `API_Weather` through the stand-ins in `tests/stubs.py` until the API layer is pure; then it imports the module directly and `stubs.py` goes.
+- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way. The network is faked with `tests/fakes.py`: `FakeRequests` stands in for `requests` in the `API_*` tests (`tests/test_api.py`), and `FakeForecastClient` for the forecast API in code that fetches through a `ForecastClient`.
 - When you add GTK-free logic (a rule, a classifier, a conversion, a parser), add a test for it. A new test file must be added to `tests/meson.build`.
 - Tests use fixed clocks and hand-built data, never the real time or Open-Meteo.
 
