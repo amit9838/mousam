@@ -11,21 +11,21 @@ from typing import Callable, Dict, List
 
 from gi.repository import GLib, GObject
 
-from .services import open_meteo
-from .services.air_quality import fetch_air_quality
-from .services.settings import settings
-from .core.forecast_client import ForecastClient
-from .core.levels import (
+from ..services import open_meteo
+from ..services.air_quality import fetch_air_quality
+from ..services.settings import settings
+from ..core.forecast_client import ForecastClient
+from ..core.levels import (
     classify_humidity_level, classify_pressure_level, classify_uv_index, classify_wind_speed_level,
 )
-from .core.forecast import nearest_hour_index
-from .core.units import transform_visibility_data
-from .core.models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
-from .services.selected_city import get_time_difference
-from .services.network import check_internet_connection
-from .core.locations import parse_coords_key
-from .core.log import get_logger
-from .config import TIMEOUT
+from ..core.forecast import nearest_hour_index
+from ..core.units import transform_visibility_data
+from ..core.models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
+from ..services.selected_city import get_time_difference
+from ..services.network import check_internet_connection
+from ..core.locations import parse_coords_key
+from ..core.log import get_logger
+from ..config import TIMEOUT
 
 logger = get_logger("data_manager")
 

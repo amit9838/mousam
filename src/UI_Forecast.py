@@ -42,7 +42,7 @@ class Forecast(Gtk.Grid):
 
     The widget contains a toggle button bar to switch between "Tomorrow"
     (hourly) and "Weekly" (daily) views. Forecast data is fetched lazily
-    from the CORE_weatherData modules when a view is first activated.
+    from the state.weather_store modules when a view is first activated.
 
     Attributes:
         ITEM_WIDTH_REQUEST (int): Width request for toggle buttons.

@@ -17,7 +17,7 @@ Built by composition, with no GTK, so everything can be tested on made-up data:
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
   and is still true, most important first.
 - AnnouncePlanner: which of those insights to show, and when the overview
-  opens by itself. The engine (CORE_Overview.py) runs the timers around it.
+  opens by itself. The engine (state/overview_engine.py) runs the timers around it.
 """
 
 import math

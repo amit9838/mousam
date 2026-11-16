@@ -74,7 +74,7 @@ class CompactWeather(Gtk.Overlay):
         self.set_child(self.stack)
         self._setup_back_button()
 
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         self._status_handler_id = weather_store.connect(
             "notify::status", self._on_store_status
         )
@@ -86,7 +86,7 @@ class CompactWeather(Gtk.Overlay):
 
     def refresh(self) -> None:
         """Show the current data, or fetch it if there is none yet."""
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         if weather_store.is_ready:
             self._build_content()
             return
@@ -135,7 +135,7 @@ class CompactWeather(Gtk.Overlay):
         return GLib.SOURCE_REMOVE
 
     def _build_content(self) -> None:
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         data = weather_store.current_weather
         aq_data = weather_store.air_pollution
 
@@ -275,7 +275,7 @@ class CompactWeather(Gtk.Overlay):
 
     def _on_destroy(self, *_args) -> None:
         self._stop_clock()
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         weather_store.disconnect(self._status_handler_id)
 
 

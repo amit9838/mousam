@@ -53,7 +53,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
         # Centralized Data Handling
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         self._status_handler_id = weather_store.connect("notify::status", self._on_store_status)
         
         # Settings setup
@@ -189,7 +189,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             return
 
         self._update_view_state("loader")
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         weather_store.refresh()
 
     def _on_store_status(self, store, _pspec):
@@ -213,7 +213,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         if child:
             self.main_stack.remove(child)
 
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         if not weather_store.is_ready:
             return
 
@@ -390,7 +390,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _on_window_destroy(self, *args):
         # weather_store outlives this window (e.g. switching to compact mode)
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         weather_store.disconnect(self._status_handler_id)
 
         app = self.get_application()
@@ -417,7 +417,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         show_about_window(self)
 
     def _on_action_air_quality(self, action, param):
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         if weather_store.air_pollution is None:
             return
         AirQualityDialog(weather_store.air_pollution).present(self)

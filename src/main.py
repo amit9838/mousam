@@ -57,7 +57,7 @@ class WeatherApplication(Adw.Application):
 
         # Overview announcements: shown in the main window's overview while it
         # can be seen, otherwise sent as a notification (never both)
-        from .CORE_Overview import overview_engine
+        from .state.overview_engine import overview_engine
         overview_engine.connect("overview-changed", self._on_overview_changed)
 
     def do_shutdown(self):
@@ -117,7 +117,7 @@ class WeatherApplication(Adw.Application):
 
     def _on_auto_refresh_tick(self):
         # The windows show the result: they listen to the store's status
-        from .CORE_weatherData import weather_store
+        from .state.weather_store import weather_store
         weather_store.refresh(check_online=False)
 
     def _on_show_compact(self, *args):

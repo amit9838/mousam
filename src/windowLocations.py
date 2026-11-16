@@ -10,7 +10,7 @@ from .services.geocoding import find_city  # noqa: E402
 from .CORE_GTKUtils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
 from .core.locations import LocationData  # noqa: E402
-from .CORE_weatherData import weather_store  # noqa: E402
+from .state.weather_store import weather_store  # noqa: E402
 from .config import (  # noqa: E402
     CITY_SEARCH_DELAY_MS,
     CITY_SEARCH_MAX_RESULTS,

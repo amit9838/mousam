@@ -31,8 +31,6 @@ configure_file(
 
 mousam_sources = [
   'CORE_GTKUtils.py',
-  'CORE_Overview.py',
-  'CORE_weatherData.py',
   'UI_CardAirPollution.py',
   'UI_CardDayNight.py',
   'UI_CardSquare.py',
@@ -85,3 +83,4 @@ configure_file(
 
 subdir('core')
 subdir('services')
+subdir('state')
