@@ -137,3 +137,19 @@ def classify_wind_speed_level(w):
     if w <= 40: return C_("wind", "Moderate")
     if w <= 60: return _("Strong")
     return C_("wind", "Extreme")
+
+
+def compass_direction(degrees: float) -> str:
+    """The nearest of the eight compass points for an angle (where the wind
+    comes from): "North", "Northeast", …"""
+    directions = [
+        _("North"),
+        _("Northeast"),
+        _("East"),
+        _("Southeast"),
+        _("South"),
+        _("Southwest"),
+        _("West"),
+        _("Northwest"),
+    ]
+    return directions[round(degrees % 360 / 45) % 8]

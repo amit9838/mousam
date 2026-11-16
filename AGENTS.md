@@ -215,7 +215,7 @@ When unsure, ask:
 
 | Need | Use |
 | --- | --- |
-| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(...).card` |
+| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`); the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
 | Sun / moon card | `CardDayNight().card` |
 | Air quality card | `CardAirPollution().card` |
 | Hourly graphs with tabs | `HourlyDetails` |

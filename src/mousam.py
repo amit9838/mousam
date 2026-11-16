@@ -5,7 +5,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio
 
 # Localization
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 # Module imports
 from .CORE_Helpers import local_time_data
@@ -23,7 +23,7 @@ logger = get_logger("ui")
 from .UI_CurrentCond import CurrentCondition
 from .UI_HourlyDetails import HourlyDetails
 from .UI_Forecast import Forecast
-from .UI_CardSquare import CardSquare
+from .UI_CardSquare import humidity_card, pressure_card, uv_card, wind_card
 from .UI_CardDayNight import CardDayNight
 from .UI_CardAirPollution import CardAirPollution
 
@@ -261,52 +261,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             # widget.set_size_request(-1, 120)
             widget_grid.attach(widget, col, row, width, 1)
 
-        # Wind
-        wind_card = CardSquare(
-            title="Wind",
-            main_val=cw_data.windspeed_10m.data,
-            main_val_unit=cw_data.windspeed_10m.unit,
-            desc=cw_data.windspeed_10m.level_str,
-            # Translators: wind direction is where the wind blows from
-            sub_desc_heading=_("Direction (from)"),
-            sub_desc=str(cw_data.winddirection_10m.data) + "°",
-            # Translators: "North" on the wind direction compass, as short as possible
-            text_up=C_("compass", "N"),
-            visual_data=cw_data.winddirection_10m.data
-        ).card
-        add_card(wind_card, 0, 0)
-
-        # Humidity
-        hum_card = CardSquare(
-            title="Humidity",
-            main_val=cw_data.relativehumidity_2m.data,
-            main_val_unit="%",
-            desc=cw_data.relativehumidity_2m.level_str,
-            sub_desc_heading=_("Dewpoint"),
-            sub_desc=f"{cw_data.dewpoint_2m.data} {cw_data.dewpoint_2m.unit}",
-            visual_data=cw_data.relativehumidity_2m.data
-        ).card
-        add_card(hum_card, 1, 0)
-
-        # Pressure
-        pres_card = CardSquare(
-            title="Pressure",
-            main_val=cw_data.pressure_msl.data,
-            main_val_unit=cw_data.pressure_msl.unit,
-            desc=cw_data.pressure_msl.level_str,
-            visual_data=cw_data.pressure_msl.data
-        ).card
-        add_card(pres_card, 0, 1)
-
-        # UV Index
-        uv_card = CardSquare(
-            title="UV Index",
-            main_val=cw_data.uv_index.data,
-            main_val_unit="",
-            desc=cw_data.uv_index.level_str,
-            visual_data=cw_data.uv_index.data,
-        ).card
-        add_card(uv_card, 1, 1)
+        add_card(wind_card(cw_data), 0, 0)
+        add_card(humidity_card(cw_data), 1, 0)
+        add_card(pressure_card(cw_data), 0, 1)
+        add_card(uv_card(cw_data), 1, 1)
 
         # Pollution & Sun
         add_card(CardAirPollution().card, 2, 0, width=2)

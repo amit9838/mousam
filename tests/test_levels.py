@@ -139,6 +139,18 @@ class WeatherLevels(unittest.TestCase):
                 self.assertEqual(levels.classify_snow_intensity(amount_cm), level)
 
 
+class CompassDirection(unittest.TestCase):
+    def test_points(self):
+        cases = [
+            (0, "North"), (22, "North"), (23, "Northeast"), (90, "East"),
+            (180, "South"), (270, "West"), (337, "Northwest"), (338, "North"),
+            (360, "North"), (-90, "West"), (405, "Northeast"),
+        ]
+        for degrees, name in cases:
+            with self.subTest(degrees=degrees):
+                self.assertEqual(levels.compass_direction(degrees), name)
+
+
 class Units(unittest.TestCase):
     def test_visibility_metric_in_km(self):
         self.assertEqual(transform_visibility_data("m", 24000, "metric"), {"unit": "km", "data": 24.0})
