@@ -7,7 +7,7 @@ from gettext import gettext as _
 
 
 from .settings import settings
-from .CORE_Helpers import create_toast
+from .CORE_GTKUtils import create_toast
 from .configs import AUTO_REFRESH_OPTIONS
 from .CORE_Logging import log_manager
 

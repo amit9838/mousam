@@ -1,7 +1,6 @@
 import time
 import socket
 import requests
-from gi.repository import Adw
 from .settings import settings
 from gettext import gettext as _
 from .configs import TIMEOUT, INTERNET_CACHE_TTL, DEFAULT_TIMEZONE, DOMAINS
@@ -44,11 +43,6 @@ def check_internet_domain(url):
         return True
     except (requests.ConnectionError, requests.Timeout):
         return False
-
-def create_toast(text, priority=0):
-    toast = Adw.Toast.new(text)
-    toast.set_priority(Adw.ToastPriority(priority))
-    return toast
 
 def get_cords():
     selected_city_ = settings.selected_city

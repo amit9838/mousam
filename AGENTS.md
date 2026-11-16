@@ -152,8 +152,8 @@ src/
   CORE_Networking.py      fetch_all_weather_data_async (the selected city), fetch_saved_locations_weather_async (Locations list); worker threads
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
-  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, run_when_ready, safe_set_draw_func, is_on_screen, show_overview_notification
-  CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings), toasts
+  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, run_when_ready, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
+  CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings)
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
   API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity; plain fetch_* functions
@@ -188,7 +188,7 @@ main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons,
 
 Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (`weather_manager` is usually imported this way); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
 
-**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_ForecastClient`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. The `API_*` modules are GTK-free too and need only `requests`. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
+**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_ForecastClient`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. The `API_*` modules are GTK-free too and need only `requests`. `CORE_Icons` imports GTK (icons), and `CORE_Helpers` reads `settings` (GSettings), so logic you want to test doesn't belong there.
 
 ### Adding a file
 
@@ -235,7 +235,7 @@ When unsure, ask:
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
 | A condition's name | `condition[code]` in `CORE_Icons` |
 | A background for a condition | `bg_css[code]` (append `n` to the code at night) |
-| A short message | `create_toast(text)` added to the window's `Adw.ToastOverlay` |
+| A short message | `create_toast(text)` from `CORE_GTKUtils`, added to the window's `Adw.ToastOverlay` |
 | Loading, empty, error page | `Adw.StatusPage`, as `_update_view_state` in `mousam.py` builds them |
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
 | Build something once the weather data is ready | `run_when_ready(self.method, plain_value)` |

@@ -4,7 +4,8 @@ from typing import Callable, Tuple
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("PangoCairo", "1.0")
-from gi.repository import GLib, Gio, GObject, Gtk, PangoCairo  # noqa: E402
+gi.require_version("Adw", "1")
+from gi.repository import Adw, GLib, Gio, GObject, Gtk, PangoCairo  # noqa: E402
 from .settings import settings  # noqa: E402
 from .CORE_Helpers import get_selected_city_name  # noqa: E402
 from .CORE_Logging import get_logger  # noqa: E402
@@ -174,6 +175,13 @@ def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
     ]
     for controller in found:
         window.remove_controller(controller)
+
+
+def create_toast(text: str, priority: int = 0) -> Adw.Toast:
+    """A toast with the given text, for a window's Adw.ToastOverlay."""
+    toast = Adw.Toast.new(text)
+    toast.set_priority(Adw.ToastPriority(priority))
+    return toast
 
 
 def is_on_screen(window) -> bool:

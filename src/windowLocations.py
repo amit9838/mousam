@@ -7,8 +7,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Gdk, Adw, GLib, GObject, Pango  # noqa: E402
 
 from .API_FindCity import find_city  # noqa: E402
-from .CORE_GTKUtils import remove_rootwindow_drop_target, weak_connect  # noqa: E402
-from .CORE_Helpers import create_toast  # noqa: E402
+from .CORE_GTKUtils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
 from .CORE_Locations import LocationData  # noqa: E402
 from .CORE_Networking import fetch_saved_locations_weather_async  # noqa: E402
