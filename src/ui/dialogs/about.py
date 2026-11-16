@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 import gi
 
-from .config import (
+from ...config import (
     APPDATA_RESOURCE,
     BUY_ME_A_COFFEE_URL,
     CC_BY_4_0_URL,
@@ -17,7 +17,7 @@ from .config import (
     TRANSLATE_URL,
     VERSION,
 )
-from .services.settings import settings
+from ...services.settings import settings
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')

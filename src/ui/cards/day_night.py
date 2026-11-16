@@ -6,10 +6,10 @@ import gi
 from gi.repository import Gtk
 from gettext import gettext as _
 
-from .UI_CompDrawDayNight import DrawDayNight
-from .UI_CardSquare import CSS_TEXT_TITLE, CSS_TEXT_VALUE
-from .services.settings import settings
-from .core.forecast import today_sun_times
+from ..drawing.day_night import DrawDayNight
+from .metric import CSS_TEXT_TITLE, CSS_TEXT_VALUE
+from ...services.settings import settings
+from ...core.forecast import today_sun_times
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

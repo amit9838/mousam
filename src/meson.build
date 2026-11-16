@@ -30,30 +30,7 @@ configure_file(
 )
 
 mousam_sources = [
-  'CORE_GTKUtils.py',
-  'UI_CardAirPollution.py',
-  'UI_CardDayNight.py',
-  'UI_CardSquare.py',
-  'UI_CompDrawBar.py',
-  'UI_CompDrawDayNight.py',
-  'UI_CompDrawImageIcon.py',
-  'UI_CompDrawLineGraph.py',
-  'UI_CompDrawPollutionBar.py',
-  'UI_CompDrawRainDrop.py',
-  'UI_CompDrawTempRange.py',
-  'UI_CompDrawTickGauge.py',
-  'UI_CompDrawbarLine.py',
-  'UI_CompactWeather.py',
-  'UI_CurrentCond.py',
-  'UI_Forecast.py',
-  'UI_HourlyDetails.py',
-  'main.py',
-  'mousam.py',
-  'shortcutsDialog.py',
-  'windowAbout.py',
-  'windowAirQuality.py',
-  'windowLocations.py',
-  'windowPreferences.py',
+  'app.py',
 ]
 
 install_emptydir(moduledir / 'css')
@@ -66,14 +43,6 @@ icon_conf.set('icon_location', get_option('prefix'))
 icon_conf.set('VERSION', meson.project_version())
 
 configure_file(
-  input: 'CORE_Icons.py',
-  output: 'CORE_Icons.py',
-  configuration: icon_conf,
-  install: true,
-  install_dir: moduledir
-)
-
-configure_file(
   input: 'config.py',
   output: 'config.py',
   configuration: icon_conf,
@@ -84,3 +53,4 @@ configure_file(
 subdir('core')
 subdir('services')
 subdir('state')
+subdir('ui')

@@ -5,10 +5,10 @@ from gi.repository import Adw, Gtk
 from gettext import gettext as _
 
 
-from .services.settings import settings
-from .CORE_GTKUtils import create_toast
-from .config import AUTO_REFRESH_OPTIONS
-from .core.log import log_manager
+from ...services.settings import settings
+from ..gtk_utils import create_toast
+from ...config import AUTO_REFRESH_OPTIONS
+from ...core.log import log_manager
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

@@ -3,7 +3,7 @@
 Importing this module is cheap and needs no GTK or GSettings, so the modules
 that use get_logger stay importable on their own (tests/). It never reads
 the settings: the app calls log_manager.setup(debug) once at start-up
-(main.main) and update_level(debug) when debug mode changes. Until then the
+(app.main) and update_level(debug) when debug mode changes. Until then the
 "mousam" loggers are silent, as they are whenever debug mode is off.
 """
 
@@ -121,5 +121,5 @@ def get_logger(name=None):
         return logging.getLogger(f"mousam.{name}")
     return logging.getLogger("mousam")
 
-# The singleton; main.main() calls log_manager.setup(debug) at start-up
+# The singleton; app.main() calls log_manager.setup(debug) at start-up
 log_manager = LogManager()

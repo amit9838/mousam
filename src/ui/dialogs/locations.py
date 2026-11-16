@@ -6,18 +6,18 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Gdk, Adw, GLib, GObject, Pango  # noqa: E402
 
-from .services.geocoding import find_city  # noqa: E402
-from .CORE_GTKUtils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
-from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
-from .core.locations import LocationData  # noqa: E402
-from .state.weather_store import weather_store  # noqa: E402
-from .config import (  # noqa: E402
+from ...services.geocoding import find_city  # noqa: E402
+from ..gtk_utils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
+from ..icons import create_weather_icon, get_icon_path  # noqa: E402
+from ...core.locations import LocationData  # noqa: E402
+from ...state.weather_store import weather_store  # noqa: E402
+from ...config import (  # noqa: E402
     CITY_SEARCH_DELAY_MS,
     CITY_SEARCH_MAX_RESULTS,
     CITY_SEARCH_MIN_CHARS,
     CITY_SEARCH_PAGE_SIZE,
 )
-from .services.settings import settings  # noqa: E402
+from ...services.settings import settings  # noqa: E402
 from gettext import gettext as _  # noqa: E402
 
 # --- Components ---

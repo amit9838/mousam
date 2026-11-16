@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk  # noqa: E402
 
-from .CORE_GTKUtils import safe_set_draw_func, theme_rgba, draw_text, text_layout, draw_knob  # noqa: E402
+from ..gtk_utils import safe_set_draw_func, theme_rgba, draw_text, text_layout, draw_knob  # noqa: E402
 
 PAD_X = 6
 HEADER_HEIGHT = 26  # Max / Min line, and room for the current value above the curve

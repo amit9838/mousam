@@ -5,12 +5,12 @@ import gi
 from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
-from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER
-from .UI_CompDrawImageIcon import DrawImage
-from .UI_CompDrawbarLine import DrawBar
-from .services.settings import settings
-from .CORE_GTKUtils import weak_connect
-from .core.forecast import nearest_hour_index
+from ..icons import get_icon_path, create_weather_icon, ARROW_CENTER
+from ..drawing.rotated_image import DrawImage
+from ..drawing.bar import DrawBar
+from ...services.settings import settings
+from ..gtk_utils import weak_connect
+from ...core.forecast import nearest_hour_index
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -213,7 +213,7 @@ class HourlyDetails(Gtk.Grid):
         return item_box
 
     def _add_time_label(self, box, index, hourly_data, nearest_idx):
-        from .services.selected_city import get_timezone_from_selected_city
+        from ...services.selected_city import get_timezone_from_selected_city
         from zoneinfo import ZoneInfo
         tz_str = get_timezone_from_selected_city()
         try:

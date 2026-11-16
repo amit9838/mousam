@@ -4,7 +4,7 @@ import cairo
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk  # noqa: E402
 
-from .CORE_GTKUtils import safe_set_draw_func, theme_rgba  # noqa: E402
+from ..gtk_utils import safe_set_draw_func, theme_rgba  # noqa: E402
 
 # Space kept free above and below the track
 PADDING_Y = 6

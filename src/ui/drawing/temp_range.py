@@ -4,7 +4,7 @@ import cairo
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk  # noqa: E402
 
-from .CORE_GTKUtils import safe_set_draw_func, theme_rgba  # noqa: E402
+from ..gtk_utils import safe_set_draw_func, theme_rgba  # noqa: E402
 
 BAR_HEIGHT = 6
 LOW_RGB = (0.38, 0.7, 1)    # the blue used across the drawings

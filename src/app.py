@@ -1,4 +1,4 @@
-# main.py
+# app.py
 #
 # Copyright 2024 Amit
 #
@@ -20,7 +20,7 @@
 import os
 import sys
 import gi
-from .mousam import WeatherMainWindow
+from .ui.window import WeatherMainWindow
 from .services.settings import settings
 from .config import APP_ID
 from .core.log import get_logger, log_manager
@@ -50,7 +50,7 @@ class WeatherApplication(Adw.Application):
         self.create_action("show-normal", self._on_show_normal)
         
         # Centralized auto-refresh
-        from .CORE_GTKUtils import AutoRefreshTimer
+        from .ui.gtk_utils import AutoRefreshTimer
         self.auto_refresh = AutoRefreshTimer(self._on_auto_refresh_tick)
         
         self.connect("window-removed", self._on_window_removed)
@@ -106,7 +106,7 @@ class WeatherApplication(Adw.Application):
     def _on_overview_changed(self, engine, announce: bool) -> None:
         """Send the announcement as a notification when the main window can't
         be seen (minimized, or compact mode); otherwise its overview shows it."""
-        from .CORE_GTKUtils import is_on_screen, show_overview_notification
+        from .ui.gtk_utils import is_on_screen, show_overview_notification
 
         insight = engine.current()
         if not announce or insight is None or not settings.show_notifications:
@@ -127,7 +127,7 @@ class WeatherApplication(Adw.Application):
         self.main_window.hide()
         
         if not self.compact_window:
-            from .UI_CompactWeather import CompactWeatherWindow
+            from .ui.compact_window import CompactWeatherWindow
             self.compact_window = CompactWeatherWindow(
                 self, 
                 bg_classes=bg_classes,

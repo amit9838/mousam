@@ -8,27 +8,27 @@ from gi.repository import Gtk, Adw, Gio
 from gettext import gettext as _
 
 # Module imports
-from .services.selected_city import get_time_difference, local_time_data
-from .core.locations import parse_coords_key
-from .CORE_Icons import bg_css
-from .windowAbout import show_about_window
-from .windowPreferences import WeatherPreferences
-from .shortcutsDialog import ShortcutsDialog
-from .windowLocations import WeatherLocations
-from .windowAirQuality import AirQualityDialog  # noqa: E402
-from .core.log import get_logger
+from ..services.selected_city import get_time_difference, local_time_data
+from ..core.locations import parse_coords_key
+from .icons import bg_css
+from .dialogs.about import show_about_window
+from .dialogs.preferences import WeatherPreferences
+from .dialogs.shortcuts import ShortcutsDialog
+from .dialogs.locations import WeatherLocations
+from .dialogs.air_quality import AirQualityDialog  # noqa: E402
+from ..core.log import get_logger
 
 logger = get_logger("ui")
 
 # Frontend Components
-from .UI_CurrentCond import CurrentCondition
-from .UI_HourlyDetails import HourlyDetails
-from .UI_Forecast import Forecast
-from .UI_CardSquare import humidity_card, pressure_card, uv_card, wind_card
-from .UI_CardDayNight import CardDayNight
-from .UI_CardAirPollution import CardAirPollution
+from .sections.current import CurrentCondition
+from .sections.hourly import HourlyDetails
+from .sections.forecast import Forecast
+from .cards.metric import humidity_card, pressure_card, uv_card, wind_card
+from .cards.day_night import CardDayNight
+from .cards.air_quality import CardAirPollution
 
-from .services.settings import settings
+from ..services.settings import settings
 
 
 class WeatherMainWindow(Adw.ApplicationWindow):
@@ -53,7 +53,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
         # Centralized Data Handling
-        from .state.weather_store import weather_store
+        from ..state.weather_store import weather_store
         self._status_handler_id = weather_store.connect("notify::status", self._on_store_status)
         
         # Settings setup
@@ -78,7 +78,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         )
 
     def _on_selected_city_changed(self, *args):
-        from .services.selected_city import get_selected_city_name
+        from ..services.selected_city import get_selected_city_name
         city = get_selected_city_name()
         logger.info(f"Location switched to: {city}")
         self._start_data_refresh()
@@ -189,7 +189,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             return
 
         self._update_view_state("loader")
-        from .state.weather_store import weather_store
+        from ..state.weather_store import weather_store
         weather_store.refresh()
 
     def _on_store_status(self, store, _pspec):
@@ -213,7 +213,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         if child:
             self.main_stack.remove(child)
 
-        from .state.weather_store import weather_store
+        from ..state.weather_store import weather_store
         if not weather_store.is_ready:
             return
 
@@ -366,7 +366,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # Removed _setup_auto_refresh, logic moved to utils.AutoRefreshTimer
 
     def _pre_refresh_cleanup(self):
-        from .services import air_quality, open_meteo
+        from ..services import air_quality, open_meteo
 
         # Evict old content widget tree (weak refs in draw funcs handle GC cleanly)
         child = self.main_stack.get_child_by_name("content")
@@ -390,7 +390,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     def _on_window_destroy(self, *args):
         # weather_store outlives this window (e.g. switching to compact mode)
-        from .state.weather_store import weather_store
+        from ..state.weather_store import weather_store
         weather_store.disconnect(self._status_handler_id)
 
         app = self.get_application()
@@ -417,11 +417,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         show_about_window(self)
 
     def _on_action_air_quality(self, action, param):
-        from .state.weather_store import weather_store
+        from ..state.weather_store import weather_store
         if weather_store.air_pollution is None:
             return
         AirQualityDialog(weather_store.air_pollution).present(self)
 
     def _on_action_open_logs(self, action, param):
-        from .core.log import log_manager
+        from ..core.log import log_manager
         log_manager.open_log_file()
