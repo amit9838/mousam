@@ -116,16 +116,9 @@ class WeatherApplication(Adw.Application):
         show_overview_notification(self, insight)
 
     def _on_auto_refresh_tick(self):
-        from .CORE_Networking import fetch_all_weather_data_async
-
-        def on_success():
-            # Notify all windows to refresh UI
-            if self.main_window:
-                self.main_window._on_data_fetch_success(is_auto=True)
-            if self.compact_window:
-                self.compact_window.update_ui()
-                
-        fetch_all_weather_data_async(on_success=on_success)
+        # The windows show the result: they listen to the store's status
+        from .CORE_weatherData import weather_store
+        weather_store.refresh(check_online=False)
 
     def _on_show_compact(self, *args):
         if not self.main_window: return

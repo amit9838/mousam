@@ -12,7 +12,6 @@ from .settings import settings  # noqa: E402
 from .CORE_Icons import condition, bg_css, create_weather_icon  # noqa: E402
 from .CORE_Levels import classify_aqi  # noqa: E402
 from .CORE_Helpers import (  # noqa: E402
-    check_internet_connection,
     get_selected_city_name,
     get_timezone_from_selected_city,
 )
@@ -76,8 +75,8 @@ class CompactWeather(Gtk.Overlay):
         self._setup_back_button()
 
         from .CORE_weatherData import weather_manager
-        self._ready_handler_id = weather_manager.connect(
-            "notify::is-ready", self._on_weather_manager_ready
+        self._status_handler_id = weather_manager.connect(
+            "notify::status", self._on_store_status
         )
         self.connect("destroy", self._on_destroy)
 
@@ -92,18 +91,17 @@ class CompactWeather(Gtk.Overlay):
             self._build_content()
             return
 
-        if not check_internet_connection(force=True):
-            self._show_error(_("No Internet"))
-            return
-
         self._show_page("loader")
-        from .CORE_Networking import fetch_all_weather_data_async
-        fetch_all_weather_data_async(on_error=self._show_error)
+        weather_manager.refresh()
 
-    def _on_weather_manager_ready(self, manager, _pspec) -> None:
-        """Build the content once per fetch (is-ready is emitted on the main loop)."""
-        if manager.is_ready:
+    def _on_store_status(self, store, _pspec) -> None:
+        """Show what the last fetch brought (status changes on the main loop)."""
+        if store.status == "ready":
             self._build_content()
+        elif store.status == "offline":
+            self._show_error(_("No Internet"))
+        elif store.status == "error":
+            self._show_error(store.error)
 
     # ---------- Pages ----------
 
@@ -278,7 +276,7 @@ class CompactWeather(Gtk.Overlay):
     def _on_destroy(self, *_args) -> None:
         self._stop_clock()
         from .CORE_weatherData import weather_manager
-        weather_manager.disconnect(self._ready_handler_id)
+        weather_manager.disconnect(self._status_handler_id)
 
 
 class CompactWeatherWindow(Adw.ApplicationWindow):

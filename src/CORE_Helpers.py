@@ -4,7 +4,7 @@ import requests
 from .settings import settings
 from gettext import gettext as _
 from .configs import TIMEOUT, INTERNET_CACHE_TTL, DEFAULT_TIMEZONE, DOMAINS
-from .CORE_Locations import JsonProcessor, find_selected_city
+from .CORE_Locations import JsonProcessor, find_selected_city, parse_coords_key
 from .CORE_Logging import get_logger
 from .CORE_Timezones import time_difference
 
@@ -45,8 +45,7 @@ def check_internet_domain(url):
         return False
 
 def get_cords():
-    selected_city_ = settings.selected_city
-    return [float(x) for x in selected_city_.split(",")]
+    return parse_coords_key(settings.selected_city)
 
 def get_timezone_from_selected_city():
     added_cities = JsonProcessor.str_list_to_json(settings.added_cities)

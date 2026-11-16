@@ -91,6 +91,11 @@ class LocationData:
         return {LocationData.get_coords_key(city) for city in cities if city}
 
 
+def parse_coords_key(key: str) -> List[float]:
+    """[latitude, longitude] from a "lat,lon" key (as get_coords_key writes it)."""
+    return [float(x) for x in key.split(",")]
+
+
 def find_selected_city(cities: List[Dict], selected_city: str) -> Optional[Dict]:
     """The city whose "lat,lon" key is `selected_city`, or None."""
     for city in cities:

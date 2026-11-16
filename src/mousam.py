@@ -8,8 +8,7 @@ from gi.repository import Gtk, Adw, Gio
 from gettext import gettext as _, pgettext as C_
 
 # Module imports
-from .CORE_Helpers import check_internet_connection, local_time_data
-from .CORE_Networking import fetch_all_weather_data_async
+from .CORE_Helpers import local_time_data
 from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
@@ -50,11 +49,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._use_dynamic_bg()
 
         # Initial Data Load
-        self._start_data_refresh(is_initial=True)
+        self._start_data_refresh()
 
         # Centralized Data Handling
         from .CORE_weatherData import weather_manager
-        self._ready_handler_id = weather_manager.connect("notify::is-ready", self._on_weather_manager_ready)
+        self._status_handler_id = weather_manager.connect("notify::status", self._on_store_status)
         
         # Settings setup
         settings.connect(
@@ -182,39 +181,25 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     # ================= Data Handling =================
 
-    def _start_data_refresh(self, is_initial=False, force_welcome=False, is_auto=False):
-        if force_welcome:
-            self._update_view_state("welcome")
-            return
-
-        # Force internet check if manually triggered
-        if not check_internet_connection(force=not is_auto):
-            self._update_view_state("error_no_internet")
-            return
-
-
+    def _start_data_refresh(self):
+        """Show the loader and fetch; _on_store_status shows the result."""
         if not self.added_cities:
             self._update_view_state("welcome")
             return
 
-
         self._update_view_state("loader")
-        fetch_all_weather_data_async(
-            on_success=lambda: self._on_data_fetch_success(is_auto),
-            on_error=lambda err: self._update_view_state("error_api", err)
-        )
+        from .CORE_weatherData import weather_store
+        weather_store.refresh()
 
-    # _worker_fetch_data moved to utils.fetch_all_weather_data_async
-
-    def _on_weather_manager_ready(self, manager, _pspec):
-        """Render the grid once per fetch (is-ready is emitted on the main loop)."""
-        if manager.is_ready:
+    def _on_store_status(self, store, _pspec):
+        """Show what the last fetch brought (status changes on the main loop)."""
+        if store.status == "ready":
             self._render_weather_grid()
-
-    def _on_data_fetch_success(self, is_auto=False):
-        """Called on Main Thread after the worker has populated weatherData."""
-        # Note: self._on_weather_manager_ready handles rendering via signals
-        self._update_view_state("content")
+            self._update_view_state("content")
+        elif store.status == "offline":
+            self._update_view_state("error_no_internet")
+        elif store.status == "error":
+            self._update_view_state("error_api", store.error)
 
     # ================= UI Rendering =================
 
@@ -445,7 +430,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     def _on_window_destroy(self, *args):
         # weather_manager outlives this window (e.g. switching to compact mode)
         from .CORE_weatherData import weather_manager
-        weather_manager.disconnect(self._ready_handler_id)
+        weather_manager.disconnect(self._status_handler_id)
 
         app = self.get_application()
         if app and hasattr(app, "main_window"):
