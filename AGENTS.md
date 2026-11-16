@@ -73,9 +73,9 @@ flatpak run io.github.amit9838.mousam
 
 # Checks
 ruff check src                       # lint, settings in ruff.toml (see "Linting and Validation")
-python3 -m py_compile src/*.py      # syntax check
+python3 -m compileall -q src        # syntax check, subfolders included
 glib-compile-schemas --strict --dry-run data/
-python3 tests/test_overview_rules.py   # overview rules and planner, no build needed
+python3 tests/test_overview_rules.py   # one test file, no build needed (see "Testing")
 meson test -C builddir --print-errorlogs   # what CI runs: unit tests + gschema, appdata, desktop validation
 appstreamcli validate data/io.github.amit9838.mousam.appdata.xml.in
 desktop-file-validate data/io.github.amit9838.mousam.desktop.in
@@ -89,7 +89,7 @@ gsettings set io.github.amit9838.mousam debug-mode true   # logs to the console 
 python3 src/test_memory_leak.py --duration 10              # watches RSS across auto-refreshes (local only, git-ignored)
 ```
 
-Run the installed app, not `python3 src/main.py`: `configs.py` and `CORE_Icons.py` are filled in by Meson (`@icon_location@`), the GSettings schema must be installed, and `src/` is imported as the `mousam` package. After changing any source, run `meson install -C builddir` again.
+Run the installed app, not `python3 src/app.py`: `config.py` and `ui/icons.py` are filled in by Meson (`@VERSION@`, `@icon_location@`), the GSettings schema must be installed, and `src/` is imported as the `mousam` package. After changing any source, run `meson install -C builddir` again.
 
 ---
 
@@ -129,41 +129,49 @@ Do not add new libraries without user approval. Prefer what GTK, libadwaita, GLi
 
 ## Architecture Guidelines
 
-Use this structure unless there is a strong reason to change it. The file prefix tells you the layer.
+Use this structure unless there is a strong reason to change it. `src/` is installed as the `mousam` package, in four layers; the folder is the layer.
 
 ```txt
 src/
-  main.py                 WeatherApplication (Adw.Application): actions, CSS, auto-refresh, normal ↔ compact switching
-  mousam.py               WeatherMainWindow: header bar, view states (loader, welcome, errors, content), the card grid
+  app.py                  WeatherApplication (Adw.Application): actions, CSS, auto-refresh, normal ↔ compact switching
+  config.py               constants: app ID, version, URLs, timeouts, cache sizes, refresh options, thresholds (Meson fills in VERSION)
   mousam.in               launcher script (Meson fills in paths, sets up gettext, loads the GResource)
-  window*.py              secondary windows: Locations (+ city search), Preferences, About, Air Quality (details)
-  shortcutsDialog.py/.ui  keyboard shortcuts (Gtk.Template from the GResource)
-  UI_*.py                 sections and cards: CurrentCond, HourlyDetails, Forecast, CardSquare, CardDayNight, CardAirPollution, CompactWeather
-  UI_CompDraw*.py         small Cairo-drawn pieces used by the cards
-  CORE_weatherData.py     WeatherStore (weather_store): the selected city's data and loading status; fetches on worker threads
-  CORE_Levels.py          classify_* and the AQI helpers: level words and colour classes (no GTK)
-  CORE_Units.py           conversions the API doesn't do (visibility) (no GTK)
-  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low and sun times (no GTK)
-  CORE_Locations.py       LocationData, JsonProcessor, find_selected_city: saved cities (no GTK)
-  CORE_Timezones.py       time_difference: a city's time by zone name (no GTK)
-  CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
-  CORE_OverviewRules.py   the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook (no GTK)
-  CORE_OverviewMessages.py the overview wordings: several per message key, picked by MessageBook (no GTK)
-  CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
-  CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
-  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
-  CORE_Helpers.py         coordinates, name and timezone of the selected city (from settings)
-  CORE_Network.py         check_internet_connection
-  CORE_Cache.py           @cached: TTL + LRU cache for API calls
-  CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
-  API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity; plain fetch_* functions
-  CORE_ForecastClient.py  ForecastClient: the Protocol API_Weather fills and tests fake (no GTK)
-  configs.py              constants: app ID, version, URLs, timeouts, cache sizes, refresh options, AQI thresholds
-  settings.py             the Settings singleton: one property per GSettings key
-  css/style.css           all custom styling
   mousam.gresource.xml    files bundled into the GResource
+  css/style.css           all custom styling
+  core/                   logic and data, no GTK, no requests, no settings
+    models.py             WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
+    levels.py             classify_*, the AQI helpers, compass_direction: level words and colour classes
+    units.py              conversions the API doesn't do (visibility)
+    forecast.py           nearest hour, rain drop count, snow codes, rain or snow, today's high/low and sun times
+    locations.py          LocationData, JsonProcessor, parse_coords_key, find_selected_city: saved cities
+    timezones.py          time_difference: a city's time by zone name
+    cache.py              @cached: TTL + LRU cache for API calls
+    log.py                LogManager (set up once by app.main, given the debug mode) and get_logger
+    forecast_client.py    ForecastClient: the Protocol services/open_meteo.py fills and tests fake
+    overview/rules.py     the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook, AnnouncePlanner
+    overview/messages.py  the overview wordings: several per message key, picked by MessageBook
+  services/               the outside world: HTTP, GSettings, the network
+    open_meteo.py         the forecast API: fetch_current, fetch_hourly, fetch_daily, fetch_many, clear_cache
+    air_quality.py        the air-quality API: fetch_air_quality, clear_cache
+    geocoding.py          the city search: find_city
+    network.py            check_internet_connection
+    settings.py           the Settings singleton: one property per GSettings key
+    selected_city.py      coordinates, name and time zone of the selected city (read from settings)
+  state/                  what is loaded now; GObjects the UI listens to
+    weather_store.py      WeatherStore (weather_store): the selected city's data and loading status; fetches on worker threads
+    overview_engine.py    OverviewEngine (overview_engine): when the overview runs and is announced; publishes "overview-changed"
+  ui/                     everything on screen
+    window.py             WeatherMainWindow: header bar, view states (loader, welcome, errors, content), the card grid
+    compact_window.py     CompactWeather, CompactWeatherWindow: the compact window
+    icons.py              weather icon paths (default + Material), background CSS classes, condition names per WMO code
+    gtk_utils.py          AutoRefreshTimer, weak_connect, safe_set_draw_func, Cairo text helpers, create_toast, is_on_screen, show_overview_notification
+    sections/             current.py (CurrentCondition, the overview pill), hourly.py (HourlyDetails), forecast.py (Forecast)
+    cards/                metric.py (CardSquare and the four current-conditions cards), day_night.py, air_quality.py
+    drawing/              small Cairo-drawn pieces used by the cards (level_bar, bar, line_graph, rotated_image, day_night, …)
+    dialogs/              preferences.py, locations.py (+ city search), about.py, air_quality.py, shortcuts.py
+    templates/            Gtk.Template .ui files (shortcuts.ui)
   test_memory_leak.py     local RSS watcher (git-ignored, not installed)
-tests/                    plain-Python unit tests, no GTK (run by meson test; see "Testing")
+tests/                    unit tests and their fakes (run by meson test; see "Testing")
 data/                     gschema, .desktop, appdata, icons (default_icons, material_icons), Flatpak dependency
 po/                       translations (POTFILES, LINGUAS, mousam.pot, *.po)
 snap/                     Snap packaging (snapcraft.yaml)
@@ -174,31 +182,39 @@ screenshots/              images for README and appdata
 
 ### Layers
 
-Each layer may import only the ones below it:
-
 ```txt
-main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_Levels, CORE_Units, CORE_Forecast, CORE_Locations, CORE_Timezones, CORE_ForecastClient, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
+app.py  →  ui  →  state  →  services  →  core  →  config
 ```
 
-- UI code never calls `API_*` directly. It reads `weather_store` (from `CORE_weatherData`) and asks for a refresh with `weather_store.refresh()`. The one exception is the city search in `windowLocations.py`, which calls `find_city`.
-- `API_*` modules only build URLs, call `requests` and return the JSON (with unit conversions the API doesn't do itself). No GTK, no models, no `settings`: every input is an argument (`fetch_current(lat, lon, unit)`), and `clear_cache()` forgets their cached responses.
-- `CORE_weatherData` turns raw JSON into models and adds derived values (levels from `CORE_Levels`, nearest-hour fields from `CORE_Forecast`). No widgets.
-- Read and write saved values only through `settings` (`src/settings.py`), never with a new `Gio.Settings(...)`.
-- Constants (URLs, timeouts, thresholds, option lists) go in `configs.py`, not inline.
+Each layer may import only the ones to its right.
 
-Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (the store is usually imported this way); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
+| Layer | Holds | Never |
+| --- | --- | --- |
+| `core/` | models, units, levels, forecast logic, overview rules, cache, logging | `gi`, `requests`, `settings` |
+| `services/` | Open-Meteo and geocoding HTTP, the internet check, the GSettings wrapper | widgets, `GLib.idle_add` |
+| `state/` | `WeatherStore` and `OverviewEngine`: what is loaded now, loading/error status, `refresh()` | widgets |
+| `ui/` | windows, sections, cards, drawings, dialogs, `.ui` templates | HTTP calls |
 
-**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_ForecastClient`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. The `API_*` modules are GTK-free too and need only `requests`. `CORE_Icons` imports GTK (icons), and `CORE_Helpers` reads `settings` (GSettings), so logic you want to test doesn't belong there.
+- UI code never calls `services/` HTTP functions directly. It reads `weather_store` (from `state/weather_store.py`) and asks for data with `weather_store.refresh()`. The one exception is the city search in `ui/dialogs/locations.py`, which calls `find_city`.
+- The API modules (`services/open_meteo.py`, `air_quality.py`, `geocoding.py`) only build URLs, call `requests` and return the JSON (with unit conversions the API doesn't do itself). No GTK, no models, no `settings`: every input is an argument (`fetch_current(lat, lon, unit)`), and `clear_cache()` forgets their cached responses.
+- The store turns raw JSON into models and adds derived values (levels from `core/levels.py`, this hour's fields from `core/forecast.py`). No widgets.
+- Read and write saved values only through `settings` (`services/settings.py`), never with a new `Gio.Settings(...)`.
+- Constants (URLs, timeouts, thresholds, option lists) go in `config.py`, not inline.
+- Imports inside `src/` are relative, from the file's own place: `from ..core.levels import classify_aqi` in `ui/window.py`, `from ...config import TIMEOUT` in `ui/cards/metric.py`.
+
+Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (the store is usually imported this way in `ui/window.py`); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
+
+**GTK-free modules.** Everything in `core/`, plus `config.py`, imports no `gi` (`core/log.py` imports it only inside the methods that find the cache folder and open the log), so tests import it without a display. It doesn't read `settings` either: a value it needs from there (the unit, the 24h clock, debug mode) is an argument. The API modules in `services/` need only `requests`. `ui/icons.py` imports GTK, and `services/selected_city.py` reads `settings`, so logic you want to test doesn't belong there.
 
 ### Adding a file
 
-A new module under `src/` must be added to:
+A new module goes in the folder of its layer, with a lowercase `snake_case` name that isn't a stdlib module's (`log.py`, not `logging.py`). Add it to:
 
-- `mousam_sources` in [src/meson.build](src/meson.build), or it won't be installed
+- the `meson.build` of its folder (each folder under `src/` has one listing its files), or it won't be installed. A new folder needs an `__init__.py`, its own `meson.build`, and a `subdir()` in the parent's
 - [po/POTFILES](po/POTFILES), if it has translatable strings
-- [src/mousam.gresource.xml](src/mousam.gresource.xml), if it's a `.ui` or other bundled resource
+- [src/mousam.gresource.xml](src/mousam.gresource.xml), if it's a `.ui` file (in `ui/templates/`) or another bundled resource
 
-### UI_* components
+### UI components
 
 Create a component only when:
 
@@ -212,35 +228,37 @@ When unsure, ask:
 
 > Should this UI be extracted into a reusable component, or should I keep it inside the current window for now?
 
-**Reuse before you build.** Check `src/UI_*.py` and `src/CORE_*.py` before writing UI by hand. These already exist:
+**Reuse before you build.** Check `ui/`, `core/` and `state/` before writing UI by hand. These already exist:
 
 | Need | Use |
 | --- | --- |
-| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`); the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
+| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`) in `ui/cards/metric.py`; the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
 | Sun / moon card | `CardDayNight(daily, timezone_name, latitude).card` |
 | Air quality card | `CardAirPollution(air).card` |
 | Hourly graphs with tabs | `HourlyDetails(hourly)` |
 | Tomorrow / 7-day list | `Forecast(daily, hourly)` |
-| Vertical level gauge | `DrawLevelBar` |
-| Small bar | `DrawBar` |
-| Line graph with "now" marker | `LineGraph` |
-| Rotated icon (wind direction) | `DrawImage` |
-| Day/night arc | `DrawDayNight` |
+| Vertical level gauge | `DrawLevelBar(...).widget` (`ui/drawing/level_bar.py`) |
+| Small bar | `DrawBar(...).widget` (`ui/drawing/bar.py`) |
+| Line graph with "now" marker | `LineGraph(...).widget` |
+| Rotated icon (wind direction) | `DrawImage(...).widget` (`ui/drawing/rotated_image.py`) |
+| Day/night arc | `DrawDayNight(...).widget` |
 | Pollutant level bar | `PollutionBar` (a `Gtk.DrawingArea` subclass) |
-| A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max)` |
+| A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max).widget` |
 | Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).widget` |
-| Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `CORE_GTKUtils` |
+| Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `ui/gtk_utils.py` |
 | Chance of rain as one to four drops | `DrawRainDrops(count, height).widget` (give it the `text-rain` class; `count` from `rain_drop_count`) |
 | Snow as one to four snowflakes | `DrawSnowflakes(count, height).widget` (same layout and class as the drops) |
-| A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
-| A condition's name | `condition[code]` in `CORE_Icons` |
+| A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` in `ui/icons.py` |
+| A condition's name | `condition[code]` in `ui/icons.py` |
 | A background for a condition | `bg_css[code]` (append `n` to the code at night) |
-| A short message | `create_toast(text)` from `CORE_GTKUtils`, added to the window's `Adw.ToastOverlay` |
-| Loading, empty, error page | `Adw.StatusPage`, as `_update_view_state` in `mousam.py` builds them |
+| A level word or colour for a value | `classify_*`, `aqi_level_class`, `compass_direction` in `core/levels.py` |
+| "Which hour is now", today's high/low or sun times | `nearest_hour_index`, `today_high_low`, `today_sun_times` in `core/forecast.py` |
+| A short message | `create_toast(text)` from `ui/gtk_utils.py`, added to the window's `Adw.ToastOverlay` |
+| Loading, empty, error page | `Adw.StatusPage`, as `_update_view_state` in `ui/window.py` builds them |
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
 | A Cairo draw function | `safe_set_draw_func(area, self, "draw")` |
-| A one-line summary of the coming hours | `overview_engine` (`CORE_Overview`): read `current()` and `heading`, listen to `overview-changed` |
-| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `CORE_OverviewRules` |
+| A one-line summary of the coming hours | `overview_engine` (`state/overview_engine.py`): read `current()` and `heading`, listen to `overview-changed` |
+| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `core/overview/rules.py` |
 
 Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`"61n"`). A code must be in `icons_default`, `icons_material`, `bg_css` and `condition` together.
 
@@ -248,13 +266,13 @@ Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`
 
 The overview is the pill under the current conditions. Its rules are written in plain English in [docs/overview-rules.md](docs/overview-rules.md), the **source of truth**: change that file first, then the code and the numbers to match. If the two disagree, the code is wrong.
 
-- **Wordings** (`CORE_OverviewMessages.py`): a map of message key → several wordings (4–5 for common messages, 2 for rare safety ones). Rules only use keys (`ctx.messages.say("rain.start", time=…, chance=…)`, `say_count` for plurals). All wordings of a key say the same thing with the same placeholders.
-- **Rules** (`CORE_OverviewRules.py`, no GTK) look at an `OverviewContext` and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
-- **Planner** (`AnnouncePlanner` in `CORE_OverviewRules.py`, no GTK): decides which insight to show and when the pill opens. The next opening is `OVERVIEW_ANNOUNCE_BASE_MINUTES ÷ (1 + score)` (score = sum of priorities ÷ 100), so a busy forecast opens it more often; each opening shows the insight whose turn it is (priority × time since last shown), so none is thrown away; something turning severe opens at once (once, not on every flicker).
-- **Engine** (`CORE_Overview.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the shown insight stops being true (silent text update) or when the planner's next opening is due. Its memory survives refreshes (a refresh never opens the pill or resets the turns); only a location change or turning the setting off starts over. Each opening draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
-- **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`main.py`) sends it as a notification (`show_overview_notification`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
-- **Section** (`UI_CurrentCond.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
-- **Numbers** (thresholds, priorities, open times, republish intervals) live in `configs.py` under "Overview", in metric; rules convert imperial data before comparing.
+- **Wordings** (`core/overview/messages.py`): a map of message key → several wordings (4–5 for common messages, 2 for rare safety ones). Rules only use keys (`ctx.messages.say("rain.start", time=…, chance=…)`, `say_count` for plurals). All wordings of a key say the same thing with the same placeholders.
+- **Rules** (`core/overview/rules.py`, no GTK) look at an `OverviewContext` and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
+- **Planner** (`AnnouncePlanner` in `core/overview/rules.py`, no GTK): decides which insight to show and when the pill opens. The next opening is `OVERVIEW_ANNOUNCE_BASE_MINUTES ÷ (1 + score)` (score = sum of priorities ÷ 100), so a busy forecast opens it more often; each opening shows the insight whose turn it is (priority × time since last shown), so none is thrown away; something turning severe opens at once (once, not on every flicker).
+- **Engine** (`state/overview_engine.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the shown insight stops being true (silent text update) or when the planner's next opening is due. Its memory survives refreshes (a refresh never opens the pill or resets the turns); only a location change or turning the setting off starts over. Each opening draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
+- **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`app.py`) sends it as a notification (`show_overview_notification`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
+- **Section** (`ui/sections/current.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
+- **Numbers** (thresholds, priorities, open times, republish intervals) live in `config.py` under "Overview", in metric; rules convert imperial data before comparing.
 - Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`. The tests in [tests/test_overview_rules.py](tests/test_overview_rules.py) do this; add a case there when you add or change a rule.
 
 ---
@@ -263,29 +281,12 @@ The overview is the pill under the current conditions. Its rules are written in 
 
 How to structure new code so it stays reusable and testable. Some existing code doesn't follow these yet; don't rewrite it as a side effect of another task. Bring it in line in a separate `refactor` commit, one area at a time.
 
-### Where the architecture is heading
+### The rules the layers depend on
 
-The current layout (above) is moving, step by step, to four layers in a lowercase Python package:
-
-```txt
-ui  →  state  →  services  →  core
-```
-
-| Layer | Holds | Never |
-| --- | --- | --- |
-| `core/` | models, units, levels, forecast logic, overview rules, cache | `gi`, `requests`, `settings` |
-| `services/` | Open-Meteo and geocoding HTTP, internet check, the GSettings wrapper | widgets, `GLib.idle_add` |
-| `state/` | `WeatherStore` and `OverviewEngine`: what is loaded now, loading/error status, `refresh()` | widgets |
-| `ui/` | windows, sections, cards, drawings, dialogs, `.ui` templates | HTTP calls |
-
-Until a module has moved, it keeps its current name and place. Write new code so it already fits the layer it will land in: logic that would go in `core` imports no `gi`, a fetch function takes every input as an argument, a widget gets its data passed in.
-
-The key rules of the target, which new code should already follow:
-
-1. **One source of truth.** One GObject store holds the selected city's data and its loading status. The UI reads it, binds to it and asks it to refresh; nothing else keeps fetched data.
+1. **One source of truth.** `weather_store` holds the selected city's data and its loading status. The UI reads it and asks it to refresh; nothing else keeps fetched data.
 2. **Threads stay inside the store.** It fetches on a worker thread and hands the result to the main loop before it sets a property or emits. UI code never sees a thread.
 3. **Services are pure functions.** Inputs as arguments (`lat`, `lon`, `unit`), JSON or `None` out, with a timeout and `@cached`.
-4. **Widgets are given data**, and windows and dialogs move their layout into `Gtk.Template` `.ui` files over time.
+4. **Widgets are given data**, and windows and dialogs move their layout into `Gtk.Template` `.ui` files (`ui/templates/`) over time.
 
 ### Choosing the right tool
 
@@ -308,14 +309,14 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 - **Interface segregation:** ask for the smallest thing you need. A card takes the air-quality model, not the whole store.
 - **Dependency inversion:** pass dependencies in (`WeatherStore(client=…)`), so tests can pass fakes. No containers or frameworks.
 
-### Refactoring toward the target
+### Refactoring
 
 - **Fix behaviour in place first, then extract logic, then move files.** Never mix them in one commit.
 - A file move is mechanical: `git mv` plus import updates, with no code changes in the same commit, so review stays small and `git blame` keeps working.
-- A move updates everything that lists paths: `src/meson.build` (and a `meson.build` per new subfolder), `mousam.in`, `po/POTFILES`, `mousam.gresource.xml`, the test import shim and this file. Then check that the Flatpak and Snap builds still start.
-- Don't name a module after a stdlib one (`logging.py`, `time.py`, `json.py`). Use `log.py`, `timezones.py`.
+- A move updates everything that lists paths: the `meson.build` of each folder involved, `mousam.in`, `po/POTFILES`, `mousam.gresource.xml` (a moved `.ui` keeps its resource path with an `alias`), the tests' imports and this file. Then check that the Flatpak and Snap builds still start: lint and tests don't see resource paths.
 - A temporary alias that keeps old imports working (`old_name = new_name`) is fine for one step. Remove it once the callers are updated.
 - No UI or behaviour change inside a refactor commit. A bug you find along the way gets its own `fix` commit.
+- Still to do, each as its own refactor: split `core/overview/rules.py` along its classes (context, hour tests, rules, planner); move `AutoRefreshTimer` to `state/` and `show_overview_notification` to `ui/notifications.py`; move window and dialog layouts into `ui/templates/`.
 
 ### Composition over inheritance
 
@@ -325,22 +326,22 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 
 ### Components
 
-- **Sections and cards that have state, timers or signal handlers** subclass a GTK widget (`Gtk.Box`, `Gtk.Grid`), as `CurrentCondition` and `Forecast` do. Their lifetime is then the widget's: connect on `map`, disconnect and remove sources on `unmap`.
+- **Sections and cards that have state, timers or signal handlers** subclass a GTK widget (`Gtk.Box`, `Gtk.Grid`), as `CurrentCondition` and `Forecast` (`ui/sections/`) do. Their lifetime is then the widget's: connect on `map`, disconnect and remove sources on `unmap`.
 - **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands it out as `.widget` (`PollutionBar` is the one that subclasses `Gtk.DrawingArea` instead).
 - A component is ready to use when its constructor returns: no separate `create_card()` step.
 
 ### Pass data in
 
-- A component gets its data through its constructor (`CardAirPollution(air_data, tz)`), from the window that builds the grid. It doesn't import `weather_store` or read `settings` deep inside itself to find it. This makes components reusable (main and compact window), buildable with test data, and removes the lazy imports that only exist to dodge import cycles.
+- A component gets its data through its constructor (`CardAirPollution(air)`, `Forecast(daily, hourly)`), from the window that builds the grid. It doesn't import `weather_store` or read `settings` deep inside itself to find it. This makes components reusable (main and compact window), buildable with test data, and removes the lazy imports that only exist to dodge import cycles.
 - Reading `settings` for display preferences (units, clock, icon theme) at build time is fine; reacting to a change is the owner's job (rebuild, or a `changed::` handler on `map`).
 - The shared instances (`settings`, `weather_store`, `overview_engine`, `log_manager`) stay. The problem is reaching for them from everywhere, not that they exist.
 
 ### Separate logic from widgets
 
-- Anything that is a decision rather than a widget goes in a plain function or `@staticmethod` in a GTK-free module: classifying a level, how many drops a rain chance gets, today's high and low, whether a code is snow. Widgets call it; tests test it.
-- Level classification belongs in `CORE_Levels` (`classify_*`), not in `UI_*`; forecast decisions in `CORE_Forecast`. A new set of GTK-free helpers can get its own `CORE_*` module.
-- `API_*` stay pure: take every input as an argument (coordinates, unit), return JSON. They don't read `settings`. Expose module functions or public methods; never call a `_private` method from another module.
-- Don't mix layers in one helper module: GTK helpers (toasts, widgets) go in `CORE_GTKUtils`, not next to network or time-zone helpers.
+- Anything that is a decision rather than a widget goes in a plain function in `core/`: classifying a level, how many drops a rain chance gets, today's high and low, whether a code is snow. Widgets call it; tests test it.
+- Level classification belongs in `core/levels.py` (`classify_*`), not in `ui/`; forecast decisions in `core/forecast.py`. A new set of GTK-free helpers can get its own module in `core/`.
+- The API modules in `services/` stay pure: take every input as an argument (coordinates, unit), return JSON. They don't read `settings`. Expose module functions or public methods; never call a `_private` method from another module.
+- Don't mix layers in one helper module: GTK helpers (toasts, widgets) go in `ui/gtk_utils.py`, not next to network or time-zone helpers.
 
 ### Signals and threads
 
@@ -349,7 +350,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 
 ### Reuse, don't copy
 
-- When the same block appears a second time, extract it into a helper; a third copy is a bug waiting to happen. For example, "which hour is now" is one function (`nearest_hour_index` in `CORE_Forecast`), not a loop in each module.
+- When the same block appears a second time, extract it into a helper; a third copy is a bug waiting to happen. For example, "which hour is now" is one function (`nearest_hour_index` in `core/forecast.py`), not a loop in each module.
 - A helper that connects to a signal on someone's behalf does the hard parts once: it doesn't capture widgets, it disconnects itself, and it does nothing if the widget is gone.
 
 ### Keep it small
@@ -383,9 +384,9 @@ Do not approximate. Do not simplify unless explicitly asked.
 
 - Follow libadwaita and the GNOME HIG first. Use stock widgets and style classes (`card`, `view`, `pill`, `suggested-action`, `flat`, `linked`, `dim-label`, …) before custom CSS.
 - Content sits in `card` boxes inside an `Adw.Clamp` (max 1400px). Cards keep the spacing the grid uses today (3–12px margins, 6px between rows inside a card).
-- Text hierarchy comes from the utility classes in `style.css`: titles `text-lg opacity-80 font-medium`, values `text-3xl font-medium`, units `text-sm opacity-80`, levels `text-base opacity-90 font-semibold` (see the `CSS_TEXT_*` lists in `UI_CardSquare.py`).
-- Pair every number with its unit, and every level colour with words ("Moderate", "High"). Levels come from the `classify_*` functions in `CORE_Levels.py`; AQI colours from `THRESHOLDS` in `configs.py`.
-- Icons: symbolic icons from the icon theme for buttons (`view-refresh-symbolic`, …); weather icons only through `CORE_Icons`. Both icon themes must look right; Material icons are drawn smaller (`get_icon_pixel_size`).
+- Text hierarchy comes from the utility classes in `style.css`: titles `text-lg opacity-80 font-medium`, values `text-3xl font-medium`, units `text-sm opacity-80`, levels `text-base opacity-90 font-semibold` (see the `CSS_TEXT_*` lists in `ui/cards/metric.py`).
+- Pair every number with its unit, and every level colour with words ("Moderate", "High"). Levels come from the `classify_*` functions in `core/levels.py`; AQI colours from `THRESHOLDS` in `config.py`.
+- Icons: symbolic icons from the icon theme for buttons (`view-refresh-symbolic`, …); weather icons only through `ui/icons.py`. Both icon themes must look right; Material icons are drawn smaller (`get_icon_pixel_size`).
 - One `suggested-action` button per page, for the main action (Add Location, Retry).
 - Every screen must work in light and dark, with dynamic backgrounds on and off, in metric and imperial, and in both 12h and 24h.
 - With dynamic backgrounds on, cards add `bg-dark-overlay` so text stays readable on any weather gradient.
@@ -414,7 +415,7 @@ All custom styling lives in [src/css/style.css](src/css/style.css), loaded once 
 
 | Scenario | Why | Use instead |
 | --- | --- | --- |
-| Graphs, gauges, arcs, rotated icons | CSS can't draw them | Cairo in a `Gtk.DrawingArea` via `safe_set_draw_func` (`UI_CompDraw*`) |
+| Graphs, gauges, arcs, rotated icons | CSS can't draw them | Cairo in a `Gtk.DrawingArea` via `safe_set_draw_func` (`ui/drawing/`) |
 | Size of a drawing area | It decides the drawing's layout | `set_size_request` |
 | Layout (expand, align, grid spans) | Not CSS properties in GTK | `set_hexpand`, `set_halign`, `Gtk.Grid.attach` |
 | A value known only at runtime (e.g. a level's position) | Changes per fetch | Pass it into the drawing class |
@@ -440,14 +441,14 @@ Use:
 - cards with clear hierarchy, not heavy borders
 - toasts for short confirmations
 - `Adw.StatusPage` for empty and error states
-- keyboard shortcuts for main actions (listed in `shortcutsDialog.ui`)
+- keyboard shortcuts for main actions (listed in `ui/templates/shortcuts.ui`)
 - simple crossfade transitions when useful
 
 ---
 
 ## State Management Rules
 
-- **Saved values** live in GSettings. Add a key to [data/io.github.amit9838.mousam.gschema.xml](data/io.github.amit9838.mousam.gschema.xml), a property to `Settings` in `settings.py`, and (if the user can change it) a row in `windowPreferences.py`. Never rename or retype an existing key: users' saved values would be lost.
+- **Saved values** live in GSettings. Add a key to [data/io.github.amit9838.mousam.gschema.xml](data/io.github.amit9838.mousam.gschema.xml), a property to `Settings` in `services/settings.py`, and (if the user can change it) a row in `ui/dialogs/preferences.py`. Never rename or retype an existing key: users' saved values would be lost.
 - **Fetched data** lives only in `weather_store`. Its fields change only in `_start_loading` and `_finish`, on the main loop; nothing else writes them.
 - **Temporary UI state** (selected tab, page, dialog contents) stays on the widget.
 - React to changes with signals: `settings.connect("changed::<key>", ...)`, `weather_store.connect("notify::status", ...)` (or `notify::is-ready`). Don't poll.
@@ -458,10 +459,10 @@ Use:
 ## Threading and Performance Rules
 
 - **Never touch GTK from a worker thread.** Network calls run on threads (`weather_store.refresh()`, the city search); hand results back to the main loop with `GLib.idle_add`.
-- **`weather_store` changes on the main loop, once per change.** Its worker downloads and builds the models, then hands them over with `GLib.idle_add`: `status` goes `loading` (data cleared, `is-ready` false) and then `ready` (`is-ready` true, one `data-updated`), `offline` or `error`. Handlers may build widgets directly (see `_on_store_status` in `mousam.py`). A new field is built in the worker (`_download`) and set in `_finish`.
+- **`weather_store` changes on the main loop, once per change.** Its worker downloads and builds the models, then hands them over with `GLib.idle_add`: `status` goes `loading` (data cleared, `is-ready` false) and then `ready` (`is-ready` true, one `data-updated`), `offline` or `error`. Handlers may build widgets directly (see `_on_store_status` in `ui/window.py`). A new field is built in the worker (`_download`) and set in `_finish`.
 - **One fetch at a time.** `weather_store.refresh()` joins a running fetch for the same city instead of starting another (for another city, it fetches that one when the running fetch ends and drops the old result); go through it, don't start threads of your own for weather data. The Locations window's list uses `weather_store.refresh_saved_locations(coords, on_done)`; use that, not a new thread. The internet check is part of `refresh()` (on its worker), so callers never block on it.
 - **Don't wait on the main thread.** No `threading.Event`/`join` or blocking network call there: it freezes the UI. If you need a lock for data shared with a thread, hold it only while assigning or reading, never while calling the network, emitting or calling `GLib`.
-- **Every request has a timeout** (`TIMEOUT` from `configs.py`), and every API function logs and returns `None` on failure instead of raising.
+- **Every request has a timeout** (`TIMEOUT` from `config.py`), and every API function logs and returns `None` on failure instead of raising.
 - **API calls are cached** with `@cached` (TTL `DATA_CACHE_TTL`). A new API call uses it too.
 - **No leaks across refreshes.** The content grid is rebuilt on every refresh, so widgets must not be kept alive by their own handlers. Connect handlers on rebuilt widgets with `weak_connect`, set draw functions with `safe_set_draw_func`, remove `GLib.timeout_add` sources when the widget goes, and disconnect `settings` handlers you connect from short-lived widgets. Check with `test_memory_leak.py` after touching refresh or widget lifetime.
 - **Never poll the main loop.** Don't write a `GLib.idle_add` / `GLib.timeout_add` callback that returns `SOURCE_CONTINUE` while it waits for UI state (a width, a mapped widget, data). Widgets are often built hidden (the content grid is built behind the `loader` page) and may be thrown away before they are ever shown, so such a callback can spin at 100% CPU forever and keep the old widget tree alive. Wait for the signal that reports the change instead: `Gtk.Adjustment` `changed` for a scrolled size, `map` / `realize` for being shown, `notify::<property>` for data. Disconnect a one-shot handler once it has run. The only repeating timers are real clocks and intervals (the compact clock, `AutoRefreshTimer`), and they must be removed when their widget goes.
@@ -475,15 +476,15 @@ Use:
 
 - Follow the style of the file you are in (PEP 8, 4 spaces).
 - Target **Python 3.12** (`target-version` in `ruff.toml`): no syntax or stdlib API newer than that, even if your machine or the GNOME runtime has a newer Python.
-- Imports inside `src/` are relative (`from .settings import settings`): the sources are installed and imported as the `mousam` package. Never `import settings` or add `sys.path` hacks.
+- Imports inside `src/` are relative (`from ..services.settings import settings` in `ui/window.py`): the sources are installed and imported as the `mousam` package. Never `import settings` or add `sys.path` hacks.
 - Singletons are module instances: import `settings`, `weather_store`, `overview_engine`, `log_manager`; never construct `Settings()` or a `WeatherStore()` yourself (tests do, with fakes).
 - Add type hints to new functions; keep them simple. In a file that already uses `typing.List` / `Optional`, keep using them; in new files prefer `list[str]` and `str | None`.
-- Data from the API goes into `CORE_Models` classes and is read as attributes (`cw.temperature_2m.data`, `.unit`, `.level_str`), not as raw dicts.
+- Data from the API goes into the `core/models.py` classes and is read as attributes (`cw.temperature_2m.data`, `.unit`, `.level_str`), not as raw dicts.
 - No bare `except:` in new code; catch the specific exception and log it (`requests.RequestException` in `API_*`, `(KeyError, TypeError, ValueError)` when parsing JSON). A broad `except Exception` is only for boundaries that must not crash the app (a worker thread's top level, `RuleBook.run`); log it there.
 - No mutable default arguments (`def f(items=None)`, then `items = items or []`), and no module-level state other than the singletons above and constants.
 - Times are unix timestamps from the API. Turn them into local times with `datetime.fromtimestamp(ts, ZoneInfo(tz))` using the city's time zone, never naive `datetime.now()` / `fromtimestamp(ts)`.
 - Each module gets `_` with `from gettext import gettext as _` (and `pgettext as C_`, `ngettext`); don't rely on the builtin `_` that `gettext.install` adds in the launcher.
-- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK and it never reads `settings`: `main.main()` calls `log_manager.setup(debug)` once at start-up, and Preferences calls `update_level(debug)`.
+- Use `get_logger("<area>")` from `core/log.py`, never `print`. Logging is silent unless debug mode is on. Importing `core/log.py` needs no GTK and it never reads `settings`: `app.main()` calls `log_manager.setup(debug)` once at start-up, and Preferences calls `update_level(debug)`.
 - Keep `gi.require_version(...)` before importing from `gi.repository`, as the files already do.
 - New logic that doesn't need GTK (classification, conversions, parsing) should be a plain function or `@staticmethod` so it stays easy to test.
 
@@ -495,8 +496,8 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 
 **Naming**
 
-- Modules: the layer prefix followed by a PascalCase name (`UI_CardSquare.py`, `CORE_Helpers.py`, `API_Weather.py`), or `window` + name for windows. Don't add another scheme until modules move into the layer packages (see "Where the architecture is heading"). There, names are lowercase `snake_case` and the folder is the layer (`ui/cards/metric.py`).
-- Classes are `PascalCase`; functions, methods and variables are `snake_case`; constants are `UPPER_SNAKE` (in `configs.py`, or at the top of a module for local ones such as `CSS_TEXT_TITLE`).
+- Modules: lowercase `snake_case` in the folder of their layer (`ui/cards/metric.py`, `services/open_meteo.py`, `core/levels.py`); the folder says the layer, so the name doesn't repeat it.
+- Classes are `PascalCase`; functions, methods and variables are `snake_case`; constants are `UPPER_SNAKE` (in `config.py`, or at the top of a module for local ones such as `CSS_TEXT_TITLE`).
 - Anything not used outside its class or module starts with `_` (`_render_weather_grid`, `_finish`).
 - Signal handlers are `_on_<source>_<what>` (`_on_store_status`, `_on_enabled_changed`). Idle and timeout callbacks get a name that says what they do (`_start_loading`), not `_callback`.
 - Names say what they hold, with the unit when it matters: `delay_seconds`, `week_min`, `sunrise_ts`, not `d`, `tmp`, `data2`.
@@ -507,7 +508,7 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 - Lines up to about 100 characters (ruff doesn't check length). Wrap long calls inside the brackets, one argument per line if they don't fit; no backslash continuations.
 - Two blank lines between top-level definitions, one between methods.
 - Long classes are split with section comments: `# ---------- Data ----------`.
-- Imports: standard library, then `gi` with `gi.require_version(...)`, then `gi.repository`, then local `.` imports. Import names (`from .CORE_Icons import bg_css`), not `*`.
+- Imports: standard library, then `gi` with `gi.require_version(...)`, then `gi.repository`, then local relative imports. Import names (`from ..icons import bg_css`), not `*`.
 
 **Functions**
 
@@ -538,10 +539,10 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 
 ## Data Rules
 
-- Open-Meteo is the only data source: forecast (`OPEN_METEO_BASE_URL`), air quality (`AIR_QUALITY_BASE_URL`) and geocoding (`GEOCODING_BASE_URL`), all in `configs.py`. It needs no API key; never add one to the app.
+- Open-Meteo is the only data source: forecast (`OPEN_METEO_BASE_URL`), air quality (`AIR_QUALITY_BASE_URL`) and geocoding (`GEOCODING_BASE_URL`), all in `config.py`. It needs no API key; never add one to the app.
 - Request `timeformat=unixtime`, and handle time zones through `get_time_difference` / the selected city's `timezone`. Never assume the city is in the system time zone.
-- Units: imperial is requested from the API where it supports it (`temperature_unit`, `wind_speed_unit`); pressure (hPa → inHg, `HPA_TO_INHG`) and visibility (m → km / miles) are converted by us. Keep conversions in the API layer, `CORE_Units` or the store's model building, not in widgets.
-- A new field means: add it to the request list in the `API_*` module, to the model's annotations in `CORE_Models.py`, and (if it gets a level) a `classify_*` function in `CORE_Levels.py`.
+- Units: imperial is requested from the API where it supports it (`temperature_unit`, `wind_speed_unit`); pressure (hPa → inHg, `HPA_TO_INHG`) and visibility (m → km / miles) are converted by us. Keep conversions in the API layer, `core/units.py` or the store's model building, not in widgets.
+- A new field means: add it to the request list in the API module (`services/open_meteo.py`, `services/air_quality.py`), to the model's annotations in `core/models.py`, and (if it gets a level) a `classify_*` function in `core/levels.py`.
 - Don't send anything about the user to any service except the coordinates and city name needed for the request.
 
 ---
@@ -576,15 +577,15 @@ When the user asks to build a feature:
 
 - The Flatpak manifest is [io.github.amit9838.mousam.json](io.github.amit9838.mousam.json); keep its sandbox permissions (`finish-args`) as small as they are. A new permission needs a strong reason and user approval.
 - Snap (`snap/snapcraft.yaml`, built from the checkout) is maintained too; a change to dependencies or installed files must be reflected there.
-- The version lives in two places: `meson.build` (Meson fills it into `VERSION` in `src/configs.py`) and a new `<release>` in `data/io.github.amit9838.mousam.appdata.xml.in` (with release notes, shown on the About dialog's What's New page). Change them together, and only when asked to prepare a release.
+- The version lives in two places: `meson.build` (Meson fills it into `VERSION` in `src/config.py`) and a new `<release>` in `data/io.github.amit9838.mousam.appdata.xml.in` (with release notes, shown on the About dialog's What's New page). Change them together, and only when asked to prepare a release.
 - User-visible changes to the app's look should come with updated `screenshots/` when the user asks for it; the appdata points at them.
 
 ---
 
 ## Testing
 
-- Unit tests live in `tests/`, use `unittest` (no pytest dependency) and are registered in [tests/meson.build](tests/meson.build), so `meson test` and CI run them.
-- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way, plus the store (`tests/test_weather_store.py`), which needs PyGObject's GLib and GObject but no display; CI installs `python3-gi` for it. `tests/fakes.py` holds the fakes: `FakeRequests` stands in for `requests` in the `API_*` tests (`tests/test_api.py`), `FakeForecastClient` for the forecast API, and `FakeSettings` for the GSettings wrapper, which needs the installed schema.
+- Unit tests live in `tests/`, one file per area (`test_levels.py`, `test_forecast.py`, `test_locations.py`, `test_api.py`, `test_weather_store.py`, `test_overview_rules.py`), use `unittest` (no pytest dependency) and are registered in [tests/meson.build](tests/meson.build), so `meson test` and CI run them.
+- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way, plus the store (`tests/test_weather_store.py`), which needs PyGObject's GLib and GObject but no display; CI installs `python3-gi` for it. `tests/fakes.py` holds the fakes: `FakeRequests` stands in for `requests` in the API tests (`tests/test_api.py`), `FakeForecastClient` for the forecast API, and `FakeSettings` for the GSettings wrapper, which needs the installed schema.
 - When you add GTK-free logic (a rule, a classifier, a conversion, a parser), add a test for it. A new test file must be added to `tests/meson.build`.
 - Tests use fixed clocks and hand-built data, never the real time or Open-Meteo.
 
@@ -595,12 +596,12 @@ When the user asks to build a feature:
 Run before declaring any task done:
 
 ```bash
-ruff check src
-python3 -m py_compile src/*.py
-python3 tests/test_overview_rules.py
+ruff check src tests
+python3 -m compileall -q src
+for t in tests/test_*.py; do python3 "$t"; done
 ```
 
-`src/` is free of ruff findings, and the Checks workflow (`.github/workflows/checks.yml`) keeps it that way, along with `py_compile` and `meson test` (which validates the gschema, appdata and desktop file). Fix a finding rather than silencing it; change `ruff.toml` only for a rule that doesn't fit the whole codebase. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
+`src/` is free of ruff findings, and the Checks workflow (`.github/workflows/checks.yml`) keeps it that way, along with `compileall` and `meson test` (which validates the gschema, appdata and desktop file). Fix a finding rather than silencing it; change `ruff.toml` only for a rule that doesn't fit the whole codebase. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
 
 Then build, install and run the app, and check the change in light and dark, metric and imperial.
 
