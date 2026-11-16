@@ -2,14 +2,14 @@ import datetime
 import random
 import time
 import gi
-from gi.repository import Gtk, GLib, Adw
+from gi.repository import Gtk, Adw
 from gettext import gettext as _, pgettext as C_
 
 from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
-from .CORE_GTKUtils import weak_connect
+from .CORE_GTKUtils import run_when_ready, weak_connect
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -94,20 +94,18 @@ class HourlyDetails(Gtk.Grid):
         spinner.set_margin_top(80)
         container.append(spinner)
 
-        from .CORE_weatherData import weather_manager
-        if weather_manager.is_ready:
-            self._on_data_loaded(page_name, container, spinner, weather_manager.hourly_forecast)
-        else:
-            def _wait_for_data(mgr, pspec):
-                if mgr.is_ready:
-                    GLib.idle_add(self._on_data_loaded, page_name, container, spinner, mgr.hourly_forecast)
-                    mgr.disconnect_by_func(_wait_for_data)
-            
-            weather_manager.connect("notify::is-ready", _wait_for_data)
+        run_when_ready(self._on_data_loaded, page_name)
 
-    def _on_data_loaded(self, page_name, container, spinner, hourly_data):
-        """Callback to build the UI once data is fetched."""
+    def _on_data_loaded(self, page_name):
+        """Replace a page's spinner with its content once the data is ready."""
+        container = self.hourly_stack.get_child_by_name(page_name)
+        spinner = container.get_first_child() if container else None
+        if not isinstance(spinner, Adw.Spinner):
+            return  # Already built
         container.remove(spinner)
+
+        from .CORE_weatherData import weather_manager
+        hourly_data = weather_manager.hourly_forecast
 
         page_grid = Gtk.Grid()
         container.append(page_grid)
