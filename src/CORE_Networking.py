@@ -3,6 +3,7 @@ from threading import Lock
 from gi.repository import GLib
 from .CORE_Helpers import get_time_difference
 from .CORE_Logging import get_logger
+from .configs import TIMEOUT
 
 logger = get_logger("networking")
 
@@ -22,7 +23,6 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
             return
 
     def _worker():
-        from .CORE_Helpers import TIMEOUT
         logger.info("Starting background fetch for all weather data")
         
         # Reset ready state before starting fresh fetch

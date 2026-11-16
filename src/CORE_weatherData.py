@@ -1,8 +1,8 @@
 import time
 import threading
 from gi.repository import GLib, GObject
-from .API_Weather import Weather
-from .API_AirPollution import AirPollution
+from .API_Weather import fetch_current, fetch_daily, fetch_hourly, fetch_many
+from .API_AirPollution import fetch_air_quality
 from .settings import settings
 from .CORE_Levels import (
     classify_humidity_level, classify_pressure_level, classify_uv_index, classify_wind_speed_level,
@@ -83,9 +83,8 @@ class WeatherDataManager(GObject.Object):
         return GLib.SOURCE_REMOVE
 
     def update_current_weather(self):
-        obj = Weather()
         logger.debug(f"Fetching current weather for cords: {get_cords()}")
-        raw_data = obj._get_current_weather(*get_cords())
+        raw_data = fetch_current(*get_cords(), settings.unit)
         if raw_data is None:
             logger.error("Failed to fetch current weather data from API")
             raise ValueError("Failed to fetch current weather data")
@@ -101,7 +100,7 @@ class WeatherDataManager(GObject.Object):
 
     def update_saved_locations_weather(self, coords: list) -> None:
         """Fetches every given "lat,lon" in one request; failed ones become None."""
-        raw_data = Weather()._get_current_for_locations(coords) or []
+        raw_data = fetch_many(coords, settings.unit) or []
         results = {key: CurrentWeather(raw) for key, raw in zip(coords, raw_data)}
 
         with self._lock:
@@ -109,8 +108,7 @@ class WeatherDataManager(GObject.Object):
                 self.saved_locations_weather[key] = results.get(key)
 
     def update_hourly_forecast(self):
-        obj = Weather()
-        raw_data = obj._get_hourly_forecast(*get_cords())
+        raw_data = fetch_hourly(*get_cords(), settings.unit)
         if raw_data is None:
             raise ValueError("Failed to fetch hourly forecast data")
 
@@ -143,8 +141,7 @@ class WeatherDataManager(GObject.Object):
         return hourly_data
 
     def update_daily_forecast(self):
-        obj = Weather()
-        raw_data = obj._get_daily_forecast(*get_cords())
+        raw_data = fetch_daily(*get_cords(), settings.unit)
         if raw_data is None:
             raise ValueError("Failed to fetch daily forecast data")
 
@@ -154,8 +151,7 @@ class WeatherDataManager(GObject.Object):
         return data
 
     def update_air_pollution(self):
-        obj = AirPollution()
-        raw_data = obj._get_current_air_pollution(*get_cords())
+        raw_data = fetch_air_quality(*get_cords())
         if raw_data is None:
             raise ValueError("Failed to fetch air pollution data")
         

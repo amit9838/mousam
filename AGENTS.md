@@ -156,7 +156,8 @@ src/
   CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings), toasts
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
-  API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity
+  API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity; plain fetch_* functions
+  CORE_ForecastClient.py  ForecastClient: the Protocol API_Weather fills and tests fake (no GTK)
   configs.py              constants: app ID, version, URLs, timeouts, cache sizes, refresh options, AQI thresholds
   settings.py             the Settings singleton: one property per GSettings key
   css/style.css           all custom styling
@@ -176,18 +177,18 @@ screenshots/              images for README and appdata
 Each layer may import only the ones below it:
 
 ```txt
-main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_Levels, CORE_Units, CORE_Forecast, CORE_Locations, CORE_Timezones, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
+main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_Levels, CORE_Units, CORE_Forecast, CORE_Locations, CORE_Timezones, CORE_ForecastClient, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
 ```
 
 - UI code never calls `API_*` directly. It reads `weather_manager` (from `CORE_weatherData`) and asks for a refresh through `fetch_all_weather_data_async`. The one exception is the city search in `windowLocations.py`, which calls `find_city`.
-- `API_*` modules only build URLs, call `requests` and return the JSON (with unit conversions the API doesn't do itself). No GTK, no models.
+- `API_*` modules only build URLs, call `requests` and return the JSON (with unit conversions the API doesn't do itself). No GTK, no models, no `settings`: every input is an argument (`fetch_current(lat, lon, unit)`), and `clear_cache()` forgets their cached responses.
 - `CORE_weatherData` turns raw JSON into models and adds derived values (levels from `CORE_Levels`, nearest-hour fields from `CORE_Forecast`). No widgets.
 - Read and write saved values only through `settings` (`src/settings.py`), never with a new `Gio.Settings(...)`.
 - Constants (URLs, timeouts, thresholds, option lists) go in `configs.py`, not inline.
 
 Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (`weather_manager` is usually imported this way); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
 
-**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
+**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_ForecastClient`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. The `API_*` modules are GTK-free too and need only `requests`. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
 
 ### Adding a file
 

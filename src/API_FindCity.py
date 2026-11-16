@@ -1,14 +1,13 @@
-import requests
 from typing import List, Optional
-from requests.exceptions import RequestException
+
+import requests
+
 from .CORE_Cache import cached
 from .configs import GEOCODING_BASE_URL, TIMEOUT
 from .CORE_Logging import get_logger
 
 # Configure logging at the module level
 logger = get_logger("API_FindCity")
-
-# GEO_BASE_URL moved to configs.py
 
 
 @cached(5)
@@ -51,7 +50,7 @@ def find_city(city: str, count: int = 3) -> Optional[List[dict]]:
             for item in results
         ]
 
-    except RequestException as e:
+    except requests.RequestException as e:
         # Log the error with context instead of printing
         logger.error(f"Failed to fetch city data for '{city}': {e}")
         return None

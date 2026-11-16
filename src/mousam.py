@@ -420,8 +420,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # Removed _setup_auto_refresh, logic moved to utils.AutoRefreshTimer
 
     def _pre_refresh_cleanup(self):
-        from .API_Weather import Weather
-        from .API_AirPollution import AirPollution
+        from . import API_AirPollution, API_Weather
 
         # Evict old content widget tree (weak refs in draw funcs handle GC cleanly)
         child = self.main_stack.get_child_by_name("content")
@@ -429,10 +428,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self.main_stack.remove(child)
 
         # Clear API response caches so the next fetch goes to network
-        Weather.current_weather.__func__.cache_clear()
-        Weather.forecast_hourly.__func__.cache_clear()
-        Weather.forecast_daily.__func__.cache_clear()
-        AirPollution.current_air_pollution.cache_clear()
+        API_Weather.clear_cache()
+        API_AirPollution.clear_cache()
 
         # Clear timezone cache (will be repopulated during fetch)
         local_time_data.clear()
