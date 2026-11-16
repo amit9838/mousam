@@ -8,6 +8,7 @@ import sys
 import types
 import unittest
 from datetime import date, datetime, timezone
+from zoneinfo import ZoneInfo
 
 # src/ is imported as the `mousam` package, as in the installed app
 SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src")
@@ -21,6 +22,7 @@ from mousam.CORE_Forecast import (  # noqa: E402
     nearest_hour_index,
     rain_drop_count,
     today_high_low,
+    today_sun_times,
 )
 
 H = 3600
@@ -92,6 +94,35 @@ class TodayHighLow(unittest.TestCase):
     def test_day_not_in_the_data(self):
         result = today_high_low(self.MIDNIGHTS, [20, 25, 30], [5, 10, 15], date(2026, 2, 1))
         self.assertIsNone(result)
+
+
+class TodaySunTimes(unittest.TestCase):
+    # Daily data: each day is its midnight in UTC
+    MIDNIGHTS = [datetime(2026, 1, d, tzinfo=timezone.utc).timestamp() for d in (14, 15, 16)]
+    SUNRISES = [114, 115, 116]
+    SUNSETS = [214, 215, 216]
+
+    def sun_times(self, zone, local_now):
+        tz = ZoneInfo(zone)
+        now = local_now.replace(tzinfo=tz).timestamp()
+        return today_sun_times(self.MIDNIGHTS, self.SUNRISES, self.SUNSETS, tz, now)
+
+    def test_east_of_utc(self):
+        self.assertEqual(self.sun_times("Asia/Kolkata", datetime(2026, 1, 15, 12)), (115, 215))
+
+    def test_utc(self):
+        self.assertEqual(self.sun_times("UTC", datetime(2026, 1, 15, 12)), (115, 215))
+
+    def test_west_of_utc(self):
+        # 15 January at noon in Flagstaff; its UTC midnight is still the 14th there
+        self.assertEqual(self.sun_times("America/Phoenix", datetime(2026, 1, 15, 12)), (115, 215))
+
+    def test_late_evening_west_of_utc(self):
+        # 23:30 in Flagstaff is already the 16th in UTC, but it is still the 15th
+        self.assertEqual(self.sun_times("America/Phoenix", datetime(2026, 1, 15, 23, 30)), (115, 215))
+
+    def test_day_not_in_the_data(self):
+        self.assertEqual(self.sun_times("UTC", datetime(2026, 3, 1, 12)), (0, 0))
 
 
 if __name__ == "__main__":

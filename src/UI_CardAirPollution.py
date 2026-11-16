@@ -1,56 +1,26 @@
 import gi
-from datetime import datetime
-from zoneinfo import ZoneInfo
 
 from gi.repository import Gtk
 from gettext import gettext as _
 
 from .UI_CompDrawPollutionBar import PollutionBar
 from .settings import settings
-from .CORE_Helpers import get_time_difference
 from .CORE_Levels import classify_aqi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 
 class CardAirPollution:
-    def __init__(self):
-        from .CORE_weatherData import weather_manager
+    """The US AQI now, its level and a bar, with a button to the details.
 
-        self.air_pollution_data = weather_manager.air_pollution
-        self.card = None
-        self.create_card()
+    Takes the air-quality model; its current_us_aqi is this hour's value.
+    """
 
-    def _get_nearest_time_index(self):
-        t_data = get_time_difference()
-        target_time = t_data.get("target_time")
-        timezone_str = t_data.get("timezone", "UTC")
-        tz = ZoneInfo(timezone_str)
-        
-        target_dt = datetime.fromtimestamp(target_time, tz=tz)
+    def __init__(self, air):
+        self.card = self._build_card(air.current_us_aqi)
 
-        # convet target dt into timestamp
-        target_timestamp = target_dt.timestamp()
-        
-        air_poll_times = self.air_pollution_data.time.data
-        if not air_poll_times:
-            return 0
-
-        best_idx = 0
-        min_diff = float('inf')
-
-        for i, ts in enumerate(air_poll_times):
-            diff = abs(target_timestamp - ts)
-            if diff < min_diff:
-                min_diff = diff
-                best_idx = i
-        
-        return best_idx
-
-    def create_card(self):
-        idx = self._get_nearest_time_index()
+    def _build_card(self, aqi) -> Gtk.Widget:
         card = Gtk.Grid(margin_top=6, margin_start=3)
-        self.card = card
         card.halign = Gtk.Align.FILL
         card.set_row_spacing(5)
         card.set_css_classes(["view", "card"])
@@ -80,16 +50,14 @@ class CardAirPollution:
         info_box.set_margin_start(10)
         info_box.set_margin_top(5)
 
-        main_val = Gtk.Label(label=str(self.air_pollution_data.us_aqi.data[idx]))
+        main_val = Gtk.Label(label=str(aqi))
         main_val.set_css_classes(["text-5xl", "font-medium"])
         main_val.set_halign(Gtk.Align.START)
         main_val.set_halign(Gtk.Align.END)
         main_val.set_margin_end(10)
         info_box.append(main_val)
 
-        desc = Gtk.Label(
-            label=classify_aqi(self.air_pollution_data.us_aqi.data[idx])
-        )
+        desc = Gtk.Label(label=classify_aqi(aqi))
         desc.set_css_classes(["text-xl", "opacity-90", "font-semibold"])
         desc.set_margin_bottom(7)
         desc.set_valign(Gtk.Align.END)
@@ -97,9 +65,8 @@ class CardAirPollution:
         info_box.append(desc)
 
         # Pollution bar
-        aqi = self.air_pollution_data.us_aqi.data[idx]
-
         bar_level = aqi / 350
         pollution_bar = PollutionBar(min(bar_level, 0.99))
         # pollution_bar.set_margin_top()
         card.attach(pollution_bar, 0, 4, 4, 1)
+        return card

@@ -26,7 +26,7 @@ class CurrentCondition(Gtk.Box):
     """Top section: current conditions, the location and its local time,
     and a one-line overview of the coming hours."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, current, daily, *args, **kwargs):
         super().__init__(orientation=Gtk.Orientation.VERTICAL, *args, **kwargs)
         self.set_hexpand(True)
         self._clock_id = 0
@@ -35,16 +35,14 @@ class CurrentCondition(Gtk.Box):
         self._overview_setting_id = 0
         self._overview_insight = None
         self._timezone = self._city_timezone()
-        self.paint_ui()
+        self.paint_ui(current, daily)
 
         # The clock ticks, and the overview is followed, only while the
         # section is on screen
         weak_connect(self, "map", self._on_map)
         weak_connect(self, "unmap", self._on_unmap)
 
-    def paint_ui(self) -> None:
-        from .CORE_weatherData import weather_manager
-        data = weather_manager.current_weather
+    def paint_ui(self, data, daily) -> None:
 
         # Conditions on the left, location on the right; in a narrow
         # window the location wraps onto its own line
@@ -59,7 +57,7 @@ class CurrentCondition(Gtk.Box):
         )
         self.append(top)
 
-        top.append(self._build_conditions(data, weather_manager.daily_forecast))
+        top.append(self._build_conditions(data, daily))
         top.append(self._build_location())
 
         # Flow box children look clickable by default (hover highlight);

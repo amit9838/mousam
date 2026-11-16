@@ -143,7 +143,7 @@ src/
   CORE_weatherData.py     WeatherStore (weather_store): the selected city's data and loading status; fetches on worker threads
   CORE_Levels.py          classify_* and the AQI helpers: level words and colour classes (no GTK)
   CORE_Units.py           conversions the API doesn't do (visibility) (no GTK)
-  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low (no GTK)
+  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low and sun times (no GTK)
   CORE_Locations.py       LocationData, JsonProcessor, find_selected_city: saved cities (no GTK)
   CORE_Timezones.py       time_difference: a city's time by zone name (no GTK)
   CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
@@ -151,7 +151,7 @@ src/
   CORE_OverviewMessages.py the overview wordings: several per message key, picked by MessageBook (no GTK)
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
-  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, run_when_ready, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
+  CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
   CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings)
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
@@ -215,11 +215,11 @@ When unsure, ask:
 
 | Need | Use |
 | --- | --- |
-| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(...).card` |
-| Sun / moon card | `CardDayNight().card` |
-| Air quality card | `CardAirPollution().card` |
-| Hourly graphs with tabs | `HourlyDetails` |
-| Tomorrow / 7-day list | `Forecast` |
+| A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`); the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
+| Sun / moon card | `CardDayNight(daily, timezone_name, latitude).card` |
+| Air quality card | `CardAirPollution(air).card` |
+| Hourly graphs with tabs | `HourlyDetails(hourly)` |
+| Tomorrow / 7-day list | `Forecast(daily, hourly)` |
 | Vertical level gauge | `DrawLevelBar` |
 | Small bar | `DrawBar` |
 | Line graph with "now" marker | `LineGraph` |
@@ -227,17 +227,16 @@ When unsure, ask:
 | Day/night arc | `DrawDayNight` |
 | Pollutant level bar | `PollutionBar` (a `Gtk.DrawingArea` subclass) |
 | A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max)` |
-| Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).dw` |
+| Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).widget` |
 | Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `CORE_GTKUtils` |
-| Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class; `count` from `rain_drop_count`) |
-| Snow as one to four snowflakes | `DrawSnowflakes(count, height).drawing_area` (same layout and class as the drops) |
+| Chance of rain as one to four drops | `DrawRainDrops(count, height).widget` (give it the `text-rain` class; `count` from `rain_drop_count`) |
+| Snow as one to four snowflakes | `DrawSnowflakes(count, height).widget` (same layout and class as the drops) |
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
 | A condition's name | `condition[code]` in `CORE_Icons` |
 | A background for a condition | `bg_css[code]` (append `n` to the code at night) |
 | A short message | `create_toast(text)` from `CORE_GTKUtils`, added to the window's `Adw.ToastOverlay` |
 | Loading, empty, error page | `Adw.StatusPage`, as `_update_view_state` in `mousam.py` builds them |
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
-| Build something once the weather data is ready | `run_when_ready(self.method, plain_value)` |
 | A Cairo draw function | `safe_set_draw_func(area, self, "draw")` |
 | A one-line summary of the coming hours | `overview_engine` (`CORE_Overview`): read `current()` and `heading`, listen to `overview-changed` |
 | A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `CORE_OverviewRules` |
@@ -326,7 +325,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 ### Components
 
 - **Sections and cards that have state, timers or signal handlers** subclass a GTK widget (`Gtk.Box`, `Gtk.Grid`), as `CurrentCondition` and `Forecast` do. Their lifetime is then the widget's: connect on `map`, disconnect and remove sources on `unmap`.
-- **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands out the area. New ones expose it as `.widget`; the existing `.card` / `.dw` / `.drawing_area` names stay until they are unified in one refactor.
+- **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands it out as `.widget` (`PollutionBar` is the one that subclasses `Gtk.DrawingArea` instead).
 - A component is ready to use when its constructor returns: no separate `create_card()` step.
 
 ### Pass data in
@@ -349,7 +348,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 
 ### Reuse, don't copy
 
-- When the same block appears a second time, extract it into a helper; a third copy is a bug waiting to happen. For example, "wait until data is ready, then build this section" is one helper in `CORE_GTKUtils` (`run_when_ready`), not a nested `_wait_for_data` in each section.
+- When the same block appears a second time, extract it into a helper; a third copy is a bug waiting to happen. For example, "which hour is now" is one function (`nearest_hour_index` in `CORE_Forecast`), not a loop in each module.
 - A helper that connects to a signal on someone's behalf does the hard parts once: it doesn't capture widgets, it disconnects itself, and it does nothing if the widget is gone.
 
 ### Keep it small
@@ -395,7 +394,7 @@ Do not approximate. Do not simplify unless explicitly asked.
 
 - The main window has one view state at a time in `main_stack`: `loader`, `welcome` (no locations), `error_no_internet`, `error_api`, `content`. Switch with `_update_view_state(state, message)`; don't add separate spinners on top.
 - The window shows the loader, calls `weather_store.refresh()`, and switches on `notify::status`: `ready` rebuilds `content`, `offline` shows `error_no_internet`, `error` shows `error_api` with `weather_store.error`. There are no fetch callbacks.
-- Inside a section (hourly tabs, forecast pages), building heavy content after first paint is fine: show a spinner in that section and fill it with `GLib.idle_add`, as `HourlyDetails` and `Forecast` do.
+- Sections get their data when they are built, so they never wait for it. `HourlyDetails` and `Forecast` build a tab's page the first time it is chosen. If a page ever gets heavy enough to slow the first paint, show a spinner in it and fill it with `GLib.idle_add`.
 - Errors the user can fix say how ("Please check your connection.") and offer Retry.
 
 ---
@@ -458,7 +457,7 @@ Use:
 ## Threading and Performance Rules
 
 - **Never touch GTK from a worker thread.** Network calls run on threads (`weather_store.refresh()`, the city search); hand results back to the main loop with `GLib.idle_add`.
-- **`weather_store` changes on the main loop, once per change.** Its worker downloads and builds the models, then hands them over with `GLib.idle_add`: `status` goes `loading` (data cleared, `is-ready` false) and then `ready` (`is-ready` true, one `data-updated`), `offline` or `error`. Handlers may build widgets directly (see `_on_store_status` in `mousam.py`). A new field is built in the worker (`_download`) and set in `_finish`. To build a section once the data is there, use `run_when_ready(self._fill, plain_value)` from `CORE_GTKUtils`.
+- **`weather_store` changes on the main loop, once per change.** Its worker downloads and builds the models, then hands them over with `GLib.idle_add`: `status` goes `loading` (data cleared, `is-ready` false) and then `ready` (`is-ready` true, one `data-updated`), `offline` or `error`. Handlers may build widgets directly (see `_on_store_status` in `mousam.py`). A new field is built in the worker (`_download`) and set in `_finish`.
 - **One fetch at a time.** `weather_store.refresh()` joins a running fetch for the same city instead of starting another (for another city, it fetches that one when the running fetch ends and drops the old result); go through it, don't start threads of your own for weather data. The Locations window's list uses `weather_store.refresh_saved_locations(coords, on_done)`; use that, not a new thread. The internet check is part of `refresh()` (on its worker), so callers never block on it.
 - **Don't wait on the main thread.** No `threading.Event`/`join` or blocking network call there: it freezes the UI. If you need a lock for data shared with a thread, hold it only while assigning or reading, never while calling the network, emitting or calling `GLib`.
 - **Every request has a timeout** (`TIMEOUT` from `configs.py`), and every API function logs and returns `None` on failure instead of raising.

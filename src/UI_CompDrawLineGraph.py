@@ -24,9 +24,9 @@ class LineGraph:
 
     def __init__(self, values, times=None, current_idx=None, color=(0.38, 0.7, 1), tz=None):
         self.color = tuple(color)
-        self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(260, 120)
-        safe_set_draw_func(self.dw, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(260, 120)
+        safe_set_draw_func(self.widget, self, "draw")
 
         # Everything that doesn't depend on the widget's size is worked out here,
         # so draw() only scales it.

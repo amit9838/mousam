@@ -38,9 +38,9 @@ class DrawLevelBar:
         # The cards centre their labels ("100", "0") over this area, so the
         # space on the right is part of the area, not a margin: the track,
         # drawn in the middle, then lines up with the labels.
-        self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(width + 10, height)
-        safe_set_draw_func(self.dw, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(width + 10, height)
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, ctx, width, height, data):
         x = width / 2

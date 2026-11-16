@@ -5,10 +5,11 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, Gio
 
 # Localization
-from gettext import gettext as _, pgettext as C_
+from gettext import gettext as _
 
 # Module imports
-from .CORE_Helpers import local_time_data
+from .CORE_Helpers import get_time_difference, local_time_data
+from .CORE_Locations import parse_coords_key
 from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
@@ -23,7 +24,7 @@ logger = get_logger("ui")
 from .UI_CurrentCond import CurrentCondition
 from .UI_HourlyDetails import HourlyDetails
 from .UI_Forecast import Forecast
-from .UI_CardSquare import CardSquare
+from .UI_CardSquare import humidity_card, pressure_card, uv_card, wind_card
 from .UI_CardDayNight import CardDayNight
 from .UI_CardAirPollution import CardAirPollution
 
@@ -237,18 +238,18 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # --- Top Section ---
         # No tightening, so the section lines up with the cards below
         current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=1400)
-        curr_cond = CurrentCondition()
+        curr_cond = CurrentCondition(cw_data, weather_manager.daily_forecast)
         curr_cond.set_size_request(-1, 100)
         current_clamp.set_child(curr_cond)
         grid.attach(current_clamp, 0, 0, 3, 1)
 
-        hourly = HourlyDetails()
+        hourly = HourlyDetails(weather_manager.hourly_forecast)
         hourly.set_size_request(-1, 180)
         grid.attach(hourly, 0, 1, 2, 1)
 
         # --- Forecast Section ---
         forecast_clamp = Adw.Clamp()
-        forecast = Forecast()
+        forecast = Forecast(weather_manager.daily_forecast, weather_manager.hourly_forecast)
         # forecast.set_size_request(-1, 500)
         forecast_clamp.set_child(forecast)
         grid.attach(forecast_clamp, 2, 1, 1, 2)
@@ -261,56 +262,16 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             # widget.set_size_request(-1, 120)
             widget_grid.attach(widget, col, row, width, 1)
 
-        # Wind
-        wind_card = CardSquare(
-            title="Wind",
-            main_val=cw_data.windspeed_10m.data,
-            main_val_unit=cw_data.windspeed_10m.unit,
-            desc=cw_data.windspeed_10m.level_str,
-            # Translators: wind direction is where the wind blows from
-            sub_desc_heading=_("Direction (from)"),
-            sub_desc=str(cw_data.winddirection_10m.data) + "°",
-            # Translators: "North" on the wind direction compass, as short as possible
-            text_up=C_("compass", "N"),
-            visual_data=cw_data.winddirection_10m.data
-        ).card
-        add_card(wind_card, 0, 0)
-
-        # Humidity
-        hum_card = CardSquare(
-            title="Humidity",
-            main_val=cw_data.relativehumidity_2m.data,
-            main_val_unit="%",
-            desc=cw_data.relativehumidity_2m.level_str,
-            sub_desc_heading=_("Dewpoint"),
-            sub_desc=f"{cw_data.dewpoint_2m.data} {cw_data.dewpoint_2m.unit}",
-            visual_data=cw_data.relativehumidity_2m.data
-        ).card
-        add_card(hum_card, 1, 0)
-
-        # Pressure
-        pres_card = CardSquare(
-            title="Pressure",
-            main_val=cw_data.pressure_msl.data,
-            main_val_unit=cw_data.pressure_msl.unit,
-            desc=cw_data.pressure_msl.level_str,
-            visual_data=cw_data.pressure_msl.data
-        ).card
-        add_card(pres_card, 0, 1)
-
-        # UV Index
-        uv_card = CardSquare(
-            title="UV Index",
-            main_val=cw_data.uv_index.data,
-            main_val_unit="",
-            desc=cw_data.uv_index.level_str,
-            visual_data=cw_data.uv_index.data,
-        ).card
-        add_card(uv_card, 1, 1)
+        add_card(wind_card(cw_data), 0, 0)
+        add_card(humidity_card(cw_data), 1, 0)
+        add_card(pressure_card(cw_data), 0, 1)
+        add_card(uv_card(cw_data), 1, 1)
 
         # Pollution & Sun
-        add_card(CardAirPollution().card, 2, 0, width=2)
-        add_card(CardDayNight().card, 2, 1, width=2)
+        add_card(CardAirPollution(weather_manager.air_pollution).card, 2, 0, width=2)
+        timezone_name = get_time_difference().get("timezone", "UTC")
+        latitude = parse_coords_key(weather_manager.location)[0]
+        add_card(CardDayNight(weather_manager.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)
 
         self.main_stack.add_named(grid, "content")
 
@@ -459,7 +420,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         from .CORE_weatherData import weather_manager
         if weather_manager.air_pollution is None:
             return
-        AirQualityDialog().present(self)
+        AirQualityDialog(weather_manager.air_pollution).present(self)
 
     def _on_action_open_logs(self, action, param):
         from .CORE_Logging import log_manager

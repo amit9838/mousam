@@ -21,9 +21,9 @@ class DrawBar:
         self.value = max(0.0, min(value, 1.0))
         self.rgb = tuple(rgb_color)
 
-        self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(50, 60)
-        safe_set_draw_func(self.dw, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(50, 60)
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, ctx, width, height, data):
         x = width / 2

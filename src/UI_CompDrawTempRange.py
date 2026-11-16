@@ -29,10 +29,10 @@ class DrawTempRange:
         self.start_fr = max(0.0, min(self.start_fr, 1.0))
         self.end_fr = max(self.start_fr, min(self.end_fr, 1.0))
 
-        self.dw = Gtk.DrawingArea()
-        self.dw.set_size_request(56, 20)
-        self.dw.set_valign(Gtk.Align.CENTER)
-        safe_set_draw_func(self.dw, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(56, 20)
+        self.widget.set_valign(Gtk.Align.CENTER)
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, ctx, width, height, data):
         y = height / 2

@@ -96,9 +96,9 @@ class DrawRainDrops:
         reach = max(abs(min(ys)), max(ys))
         self.origin_x = -min(xs) + PADDING
         width = max(xs) - min(xs) + 2 * PADDING
-        self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(math.ceil(width), math.ceil(2 * (reach + PADDING)))
-        safe_set_draw_func(self.drawing_area, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(math.ceil(width), math.ceil(2 * (reach + PADDING)))
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, cr, width, height, data):
         # Snap the main drop to the pixel grid, so it stays crisp: its tip is a
@@ -214,9 +214,9 @@ class DrawSnowflakes:
         reach = max(abs(min(ys)), max(ys))
         self.origin_x = -min(xs) + PADDING
         width = max(xs) - min(xs) + 2 * PADDING
-        self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(math.ceil(width), math.ceil(2 * (reach + PADDING)))
-        safe_set_draw_func(self.drawing_area, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(math.ceil(width), math.ceil(2 * (reach + PADDING)))
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, cr, width, height, data):
         # The main flake's centre on a pixel's middle, so its upright arm is crisp

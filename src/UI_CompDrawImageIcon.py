@@ -37,5 +37,5 @@ class DrawImage:
         )
         fixed.set_child_transform(image, transform)
 
-        self.img_box = Gtk.Box()
-        self.img_box.append(fixed)
+        self.widget = Gtk.Box()
+        self.widget.append(fixed)

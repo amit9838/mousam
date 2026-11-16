@@ -15,7 +15,6 @@ from .CORE_Levels import (  # noqa: E402
     aqi_advice, aqi_level_class, classify_aqi, classify_eu_aqi, classify_pollen, classify_pollutant,
     main_pollutant,
 )
-from .CORE_weatherData import weather_manager  # noqa: E402
 from .UI_CompDrawLineGraph import LineGraph  # noqa: E402
 
 # The pollutants that make up the AQI, listed first
@@ -69,15 +68,15 @@ class AirQualityDialog(Adw.Dialog):
 
     The summary and the trend are on the left; the details on the right,
     which scroll on their own. On phones it is one column, the trend on top.
+    Takes the air-quality model.
     """
 
-    def __init__(self):
+    def __init__(self, data):
         super().__init__(title=_("Air Quality"))
         self.set_content_width(840)
         # Dialogs with breakpoints need a minimum size: a small phone
         self.set_size_request(MIN_WIDTH, MIN_HEIGHT)
 
-        data = weather_manager.air_pollution
         self.idx = nearest_index(data.time.data, time.time())
 
         header = Adw.HeaderBar()
@@ -194,7 +193,7 @@ class AirQualityDialog(Adw.Dialog):
         """The US AQI over the last and next three days."""
         group = Adw.PreferencesGroup(title=_("Trend"), description=_("Last 3 days and next 3 days"))
         tz = ZoneInfo(get_time_difference().get("timezone", "UTC"))
-        graph = LineGraph(data.us_aqi.data, times=data.time.data, current_idx=self.idx, tz=tz).dw
+        graph = LineGraph(data.us_aqi.data, times=data.time.data, current_idx=self.idx, tz=tz).widget
         graph.set_size_request(-1, GRAPH_HEIGHT)
         graph.set_hexpand(True)
         group.add(graph)
