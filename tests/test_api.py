@@ -1,5 +1,5 @@
 """Tests for the Open-Meteo API modules (src/API_*.py) and the forecast
-client seam (src/CORE_ForecastClient.py).
+client seam (src/core/forecast_client.py).
 
 Plain Python, no GTK and no network: a fake `requests` (tests/fakes.py)
 records the URLs and answers with hand-built JSON.
@@ -26,18 +26,18 @@ package = types.ModuleType("mousam")
 package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
 
-from mousam import API_AirPollution, API_FindCity, API_Weather  # noqa: E402
-from mousam.CORE_ForecastClient import ForecastClient  # noqa: E402
-from mousam.configs import HPA_TO_INHG, TIMEOUT  # noqa: E402
+from mousam.services import air_quality, geocoding, open_meteo  # noqa: E402
+from mousam.core.forecast_client import ForecastClient  # noqa: E402
+from mousam.config import HPA_TO_INHG, TIMEOUT  # noqa: E402
 
 
 class ApiTestCase(unittest.TestCase):
     def setUp(self):
         requests.reset()
-        API_Weather.clear_cache()
-        API_Weather.fetch_many.cache_clear()
-        API_AirPollution.clear_cache()
-        API_FindCity.find_city.cache_clear()
+        open_meteo.clear_cache()
+        open_meteo.fetch_many.cache_clear()
+        air_quality.clear_cache()
+        geocoding.find_city.cache_clear()
 
     def url(self) -> str:
         self.assertEqual(len(requests.calls), 1)
@@ -46,11 +46,11 @@ class ApiTestCase(unittest.TestCase):
 
 class UnitParams(unittest.TestCase):
     def test_metric_is_the_api_default(self):
-        self.assertEqual(API_Weather.unit_params("metric"), "")
+        self.assertEqual(open_meteo.unit_params("metric"), "")
 
     def test_imperial(self):
         self.assertEqual(
-            API_Weather.unit_params("imperial"), "&temperature_unit=fahrenheit&wind_speed_unit=mph"
+            open_meteo.unit_params("imperial"), "&temperature_unit=fahrenheit&wind_speed_unit=mph"
         )
 
 
@@ -59,10 +59,10 @@ class Current(ApiTestCase):
 
     def test_url(self):
         requests.response = FakeResponse(self.PAYLOAD)
-        API_Weather.fetch_current(9.93, 76.27, "metric")
+        open_meteo.fetch_current(9.93, 76.27, "metric")
         url = self.url()
         self.assertIn("?latitude=9.93&longitude=76.27", url)
-        self.assertIn("&current=" + ",".join(API_Weather.CURRENT_FIELDS), url)
+        self.assertIn("&current=" + ",".join(open_meteo.CURRENT_FIELDS), url)
         self.assertTrue(url.endswith("&timeformat=unixtime"))
         self.assertNotIn("fahrenheit", url)
         self.assertEqual(requests.calls[0]["timeout"], TIMEOUT)
@@ -71,35 +71,35 @@ class Current(ApiTestCase):
         requests.response = FakeResponse(
             {"current": {"pressure_msl": 1000.0}, "current_units": {"pressure_msl": "hPa"}}
         )
-        data = API_Weather.fetch_current(9.93, 76.27, "imperial")
+        data = open_meteo.fetch_current(9.93, 76.27, "imperial")
         self.assertIn("&temperature_unit=fahrenheit", self.url())
         self.assertAlmostEqual(data["current"]["pressure_msl"], 1000 * HPA_TO_INHG)
         self.assertEqual(data["current_units"]["pressure_msl"], "inHg")
 
     def test_failure_is_none(self):
         requests.error = FakeRequests.ConnectionError("offline")
-        self.assertIsNone(API_Weather.fetch_current(9.93, 76.27, "metric"))
+        self.assertIsNone(open_meteo.fetch_current(9.93, 76.27, "metric"))
 
     def test_http_error_is_none(self):
         requests.response = FakeResponse(status=500)
-        self.assertIsNone(API_Weather.fetch_current(9.93, 76.27, "metric"))
+        self.assertIsNone(open_meteo.fetch_current(9.93, 76.27, "metric"))
 
     def test_cached_per_unit(self):
         requests.response = FakeResponse(self.PAYLOAD)
-        API_Weather.fetch_current(9.93, 76.27, "metric")
-        API_Weather.fetch_current(9.93, 76.27, "metric")
+        open_meteo.fetch_current(9.93, 76.27, "metric")
+        open_meteo.fetch_current(9.93, 76.27, "metric")
         self.assertEqual(len(requests.calls), 1)
         requests.response = FakeResponse(
             {"current": {"pressure_msl": 1000.0}, "current_units": {"pressure_msl": "hPa"}}
         )
-        API_Weather.fetch_current(9.93, 76.27, "imperial")
+        open_meteo.fetch_current(9.93, 76.27, "imperial")
         self.assertEqual(len(requests.calls), 2)
 
     def test_clear_cache_goes_to_the_network_again(self):
         requests.response = FakeResponse(self.PAYLOAD)
-        API_Weather.fetch_current(9.93, 76.27, "metric")
-        API_Weather.clear_cache()
-        API_Weather.fetch_current(9.93, 76.27, "metric")
+        open_meteo.fetch_current(9.93, 76.27, "metric")
+        open_meteo.clear_cache()
+        open_meteo.fetch_current(9.93, 76.27, "metric")
         self.assertEqual(len(requests.calls), 2)
 
 
@@ -108,10 +108,10 @@ class Forecasts(ApiTestCase):
         requests.response = FakeResponse(
             {"hourly": {"pressure_msl": [1000.0, 1010.0]}, "hourly_units": {"pressure_msl": "hPa"}}
         )
-        data = API_Weather.fetch_hourly(9.93, 76.27, "imperial")
+        data = open_meteo.fetch_hourly(9.93, 76.27, "imperial")
         url = self.url()
         self.assertIn("?latitude=9.93&longitude=76.27&timezone=auto", url)
-        self.assertIn("&hourly=" + ",".join(API_Weather.HOURLY_FIELDS), url)
+        self.assertIn("&hourly=" + ",".join(open_meteo.HOURLY_FIELDS), url)
         self.assertEqual(
             data["hourly"]["pressure_msl"], [1000 * HPA_TO_INHG, 1010 * HPA_TO_INHG]
         )
@@ -119,34 +119,34 @@ class Forecasts(ApiTestCase):
 
     def test_daily_url_in_gmt(self):
         requests.response = FakeResponse({"daily": {}})
-        API_Weather.fetch_daily(9.93, 76.27, "metric")
+        open_meteo.fetch_daily(9.93, 76.27, "metric")
         url = self.url()
-        self.assertIn("&daily=" + ",".join(API_Weather.DAILY_FIELDS), url)
+        self.assertIn("&daily=" + ",".join(open_meteo.DAILY_FIELDS), url)
         self.assertIn("&timezone=GMT", url)
 
     def test_many_places_in_one_request(self):
         requests.response = FakeResponse([{"a": 1}, {"b": 2}])
-        data = API_Weather.fetch_many(["9.93,76.27", "28.6,77.2"], "metric")
+        data = open_meteo.fetch_many(["9.93,76.27", "28.6,77.2"], "metric")
         self.assertIn("?latitude=9.93,28.6&longitude=76.27,77.2", self.url())
         self.assertEqual(data, [{"a": 1}, {"b": 2}])
 
     def test_one_place_comes_back_as_a_list(self):
         requests.response = FakeResponse({"a": 1})
-        self.assertEqual(API_Weather.fetch_many(["9.93,76.27"], "metric"), [{"a": 1}])
+        self.assertEqual(open_meteo.fetch_many(["9.93,76.27"], "metric"), [{"a": 1}])
 
 
 class AirQuality(ApiTestCase):
     def test_url(self):
         requests.response = FakeResponse({"hourly": {}})
-        API_AirPollution.fetch_air_quality(9.93, 76.27)
+        air_quality.fetch_air_quality(9.93, 76.27)
         url = self.url()
         self.assertIn("?latitude=9.93&longitude=76.27", url)
-        self.assertIn("&hourly=" + ",".join(API_AirPollution.HOURLY_FIELDS), url)
+        self.assertIn("&hourly=" + ",".join(air_quality.HOURLY_FIELDS), url)
         self.assertIn("&past_days=3&forecast_days=3", url)
 
     def test_failure_is_none(self):
         requests.error = FakeRequests.Timeout("slow")
-        self.assertIsNone(API_AirPollution.fetch_air_quality(9.93, 76.27))
+        self.assertIsNone(air_quality.fetch_air_quality(9.93, 76.27))
 
 
 class FindCity(ApiTestCase):
@@ -155,7 +155,7 @@ class FindCity(ApiTestCase):
             "name": "Kochi", "country": "India", "admin1": "Kerala", "admin2": "Ernakulam",
             "latitude": 9.93, "longitude": 76.27, "timezone": "Asia/Kolkata", "id": 1,
         }]})
-        cities = API_FindCity.find_city("Kochi", 5)
+        cities = geocoding.find_city("Kochi", 5)
         self.assertEqual(requests.calls[0]["params"]["count"], 5)
         self.assertEqual(cities, [{
             "name": "Kochi", "country": "India", "state": "Kerala", "region": "Ernakulam",
@@ -164,25 +164,25 @@ class FindCity(ApiTestCase):
 
     def test_no_results_is_empty(self):
         requests.response = FakeResponse({})
-        self.assertEqual(API_FindCity.find_city("Nowhere"), [])
+        self.assertEqual(geocoding.find_city("Nowhere"), [])
 
     def test_failure_is_none(self):
         requests.error = FakeRequests.ConnectionError("offline")
-        self.assertIsNone(API_FindCity.find_city("Kochi"))
+        self.assertIsNone(geocoding.find_city("Kochi"))
 
 
 class Client(unittest.TestCase):
     NAMES = ("fetch_current", "fetch_hourly", "fetch_daily", "fetch_many")
 
     def test_api_weather_is_a_forecast_client(self):
-        self.assertIsInstance(API_Weather, ForecastClient)
+        self.assertIsInstance(open_meteo, ForecastClient)
 
     def test_fake_matches_the_real_functions(self):
         fake = FakeForecastClient()
         self.assertIsInstance(fake, ForecastClient)
         for name in self.NAMES:
             with self.subTest(name=name):
-                real = list(inspect.signature(getattr(API_Weather, name)).parameters)
+                real = list(inspect.signature(getattr(open_meteo, name)).parameters)
                 faked = list(inspect.signature(getattr(fake, name)).parameters)
                 self.assertEqual(faked, real)
 

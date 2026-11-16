@@ -30,76 +30,27 @@ configure_file(
 )
 
 mousam_sources = [
-  'main.py',
-  'mousam.py',
-  'CORE_Models.py',
-  'CORE_weatherData.py',
-  'CORE_Overview.py',
-  'CORE_OverviewMessages.py',
-  'CORE_OverviewRules.py',
-  'CORE_Icons.py',
-  'CORE_Logging.py',
-  'CORE_Levels.py',
-  'CORE_Units.py',
-  'CORE_Forecast.py',
-  'CORE_Locations.py',
-  'CORE_Timezones.py',
-  'CORE_ForecastClient.py',
-
-  'API_AirPollution.py',
-  'API_FindCity.py',
-  'API_Weather.py',
-
-  'UI_Forecast.py',
-  'UI_CardAirPollution.py',
-  'UI_CardDayNight.py',
-  'UI_CardSquare.py',
-  'UI_CurrentCond.py',
-  'UI_HourlyDetails.py',
-
-  'UI_CompDrawBar.py',
-  'UI_CompDrawbarLine.py',
-  'UI_CompDrawDayNight.py',
-  'UI_CompDrawImageIcon.py',
-  'UI_CompDrawPollutionBar.py',
-  'UI_CompDrawLineGraph.py',
-  'UI_CompDrawTickGauge.py',
-  'UI_CompDrawTempRange.py',
-  'UI_CompDrawRainDrop.py',
-  'UI_CompactWeather.py',
-
-  'configs.py',
-  'CORE_Cache.py',
-  'CORE_Helpers.py',
-  'CORE_GTKUtils.py',
-  'settings.py',
-  'windowAbout.py',
-  'windowPreferences.py',
-  'windowLocations.py',
-  'windowAirQuality.py',
-  'shortcutsDialog.py'
+  'app.py',
 ]
 
 install_emptydir(moduledir / 'css')
-install_data('css/style.css',install_dir: join_paths(moduledir,'css'))
+install_data('css/style.css', install_dir: moduledir / 'css')
 install_data(mousam_sources, install_dir: moduledir)
 
+# Filled in by Meson: the icon folder and the version
 icon_conf = configuration_data()
 icon_conf.set('icon_location', get_option('prefix'))
 icon_conf.set('VERSION', meson.project_version())
 
 configure_file(
-  input: 'configs.py',
-  output: 'configs.py',
+  input: 'config.py',
+  output: 'config.py',
   configuration: icon_conf,
   install: true,
   install_dir: moduledir
 )
 
-configure_file(
-  input: 'CORE_Icons.py',
-  output: 'CORE_Icons.py',
-  configuration: icon_conf,
-  install: true,
-  install_dir: moduledir
-)
+subdir('core')
+subdir('services')
+subdir('state')
+subdir('ui')

@@ -1,4 +1,4 @@
-"""Tests for the forecast decisions (src/CORE_Forecast.py).
+"""Tests for the forecast decisions (src/core/forecast.py).
 
 Plain Python, no GTK. Run: python3 tests/test_forecast.py (also run by `meson test`).
 """
@@ -16,7 +16,7 @@ package = types.ModuleType("mousam")
 package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
-from mousam.CORE_Forecast import (  # noqa: E402
+from mousam.core.forecast import (  # noqa: E402
     hourly_precipitation,
     is_snow_code,
     nearest_hour_index,

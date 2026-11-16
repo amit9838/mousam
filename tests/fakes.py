@@ -55,7 +55,7 @@ class FakeRequests(types.ModuleType):
 
 
 class FakeForecastClient:
-    """A ForecastClient (src/CORE_ForecastClient.py) that answers from
+    """A ForecastClient (src/core/forecast_client.py) that answers from
     `responses` (by function name) and records each call. A missing answer
     is None, as from a failed request; an exception as answer is raised.
 
@@ -102,8 +102,8 @@ class FakeSettings:
 
 
 def settings_module(settings):
-    """A stand-in for `mousam.settings` (the real one needs the installed
+    """A stand-in for `mousam.services.settings` (the real one needs the installed
     GSettings schema), holding `settings`."""
-    module = types.ModuleType("mousam.settings")
+    module = types.ModuleType("mousam.services.settings")
     module.settings = settings
     return module

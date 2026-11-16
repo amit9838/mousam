@@ -152,7 +152,8 @@ src/
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
   CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
-  CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings)
+  CORE_Helpers.py         coordinates, name and timezone of the selected city (from settings)
+  CORE_Network.py         check_internet_connection
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
   API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity; plain fetch_* functions
@@ -313,7 +314,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 - A file move is mechanical: `git mv` plus import updates, with no code changes in the same commit, so review stays small and `git blame` keeps working.
 - A move updates everything that lists paths: `src/meson.build` (and a `meson.build` per new subfolder), `mousam.in`, `po/POTFILES`, `mousam.gresource.xml`, the test import shim and this file. Then check that the Flatpak and Snap builds still start.
 - Don't name a module after a stdlib one (`logging.py`, `time.py`, `json.py`). Use `log.py`, `timezones.py`.
-- A temporary alias that keeps old imports working (`weather_manager = weather_store`, there today) is fine for one step. Remove it once the callers are updated.
+- A temporary alias that keeps old imports working (`old_name = new_name`) is fine for one step. Remove it once the callers are updated.
 - No UI or behaviour change inside a refactor commit. A bug you find along the way gets its own `fix` commit.
 
 ### Composition over inheritance
@@ -482,7 +483,7 @@ Use:
 - No mutable default arguments (`def f(items=None)`, then `items = items or []`), and no module-level state other than the singletons above and constants.
 - Times are unix timestamps from the API. Turn them into local times with `datetime.fromtimestamp(ts, ZoneInfo(tz))` using the city's time zone, never naive `datetime.now()` / `fromtimestamp(ts)`.
 - Each module gets `_` with `from gettext import gettext as _` (and `pgettext as C_`, `ngettext`); don't rely on the builtin `_` that `gettext.install` adds in the launcher.
-- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK; `main.main()` calls `log_manager.setup()` once at start-up, so keep GTK and `settings` out of its module level.
+- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK and it never reads `settings`: `main.main()` calls `log_manager.setup(debug)` once at start-up, and Preferences calls `update_level(debug)`.
 - Keep `gi.require_version(...)` before importing from `gi.repository`, as the files already do.
 - New logic that doesn't need GTK (classification, conversions, parsing) should be a plain function or `@staticmethod` so it stays easy to test.
 

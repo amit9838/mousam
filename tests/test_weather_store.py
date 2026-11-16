@@ -1,4 +1,4 @@
-"""Tests for the weather store (src/CORE_weatherData.py).
+"""Tests for the weather store (src/state/weather_store.py).
 
 The store is a GObject that hands its results to the GLib main loop, so
 these tests need PyGObject (GLib and GObject only: no display). The network,
@@ -29,9 +29,9 @@ sys.modules["requests"] = FakeRequests()
 package = types.ModuleType("mousam")
 package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
-sys.modules["mousam.settings"] = settings_module(FakeSettings())
+sys.modules["mousam.services.settings"] = settings_module(FakeSettings())
 
-from mousam.CORE_weatherData import WeatherStore  # noqa: E402
+from mousam.state.weather_store import WeatherStore  # noqa: E402
 
 
 def current_json(pressure=1013):

@@ -1,0 +1,427 @@
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+from gi.repository import Gtk, Adw, Gio
+
+# Localization
+from gettext import gettext as _
+
+# Module imports
+from ..services.selected_city import get_time_difference, local_time_data
+from ..core.locations import parse_coords_key
+from .icons import bg_css
+from .dialogs.about import show_about_window
+from .dialogs.preferences import WeatherPreferences
+from .dialogs.shortcuts import ShortcutsDialog
+from .dialogs.locations import WeatherLocations
+from .dialogs.air_quality import AirQualityDialog  # noqa: E402
+from ..core.log import get_logger
+
+logger = get_logger("ui")
+
+# Frontend Components
+from .sections.current import CurrentCondition
+from .sections.hourly import HourlyDetails
+from .sections.forecast import Forecast
+from .cards.metric import humidity_card, pressure_card, uv_card, wind_card
+from .cards.day_night import CardDayNight
+from .cards.air_quality import CardAirPollution
+
+from ..services.settings import settings
+
+
+class WeatherMainWindow(Adw.ApplicationWindow):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        # Window Setup
+        self.set_title("Mousam")
+        self.set_default_size(settings.window_width, settings.window_height)
+        self.connect("close-request", self._save_window_state)
+        self.connect("destroy", self._on_window_destroy)
+
+        # State Tracking
+        self.added_cities = settings.added_cities
+
+        # --- UI Construction ---
+        self._setup_actions()
+        self._setup_ui()
+        self._use_dynamic_bg()
+
+        # Initial Data Load
+        self._start_data_refresh()
+
+        # Centralized Data Handling
+        from ..state.weather_store import weather_store
+        self._status_handler_id = weather_store.connect("notify::status", self._on_store_status)
+        
+        # Settings setup
+        settings.connect(
+            "changed::auto-refresh-interval",
+            lambda *_: self.get_application().auto_refresh.setup(),
+        )
+        settings.connect(
+            "changed::debug-mode",
+            self._on_debug_mode_changed,
+        )
+        settings.connect(
+            "changed::selected-city",
+            self._on_selected_city_changed,
+        )
+
+        # Run in background: closing the window hides it, so the app keeps running
+        self.set_hide_on_close(settings.run_in_background)
+        settings.connect(
+            "changed::run-in-background",
+            lambda *_: self.set_hide_on_close(settings.run_in_background),
+        )
+
+    def _on_selected_city_changed(self, *args):
+        from ..services.selected_city import get_selected_city_name
+        city = get_selected_city_name()
+        logger.info(f"Location switched to: {city}")
+        self._start_data_refresh()
+
+    def _on_debug_mode_changed(self, *args):
+        if settings.debug_mode:
+            toast = Adw.Toast.new(_("Debug Mode Enabled"))
+            toast.set_button_label(_("View Logs"))
+            toast.set_action_name("win.open-logs")
+            self.toast_overlay.add_toast(toast)
+        else:
+            self.toast_overlay.add_toast(Adw.Toast.new(_("Debug Mode Disabled")))
+
+    def _setup_ui(self):
+        """Initialize the main UI skeleton using Adwaita patterns."""
+        self.toolbar_view = Adw.ToolbarView()
+        self.set_content(self.toolbar_view)
+
+        # Header Bar
+        self.header = Adw.HeaderBar()
+        self.header.add_css_class("flat")
+        self.toolbar_view.add_top_bar(self.header)
+
+        # Toast Overlay
+        self.toast_overlay = Adw.ToastOverlay()
+        self.toolbar_view.set_content(self.toast_overlay)
+
+        # Main Content Stack
+        self.main_stack = Gtk.Stack()
+        self.main_stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
+
+        # Scrolled Window & Clamp
+        self.scrolled_window = Gtk.ScrolledWindow()
+        self.scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC
+        )
+
+        self.clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=100)
+        self.clamp.set_child(self.main_stack)
+        self.scrolled_window.set_child(self.clamp)
+
+        self.toast_overlay.set_child(self.scrolled_window)
+
+        self._build_header_controls()
+
+    def _build_header_controls(self):
+        # Refresh Button
+        btn_refresh = Gtk.Button(icon_name="view-refresh-symbolic")
+        btn_refresh.set_tooltip_text(_("Refresh weather"))
+        btn_refresh.set_action_name("win.refresh")
+        self.header.pack_start(btn_refresh)
+
+        # Menu
+        menu_model = Gio.Menu()
+        self._populate_menu(menu_model)
+
+        btn_menu = Gtk.MenuButton()
+        btn_menu.set_icon_name("open-menu-symbolic")
+        btn_menu.set_menu_model(menu_model)
+        self.header.pack_end(btn_menu)
+
+        # Locations Button
+        btn_loc = Gtk.Button(icon_name="mark-location-symbolic")
+        btn_loc.set_tooltip_text(_("Locations"))
+        btn_loc.set_action_name("win.locations")
+        self.header.pack_end(btn_loc)
+
+        # Compact Mode Button
+        btn_compact = Gtk.Button(icon_name="view-restore-symbolic")
+        btn_compact.set_tooltip_text(_("Compact Mode"))
+        btn_compact.set_action_name("win.compact")
+        self.header.pack_end(btn_compact)
+
+    def _setup_actions(self):
+        action_group = Gio.SimpleActionGroup()
+        self.insert_action_group("win", action_group)
+
+        actions = [
+            ("refresh", self._on_action_refresh, ["<Control>r"]),
+            ("locations", self._on_action_locations, ["<Control>l"]),
+            ("compact", self._on_action_compact, ["<Control>m"]),
+            ("preferences", self._on_action_preferences, ["<Control>comma"]),
+            ("shortcuts", self._on_action_shortcuts, ["<Control>question"]),
+            ("about", self._on_action_about, None),
+            ("open-logs", self._on_action_open_logs, None),
+            ("air-quality", self._on_action_air_quality, None),
+        ]
+
+        for name, callback, accel in actions:
+            action = Gio.SimpleAction.new(name, None)
+            action.connect("activate", callback)
+            action_group.add_action(action)
+            if accel:
+                self.get_application().set_accels_for_action(f"win.{name}", accel)
+
+    def _populate_menu(self, menu):
+        menu.append(_("Preferences"), "win.preferences")
+        menu.append(_("Keyboard Shortcuts"), "win.shortcuts")
+        menu.append(_("About Mousam"), "win.about")
+        menu.append(_("Quit"), "app.quit")
+
+    # ================= Data Handling =================
+
+    def _start_data_refresh(self):
+        """Show the loader and fetch; _on_store_status shows the result."""
+        if not self.added_cities:
+            self._update_view_state("welcome")
+            return
+
+        self._update_view_state("loader")
+        from ..state.weather_store import weather_store
+        weather_store.refresh()
+
+    def _on_store_status(self, store, _pspec):
+        """Show what the last fetch brought (status changes on the main loop)."""
+        if store.status == "ready":
+            self._render_weather_grid()
+            self._update_view_state("content")
+        elif store.status == "offline":
+            self._update_view_state("error_no_internet")
+        elif store.status == "error":
+            self._update_view_state("error_api", store.error)
+
+    # ================= UI Rendering =================
+
+    def _render_weather_grid(self):
+        """
+        Now that fetching is done, we can safely import and read the data.
+        """
+        # Clear previous grid if exists
+        child = self.main_stack.get_child_by_name("content")
+        if child:
+            self.main_stack.remove(child)
+
+        from ..state.weather_store import weather_store
+        if not weather_store.is_ready:
+            return
+
+        cw_data = weather_store.current_weather
+
+        # Dynamic Background
+        w_code = cw_data.weathercode.data
+        is_day = cw_data.is_day.data
+        self._use_dynamic_bg(
+            w_code if w_code is not None else 0,
+            is_day if is_day is not None else 1
+        )
+
+        # Main Grid Layout
+        grid = Gtk.Grid()
+        grid.set_margin_top(20)
+        grid.set_margin_bottom(10)
+        grid.set_margin_start(12)
+        grid.set_margin_end(12)
+        grid.set_hexpand(True)
+
+        # --- Top Section ---
+        # No tightening, so the section lines up with the cards below
+        current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=1400)
+        curr_cond = CurrentCondition(cw_data, weather_store.daily_forecast)
+        curr_cond.set_size_request(-1, 100)
+        current_clamp.set_child(curr_cond)
+        grid.attach(current_clamp, 0, 0, 3, 1)
+
+        hourly = HourlyDetails(weather_store.hourly_forecast)
+        hourly.set_size_request(-1, 180)
+        grid.attach(hourly, 0, 1, 2, 1)
+
+        # --- Forecast Section ---
+        forecast_clamp = Adw.Clamp()
+        forecast = Forecast(weather_store.daily_forecast, weather_store.hourly_forecast)
+        # forecast.set_size_request(-1, 500)
+        forecast_clamp.set_child(forecast)
+        grid.attach(forecast_clamp, 2, 1, 1, 2)
+
+        # --- Small Widgets Grid ---
+        widget_grid = Gtk.Grid()
+        grid.attach(widget_grid, 1, 2, 1, 1)
+
+        def add_card(widget, col, row, width=1):
+            # widget.set_size_request(-1, 120)
+            widget_grid.attach(widget, col, row, width, 1)
+
+        add_card(wind_card(cw_data), 0, 0)
+        add_card(humidity_card(cw_data), 1, 0)
+        add_card(pressure_card(cw_data), 0, 1)
+        add_card(uv_card(cw_data), 1, 1)
+
+        # Pollution & Sun
+        add_card(CardAirPollution(weather_store.air_pollution).card, 2, 0, width=2)
+        timezone_name = get_time_difference().get("timezone", "UTC")
+        latitude = parse_coords_key(weather_store.location)[0]
+        add_card(CardDayNight(weather_store.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)
+
+        self.main_stack.add_named(grid, "content")
+
+    def _update_view_state(self, state: str, message: str = ""):
+        # Lazy Loading Views
+        if self.main_stack.get_child_by_name(state) is None:
+            if state == "loader":
+                self.main_stack.add_named(self._create_loader_page(), state)
+            elif state == "welcome":
+                self.main_stack.add_named(self._create_welcome_page(), state)
+            elif state == "error_no_internet":
+                self.main_stack.add_named(
+                    self._create_error_page("network-error-symbolic", _("No Internet"), _("Please check your connection.")),
+                    state,
+                )
+            elif state == "error_api":
+                self.main_stack.add_named(
+                    self._create_error_page("computer-fail-symbolic", _("Fetch Error"), ""),
+                    state,
+                )
+
+        child = self.main_stack.get_child_by_name(state)
+        if child:
+            if state == "error_api" and message:
+                child.set_description(str(message))
+            self.main_stack.set_visible_child_name(state)
+
+    def _create_loader_page(self):
+        spinner = Adw.Spinner()
+        spinner.set_size_request(64, 64)
+        page = Adw.StatusPage()
+        page.set_title(_("Getting Weather Data"))
+        page.set_child(spinner)
+        return page
+
+    def _create_welcome_page(self):
+        page = Adw.StatusPage()
+        page.set_icon_name("io.github.amit9838.mousam")
+        page.set_title(_("Welcome to Mousam"))
+        page.set_description(_("Add a location to get started."))
+        btn = Gtk.Button(label=_("Add Location"))
+        btn.add_css_class("pill")
+        btn.add_css_class("suggested-action")
+        btn.set_action_name("win.locations")
+        btn.set_halign(Gtk.Align.CENTER)
+        page.set_child(btn)
+        return page
+
+    def _create_error_page(self, icon, title, description):
+        page = Adw.StatusPage()
+        page.set_icon_name(icon)
+        page.set_title(title)
+        page.set_description(description)
+        
+        btn = Gtk.Button(label=_("Retry"))
+        btn.add_css_class("pill")
+        btn.add_css_class("suggested-action")
+        btn.connect("clicked", lambda x: self._start_data_refresh())
+        btn.set_halign(Gtk.Align.CENTER)
+        page.set_child(btn)
+        
+        return page
+
+    def _use_dynamic_bg(self, weather_code: int = 0, is_day: int = 1) -> None:
+        # Always required classes
+        required = {"background", "csd"}
+
+        if settings.is_using_dynamic_bg:
+            required.add("dynamic-bg")
+        
+        # Add weather class if dynamic backgrounds are on
+        if settings.is_using_dynamic_bg:
+            key = f"{weather_code}{'' if is_day else 'n'}"
+            if weather_cls := bg_css.get(key):
+                required.add(weather_cls)
+        
+        current = set(self.get_css_classes())
+        weather_classes = set(bg_css.values())
+        
+        # Keep all non-weather classes, but enforce the required ones
+        target = (current - weather_classes) | required
+        
+        # Sync current classes to target
+        # classes that are currently on the widget but not in the target. These need to be removed.
+        for cls in current - target:
+            self.remove_css_class(cls)
+
+        # classes that are in the target but not currently on the widget. These need to be added.
+        for cls in target - current:
+            self.add_css_class(cls)
+
+    # Removed _setup_auto_refresh, logic moved to utils.AutoRefreshTimer
+
+    def _pre_refresh_cleanup(self):
+        from ..services import air_quality, open_meteo
+
+        # Evict old content widget tree (weak refs in draw funcs handle GC cleanly)
+        child = self.main_stack.get_child_by_name("content")
+        if child:
+            self.main_stack.remove(child)
+
+        # Clear API response caches so the next fetch goes to network
+        open_meteo.clear_cache()
+        air_quality.clear_cache()
+
+        # Clear timezone cache (will be repopulated during fetch)
+        local_time_data.clear()
+
+
+    def _save_window_state(self, window):
+
+        width, height = window.get_default_size()
+        settings.window_width = width
+        settings.window_height = height
+        settings.window_maximized = window.is_maximized()
+
+    def _on_window_destroy(self, *args):
+        # weather_store outlives this window (e.g. switching to compact mode)
+        from ..state.weather_store import weather_store
+        weather_store.disconnect(self._status_handler_id)
+
+        app = self.get_application()
+        if app and hasattr(app, "main_window"):
+            app.main_window = None
+
+    # --- Callbacks ---
+    def _on_action_refresh(self, action, param):
+        self._start_data_refresh()
+
+    def _on_action_locations(self, action, param):
+        WeatherLocations(self).present(self)
+
+    def _on_action_compact(self, action, param):
+        self.get_application().activate_action("show-compact", None)
+
+    def _on_action_preferences(self, action, param):
+        WeatherPreferences(self).present(self)
+
+    def _on_action_shortcuts(self, action, param):
+        ShortcutsDialog(self).present()
+
+    def _on_action_about(self, action, param):
+        show_about_window(self)
+
+    def _on_action_air_quality(self, action, param):
+        from ..state.weather_store import weather_store
+        if weather_store.air_pollution is None:
+            return
+        AirQualityDialog(weather_store.air_pollution).present(self)
+
+    def _on_action_open_logs(self, action, param):
+        from ..core.log import log_manager
+        log_manager.open_log_file()
