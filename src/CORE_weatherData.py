@@ -7,6 +7,7 @@ from .settings import settings
 from .CORE_Levels import (
     classify_humidity_level, classify_presssure_level, classify_uv_index, classify_wind_speed_level,
 )
+from .CORE_Forecast import nearest_hour_index
 from .CORE_Units import transform_visibility_data
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
@@ -115,13 +116,7 @@ class WeatherDataManager(GObject.Object):
 
         hourly_data = HourlyWeather(raw_data)
         time_list = raw_data.get("hourly").get("time")
-        
-        nearest_idx = 0
-        now = time.time()
-        for i, ts in enumerate(time_list):
-            if abs(now - ts) < 1800:
-                nearest_idx = i
-                break
+        nearest_idx = nearest_hour_index(time_list, time.time())
 
         # Update current weather with derived hourly fields
         with self._lock:
@@ -165,12 +160,7 @@ class WeatherDataManager(GObject.Object):
             raise ValueError("Failed to fetch air pollution data")
         
         time_list = raw_data.get("hourly").get("time")
-        nearest_idx = 0
-        now = time.time()
-        for i, ts in enumerate(time_list):
-            if abs(now - ts) < 1800:
-                nearest_idx = i
-                break
+        nearest_idx = nearest_hour_index(time_list, time.time())
                 
         data = AirPollutionData(raw_data)
         data.current_us_aqi = data.us_aqi.data[nearest_idx]

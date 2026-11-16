@@ -10,6 +10,7 @@ from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
 from .CORE_GTKUtils import run_when_ready, weak_connect
+from .CORE_Forecast import nearest_hour_index
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -187,7 +188,7 @@ class HourlyDetails(Gtk.Grid):
             graphic_container.append(self._create_empty_prec_widget())
             return scrolled_window
 
-        nearest_idx = self._get_nearest_time_index(hourly_data.time.data)
+        nearest_idx = nearest_hour_index(hourly_data.time.data, time.time())
         max_prec = max(hourly_data.precipitation.data[:24]) if page_name == "prec" else 0
 
         for i in range(24):
@@ -295,13 +296,6 @@ class HourlyDetails(Gtk.Grid):
         label.set_margin_bottom(30)
         box.append(label)
         return box
-
-    def _get_nearest_time_index(self, time_list):
-        now = time.time()
-        for i, ts in enumerate(time_list):
-            if abs(now - ts) < 1800:
-                return i
-        return 0
 
     @staticmethod
     def _scroll_to_now_once_sized(scrolled: Gtk.ScrolledWindow, index: int) -> None:

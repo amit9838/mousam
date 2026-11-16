@@ -66,6 +66,12 @@ RAIN_INTENSITY_FROM_MM = (2.5, 7.6, 50)
 # Below this (the forecast's smallest step) an hour shows no drops
 RAIN_MIN_AMOUNT_MM = 0.1
 
+# --- Chance of rain (%), shown as drops on the 7-day forecast ---
+# Below this chance no drops are shown
+RAIN_MIN_CHANCE = 10
+# Chances from which a second, third, then fourth drop joins the first
+RAIN_MORE_DROPS_FROM = (50, 80, 90)
+
 # --- Snow intensity (cm of fresh snow in an hour) ---
 # From these amounts an hour's snow is moderate, heavy, then very heavy; about
 # 1 inch an hour (2.5 cm) is "heavy snow" for the US National Weather Service
