@@ -12,11 +12,11 @@ from gettext import gettext as _, pgettext as C_  # noqa: E402
 
 from .core.forecast import today_high_low  # noqa: E402
 from .CORE_GTKUtils import is_on_screen, weak_connect  # noqa: E402
-from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
+from .services.selected_city import get_timezone_from_selected_city  # noqa: E402
 from .core.locations import JsonProcessor, find_selected_city  # noqa: E402
 from .CORE_Icons import condition, create_weather_icon  # noqa: E402
 from .CORE_Overview import overview_engine  # noqa: E402
-from .settings import settings  # noqa: E402
+from .services.settings import settings  # noqa: E402
 
 # Heading colour for each insight severity (libadwaita style classes)
 SEVERITY_CSS = {"info": "accent", "warning": "warning", "error": "error"}

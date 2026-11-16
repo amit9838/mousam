@@ -17,7 +17,7 @@ from .config import (
     TRANSLATE_URL,
     VERSION,
 )
-from .settings import settings
+from .services.settings import settings
 
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')

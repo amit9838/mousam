@@ -30,12 +30,7 @@ configure_file(
 )
 
 mousam_sources = [
-  'API_AirPollution.py',
-  'API_FindCity.py',
-  'API_Weather.py',
   'CORE_GTKUtils.py',
-  'CORE_Helpers.py',
-  'CORE_Network.py',
   'CORE_Overview.py',
   'CORE_weatherData.py',
   'UI_CardAirPollution.py',
@@ -56,7 +51,6 @@ mousam_sources = [
   'UI_HourlyDetails.py',
   'main.py',
   'mousam.py',
-  'settings.py',
   'shortcutsDialog.py',
   'windowAbout.py',
   'windowAirQuality.py',
@@ -90,3 +84,4 @@ configure_file(
 )
 
 subdir('core')
+subdir('services')

@@ -29,7 +29,7 @@ sys.modules["requests"] = FakeRequests()
 package = types.ModuleType("mousam")
 package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
-sys.modules["mousam.settings"] = settings_module(FakeSettings())
+sys.modules["mousam.services.settings"] = settings_module(FakeSettings())
 
 from mousam.CORE_weatherData import WeatherStore  # noqa: E402
 

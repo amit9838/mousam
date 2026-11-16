@@ -8,10 +8,10 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GLib, Pango  # noqa: E402
 
-from .settings import settings  # noqa: E402
+from .services.settings import settings  # noqa: E402
 from .CORE_Icons import condition, bg_css, create_weather_icon  # noqa: E402
 from .core.levels import classify_aqi  # noqa: E402
-from .CORE_Helpers import (  # noqa: E402
+from .services.selected_city import (  # noqa: E402
     get_selected_city_name,
     get_timezone_from_selected_city,
 )

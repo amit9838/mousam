@@ -21,7 +21,7 @@ import os
 import sys
 import gi
 from .mousam import WeatherMainWindow
-from .settings import settings
+from .services.settings import settings
 from .config import APP_ID
 from .core.log import get_logger, log_manager
 

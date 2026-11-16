@@ -4,7 +4,7 @@ from gi.repository import Gtk
 from gettext import gettext as _
 
 from .UI_CompDrawPollutionBar import PollutionBar
-from .settings import settings
+from .services.settings import settings
 from .core.levels import classify_aqi
 
 gi.require_version("Gtk", "4.0")

@@ -1,6 +1,6 @@
 """What the weather data needs from the forecast API.
 
-The API_Weather module is the real one; tests pass a fake with the same
+The services.open_meteo module is the real one; tests pass a fake with the same
 functions (tests/fakes.py), so fetching can be tested without the network.
 """
 

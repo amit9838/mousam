@@ -5,7 +5,7 @@ from gi.repository import Adw, Gtk
 from gettext import gettext as _
 
 
-from .settings import settings
+from .services.settings import settings
 from .CORE_GTKUtils import create_toast
 from .config import AUTO_REFRESH_OPTIONS
 from .core.log import log_manager

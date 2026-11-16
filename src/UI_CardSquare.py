@@ -8,7 +8,7 @@ from gi.repository import Gtk
 
 from .CORE_Icons import get_icon_path, ARROW_CENTER
 from .config import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402
-from .settings import settings
+from .services.settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
 from .UI_CompDrawImageIcon import DrawImage

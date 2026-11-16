@@ -8,7 +8,7 @@ from gettext import gettext as _, pgettext as C_
 from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
-from .settings import settings
+from .services.settings import settings
 from .CORE_GTKUtils import weak_connect
 from .core.forecast import nearest_hour_index
 
@@ -213,7 +213,7 @@ class HourlyDetails(Gtk.Grid):
         return item_box
 
     def _add_time_label(self, box, index, hourly_data, nearest_idx):
-        from .CORE_Helpers import get_timezone_from_selected_city
+        from .services.selected_city import get_timezone_from_selected_city
         from zoneinfo import ZoneInfo
         tz_str = get_timezone_from_selected_city()
         try:

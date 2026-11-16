@@ -102,8 +102,8 @@ class FakeSettings:
 
 
 def settings_module(settings):
-    """A stand-in for `mousam.settings` (the real one needs the installed
+    """A stand-in for `mousam.services.settings` (the real one needs the installed
     GSettings schema), holding `settings`."""
-    module = types.ModuleType("mousam.settings")
+    module = types.ModuleType("mousam.services.settings")
     module.settings = settings
     return module

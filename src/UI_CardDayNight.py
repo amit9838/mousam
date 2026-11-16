@@ -8,7 +8,7 @@ from gettext import gettext as _
 
 from .UI_CompDrawDayNight import DrawDayNight
 from .UI_CardSquare import CSS_TEXT_TITLE, CSS_TEXT_VALUE
-from .settings import settings
+from .services.settings import settings
 from .core.forecast import today_sun_times
 
 gi.require_version("Gtk", "4.0")

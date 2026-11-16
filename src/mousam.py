@@ -8,7 +8,7 @@ from gi.repository import Gtk, Adw, Gio
 from gettext import gettext as _
 
 # Module imports
-from .CORE_Helpers import get_time_difference, local_time_data
+from .services.selected_city import get_time_difference, local_time_data
 from .core.locations import parse_coords_key
 from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
@@ -28,7 +28,7 @@ from .UI_CardSquare import humidity_card, pressure_card, uv_card, wind_card
 from .UI_CardDayNight import CardDayNight
 from .UI_CardAirPollution import CardAirPollution
 
-from .settings import settings
+from .services.settings import settings
 
 
 class WeatherMainWindow(Adw.ApplicationWindow):
@@ -78,7 +78,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         )
 
     def _on_selected_city_changed(self, *args):
-        from .CORE_Helpers import get_selected_city_name
+        from .services.selected_city import get_selected_city_name
         city = get_selected_city_name()
         logger.info(f"Location switched to: {city}")
         self._start_data_refresh()
@@ -366,7 +366,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # Removed _setup_auto_refresh, logic moved to utils.AutoRefreshTimer
 
     def _pre_refresh_cleanup(self):
-        from . import API_AirPollution, API_Weather
+        from .services import air_quality, open_meteo
 
         # Evict old content widget tree (weak refs in draw funcs handle GC cleanly)
         child = self.main_stack.get_child_by_name("content")
@@ -374,8 +374,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
             self.main_stack.remove(child)
 
         # Clear API response caches so the next fetch goes to network
-        API_Weather.clear_cache()
-        API_AirPollution.clear_cache()
+        open_meteo.clear_cache()
+        air_quality.clear_cache()
 
         # Clear timezone cache (will be repopulated during fetch)
         local_time_data.clear()
