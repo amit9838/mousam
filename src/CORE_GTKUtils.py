@@ -107,17 +107,20 @@ def draw_knob(cr, x: float, y: float, radius: float, rgb) -> None:
     cr.fill()
 
 
-def weak_connect(widget, signal_name, bound_method, *data):
-    """Connect without the handler keeping its object alive. Extra data is
-    passed to the handler after the signal's own arguments."""
-    target = bound_method.__self__
+def _weak_ref_to(target) -> Callable:
+    """A weak reference to target: call it to get target, or None once gone."""
     # Since PyGObject 3.55 a GObject's Python wrapper is freed while the
     # GObject lives on, so a Python weakref to it goes dead too early:
     # GObject.Object.weak_ref() follows the GObject itself.
     if isinstance(target, GObject.Object):
-        weak_self = target.weak_ref()
-    else:
-        weak_self = weakref.ref(target)
+        return target.weak_ref()
+    return weakref.ref(target)
+
+
+def weak_connect(widget, signal_name, bound_method, *data):
+    """Connect without the handler keeping its object alive. Extra data is
+    passed to the handler after the signal's own arguments."""
+    weak_self = _weak_ref_to(bound_method.__self__)
     func_name = bound_method.__name__
     def wrapper(*args, **kwargs):
         target = weak_self()
@@ -126,6 +129,35 @@ def weak_connect(widget, signal_name, bound_method, *data):
             if method:
                 return method(*args, **kwargs)
     return widget.connect(signal_name, wrapper, *data)
+
+
+def run_when_ready(bound_method: Callable, *data) -> None:
+    """Call bound_method(*data) once the weather data is ready: now if it
+    already is, otherwise on the next finished fetch.
+
+    For sections that build their content lazily. The wait holds its object
+    only weakly and disconnects itself after one call, so a section thrown
+    away before the data arrives is neither kept alive nor called. Pass plain
+    values as data, not widgets.
+    """
+    from .CORE_weatherData import weather_manager
+    if weather_manager.is_ready:
+        bound_method(*data)
+        return
+
+    weak_self = _weak_ref_to(bound_method.__self__)
+    func_name = bound_method.__name__
+
+    def on_ready_changed(manager, _pspec):
+        if not manager.is_ready:
+            return
+        manager.disconnect(handler_id)
+        target = weak_self()
+        if target is not None:
+            getattr(target, func_name)(*data)
+
+    handler_id = weather_manager.connect("notify::is-ready", on_ready_changed)
+
 
 def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
     """Remove GTK's own drop target from a window that reorders things by drag.

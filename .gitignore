@@ -29,5 +29,8 @@ dist-ssr
 *.sw?
 dist
 test*
+!tests/
+!tests/**
+__pycache__/
 # Local plan documents
 *-plan.md

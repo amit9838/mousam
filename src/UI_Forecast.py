@@ -16,7 +16,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, GLib, Adw
+from gi.repository import Gtk, Adw
 
 from .CORE_Icons import create_weather_icon
 from .settings import settings
@@ -24,7 +24,7 @@ from .CORE_weatherData import WeatherDataManager, weather_manager
 from .configs import (  # noqa: E402
     RAIN_MIN_AMOUNT_MM, SNOW_MIN_AMOUNT_CM, SNOW_WATER_MM_PER_CM, SNOW_WEATHER_CODES,
 )
-from .CORE_GTKUtils import weak_connect
+from .CORE_GTKUtils import run_when_ready, weak_connect
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402
 from .UI_CompDrawRainDrop import DrawRainDrops, DrawSnowflakes  # noqa: E402
@@ -217,27 +217,17 @@ class Forecast(Gtk.Grid):
         spinner.set_margin_top(self.SCROLLED_WINDOW_HEIGHT // 2)
         container.append(spinner)
 
-        if weather_manager.is_ready:
-            self._on_data_loaded(page, container, spinner, weather_manager.daily_forecast, weather_manager.hourly_forecast)
-        else:
-            def _wait_for_data(mgr, pspec):
-                if mgr.is_ready:
-                    GLib.idle_add(self._on_data_loaded, page, container, spinner, mgr.daily_forecast, mgr.hourly_forecast)
-                    mgr.disconnect_by_func(_wait_for_data)
-            
-            weather_manager.connect("notify::is-ready", _wait_for_data)
+        run_when_ready(self._on_data_loaded, page)
 
-    def _on_data_loaded(
-        self,
-        page: ForecastPage,
-        container: Gtk.Box,
-        spinner: Adw.Spinner,
-        daily_forecast_data: Any,
-        hourly_forecast_data: Any,
-    ) -> None:
-        """Callback to populate the UI once data is fetched."""
-        # Remove spinner
+    def _on_data_loaded(self, page: ForecastPage) -> None:
+        """Replace a page's spinner with its content once the data is ready."""
+        container = self._forecast_stack.get_child_by_name(page.name.lower())
+        spinner = container.get_first_child() if container else None
+        if not isinstance(spinner, Adw.Spinner):
+            return  # Already built
         container.remove(spinner)
+        daily_forecast_data = weather_manager.daily_forecast
+        hourly_forecast_data = weather_manager.hourly_forecast
 
         # Scrolled window for vertical scrolling
         scrolled = Gtk.ScrolledWindow(hexpand=True)

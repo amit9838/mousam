@@ -1,6 +1,6 @@
 import time
 import threading
-from gi.repository import GObject
+from gi.repository import GLib, GObject
 from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
@@ -18,6 +18,11 @@ class WeatherDataManager(GObject.Object):
     """
     Centralized data manager for Mousam.
     Handles data storage, validation, and notification of updates.
+
+    The update_* methods run on the fetch worker threads and only store
+    data. The signals (data-updated, notify::is-ready) are emitted on the
+    main loop, once when a fetch starts (clear) and once when it is done
+    (publish), so handlers may touch GTK directly.
     """
     
     __gsignals__ = {
@@ -33,26 +38,48 @@ class WeatherDataManager(GObject.Object):
     def __init__(self):
         super().__init__()
         self._lock = threading.Lock()
+        # Turns true only on the main loop, when a finished fetch is
+        # announced, so is-ready is never true before its handlers run
+        self._ready = False
         # Current weather of the saved locations, by their "lat,lon" key
         self.saved_locations_weather = {}
 
     @GObject.Property(type=bool, default=False)
     def is_ready(self):
-        """Returns True if all essential data is loaded and valid."""
+        """True once a whole fetch has been published, until the next one starts."""
         with self._lock:
-            return (self.current_weather is not None and 
-                    self.hourly_forecast is not None and 
-                    self.daily_forecast is not None and
-                    self.air_pollution is not None)
+            return self._ready
+
+    def _has_all_data(self) -> bool:
+        return (self.current_weather is not None and
+                self.hourly_forecast is not None and
+                self.daily_forecast is not None and
+                self.air_pollution is not None)
 
     def clear(self):
-        """Resets all data."""
+        """Resets all data at the start of a fetch (called from its worker)."""
         with self._lock:
+            self._ready = False
             self.current_weather = None
             self.hourly_forecast = None
             self.daily_forecast = None
             self.air_pollution = None
+        GLib.idle_add(self._announce, False)
+
+    def publish(self):
+        """Announces a finished fetch (called from its worker after every update_*)."""
+        GLib.idle_add(self._announce, True)
+
+    def _announce(self, finished: bool) -> bool:
+        """Emits the change on the main loop, once per clear or publish."""
+        with self._lock:
+            # A fetch that started after publish() has cleared the data again
+            self._ready = finished and self._has_all_data()
+            ready = self._ready
+        if ready:
+            self.emit("data-updated")
         self.notify("is-ready")
+        return GLib.SOURCE_REMOVE
 
     def update_current_weather(self):
         obj = Weather()
@@ -69,8 +96,6 @@ class WeatherDataManager(GObject.Object):
         
         with self._lock:
             self.current_weather = data
-        self.emit("data-updated")
-        self.notify("is-ready")
         return data
 
     def update_saved_locations_weather(self, coords: list) -> None:
@@ -119,8 +144,6 @@ class WeatherDataManager(GObject.Object):
                 )
             self.hourly_forecast = hourly_data
             
-        self.emit("data-updated")
-        self.notify("is-ready")
         return hourly_data
 
     def update_daily_forecast(self):
@@ -132,8 +155,6 @@ class WeatherDataManager(GObject.Object):
         data = DailyWeather(raw_data)
         with self._lock:
             self.daily_forecast = data
-        self.emit("data-updated")
-        self.notify("is-ready")
         return data
 
     def update_air_pollution(self):
@@ -156,8 +177,6 @@ class WeatherDataManager(GObject.Object):
         
         with self._lock:
             self.air_pollution = data
-        self.emit("data-updated")
-        self.notify("is-ready")
         logger.info("Air pollution data updated successfully")
         return data
 

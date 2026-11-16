@@ -154,12 +154,14 @@ COLD_FEELS_LIKE_C = -15  # feels-like °C from which cold is a warning
 UNHEALTHY_US_AQI = 151  # US AQI from which air is unhealthy
 VERY_HIGH_UV = 8
 FOG_VISIBILITY_M = 1000
+FOG_SUNRISE_MINUTES = 60  # fog this close to sunrise is "around sunrise"
 STRONG_WIND_KMH = 40  # matches "Strong" in classify_wind_speed_level
 EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
 TEMPERATURE_SWING_C = 6  # change across the window worth a mention
 TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention
 SUNSET_SOON_MINUTES = 120
 SUNRISE_SOON_MINUTES = 180
+SUN_ROUND_MINUTES = 5  # "The sun sets in about N minutes": N to the nearest 5
 
 # Higher wins. Safety first, then changes, then calm facts.
 OVERVIEW_PRIORITIES = {

@@ -101,8 +101,10 @@ temperature swing 0.4, sunset 0.2, calm 0). The next opening is
 
 As insights stop being true the score falls, and openings space out.
 
-**What: the insight whose turn it is.** Never-shown insights go first, most
-important first. After that, the turn goes to the highest **priority ×
+**What: the insight whose turn it is.** The first opening shows the most
+severe insight (the most important among equals): it counts as an
+escalation, below. After that, never-shown insights go first, most
+important first, and then the turn goes to the highest **priority ×
 minutes since it was last shown**: important ones come back more often, and
 the others still get their turn.
 
@@ -111,7 +113,8 @@ warning → error, say a storm), it opens at once, without waiting, unless:
 
 - it was already shown in the last 40 minutes (one that comes and goes
   counts once), or
-- the overview opened less than 5 minutes ago.
+- the overview opened less than 5 minutes ago: then it opens as soon as
+  those 5 minutes are up.
 
 **Between openings** the text on screen is kept up to date without opening
 (the values change, the wording stays). When the shown insight stops being
@@ -218,7 +221,8 @@ From most to least important. "An hour" means an hour inside the window.
 ### 7. Rain or snow
 
 - **Priority** 60 · **Severity** info · **Icon** showers, or snow
-- **A wet hour** has a **50%** chance of precipitation or more.
+- **A wet hour** has a **50%** chance of precipitation or more, a **dry
+  hour** less. An hour with no data is neither.
 - **Snow or rain**: snow when that hour has a snow code, otherwise rain.
 - **Says**:
   - wet now, and a dry hour later in the window:

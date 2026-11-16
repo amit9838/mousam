@@ -23,7 +23,7 @@ import gi
 from .mousam import WeatherMainWindow
 from .settings import settings
 from .configs import APP_ID
-from .CORE_Logging import get_logger
+from .CORE_Logging import get_logger, log_manager
 
 logger = get_logger("main")
 
@@ -169,5 +169,6 @@ class WeatherApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
+    log_manager.setup()
     app = WeatherApplication()
     return app.run(sys.argv)
