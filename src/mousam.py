@@ -420,7 +420,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         from .CORE_weatherData import weather_manager
         if weather_manager.air_pollution is None:
             return
-        AirQualityDialog().present(self)
+        AirQualityDialog(weather_manager.air_pollution).present(self)
 
     def _on_action_open_logs(self, action, param):
         from .CORE_Logging import log_manager
