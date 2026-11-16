@@ -104,12 +104,11 @@ class OverviewEngine(GObject.Object):
             self._reset()
 
     def _on_ready_changed(self, *_args) -> None:
-        # Emitted from the fetch worker threads: continue on the main loop
-        GLib.idle_add(self._schedule)
+        self._schedule()
 
-    def _schedule(self) -> bool:
+    def _schedule(self) -> None:
         if not self.enabled():
-            return GLib.SOURCE_REMOVE
+            return
 
         if not weather_manager.is_ready:
             if settings.selected_city != self._location:
@@ -120,17 +119,17 @@ class OverviewEngine(GObject.Object):
                 # opens next; the shown insight stays until it stops being true
                 self._cancel()
                 self._scheduled_for = None
-            return GLib.SOURCE_REMOVE
+            return
 
-        # is-ready fires once per update; schedule once per fetch
+        # Once per fetch: turning a setting on again doesn't move a run
+        # already scheduled for this data
         hourly = weather_manager.hourly_forecast
         if hourly is self._scheduled_for:
-            return GLib.SOURCE_REMOVE
+            return
         self._scheduled_for = hourly
 
         delay = OVERVIEW_REFRESH_DELAY if self._first_built else OVERVIEW_FIRST_DELAY
         self._run_in(delay)
-        return GLib.SOURCE_REMOVE
 
     def _run_in(self, seconds: float) -> None:
         """The next run, replacing any already scheduled (a one-shot timer)."""

@@ -70,6 +70,8 @@ def fetch_all_weather_data_async(on_success=None, on_error=None):
                 raise error_container[0]
             
             logger.info("All background fetch targets completed successfully")
+            # Before the callbacks, so the data is ready when they run
+            weather_manager.publish()
             with _fetch_lock:
                 callbacks = _fetch_callbacks[:]
                 _fetch_callbacks.clear()

@@ -63,7 +63,6 @@ class CompactWeather(Gtk.Overlay):
         super().__init__(**kwargs)
         self.on_back_clicked = on_back_clicked
         self._clock_timeout_id = None
-        self._rendered_weather = None  # current_weather the content was built from
 
         self.set_size_request(MIN_WIDTH, MIN_HEIGHT)
 
@@ -75,10 +74,9 @@ class CompactWeather(Gtk.Overlay):
         self.set_child(self.stack)
         self._setup_back_button()
 
-        # notify::is-ready is emitted from the fetch worker threads
         from .CORE_weatherData import weather_manager
         self._ready_handler_id = weather_manager.connect(
-            "notify::is-ready", lambda *_: GLib.idle_add(self._show_data_if_new)
+            "notify::is-ready", self._on_weather_manager_ready
         )
         self.connect("destroy", self._on_destroy)
 
@@ -90,7 +88,7 @@ class CompactWeather(Gtk.Overlay):
         """Show the current data, or fetch it if there is none yet."""
         from .CORE_weatherData import weather_manager
         if weather_manager.is_ready:
-            self._show_data_if_new()
+            self._build_content()
             return
 
         if not check_internet_connection(force=True):
@@ -101,12 +99,10 @@ class CompactWeather(Gtk.Overlay):
         from .CORE_Networking import fetch_all_weather_data_async
         fetch_all_weather_data_async(on_error=self._show_error)
 
-    def _show_data_if_new(self) -> bool:
-        """Build the content once per fetch, however often is-ready fires."""
-        from .CORE_weatherData import weather_manager
-        if weather_manager.is_ready and weather_manager.current_weather is not self._rendered_weather:
+    def _on_weather_manager_ready(self, manager, _pspec) -> None:
+        """Build the content once per fetch (is-ready is emitted on the main loop)."""
+        if manager.is_ready:
             self._build_content()
-        return GLib.SOURCE_REMOVE
 
     # ---------- Pages ----------
 
@@ -143,7 +139,6 @@ class CompactWeather(Gtk.Overlay):
         from .CORE_weatherData import weather_manager
         data = weather_manager.current_weather
         aq_data = weather_manager.air_pollution
-        self._rendered_weather = data
 
         weather_code = str(data.weathercode.data if data.weathercode.data is not None else 0)
         is_night = data.is_day.data == 0

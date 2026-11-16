@@ -338,7 +338,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 
 ### Signals and threads
 
-- A signal is emitted on the main loop. Code running on a worker thread hands its result over with `GLib.idle_add` and emits from there, so subscribers never need to know about threads. (`weather_manager` doesn't do this yet; see "Threading and Performance Rules" for how to handle it until it does.)
+- A signal is emitted on the main loop. Code running on a worker thread hands its result over with `GLib.idle_add` and emits from there, so subscribers never need to know about threads (as `weather_manager.publish()` does).
 - One emit per real change. If a value is built in several steps, emit once at the end, not per step.
 
 ### Reuse, don't copy
@@ -452,7 +452,7 @@ Use:
 ## Threading and Performance Rules
 
 - **Never touch GTK from a worker thread.** Network calls run on threads (`fetch_all_weather_data_async`, the city search); hand results back to the main loop with `GLib.idle_add`.
-- **`weather_manager` signals fire on worker threads.** Its `update_*` methods run inside the fetch threads, so `notify::is-ready` and `data-updated` handlers run there too. A handler may only read plain values and schedule work with `GLib.idle_add`; build or change widgets in that idle callback (see `_on_weather_manager_ready` in `mousam.py`, `UI_CompactWeather`). Because `is-ready` fires once per `update_*` call (several times per fetch), make the callback idempotent: compare against the data object you last rendered.
+- **`weather_manager` signals fire on the main loop, once per change.** Its `update_*` methods run inside the fetch threads and only store data. `clear()` (a fetch starts) and `publish()` (it finished) emit from a `GLib.idle_add` callback: `notify::is-ready` once each, `data-updated` once per finished fetch. Handlers may build widgets directly (see `_on_weather_manager_ready` in `mousam.py`); check `is_ready`, as the start of a fetch notifies too. A new `update_*` stores its result and does not emit.
 - **One fetch at a time.** `fetch_all_weather_data_async` joins a running fetch instead of starting another; go through it, don't start threads of your own for weather data. The Locations window's list uses `fetch_saved_locations_weather_async`; use that, not a new thread.
 - **Locks are for data, not for waiting.** Hold `weather_manager._lock` only while assigning or reading its fields; never call the network, emit a signal or call `GLib` while holding it. Don't use `threading.Event`/`join` on the main thread: it freezes the UI.
 - **Every request has a timeout** (`TIMEOUT` from `configs.py`), and every API function logs and returns `None` on failure instead of raising.
