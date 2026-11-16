@@ -113,6 +113,14 @@ class TodaySunTimes(unittest.TestCase):
     def test_utc(self):
         self.assertEqual(self.sun_times("UTC", datetime(2026, 1, 15, 12)), (115, 215))
 
+    def test_west_of_utc(self):
+        # 15 January at noon in Flagstaff; its UTC midnight is still the 14th there
+        self.assertEqual(self.sun_times("America/Phoenix", datetime(2026, 1, 15, 12)), (115, 215))
+
+    def test_late_evening_west_of_utc(self):
+        # 23:30 in Flagstaff is already the 16th in UTC, but it is still the 15th
+        self.assertEqual(self.sun_times("America/Phoenix", datetime(2026, 1, 15, 23, 30)), (115, 215))
+
     def test_day_not_in_the_data(self):
         self.assertEqual(self.sun_times("UTC", datetime(2026, 3, 1, 12)), (0, 0))
 

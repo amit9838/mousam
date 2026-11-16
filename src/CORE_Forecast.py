@@ -63,11 +63,12 @@ def today_high_low(times: list, highs: list, lows: list, today: date) -> Optiona
 def today_sun_times(times: list, sunrises: list, sunsets: list, tz: tzinfo, now: float) -> tuple:
     """Today's (sunrise, sunset) timestamps from daily data, or (0, 0).
 
-    Today is the day it is at `now` in `tz`, the city's time zone; each day
-    of the data is read in that zone too.
+    Today is the day it is at `now` in `tz`, the city's time zone. Daily
+    data is requested in GMT, so each day's timestamp is its midnight in
+    UTC: compare its UTC date, as today_high_low does.
     """
     today = datetime.fromtimestamp(now, tz).date()
     for i, ts in enumerate(times):
-        if datetime.fromtimestamp(ts, tz=tz).date() == today:
+        if datetime.fromtimestamp(ts, tz=timezone.utc).date() == today:
             return sunrises[i], sunsets[i]
     return 0, 0
