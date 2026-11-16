@@ -20,7 +20,8 @@ from gi.repository import Gtk, Adw
 
 from .CORE_Icons import create_weather_icon
 from .settings import settings
-from .CORE_weatherData import WeatherDataManager, weather_manager
+from .CORE_Levels import classify_rain_intensity, classify_snow_intensity
+from .CORE_weatherData import weather_manager
 from .configs import (  # noqa: E402
     RAIN_MIN_AMOUNT_MM, SNOW_MIN_AMOUNT_CM, SNOW_WATER_MM_PER_CM, SNOW_WEATHER_CODES,
 )
@@ -464,7 +465,7 @@ class Forecast(Gtk.Grid):
             amount = f"{amount_cm / 2.54:.1f} inch"
         else:
             amount = f"{amount_cm:.1f} cm"
-        intensity = WeatherDataManager.classify_snow_intensity(amount_cm)
+        intensity = classify_snow_intensity(amount_cm)
         # Translators: tooltips on the hourly snowflakes; {amount} is the fresh
         # snow in that hour with its unit, like "1.2 cm"
         texts = {
@@ -484,7 +485,7 @@ class Forecast(Gtk.Grid):
             amount = f"{amount_mm / 25.4:.2f} inch"
         else:
             amount = f"{amount_mm:.1f} mm"
-        intensity = WeatherDataManager.classify_rain_intensity(amount_mm)
+        intensity = classify_rain_intensity(amount_mm)
         # Translators: tooltips on the hourly rain drops; {amount} is the rain
         # in that hour with its unit, like "3.2 mm"
         texts = {

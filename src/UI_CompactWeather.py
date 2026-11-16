@@ -10,6 +10,7 @@ from gi.repository import Gtk, Adw, GLib, Pango  # noqa: E402
 
 from .settings import settings  # noqa: E402
 from .CORE_Icons import condition, bg_css, create_weather_icon  # noqa: E402
+from .CORE_Levels import classify_aqi  # noqa: E402
 from .CORE_Helpers import (  # noqa: E402
     check_internet_connection,
     get_selected_city_name,
@@ -200,7 +201,6 @@ class CompactWeather(Gtk.Overlay):
         details.attach(self.lbl_time, 0, 0, 2, 1)
         self._start_clock()
 
-        from .CORE_weatherData import weather_manager
         wind = data.windspeed_10m
         wind_str = f"{wind.data:.0f} {wind.unit}" if wind.data is not None else "--"
         hum = data.relativehumidity_2m.data
@@ -210,7 +210,7 @@ class CompactWeather(Gtk.Overlay):
             (_("Humidity"), f"{hum} %" if hum is not None else "-- %"),
             (_("Pressure"), format_pressure(data.pressure_msl.data, data.pressure_msl.unit)),
             # A level word with the number: "202 • Severe"
-            (_("AQI"), f"{aqi} • {weather_manager.classify_aqi(aqi)}" if aqi is not None else "--"),
+            (_("AQI"), f"{aqi} • {classify_aqi(aqi)}" if aqi is not None else "--"),
         ]
         for row, (name, value) in enumerate(rows, start=1):
             details.attach(_label(name, ["compact-detail-label"]), 0, row, 1, 1)
