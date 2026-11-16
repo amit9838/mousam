@@ -268,7 +268,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         add_card(uv_card(cw_data), 1, 1)
 
         # Pollution & Sun
-        add_card(CardAirPollution().card, 2, 0, width=2)
+        add_card(CardAirPollution(weather_manager.air_pollution).card, 2, 0, width=2)
         timezone_name = get_time_difference().get("timezone", "UTC")
         latitude = parse_coords_key(weather_manager.location)[0]
         add_card(CardDayNight(weather_manager.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)

@@ -217,7 +217,7 @@ When unsure, ask:
 | --- | --- |
 | A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`); the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
 | Sun / moon card | `CardDayNight(daily, timezone_name, latitude).card` |
-| Air quality card | `CardAirPollution().card` |
+| Air quality card | `CardAirPollution(air).card` |
 | Hourly graphs with tabs | `HourlyDetails` |
 | Tomorrow / 7-day list | `Forecast` |
 | Vertical level gauge | `DrawLevelBar` |
