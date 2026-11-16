@@ -162,6 +162,6 @@ class WeatherApplication(Adw.Application):
 
 def main(version):
     """The application's entry point."""
-    log_manager.setup()
+    log_manager.setup(settings.debug_mode)
     app = WeatherApplication()
     return app.run(sys.argv)

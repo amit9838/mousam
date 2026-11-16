@@ -1,9 +1,10 @@
 """Logging for the app: get_logger() for modules, log_manager for its setup.
 
 Importing this module is cheap and needs no GTK or GSettings, so the modules
-that use get_logger stay importable on their own (tests/). The app calls
-log_manager.setup() once at start-up (main.main); until then the "mousam"
-loggers are silent, as they are whenever debug mode is off.
+that use get_logger stay importable on their own (tests/). It never reads
+the settings: the app calls log_manager.setup(debug) once at start-up
+(main.main) and update_level(debug) when debug mode changes. Until then the
+"mousam" loggers are silent, as they are whenever debug mode is off.
 """
 
 import os
@@ -34,7 +35,7 @@ class LogManager:
         self.log_file = None
         self._initialized = True
 
-    def setup(self) -> None:
+    def setup(self, debug: bool) -> None:
         """Create the log folder and apply the debug-mode setting. Called once
         at start-up, before anything is logged."""
         # Imported here so that importing this module needs no GTK or GSettings
@@ -43,16 +44,14 @@ class LogManager:
         self.log_dir = os.path.join(GLib.get_user_cache_dir(), "mousam")
         self.log_file = os.path.join(self.log_dir, self.LOG_FILE_NAME)
         os.makedirs(self.log_dir, exist_ok=True)
-        self._setup_logging()
+        self._setup_logging(debug)
 
-    def _setup_logging(self):
-        from .settings import settings
-
+    def _setup_logging(self, debug: bool):
         # Clear existing handlers
         if self.logger.hasHandlers():
             self.logger.handlers.clear()
 
-        if not settings.debug_mode:
+        if not debug:
             self.logger.setLevel(logging.CRITICAL + 1)
             return
 
@@ -78,12 +77,10 @@ class LogManager:
         except Exception as e:
             print(f"Failed to setup file logging: {e}")
 
-    def update_level(self):
-        """Reload logging level based on current settings."""
-        from .settings import settings
-
-        self._setup_logging()
-        if settings.debug_mode:
+    def update_level(self, debug: bool):
+        """Turn logging on or off, when the debug-mode setting changes."""
+        self._setup_logging(debug)
+        if debug:
             self.logger.info("Logging enabled")
             self.logger.info(f"Logging level set to: {logging.getLevelName(logging.DEBUG)}")
 
@@ -124,5 +121,5 @@ def get_logger(name=None):
         return logging.getLogger(f"mousam.{name}")
     return logging.getLogger("mousam")
 
-# The singleton; main.main() calls log_manager.setup() at start-up
+# The singleton; main.main() calls log_manager.setup(debug) at start-up
 log_manager = LogManager()

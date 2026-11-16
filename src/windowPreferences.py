@@ -318,7 +318,7 @@ class WeatherPreferences(Adw.PreferencesDialog):
 
     def _on_debug_mode_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         settings.debug_mode = row.get_active()
-        log_manager.update_level()
+        log_manager.update_level(settings.debug_mode)
 
     def _on_open_logs_clicked(self, _row: Adw.ActionRow) -> None:
         log_manager.open_log_folder()

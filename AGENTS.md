@@ -482,7 +482,7 @@ Use:
 - No mutable default arguments (`def f(items=None)`, then `items = items or []`), and no module-level state other than the singletons above and constants.
 - Times are unix timestamps from the API. Turn them into local times with `datetime.fromtimestamp(ts, ZoneInfo(tz))` using the city's time zone, never naive `datetime.now()` / `fromtimestamp(ts)`.
 - Each module gets `_` with `from gettext import gettext as _` (and `pgettext as C_`, `ngettext`); don't rely on the builtin `_` that `gettext.install` adds in the launcher.
-- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK; `main.main()` calls `log_manager.setup()` once at start-up, so keep GTK and `settings` out of its module level.
+- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK and it never reads `settings`: `main.main()` calls `log_manager.setup(debug)` once at start-up, and Preferences calls `update_level(debug)`.
 - Keep `gi.require_version(...)` before importing from `gi.repository`, as the files already do.
 - New logic that doesn't need GTK (classification, conversions, parsing) should be a plain function or `@staticmethod` so it stays easy to test.
 
