@@ -143,7 +143,7 @@ src/
   CORE_weatherData.py     WeatherStore (weather_store): the selected city's data and loading status; fetches on worker threads
   CORE_Levels.py          classify_* and the AQI helpers: level words and colour classes (no GTK)
   CORE_Units.py           conversions the API doesn't do (visibility) (no GTK)
-  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low (no GTK)
+  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low and sun times (no GTK)
   CORE_Locations.py       LocationData, JsonProcessor, find_selected_city: saved cities (no GTK)
   CORE_Timezones.py       time_difference: a city's time by zone name (no GTK)
   CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
@@ -216,7 +216,7 @@ When unsure, ask:
 | Need | Use |
 | --- | --- |
 | A metric card (title, value, unit, level, sub line, gauge) | `CardSquare(..., visual=widget).card` (or `visual_below=`); the current conditions' cards are `wind_card(current)`, `humidity_card`, `pressure_card`, `uv_card` |
-| Sun / moon card | `CardDayNight().card` |
+| Sun / moon card | `CardDayNight(daily, timezone_name, latitude).card` |
 | Air quality card | `CardAirPollution().card` |
 | Hourly graphs with tabs | `HourlyDetails` |
 | Tomorrow / 7-day list | `Forecast` |

@@ -8,7 +8,8 @@ from gi.repository import Gtk, Adw, Gio
 from gettext import gettext as _
 
 # Module imports
-from .CORE_Helpers import local_time_data
+from .CORE_Helpers import get_time_difference, local_time_data
+from .CORE_Locations import parse_coords_key
 from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
@@ -268,7 +269,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         # Pollution & Sun
         add_card(CardAirPollution().card, 2, 0, width=2)
-        add_card(CardDayNight().card, 2, 1, width=2)
+        timezone_name = get_time_difference().get("timezone", "UTC")
+        latitude = parse_coords_key(weather_manager.location)[0]
+        add_card(CardDayNight(weather_manager.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)
 
         self.main_stack.add_named(grid, "content")
 

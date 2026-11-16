@@ -4,7 +4,7 @@ chance gets, whether a code is snow, today's high and low.
 Plain functions with no GTK or settings, so they can be tested on their own.
 """
 
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, tzinfo
 from typing import Optional
 
 from .configs import (
@@ -58,3 +58,16 @@ def today_high_low(times: list, highs: list, lows: list, today: date) -> Optiona
                 return None
             return high, low
     return None
+
+
+def today_sun_times(times: list, sunrises: list, sunsets: list, tz: tzinfo, now: float) -> tuple:
+    """Today's (sunrise, sunset) timestamps from daily data, or (0, 0).
+
+    Today is the day it is at `now` in `tz`, the city's time zone; each day
+    of the data is read in that zone too.
+    """
+    today = datetime.fromtimestamp(now, tz).date()
+    for i, ts in enumerate(times):
+        if datetime.fromtimestamp(ts, tz=tz).date() == today:
+            return sunrises[i], sunsets[i]
+    return 0, 0
