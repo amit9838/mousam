@@ -1,4 +1,5 @@
-"""Tests for the level classifiers (src/CORE_Levels.py).
+"""Tests for the level classifiers and unit conversions (src/CORE_Levels.py,
+src/CORE_Units.py).
 
 Plain Python, no GTK. Run: python3 tests/test_levels.py (also run by `meson test`).
 """
@@ -15,6 +16,7 @@ package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
 from mousam import CORE_Levels as levels  # noqa: E402
+from mousam.CORE_Units import transform_visibility_data  # noqa: E402
 from mousam.configs import HPA_TO_INHG  # noqa: E402
 
 
@@ -135,6 +137,19 @@ class WeatherLevels(unittest.TestCase):
         for amount_cm, level in cases:
             with self.subTest(amount_cm=amount_cm):
                 self.assertEqual(levels.classify_snow_intensity(amount_cm), level)
+
+
+class Units(unittest.TestCase):
+    def test_visibility_metric_in_km(self):
+        self.assertEqual(transform_visibility_data("m", 24000, "metric"), {"unit": "km", "data": 24.0})
+
+    def test_visibility_imperial_in_miles(self):
+        result = transform_visibility_data("m", 1609.34, "imperial")
+        self.assertEqual(result["unit"], "miles")
+        self.assertAlmostEqual(result["data"], 1.0)
+
+    def test_visibility_in_other_units_is_kept(self):
+        self.assertEqual(transform_visibility_data("ft", 500, "imperial"), {"unit": "ft", "data": 500})
 
 
 if __name__ == "__main__":

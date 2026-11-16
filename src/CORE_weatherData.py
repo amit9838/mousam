@@ -7,10 +7,10 @@ from .settings import settings
 from .CORE_Levels import (
     classify_humidity_level, classify_presssure_level, classify_uv_index, classify_wind_speed_level,
 )
+from .CORE_Units import transform_visibility_data
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_cords
 from .CORE_Logging import get_logger
-from gettext import gettext as _
 
 logger = get_logger("data_manager")
 
@@ -134,9 +134,10 @@ class WeatherDataManager(GObject.Object):
                     unit=hourly_data.dewpoint_2m.unit,
                     data=hourly_data.dewpoint_2m.data[nearest_idx],
                 )
-                vis_transformed = self.transform_visibility_data(
+                vis_transformed = transform_visibility_data(
                     hourly_data.visibility.unit,
                     hourly_data.visibility.data[nearest_idx],
+                    settings.unit,
                 )
                 self.current_weather.visibility = WeatherField(
                     data=vis_transformed["data"],
@@ -179,15 +180,6 @@ class WeatherDataManager(GObject.Object):
             self.air_pollution = data
         logger.info("Air pollution data updated successfully")
         return data
-
-    @staticmethod
-    def transform_visibility_data(unit, data):
-        dist_unit, dist = _("km"), data / 1000
-        if settings.unit == "imperial":
-            dist_unit, dist = _("miles"), data / 1609.34
-        if unit.lower() == "m":
-            data, unit = dist, dist_unit
-        return {"unit": unit, "data": data}
 
 # Singleton instance
 weather_manager = WeatherDataManager()

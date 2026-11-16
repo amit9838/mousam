@@ -1,4 +1,4 @@
-"""Tests for today's unit helpers and location formatting.
+"""Tests for the API's unit parameters and location formatting.
 
 They pin down the current behaviour before the logic moves into GTK-free
 modules (docs/architecture-plan.md, phase 2). The modules still import GTK,
@@ -21,10 +21,7 @@ stubs.install()
 
 from mousam import windowLocations  # noqa: E402
 from mousam.API_Weather import unit_params  # noqa: E402
-from mousam.CORE_weatherData import WeatherDataManager  # noqa: E402
 from mousam.windowLocations import LocationData  # noqa: E402
-
-W = WeatherDataManager
 
 
 def fixed_clock():
@@ -44,19 +41,7 @@ class SettingsTestCase(unittest.TestCase):
         stubs.settings.reset()
 
 
-class Units(SettingsTestCase):
-    def test_visibility_metric_in_km(self):
-        self.assertEqual(W.transform_visibility_data("m", 24000), {"unit": "km", "data": 24.0})
-
-    def test_visibility_imperial_in_miles(self):
-        stubs.settings.unit = "imperial"
-        result = W.transform_visibility_data("m", 1609.34)
-        self.assertEqual(result["unit"], "miles")
-        self.assertAlmostEqual(result["data"], 1.0)
-
-    def test_visibility_in_other_units_is_kept(self):
-        self.assertEqual(W.transform_visibility_data("ft", 500), {"unit": "ft", "data": 500})
-
+class UnitParams(unittest.TestCase):
     def test_unit_params(self):
         self.assertEqual(unit_params("metric"), "")
         self.assertEqual(

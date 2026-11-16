@@ -16,6 +16,7 @@ src/CORE_Models.py
 src/CORE_Overview.py
 src/CORE_OverviewMessages.py
 src/CORE_OverviewRules.py
+src/CORE_Units.py
 src/CORE_weatherData.py
 src/UI_CardAirPollution.py
 src/UI_CardDayNight.py
