@@ -18,7 +18,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            meson gettext libglib2.0-dev-bin appstream desktop-file-utils
+            meson gettext libglib2.0-dev-bin appstream desktop-file-utils \
+            python3-gi
       - name: Lint (settings in ruff.toml)
         run: pipx run 'ruff==0.15.*' check src
       - name: Check Python syntax

@@ -1,175 +1,284 @@
-import time
+"""The weather store: the selected city's data and its loading status.
+
+Fetching runs on worker threads, and the results are handed to the main loop
+before any property is set or any signal is emitted, so the UI never sees a
+thread.
+"""
+
 import threading
+import time
+from typing import Callable, Dict, List
+
 from gi.repository import GLib, GObject
-from .API_Weather import Weather
-from .API_AirPollution import AirPollution
+
+from . import API_Weather
+from .API_AirPollution import fetch_air_quality
 from .settings import settings
+from .CORE_ForecastClient import ForecastClient
 from .CORE_Levels import (
     classify_humidity_level, classify_pressure_level, classify_uv_index, classify_wind_speed_level,
 )
 from .CORE_Forecast import nearest_hour_index
 from .CORE_Units import transform_visibility_data
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
-from .CORE_Helpers import get_cords
+from .CORE_Helpers import check_internet_connection, get_time_difference
+from .CORE_Locations import parse_coords_key
 from .CORE_Logging import get_logger
+from .configs import TIMEOUT
 
 logger = get_logger("data_manager")
 
-class WeatherDataManager(GObject.Object):
-    """
-    Centralized data manager for Mousam.
-    Handles data storage, validation, and notification of updates.
+# The values of WeatherStore.status
+STATUS_IDLE = "idle"  # nothing fetched yet
+STATUS_LOADING = "loading"  # a fetch is running; the data is cleared
+STATUS_READY = "ready"  # the data of `location` is there
+STATUS_OFFLINE = "offline"  # no connection; the data of the last fetch is kept
+STATUS_ERROR = "error"  # the last fetch failed; `error` says why
 
-    The update_* methods run on the fetch worker threads and only store
-    data. The signals (data-updated, notify::is-ready) are emitted on the
-    main loop, once when a fetch starts (clear) and once when it is done
-    (publish), so handlers may touch GTK directly.
+
+class WeatherStore(GObject.Object):
+    """The one holder of the selected city's weather.
+
+    Ask for data with refresh() and listen to notify::status (or
+    notify::is-ready). A refresh while a fetch for the same city is running
+    joins it: its result reaches every listener. A refresh for another city
+    fetches that one once the running fetch ends, and the old result is
+    dropped. Fields and signals change only on the main loop.
     """
-    
+
     __gsignals__ = {
-        'data-updated': (GObject.SignalFlags.RUN_FIRST, None, ()),
+        "data-updated": (GObject.SignalFlags.RUN_FIRST, None, ()),
     }
 
-    # Properties for data storage
+    status = GObject.Property(type=str, default=STATUS_IDLE)
+    error = GObject.Property(type=str, default="")
+    location = GObject.Property(type=str, default="")  # "lat,lon" the data belongs to
+
     current_weather = GObject.Property(type=GObject.TYPE_PYOBJECT)
     hourly_forecast = GObject.Property(type=GObject.TYPE_PYOBJECT)
     daily_forecast = GObject.Property(type=GObject.TYPE_PYOBJECT)
     air_pollution = GObject.Property(type=GObject.TYPE_PYOBJECT)
-    
-    def __init__(self):
+
+    def __init__(
+        self,
+        client: ForecastClient = API_Weather,
+        fetch_air: Callable = fetch_air_quality,
+        settings=settings,
+        is_online: Callable[..., bool] = check_internet_connection,
+    ):
         super().__init__()
-        self._lock = threading.Lock()
-        # Turns true only on the main loop, when a finished fetch is
-        # announced, so is-ready is never true before its handlers run
+        self._client = client
+        self._fetch_air = fetch_air
+        self._settings = settings
+        self._is_online = is_online
         self._ready = False
+        self._fetching = None  # The "lat,lon" being fetched, or None
+        self._refetch = False  # Another city was asked for during the fetch
         # Current weather of the saved locations, by their "lat,lon" key
-        self.saved_locations_weather = {}
+        self.saved_locations_weather: Dict[str, CurrentWeather] = {}
 
     @GObject.Property(type=bool, default=False)
     def is_ready(self):
         """True once a whole fetch has been published, until the next one starts."""
-        with self._lock:
-            return self._ready
+        return self._ready
 
-    def _has_all_data(self) -> bool:
-        return (self.current_weather is not None and
-                self.hourly_forecast is not None and
-                self.daily_forecast is not None and
-                self.air_pollution is not None)
+    # ---------- Fetching ----------
 
-    def clear(self):
-        """Resets all data at the start of a fetch (called from its worker)."""
-        with self._lock:
-            self._ready = False
-            self.current_weather = None
-            self.hourly_forecast = None
-            self.daily_forecast = None
-            self.air_pollution = None
-        GLib.idle_add(self._announce, False)
+    def refresh(self, check_online: bool = True) -> None:
+        """Fetch the selected city's weather, unless a fetch is already
+        running (then its result is the answer).
 
-    def publish(self):
-        """Announces a finished fetch (called from its worker after every update_*)."""
-        GLib.idle_add(self._announce, True)
+        With check_online, a missing connection ends it as STATUS_OFFLINE
+        and keeps the data that is there.
+        """
+        # Read on the main loop: the worker never touches settings
+        coords = self._settings.selected_city
+        unit = self._settings.unit
+        if self._fetching is not None:
+            if coords != self._fetching:
+                self._refetch = True
+            return
+        self._fetching = coords
+        threading.Thread(
+            target=self._fetch_worker,
+            args=(coords, unit, check_online),
+            name="fetch_all_worker",
+            daemon=True,
+        ).start()
 
-    def _announce(self, finished: bool) -> bool:
-        """Emits the change on the main loop, once per clear or publish."""
-        with self._lock:
-            # A fetch that started after publish() has cleared the data again
-            self._ready = finished and self._has_all_data()
-            ready = self._ready
-        if ready:
-            self.emit("data-updated")
-        self.notify("is-ready")
-        return GLib.SOURCE_REMOVE
+    def _fetch_worker(self, coords: str, unit: str, check_online: bool) -> None:
+        if check_online and not self._is_online(force=True):
+            GLib.idle_add(self._finish, STATUS_OFFLINE, coords, None)
+            return
 
-    def update_current_weather(self):
-        obj = Weather()
-        logger.debug(f"Fetching current weather for cords: {get_cords()}")
-        raw_data = obj._get_current_weather(*get_cords())
-        if raw_data is None:
+        GLib.idle_add(self._start_loading)
+        logger.info("Starting background fetch for all weather data")
+        try:
+            data = self._download(*parse_coords_key(coords), unit)
+        except Exception as e:  # A worker's top level: report, never crash
+            logger.error(f"Error fetching data: {e}")
+            GLib.idle_add(self._finish, STATUS_ERROR, coords, str(e))
+            return
+        logger.info("All background fetch targets completed successfully")
+        GLib.idle_add(self._finish, STATUS_READY, coords, data)
+
+    def _download(self, lat: float, lon: float, unit: str) -> dict:
+        """Every model of one city, or an exception saying what failed."""
+        logger.debug(f"Fetching current weather for cords: {[lat, lon]}")
+        current = _run_all(
+            {"cwt": lambda: self._client.fetch_current(lat, lon, unit)},
+            timeout_message="Current weather fetch timed out",
+        )["cwt"]
+        if current is None:
             logger.error("Failed to fetch current weather data from API")
             raise ValueError("Failed to fetch current weather data")
 
-        data = CurrentWeather(raw_data)
-        data.relativehumidity_2m.level_str = classify_humidity_level(data.relativehumidity_2m.data)
-        data.windspeed_10m.level_str = classify_wind_speed_level(data.windspeed_10m.data)
-        data.pressure_msl.level_str = classify_pressure_level(data.pressure_msl.data, settings.unit)
-        
-        with self._lock:
-            self.current_weather = data
-        return data
-
-    def update_saved_locations_weather(self, coords: list) -> None:
-        """Fetches every given "lat,lon" in one request; failed ones become None."""
-        raw_data = Weather()._get_current_for_locations(coords) or []
-        results = {key: CurrentWeather(raw) for key, raw in zip(coords, raw_data)}
-
-        with self._lock:
-            for key in coords:
-                self.saved_locations_weather[key] = results.get(key)
-
-    def update_hourly_forecast(self):
-        obj = Weather()
-        raw_data = obj._get_hourly_forecast(*get_cords())
-        if raw_data is None:
+        logger.info("Current weather fetched successfully, starting forecasts and air pollution")
+        raw = _run_all({
+            "hft": lambda: self._client.fetch_hourly(lat, lon, unit),
+            "dft": lambda: self._client.fetch_daily(lat, lon, unit),
+            "apt": lambda: self._fetch_air(lat, lon),
+            "local_time": lambda: get_time_difference("", True),
+        })
+        if raw["hft"] is None:
             raise ValueError("Failed to fetch hourly forecast data")
-
-        hourly_data = HourlyWeather(raw_data)
-        time_list = raw_data.get("hourly").get("time")
-        nearest_idx = nearest_hour_index(time_list, time.time())
-
-        # Update current weather with derived hourly fields
-        with self._lock:
-            if self.current_weather:
-                self.current_weather.uv_index = WeatherField(
-                    data=hourly_data.uv_index.data[nearest_idx],
-                    level_str=classify_uv_index(hourly_data.uv_index.data[nearest_idx]),
-                )
-                self.current_weather.dewpoint_2m = WeatherField(
-                    unit=hourly_data.dewpoint_2m.unit,
-                    data=hourly_data.dewpoint_2m.data[nearest_idx],
-                )
-                vis_transformed = transform_visibility_data(
-                    hourly_data.visibility.unit,
-                    hourly_data.visibility.data[nearest_idx],
-                    settings.unit,
-                )
-                self.current_weather.visibility = WeatherField(
-                    data=vis_transformed["data"],
-                    unit=vis_transformed["unit"]
-                )
-            self.hourly_forecast = hourly_data
-            
-        return hourly_data
-
-    def update_daily_forecast(self):
-        obj = Weather()
-        raw_data = obj._get_daily_forecast(*get_cords())
-        if raw_data is None:
+        if raw["dft"] is None:
             raise ValueError("Failed to fetch daily forecast data")
-
-        data = DailyWeather(raw_data)
-        with self._lock:
-            self.daily_forecast = data
-        return data
-
-    def update_air_pollution(self):
-        obj = AirPollution()
-        raw_data = obj._get_current_air_pollution(*get_cords())
-        if raw_data is None:
+        if raw["apt"] is None:
             raise ValueError("Failed to fetch air pollution data")
-        
-        time_list = raw_data.get("hourly").get("time")
-        nearest_idx = nearest_hour_index(time_list, time.time())
-                
-        data = AirPollutionData(raw_data)
-        data.current_us_aqi = data.us_aqi.data[nearest_idx]
-        data.current_eu_aqi = data.european_aqi.data[nearest_idx]
-        
-        with self._lock:
-            self.air_pollution = data
-        logger.info("Air pollution data updated successfully")
-        return data
 
-# Singleton instance
-weather_manager = WeatherDataManager()
+        current_weather = build_current(current, unit)
+        hourly = HourlyWeather(raw["hft"])
+        add_hourly_fields(current_weather, hourly, raw["hft"]["hourly"]["time"], unit)
+        return {
+            "current_weather": current_weather,
+            "hourly_forecast": hourly,
+            "daily_forecast": DailyWeather(raw["dft"]),
+            "air_pollution": build_air_pollution(raw["apt"]),
+        }
+
+    # ---------- On the main loop ----------
+
+    def _start_loading(self) -> bool:
+        self.current_weather = None
+        self.hourly_forecast = None
+        self.daily_forecast = None
+        self.air_pollution = None
+        self._ready = False
+        self.status = STATUS_LOADING
+        self.notify("is-ready")
+        return GLib.SOURCE_REMOVE
+
+    def _finish(self, status: str, coords: str, payload) -> bool:
+        self._fetching = None
+        if self._refetch:
+            # The city changed during the fetch: its result is out of date
+            self._refetch = False
+            self.refresh()
+            return GLib.SOURCE_REMOVE
+        if status == STATUS_READY:
+            for name, value in payload.items():
+                setattr(self, name, value)
+            self.location = coords
+            self._ready = True
+            self.emit("data-updated")
+            self.notify("is-ready")
+        elif status == STATUS_ERROR:
+            self.error = payload
+        self.status = status
+        return GLib.SOURCE_REMOVE
+
+    # ---------- Saved locations ----------
+
+    def refresh_saved_locations(self, coords: List[str], on_done: Callable[[], None]) -> None:
+        """Fetch the current weather of every given "lat,lon" in one request
+        (failed ones become None), then call on_done on the main loop."""
+        unit = self._settings.unit
+
+        def worker():
+            raw_data = self._client.fetch_many(coords, unit) or []
+            results = {key: CurrentWeather(raw) for key, raw in zip(coords, raw_data)}
+            GLib.idle_add(self._saved_locations_loaded, coords, results, on_done)
+
+        threading.Thread(target=worker, name="saved_locations_worker", daemon=True).start()
+
+    def _saved_locations_loaded(self, coords: List[str], results: dict, on_done) -> bool:
+        for key in coords:
+            self.saved_locations_weather[key] = results.get(key)
+        on_done()
+        return GLib.SOURCE_REMOVE
+
+
+# ---------- Building the models (on the worker) ----------
+
+def build_current(raw: dict, unit: str) -> CurrentWeather:
+    """Current conditions with their levels."""
+    data = CurrentWeather(raw)
+    data.relativehumidity_2m.level_str = classify_humidity_level(data.relativehumidity_2m.data)
+    data.windspeed_10m.level_str = classify_wind_speed_level(data.windspeed_10m.data)
+    data.pressure_msl.level_str = classify_pressure_level(data.pressure_msl.data, unit)
+    return data
+
+
+def add_hourly_fields(current: CurrentWeather, hourly: HourlyWeather, times: list, unit: str) -> None:
+    """Fill the current conditions the current API doesn't give (UV index,
+    dew point, visibility) from this hour of the hourly forecast."""
+    i = nearest_hour_index(times, time.time())
+    current.uv_index = WeatherField(
+        data=hourly.uv_index.data[i],
+        level_str=classify_uv_index(hourly.uv_index.data[i]),
+    )
+    current.dewpoint_2m = WeatherField(
+        unit=hourly.dewpoint_2m.unit,
+        data=hourly.dewpoint_2m.data[i],
+    )
+    visibility = transform_visibility_data(hourly.visibility.unit, hourly.visibility.data[i], unit)
+    current.visibility = WeatherField(data=visibility["data"], unit=visibility["unit"])
+
+
+def build_air_pollution(raw: dict) -> AirPollutionData:
+    """Air quality, with this hour's US and EU AQI."""
+    i = nearest_hour_index(raw.get("hourly").get("time"), time.time())
+    data = AirPollutionData(raw)
+    data.current_us_aqi = data.us_aqi.data[i]
+    data.current_eu_aqi = data.european_aqi.data[i]
+    logger.info("Air pollution data updated successfully")
+    return data
+
+
+def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
+    """Run each task on its own thread and return {name: result}.
+
+    Each gets TIMEOUT seconds; the first one still running after that, or
+    the first error, is raised.
+    """
+    results, errors = {}, []
+
+    def run(name, task):
+        try:
+            logger.debug(f"Starting target: {name}")
+            results[name] = task()
+            logger.debug(f"Finished target: {name}")
+        except Exception as e:  # Re-raised below, on the fetch worker
+            logger.error(f"Error in target {name}: {e}")
+            errors.append(e)
+
+    threads = [
+        threading.Thread(target=run, args=(name, task), name=name, daemon=True)
+        for name, task in tasks.items()
+    ]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join(timeout=TIMEOUT)
+        if thread.is_alive():
+            raise TimeoutError(timeout_message or f"{thread.name} fetch timed out")
+    if errors:
+        raise errors[0]
+    return results
+
+
+# The shared instance
+weather_store = WeatherStore()
+# The old name, until every caller uses weather_store
+weather_manager = weather_store

@@ -1,52 +1,59 @@
+"""Open-Meteo air-quality API: https://open-meteo.com/en/docs/air-quality-api
+
+A plain function with the coordinates as arguments; it returns the JSON, or
+None when the request fails.
+"""
+
+from typing import Optional
+
 import requests
+
 from .CORE_Cache import cached
-from .CORE_Helpers import TIMEOUT
-from .configs import AIR_QUALITY_BASE_URL
 from .CORE_Logging import get_logger
+from .configs import AIR_QUALITY_BASE_URL, TIMEOUT
 
 logger = get_logger("API_AirPollution")
 
-# base_url moved to configs.py
+HOURLY_FIELDS = [
+    "european_aqi",
+    "us_aqi",
+    "pm10",
+    "pm2_5",
+    "carbon_monoxide",
+    "carbon_dioxide",
+    "nitrogen_dioxide",
+    "sulphur_dioxide",
+    "ozone",
+    "dust",
+    "ammonia",
+    "methane",
+    "alder_pollen",
+    "birch_pollen",
+    "grass_pollen",
+    "mugwort_pollen",
+    "olive_pollen",
+    "ragweed_pollen",
+]
 
 
-class AirPollution:
-    @staticmethod
-    @cached()
-    def current_air_pollution(latitude: float, longitude: float, **kwargs):
-        url = AIR_QUALITY_BASE_URL + f"?latitude={latitude}&longitude={longitude}"
-        if "hourly" in kwargs:
-            hourly_fields = ",".join(kwargs.get("hourly"))
-            url = url + f"&hourly={hourly_fields}"
+@cached()
+def fetch_air_quality(latitude: float, longitude: float) -> Optional[dict]:
+    """Hourly air quality of one place, from three days back to three ahead."""
+    url = (
+        AIR_QUALITY_BASE_URL
+        + f"?latitude={latitude}&longitude={longitude}"
+        + f"&hourly={','.join(HOURLY_FIELDS)}"
+        + "&timeformat=unixtime&past_days=3&forecast_days=3&timezone=auto"
+    )
+    try:
+        response = requests.get(url, timeout=TIMEOUT)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        logger.error(f"Failed to fetch air pollution data: {e}")
+        return None
 
-        try:
-            url = url + "&timeformat=unixtime" + "&past_days=3" + "&forecast_days=3"+ "&timezone=auto"
-            response = requests.get(url, timeout=TIMEOUT)
-            response.raise_for_status()  # Raise an exception if the request was unsuccessful
-            data = response.json()
-            return data
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Failed to fetch air pollution data: {e}")
 
-    def _get_current_air_pollution(self, lat, lon):
-        hourly_args = [
-            "european_aqi",
-            "us_aqi",
-            "pm10",
-            "pm2_5",
-            "carbon_monoxide",
-            "carbon_dioxide",
-            "nitrogen_dioxide",
-            "sulphur_dioxide",
-            "ozone",
-            "dust",
-            "ammonia",
-            "methane",
-            "alder_pollen",
-            "birch_pollen",
-            "grass_pollen",
-            "mugwort_pollen",
-            "olive_pollen",
-            "ragweed_pollen",
-        ]
-
-        return self.current_air_pollution(lat, lon, hourly=hourly_args)
+def clear_cache() -> None:
+    """Forget cached responses, so the next fetch goes to the network."""
+    fetch_air_quality.cache_clear()

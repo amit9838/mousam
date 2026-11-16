@@ -7,11 +7,9 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Gdk, Adw, GLib, GObject, Pango  # noqa: E402
 
 from .API_FindCity import find_city  # noqa: E402
-from .CORE_GTKUtils import remove_rootwindow_drop_target, weak_connect  # noqa: E402
-from .CORE_Helpers import create_toast  # noqa: E402
+from .CORE_GTKUtils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
 from .CORE_Locations import LocationData  # noqa: E402
-from .CORE_Networking import fetch_saved_locations_weather_async  # noqa: E402
 from .CORE_weatherData import weather_manager  # noqa: E402
 from .configs import (  # noqa: E402
     CITY_SEARCH_DELAY_MS,
@@ -367,7 +365,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         """Fetch the weather of every saved city, in a single request."""
         if self.cities:
             coords = [LocationData.get_coords_key(city) for city in self.cities]
-            fetch_saved_locations_weather_async(coords, self._on_weather_loaded)
+            weather_manager.refresh_saved_locations(coords, self._on_weather_loaded)
 
     def _on_weather_loaded(self) -> bool:
         # Fill the rows in place: rebuilding them would lose focus or a drag

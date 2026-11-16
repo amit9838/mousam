@@ -1,4 +1,3 @@
-import threading
 from typing import Callable
 
 import gi
@@ -7,7 +6,7 @@ from gettext import gettext as _
 
 
 from .settings import settings
-from .CORE_Helpers import create_toast
+from .CORE_GTKUtils import create_toast
 from .configs import AUTO_REFRESH_OPTIONS
 from .CORE_Logging import log_manager
 
@@ -280,31 +279,31 @@ class WeatherPreferences(Adw.PreferencesDialog):
     # ------------------------------------------------------------------
     def _on_dynamic_bg_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         settings.is_using_dynamic_bg = row.get_active()
-        self._start_refresh_thread()
+        self._refresh_weather()
 
     def _on_icon_theme_toggled(self, button: Gtk.ToggleButton, theme: str) -> None:
         if settings.icon_theme == theme:
             return
         settings.icon_theme = theme
-        self._start_refresh_thread()
+        self._refresh_weather()
 
     def _on_24h_clock_toggled(self, button: Gtk.ToggleButton, use_24h: bool) -> None:
         if settings.is_using_24h_clock == use_24h:
             return
         settings.is_using_24h_clock = use_24h
-        self._start_refresh_thread()
+        self._refresh_weather()
 
     def _on_unit_toggled(self, button: Gtk.ToggleButton, unit: str) -> None:
         if settings.unit == unit:
             return
         settings.unit = unit
-        self._start_refresh_thread()
+        self._refresh_weather()
 
     def _on_precip_unit_toggled(self, button: Gtk.ToggleButton, use_inch: bool) -> None:
         if settings.is_using_inch_for_prec == use_inch:
             return
         settings.is_using_inch_for_prec = use_inch
-        self._start_refresh_thread()
+        self._refresh_weather()
 
     def _on_notifications_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         settings.show_notifications = row.get_active()
@@ -371,13 +370,9 @@ class WeatherPreferences(Adw.PreferencesDialog):
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))
 
-        # Force a refresh of weather data (showing welcome screen)
-        self._start_refresh_thread()
+        # Refresh the weather data (the welcome screen if there are no cities)
+        self._refresh_weather()
 
-    def _start_refresh_thread(self):
-        thread = threading.Thread(
-            target=self.window._start_data_refresh,
-            name="refresh_after_preferences_change"
-        )
-        thread.daemon = True
-        thread.start()
+    def _refresh_weather(self):
+        """Fetch again with the new preferences (the store fetches off the main loop)."""
+        self.window._start_data_refresh()

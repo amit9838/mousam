@@ -44,6 +44,7 @@ mousam_sources = [
   'CORE_Forecast.py',
   'CORE_Locations.py',
   'CORE_Timezones.py',
+  'CORE_ForecastClient.py',
 
   'API_AirPollution.py',
   'API_FindCity.py',
@@ -70,7 +71,6 @@ mousam_sources = [
   'configs.py',
   'CORE_Cache.py',
   'CORE_Helpers.py',
-  'CORE_Networking.py',
   'CORE_GTKUtils.py',
   'settings.py',
   'windowAbout.py',
