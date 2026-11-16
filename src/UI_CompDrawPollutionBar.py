@@ -11,7 +11,7 @@ TRACK_HEIGHT = 8
 KNOB_RADIUS = 7
 
 # The bar spans US AQI 0 to 350. One colour per AQI band, placed in the middle
-# of the band (the bands match CORE_Levels.classify_aqi), in
+# of the band (the bands match core.levels.classify_aqi), in
 # libadwaita's palette.
 AQI_SCALE = 350
 AQI_BAND_COLORS = [

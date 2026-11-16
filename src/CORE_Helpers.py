@@ -1,10 +1,10 @@
 import time
 from .settings import settings
 from gettext import gettext as _
-from .configs import DEFAULT_TIMEZONE
-from .CORE_Locations import JsonProcessor, find_selected_city, parse_coords_key
-from .CORE_Logging import get_logger
-from .CORE_Timezones import time_difference
+from .config import DEFAULT_TIMEZONE
+from .core.locations import JsonProcessor, find_selected_city, parse_coords_key
+from .core.log import get_logger
+from .core.timezones import time_difference
 
 logger = get_logger("helpers")
 

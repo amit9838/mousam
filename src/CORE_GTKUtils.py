@@ -8,7 +8,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, GLib, Gio, GObject, Gtk, PangoCairo  # noqa: E402
 from .settings import settings  # noqa: E402
 from .CORE_Helpers import get_selected_city_name  # noqa: E402
-from .CORE_Logging import get_logger  # noqa: E402
+from .core.log import get_logger  # noqa: E402
 
 logger = get_logger("utils")
 

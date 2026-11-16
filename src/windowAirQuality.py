@@ -9,9 +9,9 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gtk  # noqa: E402
 
-from .configs import THRESHOLDS  # noqa: E402
+from .config import THRESHOLDS  # noqa: E402
 from .CORE_Helpers import get_selected_city_name, get_time_difference  # noqa: E402
-from .CORE_Levels import (  # noqa: E402
+from .core.levels import (  # noqa: E402
     aqi_advice, aqi_level_class, classify_aqi, classify_eu_aqi, classify_pollen, classify_pollutant,
     main_pollutant,
 )

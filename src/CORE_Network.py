@@ -6,8 +6,8 @@ seconds unless asked with force.
 import time
 import socket
 import requests
-from .configs import TIMEOUT, INTERNET_CACHE_TTL, DOMAINS
-from .CORE_Logging import get_logger
+from .config import TIMEOUT, INTERNET_CACHE_TTL, DOMAINS
+from .core.log import get_logger
 
 logger = get_logger("network")
 

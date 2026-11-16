@@ -5,7 +5,7 @@ from gettext import gettext as _
 
 from .UI_CompDrawPollutionBar import PollutionBar
 from .settings import settings
-from .CORE_Levels import classify_aqi
+from .core.levels import classify_aqi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

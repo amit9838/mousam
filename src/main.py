@@ -22,8 +22,8 @@ import sys
 import gi
 from .mousam import WeatherMainWindow
 from .settings import settings
-from .configs import APP_ID
-from .CORE_Logging import get_logger, log_manager
+from .config import APP_ID
+from .core.log import get_logger, log_manager
 
 logger = get_logger("main")
 

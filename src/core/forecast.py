@@ -7,7 +7,7 @@ Plain functions with no GTK or settings, so they can be tested on their own.
 from datetime import date, datetime, timezone, tzinfo
 from typing import Optional
 
-from .configs import (
+from ..config import (
     RAIN_MIN_AMOUNT_MM, RAIN_MORE_DROPS_FROM, SNOW_MIN_AMOUNT_CM, SNOW_WATER_MM_PER_CM,
     SNOW_WEATHER_CODES,
 )

@@ -7,12 +7,12 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk
 
 from .CORE_Icons import get_icon_path, ARROW_CENTER
-from .configs import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402
+from .config import HPA_TO_INHG, PRESSURE_GAUGE_CENTER, PRESSURE_GAUGE_SPAN  # noqa: E402
 from .settings import settings
 from .UI_CompDrawBar import DrawLevelBar
 from .UI_CompDrawTickGauge import DrawTickGauge  # noqa: E402
 from .UI_CompDrawImageIcon import DrawImage
-from .CORE_Levels import compass_direction
+from .core.levels import compass_direction
 
 # Standardizing CSS classes for reuse
 CSS_CARD_BASE = ["view", "card"]

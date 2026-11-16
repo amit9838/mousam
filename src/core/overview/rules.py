@@ -1,7 +1,7 @@
 """Rules for the overview: each looks at the forecast and may offer an Insight.
 
 Source of truth: docs/overview-rules.md. Change that file first, then this
-one and the numbers in configs.py to match.
+one and the numbers in config.py to match.
 
 Built by composition, with no GTK, so everything can be tested on made-up data:
 
@@ -12,7 +12,7 @@ Built by composition, with no GTK, so everything can be tested on made-up data:
   AnyOf), combined to describe what a rule looks for.
 - Phrasing: the "now" and "later" message keys of a rule, rendered with the
   right valid_until. The wordings, several per message, are in
-  CORE_OverviewMessages.py; the context's MessageBook picks one.
+  core/overview/messages.py; the context's MessageBook picks one.
 - Rule: one rule, `evaluate(ctx) -> Optional[Insight]`.
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
   and is still true, most important first.
@@ -29,7 +29,7 @@ from gettext import pgettext as C_
 from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
-from .configs import (
+from ...config import (
     OVERVIEW_ANNOUNCE_BASE_MINUTES,
     OVERVIEW_ANNOUNCE_MAX_MINUTES,
     OVERVIEW_ANNOUNCE_MIN_MINUTES,
@@ -59,8 +59,8 @@ from .configs import (
     UNHEALTHY_US_AQI,
     VERY_HIGH_UV,
 )
-from .CORE_Logging import get_logger
-from .CORE_OverviewMessages import MessageBook
+from ..log import get_logger
+from .messages import MessageBook
 
 logger = get_logger("overview")
 
@@ -462,7 +462,7 @@ class Phrasing:
 class Rule(ABC):
     """One rule. `evaluate` returns an Insight, or None when it has nothing
     to say. The plain-English description is in docs/overview-rules.md, the
-    wordings in CORE_OverviewMessages.py."""
+    wordings in core/overview/messages.py."""
 
     def __init__(self, kind: str, severity: str = "info", icon: Optional[str] = None):
         self.kind = kind

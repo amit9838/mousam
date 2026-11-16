@@ -7,8 +7,8 @@ from gettext import gettext as _
 
 from .settings import settings
 from .CORE_GTKUtils import create_toast
-from .configs import AUTO_REFRESH_OPTIONS
-from .CORE_Logging import log_manager
+from .config import AUTO_REFRESH_OPTIONS
+from .core.log import log_manager
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

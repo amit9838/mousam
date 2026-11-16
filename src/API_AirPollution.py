@@ -8,9 +8,9 @@ from typing import Optional
 
 import requests
 
-from .CORE_Cache import cached
-from .CORE_Logging import get_logger
-from .configs import AIR_QUALITY_BASE_URL, TIMEOUT
+from .core.cache import cached
+from .core.log import get_logger
+from .config import AIR_QUALITY_BASE_URL, TIMEOUT
 
 logger = get_logger("API_AirPollution")
 

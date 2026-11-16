@@ -1,5 +1,5 @@
 """Tests for saved-location storage and formatting, and city time zones
-(src/CORE_Locations.py, src/CORE_Timezones.py).
+(src/core/locations.py, src/core/timezones.py).
 
 Plain Python, no GTK. Run: python3 tests/test_locations.py (also run by `meson test`).
 """
@@ -18,13 +18,13 @@ package = types.ModuleType("mousam")
 package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
-from mousam import CORE_Locations  # noqa: E402
-from mousam.CORE_Locations import JsonProcessor, LocationData, find_selected_city  # noqa: E402
-from mousam.CORE_Timezones import time_difference  # noqa: E402
+from mousam.core import locations  # noqa: E402
+from mousam.core.locations import JsonProcessor, LocationData, find_selected_city  # noqa: E402
+from mousam.core.timezones import time_difference  # noqa: E402
 
 
 def fixed_clock():
-    """Make CORE_Locations see 21:05 in Kolkata (15:35 UTC) as the time now."""
+    """Make locations see 21:05 in Kolkata (15:35 UTC) as the time now."""
     fixed = datetime(2026, 1, 15, 21, 5, tzinfo=ZoneInfo("Asia/Kolkata"))
 
     class FixedDatetime(datetime):
@@ -32,7 +32,7 @@ def fixed_clock():
         def now(cls, tz=None):
             return fixed.astimezone(tz)
 
-    return mock.patch.object(CORE_Locations, "datetime", FixedDatetime)
+    return mock.patch.object(locations, "datetime", FixedDatetime)
 
 
 class LocationFormatting(unittest.TestCase):

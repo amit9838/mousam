@@ -1,5 +1,5 @@
-"""Tests for the level classifiers and unit conversions (src/CORE_Levels.py,
-src/CORE_Units.py).
+"""Tests for the level classifiers and unit conversions (src/core/levels.py,
+src/core/units.py).
 
 Plain Python, no GTK. Run: python3 tests/test_levels.py (also run by `meson test`).
 """
@@ -15,9 +15,9 @@ package = types.ModuleType("mousam")
 package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
-from mousam import CORE_Levels as levels  # noqa: E402
-from mousam.CORE_Units import transform_visibility_data  # noqa: E402
-from mousam.configs import HPA_TO_INHG  # noqa: E402
+from mousam.core import levels as levels  # noqa: E402
+from mousam.core.units import transform_visibility_data  # noqa: E402
+from mousam.config import HPA_TO_INHG  # noqa: E402
 
 
 class AirQualityLevels(unittest.TestCase):

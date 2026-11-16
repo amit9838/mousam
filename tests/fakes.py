@@ -55,7 +55,7 @@ class FakeRequests(types.ModuleType):
 
 
 class FakeForecastClient:
-    """A ForecastClient (src/CORE_ForecastClient.py) that answers from
+    """A ForecastClient (src/core/forecast_client.py) that answers from
     `responses` (by function name) and records each call. A missing answer
     is None, as from a failed request; an exception as answer is raised.
 

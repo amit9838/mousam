@@ -144,7 +144,7 @@ OVERVIEW_ANNOUNCE_MIN_MINUTES = 5
 OVERVIEW_ANNOUNCE_MAX_MINUTES = 40
 OVERVIEW_ANNOUNCE_SPREAD = 0.2
 
-# Overview rules (CORE_OverviewRules.py). All thresholds are metric; rules
+# Overview rules (core/overview/rules.py). All thresholds are metric; rules
 # convert imperial data before comparing.
 OVERVIEW_DAY_MIN_HOURS = 3  # by day, look at least this far ahead, even near sunset
 OVERVIEW_TOMORROW_FROM_HOUR = 18  # local hour from which tomorrow is worth a mention
@@ -161,7 +161,7 @@ UNHEALTHY_US_AQI = 151  # US AQI from which air is unhealthy
 VERY_HIGH_UV = 8
 FOG_VISIBILITY_M = 1000
 FOG_SUNRISE_MINUTES = 60  # fog this close to sunrise is "around sunrise"
-STRONG_WIND_KMH = 40  # matches "Strong" in CORE_Levels.classify_wind_speed_level
+STRONG_WIND_KMH = 40  # matches "Strong" in core.levels.classify_wind_speed_level
 EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
 TEMPERATURE_SWING_C = 6  # change across the window worth a mention
 TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention

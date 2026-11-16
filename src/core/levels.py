@@ -6,7 +6,7 @@ Plain functions with no GTK or settings, so they can be tested on their own.
 
 from gettext import gettext as _, pgettext as C_
 
-from .configs import (
+from ..config import (
     HPA_TO_INHG, PRESSURE_LOW, PRESSURE_HIGH, RAIN_INTENSITY_FROM_MM, SNOW_INTENSITY_FROM_CM, THRESHOLDS,
 )
 

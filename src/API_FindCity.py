@@ -2,9 +2,9 @@ from typing import List, Optional
 
 import requests
 
-from .CORE_Cache import cached
-from .configs import GEOCODING_BASE_URL, TIMEOUT
-from .CORE_Logging import get_logger
+from .core.cache import cached
+from .config import GEOCODING_BASE_URL, TIMEOUT
+from .core.log import get_logger
 
 # Configure logging at the module level
 logger = get_logger("API_FindCity")

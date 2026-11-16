@@ -1,4 +1,4 @@
-"""Tests for the overview rules and planner (src/CORE_OverviewRules.py).
+"""Tests for the overview rules and planner (src/core/overview/rules.py).
 
 Plain Python, no GTK: each test builds a forecast by hand, as
 docs/overview-rules.md describes, and checks what the rules say.
@@ -19,7 +19,7 @@ package = types.ModuleType("mousam")
 package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
-from mousam.CORE_OverviewRules import (  # noqa: E402
+from mousam.core.overview.rules import (  # noqa: E402
     AirSeries,
     AnnouncePlanner,
     AtLeast,

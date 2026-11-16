@@ -1,5 +1,5 @@
 """Tests for the Open-Meteo API modules (src/API_*.py) and the forecast
-client seam (src/CORE_ForecastClient.py).
+client seam (src/core/forecast_client.py).
 
 Plain Python, no GTK and no network: a fake `requests` (tests/fakes.py)
 records the URLs and answers with hand-built JSON.
@@ -27,8 +27,8 @@ package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
 
 from mousam import API_AirPollution, API_FindCity, API_Weather  # noqa: E402
-from mousam.CORE_ForecastClient import ForecastClient  # noqa: E402
-from mousam.configs import HPA_TO_INHG, TIMEOUT  # noqa: E402
+from mousam.core.forecast_client import ForecastClient  # noqa: E402
+from mousam.config import HPA_TO_INHG, TIMEOUT  # noqa: E402
 
 
 class ApiTestCase(unittest.TestCase):

@@ -14,18 +14,18 @@ from gi.repository import GLib, GObject
 from . import API_Weather
 from .API_AirPollution import fetch_air_quality
 from .settings import settings
-from .CORE_ForecastClient import ForecastClient
-from .CORE_Levels import (
+from .core.forecast_client import ForecastClient
+from .core.levels import (
     classify_humidity_level, classify_pressure_level, classify_uv_index, classify_wind_speed_level,
 )
-from .CORE_Forecast import nearest_hour_index
-from .CORE_Units import transform_visibility_data
-from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
+from .core.forecast import nearest_hour_index
+from .core.units import transform_visibility_data
+from .core.models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
 from .CORE_Helpers import get_time_difference
 from .CORE_Network import check_internet_connection
-from .CORE_Locations import parse_coords_key
-from .CORE_Logging import get_logger
-from .configs import TIMEOUT
+from .core.locations import parse_coords_key
+from .core.log import get_logger
+from .config import TIMEOUT
 
 logger = get_logger("data_manager")
 

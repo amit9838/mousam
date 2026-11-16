@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 import gi
 
-from .configs import (
+from .config import (
     APPDATA_RESOURCE,
     BUY_ME_A_COFFEE_URL,
     CC_BY_4_0_URL,

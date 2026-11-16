@@ -10,7 +10,7 @@ from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
 from .CORE_GTKUtils import weak_connect
-from .CORE_Forecast import nearest_hour_index
+from .core.forecast import nearest_hour_index
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")

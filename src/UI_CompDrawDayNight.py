@@ -8,7 +8,7 @@ gi.require_version("Gtk", "4.0")
 from gi.repository import GLib, Gtk  # noqa: E402
 
 from .CORE_GTKUtils import safe_set_draw_func, theme_rgba, draw_text, text_layout, weak_connect  # noqa: E402
-from .configs import DAY_NIGHT_UPDATE_SECONDS, LUNAR_CYCLE_DAYS, NEW_MOON_REFERENCE  # noqa: E402
+from .config import DAY_NIGHT_UPDATE_SECONDS, LUNAR_CYCLE_DAYS, NEW_MOON_REFERENCE  # noqa: E402
 
 # The sun's height through the day: a wave from midnight (left edge) through
 # noon (top, in the middle) to midnight (right edge)

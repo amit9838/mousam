@@ -5,7 +5,7 @@ thing, so the overview does not read the same every time. Common messages
 have 4-5 wordings, rare safety messages 2. A MessageBook picks one at random
 and fills in the values.
 
-The rules (CORE_OverviewRules.py) only use keys; what each rule means is in
+The rules (core/overview/rules.py) only use keys; what each rule means is in
 docs/overview-rules.md. When adding or changing a wording:
 
 - every wording of a key says the same thing, with the same placeholders

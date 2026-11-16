@@ -20,9 +20,9 @@ from gi.repository import Gtk, Adw
 
 from .CORE_Icons import create_weather_icon
 from .settings import settings
-from .CORE_Levels import classify_rain_intensity, classify_snow_intensity
-from .configs import RAIN_MIN_CHANCE  # noqa: E402
-from .CORE_Forecast import hourly_precipitation, is_snow_code, rain_drop_count  # noqa: E402
+from .core.levels import classify_rain_intensity, classify_snow_intensity
+from .config import RAIN_MIN_CHANCE  # noqa: E402
+from .core.forecast import hourly_precipitation, is_snow_code, rain_drop_count  # noqa: E402
 from .CORE_GTKUtils import weak_connect
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402

@@ -9,14 +9,14 @@ from gettext import gettext as _
 
 # Module imports
 from .CORE_Helpers import get_time_difference, local_time_data
-from .CORE_Locations import parse_coords_key
+from .core.locations import parse_coords_key
 from .CORE_Icons import bg_css
 from .windowAbout import show_about_window
 from .windowPreferences import WeatherPreferences
 from .shortcutsDialog import ShortcutsDialog
 from .windowLocations import WeatherLocations
 from .windowAirQuality import AirQualityDialog  # noqa: E402
-from .CORE_Logging import get_logger
+from .core.log import get_logger
 
 logger = get_logger("ui")
 
@@ -423,5 +423,5 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         AirQualityDialog(weather_store.air_pollution).present(self)
 
     def _on_action_open_logs(self, action, param):
-        from .CORE_Logging import log_manager
+        from .core.log import log_manager
         log_manager.open_log_file()

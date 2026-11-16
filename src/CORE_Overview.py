@@ -1,6 +1,6 @@
 """Overview engine: runs the overview rules and publishes what to show.
 
-What to say comes from the rules (CORE_OverviewRules.py, described in
+What to say comes from the rules (core/overview/rules.py, described in
 docs/overview-rules.md). Which insight to show, and when the overview opens
 by itself, is the AnnouncePlanner's call (same file): a busy forecast opens
 it more often, each opening shows the insight whose turn it is, and
@@ -19,7 +19,7 @@ The engine adds the timing around them:
   auto-refresh or a units change neither open the overview nor reset its
   turns. Only a location change (or turning the overview off) starts over.
 - Varied wording: each opening draws a new seed, which picks one of the
-  message's wordings (CORE_OverviewMessages.py). Silent updates keep the
+  message's wordings (core/overview/messages.py). Silent updates keep the
   seed, so the wording stays put while only the values change.
 - Only while it has somewhere to go: the overview ("show-overview") or
   notifications ("show-notifications") is on. With both off nothing is
@@ -43,10 +43,10 @@ gi.require_version("GLib", "2.0")
 
 from gi.repository import GLib, GObject  # noqa: E402
 
-from .configs import OVERVIEW_FIRST_DELAY, OVERVIEW_REFRESH_DELAY  # noqa: E402
+from .config import OVERVIEW_FIRST_DELAY, OVERVIEW_REFRESH_DELAY  # noqa: E402
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
-from .CORE_Logging import get_logger  # noqa: E402
-from .CORE_OverviewRules import AnnouncePlanner, Insight, OverviewContext, RuleBook  # noqa: E402
+from .core.log import get_logger  # noqa: E402
+from .core.overview.rules import AnnouncePlanner, Insight, OverviewContext, RuleBook  # noqa: E402
 from .CORE_weatherData import weather_store  # noqa: E402
 from .settings import settings  # noqa: E402
 
