@@ -238,18 +238,18 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # --- Top Section ---
         # No tightening, so the section lines up with the cards below
         current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=1400)
-        curr_cond = CurrentCondition()
+        curr_cond = CurrentCondition(cw_data, weather_manager.daily_forecast)
         curr_cond.set_size_request(-1, 100)
         current_clamp.set_child(curr_cond)
         grid.attach(current_clamp, 0, 0, 3, 1)
 
-        hourly = HourlyDetails()
+        hourly = HourlyDetails(weather_manager.hourly_forecast)
         hourly.set_size_request(-1, 180)
         grid.attach(hourly, 0, 1, 2, 1)
 
         # --- Forecast Section ---
         forecast_clamp = Adw.Clamp()
-        forecast = Forecast()
+        forecast = Forecast(weather_manager.daily_forecast, weather_manager.hourly_forecast)
         # forecast.set_size_request(-1, 500)
         forecast_clamp.set_child(forecast)
         grid.attach(forecast_clamp, 2, 1, 1, 2)

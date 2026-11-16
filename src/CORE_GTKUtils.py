@@ -132,34 +132,6 @@ def weak_connect(widget, signal_name, bound_method, *data):
     return widget.connect(signal_name, wrapper, *data)
 
 
-def run_when_ready(bound_method: Callable, *data) -> None:
-    """Call bound_method(*data) once the weather data is ready: now if it
-    already is, otherwise on the next finished fetch.
-
-    For sections that build their content lazily. The wait holds its object
-    only weakly and disconnects itself after one call, so a section thrown
-    away before the data arrives is neither kept alive nor called. Pass plain
-    values as data, not widgets.
-    """
-    from .CORE_weatherData import weather_manager
-    if weather_manager.is_ready:
-        bound_method(*data)
-        return
-
-    weak_self = _weak_ref_to(bound_method.__self__)
-    func_name = bound_method.__name__
-
-    def on_ready_changed(manager, _pspec):
-        if not manager.is_ready:
-            return
-        manager.disconnect(handler_id)
-        target = weak_self()
-        if target is not None:
-            getattr(target, func_name)(*data)
-
-    handler_id = weather_manager.connect("notify::is-ready", on_ready_changed)
-
-
 def remove_rootwindow_drop_target(window: Gtk.Window) -> None:
     """Remove GTK's own drop target from a window that reorders things by drag.
 

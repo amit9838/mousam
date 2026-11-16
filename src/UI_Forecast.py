@@ -21,10 +21,9 @@ from gi.repository import Gtk, Adw
 from .CORE_Icons import create_weather_icon
 from .settings import settings
 from .CORE_Levels import classify_rain_intensity, classify_snow_intensity
-from .CORE_weatherData import weather_manager
 from .configs import RAIN_MIN_CHANCE  # noqa: E402
 from .CORE_Forecast import hourly_precipitation, is_snow_code, rain_drop_count  # noqa: E402
-from .CORE_GTKUtils import run_when_ready, weak_connect
+from .CORE_GTKUtils import weak_connect
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .UI_CompDrawTempRange import DrawTempRange  # noqa: E402
 from .UI_CompDrawRainDrop import DrawRainDrops, DrawSnowflakes  # noqa: E402
@@ -83,13 +82,15 @@ class Forecast(Gtk.Grid):
         "weekly": ForecastPage.WEEKLY,
     }
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, daily: Any, hourly: Any, *args: Any, **kwargs: Any) -> None:
         """
-        Initialize the Forecast widget.
+        Initialize the Forecast widget from the daily and hourly forecasts.
 
         Sets margins, applies CSS classes, and builds the UI.
         """
         super().__init__(*args, **kwargs)
+        self._daily = daily
+        self._hourly = hourly
 
         self._setup_styling()
         self._build_ui()
@@ -194,36 +195,21 @@ class Forecast(Gtk.Grid):
 
     def _load_page(self, page: ForecastPage) -> None:
         """
-        Load (or reload) a forecast page and add it to the stack.
+        Build a forecast page and add it to the stack.
 
         Args:
             page: The ForecastPage enum value to load.
         """
         page_name = page.name.lower()
-        
+
         # Main container for the page
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container.set_size_request(-1, self.SCROLLED_WINDOW_HEIGHT)
         self._forecast_stack.add_named(container, page_name)
         self._forecast_stack.set_visible_child_name(page_name)
 
-        # Spinner for loading state
-        spinner = Adw.Spinner(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER, hexpand=True)
-        spinner.set_size_request(32, 32)
-        spinner.set_margin_top(self.SCROLLED_WINDOW_HEIGHT // 2)
-        container.append(spinner)
-
-        run_when_ready(self._on_data_loaded, page)
-
-    def _on_data_loaded(self, page: ForecastPage) -> None:
-        """Replace a page's spinner with its content once the data is ready."""
-        container = self._forecast_stack.get_child_by_name(page.name.lower())
-        spinner = container.get_first_child() if container else None
-        if not isinstance(spinner, Adw.Spinner):
-            return  # Already built
-        container.remove(spinner)
-        daily_forecast_data = weather_manager.daily_forecast
-        hourly_forecast_data = weather_manager.hourly_forecast
+        daily_forecast_data = self._daily
+        hourly_forecast_data = self._hourly
 
         # Scrolled window for vertical scrolling
         scrolled = Gtk.ScrolledWindow(hexpand=True)

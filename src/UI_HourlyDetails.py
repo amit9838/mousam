@@ -2,14 +2,14 @@ import datetime
 import random
 import time
 import gi
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 from gettext import gettext as _, pgettext as C_
 
 from .CORE_Icons import get_icon_path, create_weather_icon, ARROW_CENTER
 from .UI_CompDrawImageIcon import DrawImage
 from .UI_CompDrawbarLine import DrawBar
 from .settings import settings
-from .CORE_GTKUtils import run_when_ready, weak_connect
+from .CORE_GTKUtils import weak_connect
 from .CORE_Forecast import nearest_hour_index
 
 gi.require_version("Gtk", "4.0")
@@ -19,8 +19,12 @@ gi.require_version("Adw", "1")
 
 
 class HourlyDetails(Gtk.Grid):
-    def __init__(self, *args, **kwargs):
+    """The hourly card: temperature, wind and precipitation tabs, built from
+    the hourly forecast passed in."""
+
+    def __init__(self, hourly, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._hourly = hourly
         self.set_hexpand(True)
         self.set_css_classes(["view", "card"])
 
@@ -84,30 +88,13 @@ class HourlyDetails(Gtk.Grid):
                 self.create_stack_page(page_name)
 
     def create_stack_page(self, page_name):
-        """Create a new page in the hourly stack with a loading indicator."""
+        """Create a page in the hourly stack, the first time its tab is chosen."""
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         container.set_size_request(-1, 180)
         self.hourly_stack.add_named(container, page_name)
         self.hourly_stack.set_visible_child_name(page_name)
 
-        spinner = Adw.Spinner(halign=Gtk.Align.CENTER, valign=Gtk.Align.CENTER, hexpand=True)
-        spinner.set_size_request(32, 32)
-        spinner.set_margin_top(80)
-        container.append(spinner)
-
-        run_when_ready(self._on_data_loaded, page_name)
-
-    def _on_data_loaded(self, page_name):
-        """Replace a page's spinner with its content once the data is ready."""
-        container = self.hourly_stack.get_child_by_name(page_name)
-        spinner = container.get_first_child() if container else None
-        if not isinstance(spinner, Adw.Spinner):
-            return  # Already built
-        container.remove(spinner)
-
-        from .CORE_weatherData import weather_manager
-        hourly_data = weather_manager.hourly_forecast
-
+        hourly_data = self._hourly
         page_grid = Gtk.Grid()
         container.append(page_grid)
 
