@@ -227,6 +227,22 @@ class Joining(StoreTestCase):
         self.assertEqual([c[0] for c in self.client.calls].count("fetch_current"), 1)
         self.assertEqual(self.updates, [True])
 
+    def test_another_city_during_a_fetch_fetches_it_after(self):
+        store = self.make_store()
+        self.client.gate = threading.Event()
+        store.refresh()
+        self.run_until(lambda: self.statuses == ["loading"])
+        self.settings.selected_city = "28.6,77.2"
+        store.refresh()
+        self.client.gate.set()
+        self.run_until(lambda: self.statuses[-1] == "ready")
+        currents = [c[1:3] for c in self.client.calls if c[0] == "fetch_current"]
+        self.assertEqual(currents, [(9.93, 76.27), (28.6, 77.2)])
+        # The first city's data is never shown
+        self.assertEqual(store.location, "28.6,77.2")
+        self.assertEqual(self.updates, [True])
+        self.assertEqual(self.ready_changes.count(True), 1)
+
     def test_a_refresh_after_a_fetch_fetches_again(self):
         self.make_store()
         self.refresh_and_wait()

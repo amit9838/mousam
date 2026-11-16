@@ -40,9 +40,10 @@ class WeatherStore(GObject.Object):
     """The one holder of the selected city's weather.
 
     Ask for data with refresh() and listen to notify::status (or
-    notify::is-ready). A refresh while a fetch is running joins it: its
-    result reaches every listener. Fields and signals change only on the
-    main loop.
+    notify::is-ready). A refresh while a fetch for the same city is running
+    joins it: its result reaches every listener. A refresh for another city
+    fetches that one once the running fetch ends, and the old result is
+    dropped. Fields and signals change only on the main loop.
     """
 
     __gsignals__ = {
@@ -71,7 +72,8 @@ class WeatherStore(GObject.Object):
         self._settings = settings
         self._is_online = is_online
         self._ready = False
-        self._fetching = False
+        self._fetching = None  # The "lat,lon" being fetched, or None
+        self._refetch = False  # Another city was asked for during the fetch
         # Current weather of the saved locations, by their "lat,lon" key
         self.saved_locations_weather: Dict[str, CurrentWeather] = {}
 
@@ -89,12 +91,14 @@ class WeatherStore(GObject.Object):
         With check_online, a missing connection ends it as STATUS_OFFLINE
         and keeps the data that is there.
         """
-        if self._fetching:
-            return
-        self._fetching = True
         # Read on the main loop: the worker never touches settings
         coords = self._settings.selected_city
         unit = self._settings.unit
+        if self._fetching is not None:
+            if coords != self._fetching:
+                self._refetch = True
+            return
+        self._fetching = coords
         threading.Thread(
             target=self._fetch_worker,
             args=(coords, unit, check_online),
@@ -166,7 +170,12 @@ class WeatherStore(GObject.Object):
         return GLib.SOURCE_REMOVE
 
     def _finish(self, status: str, coords: str, payload) -> bool:
-        self._fetching = False
+        self._fetching = None
+        if self._refetch:
+            # The city changed during the fetch: its result is out of date
+            self._refetch = False
+            self.refresh()
+            return GLib.SOURCE_REMOVE
         if status == STATUS_READY:
             for name, value in payload.items():
                 setattr(self, name, value)
