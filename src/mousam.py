@@ -53,8 +53,8 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         self._start_data_refresh()
 
         # Centralized Data Handling
-        from .CORE_weatherData import weather_manager
-        self._status_handler_id = weather_manager.connect("notify::status", self._on_store_status)
+        from .CORE_weatherData import weather_store
+        self._status_handler_id = weather_store.connect("notify::status", self._on_store_status)
         
         # Settings setup
         settings.connect(
@@ -213,11 +213,11 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         if child:
             self.main_stack.remove(child)
 
-        from .CORE_weatherData import weather_manager
-        if not weather_manager.is_ready:
+        from .CORE_weatherData import weather_store
+        if not weather_store.is_ready:
             return
 
-        cw_data = weather_manager.current_weather
+        cw_data = weather_store.current_weather
 
         # Dynamic Background
         w_code = cw_data.weathercode.data
@@ -238,18 +238,18 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         # --- Top Section ---
         # No tightening, so the section lines up with the cards below
         current_clamp = Adw.Clamp(maximum_size=1400, tightening_threshold=1400)
-        curr_cond = CurrentCondition(cw_data, weather_manager.daily_forecast)
+        curr_cond = CurrentCondition(cw_data, weather_store.daily_forecast)
         curr_cond.set_size_request(-1, 100)
         current_clamp.set_child(curr_cond)
         grid.attach(current_clamp, 0, 0, 3, 1)
 
-        hourly = HourlyDetails(weather_manager.hourly_forecast)
+        hourly = HourlyDetails(weather_store.hourly_forecast)
         hourly.set_size_request(-1, 180)
         grid.attach(hourly, 0, 1, 2, 1)
 
         # --- Forecast Section ---
         forecast_clamp = Adw.Clamp()
-        forecast = Forecast(weather_manager.daily_forecast, weather_manager.hourly_forecast)
+        forecast = Forecast(weather_store.daily_forecast, weather_store.hourly_forecast)
         # forecast.set_size_request(-1, 500)
         forecast_clamp.set_child(forecast)
         grid.attach(forecast_clamp, 2, 1, 1, 2)
@@ -268,10 +268,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         add_card(uv_card(cw_data), 1, 1)
 
         # Pollution & Sun
-        add_card(CardAirPollution(weather_manager.air_pollution).card, 2, 0, width=2)
+        add_card(CardAirPollution(weather_store.air_pollution).card, 2, 0, width=2)
         timezone_name = get_time_difference().get("timezone", "UTC")
-        latitude = parse_coords_key(weather_manager.location)[0]
-        add_card(CardDayNight(weather_manager.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)
+        latitude = parse_coords_key(weather_store.location)[0]
+        add_card(CardDayNight(weather_store.daily_forecast, timezone_name, latitude).card, 2, 1, width=2)
 
         self.main_stack.add_named(grid, "content")
 
@@ -389,9 +389,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         settings.window_maximized = window.is_maximized()
 
     def _on_window_destroy(self, *args):
-        # weather_manager outlives this window (e.g. switching to compact mode)
-        from .CORE_weatherData import weather_manager
-        weather_manager.disconnect(self._status_handler_id)
+        # weather_store outlives this window (e.g. switching to compact mode)
+        from .CORE_weatherData import weather_store
+        weather_store.disconnect(self._status_handler_id)
 
         app = self.get_application()
         if app and hasattr(app, "main_window"):
@@ -417,10 +417,10 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         show_about_window(self)
 
     def _on_action_air_quality(self, action, param):
-        from .CORE_weatherData import weather_manager
-        if weather_manager.air_pollution is None:
+        from .CORE_weatherData import weather_store
+        if weather_store.air_pollution is None:
             return
-        AirQualityDialog(weather_manager.air_pollution).present(self)
+        AirQualityDialog(weather_store.air_pollution).present(self)
 
     def _on_action_open_logs(self, action, param):
         from .CORE_Logging import log_manager

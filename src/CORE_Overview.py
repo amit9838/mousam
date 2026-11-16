@@ -47,7 +47,7 @@ from .configs import OVERVIEW_FIRST_DELAY, OVERVIEW_REFRESH_DELAY  # noqa: E402
 from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
 from .CORE_Logging import get_logger  # noqa: E402
 from .CORE_OverviewRules import AnnouncePlanner, Insight, OverviewContext, RuleBook  # noqa: E402
-from .CORE_weatherData import weather_manager  # noqa: E402
+from .CORE_weatherData import weather_store  # noqa: E402
 from .settings import settings  # noqa: E402
 
 logger = get_logger("overview")
@@ -71,7 +71,7 @@ class OverviewEngine(GObject.Object):
         self._planner = AnnouncePlanner()  # what was shown when, and the next opening
         self._location = None  # the selected city the planner's memory belongs to
         self._seed = 0  # picks the wordings; new on each opening
-        weather_manager.connect("notify::is-ready", self._on_ready_changed)
+        weather_store.connect("notify::is-ready", self._on_ready_changed)
         settings.connect("changed::show-overview", self._on_enabled_changed)
         settings.connect("changed::show-notifications", self._on_enabled_changed)
 
@@ -110,7 +110,7 @@ class OverviewEngine(GObject.Object):
         if not self.enabled():
             return
 
-        if not weather_manager.is_ready:
+        if not weather_store.is_ready:
             if settings.selected_city != self._location:
                 # Another city: start over
                 self._reset()
@@ -123,7 +123,7 @@ class OverviewEngine(GObject.Object):
 
         # Once per fetch: turning a setting on again doesn't move a run
         # already scheduled for this data
-        hourly = weather_manager.hourly_forecast
+        hourly = weather_store.hourly_forecast
         if hourly is self._scheduled_for:
             return
         self._scheduled_for = hourly
@@ -141,7 +141,7 @@ class OverviewEngine(GObject.Object):
     def _run(self) -> bool:
         self._timer_id = 0
         self._first_built = True
-        if not self.enabled() or not weather_manager.is_ready:
+        if not self.enabled() or not weather_store.is_ready:
             return GLib.SOURCE_REMOVE
 
         now = time.time()
@@ -183,9 +183,9 @@ class OverviewEngine(GObject.Object):
             tz = None
         try:
             ctx = OverviewContext.from_models(
-                weather_manager.hourly_forecast,
-                weather_manager.daily_forecast,
-                weather_manager.air_pollution,
+                weather_store.hourly_forecast,
+                weather_store.daily_forecast,
+                weather_store.air_pollution,
                 now,
                 tz,
                 imperial=settings.unit == "imperial",

@@ -74,8 +74,8 @@ class CompactWeather(Gtk.Overlay):
         self.set_child(self.stack)
         self._setup_back_button()
 
-        from .CORE_weatherData import weather_manager
-        self._status_handler_id = weather_manager.connect(
+        from .CORE_weatherData import weather_store
+        self._status_handler_id = weather_store.connect(
             "notify::status", self._on_store_status
         )
         self.connect("destroy", self._on_destroy)
@@ -86,13 +86,13 @@ class CompactWeather(Gtk.Overlay):
 
     def refresh(self) -> None:
         """Show the current data, or fetch it if there is none yet."""
-        from .CORE_weatherData import weather_manager
-        if weather_manager.is_ready:
+        from .CORE_weatherData import weather_store
+        if weather_store.is_ready:
             self._build_content()
             return
 
         self._show_page("loader")
-        weather_manager.refresh()
+        weather_store.refresh()
 
     def _on_store_status(self, store, _pspec) -> None:
         """Show what the last fetch brought (status changes on the main loop)."""
@@ -135,9 +135,9 @@ class CompactWeather(Gtk.Overlay):
         return GLib.SOURCE_REMOVE
 
     def _build_content(self) -> None:
-        from .CORE_weatherData import weather_manager
-        data = weather_manager.current_weather
-        aq_data = weather_manager.air_pollution
+        from .CORE_weatherData import weather_store
+        data = weather_store.current_weather
+        aq_data = weather_store.air_pollution
 
         weather_code = str(data.weathercode.data if data.weathercode.data is not None else 0)
         is_night = data.is_day.data == 0
@@ -275,8 +275,8 @@ class CompactWeather(Gtk.Overlay):
 
     def _on_destroy(self, *_args) -> None:
         self._stop_clock()
-        from .CORE_weatherData import weather_manager
-        weather_manager.disconnect(self._status_handler_id)
+        from .CORE_weatherData import weather_store
+        weather_store.disconnect(self._status_handler_id)
 
 
 class CompactWeatherWindow(Adw.ApplicationWindow):

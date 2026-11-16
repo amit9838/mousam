@@ -280,5 +280,3 @@ def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
 
 # The shared instance
 weather_store = WeatherStore()
-# The old name, until every caller uses weather_store
-weather_manager = weather_store

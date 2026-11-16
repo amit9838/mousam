@@ -10,7 +10,7 @@ from .API_FindCity import find_city  # noqa: E402
 from .CORE_GTKUtils import create_toast, remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
 from .CORE_Locations import LocationData  # noqa: E402
-from .CORE_weatherData import weather_manager  # noqa: E402
+from .CORE_weatherData import weather_store  # noqa: E402
 from .configs import (  # noqa: E402
     CITY_SEARCH_DELAY_MS,
     CITY_SEARCH_MAX_RESULTS,
@@ -365,7 +365,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         """Fetch the weather of every saved city, in a single request."""
         if self.cities:
             coords = [LocationData.get_coords_key(city) for city in self.cities]
-            weather_manager.refresh_saved_locations(coords, self._on_weather_loaded)
+            weather_store.refresh_saved_locations(coords, self._on_weather_loaded)
 
     def _on_weather_loaded(self) -> bool:
         # Fill the rows in place: rebuilding them would lose focus or a drag
@@ -376,7 +376,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         return GLib.SOURCE_REMOVE
 
     def _update_row_weather(self, coords: str) -> None:
-        weather = weather_manager.saved_locations_weather.get(coords)
+        weather = weather_store.saved_locations_weather.get(coords)
         self.row_weather[coords].update(weather, self._weather_loading)
 
     def _clear_rows(self) -> None:

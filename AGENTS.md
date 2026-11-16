@@ -313,7 +313,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 - A file move is mechanical: `git mv` plus import updates, with no code changes in the same commit, so review stays small and `git blame` keeps working.
 - A move updates everything that lists paths: `src/meson.build` (and a `meson.build` per new subfolder), `mousam.in`, `po/POTFILES`, `mousam.gresource.xml`, the test import shim and this file. Then check that the Flatpak and Snap builds still start.
 - Don't name a module after a stdlib one (`logging.py`, `time.py`, `json.py`). Use `log.py`, `timezones.py`.
-- A temporary alias that keeps old imports working (`weather_manager = weather_store`, there today) is fine for one step. Remove it once the callers are updated.
+- A temporary alias that keeps old imports working (`old_name = new_name`) is fine for one step. Remove it once the callers are updated.
 - No UI or behaviour change inside a refactor commit. A bug you find along the way gets its own `fix` commit.
 
 ### Composition over inheritance
