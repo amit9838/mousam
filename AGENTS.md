@@ -45,7 +45,7 @@ Do not introduce other libraries unless there is a strong reason (see "Decision 
 
 Widgets get deprecated and replaced between libadwaita releases (`Adw.PreferencesWindow` → `Adw.PreferencesDialog`, `Adw.AboutWindow` → `Adw.AboutDialog`, `Gtk.Spinner` → `Adw.Spinner`, …). Before using a GTK or libadwaita API:
 
-1. Read `runtime-version` in [io.github.amit9838.mousam.json](io.github.amit9838.mousam.json) to know which GNOME runtime we ship against. CI ([.github/workflows/flatpak.yml](.github/workflows/flatpak.yml)) builds on an older GNOME image, so don't rely on an API newer than both.
+1. Read `runtime-version` in [io.github.amit9838.mousam.json](io.github.amit9838.mousam.json) to know which GNOME runtime we ship against, and the `image:` in [.github/workflows/flatpak.yml](.github/workflows/flatpak.yml) that CI builds on. They can drift apart; don't rely on an API newer than the older of the two. Snap builds with the `gnome` extension on `core26` ([snap/snapcraft.yaml](snap/snapcraft.yaml)), so check it there too.
 2. Check the API in the official docs, not from memory:
    - GTK 4: https://docs.gtk.org/gtk4/
    - libadwaita: https://gnome.pages.gitlab.gnome.org/libadwaita/doc/ (pick the matching version)
@@ -75,6 +75,8 @@ flatpak run io.github.amit9838.mousam
 ruff check src                       # lint, settings in ruff.toml (see "Linting and Validation")
 python3 -m py_compile src/*.py      # syntax check
 glib-compile-schemas --strict --dry-run data/
+python3 tests/test_overview_rules.py   # overview rules and planner, no build needed
+meson test -C builddir --print-errorlogs   # what CI runs: unit tests + gschema, appdata, desktop validation
 appstreamcli validate data/io.github.amit9838.mousam.appdata.xml.in
 desktop-file-validate data/io.github.amit9838.mousam.desktop.in
 
@@ -142,18 +144,20 @@ src/
   CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
   CORE_OverviewRules.py   the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook (no GTK)
   CORE_OverviewMessages.py the overview wordings: several per message key, picked by MessageBook (no GTK)
-  CORE_Networking.py      fetch_all_weather_data_async: runs every fetch on worker threads
+  CORE_Networking.py      fetch_all_weather_data_async (the selected city), fetch_saved_locations_weather_async (Locations list); worker threads
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
   CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, is_on_screen, show_overview_notification
   CORE_Helpers.py         internet check, coordinates and timezone of the selected city, toasts, JSON helpers
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
-  CORE_Logging.py         LogManager and get_logger
+  CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
   API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity
   configs.py              constants: app ID, version, URLs, timeouts, cache sizes, refresh options, AQI thresholds
   settings.py             the Settings singleton: one property per GSettings key
   css/style.css           all custom styling
   mousam.gresource.xml    files bundled into the GResource
+  test_memory_leak.py     local RSS watcher (git-ignored, not installed)
+tests/                    plain-Python unit tests, no GTK (run by meson test; see "Testing")
 data/                     gschema, .desktop, appdata, icons (default_icons, material_icons), Flatpak dependency
 po/                       translations (POTFILES, LINGUAS, mousam.pot, *.po)
 snap/                     Snap packaging (snapcraft.yaml)
@@ -176,7 +180,9 @@ main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons,
 - Read and write saved values only through `settings` (`src/settings.py`), never with a new `Gio.Settings(...)`.
 - Constants (URLs, timeouts, thresholds, option lists) go in `configs.py`, not inline.
 
-Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles; keep them that way.
+Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (`weather_manager` is usually imported this way); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
+
+**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. Keep it that way. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
 
 ### Adding a file
 
@@ -214,7 +220,10 @@ When unsure, ask:
 | Line graph with "now" marker | `LineGraph` |
 | Rotated icon (wind direction) | `DrawImage` |
 | Day/night arc | `DrawDayNight` |
-| Pollutant level bar | `PollutionBar` |
+| Pollutant level bar | `PollutionBar` (a `Gtk.DrawingArea` subclass) |
+| A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max)` |
+| Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).dw` |
+| Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `CORE_GTKUtils` |
 | Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class) |
 | Snow as one to four snowflakes | `DrawSnowflakes(count, height).drawing_area` (same layout and class as the drops) |
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
@@ -240,7 +249,107 @@ The overview is the pill under the current conditions. Its rules are written in 
 - **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`main.py`) sends it as a notification (`show_overview_notification`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
 - **Section** (`UI_CurrentCond.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
 - **Numbers** (thresholds, priorities, open times, republish intervals) live in `configs.py` under "Overview", in metric; rules convert imperial data before comparing.
-- Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`.
+- Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`. The tests in [tests/test_overview_rules.py](tests/test_overview_rules.py) do this; add a case there when you add or change a rule.
+
+---
+
+## Design Principles
+
+How to structure new code so it stays reusable and testable. Some existing code doesn't follow these yet; don't rewrite it as a side effect of another task. Bring it in line in a separate `refactor` commit, one area at a time.
+
+### Where the architecture is heading
+
+The current layout (above) is moving, step by step, to four layers in a lowercase Python package:
+
+```txt
+ui  →  state  →  services  →  core
+```
+
+| Layer | Holds | Never |
+| --- | --- | --- |
+| `core/` | models, units, levels, forecast logic, overview rules, cache | `gi`, `requests`, `settings` |
+| `services/` | Open-Meteo and geocoding HTTP, internet check, the GSettings wrapper | widgets, `GLib.idle_add` |
+| `state/` | `WeatherStore` and `OverviewEngine`: what is loaded now, loading/error status, `refresh()` | widgets |
+| `ui/` | windows, sections, cards, drawings, dialogs, `.ui` templates | HTTP calls |
+
+Until a module has moved, it keeps its current name and place. Write new code so it already fits the layer it will land in: logic that would go in `core` imports no `gi`, a fetch function takes every input as an argument, a widget gets its data passed in.
+
+The key rules of the target, which new code should already follow:
+
+1. **One source of truth.** One GObject store holds the selected city's data and its loading status. The UI reads it, binds to it and asks it to refresh; nothing else keeps fetched data.
+2. **Threads stay inside the store.** It fetches on a worker thread and hands the result to the main loop before it sets a property or emits. UI code never sees a thread.
+3. **Services are pure functions.** Inputs as arguments (`lat`, `lon`, `unit`), JSON or `None` out, with a timeout and `@cached`.
+4. **Widgets are given data**, and windows and dialogs move their layout into `Gtk.Template` `.ui` files over time.
+
+### Choosing the right tool
+
+| What it is | Use |
+| --- | --- |
+| A calculation or decision (units, levels, drop count) | a plain function |
+| Data with no behaviour (a forecast, a location) | `@dataclass` (`frozen=True` for new models) |
+| State plus behaviour (cache, planner) | a class |
+| State the UI must react to | a `GObject.Object` with properties and signals |
+| Something on screen | a GTK widget subclass, or a class that owns one |
+| A seam tests need to swap (an HTTP client) | a `typing.Protocol`, not an ABC |
+
+A class with one method and no state is a function. Avoid catch-all "Manager", "Helper" or "Utils" classes for unrelated things.
+
+### SOLID, the small version
+
+- **Single responsibility:** a module changes for one reason. The API module changes when Open-Meteo does, the levels module when thresholds do, a widget when the look does.
+- **Open/closed:** add behaviour by adding a piece (a rule in `RuleBook.default()`, a `visual` passed to a card), not by growing an `if/elif` on a type.
+- **Liskov:** a subclass works wherever its base is expected. Every `Rule` returns an `Insight` or `None`.
+- **Interface segregation:** ask for the smallest thing you need. A card takes the air-quality model, not the whole store.
+- **Dependency inversion:** pass dependencies in (`WeatherStore(client=…)`), so tests can pass fakes. No containers or frameworks.
+
+### Refactoring toward the target
+
+- **Fix behaviour in place first, then extract logic, then move files.** Never mix them in one commit.
+- A file move is mechanical: `git mv` plus import updates, with no code changes in the same commit, so review stays small and `git blame` keeps working.
+- A move updates everything that lists paths: `src/meson.build` (and a `meson.build` per new subfolder), `mousam.in`, `po/POTFILES`, `mousam.gresource.xml`, the test import shim and this file. Then check that the Flatpak and Snap builds still start.
+- Don't name a module after a stdlib one (`logging.py`, `time.py`, `json.py`). Use `log.py`, `timezones.py`.
+- A temporary alias that keeps old imports working (`weather_manager = store`) is fine for one step. Remove it once the callers are updated.
+- No UI or behaviour change inside a refactor commit. A bug you find along the way gets its own `fix` commit.
+
+### Composition over inheritance
+
+- Build behaviour from small parts rather than subclass trees. The model is the overview: `FirstHourRule` is a `HourTest` (which hour?) plus a `Phrasing` (how to say it), not one subclass per rule. Subclass only to fill in a real extension point (`Rule.evaluate`), and keep hierarchies shallow: one level, two at most (`Below(AtLeast)`).
+- No mixins, and no abstract base class "in case we need it": add one when a second implementation exists.
+- Share code with a plain function or a small helper class, not a common base class for unrelated widgets.
+
+### Components
+
+- **Sections and cards that have state, timers or signal handlers** subclass a GTK widget (`Gtk.Box`, `Gtk.Grid`), as `CurrentCondition` and `Forecast` do. Their lifetime is then the widget's: connect on `map`, disconnect and remove sources on `unmap`.
+- **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands out the area. New ones expose it as `.widget`; the existing `.card` / `.dw` / `.drawing_area` names stay until they are unified in one refactor.
+- A component is ready to use when its constructor returns: no separate `create_card()` step.
+
+### Pass data in
+
+- A component gets its data through its constructor (`CardAirPollution(air_data, tz)`), from the window that builds the grid. It doesn't import `weather_manager` or read `settings` deep inside itself to find it. This makes components reusable (main and compact window), buildable with test data, and removes the lazy imports that only exist to dodge import cycles.
+- Reading `settings` for display preferences (units, clock, icon theme) at build time is fine; reacting to a change is the owner's job (rebuild, or a `changed::` handler on `map`).
+- The shared instances (`settings`, `weather_manager`, `overview_engine`, `log_manager`) stay. The problem is reaching for them from everywhere, not that they exist.
+
+### Separate logic from widgets
+
+- Anything that is a decision rather than a widget goes in a plain function or `@staticmethod` in a GTK-free module: classifying a level, how many drops a rain chance gets, today's high and low, whether a code is snow. Widgets call it; tests test it.
+- Level classification belongs with the data (`classify_*`), not in `UI_*`. A new set of GTK-free helpers can get its own `CORE_*` module.
+- `API_*` stay pure: take every input as an argument (coordinates, unit), return JSON. They don't read `settings`. Expose module functions or public methods; never call a `_private` method from another module.
+- Don't mix layers in one helper module: GTK helpers (toasts, widgets) go in `CORE_GTKUtils`, not next to network or time-zone helpers.
+
+### Signals and threads
+
+- A signal is emitted on the main loop. Code running on a worker thread hands its result over with `GLib.idle_add` and emits from there, so subscribers never need to know about threads. (`weather_manager` doesn't do this yet; see "Threading and Performance Rules" for how to handle it until it does.)
+- One emit per real change. If a value is built in several steps, emit once at the end, not per step.
+
+### Reuse, don't copy
+
+- When the same block appears a second time, extract it into a helper; a third copy is a bug waiting to happen. For example, "wait until data is ready, then build this section" is one helper in `CORE_GTKUtils`, not a nested `_wait_for_data` in each section.
+- A helper that connects to a signal on someone's behalf does the hard parts once: it doesn't capture widgets, it disconnects itself, and it does nothing if the widget is gone.
+
+### Keep it small
+
+- No dependency-injection frameworks, event buses, plugin systems or MVVM frameworks. The store is the only "view model"; plain classes, functions and GObject properties and signals are enough.
+- Prefer a 20-line function anyone can read over a generic abstraction that saves 10 lines.
 
 ---
 
@@ -343,7 +452,9 @@ Use:
 ## Threading and Performance Rules
 
 - **Never touch GTK from a worker thread.** Network calls run on threads (`fetch_all_weather_data_async`, the city search); hand results back to the main loop with `GLib.idle_add`.
-- **One fetch at a time.** `fetch_all_weather_data_async` joins a running fetch instead of starting another; go through it, don't start threads of your own for weather data.
+- **`weather_manager` signals fire on worker threads.** Its `update_*` methods run inside the fetch threads, so `notify::is-ready` and `data-updated` handlers run there too. A handler may only read plain values and schedule work with `GLib.idle_add`; build or change widgets in that idle callback (see `_on_weather_manager_ready` in `mousam.py`, `UI_CompactWeather`). Because `is-ready` fires once per `update_*` call (several times per fetch), make the callback idempotent: compare against the data object you last rendered.
+- **One fetch at a time.** `fetch_all_weather_data_async` joins a running fetch instead of starting another; go through it, don't start threads of your own for weather data. The Locations window's list uses `fetch_saved_locations_weather_async`; use that, not a new thread.
+- **Locks are for data, not for waiting.** Hold `weather_manager._lock` only while assigning or reading its fields; never call the network, emit a signal or call `GLib` while holding it. Don't use `threading.Event`/`join` on the main thread: it freezes the UI.
 - **Every request has a timeout** (`TIMEOUT` from `configs.py`), and every API function logs and returns `None` on failure instead of raising.
 - **API calls are cached** with `@cached` (TTL `DATA_CACHE_TTL`). A new API call uses it too.
 - **No leaks across refreshes.** The content grid is rebuilt on every refresh, so widgets must not be kept alive by their own handlers. Connect handlers on rebuilt widgets with `weak_connect`, set draw functions with `safe_set_draw_func`, remove `GLib.timeout_add` sources when the widget goes, and disconnect `settings` handlers you connect from short-lived widgets. Check with `test_memory_leak.py` after touching refresh or widget lifetime.
@@ -357,12 +468,65 @@ Use:
 ## Python Rules
 
 - Follow the style of the file you are in (PEP 8, 4 spaces).
-- Add type hints to new functions; keep them simple.
+- Target **Python 3.12** (`target-version` in `ruff.toml`): no syntax or stdlib API newer than that, even if your machine or the GNOME runtime has a newer Python.
+- Imports inside `src/` are relative (`from .settings import settings`): the sources are installed and imported as the `mousam` package. Never `import settings` or add `sys.path` hacks.
+- Singletons are module instances: import `settings`, `weather_manager`, `overview_engine`, `log_manager`; never construct `Settings()` or `WeatherDataManager()` yourself.
+- Add type hints to new functions; keep them simple. In a file that already uses `typing.List` / `Optional`, keep using them; in new files prefer `list[str]` and `str | None`.
 - Data from the API goes into `CORE_Models` classes and is read as attributes (`cw.temperature_2m.data`, `.unit`, `.level_str`), not as raw dicts.
-- No bare `except:` in new code; catch the specific exception and log it.
-- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on.
+- No bare `except:` in new code; catch the specific exception and log it (`requests.RequestException` in `API_*`, `(KeyError, TypeError, ValueError)` when parsing JSON). A broad `except Exception` is only for boundaries that must not crash the app (a worker thread's top level, `RuleBook.run`); log it there.
+- No mutable default arguments (`def f(items=None)`, then `items = items or []`), and no module-level state other than the singletons above and constants.
+- Times are unix timestamps from the API. Turn them into local times with `datetime.fromtimestamp(ts, ZoneInfo(tz))` using the city's time zone, never naive `datetime.now()` / `fromtimestamp(ts)`.
+- Each module gets `_` with `from gettext import gettext as _` (and `pgettext as C_`, `ngettext`); don't rely on the builtin `_` that `gettext.install` adds in the launcher.
+- Use `get_logger("<area>")` from `CORE_Logging`, never `print`. Logging is silent unless debug mode is on. Importing `CORE_Logging` needs no GTK; `main.main()` calls `log_manager.setup()` once at start-up, so keep GTK and `settings` out of its module level.
 - Keep `gi.require_version(...)` before importing from `gi.repository`, as the files already do.
 - New logic that doesn't need GTK (classification, conversions, parsing) should be a plain function or `@staticmethod` so it stays easy to test.
+
+---
+
+## Code Style
+
+The codebase has no formatter. Its conventions are below; when a file differs, follow the file.
+
+**Naming**
+
+- Modules: the layer prefix followed by a PascalCase name (`UI_CardSquare.py`, `CORE_Helpers.py`, `API_Weather.py`), or `window` + name for windows. Don't add another scheme until modules move into the layer packages (see "Where the architecture is heading"). There, names are lowercase `snake_case` and the folder is the layer (`ui/cards/metric.py`).
+- Classes are `PascalCase`; functions, methods and variables are `snake_case`; constants are `UPPER_SNAKE` (in `configs.py`, or at the top of a module for local ones such as `CSS_TEXT_TITLE`).
+- Anything not used outside its class or module starts with `_` (`_render_new_data`, `_lock`).
+- Signal handlers are `_on_<source>_<what>` (`_on_weather_manager_ready`, `_on_enabled_changed`). Idle and timeout callbacks get a name that says what they do (`_render_new_data`), not `_callback`.
+- Names say what they hold, with the unit when it matters: `delay_seconds`, `week_min`, `sunrise_ts`, not `d`, `tmp`, `data2`.
+
+**Layout**
+
+- Double quotes for strings.
+- Lines up to about 100 characters (ruff doesn't check length). Wrap long calls inside the brackets, one argument per line if they don't fit; no backslash continuations.
+- Two blank lines between top-level definitions, one between methods.
+- Long classes are split with section comments: `# ---------- Data ----------`.
+- Imports: standard library, then `gi` with `gi.require_version(...)`, then `gi.repository`, then local `.` imports. Import names (`from .CORE_Icons import bg_css`), not `*`.
+
+**Functions**
+
+- Keep functions short and flat: return early instead of nesting `if`s, and split out a helper once a function does two separate things (build vs. fill, fetch vs. parse).
+- Pass values in, don't reach for globals: a drawing class takes its numbers in `__init__`, it doesn't read `weather_manager`.
+- GLib callbacks return `GLib.SOURCE_REMOVE` / `GLib.SOURCE_CONTINUE` explicitly, never `True` / `False` / `None`.
+- Build widgets with constructor keyword arguments when there are only a few (`Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)`), then setters for the rest, as the surrounding code does.
+
+**Strings**
+
+- f-strings for strings that aren't translated (logs, CSS class names, debug output).
+- Translated strings with values use named placeholders and `.format()`: `_("Material icons: {name}").format(name=…)`. Never `_(f"…")`: gettext can't extract it, and translators need the placeholder names.
+- Log messages say what happened and the value that matters: `logger.error(f"Air quality fetch failed: {e}")`. Log only coordinates and city names, nothing else about the user.
+
+**Comments and docstrings**
+
+- Public classes and functions get a docstring: a one-line summary, then a short paragraph if the behaviour isn't obvious (see `DrawTempRange`, `DrawTickGauge`).
+- Comments explain *why* (a thread, a GTK quirk, a leak being avoided), not what the next line does.
+- Comments are plain English, in full sentences, and readable by a newcomer.
+- Don't leave commented-out code, `print` calls or notes like "moved to …". Git keeps the history.
+
+**Diffs**
+
+- Change only what the task needs. Don't reformat, rename or reorder code you aren't otherwise touching: it hides the real change in review and breaks other contributors' branches.
+- Fix typos in names (`classify_presssure_level`) only in a separate refactor commit, and update every caller.
 
 ---
 
@@ -411,6 +575,15 @@ When the user asks to build a feature:
 
 ---
 
+## Testing
+
+- Unit tests live in `tests/`, use `unittest` (no pytest dependency) and are registered in [tests/meson.build](tests/meson.build), so `meson test` and CI run them.
+- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way.
+- When you add GTK-free logic (a rule, a classifier, a conversion, a parser), add a test for it. A new test file must be added to `tests/meson.build`.
+- Tests use fixed clocks and hand-built data, never the real time or Open-Meteo.
+
+---
+
 ## Linting and Validation
 
 Run before declaring any task done:
@@ -418,6 +591,7 @@ Run before declaring any task done:
 ```bash
 ruff check src
 python3 -m py_compile src/*.py
+python3 tests/test_overview_rules.py
 ```
 
 `src/` is free of ruff findings, and the Checks workflow (`.github/workflows/checks.yml`) keeps it that way, along with `py_compile` and `meson test` (which validates the gschema, appdata and desktop file). Fix a finding rather than silencing it; change `ruff.toml` only for a rule that doesn't fit the whole codebase. If you touched the gschema, appdata or desktop file, run their validators too (see "Commands").
@@ -451,4 +625,4 @@ Before every feature implementation:
 - Commit messages follow Conventional Commits: `type(scope): subject` (`feat`, `fix`, `refactor`, `chore`, `style`; e.g. `fix(render): …`, `chore(po): …`)
 - Always name plan documents with the `-plan.md` suffix (e.g. `docs/abc-plan.md`), so `.gitignore` catches them
 - Never commit plan documents. They stay local and are gitignored (`*-plan.md`)
-- `.gitignore` also ignores `test*`, so a new test file won't be tracked unless you `git add -f` it or change that rule
+- `.gitignore` ignores `test*` everywhere except `tests/`: files under `tests/` are tracked, but a `test*` file anywhere else (like `src/test_memory_leak.py`) is not
