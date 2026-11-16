@@ -120,7 +120,7 @@ def classify_humidity_level(h):
     return C_("humidity", "High")
 
 
-def classify_presssure_level(p, unit: str):
+def classify_pressure_level(p, unit: str):
     """Sea-level pressure against PRESSURE_LOW and PRESSURE_HIGH, in hPa for
     "metric" and inHg for "imperial"."""
     low, high = PRESSURE_LOW, PRESSURE_HIGH

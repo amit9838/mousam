@@ -116,11 +116,11 @@ class WeatherLevels(unittest.TestCase):
         cases = [(999, "Low"), (1000, "Normal"), (1026, "Normal"), (1027, "High")]
         for pressure, word in cases:
             with self.subTest(pressure=pressure):
-                self.assertEqual(levels.classify_presssure_level(pressure, "metric"), word)
+                self.assertEqual(levels.classify_pressure_level(pressure, "metric"), word)
 
     def test_pressure_imperial_uses_inhg(self):
         def level(hpa):
-            return levels.classify_presssure_level(hpa * HPA_TO_INHG, "imperial")
+            return levels.classify_pressure_level(hpa * HPA_TO_INHG, "imperial")
 
         self.assertEqual(level(999), "Low")
         self.assertEqual(level(1013), "Normal")

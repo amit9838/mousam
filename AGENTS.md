@@ -527,7 +527,7 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 **Diffs**
 
 - Change only what the task needs. Don't reformat, rename or reorder code you aren't otherwise touching: it hides the real change in review and breaks other contributors' branches.
-- Fix typos in names (`classify_presssure_level`) only in a separate refactor commit, and update every caller.
+- Fix typos in names only in a separate refactor commit, and update every caller.
 
 ---
 

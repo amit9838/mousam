@@ -5,7 +5,7 @@ from .API_Weather import Weather
 from .API_AirPollution import AirPollution
 from .settings import settings
 from .CORE_Levels import (
-    classify_humidity_level, classify_presssure_level, classify_uv_index, classify_wind_speed_level,
+    classify_humidity_level, classify_pressure_level, classify_uv_index, classify_wind_speed_level,
 )
 from .CORE_Forecast import nearest_hour_index
 from .CORE_Units import transform_visibility_data
@@ -93,7 +93,7 @@ class WeatherDataManager(GObject.Object):
         data = CurrentWeather(raw_data)
         data.relativehumidity_2m.level_str = classify_humidity_level(data.relativehumidity_2m.data)
         data.windspeed_10m.level_str = classify_wind_speed_level(data.windspeed_10m.data)
-        data.pressure_msl.level_str = classify_presssure_level(data.pressure_msl.data, settings.unit)
+        data.pressure_msl.level_str = classify_pressure_level(data.pressure_msl.data, settings.unit)
         
         with self._lock:
             self.current_weather = data
