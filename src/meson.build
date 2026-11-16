@@ -71,6 +71,7 @@ mousam_sources = [
   'configs.py',
   'CORE_Cache.py',
   'CORE_Helpers.py',
+  'CORE_Network.py',
   'CORE_GTKUtils.py',
   'settings.py',
   'windowAbout.py',

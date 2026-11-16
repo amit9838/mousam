@@ -152,7 +152,8 @@ src/
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
   CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, safe_set_draw_func, create_toast, is_on_screen, show_overview_notification
-  CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings)
+  CORE_Helpers.py         coordinates, name and timezone of the selected city (from settings)
+  CORE_Network.py         check_internet_connection
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
   API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity; plain fetch_* functions

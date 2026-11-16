@@ -21,7 +21,8 @@ from .CORE_Levels import (
 from .CORE_Forecast import nearest_hour_index
 from .CORE_Units import transform_visibility_data
 from .CORE_Models import CurrentWeather, HourlyWeather, DailyWeather, WeatherField, AirPollutionData
-from .CORE_Helpers import check_internet_connection, get_time_difference
+from .CORE_Helpers import get_time_difference
+from .CORE_Network import check_internet_connection
 from .CORE_Locations import parse_coords_key
 from .CORE_Logging import get_logger
 from .configs import TIMEOUT
