@@ -1,14 +1,13 @@
 import time
 import socket
 import requests
-import datetime
-from zoneinfo import ZoneInfo
 from gi.repository import Adw
 from .settings import settings
 from gettext import gettext as _
 from .configs import TIMEOUT, INTERNET_CACHE_TTL, DEFAULT_TIMEZONE, DOMAINS
 from .CORE_Locations import JsonProcessor, find_selected_city
 from .CORE_Logging import get_logger
+from .CORE_Timezones import time_difference
 
 logger = get_logger("helpers")
 
@@ -66,21 +65,10 @@ def get_time_difference(timezone_str: str = "", force=False):
         timezone_str = get_timezone_from_selected_city()
     if force is False and local_time_data.get(timezone_str) is not None:
         return local_time_data[timezone_str]
-    try:
-        target_tz = ZoneInfo(timezone_str)
-        target_now = datetime.datetime.now(target_tz)
-        current_system_timestamp = time.time()
-        target_timestamp = target_now.timestamp()
-        epoch_diff = current_system_timestamp - target_timestamp
-        data = {
-            "epoch_diff": epoch_diff,
-            "target_time": target_timestamp,
-            "timezone": timezone_str,
-        }
+    data = time_difference(timezone_str, time.time())
+    if "error" not in data:
         local_time_data[timezone_str] = data
-        return data
-    except Exception as e:
-        return {"error": f"Invalid timezone: {str(e)}"}
+    return data
 
 def get_selected_city_name():
     try:

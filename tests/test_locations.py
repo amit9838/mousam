@@ -1,4 +1,5 @@
-"""Tests for saved-location storage and formatting (src/CORE_Locations.py).
+"""Tests for saved-location storage and formatting, and city time zones
+(src/CORE_Locations.py, src/CORE_Timezones.py).
 
 Plain Python, no GTK. Run: python3 tests/test_locations.py (also run by `meson test`).
 """
@@ -19,6 +20,7 @@ sys.modules.setdefault("mousam", package)
 
 from mousam import CORE_Locations  # noqa: E402
 from mousam.CORE_Locations import JsonProcessor, LocationData, find_selected_city  # noqa: E402
+from mousam.CORE_Timezones import time_difference  # noqa: E402
 
 
 def fixed_clock():
@@ -117,6 +119,21 @@ class SelectedCity(unittest.TestCase):
     def test_json_list_round_trip(self):
         stored = JsonProcessor.json_list_to_str(self.CITIES)
         self.assertEqual(JsonProcessor.str_list_to_json(stored), self.CITIES)
+
+
+class TimeDifference(unittest.TestCase):
+    NOW = datetime(2026, 1, 15, 15, 35, tzinfo=ZoneInfo("UTC")).timestamp()
+
+    def test_known_zone(self):
+        self.assertEqual(
+            time_difference("Asia/Kolkata", self.NOW),
+            {"epoch_diff": 0, "target_time": self.NOW, "timezone": "Asia/Kolkata"},
+        )
+
+    def test_unknown_zone_is_an_error(self):
+        for name in ("Not/A_Zone", "", None):
+            with self.subTest(name=name):
+                self.assertIn("error", time_difference(name, self.NOW))
 
 
 if __name__ == "__main__":
