@@ -227,10 +227,10 @@ When unsure, ask:
 | Day/night arc | `DrawDayNight` |
 | Pollutant level bar | `PollutionBar` (a `Gtk.DrawingArea` subclass) |
 | A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max)` |
-| Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).dw` |
+| Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).widget` |
 | Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `CORE_GTKUtils` |
-| Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class; `count` from `rain_drop_count`) |
-| Snow as one to four snowflakes | `DrawSnowflakes(count, height).drawing_area` (same layout and class as the drops) |
+| Chance of rain as one to four drops | `DrawRainDrops(count, height).widget` (give it the `text-rain` class; `count` from `rain_drop_count`) |
+| Snow as one to four snowflakes | `DrawSnowflakes(count, height).widget` (same layout and class as the drops) |
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
 | A condition's name | `condition[code]` in `CORE_Icons` |
 | A background for a condition | `bg_css[code]` (append `n` to the code at night) |
@@ -326,7 +326,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 ### Components
 
 - **Sections and cards that have state, timers or signal handlers** subclass a GTK widget (`Gtk.Box`, `Gtk.Grid`), as `CurrentCondition` and `Forecast` do. Their lifetime is then the widget's: connect on `map`, disconnect and remove sources on `unmap`.
-- **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands out the area. New ones expose it as `.widget`; the existing `.card` / `.dw` / `.drawing_area` names stay until they are unified in one refactor.
+- **Drawing pieces** use composition: the class owns its `Gtk.DrawingArea`, sets the draw function with `safe_set_draw_func`, builds everything in `__init__`, and hands it out as `.widget` (`PollutionBar` is the one that subclasses `Gtk.DrawingArea` instead).
 - A component is ready to use when its constructor returns: no separate `create_card()` step.
 
 ### Pass data in

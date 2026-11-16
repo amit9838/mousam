@@ -84,6 +84,6 @@ class CardDayNight:
             times_box.append(time_box)
 
         southern = get_cords()[0] < 0
-        sun_path = DrawDayNight(self.sunrise_ts, self.sunset_ts, southern, 120, 90).drawing_area
+        sun_path = DrawDayNight(self.sunrise_ts, self.sunset_ts, southern, 120, 90).widget
         sun_path.set_valign(Gtk.Align.CENTER)
         content_box.append(sun_path)

@@ -45,10 +45,10 @@ class DrawTickGauge:
             for i in range(TICKS)
         ]
 
-        self.dw = Gtk.DrawingArea()
-        self.dw.set_hexpand(True)
-        self.dw.set_size_request(-1, HEIGHT)
-        safe_set_draw_func(self.dw, self, "draw")
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_hexpand(True)
+        self.widget.set_size_request(-1, HEIGHT)
+        safe_set_draw_func(self.widget, self, "draw")
 
     def draw(self, area, ctx, width, height, data):
         # The ticks span the whole width: the outer ones touch the edges

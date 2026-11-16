@@ -262,7 +262,7 @@ class HourlyDetails(Gtk.Grid):
         val_label.set_text(str(speed))
         val_label.set_margin_top(0)
         
-        icon_box.append(DrawImage(get_icon_path("arrow", settings.icon_theme), direction + 180, 32, 32, ARROW_CENTER).img_box)
+        icon_box.append(DrawImage(get_icon_path("arrow", settings.icon_theme), direction + 180, 32, 32, ARROW_CENTER).widget)
         icon_box.set_margin_top(5)
         icon_box.set_margin_bottom(5)
 
@@ -271,7 +271,7 @@ class HourlyDetails(Gtk.Grid):
         if settings.is_using_inch_for_prec: val /= 25.4
         
         bar = DrawBar(val / max_prec if max_prec > 0 else 0)
-        icon_box.append(bar.dw)
+        icon_box.append(bar.widget)
         
         val_text = f"{val:.2f}" if val >= 0.01 else ("0" if val == 0 else f"{val:.1f}+")
         val_label.set_text(val_text)

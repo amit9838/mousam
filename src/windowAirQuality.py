@@ -194,7 +194,7 @@ class AirQualityDialog(Adw.Dialog):
         """The US AQI over the last and next three days."""
         group = Adw.PreferencesGroup(title=_("Trend"), description=_("Last 3 days and next 3 days"))
         tz = ZoneInfo(get_time_difference().get("timezone", "UTC"))
-        graph = LineGraph(data.us_aqi.data, times=data.time.data, current_idx=self.idx, tz=tz).dw
+        graph = LineGraph(data.us_aqi.data, times=data.time.data, current_idx=self.idx, tz=tz).widget
         graph.set_size_request(-1, GRAPH_HEIGHT)
         graph.set_hexpand(True)
         group.add(graph)

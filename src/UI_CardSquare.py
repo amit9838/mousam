@@ -197,22 +197,22 @@ class CardSquare:
 
         if self.title_key == "wind":
             # Arrow Icon
-            return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35, ARROW_CENTER).img_box
+            return DrawImage(get_icon_path("arrow", settings.icon_theme), val + 180, 35, 35, ARROW_CENTER).widget
 
         elif self.title_key == "humidity":
             # Level Bar (0.0 - 1.0), in a bright ocean blue (#219eed)
-            return DrawLevelBar(val / 100.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.13, 0.62, 0.93)).dw
+            return DrawLevelBar(val / 100.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.13, 0.62, 0.93)).widget
 
         elif self.title_key == "pressure":
             # Centred on standard pressure: 0.5 is best, 0 and 1 the extremes
             if settings.unit == "imperial":
                 val /= HPA_TO_INHG
             level = 0.5 + (val - PRESSURE_GAUGE_CENTER) / (2 * PRESSURE_GAUGE_SPAN)
-            return DrawTickGauge(level).dw
+            return DrawTickGauge(level).widget
 
         elif self.title_key == "uv index":
             # UV Level (Assuming Max 12), in a bright violet-blue (#5c66ff)
-            return DrawLevelBar(val / 12.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.36, 0.40, 1.0)).dw
+            return DrawLevelBar(val / 12.0, height=LEVEL_BAR_HEIGHT, rgb_color=(0.36, 0.40, 1.0)).widget
 
         return None
 

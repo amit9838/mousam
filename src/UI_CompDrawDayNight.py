@@ -150,15 +150,15 @@ class DrawDayNight:
         self._update_id = 0
         self._move_to_now()
 
-        self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_size_request(width + 20, height + 20)
+        self.widget = Gtk.DrawingArea()
+        self.widget.set_size_request(width + 20, height + 20)
         # Don't keep a parent container on self: the drawing area keeps self
         # alive (safe_set_draw_func), so self holding its parent would form a
         # cycle Python can't collect, and leak the card on every refresh.
-        safe_set_draw_func(self.drawing_area, self, "on_draw")
+        safe_set_draw_func(self.widget, self, "on_draw")
         # Move only while shown: the timer stops when the card goes
-        weak_connect(self.drawing_area, "map", self._start_updates)
-        weak_connect(self.drawing_area, "unmap", self._stop_updates)
+        weak_connect(self.widget, "map", self._start_updates)
+        weak_connect(self.widget, "unmap", self._stop_updates)
 
     # ---------- Moving with the time ----------
 
@@ -174,7 +174,7 @@ class DrawDayNight:
 
     def _on_update(self) -> bool:
         self._move_to_now()
-        self.drawing_area.queue_draw()
+        self.widget.queue_draw()
         return GLib.SOURCE_CONTINUE
 
     def _move_to_now(self) -> None:

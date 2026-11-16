@@ -368,7 +368,7 @@ class Forecast(Gtk.Grid):
             temp_max,
             min(daily.temperature_2m_min.data[:self.DAILY_ITEMS]),
             max(daily.temperature_2m_max.data[:self.DAILY_ITEMS]),
-        ).dw)
+        ).widget)
         high = Gtk.Label(label=f"{temp_max:.0f}°", xalign=0, width_chars=3)
         high.set_css_classes(["text-base", "font-semibold"])
         range_box.append(high)
@@ -496,7 +496,7 @@ class Forecast(Gtk.Grid):
     def _rain_drops(self, count: int, text: str, snow: bool = False) -> Gtk.Widget:
         """One to four drops (or flakes), with text as their tooltip and accessible label."""
         drawing = DrawSnowflakes if snow else DrawRainDrops
-        drop = drawing(count, self.RAIN_DROP_HEIGHT).drawing_area
+        drop = drawing(count, self.RAIN_DROP_HEIGHT).widget
         drop.set_valign(Gtk.Align.CENTER)
         drop.set_tooltip_text(text)
         # The outline takes the rain colour, which follows the theme
