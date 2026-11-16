@@ -8,6 +8,7 @@ from gettext import gettext as _
 from .UI_CompDrawPollutionBar import PollutionBar
 from .settings import settings
 from .CORE_Helpers import get_time_difference
+from .CORE_Levels import classify_aqi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
@@ -17,7 +18,6 @@ class CardAirPollution:
         from .CORE_weatherData import weather_manager
 
         self.air_pollution_data = weather_manager.air_pollution
-        self.classify_aqi = weather_manager.classify_aqi
         self.card = None
         self.create_card()
 
@@ -88,7 +88,7 @@ class CardAirPollution:
         info_box.append(main_val)
 
         desc = Gtk.Label(
-            label=self.classify_aqi(self.air_pollution_data.us_aqi.data[idx])
+            label=classify_aqi(self.air_pollution_data.us_aqi.data[idx])
         )
         desc.set_css_classes(["text-xl", "opacity-90", "font-semibold"])
         desc.set_margin_bottom(7)

@@ -1,8 +1,5 @@
-import json
 import threading
-from datetime import datetime
 from typing import Dict, List, Optional
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -13,6 +10,7 @@ from .API_FindCity import find_city  # noqa: E402
 from .CORE_GTKUtils import remove_rootwindow_drop_target, weak_connect  # noqa: E402
 from .CORE_Helpers import create_toast  # noqa: E402
 from .CORE_Icons import create_weather_icon, get_icon_path  # noqa: E402
+from .CORE_Locations import LocationData  # noqa: E402
 from .CORE_Networking import fetch_saved_locations_weather_async  # noqa: E402
 from .CORE_weatherData import weather_manager  # noqa: E402
 from .configs import (  # noqa: E402
@@ -23,80 +21,6 @@ from .configs import (  # noqa: E402
 )
 from .settings import settings  # noqa: E402
 from gettext import gettext as _  # noqa: E402
-
-# --- Data Layer Utilities ---
-
-
-class LocationData:
-    """Helper to handle serialization and formatting of city data."""
-
-    @staticmethod
-    def to_storage_string(city_dict: Dict) -> str:
-        """Converts a city dictionary to a JSON string for settings."""
-        return json.dumps(city_dict)
-
-    @staticmethod
-    def from_storage_string(json_str: str) -> Dict:
-        """Converts a JSON string from settings back to a dictionary."""
-        try:
-            return json.loads(json_str)
-        except (json.JSONDecodeError, TypeError):
-            return {}
-
-    @staticmethod
-    def format_display_name(data: Dict) -> str:
-        """Creates a clean 'City, State, Country' string."""
-        parts = [data.get("name"), data.get("state"), data.get("country")]
-        return ", ".join(filter(None, parts))
-
-    @staticmethod
-    def format_place(data: Dict, with_region: bool = False) -> str:
-        """Creates the '[Region,] State, Country' line under a city's name."""
-        name = data.get("name")
-        # A state named like its city (Delhi, Delhi) adds nothing
-        state = data.get("state") if data.get("state") != name else None
-        region = data.get("region") if with_region else None
-        if region in (name, state):
-            region = None
-        return ", ".join(filter(None, [region, state, data.get("country")]))
-
-    @staticmethod
-    def format_place_and_coords(data: Dict) -> str:
-        """Creates the 'Region, State, Country · 9.93, 76.26' line of a search result."""
-        place = LocationData.format_place(data, with_region=True)
-        latitude, longitude = data.get("latitude"), data.get("longitude")
-        coords = f"{latitude:.2f}, {longitude:.2f}" if None not in (latitude, longitude) else ""
-        return " · ".join(filter(None, [place, coords]))
-
-    @staticmethod
-    def format_place_and_time(data: Dict) -> str:
-        """Creates the 'State, Country · 9:14 PM' line of a saved city."""
-        place = LocationData.format_place(data)
-        return " · ".join(filter(None, [place, LocationData.format_local_time(data)]))
-
-    @staticmethod
-    def format_local_time(data: Dict) -> str:
-        """The city's current time, or an empty string if its timezone is unknown."""
-        timezone = data.get("timezone")
-        if not timezone:
-            return ""
-        try:
-            now = datetime.now(ZoneInfo(timezone))
-        except (ZoneInfoNotFoundError, ValueError, OSError):
-            return ""
-        return now.strftime("%H:%M" if settings.is_using_24h_clock else "%-I:%M %p")
-
-    @staticmethod
-    def get_coords_key(data: Dict) -> str:
-        """Returns a unique coordinate string used for selection tracking."""
-        return f"{data.get('latitude')},{data.get('longitude')}"
-
-    @staticmethod
-    def saved_coords() -> set:
-        """The coordinate keys of every saved city."""
-        cities = [LocationData.from_storage_string(item) for item in settings.added_cities if item]
-        return {LocationData.get_coords_key(city) for city in cities if city}
-
 
 # --- Components ---
 
@@ -357,7 +281,7 @@ class CitySearchDialog(Adw.PreferencesDialog):
 
     def _show_next_page(self) -> None:
         self._remove_more_row()
-        saved_coords = LocationData.saved_coords()
+        saved_coords = LocationData.saved_coords(settings.added_cities)
         start = len(self.results_rows)
         for city in self.cities[start:start + CITY_SEARCH_PAGE_SIZE]:
             self._add_result_row(city, LocationData.get_coords_key(city) in saved_coords)
@@ -529,7 +453,7 @@ class WeatherLocations(Adw.PreferencesDialog):
             name_line.append(indicator)
 
         details = Gtk.Label(
-            label=LocationData.format_place_and_time(data),
+            label=LocationData.format_place_and_time(data, settings.is_using_24h_clock),
             xalign=0,
             ellipsize=Pango.EllipsizeMode.END,
         )
@@ -565,7 +489,7 @@ class WeatherLocations(Adw.PreferencesDialog):
         row = source.get_widget().get_ancestor(Adw.ActionRow)
         preview = Adw.ActionRow(
             title=data.get("name") or "",
-            subtitle=LocationData.format_place_and_time(data),
+            subtitle=LocationData.format_place_and_time(data, settings.is_using_24h_clock),
             use_markup=False,
         )
         preview.add_prefix(Gtk.Image(icon_name="list-drag-handle-symbolic"))
@@ -616,7 +540,7 @@ class WeatherLocations(Adw.PreferencesDialog):
     def _handle_city_added(self, city_dict: Dict):
         json_str = LocationData.to_storage_string(city_dict)
 
-        if LocationData.get_coords_key(city_dict) in LocationData.saved_coords():
+        if LocationData.get_coords_key(city_dict) in LocationData.saved_coords(settings.added_cities):
             self.add_toast(create_toast(_("Location already exists")))
             return
 

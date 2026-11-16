@@ -11,7 +11,11 @@ from gi.repository import Adw, Gtk  # noqa: E402
 
 from .configs import THRESHOLDS  # noqa: E402
 from .CORE_Helpers import get_selected_city_name, get_time_difference  # noqa: E402
-from .CORE_weatherData import WeatherDataManager, weather_manager  # noqa: E402
+from .CORE_Levels import (  # noqa: E402
+    aqi_advice, aqi_level_class, classify_aqi, classify_eu_aqi, classify_pollen, classify_pollutant,
+    main_pollutant,
+)
+from .CORE_weatherData import weather_manager  # noqa: E402
 from .UI_CompDrawLineGraph import LineGraph  # noqa: E402
 
 # The pollutants that make up the AQI, listed first
@@ -157,20 +161,20 @@ class AirQualityDialog(Adw.Dialog):
         box.append(value)
 
         side = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, valign=Gtk.Align.CENTER)
-        level_class = WeatherDataManager.aqi_level_class(us_aqi)
-        side.append(self._label(WeatherDataManager.classify_aqi(us_aqi), ["title-4", level_class]))
+        level_class = aqi_level_class(us_aqi)
+        side.append(self._label(classify_aqi(us_aqi), ["title-4", level_class]))
 
         eu_aqi = data.european_aqi.data[self.idx]
         if eu_aqi is not None:
             # Translators: the European AQI beside the US one; {aqi} is its
             # value and {level} its level name ("Fair")
             eu_text = _("US AQI · EU AQI {aqi}, {level}").format(
-                aqi=int(eu_aqi), level=WeatherDataManager.classify_eu_aqi(eu_aqi))
+                aqi=int(eu_aqi), level=classify_eu_aqi(eu_aqi))
         else:
             eu_text = _("US AQI")
         side.append(self._label(eu_text, ["caption", "dim-label"]))
 
-        main = WeatherDataManager.main_pollutant(
+        main = main_pollutant(
             {key: self._value(data, key) for key, _name in MAIN_POLLUTANTS})
         if main:
             # Translators: {name} is a pollutant, like "PM2.5"
@@ -181,7 +185,7 @@ class AirQualityDialog(Adw.Dialog):
 
     def _advice(self, data) -> Gtk.Widget:
         us_aqi = data.us_aqi.data[self.idx]
-        text = WeatherDataManager.aqi_advice(us_aqi) if us_aqi is not None else ""
+        text = aqi_advice(us_aqi) if us_aqi is not None else ""
         label = self._label(text, [])
         label.set_visible(bool(text))
         return label
@@ -226,7 +230,7 @@ class AirQualityDialog(Adw.Dialog):
         if pollen:
             group = Adw.PreferencesGroup(title=_("Pollen"))
             for key, name in pollen:
-                word, level_class = WeatherDataManager.classify_pollen(self._value(data, key))
+                word, level_class = classify_pollen(self._value(data, key))
                 row = Adw.ActionRow(title=name)
                 row.add_suffix(self._label(word, [level_class], wrap=False))
                 group.add(row)
@@ -245,7 +249,7 @@ class AirQualityDialog(Adw.Dialog):
             # number and {unit} its unit, like "μg/m³"
             row.set_subtitle(_("WHO limit {limit} {unit}").format(limit=THRESHOLDS[key][0][0], unit=unit))
 
-        word, level_class = WeatherDataManager.classify_pollutant(key, value)
+        word, level_class = classify_pollutant(key, value)
         values = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, valign=Gtk.Align.CENTER)
         amount = self._label(f"{format_value(value)} {unit}", ["numeric"], wrap=False)
         amount.set_xalign(1)

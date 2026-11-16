@@ -1,10 +1,9 @@
 """Stand-ins for GTK, requests and GSettings, so tests can import modules
-that still mix pure logic with them (CORE_weatherData, API_Weather,
-windowLocations).
+that still mix pure logic with them (API_Weather).
 
 The test machines have no display, no PyGObject, no requests and no installed
 GSettings schema. Once the logic under test moves into GTK-free modules
-(docs/architecture-plan.md, phase 2), its tests import those directly and
+(docs/architecture-plan.md, phase 3), its tests import those directly and
 this file goes away. Tests of GTK-free modules must not use it.
 
 Call install() before importing anything from the `mousam` package.

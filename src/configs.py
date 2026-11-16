@@ -66,6 +66,12 @@ RAIN_INTENSITY_FROM_MM = (2.5, 7.6, 50)
 # Below this (the forecast's smallest step) an hour shows no drops
 RAIN_MIN_AMOUNT_MM = 0.1
 
+# --- Chance of rain (%), shown as drops on the 7-day forecast ---
+# Below this chance no drops are shown
+RAIN_MIN_CHANCE = 10
+# Chances from which a second, third, then fourth drop joins the first
+RAIN_MORE_DROPS_FROM = (50, 80, 90)
+
 # --- Snow intensity (cm of fresh snow in an hour) ---
 # From these amounts an hour's snow is moderate, heavy, then very heavy; about
 # 1 inch an hour (2.5 cm) is "heavy snow" for the US National Weather Service
@@ -155,7 +161,7 @@ UNHEALTHY_US_AQI = 151  # US AQI from which air is unhealthy
 VERY_HIGH_UV = 8
 FOG_VISIBILITY_M = 1000
 FOG_SUNRISE_MINUTES = 60  # fog this close to sunrise is "around sunrise"
-STRONG_WIND_KMH = 40  # matches "Strong" in classify_wind_speed_level
+STRONG_WIND_KMH = 40  # matches "Strong" in CORE_Levels.classify_wind_speed_level
 EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
 TEMPERATURE_SWING_C = 6  # change across the window worth a mention
 TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention

@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Optional
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
@@ -10,8 +10,10 @@ gi.require_version("Adw", "1")
 from gi.repository import GLib, Gtk, Pango  # noqa: E402
 from gettext import gettext as _, pgettext as C_  # noqa: E402
 
+from .CORE_Forecast import today_high_low  # noqa: E402
 from .CORE_GTKUtils import is_on_screen, weak_connect  # noqa: E402
-from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city  # noqa: E402
+from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
+from .CORE_Locations import JsonProcessor, find_selected_city  # noqa: E402
 from .CORE_Icons import condition, create_weather_icon  # noqa: E402
 from .CORE_Overview import overview_engine  # noqa: E402
 from .settings import settings  # noqa: E402
@@ -383,27 +385,20 @@ class CurrentCondition(Gtk.Box):
             return None
 
     def _today_high_low(self, daily) -> Optional[tuple]:
-        """Today's (max, min) in the selected city, or None.
-
-        Daily data is requested in GMT, so each day's timestamp is its
-        midnight in UTC: compare its UTC date with the city's today.
-        """
+        """Today's (max, min) in the selected city, or None."""
         if daily is None:
             return None
-        today = datetime.now(self._timezone).date()
-        for i, ts in enumerate(daily.time.data):
-            if datetime.fromtimestamp(ts, tz=timezone.utc).date() == today:
-                high = daily.temperature_2m_max.data[i]
-                low = daily.temperature_2m_min.data[i]
-                if high is None or low is None:
-                    return None
-                return high, low
-        return None
+        return today_high_low(
+            daily.time.data,
+            daily.temperature_2m_max.data,
+            daily.temperature_2m_min.data,
+            datetime.now(self._timezone).date(),
+        )
 
     @staticmethod
     def _selected_city() -> dict:
         cities = JsonProcessor.str_list_to_json(settings.added_cities)
-        for city in cities:
-            if settings.selected_city == f"{city.get('latitude')},{city.get('longitude')}":
-                return city
+        city = find_selected_city(cities, settings.selected_city)
+        if city is not None:
+            return city
         return cities[0] if cities else {}

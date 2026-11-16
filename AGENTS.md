@@ -140,7 +140,12 @@ src/
   shortcutsDialog.py/.ui  keyboard shortcuts (Gtk.Template from the GResource)
   UI_*.py                 sections and cards: CurrentCond, HourlyDetails, Forecast, CardSquare, CardDayNight, CardAirPollution, CompactWeather
   UI_CompDraw*.py         small Cairo-drawn pieces used by the cards
-  CORE_weatherData.py     WeatherDataManager: the one holder of fetched data, level classification, signals
+  CORE_weatherData.py     WeatherDataManager: the one holder of fetched data, signals
+  CORE_Levels.py          classify_* and the AQI helpers: level words and colour classes (no GTK)
+  CORE_Units.py           conversions the API doesn't do (visibility) (no GTK)
+  CORE_Forecast.py        nearest hour, rain drop count, snow codes, rain or snow, today's high/low (no GTK)
+  CORE_Locations.py       LocationData, JsonProcessor, find_selected_city: saved cities (no GTK)
+  CORE_Timezones.py       time_difference: a city's time by zone name (no GTK)
   CORE_Overview.py        OverviewEngine: when the overview runs and is announced; publishes "overview-changed"
   CORE_OverviewRules.py   the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook (no GTK)
   CORE_OverviewMessages.py the overview wordings: several per message key, picked by MessageBook (no GTK)
@@ -148,7 +153,7 @@ src/
   CORE_Models.py          WeatherField, CurrentWeather, HourlyWeather, DailyWeather, AirPollutionData, Location
   CORE_Icons.py           weather icon paths (default + Material), background CSS classes, condition names per WMO code
   CORE_GTKUtils.py        AutoRefreshTimer, weak_connect, run_when_ready, safe_set_draw_func, is_on_screen, show_overview_notification
-  CORE_Helpers.py         internet check, coordinates and timezone of the selected city, toasts, JSON helpers
+  CORE_Helpers.py         internet check, coordinates, name and timezone of the selected city (from settings), toasts
   CORE_Cache.py           @cached: TTL + LRU cache for API calls
   CORE_Logging.py         LogManager (set up once by main.main) and get_logger; imports without GTK
   API_*.py                one module per Open-Meteo API: Weather, AirPollution, FindCity
@@ -171,18 +176,18 @@ screenshots/              images for README and appdata
 Each layer may import only the ones below it:
 
 ```txt
-main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
+main / mousam / window* → UI_* → UI_CompDraw* → CORE_GTKUtils, CORE_Icons, CORE_Overview → CORE_Networking → CORE_weatherData → API_* → CORE_Cache, CORE_Helpers, CORE_Models, CORE_Levels, CORE_Units, CORE_Forecast, CORE_Locations, CORE_Timezones, CORE_OverviewRules, CORE_OverviewMessages, CORE_Logging → settings, configs
 ```
 
 - UI code never calls `API_*` directly. It reads `weather_manager` (from `CORE_weatherData`) and asks for a refresh through `fetch_all_weather_data_async`. The one exception is the city search in `windowLocations.py`, which calls `find_city`.
 - `API_*` modules only build URLs, call `requests` and return the JSON (with unit conversions the API doesn't do itself). No GTK, no models.
-- `CORE_weatherData` turns raw JSON into models and adds derived values (levels, nearest-hour fields). No widgets.
+- `CORE_weatherData` turns raw JSON into models and adds derived values (levels from `CORE_Levels`, nearest-hour fields from `CORE_Forecast`). No widgets.
 - Read and write saved values only through `settings` (`src/settings.py`), never with a new `Gio.Settings(...)`.
 - Constants (URLs, timeouts, thresholds, option lists) go in `configs.py`, not inline.
 
 Nothing enforces these rules automatically, so keep to them by hand. Some imports are done inside functions to avoid import cycles (`weather_manager` is usually imported this way); keep them that way, and import a new upper-layer module lazily too rather than reordering imports to break a cycle.
 
-**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. Keep it that way. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
+**GTK-free modules.** `configs`, `CORE_Models`, `CORE_Cache`, `CORE_Logging`, `CORE_Levels`, `CORE_Units`, `CORE_Forecast`, `CORE_Locations`, `CORE_Timezones`, `CORE_OverviewRules` and `CORE_OverviewMessages` import no `gi` at module level, so tests can import them without a display. They don't read `settings` either: a value they need from it (the unit, the 24h clock) is an argument. Keep it that way. `CORE_Helpers` and `CORE_Icons` do import GTK/Adw (toasts, icons), so logic you want to test doesn't belong there.
 
 ### Adding a file
 
@@ -224,7 +229,7 @@ When unsure, ask:
 | A day's low–high range on the week's scale | `DrawTempRange(low, high, week_min, week_max)` |
 | Tick gauge centred on the best value (pressure) | `DrawTickGauge(fill_fr).dw` |
 | Theme text colour, text and knobs in Cairo | `theme_rgba`, `text_layout`, `draw_text`, `draw_knob` in `CORE_GTKUtils` |
-| Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class) |
+| Chance of rain as one to four drops | `DrawRainDrops(count, height).drawing_area` (give it the `text-rain` class; `count` from `rain_drop_count`) |
 | Snow as one to four snowflakes | `DrawSnowflakes(count, height).drawing_area` (same layout and class as the drops) |
 | A weather icon for a WMO code | `create_weather_icon(code, settings.icon_theme, size)` or `get_icon_path(...)` |
 | A condition's name | `condition[code]` in `CORE_Icons` |
@@ -333,7 +338,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 ### Separate logic from widgets
 
 - Anything that is a decision rather than a widget goes in a plain function or `@staticmethod` in a GTK-free module: classifying a level, how many drops a rain chance gets, today's high and low, whether a code is snow. Widgets call it; tests test it.
-- Level classification belongs with the data (`classify_*`), not in `UI_*`. A new set of GTK-free helpers can get its own `CORE_*` module.
+- Level classification belongs in `CORE_Levels` (`classify_*`), not in `UI_*`; forecast decisions in `CORE_Forecast`. A new set of GTK-free helpers can get its own `CORE_*` module.
 - `API_*` stay pure: take every input as an argument (coordinates, unit), return JSON. They don't read `settings`. Expose module functions or public methods; never call a `_private` method from another module.
 - Don't mix layers in one helper module: GTK helpers (toasts, widgets) go in `CORE_GTKUtils`, not next to network or time-zone helpers.
 
@@ -379,7 +384,7 @@ Do not approximate. Do not simplify unless explicitly asked.
 - Follow libadwaita and the GNOME HIG first. Use stock widgets and style classes (`card`, `view`, `pill`, `suggested-action`, `flat`, `linked`, `dim-label`, …) before custom CSS.
 - Content sits in `card` boxes inside an `Adw.Clamp` (max 1400px). Cards keep the spacing the grid uses today (3–12px margins, 6px between rows inside a card).
 - Text hierarchy comes from the utility classes in `style.css`: titles `text-lg opacity-80 font-medium`, values `text-3xl font-medium`, units `text-sm opacity-80`, levels `text-base opacity-90 font-semibold` (see the `CSS_TEXT_*` lists in `UI_CardSquare.py`).
-- Pair every number with its unit, and every level colour with words ("Moderate", "High"). Levels come from the `classify_*` methods in `CORE_weatherData.py`; AQI colours from `THRESHOLDS` in `configs.py`.
+- Pair every number with its unit, and every level colour with words ("Moderate", "High"). Levels come from the `classify_*` functions in `CORE_Levels.py`; AQI colours from `THRESHOLDS` in `configs.py`.
 - Icons: symbolic icons from the icon theme for buttons (`view-refresh-symbolic`, …); weather icons only through `CORE_Icons`. Both icon themes must look right; Material icons are drawn smaller (`get_icon_pixel_size`).
 - One `suggested-action` button per page, for the main action (Add Location, Retry).
 - Every screen must work in light and dark, with dynamic backgrounds on and off, in metric and imperial, and in both 12h and 24h.
@@ -527,7 +532,7 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 **Diffs**
 
 - Change only what the task needs. Don't reformat, rename or reorder code you aren't otherwise touching: it hides the real change in review and breaks other contributors' branches.
-- Fix typos in names (`classify_presssure_level`) only in a separate refactor commit, and update every caller.
+- Fix typos in names only in a separate refactor commit, and update every caller.
 
 ---
 
@@ -536,7 +541,7 @@ The codebase has no formatter. Its conventions are below; when a file differs, f
 - Open-Meteo is the only data source: forecast (`OPEN_METEO_BASE_URL`), air quality (`AIR_QUALITY_BASE_URL`) and geocoding (`GEOCODING_BASE_URL`), all in `configs.py`. It needs no API key; never add one to the app.
 - Request `timeformat=unixtime`, and handle time zones through `get_time_difference` / the selected city's `timezone`. Never assume the city is in the system time zone.
 - Units: imperial is requested from the API where it supports it (`temperature_unit`, `wind_speed_unit`); pressure (hPa → inHg, `HPA_TO_INHG`) and visibility (m → km / miles) are converted by us. Keep conversions in the API layer or `WeatherDataManager`, not in widgets.
-- A new field means: add it to the request list in the `API_*` module, to the model's annotations in `CORE_Models.py`, and (if it gets a level) a `classify_*` method in `CORE_weatherData.py`.
+- A new field means: add it to the request list in the `API_*` module, to the model's annotations in `CORE_Models.py`, and (if it gets a level) a `classify_*` function in `CORE_Levels.py`.
 - Don't send anything about the user to any service except the coordinates and city name needed for the request.
 
 ---
@@ -579,7 +584,7 @@ When the user asks to build a feature:
 ## Testing
 
 - Unit tests live in `tests/`, use `unittest` (no pytest dependency) and are registered in [tests/meson.build](tests/meson.build), so `meson test` and CI run them.
-- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way. The one exception is `tests/test_levels_and_formatting.py`, which pins down logic that still lives in GTK modules through the stand-ins in `tests/stubs.py`; when that logic moves to GTK-free modules, its tests import them directly and `stubs.py` goes.
+- They import from the source tree as the `mousam` package (see the shim at the top of `tests/test_overview_rules.py`), so they need no install, no display and no network. Only test GTK-free modules this way. The one exception is `tests/test_api_weather.py`, which tests `API_Weather` through the stand-ins in `tests/stubs.py` until the API layer is pure; then it imports the module directly and `stubs.py` goes.
 - When you add GTK-free logic (a rule, a classifier, a conversion, a parser), add a test for it. A new test file must be added to `tests/meson.build`.
 - Tests use fixed clocks and hand-built data, never the real time or Open-Meteo.
 
