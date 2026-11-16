@@ -10,6 +10,7 @@ gnome = import('gnome')
 subdir('data')
 subdir('src')
 subdir('po')
+subdir('tests')
 
 install_emptydir(get_option('datadir') / 'icons/hicolor/scalable')
 
