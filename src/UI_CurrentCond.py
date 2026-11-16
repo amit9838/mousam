@@ -12,7 +12,8 @@ from gettext import gettext as _, pgettext as C_  # noqa: E402
 
 from .CORE_Forecast import today_high_low  # noqa: E402
 from .CORE_GTKUtils import is_on_screen, weak_connect  # noqa: E402
-from .CORE_Helpers import JsonProcessor, get_timezone_from_selected_city  # noqa: E402
+from .CORE_Helpers import get_timezone_from_selected_city  # noqa: E402
+from .CORE_Locations import JsonProcessor, find_selected_city  # noqa: E402
 from .CORE_Icons import condition, create_weather_icon  # noqa: E402
 from .CORE_Overview import overview_engine  # noqa: E402
 from .settings import settings  # noqa: E402
@@ -397,7 +398,7 @@ class CurrentCondition(Gtk.Box):
     @staticmethod
     def _selected_city() -> dict:
         cities = JsonProcessor.str_list_to_json(settings.added_cities)
-        for city in cities:
-            if settings.selected_city == f"{city.get('latitude')},{city.get('longitude')}":
-                return city
+        city = find_selected_city(cities, settings.selected_city)
+        if city is not None:
+            return city
         return cities[0] if cities else {}

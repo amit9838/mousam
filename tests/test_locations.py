@@ -1,31 +1,28 @@
-"""Tests for the API's unit parameters and location formatting.
+"""Tests for saved-location storage and formatting (src/CORE_Locations.py).
 
-They pin down the current behaviour before the logic moves into GTK-free
-modules (docs/architecture-plan.md, phase 2). The modules still import GTK,
-requests and GSettings, so tests/stubs.py stands in for them.
-
-Run: python3 tests/test_levels_and_formatting.py (also run by `meson test`).
+Plain Python, no GTK. Run: python3 tests/test_locations.py (also run by `meson test`).
 """
 
 import os
 import sys
+import types
 import unittest
 from datetime import datetime
 from unittest import mock
 from zoneinfo import ZoneInfo
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import stubs  # noqa: E402
+# src/ is imported as the `mousam` package, as in the installed app
+SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src")
+package = types.ModuleType("mousam")
+package.__path__ = [SRC]
+sys.modules.setdefault("mousam", package)
 
-stubs.install()
-
-from mousam import windowLocations  # noqa: E402
-from mousam.API_Weather import unit_params  # noqa: E402
-from mousam.windowLocations import LocationData  # noqa: E402
+from mousam import CORE_Locations  # noqa: E402
+from mousam.CORE_Locations import JsonProcessor, LocationData, find_selected_city  # noqa: E402
 
 
 def fixed_clock():
-    """Make windowLocations see 21:05 in Kolkata (15:35 UTC) as the time now."""
+    """Make CORE_Locations see 21:05 in Kolkata (15:35 UTC) as the time now."""
     fixed = datetime(2026, 1, 15, 21, 5, tzinfo=ZoneInfo("Asia/Kolkata"))
 
     class FixedDatetime(datetime):
@@ -33,23 +30,10 @@ def fixed_clock():
         def now(cls, tz=None):
             return fixed.astimezone(tz)
 
-    return mock.patch.object(windowLocations, "datetime", FixedDatetime)
+    return mock.patch.object(CORE_Locations, "datetime", FixedDatetime)
 
 
-class SettingsTestCase(unittest.TestCase):
-    def setUp(self):
-        stubs.settings.reset()
-
-
-class UnitParams(unittest.TestCase):
-    def test_unit_params(self):
-        self.assertEqual(unit_params("metric"), "")
-        self.assertEqual(
-            unit_params("imperial"), "&temperature_unit=fahrenheit&wind_speed_unit=mph"
-        )
-
-
-class LocationFormatting(SettingsTestCase):
+class LocationFormatting(unittest.TestCase):
     KOCHI = {
         "name": "Kochi",
         "region": "Ernakulam",
@@ -94,28 +78,45 @@ class LocationFormatting(SettingsTestCase):
         self.assertEqual(LocationData.get_coords_key(self.KOCHI), "9.9312,76.2673")
 
     def test_saved_coords(self):
-        stubs.settings.added_cities = [LocationData.to_storage_string(self.KOCHI), "", "bad"]
-        self.assertEqual(LocationData.saved_coords(), {"9.9312,76.2673"})
+        added_cities = [LocationData.to_storage_string(self.KOCHI), "", "bad"]
+        self.assertEqual(LocationData.saved_coords(added_cities), {"9.9312,76.2673"})
 
     def test_local_time_24h(self):
         with fixed_clock():
-            self.assertEqual(LocationData.format_local_time(self.KOCHI), "21:05")
+            self.assertEqual(LocationData.format_local_time(self.KOCHI, True), "21:05")
 
     def test_local_time_12h(self):
-        stubs.settings.is_using_24h_clock = False
         with fixed_clock():
-            self.assertEqual(LocationData.format_local_time(self.KOCHI), "9:05 PM")
+            self.assertEqual(LocationData.format_local_time(self.KOCHI, False), "9:05 PM")
 
     def test_local_time_without_a_known_timezone(self):
         with fixed_clock():
-            self.assertEqual(LocationData.format_local_time({"name": "Kochi"}), "")
-            self.assertEqual(LocationData.format_local_time({"timezone": "Not/A_Zone"}), "")
+            self.assertEqual(LocationData.format_local_time({"name": "Kochi"}, True), "")
+            self.assertEqual(LocationData.format_local_time({"timezone": "Not/A_Zone"}, True), "")
 
     def test_place_and_time(self):
         with fixed_clock():
             self.assertEqual(
-                LocationData.format_place_and_time(self.KOCHI), "Kerala, India · 21:05"
+                LocationData.format_place_and_time(self.KOCHI, True), "Kerala, India · 21:05"
             )
+
+
+class SelectedCity(unittest.TestCase):
+    CITIES = [
+        {"name": "Kochi", "latitude": 9.9312, "longitude": 76.2673},
+        {"name": "Delhi", "latitude": 28.6, "longitude": 77.2},
+    ]
+
+    def test_found_by_its_coords_key(self):
+        self.assertEqual(find_selected_city(self.CITIES, "28.6,77.2")["name"], "Delhi")
+
+    def test_not_found(self):
+        self.assertIsNone(find_selected_city(self.CITIES, "1.0,2.0"))
+        self.assertIsNone(find_selected_city([], "28.6,77.2"))
+
+    def test_json_list_round_trip(self):
+        stored = JsonProcessor.json_list_to_str(self.CITIES)
+        self.assertEqual(JsonProcessor.str_list_to_json(stored), self.CITIES)
 
 
 if __name__ == "__main__":
