@@ -184,7 +184,7 @@ def wind_card(current) -> Gtk.Widget:
         main_val_unit=current.windspeed_10m.unit,
         desc=current.windspeed_10m.level_str,
         # Translators: wind direction is where the wind blows from
-        sub_desc_heading=_("Direction (from)"),
+        sub_desc_heading=_("From"),
         sub_desc=(
             compass_direction(degrees) if degrees is not None
             else str(current.winddirection_10m.data) + "°"
