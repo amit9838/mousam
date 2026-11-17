@@ -31,14 +31,12 @@ from ...config import (
     COLD_FEELS_LIKE_C,
     EXTREME_WIND_KMH,
     FOG_SUNRISE_MINUTES,
-    FOG_VISIBILITY_M,
     HEAT_FEELS_LIKE_C,
     HEAVY_PRECIPITATION_MM,
     OVERVIEW_COMBINE_MINUTES,
     OVERVIEW_RELATIVE_TOLERANCE,
     OVERVIEW_TOMORROW_FROM_HOUR,
     RAIN_LIKELY_PROBABILITY,
-    STRONG_WIND_KMH,
     SUN_ROUND_MINUTES,
     SUNRISE_SOON_MINUTES,
     SUNSET_SOON_MINUTES,
@@ -48,19 +46,19 @@ from ...config import (
     VERY_HIGH_UV,
 )
 from ..log import get_logger
-from .context import HOUR, MINUTE, OverviewContext, Units, hours_between, value_at
+from .context import HOUR, MINUTE, OverviewContext, hours_between, value_at
 from .hour_tests import (
-    FOG_CODES,
     FREEZING_CODES,
     HEAVY_RAIN_CODES,
     HEAVY_SNOW_CODES,
     IS_DRY,
+    IS_FOGGY,
     IS_SNOW,
     IS_WET,
+    IS_WINDY,
     STORM_CODES,
     AnyOf,
     AtLeast,
-    Below,
     HasCode,
     HourTest,
 )
@@ -350,7 +348,7 @@ class WindRule(Rule):
 
     def __init__(self):
         super().__init__("wind", "medium", "wind", ICON_WIND)
-        self.test = AtLeast("windspeed", STRONG_WIND_KMH, to_metric=Units.kmh)
+        self.test = IS_WINDY
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         i = ctx.first(self.test)
@@ -370,7 +368,7 @@ class FogRule(Rule):
 
     def __init__(self):
         super().__init__("fog", "medium", "fog", ICON_FOG)
-        self.test = AnyOf(Below("visibility", FOG_VISIBILITY_M), HasCode(FOG_CODES))
+        self.test = IS_FOGGY
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         i = ctx.first(self.test)

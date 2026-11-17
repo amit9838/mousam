@@ -4,7 +4,7 @@ composition to describe what a rule looks for."""
 from abc import ABC, abstractmethod
 from typing import Callable, Iterable, Optional
 
-from ...config import RAIN_LIKELY_PROBABILITY
+from ...config import FOG_VISIBILITY_M, RAIN_LIKELY_PROBABILITY, STRONG_WIND_KMH
 from .context import HourlySeries, OverviewContext, Units
 
 # WMO weather codes
@@ -76,3 +76,5 @@ class AnyOf(HourTest):
 IS_SNOW = HasCode(SNOW_CODES)
 IS_WET = AtLeast("precip_probability", RAIN_LIKELY_PROBABILITY)
 IS_DRY = Below("precip_probability", RAIN_LIKELY_PROBABILITY)  # an hour with no data is neither
+IS_FOGGY = AnyOf(Below("visibility", FOG_VISIBILITY_M), HasCode(FOG_CODES))
+IS_WINDY = AtLeast("windspeed", STRONG_WIND_KMH, to_metric=Units.kmh)
