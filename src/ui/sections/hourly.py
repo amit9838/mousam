@@ -255,11 +255,12 @@ class HourlyDetails(Gtk.Grid):
 
     def _setup_prec_item(self, icon_box, val_label, index, hourly_data, max_prec):
         val = hourly_data.precipitation.data[index]
-        if settings.is_using_inch_for_prec: val /= 25.4
-        
+        # The bar compares mm with the day's high in mm; only the label is in inches
         bar = DrawBar(val / max_prec if max_prec > 0 else 0)
         icon_box.append(bar.widget)
-        
+        if settings.is_using_inch_for_prec:
+            val /= 25.4
+
         val_text = f"{val:.2f}" if val >= 0.01 else ("0" if val == 0 else f"{val:.1f}+")
         val_label.set_text(val_text)
         val_label.set_margin_top(0)
