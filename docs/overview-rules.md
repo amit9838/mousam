@@ -147,6 +147,30 @@ something more urgent turning up (a storm) opens first, at once.
 **The gap.** Nothing opens within **5 minutes** of the last opening; an
 insight that is due opens as soon as those 5 minutes are up.
 
+**Several urgent things at once: a group.** Rain often comes with
+thunderstorms or strong wind around the same time. So that one doesn't hide
+the other, the insight that opens **leads a group**, and up to two more join
+it when they:
+
+- are **medium or above** (low and calm never join)
+- happen within **60 minutes** of the lead: the hour or event they are
+  about, or now for "right now"
+- are about the coming hours (tomorrow never joins)
+- don't share a topic with one already in it (heavy rain beats rain)
+
+The most urgent join first (level, then priority). Each member keeps its
+own whole sentence, so every time and value stays right:
+
+- in the window, the members take turns in the overview, the lead first
+  for its open time, then each other one for 10 seconds, with "1 of 3"
+  beside it; the heading has the lead's colour
+- in a notification, their sentences are on separate lines, the lead first
+
+Opening a group counts as announcing every member, so none opens on its own
+minutes later. The group is news when any member is. A member that stops
+being true leaves the group, without opening. One that didn't join (too far
+apart, below medium, or a fourth) is not lost: it keeps its own turn.
+
 **Between openings** the text on screen is kept up to date without opening
 (the values change, the wording stays). When the shown insight stops being
 true, the most important remaining one takes its place, also without opening.

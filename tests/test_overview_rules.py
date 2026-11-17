@@ -377,7 +377,8 @@ class TestAnnounce(unittest.TestCase):
 
     def setUp(self):
         self.memory = AnnounceMemory()
-        self.rain = self.insight("precipitation")
+        # Rain 5 hours away: too far to join a group with the others
+        self.rain = self.insight("precipitation", about=at_hour(5))
         self.wind = self.insight("wind", "high")
         self.calm = self.insight("calm", "calm")
         self.storm = self.insight("storm", "extreme")
@@ -424,7 +425,7 @@ class TestAnnounce(unittest.TestCase):
         self.decide([self.rain, self.wind], NOW)
         self.assertEqual(self.opened([self.rain, self.wind], NOW + 6 * MIN, ["wind"]),
                          ("precipitation", NEWS))  # rain was never said
-        again = [self.insight("precipitation"), self.insight("wind", "high")]  # rebuilt, equal
+        again = [self.insight("precipitation", about=at_hour(5)), self.insight("wind", "high")]  # rebuilt, equal
         self.assertEqual(self.opened(again, NOW + 12 * MIN, ["precipitation"]), ("precipitation", None))
 
     def test_news_waits_for_the_gap(self):
@@ -494,6 +495,73 @@ class TestAnnounce(unittest.TestCase):
         self.assertTrue(should_notify(REMINDER, "extreme"))
         self.assertFalse(should_notify(REMINDER, "high"))
         self.assertFalse(should_notify(None, "extreme"))
+
+    # ---------- Groups ----------
+
+    def kinds(self, decision):
+        return [m.kind for m in decision.members]
+
+    def test_urgent_things_at_the_same_time_open_together(self):
+        storm = self.insight("storm", "extreme", about=at_hour(2))
+        wind = self.insight("wind", "high", about=at_hour(2))
+        rain = self.insight("precipitation", about=at_hour(1))
+        decision = self.decide([rain, wind, storm], NOW)
+        self.assertEqual(self.kinds(decision), ["storm", "wind", "precipitation"])
+        self.assertEqual(decision.reason, NEWS)
+
+    def test_a_fourth_is_left_out_and_opens_next(self):
+        busy = [self.insight(kind, "high", about=at_hour(1))
+                for kind in ("storm", "freezing", "air_quality", "wind")]
+        decision = self.decide(busy, NOW)
+        self.assertEqual(len(decision.members), 3)
+        left = [insight.kind for insight, why in decision.left_out]
+        self.assertEqual(left, ["wind"])
+        self.assertEqual(dict((i.kind, why) for i, why in decision.left_out)["wind"], "already 3")
+        self.assertEqual(self.opened(busy, decision.wake_at), ("wind", NEWS))
+
+    def test_who_never_joins(self):
+        storm = self.insight("storm", "extreme", about=at_hour(1))
+        far = self.insight("uv", "high", about=at_hour(4))
+        low = self.insight("sun", "low", about=at_hour(1))
+        tomorrow = self.insight("tomorrow", "medium")
+        decision = self.decide([storm, far, low, tomorrow], NOW)
+        self.assertEqual(self.kinds(decision), ["storm"])
+        why = {i.kind: reason for i, reason in decision.left_out}
+        self.assertEqual(why, {"uv": "180 min from the lead", "sun": "below medium",
+                               "tomorrow": "about tomorrow"})
+
+    def test_one_per_topic(self):
+        heavy = Insight("heavy_precipitation", "heavy", NOW + H, "high", topic="rain", about=at_hour(1))
+        rain = Insight("precipitation", "rain", NOW + H, "medium", topic="rain", about=at_hour(1))
+        decision = self.decide([heavy, rain], NOW)
+        self.assertEqual(self.kinds(decision), ["heavy_precipitation"])
+
+    def test_a_low_lead_opens_alone(self):
+        sun = self.insight("sun", "low")
+        self.assertEqual(self.kinds(self.decide([sun, self.calm], NOW)), ["sun"])
+
+    def test_a_group_counts_as_saying_every_member(self):
+        storm = self.insight("storm", "extreme", about=at_hour(1))
+        wind = self.insight("wind", "high", about=at_hour(1))
+        self.decide([storm, wind], NOW)
+        self.assertEqual(self.memory.times_said(wind), 1)
+        self.assertEqual(self.opened([storm, wind], NOW + 10 * MIN, ["storm", "wind"]), ("storm", None))
+
+    def test_news_when_any_member_is_new(self):
+        storm = self.insight("storm", "extreme", about=at_hour(1))
+        wind = self.insight("wind", "high", about=at_hour(1))
+        self.decide([storm], NOW)
+        decision = self.decide([storm, wind], NOW + 31 * MIN)  # storm's reminder, wind new
+        self.assertEqual(self.kinds(decision), ["wind", "storm"])  # news leads
+        self.assertEqual(decision.reason, NEWS)
+
+    def test_a_member_that_stops_being_true_leaves_silently(self):
+        storm = self.insight("storm", "extreme", about=at_hour(1))
+        wind = self.insight("wind", "high", about=at_hour(1), valid_hours=0.25)
+        self.decide([storm, wind], NOW)
+        decision = self.decide([storm], NOW + 20 * MIN, ["storm", "wind"])  # before any reminder
+        self.assertEqual(self.kinds(decision), ["storm"])
+        self.assertIsNone(decision.reason)
 
 if __name__ == "__main__":
     unittest.main()

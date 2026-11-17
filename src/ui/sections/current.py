@@ -10,6 +10,7 @@ gi.require_version("Adw", "1")
 from gi.repository import GLib, Gtk, Pango  # noqa: E402
 from gettext import gettext as _, pgettext as C_  # noqa: E402
 
+from ...config import OVERVIEW_GROUP_STEP_SECONDS  # noqa: E402
 from ...core.forecast import today_high_low  # noqa: E402
 from ..gtk_utils import is_on_screen, weak_connect  # noqa: E402
 from ...services.selected_city import get_timezone_from_selected_city  # noqa: E402
@@ -34,7 +35,8 @@ class CurrentCondition(Gtk.Box):
         self._overview_hide_id = 0
         self._overview_handler_id = 0
         self._overview_setting_id = 0
-        self._overview_insight = None
+        self._overview_members = ()  # the engine's group, the lead first
+        self._overview_index = 0  # the member on screen
         self._timezone = self._city_timezone()
         self.paint_ui(current, daily)
 
@@ -246,27 +248,44 @@ class CurrentCondition(Gtk.Box):
         self._overview_label.set_css_classes(["text-sm", "opacity-75"])
         message_box.append(self._overview_label)
 
+        # "1 of 3" while a group of insights takes turns (hidden for one)
+        self._overview_counter = Gtk.Label(valign=Gtk.Align.CENTER, visible=False)
+        self._overview_counter.set_css_classes(["text-xs", "opacity-75", "numeric"])
+        message_box.append(self._overview_counter)
+
         return bar
 
-    def _set_overview(self, insight, heading: Optional[str]) -> None:
-        """Show the engine's insight; without one the button does nothing."""
-        self._overview_insight = insight
-        self._overview_button.set_sensitive(insight is not None)
-        if insight is None:
+    def _set_overview(self, members, heading: Optional[str]) -> None:
+        """Show the engine's insights (a group takes turns); without any the
+        button does nothing."""
+        self._overview_members = members
+        self._overview_button.set_sensitive(bool(members))
+        if not members:
             self._close_overview()
             return
 
-        # The heading's colour follows the level, always with words
+        # The heading's colour follows the lead's level, always with words
         self._overview_heading.set_label((heading or "").upper())
         classes = ["text-xs", "font-bold", "current-overview-heading"]
-        if insight.level in LEVEL_CSS:
-            classes.append(LEVEL_CSS[insight.level])
+        if members[0].level in LEVEL_CSS:
+            classes.append(LEVEL_CSS[members[0].level])
         self._overview_heading.set_css_classes(classes)
+        # Every member's whole sentence in the tooltip
+        self._overview_label.set_tooltip_text("\n".join(m.message for m in members))
+        self._show_member(min(self._overview_index, len(members) - 1))
+
+    def _show_member(self, index: int) -> None:
+        self._overview_index = index
+        insight = self._overview_members[index]
         self._overview_icon.set_visible(insight.icon is not None)
         if insight.icon:
             self._overview_icon.set_from_icon_name(insight.icon)
         self._overview_label.set_label(insight.message)
-        self._overview_label.set_tooltip_text(insight.message)
+        total = len(self._overview_members)
+        self._overview_counter.set_visible(total > 1)
+        # Translators: while several insights take turns in the overview:
+        # {n} is the one shown, {total} how many there are ("1 of 3")
+        self._overview_counter.set_label(_("{n} of {total}").format(n=index + 1, total=total))
 
     def _on_overview_setting_changed(self, *_args) -> None:
         self._overview_bar.set_visible(settings.show_overview)
@@ -274,9 +293,9 @@ class CurrentCondition(Gtk.Box):
     def _on_overview_changed(self, engine, announce: bool) -> None:
         # New text always; open it only when the engine announces it and the
         # window can be seen (otherwise the app sends it as a notification)
-        insight = engine.current()
-        self._set_overview(insight, engine.heading)
-        if announce and insight is not None and is_on_screen(self.get_root()):
+        members = engine.members()
+        self._set_overview(members, engine.heading)
+        if announce and members and is_on_screen(self.get_root()):
             self._open_overview()
 
     def _on_overview_clicked(self, _button: Gtk.Button) -> None:
@@ -289,14 +308,16 @@ class CurrentCondition(Gtk.Box):
             overview_engine.note_shown()
 
     def _open_overview(self) -> None:
-        if self._overview_insight is None:
+        """Open on the lead; the other members of a group follow in turn."""
+        if not self._overview_members:
             return
         self._cancel_overview_hide()
+        self._show_member(0)
         self._overview_bar.add_css_class("open")
         self._overview_revealer.set_reveal_child(True)
-        # Severe insights stay open longer
+        # Urgent insights stay open longer
         self._overview_hide_id = GLib.timeout_add_seconds(
-            self._overview_insight.show_seconds, self._hide_overview
+            self._overview_members[0].show_seconds, self._show_next_or_hide
         )
 
     def _on_overview_revealed(self, revealer: Gtk.Revealer, _pspec) -> None:
@@ -304,9 +325,17 @@ class CurrentCondition(Gtk.Box):
         if not revealer.get_child_revealed():
             self._overview_bar.remove_css_class("open")
 
-    def _hide_overview(self) -> bool:
+    def _show_next_or_hide(self) -> bool:
+        """The next member of the group for a while, or close after the last."""
         self._overview_hide_id = 0
-        self._overview_revealer.set_reveal_child(False)
+        following = self._overview_index + 1
+        if following < len(self._overview_members):
+            self._show_member(following)
+            self._overview_hide_id = GLib.timeout_add_seconds(
+                OVERVIEW_GROUP_STEP_SECONDS, self._show_next_or_hide
+            )
+        else:
+            self._overview_revealer.set_reveal_child(False)
         return GLib.SOURCE_REMOVE
 
     def _close_overview(self) -> None:
@@ -321,7 +350,7 @@ class CurrentCondition(Gtk.Box):
     def _on_map(self, *_args) -> None:
         self._start_clock()
         # Subscribe to the overview; it may already have an insight
-        self._set_overview(overview_engine.current(), overview_engine.heading)
+        self._set_overview(overview_engine.members(), overview_engine.heading)
         if not self._overview_handler_id:
             self._overview_handler_id = weak_connect(
                 overview_engine, "overview-changed", self._on_overview_changed

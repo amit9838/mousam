@@ -118,7 +118,7 @@ class WeatherApplication(Adw.Application):
             return
         if is_on_screen(self.main_window):
             return
-        show_overview_notification(self, insight)
+        show_overview_notification(self, engine.members())
 
     def _on_auto_refresh_tick(self):
         # The windows show the result: they listen to the store's status
