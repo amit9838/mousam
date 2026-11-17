@@ -323,7 +323,14 @@ class CitySearchDialog(Adw.PreferencesDialog):
 
 class WeatherLocations(Adw.PreferencesDialog):
     def __init__(self, application, **kwargs):
-        super().__init__(title=_("Locations"), content_width=560, **kwargs)
+        super().__init__(
+            title=_("Locations"),
+            content_width=560,
+            # Without it the dialog is only 200px tall, so even a few
+            # locations scroll. Same height as the city search over it.
+            content_height=500,
+            **kwargs,
+        )
         self.application = application
         remove_rootwindow_drop_target(application)
         self.cities: List[Dict] = []  # In the order of the rows
