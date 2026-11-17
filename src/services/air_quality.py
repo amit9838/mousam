@@ -54,6 +54,8 @@ def fetch_air_quality(latitude: float, longitude: float) -> Optional[dict]:
         return None
 
 
-def clear_cache() -> None:
-    """Forget cached responses, so the next fetch goes to the network."""
-    fetch_air_quality.cache_clear()
+def clear_cache(latitude: Optional[float] = None, longitude: Optional[float] = None) -> None:
+    """Forget cached responses, so the next fetch goes to the network: all
+    of them, or with a latitude and longitude only that place's."""
+    place = () if latitude is None else (latitude, longitude)
+    fetch_air_quality.cache_clear(*place)

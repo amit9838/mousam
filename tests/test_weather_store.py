@@ -70,6 +70,7 @@ class StoreTestCase(unittest.TestCase):
     def make_store(self, client=None, air=None, online=True, **settings):
         self.client = client or full_client()
         self.air_calls = []
+        self.air_cleared = []
         self.settings = FakeSettings(**settings)
 
         def fetch_air(lat, lon):
@@ -79,6 +80,7 @@ class StoreTestCase(unittest.TestCase):
         self.store = WeatherStore(
             client=self.client,
             fetch_air=fetch_air,
+            clear_air_cache=lambda lat, lon: self.air_cleared.append((lat, lon)),
             settings=self.settings,
             is_online=lambda force=False: online,
         )
@@ -221,6 +223,22 @@ class Errors(StoreTestCase):
         self.refresh_and_wait()
         self.assertEqual(self.statuses, ["loading", "error", "loading", "ready"])
         self.assertTrue(store.is_ready)
+
+
+class HardRefresh(StoreTestCase):
+    def test_forgets_the_city_then_fetches(self):
+        self.make_store(selected_city="28.6,77.2")
+        self.refresh_and_wait(hard=True)
+        self.assertEqual(self.client.calls[0], ("clear_cache", 28.6, 77.2))
+        self.assertEqual(self.air_cleared, [(28.6, 77.2)])
+        self.assertIn(("fetch_current", 28.6, 77.2, "metric"), self.client.calls)
+        self.assertEqual(self.statuses, ["loading", "ready"])
+
+    def test_a_normal_refresh_keeps_the_cache(self):
+        self.make_store()
+        self.refresh_and_wait()
+        self.assertNotIn("clear_cache", [call[0] for call in self.client.calls])
+        self.assertEqual(self.air_cleared, [])
 
 
 class RunAll(unittest.TestCase):

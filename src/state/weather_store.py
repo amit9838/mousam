@@ -12,6 +12,7 @@ from typing import Callable, Dict, Iterable, List, Optional
 from gi.repository import GLib, GObject
 
 from ..services import open_meteo
+from ..services import air_quality
 from ..services.air_quality import fetch_air_quality
 from ..services.settings import settings
 from ..core.forecast_client import ForecastClient
@@ -64,12 +65,14 @@ class WeatherStore(GObject.Object):
         self,
         client: ForecastClient = open_meteo,
         fetch_air: Callable = fetch_air_quality,
+        clear_air_cache: Callable = air_quality.clear_cache,
         settings=settings,
         is_online: Callable[..., bool] = check_internet_connection,
     ):
         super().__init__()
         self._client = client
         self._fetch_air = fetch_air
+        self._clear_air_cache = clear_air_cache
         self._settings = settings
         self._is_online = is_online
         self._ready = False
@@ -85,12 +88,14 @@ class WeatherStore(GObject.Object):
 
     # ---------- Fetching ----------
 
-    def refresh(self, check_online: bool = True) -> None:
+    def refresh(self, check_online: bool = True, hard: bool = False) -> None:
         """Fetch the selected city's weather, unless a fetch is already
         running (then its result is the answer).
 
         With check_online, a missing connection ends it as STATUS_OFFLINE
-        and keeps the data that is there.
+        and keeps the data that is there. A hard refresh (Ctrl+Shift+R)
+        first forgets the city's cached responses, so everything comes from
+        the network; other cities keep theirs.
         """
         # Read on the main loop: the worker never touches settings
         coords = self._settings.selected_city
@@ -102,15 +107,23 @@ class WeatherStore(GObject.Object):
         self._fetching = coords
         threading.Thread(
             target=self._fetch_worker,
-            args=(coords, unit, check_online),
+            args=(coords, unit, check_online, hard),
             name="fetch_all_worker",
             daemon=True,
         ).start()
 
-    def _fetch_worker(self, coords: str, unit: str, check_online: bool) -> None:
+    def _fetch_worker(self, coords: str, unit: str, check_online: bool, hard: bool) -> None:
         if check_online and not self._is_online(force=True):
             GLib.idle_add(self._finish, STATUS_OFFLINE, coords, None)
             return
+
+        if hard:
+            # Here, not on the main loop: the cache holds its lock while a
+            # request runs, so forgetting could wait for one
+            lat, lon = parse_coords_key(coords)
+            logger.info(f"Hard refresh: forgetting cached data for {coords}")
+            self._client.clear_cache(lat, lon)
+            self._clear_air_cache(lat, lon)
 
         GLib.idle_add(self._start_loading)
         logger.info("Starting background fetch for all weather data")

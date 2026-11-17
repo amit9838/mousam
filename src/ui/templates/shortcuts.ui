@@ -35,6 +35,12 @@ along with Mousam.  If not, see <http://www.gnu.org/licenses/>.
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;r</property>
+                <property name="title" translatable="yes">Hard Refresh</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Primary&gt;l</property>
                 <property name="title" translatable="yes">Locations</property>
               </object>

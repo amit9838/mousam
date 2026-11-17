@@ -69,12 +69,24 @@ class cached:
                     "ttl": self.ttl,
                 }
 
-        def cache_clear():
+        def cache_clear(*leading_args):
+            """Forget cached results: all of them (and the hit and miss
+            counts), or with `leading_args` (a place's latitude and
+            longitude) only the calls whose first arguments are those, keeping
+            the rest. Matching needs the default key."""
+            if not leading_args:
+                with self.lock:
+                    self.cache.clear()
+                    self.hits = 0
+                    self.misses = 0
+                    self.currsize = 0
+                return
+            wanted = json.loads(json.dumps(list(leading_args), default=str))
             with self.lock:
-                self.cache.clear()
-                self.hits = 0
-                self.misses = 0
-                self.currsize = 0
+                for key in list(self.cache):
+                    if json.loads(key)["args"][:len(wanted)] == wanted:
+                        del self.cache[key]
+                        self.currsize -= 1
 
         wrapper.cache_info = cache_info
         wrapper.cache_clear = cache_clear

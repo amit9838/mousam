@@ -19,3 +19,7 @@ class ForecastClient(Protocol):
     def fetch_daily(self, latitude: float, longitude: float, unit: str) -> Optional[dict]: ...
 
     def fetch_many(self, coords: List[str], unit: str) -> Optional[list]: ...
+
+    def clear_cache(self, latitude: Optional[float] = None,
+                    longitude: Optional[float] = None) -> None:
+        """Forget cached responses: all, or one place's (a hard refresh)."""

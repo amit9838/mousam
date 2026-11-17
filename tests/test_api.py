@@ -27,6 +27,7 @@ package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
 
 from mousam.services import air_quality, geocoding, open_meteo  # noqa: E402
+from mousam.core.cache import cached  # noqa: E402
 from mousam.core.forecast_client import ForecastClient  # noqa: E402
 from mousam.config import HPA_TO_INHG, REQUEST_TIMEOUT  # noqa: E402
 
@@ -42,6 +43,34 @@ class ApiTestCase(unittest.TestCase):
     def url(self) -> str:
         self.assertEqual(len(requests.calls), 1)
         return requests.calls[0]["url"]
+
+
+class CacheClear(unittest.TestCase):
+    def test_forgets_every_call_for_the_place_and_keeps_the_rest(self):
+        calls = []
+
+        @cached()
+        def fetch(latitude, longitude, unit):
+            calls.append((latitude, longitude, unit))
+            return unit
+
+        for args in ((9.93, 76.27, "metric"), (9.93, 76.27, "imperial"), (28.6, 77.2, "metric")):
+            fetch(*args)
+        fetch.cache_clear(9.93, 76.27)
+        for args in ((9.93, 76.27, "metric"), (9.93, 76.27, "imperial"), (28.6, 77.2, "metric")):
+            fetch(*args)
+        self.assertEqual(len(calls), 5)  # both units of the place again; the other cached
+        self.assertEqual(fetch.cache_info()["currsize"], 3)
+
+    def test_without_arguments_clears_everything(self):
+        @cached()
+        def fetch(latitude, longitude):
+            return latitude
+
+        fetch(9.93, 76.27)
+        fetch(28.6, 77.2)
+        fetch.cache_clear()
+        self.assertEqual(fetch.cache_info()["currsize"], 0)
 
 
 class UnitParams(unittest.TestCase):
@@ -94,6 +123,15 @@ class Current(ApiTestCase):
         )
         open_meteo.fetch_current(9.93, 76.27, "imperial")
         self.assertEqual(len(requests.calls), 2)
+
+    def test_clear_cache_of_one_place_goes_to_the_network_for_it_only(self):
+        requests.response = FakeResponse(self.PAYLOAD)
+        open_meteo.fetch_current(9.93, 76.27, "metric")
+        open_meteo.fetch_current(28.6, 77.2, "metric")
+        open_meteo.clear_cache(9.93, 76.27)
+        open_meteo.fetch_current(9.93, 76.27, "metric")  # from the network
+        open_meteo.fetch_current(28.6, 77.2, "metric")  # still cached
+        self.assertEqual(len(requests.calls), 3)
 
     def test_clear_cache_goes_to_the_network_again(self):
         requests.response = FakeResponse(self.PAYLOAD)
