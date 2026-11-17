@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-16 20:19+0530\n"
+"POT-Creation-Date: 2026-11-16 22:12+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -577,6 +577,16 @@ msgstr ""
 
 #: src/core/levels.py:153
 msgid "Northwest"
+msgstr ""
+
+#: src/core/overview/context.py:180
+msgctxt "overview heading"
+msgid "Today"
+msgstr ""
+
+#: src/core/overview/context.py:181
+msgctxt "overview heading"
+msgid "Tonight"
 msgstr ""
 
 #: src/core/overview/messages.py:31
@@ -1271,17 +1281,7 @@ msgstr ""
 msgid "The weather should hold steady until about {time}."
 msgstr ""
 
-#: src/core/overview/rules.py:269
-msgctxt "overview heading"
-msgid "Today"
-msgstr ""
-
-#: src/core/overview/rules.py:270
-msgctxt "overview heading"
-msgid "Tonight"
-msgstr ""
-
-#: src/core/overview/rules.py:707
+#: src/core/overview/rules.py:366
 msgctxt "overview heading"
 msgid "Tomorrow"
 msgstr ""

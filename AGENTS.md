@@ -148,7 +148,10 @@ src/
     cache.py              @cached: TTL + LRU cache for API calls
     log.py                LogManager (set up once by app.main, given the debug mode) and get_logger
     forecast_client.py    ForecastClient: the Protocol services/open_meteo.py fills and tests fake
-    overview/rules.py     the overview rules: Insight, OverviewContext, HourTest, Phrasing, Rule, RuleBook, AnnouncePlanner
+    overview/insight.py   Insight (what a rule returns), SEVERITY_RANK
+    overview/context.py   OverviewContext and its parts: Clock, Units, HourlySeries, SunTimes, DailyOutlook, AirSeries, Window
+    overview/hour_tests.py  HourTest, HasCode, AtLeast, Below, AnyOf, IS_SNOW / IS_WET / IS_DRY, the WMO code sets
+    overview/rules.py     the overview rules: Phrasing, Rule and the rules, RuleBook, AnnouncePlanner
     overview/messages.py  the overview wordings: several per message key, picked by MessageBook
   services/               the outside world: HTTP, GSettings, the network
     open_meteo.py         the forecast API: fetch_current, fetch_hourly, fetch_daily, fetch_many, clear_cache
@@ -164,7 +167,8 @@ src/
     window.py             WeatherMainWindow: header bar, view states (loader, welcome, errors, content), the card grid
     compact_window.py     CompactWeather, CompactWeatherWindow: the compact window
     icons.py              weather icon paths (default + Material), background CSS classes, condition names per WMO code
-    gtk_utils.py          AutoRefreshTimer, weak_connect, safe_set_draw_func, Cairo text helpers, create_toast, is_on_screen, show_overview_notification
+    gtk_utils.py          AutoRefreshTimer, weak_connect, safe_set_draw_func, Cairo text helpers, create_toast, is_on_screen
+    notifications.py      show_overview_notification: the overview as a desktop notification
     sections/             current.py (CurrentCondition, the overview pill), hourly.py (HourlyDetails), forecast.py (Forecast)
     cards/                metric.py (CardSquare and the four current-conditions cards), day_night.py, air_quality.py
     drawing/              small Cairo-drawn pieces used by the cards (level_bar, bar, line_graph, rotated_image, day_night, …)
@@ -257,7 +261,7 @@ When unsure, ask:
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
 | A Cairo draw function | `safe_set_draw_func(area, self, "draw")` |
 | A one-line summary of the coming hours | `overview_engine` (`state/overview_engine.py`): read `current()` and `heading`, listen to `overview-changed` |
-| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `core/overview/rules.py` |
+| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `core/overview/hour_tests.py` |
 
 Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`"61n"`). A code must be in `icons_default`, `icons_material`, `bg_css` and `condition` together.
 
@@ -266,10 +270,10 @@ Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`
 The overview is the pill under the current conditions. Its rules are written in plain English in [docs/overview-rules.md](docs/overview-rules.md), the **source of truth**: change that file first, then the code and the numbers to match. If the two disagree, the code is wrong.
 
 - **Wordings** (`core/overview/messages.py`): a map of message key → several wordings (4–5 for common messages, 2 for rare safety ones). Rules only use keys (`ctx.messages.say("rain.start", time=…, chance=…)`, `say_count` for plurals). All wordings of a key say the same thing with the same placeholders.
-- **Rules** (`core/overview/rules.py`, no GTK) look at an `OverviewContext` and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
+- **Rules** (`core/overview/rules.py`, no GTK) look at an `OverviewContext` (`core/overview/context.py`) and each returns an `Insight` or `None`. Every insight has a `valid_until`, and must never be shown after it. Build new rules from what exists: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers "the first hour that …"; subclass `Rule` only when that isn't enough. Register it in `RuleBook.default()`. `RuleBook.run` ignores a rule that fails (debug log only), so one bad rule never breaks the overview.
 - **Planner** (`AnnouncePlanner` in `core/overview/rules.py`, no GTK): decides which insight to show and when the pill opens. The next opening is `OVERVIEW_ANNOUNCE_BASE_MINUTES ÷ (1 + score)` (score = sum of priorities ÷ 100), so a busy forecast opens it more often; each opening shows the insight whose turn it is (priority × time since last shown), so none is thrown away; something turning severe opens at once (once, not on every flicker).
 - **Engine** (`state/overview_engine.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the shown insight stops being true (silent text update) or when the planner's next opening is due. Its memory survives refreshes (a refresh never opens the pill or resets the turns); only a location change or turning the setting off starts over. Each opening draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
-- **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`app.py`) sends it as a notification (`show_overview_notification`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
+- **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`app.py`) sends it as a notification (`show_overview_notification` in `ui/notifications.py`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
 - **Section** (`ui/sections/current.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
 - **Numbers** (thresholds, priorities, open times, republish intervals) live in `config.py` under "Overview", in metric; rules convert imperial data before comparing.
 - Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`. The tests in [tests/test_overview_rules.py](tests/test_overview_rules.py) do this; add a case there when you add or change a rule.
@@ -315,7 +319,7 @@ A class with one method and no state is a function. Avoid catch-all "Manager", "
 - A move updates everything that lists paths: the `meson.build` of each folder involved, `mousam.in`, `po/POTFILES`, `mousam.gresource.xml` (a moved `.ui` keeps its resource path with an `alias`), the tests' imports and this file. Then check that the Flatpak and Snap builds still start: lint and tests don't see resource paths.
 - A temporary alias that keeps old imports working (`old_name = new_name`) is fine for one step. Remove it once the callers are updated.
 - No UI or behaviour change inside a refactor commit. A bug you find along the way gets its own `fix` commit.
-- Still to do, each as its own refactor: split `core/overview/rules.py` along its classes (context, hour tests, rules, planner); move `AutoRefreshTimer` to `state/` and `show_overview_notification` to `ui/notifications.py`; move window and dialog layouts into `ui/templates/`.
+- Still to do, each as its own refactor: move `AutoRefreshTimer` to `state/`; move window and dialog layouts into `ui/templates/`.
 
 ### Composition over inheritance
 

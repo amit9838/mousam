@@ -1,4 +1,4 @@
-"""Tests for the overview rules and planner (src/core/overview/rules.py).
+"""Tests for the overview rules and planner (src/core/overview/).
 
 Plain Python, no GTK: each test builds a forecast by hand, as
 docs/overview-rules.md describes, and checks what the rules say.
@@ -19,20 +19,18 @@ package = types.ModuleType("mousam")
 package.__path__ = [SRC]
 sys.modules.setdefault("mousam", package)
 
-from mousam.core.overview.rules import (  # noqa: E402
+from mousam.core.overview.context import (  # noqa: E402
     AirSeries,
-    AnnouncePlanner,
-    AtLeast,
     Clock,
     DailyOutlook,
     HourlySeries,
-    Insight,
     OverviewContext,
-    RuleBook,
-    SunRule,
     SunTimes,
     Units,
 )
+from mousam.core.overview.hour_tests import AtLeast  # noqa: E402
+from mousam.core.overview.insight import Insight  # noqa: E402
+from mousam.core.overview.rules import AnnouncePlanner, RuleBook, SunRule  # noqa: E402
 
 UTC = timezone.utc
 H = 3600

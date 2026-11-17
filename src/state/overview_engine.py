@@ -47,7 +47,9 @@ from gi.repository import GLib, GObject  # noqa: E402
 from ..config import OVERVIEW_FIRST_DELAY, OVERVIEW_REFRESH_DELAY  # noqa: E402
 from ..services.selected_city import get_timezone_from_selected_city  # noqa: E402
 from ..core.log import get_logger  # noqa: E402
-from ..core.overview.rules import AnnouncePlanner, Insight, OverviewContext, RuleBook  # noqa: E402
+from ..core.overview.context import OverviewContext  # noqa: E402
+from ..core.overview.insight import Insight  # noqa: E402
+from ..core.overview.rules import AnnouncePlanner, RuleBook  # noqa: E402
 from .weather_store import weather_store  # noqa: E402
 from ..services.settings import settings  # noqa: E402
 
