@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 19:17+0530\n"
+"POT-Creation-Date: 2026-11-17 22:01+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -581,12 +581,12 @@ msgstr ""
 msgid "Northwest"
 msgstr ""
 
-#: src/core/overview/context.py:180
+#: src/core/overview/context.py:188
 msgctxt "overview heading"
 msgid "Today"
 msgstr ""
 
-#: src/core/overview/context.py:181
+#: src/core/overview/context.py:189
 msgctxt "overview heading"
 msgid "Tonight"
 msgstr ""
@@ -1550,34 +1550,278 @@ msgstr[1] ""
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:520
 #, python-brace-format
-msgid "Conditions should stay steady until about {time}."
+msgid "Thunderstorms at sunset, around {time}, best watched from indoors."
 msgstr ""
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:522
 #, python-brace-format
-msgid "No big changes expected until about {time}."
-msgstr ""
-
-#. Translators: {time} is a rounded time of day, like "6:30 PM"
-#: src/core/overview/messages.py:524
-#, python-brace-format
-msgid "A quiet spell ahead, with little change until about {time}."
+msgid "A stormy sunset around {time}. Enjoy the view from inside."
 msgstr ""
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:526
 #, python-brace-format
-msgid "Things look settled until about {time}."
+msgid "Snow at sunset, around {time}, for a quiet, wintry evening."
 msgstr ""
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:528
 #, python-brace-format
+msgid "Sunset around {time} comes with falling snow. A peaceful one!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:532
+#, python-brace-format
+msgid ""
+"A rainy sunset around {time}. Watch for a rainbow if the sun peeks through!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:534
+#, python-brace-format
+msgid "Rain at sunset, around {time}, a cozy evening in the making."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:538
+#, python-brace-format
+msgid "A misty sunset around {time}, with soft, hazy light."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:540
+#, python-brace-format
+msgid "Fog at sunset, around {time}, for a soft, hazy view."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:544
+#, python-brace-format
+msgid "A very windy sunset around {time}, best enjoyed from a sheltered spot."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:546
+#, python-brace-format
+msgid "Very strong wind at sunset, around {time}; enjoy it from shelter."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:550
+#, python-brace-format
+msgid "Clear and windy for sunset around {time}, with crisp, fresh air."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:552
+#, python-brace-format
+msgid "A bright, windy sunset around {time}. Hold on to your hat!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:556
+#, python-brace-format
+msgid "A windy sunset around {time}, with a few clouds."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:558
+#, python-brace-format
+msgid "Sunset around {time} looks windy, with clouds about."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:562
+#, python-brace-format
+msgid "A cloudy sunset around {time}, with soft, even light."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:564
+#, python-brace-format
+msgid "Sunset around {time} looks cloudy and calm."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:568
+#, python-brace-format
+msgid "A few clouds at sunset, around {time}, could bring some color."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:570
+#, python-brace-format
+msgid ""
+"Sunset around {time} brings scattered clouds, often the most colorful kind."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:574
+#, python-brace-format
+msgid "Clear skies for sunset around {time}, a great evening to catch it."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:576
+#, python-brace-format
+msgid "Sunset around {time} looks clear and bright. Worth a look!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:580
+#, python-brace-format
+msgid "Thunderstorms at sunrise, around {time}, best watched from indoors."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:582
+#, python-brace-format
+msgid "A stormy sunrise around {time}. Enjoy the view from inside."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:586
+#, python-brace-format
+msgid "Snow at sunrise, around {time}, for a quiet, wintry morning."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:588
+#, python-brace-format
+msgid "Sunrise around {time} comes with falling snow. A peaceful one!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:592
+#, python-brace-format
+msgid ""
+"A rainy sunrise around {time}. Watch for a rainbow if the sun peeks through!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:594
+#, python-brace-format
+msgid "Rain at sunrise, around {time}, a cozy start to the day."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:598
+#, python-brace-format
+msgid "A misty sunrise around {time}, with soft, hazy light."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:600
+#, python-brace-format
+msgid "Fog at sunrise, around {time}, for a soft, hazy view."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:604
+#, python-brace-format
+msgid "A very windy sunrise around {time}, best enjoyed from a sheltered spot."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:606
+#, python-brace-format
+msgid "Very strong wind at sunrise, around {time}; enjoy it from shelter."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:610
+#, python-brace-format
+msgid "Clear and windy for sunrise around {time}, with crisp, fresh air."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:612
+#, python-brace-format
+msgid "A bright, windy sunrise around {time}. Hold on to your hat!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:616
+#, python-brace-format
+msgid "A windy sunrise around {time}, with a few clouds."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:618
+#, python-brace-format
+msgid "Sunrise around {time} looks windy, with clouds about."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:622
+#, python-brace-format
+msgid "A cloudy sunrise around {time}, with soft, even light."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:624
+#, python-brace-format
+msgid "Sunrise around {time} looks cloudy and calm."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:628
+#, python-brace-format
+msgid "A few clouds at sunrise, around {time}, could bring some color."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:630
+#, python-brace-format
+msgid ""
+"Sunrise around {time} brings scattered clouds, often the most colorful kind."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:634
+#, python-brace-format
+msgid "Clear skies for sunrise around {time}, a great morning to catch it."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:636
+#, python-brace-format
+msgid "Sunrise around {time} looks clear and bright. Worth a look!"
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:641
+#, python-brace-format
+msgid "Conditions should stay steady until about {time}."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:643
+#, python-brace-format
+msgid "No big changes expected until about {time}."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:645
+#, python-brace-format
+msgid "A quiet spell ahead, with little change until about {time}."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:647
+#, python-brace-format
+msgid "Things look settled until about {time}."
+msgstr ""
+
+#. Translators: {time} is a rounded time of day, like "6:30 PM"
+#: src/core/overview/messages.py:649
+#, python-brace-format
 msgid "The weather should hold steady until about {time}."
 msgstr ""
 
-#: src/core/overview/rules.py:425
+#: src/core/overview/rules.py:428
 msgctxt "overview heading"
 msgid "Tomorrow"
 msgstr ""
