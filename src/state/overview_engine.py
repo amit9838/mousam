@@ -160,15 +160,16 @@ class OverviewEngine(GObject.Object):
         insights, window_heading = self._insights(now)
         showing = self.insight.kind if self.current() is not None else None
         decision = decide(insights, self._memory, showing, now)
-        if logger.isEnabledFor(logging.DEBUG):
-            self._log_decision(insights, decision, now)
 
         insight = decision.insight
         if insight is not None and decision.reason is not None:
-            # A fresh wording for the opening (same insight, same data)
+            # A fresh wording for the opening (same insight, same data); the
+            # rules already logged what they combined on the first run
             self._seed = random.getrandbits(32)
-            fresh, window_heading = self._insights(now)
+            fresh, window_heading = self._insights(now, log_steps=False)
             insight = next((i for i in fresh if i.kind == insight.kind), insight)
+        if logger.isEnabledFor(logging.DEBUG):
+            self._log_decision(insights, decision, insight, now)
 
         heading = (insight.heading or window_heading) if insight is not None else None
         self._set(insight, heading, decision.reason, decision.topics)
@@ -176,9 +177,11 @@ class OverviewEngine(GObject.Object):
             self._run_in(decision.wake_at - now)
         return GLib.SOURCE_REMOVE
 
-    def _log_decision(self, insights: Sequence[Insight], decision: Decision, now: float) -> None:
+    def _log_decision(self, insights: Sequence[Insight], decision: Decision,
+                      shown: Optional[Insight], now: float) -> None:
         """Debug log: every insight with its level and what the memory knows
-        about it (after this decision), then what is shown and why."""
+        about it (after this decision), then what is shown (`shown`: in the
+        wording on screen) and why."""
         memory = self._memory
         pending = [i for i in insights if i.topic in decision.topics]
         logger.debug(f"Overview: {len(insights)} insights, {len(pending)} taking turns")
@@ -201,12 +204,12 @@ class OverviewEngine(GObject.Object):
             return
         what = f"opens ({decision.reason})" if decision.reason else "silent update"
         wake = f"runs again in {int(decision.wake_at - now)}s" if decision.wake_at else "waits for data"
-        logger.debug(f"Overview {what}: {decision.insight.kind}: {decision.insight.message} ({wake})")
+        logger.debug(f"Overview {what}: {shown.kind}: {shown.message} ({wake})")
         for waiting in decision.waiting:
             logger.debug(f"Overview next turn: {waiting.kind} "
                          f"({'news' if memory.is_new(waiting) else 'reminder'}, after the gap)")
 
-    def _insights(self, now: float) -> Tuple[List[Insight], Optional[str]]:
+    def _insights(self, now: float, log_steps: bool = True) -> Tuple[List[Insight], Optional[str]]:
         """(every insight true now, most important first; the window's
         heading), from the latest data. Ignore on fail: ([], None)."""
         tz = _city_tz()
@@ -221,7 +224,7 @@ class OverviewEngine(GObject.Object):
                 use_24h=settings.is_using_24h_clock,
                 seed=self._seed,
             )
-            return RuleBook.default().run(ctx), ctx.window.heading
+            return RuleBook.default().run(ctx, log_steps), ctx.window.heading
         except Exception as e:  # noqa: BLE001 - ignore on fail: no overview this time
             logger.debug(f"Overview skipped: {e!r}")
             return [], None

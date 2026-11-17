@@ -543,10 +543,17 @@ def not_together(a: Insight, b: Insight) -> Optional[str]:
     return None
 
 
-def combine(insights: Sequence[Insight], ctx: OverviewContext) -> List[Insight]:
+def combine(insights: Sequence[Insight], ctx: OverviewContext,
+            log_steps: bool = True) -> List[Insight]:
     """`insights` with the ones that happen together folded (FOLDS) and
-    combined (COMBINATIONS) into one; everything else as it is."""
+    combined (COMBINATIONS) into one; everything else as it is. Each step is
+    logged (debug) unless `log_steps` is off."""
     result = list(insights)
+
+    def note(message: str) -> None:
+        if log_steps:
+            logger.debug(message)
+
     combined_ones = []  # each insight is combined once: these are out of the running
 
     def find(name: str) -> Optional[Insight]:
@@ -558,9 +565,9 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext) -> List[Insight]:
             continue
         why = not_together(kept, folded)
         if why:
-            logger.debug(f"Overview not folded: {folded.kind} into {kept.kind}: {why}")
+            note(f"Overview not folded: {folded.kind} into {kept.kind}: {why}")
             continue
-        logger.debug(f"Overview folded: {folded.kind} ({folded.key}) into {kept.kind}")
+        note(f"Overview folded: {folded.kind} ({folded.key}) into {kept.kind}")
         result.remove(folded)
         result[result.index(kept)] = replace(
             kept, parts=kept.parts + folded.parts, covers=kept.covers + folded.covers
@@ -572,10 +579,10 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext) -> List[Insight]:
             continue
         why = not_together(first, second)
         if why:
-            logger.debug(f"Overview not combined: {first.kind} + {second.kind}: {why}")
+            note(f"Overview not combined: {first.kind} + {second.kind}: {why}")
             continue
         combined = _combined(first, second, combination.key, ctx)
-        logger.debug(f"Overview combined: {first.kind} + {second.kind} -> {combined.key}")
+        note(f"Overview combined: {first.kind} + {second.kind} -> {combined.key}")
         result[result.index(first)] = combined
         result.remove(second)
         combined_ones.append(combined)
@@ -667,12 +674,15 @@ class RuleBook:
             CalmRule(),
         ])
 
-    def run(self, ctx: OverviewContext) -> List[Insight]:
+    def run(self, ctx: OverviewContext, log_steps: bool = True) -> List[Insight]:
         """Every insight that applies and is still true, most important first.
 
         Ignore on fail: a rule that fails, on odd or missing data, simply
         offers nothing. It is logged (debug only) and the other rules still
         run, so one rule can never break the overview.
+
+        `log_steps` off: the folds and pairs aren't logged, for the engine's
+        second run that only draws a fresh wording.
         """
         insights = []
         for rule in self.rules:
@@ -685,7 +695,7 @@ class RuleBook:
                 insights.append(insight)
         insights.sort(key=lambda insight: insight.priority, reverse=True)
         try:
-            return combine(insights, ctx)
+            return combine(insights, ctx, log_steps)
         except Exception as e:  # noqa: BLE001 - ignore on fail: each insight on its own
             logger.debug(f"Overview combining skipped: {e!r}")
             return insights

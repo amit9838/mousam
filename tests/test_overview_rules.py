@@ -326,6 +326,15 @@ class TestRuleBook(unittest.TestCase):
         self.assertNotIn("wind", found)
         self.assertEqual(found["storm"].key, "storm_wind.later")
 
+    def test_combining_is_logged_only_when_asked(self):
+        # The engine's second run, for a fresh wording, doesn't log it again
+        storm_and_rain = context(codes={2: 95}, precip_probability={2: 70})
+        with self.assertLogs("mousam.overview", level="DEBUG") as logs:
+            RuleBook.default().run(storm_and_rain)
+        self.assertTrue(any("folded" in line for line in logs.output))
+        with self.assertNoLogs("mousam.overview", level="DEBUG"):
+            RuleBook.default().run(storm_and_rain, log_steps=False)
+
     def test_unknown_series_fails_at_once(self):
         with self.assertRaises(ValueError):
             AtLeast("wind_speed", 40)
