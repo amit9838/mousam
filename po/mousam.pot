@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 17:17+0530\n"
+"POT-Creation-Date: 2026-11-17 18:46+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,7 +158,9 @@ msgid "Auto-refresh interval in minutes"
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
-msgid "Interval for automatic weather refresh. 0 means disabled."
+msgid ""
+"Interval for automatic weather refresh. 0 means disabled, which is not "
+"allowed while the overview or notifications are on."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
@@ -1654,7 +1656,7 @@ msgstr ""
 msgid "Feels like {0}"
 msgstr ""
 
-#: src/ui/sections/current.py:213 src/ui/dialogs/preferences.py:120
+#: src/ui/sections/current.py:213 src/ui/dialogs/preferences.py:118
 msgid "Show Overview"
 msgstr ""
 
@@ -1993,7 +1995,7 @@ msgid "Weather Data"
 msgstr ""
 
 #: src/ui/dialogs/about.py:52 src/ui/dialogs/about.py:74
-#: src/ui/dialogs/preferences.py:107
+#: src/ui/dialogs/preferences.py:105
 msgid "Weather Icons"
 msgstr ""
 
@@ -2122,47 +2124,47 @@ msgstr ""
 msgid "AM/PM"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:84
+#: src/ui/dialogs/preferences.py:82
 msgid "Run in Background"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:85
+#: src/ui/dialogs/preferences.py:83
 msgid "Keep Mousam running when its window is closed"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:94
+#: src/ui/dialogs/preferences.py:92
 msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:97
+#: src/ui/dialogs/preferences.py:95
 msgid "Dynamic Background"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:98
+#: src/ui/dialogs/preferences.py:96
 msgid "Change the background to match the current weather"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:110
+#: src/ui/dialogs/preferences.py:108
 msgid "Default"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:110
+#: src/ui/dialogs/preferences.py:108
 msgid "Material"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:117
+#: src/ui/dialogs/preferences.py:115
 msgid "Weather Overview"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:121
+#: src/ui/dialogs/preferences.py:119
 msgid "A short summary of the coming hours"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:129
+#: src/ui/dialogs/preferences.py:127
 msgid "Notifications"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:130
+#: src/ui/dialogs/preferences.py:128
 msgid ""
 "Send the overview as a notification while the window is minimized or in "
 "compact mode"
@@ -2212,37 +2214,41 @@ msgstr ""
 msgid "Reset…"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:229
+#: src/ui/dialogs/preferences.py:227
 msgid "Auto Refresh"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:328
+#: src/ui/dialogs/preferences.py:251
+msgid "Needed by the overview and notifications"
+msgstr ""
+
+#: src/ui/dialogs/preferences.py:341
 msgid "Logs cleared"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:330
+#: src/ui/dialogs/preferences.py:343
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:340
+#: src/ui/dialogs/preferences.py:353
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:342
+#: src/ui/dialogs/preferences.py:355
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:346
+#: src/ui/dialogs/preferences.py:359
 msgid "Cancel"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:347
+#: src/ui/dialogs/preferences.py:360
 msgid "Reset"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:371
+#: src/ui/dialogs/preferences.py:385
 msgid "Preferences have been reset"
 msgstr ""
 
