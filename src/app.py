@@ -128,8 +128,8 @@ class WeatherApplication(Adw.Application):
         insight = engine.current()
         if not announce or insight is None or not settings.show_notifications:
             return
-        # Only news (medium or above) and reminders of extreme ones
-        if not should_notify(engine.reason, insight.level):
+        # Only news (medium or above, and tomorrow) and reminders of extreme ones
+        if not should_notify(engine.reason, insight):
             return
         if is_on_screen(self.main_window):
             return

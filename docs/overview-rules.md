@@ -212,8 +212,9 @@ true, the most important remaining one takes its place, also without opening.
 - While the window is minimized, hidden by compact mode, or otherwise out of
   sight, it is sent as a desktop notification instead (the city as its
   title, the sentence as its body; clicking it opens the main window). Only
-  news of medium or above is sent, plus reminders of extreme ones (storms).
-  Low and calm are never sent.
+  news of medium or above is sent, plus news about tomorrow (low, but worth
+  knowing before the evening is over) and reminders of extreme ones
+  (storms). Other low insights and calm are never sent.
 
 **One notification per topic.** Each topic has its own notification, so
 air quality and rain can be there side by side. A new message replaces only
@@ -382,7 +383,8 @@ From most to least important. "An hour" means an hour inside the window.
 ### 11. Tomorrow
 
 - **Priority** 30 · **Level** low · **Icon** showers, or none ·
-  **Heading** Tomorrow · **Topic** tomorrow
+  **Heading** Tomorrow · **Topic** tomorrow · **Notified** as news, the one
+  low insight that is
 - **Applies** only from **6 PM** local time, until midnight.
 - **Says**, checking in this order:
   - tomorrow's chance of rain is **50%** or more:

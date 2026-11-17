@@ -585,13 +585,20 @@ class TestAnnounce(unittest.TestCase):
         self.assertEqual(self.decide([folded], NOW).topics, {"storm", "rain"})
 
     def test_should_notify(self):
-        self.assertTrue(should_notify(NEWS, "medium"))
-        self.assertTrue(should_notify(NEWS, "extreme"))
-        self.assertFalse(should_notify(NEWS, "low"))
-        self.assertFalse(should_notify(NEWS, "calm"))
-        self.assertTrue(should_notify(REMINDER, "extreme"))
-        self.assertFalse(should_notify(REMINDER, "high"))
-        self.assertFalse(should_notify(None, "extreme"))
+        self.assertTrue(should_notify(NEWS, self.rain))  # medium
+        self.assertTrue(should_notify(NEWS, self.storm))
+        self.assertFalse(should_notify(NEWS, self.sun))  # low
+        self.assertFalse(should_notify(NEWS, self.calm))
+        self.assertTrue(should_notify(REMINDER, self.storm))
+        self.assertFalse(should_notify(REMINDER, self.wind))  # high
+        self.assertFalse(should_notify(None, self.storm))
+
+    def test_tomorrow_is_notified_as_news_only(self):
+        tomorrow = self.insight("tomorrow", "low")
+        self.assertTrue(should_notify(NEWS, tomorrow))
+        self.assertFalse(should_notify(REMINDER, tomorrow))
+        self.assertEqual(self.opened([tomorrow, self.calm], NOW), ("tomorrow", NEWS))
+        self.assertEqual(self.opened([tomorrow, self.calm], NOW + 3 * H, "tomorrow"), ("tomorrow", None))
 
 
 if __name__ == "__main__":

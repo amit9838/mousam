@@ -143,6 +143,8 @@ OVERVIEW_REMIND_MINUTES = {"extreme": 30, "high": 60, "medium": 120}
 OVERVIEW_REMIND_BACKOFF = 2
 OVERVIEW_REMIND_MAX_MINUTES = 240
 OVERVIEW_FORGET_MINUTES = 240  # an insight not true for this long is forgotten
+# Topics whose news is sent as a notification even below medium
+OVERVIEW_NOTIFY_TOPICS = {"tomorrow"}
 OVERVIEW_COMBINE_MINUTES = 60  # two things this close become one sentence (rules.py)
 
 # Overview rules (core/overview/rules.py). All thresholds are metric; rules

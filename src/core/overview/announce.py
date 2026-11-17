@@ -24,6 +24,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 from ...config import (
     OVERVIEW_FORGET_MINUTES,
     OVERVIEW_MIN_GAP_MINUTES,
+    OVERVIEW_NOTIFY_TOPICS,
     OVERVIEW_REMIND_BACKOFF,
     OVERVIEW_REMIND_MAX_MINUTES,
     OVERVIEW_REMIND_MINUTES,
@@ -156,14 +157,15 @@ def decide(insights: Sequence[Insight], memory: AnnounceMemory, showing: Optiona
     return Decision(chosen, reason, _wake_at(pending, memory, now), topics, waiting)
 
 
-def should_notify(reason: Optional[str], level: str) -> bool:
+def should_notify(reason: Optional[str], insight: Insight) -> bool:
     """Whether an opening is also sent as a notification (while the window
-    can't be seen): news of medium or above, and reminders of extreme ones.
-    Low and calm never are."""
+    can't be seen): news of medium or above or on one of
+    OVERVIEW_NOTIFY_TOPICS (tomorrow), and reminders of extreme ones. Other
+    low insights and calm never are."""
     if reason == NEWS:
-        return LEVEL_RANK[level] >= LEVEL_RANK["medium"]
+        return insight.rank >= LEVEL_RANK["medium"] or insight.topic in OVERVIEW_NOTIFY_TOPICS
     if reason == REMINDER:
-        return level == "extreme"
+        return insight.level == "extreme"
     return False
 
 
