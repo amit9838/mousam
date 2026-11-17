@@ -26,6 +26,7 @@ from .config import APP_ID
 from .core.log import get_logger, log_manager
 
 logger = get_logger("main")
+overview_logger = get_logger("overview")
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -116,9 +117,6 @@ class WeatherApplication(Adw.Application):
         """Keep the notifications right, and send the announcement as one when
         the main window can't be seen (minimized, or compact mode); otherwise
         its overview shows it."""
-        from .core.overview.announce import should_notify
-        from .ui.gtk_utils import is_on_screen
-
         notifications = self.overview_notifications
         if notifications is None:
             return
@@ -126,14 +124,31 @@ class WeatherApplication(Adw.Application):
         notifications.withdraw_gone(engine.topics)
 
         insight = engine.current()
-        if not announce or insight is None or not settings.show_notifications:
+        if not announce or insight is None:
             return
-        # Only news (medium or above, and tomorrow) and reminders of extreme ones
-        if not should_notify(engine.reason, insight):
-            return
+        channel = self._announce(insight, engine.reason)
+        overview_logger.debug(
+            f"Overview channel: {insight.kind} ({engine.reason}, {insight.level}) -> {channel}"
+        )
+
+    def _announce(self, insight, reason) -> str:
+        """Send `insight` where it goes, one place at a time, and say where:
+        the window's overview, a notification, or nowhere and why."""
+        from .core.overview.announce import should_notify
+        from .ui.gtk_utils import is_on_screen
+        from .ui.notifications import notification_id
+
         if is_on_screen(self.main_window):
-            return
-        notifications.send(insight)
+            if settings.show_overview:
+                return "window"
+            return "nowhere (window in view, overview off)"
+        if not settings.show_notifications:
+            return "nowhere (window out of sight, notifications off)"
+        # Only news (medium or above, and tomorrow) and reminders of extreme ones
+        if not should_notify(reason, insight):
+            return f"nowhere (window out of sight, {reason} of a {insight.level} insight isn't notified)"
+        self.overview_notifications.send(insight)
+        return f"notification {notification_id(insight.topic)}"
 
     def _on_main_window_seen(self, window, _pspec) -> None:
         from .ui.gtk_utils import is_on_screen
