@@ -12,8 +12,6 @@ new to say, and only now and then to remind of something it said:
   before (a reminder that waits longer each time), or never (low and calm,
   said once). It returns a Decision: what to show, whether it opens, and
   when to run again.
-- group(): several urgent insights at about the same time open together,
-  each with its own sentence, so one never hides another.
 - should_notify(): which openings are also worth a notification.
 
 No GTK, so it is tested on made-up insights (tests/test_overview_rules.py).
@@ -25,9 +23,6 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from ...config import (
     OVERVIEW_FORGET_MINUTES,
-    OVERVIEW_GROUP_MAX,
-    OVERVIEW_GROUP_MIN_LEVEL,
-    OVERVIEW_GROUP_WINDOW_MINUTES,
     OVERVIEW_MIN_GAP_MINUTES,
     OVERVIEW_REMIND_BACKOFF,
     OVERVIEW_REMIND_MAX_MINUTES,
@@ -106,11 +101,10 @@ class Decision:
     """What decide() made of the insights true now."""
 
     insight: Optional[Insight]  # what the overview shows; None: nothing
-    members: Tuple[Insight, ...]  # everything shown (a group), `insight` first
     reason: Optional[str]  # NEWS or REMINDER when it opens; None: a silent update
     wake_at: Optional[float]  # when to run again; None: only after the next refresh
     topics: frozenset  # the topics of the insights taking turns now
-    left_out: Tuple[Tuple[Insight, str], ...] = ()  # did not join the group, and why
+    waiting: Tuple[Insight, ...] = ()  # due too, but not shown now: the next turns
 
 
 def worth_saying(insights: Sequence[Insight]) -> List[Insight]:
@@ -123,71 +117,34 @@ def importance(insight: Insight) -> Tuple[int, int]:
     return (insight.rank, insight.priority)
 
 
-def decide(insights: Sequence[Insight], memory: AnnounceMemory, showing: Sequence[str],
+def decide(insights: Sequence[Insight], memory: AnnounceMemory, showing: Optional[str],
            now: float) -> Decision:
     """What to show for the insights true now (most important first).
-    `showing` are the kinds on screen, the first one leading, so a silent
-    update keeps them. Updates `memory` when the overview opens."""
+    `showing` is the kind on screen, so a silent update keeps it. Updates
+    `memory` when the overview opens."""
     memory.note_seen(insights, now)
     if not insights:
-        return Decision(None, (), None, None, frozenset())
+        return Decision(None, None, None, frozenset())
 
     pending = worth_saying(insights)
     gap_over = now >= memory.last_opening + OVERVIEW_MIN_GAP_MINUTES * MINUTE
     ready = [i for i in pending if _is_due(memory, i, now)]
 
-    left_out: Tuple[Tuple[Insight, str], ...] = ()
     if ready and gap_over:
-        # News before reminders, then the most important
-        lead = max(ready, key=lambda i: (memory.is_new(i),) + importance(i))
-        members, left_out = group(lead, pending, now)
-        reason = NEWS if any(memory.is_new(m) for m in members) else REMINDER
-        for member in members:
-            memory.note_said(member, now)
+        # News before reminders, then the most important; the others that
+        # are due get the next turns, one opening each
+        chosen = max(ready, key=lambda i: (memory.is_new(i),) + importance(i))
+        reason = NEWS if memory.is_new(chosen) else REMINDER
+        memory.note_said(chosen, now)
         memory.last_opening = now
     else:
-        members = _still_showing(insights, showing) or (max(pending, key=importance),)
+        same = next((i for i in insights if i.kind == showing), None)
+        chosen = same or max(pending, key=importance)
         reason = None
 
+    waiting = tuple(i for i in ready if i is not chosen)
     topics = frozenset(i.topic for i in pending)
-    return Decision(members[0], members, reason, _wake_at(pending, memory, now), topics, left_out)
-
-
-def group(lead: Insight, pending: Sequence[Insight], now: float
-          ) -> Tuple[Tuple[Insight, ...], Tuple[Tuple[Insight, str], ...]]:
-    """(the group `lead` opens, lead first; the others, each with why it
-    didn't join). Up to OVERVIEW_GROUP_MAX insights of medium or above that
-    happen within OVERVIEW_GROUP_WINDOW_MINUTES of the lead, one per topic,
-    the most urgent first. The ones left out keep their own turn."""
-    min_rank = LEVEL_RANK[OVERVIEW_GROUP_MIN_LEVEL]
-    if lead.rank < min_rank:
-        return (lead,), ()
-    members = [lead]
-    left_out = []
-    for other in sorted(pending, key=importance, reverse=True):
-        if other is lead:
-            continue
-        apart_minutes = abs(_when(other, now) - _when(lead, now)) / MINUTE
-        if other.rank < min_rank:
-            why = f"below {OVERVIEW_GROUP_MIN_LEVEL}"
-        elif other.kind == "tomorrow":
-            why = "about tomorrow"
-        elif apart_minutes > OVERVIEW_GROUP_WINDOW_MINUTES:
-            why = f"{apart_minutes:.0f} min from the lead"
-        elif any(member.topic == other.topic for member in members):
-            why = f"same topic as {next(m.kind for m in members if m.topic == other.topic)}"
-        elif len(members) >= OVERVIEW_GROUP_MAX:
-            why = f"already {OVERVIEW_GROUP_MAX}"
-        else:
-            members.append(other)
-            continue
-        left_out.append((other, why))
-    return tuple(members), tuple(left_out)
-
-
-def _when(insight: Insight, now: float) -> float:
-    """When it happens: the hour or event it is about, or now."""
-    return insight.about if insight.about is not None else now
+    return Decision(chosen, reason, _wake_at(pending, memory, now), topics, waiting)
 
 
 def should_notify(reason: Optional[str], level: str) -> bool:
@@ -204,15 +161,6 @@ def should_notify(reason: Optional[str], level: str) -> bool:
 def _is_due(memory: AnnounceMemory, insight: Insight, now: float) -> bool:
     due = memory.due_at(insight)
     return due is not None and due <= now
-
-
-def _still_showing(insights: Sequence[Insight], showing: Sequence[str]) -> Tuple[Insight, ...]:
-    """The insights on screen that are still true, in the same order; none
-    when the leading one has stopped being true."""
-    by_kind = {i.kind: i for i in insights}
-    if not showing or showing[0] not in by_kind:
-        return ()
-    return tuple(by_kind[kind] for kind in showing if kind in by_kind)
 
 
 def _wake_at(pending: Sequence[Insight], memory: AnnounceMemory, now: float) -> float:

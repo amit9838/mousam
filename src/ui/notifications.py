@@ -3,12 +3,11 @@ can't be seen (see "Where it is shown" in docs/overview-rules.md).
 
 Each topic has its own notification (ID "overview-<topic>"), so air quality
 and rain can be there side by side, and a new message replaces only the one
-on the same topic. A group is one notification, under its lead's topic.
-OverviewNotifications remembers what it has sent and withdraws a
-notification as soon as it is no longer right.
+on the same topic. OverviewNotifications remembers what it has sent and
+withdraws a notification as soon as it is no longer right.
 """
 
-from typing import Dict, Optional, Sequence, Tuple
+from typing import Dict, Tuple
 
 import gi
 
@@ -46,48 +45,39 @@ class OverviewNotifications:
         # Older versions sent every message under this one ID
         app.withdraw_notification("overview")
 
-    def send(self, members: Sequence[Insight]) -> None:
-        """Send `members` (a group, the lead first) under the lead's topic.
-        Their own topics' notifications are withdrawn: the group covers them."""
-        topics = tuple(m.topic for m in members)
-        sent_id = self._send(members)
-        for other_id, covered in list(self._sent.items()):
-            if other_id != sent_id and covered[0] in topics:
-                self._withdraw(other_id, f"in the group of {sent_id}")
-        self._sent[sent_id] = topics
+    def send(self, insight: Insight) -> None:
+        """Send `insight` under its topic. Notifications for the topics it
+        covers are withdrawn: it says the same."""
+        covered = (insight.topic,)
+        sent_id = self._send(insight)
+        for other_id, other_covered in list(self._sent.items()):
+            if other_id != sent_id and other_covered[0] in covered:
+                self._withdraw(other_id, f"covered by {sent_id}")
+        self._sent[sent_id] = covered
 
-    def withdraw_gone(self, topics: frozenset, members: Sequence[Insight]) -> None:
-        """Keep the notifications right for the topics true now (`topics`)
-        and the group on screen (`members`, the lead first)."""
+    def withdraw_gone(self, topics: frozenset) -> None:
+        """Withdraw the notifications whose message is no longer true: one of
+        the topics it covers isn't among those true now (`topics`)."""
         for sent_id, covered in list(self._sent.items()):
-            if covered[0] not in topics:
-                self._withdraw(sent_id, f"{covered[0]} is no longer true")
-            elif not set(covered) <= topics and members and members[0].topic == covered[0]:
-                # A member stopped being true: the same notification without it,
-                # quietly, since nothing new happened
-                self._send(members, Gio.NotificationPriority.LOW)
-                self._sent[sent_id] = tuple(m.topic for m in members)
-                logger.info(f"Notification {sent_id} updated: {' + '.join(m.kind for m in members)}")
+            if not set(covered) <= topics:
+                gone = ", ".join(t for t in covered if t not in topics)
+                self._withdraw(sent_id, f"{gone} no longer true")
 
     def withdraw_all(self, why: str) -> None:
         for sent_id in list(self._sent):
             self._withdraw(sent_id, why)
 
-    def _send(self, members: Sequence[Insight],
-              priority: Optional[Gio.NotificationPriority] = None) -> str:
-        """The city as the title, each sentence on its own line, the lead
-        first (its icon and priority); clicking it opens the main window."""
-        lead = members[0]
+    def _send(self, insight: Insight) -> str:
+        """The city as the title, the sentence as the body; clicking it opens
+        the main window."""
         notification = Gio.Notification.new(get_selected_city_name())
-        notification.set_body("\n".join(m.message for m in members))
-        notification.set_icon(Gio.ThemedIcon.new(lead.icon or "dialog-information-symbolic"))
-        if priority is None:
-            priority = NOTIFICATION_PRIORITY.get(lead.level, Gio.NotificationPriority.NORMAL)
-        notification.set_priority(priority)
+        notification.set_body(insight.message)
+        notification.set_icon(Gio.ThemedIcon.new(insight.icon or "dialog-information-symbolic"))
+        notification.set_priority(NOTIFICATION_PRIORITY.get(insight.level, Gio.NotificationPriority.NORMAL))
         notification.set_default_action("app.show-normal")
-        sent_id = notification_id(lead.topic)
+        sent_id = notification_id(insight.topic)
         self._app.send_notification(sent_id, notification)
-        logger.info(f"Notification {sent_id} sent: {' + '.join(m.kind for m in members)}")
+        logger.info(f"Notification {sent_id} sent: {insight.kind} ({insight.key})")
         return sent_id
 
     def _withdraw(self, sent_id: str, why: str) -> None:

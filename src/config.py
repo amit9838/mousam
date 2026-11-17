@@ -143,11 +143,6 @@ OVERVIEW_REMIND_MINUTES = {"extreme": 30, "high": 60, "medium": 120}
 OVERVIEW_REMIND_BACKOFF = 2
 OVERVIEW_REMIND_MAX_MINUTES = 240
 OVERVIEW_FORGET_MINUTES = 240  # an insight not true for this long is forgotten
-# Several urgent things at about the same time open together, as a group
-OVERVIEW_GROUP_MAX = 3  # members in a group, the lead included
-OVERVIEW_GROUP_WINDOW_MINUTES = 60  # how far from the lead a member may be
-OVERVIEW_GROUP_MIN_LEVEL = "medium"  # lower levels never group
-OVERVIEW_GROUP_STEP_SECONDS = 10  # how long each member after the lead stays open
 
 # Overview rules (core/overview/rules.py). All thresholds are metric; rules
 # convert imperial data before comparing.

@@ -123,7 +123,7 @@ class WeatherApplication(Adw.Application):
         if notifications is None:
             return
         # Withdraw what is no longer true (an expired topic, another city)
-        notifications.withdraw_gone(engine.topics, engine.members())
+        notifications.withdraw_gone(engine.topics)
 
         insight = engine.current()
         if not announce or insight is None or not settings.show_notifications:
@@ -133,7 +133,7 @@ class WeatherApplication(Adw.Application):
             return
         if is_on_screen(self.main_window):
             return
-        notifications.send(engine.members())
+        notifications.send(insight)
 
     def _on_main_window_seen(self, window, _pspec) -> None:
         from .ui.gtk_utils import is_on_screen

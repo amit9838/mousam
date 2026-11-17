@@ -1,7 +1,6 @@
 """Tests for the overview's notifications (src/ui/notifications.py).
 
-One notification per topic, a group under its lead's topic, and each one
-withdrawn once it is no longer right. Needs PyGObject (Gio only: no display);
+One notification per topic, each one withdrawn once it is no longer right. Needs PyGObject (Gio only: no display);
 the app is a fake that records what is sent and withdrawn.
 
 Run: python3 tests/test_notifications.py (also run by `meson test`).
@@ -90,51 +89,38 @@ class TestNotifications(unittest.TestCase):
         self.rain = insight("precipitation", "rain", "medium")
         self.heavy = insight("heavy_precipitation", "rain")
         self.storm = insight("storm", "storm", "extreme")
-        self.wind = insight("wind", "wind")
 
     def test_the_old_single_notification_is_withdrawn(self):
         self.assertNotIn("overview", self.app.tray)
 
     def test_one_per_topic(self):
-        self.notes.send([self.air])
-        self.notes.send([self.rain])
+        self.notes.send(self.air)
+        self.notes.send(self.rain)
         self.assertEqual(set(self.app.tray), {"overview-air", "overview-rain"})
 
     def test_same_topic_replaces(self):
-        self.notes.send([self.rain])
-        self.notes.send([self.heavy])
+        self.notes.send(self.rain)
+        self.notes.send(self.heavy)
         self.assertEqual(set(self.app.tray), {"overview-rain"})
-        self.assertIn("heavy_precipitation", self.app.tray["overview-rain"].body)
+        self.assertEqual(self.app.tray["overview-rain"].body, "heavy_precipitation message")
 
-    def test_a_group_is_one_notification_and_covers_its_members(self):
-        self.notes.send([self.wind])
-        self.notes.send([self.storm, self.wind, self.rain])
-        self.assertEqual(set(self.app.tray), {"overview-storm"})
-        self.assertEqual(self.app.tray["overview-storm"].body.count("\n"), 2)
+    def test_priority_follows_the_level(self):
+        self.notes.send(self.storm)
+        self.assertEqual(self.app.tray["overview-storm"].priority, Gio.NotificationPriority.HIGH)
 
     def test_withdrawn_when_its_topic_is_gone(self):
-        self.notes.send([self.air])
-        self.notes.send([self.rain])
-        self.notes.withdraw_gone(frozenset({"rain"}), [self.rain])
+        self.notes.send(self.air)
+        self.notes.send(self.rain)
+        self.notes.withdraw_gone(frozenset({"rain"}))
         self.assertEqual(set(self.app.tray), {"overview-rain"})
-        self.notes.withdraw_gone(frozenset(), [])  # another city: nothing true yet
+        self.notes.withdraw_gone(frozenset())  # another city: nothing true yet
         self.assertEqual(self.app.tray, {})
-
-    def test_a_group_that_shrinks_is_resent_without_the_member(self):
-        self.notes.send([self.storm, self.wind])
-        self.notes.withdraw_gone(frozenset({"storm"}), [self.storm])
-        self.assertEqual(self.app.tray["overview-storm"].body, "storm message")
-        # Quietly: nothing new happened
-        self.assertEqual(self.app.tray["overview-storm"].priority, Gio.NotificationPriority.LOW)
-        self.notes.withdraw_gone(frozenset({"storm"}), [self.storm])  # no change: not resent
-        self.assertEqual(set(self.app.tray), {"overview-storm"})
 
     def test_withdraw_all(self):
-        self.notes.send([self.air])
-        self.notes.send([self.storm])
+        self.notes.send(self.air)
+        self.notes.send(self.storm)
         self.notes.withdraw_all("the window is in view")
         self.assertEqual(self.app.tray, {})
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -29,14 +29,12 @@ The engine adds the timing around them:
 
 Publish / subscribe: the engine emits "overview-changed" with `announce`
 (open the overview, or just update its text). Widgets connect to it and read
-`overview_engine.current()` (the lead), `members()` (the whole group),
-`heading`, `reason` (why it opened) and `topics` (what is true now, for the
-notifications).
+`overview_engine.current()`, `heading`, `reason` (why it opened) and
+`topics` (what is true now, for the notifications).
 """
 
 import logging
 import random
-from datetime import datetime
 import time
 from typing import List, Optional, Sequence, Tuple
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
@@ -70,8 +68,7 @@ class OverviewEngine(GObject.Object):
 
     def __init__(self):
         super().__init__()
-        self.insight: Optional[Insight] = None  # the lead of what is shown
-        self._members: Tuple[Insight, ...] = ()  # the group, the lead first
+        self.insight: Optional[Insight] = None
         self.heading: Optional[str] = None
         self.reason: Optional[str] = None  # why it last opened: "news", "reminder", or None
         self.topics: frozenset = frozenset()  # the topics of the insights true now
@@ -94,14 +91,6 @@ class OverviewEngine(GObject.Object):
             return None
         return self.insight
 
-    def members(self) -> Tuple[Insight, ...]:
-        """Everything to show, the lead first: several urgent things at about
-        the same time open as a group. Empty when there is nothing."""
-        if self.current() is None:
-            return ()
-        now = time.time()
-        return tuple(m for m in self._members if m.valid_until > now)
-
     @staticmethod
     def enabled() -> bool:
         """Whether the overview has somewhere to go: the overview or the
@@ -110,9 +99,9 @@ class OverviewEngine(GObject.Object):
 
     def note_shown(self) -> None:
         """The user opened the overview: that counts as announcing it."""
-        now = time.time()
-        for member in self.members():
-            self._memory.note_said(member, now)
+        insight = self.current()
+        if insight is not None:
+            self._memory.note_said(insight, time.time())
 
     # ---------- Scheduling ----------
 
@@ -169,22 +158,20 @@ class OverviewEngine(GObject.Object):
             self._location = settings.selected_city
 
         insights, window_heading = self._insights(now)
-        showing = [m.kind for m in self.members()]
+        showing = self.insight.kind if self.current() is not None else None
         decision = decide(insights, self._memory, showing, now)
         if logger.isEnabledFor(logging.DEBUG):
             self._log_decision(insights, decision, now)
 
-        members = decision.members
-        if members and decision.reason is not None:
-            # A fresh wording for the opening (same insights, same data)
+        insight = decision.insight
+        if insight is not None and decision.reason is not None:
+            # A fresh wording for the opening (same insight, same data)
             self._seed = random.getrandbits(32)
             fresh, window_heading = self._insights(now)
-            by_kind = {i.kind: i for i in fresh}
-            members = tuple(by_kind.get(m.kind, m) for m in members)
+            insight = next((i for i in fresh if i.kind == insight.kind), insight)
 
-        lead = members[0] if members else None
-        heading = (lead.heading or window_heading) if lead is not None else None
-        self._set(members, heading, decision.reason, decision.topics)
+        heading = (insight.heading or window_heading) if insight is not None else None
+        self._set(insight, heading, decision.reason, decision.topics)
         if decision.wake_at is not None:
             self._run_in(decision.wake_at - now)
         return GLib.SOURCE_REMOVE
@@ -215,31 +202,9 @@ class OverviewEngine(GObject.Object):
         what = f"opens ({decision.reason})" if decision.reason else "silent update"
         wake = f"runs again in {int(decision.wake_at - now)}s" if decision.wake_at else "waits for data"
         logger.debug(f"Overview {what}: {decision.insight.kind}: {decision.insight.message} ({wake})")
-        self._log_group(decision, now)
-
-    def _log_group(self, decision: Decision, now: float) -> None:
-        """Debug log: who joined the group, how far from the lead, and who
-        was left out and why."""
-        tz = _city_tz()
-
-        def when(insight: Insight) -> str:
-            if insight.about is None:
-                return "now"
-            return datetime.fromtimestamp(insight.about, tz).strftime("%H:%M")
-
-        lead, *others = decision.members
-        if not others and not decision.left_out:
-            return
-        lead_at = lead.about if lead.about is not None else now
-        joined = ", ".join(
-            f"{m.kind} ({m.level}, {when(m)}, "
-            f"{((m.about if m.about is not None else now) - lead_at) / 60:+.0f} min)"
-            for m in others
-        )
-        logger.debug(f"Overview group: {lead.kind} ({lead.level}, {when(lead)}) leads"
-                     + (f"; with {joined}" if joined else "; alone"))
-        for insight, why in decision.left_out:
-            logger.debug(f"Overview group: left out {insight.kind} ({insight.level}, {when(insight)}): {why}")
+        for waiting in decision.waiting:
+            logger.debug(f"Overview next turn: {waiting.kind} "
+                         f"({'news' if memory.is_new(waiting) else 'reminder'}, after the gap)")
 
     def _insights(self, now: float) -> Tuple[List[Insight], Optional[str]]:
         """(every insight true now, most important first; the window's
@@ -263,17 +228,17 @@ class OverviewEngine(GObject.Object):
 
     # ---------- Publishing ----------
 
-    def _set(self, members: Tuple[Insight, ...], heading: Optional[str],
+    def _set(self, insight: Optional[Insight], heading: Optional[str],
              reason: Optional[str], topics: frozenset) -> None:
         """Publish; emit only when something changed (or it opens)."""
+        message = insight.message if insight else None
         unchanged = (
             reason is None
-            and [m.message for m in members] == [m.message for m in self._members]
+            and message == (self.insight.message if self.insight else None)
             and heading == self.heading
             and topics == self.topics
         )
-        self.insight = members[0] if members else None
-        self._members = members
+        self.insight = insight
         self.heading = heading
         self.reason = reason
         self.topics = topics
@@ -287,7 +252,7 @@ class OverviewEngine(GObject.Object):
         self._scheduled_for = None
         self._memory.forget()
         self._location = None
-        self._set((), None, None, frozenset())
+        self._set(None, None, None, frozenset())
 
     def _cancel(self) -> None:
         if self._timer_id:
