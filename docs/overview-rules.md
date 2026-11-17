@@ -4,9 +4,10 @@ This file is the **source of truth** for the overview: the one-line message
 under the current conditions ("Rain is likely to start around
 5:00 PM with 70% chance."). The code follows it:
 
-- the rules: [`src/core/overview/rules.py`](../src/core/overview/rules.py), one `Rule` per rule, collected in `RuleBook.default()`
-- when it opens: [`src/core/overview/announce.py`](../src/core/overview/announce.py)
-- the numbers: [`src/config.py`](../src/config.py), under "Overview rules"
+- the rules: [`src/core/overview/rules.py`](../src/core/overview/rules.py), one `Rule` per rule, collected in `RuleBook.default()`; `combine()` there puts together the ones that happen at once
+- when it opens: [`src/core/overview/announce.py`](../src/core/overview/announce.py), timed by [`src/state/overview_engine.py`](../src/state/overview_engine.py)
+- the notifications: [`src/ui/notifications.py`](../src/ui/notifications.py), sent by [`src/app.py`](../src/app.py)
+- the numbers: [`src/config.py`](../src/config.py), under "Overview" and "Overview rules"
 - the wordings: [`src/core/overview/messages.py`](../src/core/overview/messages.py), several per message
 
 **To change a rule, change this file first**, then the code and the numbers
@@ -85,6 +86,8 @@ Each insight says until when it is right, and is never shown after that:
 - **Tomorrow** is right until local midnight, when tomorrow becomes today.
 - **Minutes away** ("in 40 minutes") is right while it is no more than
   **5 minutes** off.
+- **Two things in one sentence** (see "Several things at once") are right
+  until the first of them stops being right.
 
 ### Ignore on fail
 
@@ -95,19 +98,26 @@ failure is logged in debug mode only.
 ### Which insights are there
 
 Every rule runs. Insights that are no longer true are dropped, and the rest
-are sorted by priority, highest first. Then things that happen together are
-combined or folded into one (see "Several things at once"). The calm rule
-always speaks, so there is always at least one insight. Nothing is thrown
-away: the insights take turns (below).
+are sorted by priority, highest first. Then things that happen at the same
+time are put together: folded, turned heavy or combined into one sentence
+(see "Several things at once"). The calm rule always speaks, so there is
+always at least one insight. Nothing is thrown away: the insights take turns
+(below).
 
 ### When the overview opens, and with what
 
-Code: `core/overview/announce.py`; the numbers are
-`OVERVIEW_MIN_GAP_MINUTES` and the `OVERVIEW_REMIND_*` values in
-`config.py`.
+Code: `core/overview/announce.py`; the numbers are `OVERVIEW_MIN_GAP_MINUTES`,
+the `OVERVIEW_REMIND_*` values, `OVERVIEW_FORGET_MINUTES`,
+`OVERVIEW_COMBINE_MINUTES` and `OVERVIEW_NOTIFY_TOPICS` in `config.py`.
 
 The overview opens when it has **something new to say**, and only now and
 then to **remind** of something it has already said.
+
+**When it runs.** Nothing is worked out while the app starts: the first run
+is **10 seconds** after the first data load, and **2 seconds** after each
+later refresh (`OVERVIEW_FIRST_DELAY`, `OVERVIEW_REFRESH_DELAY`). After that
+it runs again only when something changes: an insight stops being true, a
+reminder is due, or the gap after an opening ends.
 
 **The same insight, or a new one.** Two insights are the same when they
 come from the same rule, with the same message, the same level, and
@@ -115,7 +125,9 @@ about the same forecast hour or event. Time passing doesn't change that
 ("in 40 minutes" becoming "in 35 minutes"). A changed forecast does: rain
 moving from 4 PM to 7 PM, wind rising from medium to high, tomorrow turning
 from warmer to rainy. A change in the chance alone (60% → 85% for the same
-hour) is not news.
+hour) is not news. An insight that says two things (see "Several things at
+once") counts as each of them: it is news when either is, and saying it
+counts as saying both.
 
 **What has been said is remembered** for each location: each insight, when
 it was last announced, and how many times.
@@ -146,21 +158,59 @@ when it is the only insight.
 
 **Which one opens.** Among the insights that are due: news before
 reminders, then the highest level, then the highest priority. So
-something more urgent turning up (a storm) opens first, at once.
+something more urgent turning up (a storm) opens first, at once. The others
+that are due open one at a time after it, each after the gap: their **next
+turn**.
 
 **The gap.** Nothing opens within **5 minutes** of the last opening; an
 insight that is due opens as soon as those 5 minutes are up.
 
-**Several things at once: combine, fold, or the next turn.** Every
-opening shows **one sentence**. Two things that happen together become one
-sentence only when a natural one exists; otherwise the second one gets the
-next turn. A single insight is always shown as it is: rain with no storm or
-wind is the plain rain sentence.
+**Several things at once.** Every opening shows **one sentence**. Two
+things that happen together become one sentence only when a natural one
+exists; otherwise the second one gets the next turn. A single insight is
+always shown as it is: rain with no storm or wind is the plain rain
+sentence.
 
-*Combine.* A known pair becomes one sentence, with its own message, when
-both happen within **60 minutes** of each other, and both now or both
-later (one now and one later is not combined: "right now" would be wrong
-for one of them, "from around" for the other):
+Two insights **happen together** when both happen now, or both later and
+within **60 minutes** of each other. One now and one later don't: "right
+now" would be wrong for one of them, "from around" for the other. (Turning
+heavy, below, is the one exception.)
+
+Three steps, in this order, each insight used once:
+
+*1. Fold.* Some insights already say another one that happens together with
+them:
+
+| Kept | Folded into it |
+| --- | --- |
+| storm | rain or snow |
+| heavy rain | rain |
+| heavy snow | snow |
+
+The folded insight isn't shown, but it counts as said with the one it is
+folded into, and its notification is withdrawn when the kept one is sent.
+
+*2. Turning heavy.* Rain falling now (or starting later) and heavy rain later
+in the **same wet spell** become one sentence: the heavy hour comes after
+the rain starts and before its first dry hour (any heavy hour counts when it
+rains all through the window). The same for snow and heavy snow. It takes
+what the fold refused (one now and one later, or more than 60 minutes
+apart), because here one sentence stays true for both:
+
+| The rain or snow message | Becomes |
+| --- | --- |
+| falling now, easing later | "Rain right now, turning heavy around 11:00 PM and easing off around 6:00 AM." |
+| falling now, all through the window | "Rain right now, turning heavy around 11:00 PM and lasting until about 7:00 AM." |
+| starting later | "Rain from around 2:00 PM, turning heavy around 5:00 PM." |
+
+It has the heavy one's rule and level (high) and the rain or snow topic, and
+is true until the heavy hour (then "Heavy rain is likely right now" takes
+over, with the rain folded in). When the easing time or the heavy hour
+moves, it is news again. Heavy rain after the rain has eased is a second
+spell: each keeps its own turn.
+
+*3. Combine.* A known pair that happens together becomes one sentence, with
+its own message:
 
 | Pair | Message |
 | --- | --- |
@@ -173,32 +223,21 @@ for one of them, "from around" for the other):
 
 Each also has a "right now" message ("Thunderstorms with strong wind,
 around 45 km/h, are likely right now."). The pairs are tried in this order,
-each insight used once, so storm + heavy rain + wind becomes storm + wind,
-and the heavy rain gets the next turn. The combined insight:
+so storm + heavy rain + wind becomes storm + wind, and the heavy rain gets
+the next turn. Something already folded or turned heavy isn't combined
+again. The combined insight:
 
 - says the earlier of the two times, as "from around", so it is true for
   both; it is true until the earlier of the two stops being true
 - has the higher level of the two, and the rule, topic and priority of the
   more important one (storm, then heavy rain or snow, then rain or snow,
   then wind)
-- covers both: announcing it counts as saying each of them, so when the
-  wind drops later, the storm alone is not news again
+- names both topics: its notification replaces the other's, and is
+  withdrawn as soon as either part stops being true
 
-*Fold.* Some insights already say another one, within the same 60 minutes
-(and both now or both later):
-
-| Kept | Folded into it |
-| --- | --- |
-| storm | rain or snow |
-| heavy rain | rain |
-| heavy snow | snow |
-
-The folded insight isn't shown, but it counts as said with the one it is
-folded into. Folding comes before combining.
-
-*The next turn.* Anything not combined or folded stays its own insight:
-a storm now and UV three hours later, a third urgent thing, one now and
-one later. It is news, so it opens on its own once the 5-minute gap is
+*The next turn.* Anything not folded, turned heavy or combined stays its own
+insight: a storm now and UV three hours later, a third urgent thing, one now
+and one later. It is news, so it opens on its own once the 5-minute gap is
 over. Nothing is lost, and nothing is shown at once.
 
 **Between openings** the text on screen is kept up to date without opening
@@ -208,13 +247,17 @@ true, the most important remaining one takes its place, also without opening.
 **Where it is shown: one place at a time.**
 
 - While the main window can be seen, the overview opens in it, for news
-  and reminders.
+  and reminders. Clicking the info button opens it on the insight shown.
 - While the window is minimized, hidden by compact mode, or otherwise out of
   sight, it is sent as a desktop notification instead (the city as its
   title, the sentence as its body; clicking it opens the main window). Only
   news of medium or above is sent, plus news about tomorrow (low, but worth
   knowing before the evening is over) and reminders of extreme ones
   (storms). Other low insights and calm are never sent.
+
+**How urgent a notification is** follows the level: low and medium are
+sent at low priority, high at normal, extreme at high. Never "urgent", so
+Do Not Disturb still holds.
 
 **One notification per topic.** Each topic has its own notification, so
 air quality and rain can be there side by side. A new message replaces only
@@ -243,7 +286,8 @@ A notification is **withdrawn** when it is no longer right or needed:
 
 - its topic has no insight any more (it stopped being true, or the forecast
   changed: rain turning to snow withdraws rain); a combined one as soon as
-  either of its parts stops being true, since its sentence names both
+  either of its parts stops being true, since its sentence names both; a
+  folded one stays while its own topic is true
 - the location changes
 - notifications are turned off (or the overview and notifications both are)
 - the main window comes into view: the overview shows it there
@@ -286,6 +330,7 @@ From most to least important. "An hour" means an hour inside the window.
 - **Says**, for the first such hour:
   - now: "Thunderstorms are likely right now. Stay indoors if you can."
   - later: "Thunderstorms are likely around 4:00 PM. Plan to be indoors by then."
+- **Together with**: rain or snow folded in; wind or heavy rain combined.
 
 ### 2. Freezing rain
 
@@ -306,6 +351,8 @@ From most to least important. "An hour" means an hour inside the window.
 - **Says**, for the first such hour:
   - now: "Heavy rain is likely right now. Expect puddles and slow roads." / "Heavy snow is likely right now. Travel may be slow."
   - later: "Heavy rain is likely around 3:00 PM. Keep an umbrella close." / "Heavy snow is likely around 3:00 PM. Travel may be slow after that."
+- **Together with**: rain or snow folded in, or turning heavy; a storm or
+  wind combined.
 
 ### 4. Extreme feels like
 
@@ -350,6 +397,11 @@ From most to least important. "An hour" means an hour inside the window.
     "Rain is likely to start around 5:00 PM with 70% chance." (the first wet hour and its chance)
   - dry all through the window: nothing.
 - Snow uses the same sentences with "Snow".
+- **Happens**: now while it rains now (easing or falling through the window),
+  even though "easing off around 4:00 PM" is about 4 PM; at its first wet
+  hour when it starts later.
+- **Together with**: folded into a storm or heavy rain, turning heavy, or
+  combined with wind.
 
 ### 8. Wind
 
@@ -359,6 +411,8 @@ From most to least important. "An hour" means an hour inside the window.
 - **Says**, for the first such hour and its speed:
   - now: "Strong wind right now, around 45 km/h. Secure loose items outdoors."
   - later: "Wind picks up to 45 km/h around 3:00 PM. Secure loose items outdoors."
+- **Together with**: combined with a storm, heavy rain or snow, or rain or
+  snow.
 
 ### 9. Fog
 
@@ -383,8 +437,9 @@ From most to least important. "An hour" means an hour inside the window.
 ### 11. Tomorrow
 
 - **Priority** 30 · **Level** low · **Icon** showers, or none ·
-  **Heading** Tomorrow · **Topic** tomorrow · **Notified** as news, the one
-  low insight that is
+  **Heading** Tomorrow · **Topic** tomorrow
+- **Notification**: sent as news, the only low insight that is
+  (`OVERVIEW_NOTIFY_TOPICS`); never reminded
 - **Applies** only from **6 PM** local time, until midnight.
 - **Says**, checking in this order:
   - tomorrow's chance of rain is **50%** or more:
@@ -427,6 +482,8 @@ say the same thing, so the overview does not read the same every time:
   sunset and sunrise, calm): **4–5 wordings**.
 - **Rare safety messages** (storm, freezing rain, heavy rain or snow,
   extreme feels like, air quality, UV): **2 wordings**, kept plain.
+- **Two things at once** (the combined pairs, turning heavy): **2
+  wordings**, one sentence with no advice after it.
 
 The examples in this file are the first wording of each message; the rest
 are in `core/overview/messages.py`.
@@ -444,7 +501,9 @@ stays the same, and only the values update ("about 40 minutes" becomes
 ## Writing messages
 
 - One whole sentence per message, with placeholders (`{time}`, `{temp}`,
-  `{chance}`, `{speed}`, `{n}`). Never build a sentence from pieces.
+  `{chance}`, `{speed}`, `{n}`, and `{start}`, `{end}`, `{heavy_time}` where
+  a message has two times). Never build a sentence from pieces: two things
+  at once get their own message key.
 - Counts use plural forms (`ngettext`): "1 minute", "5 minutes".
 - Times follow the user's 12/24-hour setting, in the city's time zone.
 - **Predicted times are rounded and hedged.** A forecast is never
@@ -466,6 +525,10 @@ stays the same, and only the values update ("about 40 minutes" becomes
   minute: "The sun rises in about 2 hours, at 6:12 AM."
 - Temperatures show the number and a degree sign ("14°"); the unit is in
   the current conditions next to it.
+- **About the weather, for everyone.** A message says what the weather does
+  and what follows from it, not what the reader should do with their own
+  plans: no commute, laundry, watering plants or "best time to go out",
+  which don't fit everyone.
 - **Full, friendly sentences.** Say what happens in a complete sentence
   and fold details like the chance into it ("Rain is likely to start around
   5:00 PM with 70% chance."). Add a short second sentence only for advice
@@ -490,5 +553,43 @@ stays the same, and only the values update ("about 40 minutes" becomes
    `Below`, `AnyOf`) and a `Phrasing` covers "the first hour that …". Only
    when it needs more, subclass `Rule` and write `evaluate(ctx)`. Add it to
    `RuleBook.default()`, in priority order.
-5. Make sure its `valid_until` follows "Every message must stay true".
-6. Run `./update-pot`.
+5. Make sure its `valid_until` follows "Every message must stay true", and
+   that it says what it is about and when it happens (`Sentence.about` and
+   `when`; `Phrasing` fills them in).
+6. If it often happens together with another rule, decide whether one says
+   the other (a fold) or both fit one sentence (a pair, with its own message
+   keys), and add it to `FOLDS` or `COMBINATIONS` in `rules.py` and to
+   "Several things at once" here.
+7. Run `./update-pot`.
+
+## Reading the debug log
+
+With debug mode on (`gsettings set io.github.amit9838.mousam debug-mode
+true`), each run of the overview logs, in this order:
+
+```
+Overview folded: precipitation (rain.start) into storm
+Overview not combined: storm + wind: one now, one later
+Overview: 3 insights, 2 taking turns
+  storm (storm): extreme, priority 100, said 1x, due in 1800s
+  wind (wind): high, priority 55, new
+  calm (calm): calm, priority 0, not taking turns
+Overview opens (news): storm: Thunderstorms are likely around 4:00 PM. … (runs again in 300s)
+Overview next turn: wind (news, after the gap)
+Overview channel: storm (news, extreme) -> notification overview-storm
+```
+
+- the first lines: what was folded, turned heavy
+  (`Overview turning heavy: precipitation (rain.easing) + heavy_precipitation (23:00) -> rain_heavier.easing`)
+  or combined, and why not (logged once per run)
+- one line per insight: its topic, level and priority, and what has been
+  said: `new`, `said 2x, due in 3600s` (its next reminder), `not repeated`
+  (low and calm), or `not taking turns` (calm next to something else)
+- `opens (news)`, `opens (reminder)` or `silent update`, with the sentence
+  as it is shown, and when the overview runs again
+- `next turn`: due too, opens after the 5-minute gap
+- `channel`: where the opening went: `window`, `notification overview-<topic>`,
+  or `nowhere` and why (overview or notifications off, or not worth a
+  notification)
+- `Notification … sent / withdrawn` (from `mousam.notifications`), with the
+  reason it was withdrawn
