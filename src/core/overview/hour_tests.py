@@ -4,7 +4,7 @@ composition to describe what a rule looks for."""
 from abc import ABC, abstractmethod
 from typing import Callable, Iterable, Optional
 
-from ...config import FOG_VISIBILITY_M, RAIN_LIKELY_PROBABILITY, STRONG_WIND_KMH
+from ...config import EXTREME_WIND_KMH, FOG_VISIBILITY_M, RAIN_LIKELY_PROBABILITY, STRONG_WIND_KMH
 from .context import HourlySeries, OverviewContext, Units
 
 # WMO weather codes
@@ -14,6 +14,9 @@ SNOW_CODES = {71, 73, 75, 77, 85, 86}
 HEAVY_RAIN_CODES = {65, 82}
 HEAVY_SNOW_CODES = {75, 86}
 FOG_CODES = {45, 48}
+CLEAR_CODES = {0, 1}  # clear sky, mainly clear
+SOME_CLOUDS_CODES = {2}  # partly cloudy
+OVERCAST_CODES = {3}
 
 
 class HourTest(ABC):
@@ -73,8 +76,19 @@ class AnyOf(HourTest):
         return any(test(ctx, i) for test in self.tests)
 
 
+class AllOf(HourTest):
+    """Every one of `tests` passes."""
+
+    def __init__(self, *tests: HourTest):
+        self.tests = tests
+
+    def __call__(self, ctx: OverviewContext, i: int) -> bool:
+        return all(test(ctx, i) for test in self.tests)
+
+
 IS_SNOW = HasCode(SNOW_CODES)
 IS_WET = AtLeast("precip_probability", RAIN_LIKELY_PROBABILITY)
 IS_DRY = Below("precip_probability", RAIN_LIKELY_PROBABILITY)  # an hour with no data is neither
 IS_FOGGY = AnyOf(Below("visibility", FOG_VISIBILITY_M), HasCode(FOG_CODES))
 IS_WINDY = AtLeast("windspeed", STRONG_WIND_KMH, to_metric=Units.kmh)
+IS_VERY_WINDY = AtLeast("windspeed", EXTREME_WIND_KMH, to_metric=Units.kmh)

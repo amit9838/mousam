@@ -48,15 +48,20 @@ from ...config import (
 from ..log import get_logger
 from .context import HOUR, MINUTE, OverviewContext, hours_between, value_at
 from .hour_tests import (
+    CLEAR_CODES,
     FREEZING_CODES,
     HEAVY_RAIN_CODES,
     HEAVY_SNOW_CODES,
     IS_DRY,
     IS_FOGGY,
+    IS_VERY_WINDY,
     IS_SNOW,
     IS_WET,
     IS_WINDY,
+    OVERCAST_CODES,
+    SOME_CLOUDS_CODES,
     STORM_CODES,
+    AllOf,
     AnyOf,
     AtLeast,
     HasCode,
@@ -441,8 +446,25 @@ class TomorrowRule(Rule):
 
 class SunRule(Rule):
     """Sunset within SUNSET_SOON_MINUTES by day, or sunrise within
-    SUNRISE_SOON_MINUTES at night: say how soon, never more than
+    SUNRISE_SOON_MINUTES at night: say how the weather at the sun's hour
+    affects it (CONDITIONS, the first that applies), around a time rounded
+    like any other. Without one, say how soon, never more than
     OVERVIEW_RELATIVE_TOLERANCE off."""
+
+    # From what changes the sunset most; each is a message key part
+    # ("sunset.rain"). The thresholds are the other rules' own.
+    CONDITIONS = (
+        ("storm", HasCode(STORM_CODES)),
+        ("snow", AllOf(IS_WET, IS_SNOW)),
+        ("rain", AnyOf(IS_WET, HasCode(FREEZING_CODES))),
+        ("fog", IS_FOGGY),
+        ("very_windy", IS_VERY_WINDY),
+        ("windy_clear", AllOf(IS_WINDY, HasCode(CLEAR_CODES))),
+        ("windy_clouds", AllOf(IS_WINDY, HasCode(SOME_CLOUDS_CODES | OVERCAST_CODES))),
+        ("cloudy", HasCode(OVERCAST_CODES)),
+        ("some_clouds", HasCode(SOME_CLOUDS_CODES)),
+        ("clear", HasCode(CLEAR_CODES)),
+    )
 
     def __init__(self):
         super().__init__("sun", "low", "sun")
@@ -457,10 +479,23 @@ class SunRule(Rule):
             icon = ICON_SUNRISE
         if event is None or event - ctx.now > soon * MINUTE:
             return None
-        sentence = self.phrase(ctx, event, sunset)
+        sentence = self.weather_sentence(ctx, event, sunset) or self.phrase(ctx, event, sunset)
         if sentence is None:
             return None
         return self.insight(sentence, icon=icon)
+
+    def weather_sentence(self, ctx: OverviewContext, event: float, sunset: bool) -> Optional[Sentence]:
+        """How the weather at the sun's hour (the hour nearest the event)
+        affects it, or None without data or a condition. The time is
+        rounded, and the event doesn't move, so it is true until the event."""
+        i = ctx.hourly.hour_near(event)
+        if i is None:
+            return None
+        condition = next((name for name, test in self.CONDITIONS if test(ctx, i)), None)
+        if condition is None:
+            return None
+        key = f"{'sunset' if sunset else 'sunrise'}.{condition}"
+        return say(ctx, key, event, event, happens_now=True, time=ctx.clock.approx_time(event))
 
     @staticmethod
     def phrase(ctx: OverviewContext, event: float, sunset: bool) -> Optional[Sentence]:

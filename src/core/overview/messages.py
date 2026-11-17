@@ -514,6 +514,127 @@ def overview_messages() -> Dict[str, List[Wording]]:
                 n,
             ),
         ],
+        # ---------- Sunset and sunrise, with the weather (SunRule.CONDITIONS in rules.py) ----------
+        "sunset.storm": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms at sunset, around {time}, best watched from indoors."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A stormy sunset around {time}. Enjoy the view from inside."),
+        ],
+        "sunset.snow": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Snow at sunset, around {time}, for a quiet, wintry evening."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} comes with falling snow. A peaceful one!"),
+        ],
+        "sunset.rain": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A rainy sunset around {time}. Watch for a rainbow if the sun peeks through!"),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Rain at sunset, around {time}, a cozy evening in the making."),
+        ],
+        "sunset.fog": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A misty sunset around {time}, with soft, hazy light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Fog at sunset, around {time}, for a soft, hazy view."),
+        ],
+        "sunset.very_windy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A very windy sunset around {time}, best enjoyed from a sheltered spot."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Very strong wind at sunset, around {time}; enjoy it from shelter."),
+        ],
+        "sunset.windy_clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear and windy for sunset around {time}, with crisp, fresh air."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A bright, windy sunset around {time}. Hold on to your hat!"),
+        ],
+        "sunset.windy_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A windy sunset around {time}, with a few clouds."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks windy, with clouds about."),
+        ],
+        "sunset.cloudy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A cloudy sunset around {time}, with soft, even light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks cloudy and calm."),
+        ],
+        "sunset.some_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A few clouds at sunset, around {time}, could bring some color."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} brings scattered clouds, often the most colorful kind."),
+        ],
+        "sunset.clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear skies for sunset around {time}, a great evening to catch it."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks clear and bright. Worth a look!"),
+        ],
+        "sunrise.storm": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms at sunrise, around {time}, best watched from indoors."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A stormy sunrise around {time}. Enjoy the view from inside."),
+        ],
+        "sunrise.snow": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Snow at sunrise, around {time}, for a quiet, wintry morning."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} comes with falling snow. A peaceful one!"),
+        ],
+        "sunrise.rain": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A rainy sunrise around {time}. Watch for a rainbow if the sun peeks through!"),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Rain at sunrise, around {time}, a cozy start to the day."),
+        ],
+        "sunrise.fog": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A misty sunrise around {time}, with soft, hazy light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Fog at sunrise, around {time}, for a soft, hazy view."),
+        ],
+        "sunrise.very_windy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A very windy sunrise around {time}, best enjoyed from a sheltered spot."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Very strong wind at sunrise, around {time}; enjoy it from shelter."),
+        ],
+        "sunrise.windy_clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear and windy for sunrise around {time}, with crisp, fresh air."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A bright, windy sunrise around {time}. Hold on to your hat!"),
+        ],
+        "sunrise.windy_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A windy sunrise around {time}, with a few clouds."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks windy, with clouds about."),
+        ],
+        "sunrise.cloudy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A cloudy sunrise around {time}, with soft, even light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks cloudy and calm."),
+        ],
+        "sunrise.some_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A few clouds at sunrise, around {time}, could bring some color."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} brings scattered clouds, often the most colorful kind."),
+        ],
+        "sunrise.clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear skies for sunrise around {time}, a great morning to catch it."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks clear and bright. Worth a look!"),
+        ],
         # ---------- Calm ----------
         "calm": [
             # Translators: {time} is a rounded time of day, like "6:30 PM"

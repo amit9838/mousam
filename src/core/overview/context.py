@@ -123,6 +123,14 @@ class HourlySeries:
         just passed (so its value is there)."""
         return value_at(getattr(self, series), i)
 
+    def hour_near(self, ts: float) -> Optional[int]:
+        """The hour nearest `ts` (at exactly half past, the later one), or
+        None when no hour starts within half an hour of it."""
+        if not self.times:
+            return None
+        i = min(range(len(self.times)), key=lambda k: (abs(self.times[k] - ts), -self.times[k]))
+        return i if abs(self.times[i] - ts) <= HOUR / 2 else None
+
 
 @dataclass
 class SunTimes:

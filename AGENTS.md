@@ -150,7 +150,7 @@ src/
     forecast_client.py    ForecastClient: the Protocol services/open_meteo.py fills and tests fake
     overview/insight.py   Insight (what a rule returns: level, topic, fingerprint), LEVELS, LEVEL_RANK
     overview/context.py   OverviewContext and its parts: Clock, Units, HourlySeries, SunTimes, DailyOutlook, AirSeries, Window
-    overview/hour_tests.py  HourTest, HasCode, AtLeast, Below, AnyOf, IS_SNOW / IS_WET / IS_DRY, the WMO code sets
+    overview/hour_tests.py  HourTest, HasCode, AtLeast, Below, AnyOf, AllOf, IS_SNOW / IS_WET / IS_DRY / IS_FOGGY / IS_WINDY, the WMO code sets
     overview/rules.py     the overview rules: Sentence, Phrasing, Rule and the rules, RuleBook, combine() (TURNING_STORMY, FOLDS, TURNING_HEAVY, COMBINATIONS)
     overview/announce.py  when it opens: AnnounceMemory, decide() -> Decision, should_notify()
     overview/messages.py  the overview wordings: several per message key, picked by MessageBook
@@ -262,7 +262,7 @@ When unsure, ask:
 | A signal handler on a rebuilt widget | `weak_connect(widget, signal, self.method)` |
 | A Cairo draw function | `safe_set_draw_func(area, self, "draw")` |
 | A one-line summary of the coming hours | `overview_engine` (`state/overview_engine.py`): read `current()` and `heading`, listen to `overview-changed` |
-| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf` in `core/overview/hour_tests.py` |
+| A yes/no question about one forecast hour | `HasCode`, `AtLeast`, `Below`, `AnyOf`, `AllOf`, or a shared one (`IS_WET`, `IS_FOGGY`, `IS_WINDY`, …) in `core/overview/hour_tests.py` |
 
 Weather codes are WMO codes as strings (`"61"`), with an `n` suffix for night (`"61n"`). A code must be in `icons_default`, `icons_material`, `bg_css` and `condition` together.
 

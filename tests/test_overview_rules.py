@@ -217,14 +217,130 @@ class TestRules(unittest.TestCase):
         self.assertSilent(context(daily=warmer), "tomorrow")
 
     def test_sunset_soon(self):
+        # No sky data at the sun's hour (11:00): the countdown
         sun = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=NOW + 40 * MIN)
-        insight = self.assertSays(context(sun=sun), "sun", NOW + 5 * MIN, "40",
+        insight = self.assertSays(context(sun=sun, codes={1: None}), "sun", NOW + 5 * MIN, "40",
                                   icon="daytime-sunset-symbolic")
         self.assertEqual(insight.heading, None)
 
     def test_sunrise_too_far(self):
         night = SunTimes(next_sunrise=NOW + 4 * H, next_sunset=NOW + 15 * H)
         self.assertSilent(context(sun=night), "sun")
+
+
+class TestSunWeather(unittest.TestCase):
+    """How the weather at the sun's hour affects the sunset or sunrise."""
+
+    # Sunset at 10:50, 40 minutes away: the sun's hour is 11:00 (offset 1)
+    SUNSET = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=NOW + 40 * MIN)
+
+    def sun(self, now=NOW, sun=None, imperial=False, **forecast) -> Insight:
+        return insights(context(now, imperial=imperial, sun=sun or self.SUNSET, **forecast))["sun"]
+
+    def key(self, **forecast) -> str:
+        return self.sun(**forecast).key
+
+    def test_the_sky(self):
+        cases = {0: "sunset.clear", 1: "sunset.clear", 2: "sunset.some_clouds", 3: "sunset.cloudy"}
+        for code, key in cases.items():
+            self.assertEqual(self.key(codes={1: code}), key, code)
+
+    def test_precipitation_storm_and_fog(self):
+        cases = [
+            (dict(precip_probability={1: 70}), "sunset.rain"),
+            (dict(codes={1: 66}), "sunset.rain"),  # freezing rain
+            (dict(codes={1: 71}, precip_probability={1: 70}), "sunset.snow"),
+            (dict(codes={1: 95}), "sunset.storm"),
+            (dict(codes={1: 95}, precip_probability={1: 70}), "sunset.storm"),  # the order
+            (dict(visibility={1: 300}), "sunset.fog"),
+            (dict(codes={1: 45}), "sunset.fog"),
+        ]
+        for forecast, key in cases:
+            self.assertEqual(self.key(**forecast), key, forecast)
+
+    def test_wind(self):
+        cases = [
+            (dict(codes={1: 0}, windspeed={1: 45}), "sunset.windy_clear"),
+            (dict(codes={1: 3}, windspeed={1: 45}), "sunset.windy_clouds"),
+            (dict(codes={1: 2}, windspeed={1: 45}), "sunset.windy_clouds"),
+            (dict(codes={1: 0}, windspeed={1: 65}), "sunset.very_windy"),
+            (dict(windspeed={1: 45}, precip_probability={1: 70}), "sunset.rain"),
+            (dict(codes={1: 0}, windspeed={1: 30}), "sunset.clear"),
+        ]
+        for forecast, key in cases:
+            self.assertEqual(self.key(**forecast), key, forecast)
+        self.assertEqual(self.sun(imperial=True, codes={1: 0}, windspeed={1: 30}).key,
+                         "sunset.windy_clear")  # 30 mph is 48 km/h
+
+    def test_the_wind_keeps_its_own_insight(self):
+        found = insights(context(sun=self.SUNSET, codes={1: 0}, windspeed={1: 45}))
+        self.assertEqual(found["sun"].key, "sunset.windy_clear")
+        self.assertIn("wind", found)
+
+    def test_rain_at_sunset_gives_both(self):
+        found = insights(context(sun=self.SUNSET, precip_probability={1: 70}))
+        self.assertEqual(found["sun"].key, "sunset.rain")
+        self.assertIn("precipitation", found)
+
+    def test_the_countdown_without_a_condition(self):
+        self.assertEqual(self.key(codes={1: None}), "sunset.minutes")
+        self.assertEqual(self.key(codes={1: 61}, precip_probability={1: 30}), "sunset.minutes")
+        self.assertEqual(self.key(codes={1: 71}, precip_probability={1: 30}), "sunset.minutes")
+
+    def test_the_time_rounds_to_10_minutes(self):
+        def message(minutes):
+            sun = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=NOW + minutes * MIN)
+            return self.sun(sun=sun, codes={1: 0}).message
+        self.assertIn("11:10", message(62))  # 11:12
+        self.assertIn("11:20", message(65))  # 11:15, halves up
+        self.assertNotIn("11:12", message(62))
+
+    def test_true_until_the_event(self):
+        self.assertEqual(self.sun(codes={1: 0}).valid_until, NOW + 40 * MIN)
+
+    def test_the_nearest_hour(self):
+        sunset = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=at_hour(1) + 40 * MIN)  # 11:40
+        self.assertEqual(self.sun(sun=sunset, codes={1: 0, 2: 3}).key, "sunset.cloudy")  # 12:00
+        half_past = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=at_hour(1) + 30 * MIN)
+        self.assertEqual(self.sun(sun=half_past, codes={1: 0, 2: 3}).key, "sunset.cloudy")  # the later
+
+    def test_sunrise(self):
+        night = SunTimes(next_sunrise=at_hour(2) + 10 * MIN, next_sunset=NOW + 14 * H)  # 12:10
+        sunrise = self.sun(sun=night, codes={2: 0})
+        self.assertEqual(sunrise.key, "sunrise.clear")
+        self.assertEqual(sunrise.icon, "daytime-sunrise-symbolic")
+        self.assertIn("12:10", sunrise.message)
+
+    def test_time_passing_is_not_news(self):
+        sunset = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=at_hour(2))  # 12:00
+        early = self.sun(sun=sunset, codes={2: 0})  # 1 h 50 min before
+        late = self.sun(NOW + 80 * MIN, sun=sunset, codes={1: 0})  # 30 min before, at 11:30
+        self.assertEqual(early.fingerprint, late.fingerprint)
+        self.assertIn("12:00", early.message)
+        self.assertIn("12:00", late.message)
+
+    def test_a_new_condition_is_news(self):
+        self.assertNotEqual(self.sun(codes={1: 0}).fingerprint, self.sun(codes={1: 3}).fingerprint)
+
+    def test_wordings_are_short_and_positive(self):
+        messages = overview_messages()
+        conditions = [name for name, _test in SunRule.CONDITIONS]
+        for event in ("sunset", "sunrise"):
+            for name in conditions:
+                for wording in messages[f"{event}.{name}"]:
+                    text = wording.format(time="12:30 PM")
+                    self.assertLess(len(text), 90, text)
+                    self.assertNotIn("hide", text.lower())
+
+
+class TestHourNear(unittest.TestCase):
+    def test_nearest_later_at_half_past_none_beyond(self):
+        hourly = HourlySeries(times=[at_hour(0), at_hour(1), at_hour(2)])
+        self.assertEqual(hourly.hour_near(at_hour(1) + 20 * MIN), 1)
+        self.assertEqual(hourly.hour_near(at_hour(1) + 40 * MIN), 2)
+        self.assertEqual(hourly.hour_near(at_hour(1) + 30 * MIN), 2)
+        self.assertIsNone(hourly.hour_near(at_hour(2) + 31 * MIN))
+        self.assertIsNone(HourlySeries(times=[]).hour_near(NOW))
 
 
 class TestSunPhrase(unittest.TestCase):
@@ -373,8 +489,8 @@ class TestIdentity(unittest.TestCase):
         self.assertEqual(self.one("precipitation", **rain).fingerprint,
                          self.one("precipitation", NOW + 20 * MIN, **rain).fingerprint)
         sun = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=NOW + 40 * MIN)
-        first = insights(context(sun=sun))["sun"]
-        later = insights(context(NOW + 10 * MIN, sun=sun))["sun"]
+        first = insights(context(sun=sun, codes={1: None}))["sun"]  # the countdown
+        later = insights(context(NOW + 10 * MIN, sun=sun, codes={1: None}))["sun"]
         self.assertNotEqual(first.message, later.message)  # 40, then 30 minutes
         self.assertEqual(first.fingerprint, later.fingerprint)
 
