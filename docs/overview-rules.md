@@ -88,6 +88,8 @@ Each insight says until when it is right, and is never shown after that:
   **5 minutes** off.
 - **Two things in one sentence** (see "Several things at once") are right
   until the first of them stops being right.
+- **The weather at sunset or sunrise** ("Clear skies for sunset around
+  6:10 PM") is right until the sun sets or rises.
 
 ### Ignore on fail
 
@@ -122,7 +124,9 @@ reminder is due, or the gap after an opening ends.
 **Fresh data.** The overview only sees a changed forecast after the data
 is refreshed. The weather refreshes by itself every **10 minutes**
 (`AUTO_REFRESH_MINUTES`), always: there is no setting for it, so the
-overview and notifications never work from an old forecast.
+overview and notifications never work from an old forecast. Ctrl+R
+refreshes at once (with responses up to a minute old, `DATA_CACHE_TTL`);
+Ctrl+Shift+R fetches the location again without cached data.
 
 **The same insight, or a new one.** Two insights are the same when they
 come from the same rule, with the same message, the same level, and
@@ -320,8 +324,9 @@ A notification is **withdrawn** when it is no longer right or needed:
 - notifications are turned off (or the overview and notifications both are)
 - the main window comes into view: the overview shows it there
 
-Either can be turned off in Preferences: *Weather Overview* and *Show
-Notifications*. The forecast is only worked out while at least one is on.
+Either can be turned off in Preferences, in the *Weather Overview* group:
+*Show Overview* and *Notifications*. The forecast is only worked out while
+at least one is on.
 
 | Overview | Notifications | Window in sight | Window out of sight |
 | --- | --- | --- | --- |
@@ -330,8 +335,7 @@ Notifications*. The forecast is only worked out while at least one is on.
 | off | on | nothing | notification |
 | off | off | nothing (no processing) | nothing |
 
-**Refreshes don't count.** A refresh (Ctrl+R, auto-refresh, changing units,
-clock or icons) keeps what has been said, so it neither opens the overview
+**Refreshes don't count.** A refresh keeps what has been said, so it neither opens the overview
 nor resets the reminders. Switching location, or turning off both the
 overview and notifications, starts over.
 
@@ -409,7 +413,8 @@ From most to least important. "An hour" means an hour inside the window.
 
 - **Priority** 80 · **Level** high · **Icon** none · **Topic** air
 - **Applies when** the **US AQI** reaches **151** (unhealthy) or more in
-  an hour of the window.
+  an hour of the window. Without air quality data (it couldn't be fetched;
+  the weather is still shown), it says nothing.
 - **Says**, for the first such hour:
   - now: "Air quality is unhealthy right now. Limit time outdoors if you can."
   - later: "Air quality turns unhealthy around 10:00 AM. Consider limiting time outdoors."
@@ -639,17 +644,23 @@ stays the same, and only the values update ("about 40 minutes" becomes
 3. Add its priority to `OVERVIEW_PRIORITIES` and any threshold to
    `config.py` (metric).
 4. In `core/overview/rules.py`, build it from what is there before writing a
-   new class: a `FirstHourRule` with an `HourTest` (`HasCode`, `AtLeast`,
-   `Below`, `AnyOf`) and a `Phrasing` covers "the first hour that …". Only
-   when it needs more, subclass `Rule` and write `evaluate(ctx)`. Add it to
-   `RuleBook.default()`, in priority order.
+   new class: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers
+   "the first hour that …". Hour tests are in `core/overview/hour_tests.py`:
+   `HasCode`, `AtLeast`, `Below`, `AnyOf`, `AllOf`, and the shared ones the
+   rules agree on (`IS_WET`, `IS_DRY`, `IS_SNOW`, `IS_FOGGY`, `IS_WINDY`,
+   `IS_VERY_WINDY`); reuse a shared one, so two rules never disagree on
+   what counts as rain or wind. Only when it needs more, subclass `Rule`
+   and write `evaluate(ctx)`, as `StormRule` (a wording by the chance) and
+   `SunRule` (a wording by the weather) do. Add it to `RuleBook.default()`,
+   in priority order.
 5. Make sure its `valid_until` follows "Every message must stay true", and
    that it says what it is about and when it happens (`Sentence.about` and
    `when`; `Phrasing` fills them in).
 6. If it often happens together with another rule, decide whether one says
-   the other (a fold) or both fit one sentence (a pair, with its own message
-   keys), and add it to `FOLDS` or `COMBINATIONS` in `rules.py` and to
-   "Several things at once" here.
+   the other (a fold), both fit one sentence (a pair, with its own message
+   keys), or one leads into the other in the same wet spell (a turning), and
+   add it to `FOLDS`, `COMBINATIONS`, `TURNING_STORMY` or `TURNING_HEAVY` in
+   `rules.py` and to "Several things at once" here.
 7. Run `./update-pot`.
 
 ## Reading the debug log
