@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 22:01+0530\n"
+"POT-Creation-Date: 2026-11-17 23:47+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,23 +221,23 @@ msgstr ""
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
 msgstr ""
 
-#: src/config.py:104
+#: src/config.py:109
 msgid "Off"
 msgstr ""
 
-#: src/config.py:105
+#: src/config.py:110
 msgid "Every 15 minutes"
 msgstr ""
 
-#: src/config.py:106
+#: src/config.py:111
 msgid "Every 30 minutes"
 msgstr ""
 
-#: src/config.py:107
+#: src/config.py:112
 msgid "Every hour"
 msgstr ""
 
-#: src/config.py:108
+#: src/config.py:113
 msgid "Every 2 hours"
 msgstr ""
 
@@ -1834,12 +1834,16 @@ msgstr ""
 msgid "miles"
 msgstr ""
 
-#: src/ui/cards/air_quality.py:31
+#: src/ui/cards/air_quality.py:32
 msgid "Air Pollution"
 msgstr ""
 
-#: src/ui/cards/air_quality.py:42
+#: src/ui/cards/air_quality.py:47
 msgid "Air Quality Details"
+msgstr ""
+
+#: src/ui/cards/air_quality.py:81
+msgid "Air quality isn't available right now."
 msgstr ""
 
 #: src/ui/cards/day_night.py:44
@@ -2073,27 +2077,27 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: src/ui/sections/hourly.py:273
+#: src/ui/sections/hourly.py:274
 msgid "No precipitation today !"
 msgstr ""
 
-#: src/ui/sections/hourly.py:274
+#: src/ui/sections/hourly.py:275
 msgid "No precipitation expected today!"
 msgstr ""
 
-#: src/ui/sections/hourly.py:275
+#: src/ui/sections/hourly.py:276
 msgid "Anticipate a precipitation-free day !"
 msgstr ""
 
-#: src/ui/sections/hourly.py:276
+#: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
 msgstr ""
 
-#: src/ui/sections/hourly.py:277
+#: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
 msgstr ""
 
-#: src/ui/sections/hourly.py:278
+#: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
 msgstr ""
 
