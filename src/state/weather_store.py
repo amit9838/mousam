@@ -7,7 +7,7 @@ thread.
 
 import threading
 import time
-from typing import Callable, Dict, List
+from typing import Callable, Dict, Iterable, List, Optional
 
 from gi.repository import GLib, GObject
 
@@ -140,13 +140,11 @@ class WeatherStore(GObject.Object):
             "dft": lambda: self._client.fetch_daily(lat, lon, unit),
             "apt": lambda: self._fetch_air(lat, lon),
             "local_time": lambda: get_time_difference("", True),
-        })
+        }, optional=("apt",))
         if raw["hft"] is None:
             raise ValueError("Failed to fetch hourly forecast data")
         if raw["dft"] is None:
             raise ValueError("Failed to fetch daily forecast data")
-        if raw["apt"] is None:
-            raise ValueError("Failed to fetch air pollution data")
 
         current_weather = build_current(current, unit)
         hourly = HourlyWeather(raw["hft"])
@@ -237,22 +235,35 @@ def add_hourly_fields(current: CurrentWeather, hourly: HourlyWeather, times: lis
     current.visibility = WeatherField(data=visibility["data"], unit=visibility["unit"])
 
 
-def build_air_pollution(raw: dict) -> AirPollutionData:
-    """Air quality, with this hour's US and EU AQI."""
-    i = nearest_hour_index(raw.get("hourly").get("time"), time.time())
-    data = AirPollutionData(raw)
-    data.current_us_aqi = data.us_aqi.data[i]
-    data.current_eu_aqi = data.european_aqi.data[i]
+def build_air_pollution(raw: Optional[dict]) -> Optional[AirPollutionData]:
+    """Air quality, with this hour's US and EU AQI; None without it.
+
+    Air quality is optional: when it fails, the weather is still shown, and
+    the air quality card says it isn't available.
+    """
+    if raw is None:
+        logger.warning("Air quality isn't available; showing the weather without it")
+        return None
+    try:
+        i = nearest_hour_index(raw["hourly"]["time"], time.time())
+        data = AirPollutionData(raw)
+        data.current_us_aqi = data.us_aqi.data[i]
+        data.current_eu_aqi = data.european_aqi.data[i]
+    except (KeyError, TypeError, ValueError, IndexError) as e:
+        logger.warning(f"Air quality data unreadable, showing the weather without it: {e!r}")
+        return None
     logger.info("Air pollution data updated successfully")
     return data
 
 
-def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
+def _run_all(tasks: Dict[str, Callable], timeout_message: str = "",
+             optional: Iterable[str] = ()) -> dict:
     """Run each task on its own thread and return {name: result}.
 
     Each gets CONNECT_TIMEOUT + TIMEOUT seconds, as long as its request may
     take to connect and answer; the first one still running after that, or
-    the first error, is raised.
+    the first error, is raised. An `optional` task that fails or runs out of
+    time gives None instead.
     """
     results, errors = {}, []
 
@@ -263,7 +274,7 @@ def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
             logger.debug(f"Finished target: {name}")
         except Exception as e:  # Re-raised below, on the fetch worker
             logger.error(f"Error in target {name}: {e}")
-            errors.append(e)
+            errors.append((name, e))
 
     threads = [
         threading.Thread(target=run, args=(name, task), name=name, daemon=True)
@@ -274,10 +285,15 @@ def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
     for thread in threads:
         thread.join(timeout=CONNECT_TIMEOUT + TIMEOUT)
         if thread.is_alive():
+            if thread.name in optional:
+                logger.warning(f"{thread.name} fetch timed out; going on without it")
+                continue
             raise TimeoutError(timeout_message or f"{thread.name} fetch timed out")
-    if errors:
-        raise errors[0]
-    return results
+    required_errors = [e for name, e in errors if name not in optional]
+    if required_errors:
+        raise required_errors[0]
+    # A copy, so an optional task that finishes late can't change it
+    return {name: results.get(name) for name in tasks}
 
 
 # The shared instance

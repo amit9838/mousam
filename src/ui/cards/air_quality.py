@@ -14,10 +14,11 @@ class CardAirPollution:
     """The US AQI now, its level and a bar, with a button to the details.
 
     Takes the air-quality model; its current_us_aqi is this hour's value.
+    Without one (None: the air quality couldn't be fetched), it says so.
     """
 
     def __init__(self, air):
-        self.card = self._build_card(air.current_us_aqi)
+        self.card = self._build_card(air.current_us_aqi if air is not None else None)
 
     def _build_card(self, aqi) -> Gtk.Widget:
         card = Gtk.Grid(margin_top=6, margin_start=3)
@@ -33,6 +34,10 @@ class CardAirPollution:
         title.set_halign(Gtk.Align.START)
         title.set_css_classes(["text-lg", "opacity-80", "font-medium"])
         card.attach(title, 0, 0, 4, 2)
+
+        if aqi is None:
+            card.attach(self._unavailable_label(), 0, 2, 4, 2)
+            return card
 
         # Opens the air quality details (the window's "air-quality" action)
         info_button = Gtk.Button(icon_name="info-outline-symbolic", action_name="win.air-quality")
@@ -70,3 +75,15 @@ class CardAirPollution:
         # pollution_bar.set_margin_top()
         card.attach(pollution_bar, 0, 4, 4, 1)
         return card
+
+    @staticmethod
+    def _unavailable_label() -> Gtk.Label:
+        label = Gtk.Label(label=_("Air quality isn't available right now."))
+        label.set_css_classes(["text-base", "opacity-80"])
+        label.set_wrap(True)
+        label.set_xalign(0)
+        label.set_margin_start(10)
+        label.set_margin_end(10)
+        label.set_margin_top(15)
+        label.set_margin_bottom(15)
+        return label

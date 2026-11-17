@@ -31,7 +31,8 @@ package.__path__ = [os.path.join(TESTS, "..", "src")]
 sys.modules.setdefault("mousam", package)
 sys.modules["mousam.services.settings"] = settings_module(FakeSettings())
 
-from mousam.state.weather_store import WeatherStore  # noqa: E402
+from mousam.state import weather_store as store_module  # noqa: E402
+from mousam.state.weather_store import WeatherStore, _run_all  # noqa: E402
 
 
 def current_json(pressure=1013):
@@ -190,11 +191,19 @@ class Errors(StoreTestCase):
         self.assertIsNone(store.current_weather)
         self.assertEqual(self.updates, [])
 
-    def test_failed_air_quality(self):
+    def test_failed_air_quality_still_shows_the_weather(self):
         store = self.make_store(air={})
         store._fetch_air = lambda lat, lon: None
         self.refresh_and_wait()
-        self.assertEqual(store.error, "Failed to fetch air pollution data")
+        self.assertEqual(store.status, "ready")
+        self.assertIsNone(store.air_pollution)
+        self.assertEqual(store.current_weather.temperature_2m.data, 21)
+
+    def test_unreadable_air_quality_still_shows_the_weather(self):
+        store = self.make_store(air={"hourly": {}})
+        self.refresh_and_wait()
+        self.assertEqual(store.status, "ready")
+        self.assertIsNone(store.air_pollution)
 
     def test_exception_in_the_client(self):
         client = full_client()
@@ -212,6 +221,44 @@ class Errors(StoreTestCase):
         self.refresh_and_wait()
         self.assertEqual(self.statuses, ["loading", "error", "loading", "ready"])
         self.assertTrue(store.is_ready)
+
+
+class RunAll(unittest.TestCase):
+    """_run_all: required tasks fail the fetch, optional ones become None."""
+
+    def test_an_optional_error_is_none(self):
+        def broken():
+            raise ValueError("no air today")
+        results = _run_all({"hft": lambda: 1, "apt": broken}, optional=("apt",))
+        self.assertEqual(results, {"hft": 1, "apt": None})
+
+    def test_a_required_error_is_raised(self):
+        def broken():
+            raise ValueError("no forecast")
+        with self.assertRaises(ValueError):
+            _run_all({"hft": broken, "apt": lambda: 2}, optional=("apt",))
+
+    def test_an_optional_timeout_is_none(self):
+        saved = store_module.CONNECT_TIMEOUT, store_module.TIMEOUT
+        store_module.CONNECT_TIMEOUT, store_module.TIMEOUT = 0, 0.05
+        release = threading.Event()
+        try:
+            results = _run_all({"hft": lambda: 1, "apt": release.wait}, optional=("apt",))
+        finally:
+            release.set()
+            store_module.CONNECT_TIMEOUT, store_module.TIMEOUT = saved
+        self.assertEqual(results, {"hft": 1, "apt": None})
+
+    def test_a_required_timeout_is_raised(self):
+        saved = store_module.CONNECT_TIMEOUT, store_module.TIMEOUT
+        store_module.CONNECT_TIMEOUT, store_module.TIMEOUT = 0, 0.05
+        release = threading.Event()
+        try:
+            with self.assertRaises(TimeoutError):
+                _run_all({"hft": release.wait})
+        finally:
+            release.set()
+            store_module.CONNECT_TIMEOUT, store_module.TIMEOUT = saved
 
 
 class Joining(StoreTestCase):
