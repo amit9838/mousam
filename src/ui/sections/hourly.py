@@ -2,7 +2,7 @@ import datetime
 import random
 import time
 import gi
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 from gettext import gettext as _, pgettext as C_
 
 from ..icons import get_icon_path, create_weather_icon, ARROW_CENTER
@@ -299,7 +299,10 @@ class HourlyDetails(Gtk.Grid):
             if adj.get_upper() <= 0:
                 return
             adj.disconnect(handler_id)
-            adj.set_value(max(0, adj.get_upper() / 24 * (index - 1)))
+            # Not here: "changed" comes while GTK lays out the list, and moving
+            # it then leaves the list as first drawn (bars missing, the wrong
+            # hours) until something redraws it. Move it once, right after.
+            GLib.idle_add(_scroll_to, adj, max(0, adj.get_upper() / 24 * (index - 1)))
 
         # The handler only holds the index, not a widget, so it can't keep
         # the rebuilt grid alive.
@@ -319,6 +322,12 @@ class HourlyDetails(Gtk.Grid):
         new_val = clamp(hadj.get_value() + delta, hadj.get_lower(), hadj.get_upper() - hadj.get_page_size())
         hadj.set_value(new_val)
         return True
+
+
+def _scroll_to(adjustment: Gtk.Adjustment, value: float) -> bool:
+    adjustment.set_value(value)
+    return GLib.SOURCE_REMOVE
+
 
 def clamp(val, min_val, max_val):
     return max(min_val, min(val, max_val))
