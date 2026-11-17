@@ -15,7 +15,8 @@ Built by composition, with no GTK, so everything can be tested on made-up data:
 - Rule: one rule, `evaluate(ctx) -> Optional[Insight]`.
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
   and is still true, most important first, with the ones that happen together
-  combined (COMBINATIONS) or folded (FOLDS) into one.
+  turned (TURNING_STORMY, TURNING_HEAVY), folded (FOLDS) or combined
+  (COMBINATIONS) into one.
 Which of those insights to show, and when the overview opens by itself, is
 up to announce.py; the engine (state/overview_engine.py) runs the timers.
 """
@@ -192,6 +193,30 @@ class FirstHourRule(Rule):
         if self.snow_phrasing is not None and IS_SNOW(ctx, i):
             phrasing, topic = self.snow_phrasing, "snow"
         return self.insight(phrasing.render(ctx, i), icon=phrasing.icon, topic=topic)
+
+
+class StormRule(Rule):
+    """The first hour with a thunderstorm code. Later, it says that hour's
+    chance of rain: "likely" from RAIN_LIKELY_PROBABILITY, "possible" below
+    it, and no chance when the data has none for that hour."""
+
+    LIKELY = Phrasing("storm.now", "storm.likely")
+    POSSIBLE = Phrasing("storm.now", "storm.possible")
+    NO_CHANCE = Phrasing("storm.now", "storm.later")
+
+    def __init__(self):
+        super().__init__("storm", "extreme", "storm", ICON_STORM)
+        self.test = HasCode(STORM_CODES)
+
+    def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
+        i = ctx.first(self.test)
+        if i is None:
+            return None
+        chance = value_at(ctx.hourly.precip_probability, i)
+        if chance is None:
+            return self.insight(self.NO_CHANCE.render(ctx, i))
+        phrasing = self.LIKELY if chance >= RAIN_LIKELY_PROBABILITY else self.POSSIBLE
+        return self.insight(phrasing.render(ctx, i, chance=round(chance)))
 
 
 class ExtremeFeelsRule(Rule):
@@ -505,17 +530,22 @@ class Fold:
 
 @dataclass(frozen=True)
 class Turning:
-    """Rain (`light`) and heavy rain (`heavy`) later in the same wet spell:
-    one sentence, `key` + the rain message's form (".easing", ".through" or
-    ".start")."""
+    """Rain (`light`) and something `later` in the same wet spell (heavy
+    rain, a storm): one sentence, `key` + the rain message's form
+    (".easing", ".through" or ".start"). `time_name` is the placeholder for
+    the later one's time; None when the sentence doesn't say it."""
 
     light: str
-    heavy: str
+    later: str
     key: str
+    time_name: Optional[str] = None
 
 
 # Tried in this order, each insight used once (docs/overview-rules.md,
-# "Several things at once"): folds, then turning heavy, then the pairs
+# "Several things at once"): turning stormy, folds, turning heavy, the pairs
+TURNING_STORMY = (
+    Turning("rain", "storm", "rain_stormy"),
+)
 FOLDS = (
     Fold("storm", "rain"),
     Fold("storm", "snow"),
@@ -523,8 +553,8 @@ FOLDS = (
     Fold("heavy_snow", "snow"),
 )
 TURNING_HEAVY = (
-    Turning("rain", "heavy_rain", "rain_heavier"),
-    Turning("snow", "heavy_snow", "snow_heavier"),
+    Turning("rain", "heavy_rain", "rain_heavier", time_name="heavy_time"),
+    Turning("snow", "heavy_snow", "snow_heavier", time_name="heavy_time"),
 )
 COMBINATIONS = (
     Combination("storm", "wind", "storm_wind"),
@@ -560,9 +590,10 @@ def not_together(a: Insight, b: Insight) -> Optional[str]:
 
 def combine(insights: Sequence[Insight], ctx: OverviewContext,
             log_steps: bool = True) -> List[Insight]:
-    """`insights` with the ones that happen together folded (FOLDS) and
-    combined (COMBINATIONS) into one; everything else as it is. Each step is
-    logged (debug) unless `log_steps` is off."""
+    """`insights` with the ones that happen together turned (TURNING_STORMY,
+    TURNING_HEAVY), folded (FOLDS) and combined (COMBINATIONS) into one;
+    everything else as it is. Each step is logged (debug) unless `log_steps`
+    is off."""
     result = list(insights)
 
     def note(message: str) -> None:
@@ -573,6 +604,25 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext,
 
     def find(name: str) -> Optional[Insight]:
         return next((i for i in result if what(i) == name and not _is_in(i, combined_ones)), None)
+
+    def turn(turnings: Sequence[Turning], how: str) -> None:
+        for turning in turnings:
+            light, later = find(turning.light), find(turning.later)
+            if light is None or later is None:
+                continue
+            why = not_in_the_same_spell(light, later, ctx)
+            if why:
+                note(f"Overview not turning {how}: {later.kind} with {light.kind} ({light.key}): {why}")
+                continue
+            turned = _turned(light, later, turning, ctx)
+            note(f"Overview turning {how}: {light.kind} ({light.key}) + {later.kind} "
+                 f"({_hh_mm(ctx, later.when)}) -> {turned.key}")
+            result[result.index(later)] = turned
+            result.remove(light)
+            combined_ones.append(turned)
+
+    # First, so a rain that leads a storm isn't folded into it
+    turn(TURNING_STORMY, "stormy")
 
     for fold in FOLDS:
         kept, folded = find(fold.kept), find(fold.folded)
@@ -588,20 +638,7 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext,
             kept, parts=kept.parts + folded.parts, covers=kept.covers + folded.covers
         )
 
-    for turning in TURNING_HEAVY:
-        light, heavy = find(turning.light), find(turning.heavy)
-        if light is None or heavy is None:
-            continue
-        why = not_in_the_same_spell(light, heavy, ctx)
-        if why:
-            note(f"Overview not turning heavy: {heavy.kind} with {light.kind} ({light.key}): {why}")
-            continue
-        turned = _turning_heavy(light, heavy, turning.key, ctx)
-        note(f"Overview turning heavy: {light.kind} ({light.key}) + {heavy.kind} "
-             f"({_hh_mm(ctx, heavy.when)}) -> {turned.key}")
-        result[result.index(heavy)] = turned
-        result.remove(light)
-        combined_ones.append(turned)
+    turn(TURNING_HEAVY, "heavy")
 
     for combination in COMBINATIONS:
         first, second = find(combination.first), find(combination.second)
@@ -619,25 +656,25 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext,
     return result
 
 
-def not_in_the_same_spell(light: Insight, heavy: Insight, ctx: OverviewContext) -> Optional[str]:
-    """Why the heavy rain is not part of the rain that is falling (or
-    starting), or None when it is: it comes after the rain starts and before
-    its first dry hour."""
+def not_in_the_same_spell(light: Insight, later: Insight, ctx: OverviewContext) -> Optional[str]:
+    """Why `later` (heavy rain, a storm) is not part of the rain that is
+    falling (or starting), or None when it is: it comes after the rain
+    starts and before its first dry hour."""
     form = light.key.split(".")[-1]
     if form not in ("easing", "through", "start"):
         return f"no sentence for {light.key}"
-    if heavy.when is None:
-        return "the heavy rain is now"
+    if later.when is None:
+        return "it is now"
     starts = light.when if light.when is not None else ctx.now
-    if heavy.when <= starts:
-        return "the heavy rain comes first"
+    if later.when <= starts:
+        return "it comes with or before the rain"
     if form == "easing":
         ends = light.about
     elif form == "through":
         ends = ctx.window.end
     else:
         ends = _wet_until(ctx, starts)
-    if heavy.when >= ends:
+    if later.when >= ends:
         return f"it comes after the rain eases ({_hh_mm(ctx, ends)})"
     return None
 
@@ -651,27 +688,37 @@ def _wet_until(ctx: OverviewContext, starts: float) -> float:
     )
 
 
-def _turning_heavy(light: Insight, heavy: Insight, key: str, ctx: OverviewContext) -> Insight:
-    """One insight for rain turning heavy: the heavy one's level and rule,
-    the rain's topic and times, true until the heavy hour (or the rain's end,
-    if sooner), counting as both."""
-    key = f"{key}.{light.key.split('.')[-1]}"
-    values = {**light.values, "heavy_time": ctx.clock.approx_time(heavy.when)}
+def _turned(light: Insight, later: Insight, turning: Turning, ctx: OverviewContext) -> Insight:
+    """One insight for rain turning heavy or stormy: the later one's rule,
+    level and topic, the rain's times, true until the later one's hour (or
+    the rain's end, if sooner), counting as both.
+
+    A part is about the hour the sentence says. Without the later one's time
+    in it, the later one's parts are about the rain's hour, so a storm moving
+    within the spell isn't news: the sentence stays the same.
+    """
+    key = f"{turning.key}.{light.key.split('.')[-1]}"
+    values = dict(light.values)
+    later_parts = later.parts
+    if turning.time_name:
+        values[turning.time_name] = ctx.clock.approx_time(later.when)
+    else:
+        later_parts = tuple((kind, key, level, light.about) for kind, _key, level, _about in later.parts)
     return Insight(
-        heavy.kind,
+        later.kind,
         ctx.messages.say(key, **values),
-        min(light.valid_until, heavy.valid_until),
-        heavy.level,
-        heavy.icon,
-        heavy.heading,
-        topic=light.topic,
+        min(light.valid_until, later.valid_until),
+        later.level,
+        later.icon,
+        later.heading,
+        topic=later.topic,
         key=key,
         about=light.about,
         when=light.when,
         values=values,
-        parts=light.parts + heavy.parts,
-        topics=light.topics,
-        covers=light.covers + heavy.covers,
+        parts=light.parts + later_parts,
+        topics=later.topics + tuple(t for t in light.topics if t not in later.topics),
+        covers=light.covers + later.covers,
     )
 
 
@@ -728,13 +775,7 @@ class RuleBook:
     def default(cls) -> "RuleBook":
         """Every rule."""
         return cls([
-            FirstHourRule(
-                "storm",
-                HasCode(STORM_CODES),
-                Phrasing("storm.now", "storm.later", ICON_STORM),
-                level="extreme",
-                topic="storm",
-            ),
+            StormRule(),
             FirstHourRule(
                 "freezing",
                 HasCode(FREEZING_CODES),

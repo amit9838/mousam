@@ -31,6 +31,7 @@ from mousam.core.overview.context import (  # noqa: E402
 from mousam.core.overview.hour_tests import AtLeast  # noqa: E402
 from mousam.core.overview.insight import Insight  # noqa: E402
 from mousam.core.overview.announce import NEWS, REMINDER, AnnounceMemory, decide, should_notify  # noqa: E402
+from mousam.core.overview.messages import overview_messages  # noqa: E402
 from mousam.core.overview.rules import RuleBook, SunRule  # noqa: E402
 
 UTC = timezone.utc
@@ -315,7 +316,8 @@ class TestRuleBook(unittest.TestCase):
             self.assertEqual(priorities, sorted(priorities, reverse=True))
 
     def test_busy_forecast(self):
-        # Every rule speaks; the wind (an hour after the storm) is combined into it
+        # Every rule speaks; the rain (now, easing at 12:00) leads the storm
+        # (11:00), so the wind is combined with the heavy snow instead
         each = {rule.kind for rule in RuleBook.default().rules if rule.evaluate(context(**self.BUSY))}
         self.assertEqual(
             each,
@@ -324,7 +326,8 @@ class TestRuleBook(unittest.TestCase):
         )
         found = insights(context(**self.BUSY))
         self.assertNotIn("wind", found)
-        self.assertEqual(found["storm"].key, "storm_wind.later")
+        self.assertEqual(found["storm"].key, "rain_stormy.easing")
+        self.assertEqual(found["heavy_precipitation"].key, "heavy_snow_wind.later")
 
     def test_combining_is_logged_only_when_asked(self):
         # The engine's second run, for a fresh wording, doesn't log it again
@@ -363,7 +366,7 @@ class TestIdentity(unittest.TestCase):
     def test_later_is_about_its_hour_and_now_about_nothing(self):
         self.assertEqual(self.one("storm", codes={2: 95}).about, at_hour(2))
         self.assertIsNone(self.one("storm", codes={0: 95}).about)
-        self.assertEqual(self.one("storm", codes={2: 95}).key, "storm.later")
+        self.assertEqual(self.one("storm", codes={2: 95}, precip_probability={2: 70}).key, "storm.likely")
 
     def test_same_while_time_passes(self):
         rain = dict(precip_probability={3: 70})
@@ -422,7 +425,8 @@ class TestCombine(unittest.TestCase):
         found = insights(context(codes={2: 95}, precip_probability={2: 70}))
         self.assertNotIn("precipitation", found)
         storm = found["storm"]
-        self.assertEqual(storm.key, "storm.later")
+        self.assertEqual(storm.key, "storm.likely")
+        self.assertIn("70%", storm.message)
         self.assertEqual(len(storm.parts), 2)
         self.assertEqual(storm.covers, ("storm", "rain"))
         self.assertEqual(storm.topics, ("storm",))
@@ -446,6 +450,130 @@ class TestCombine(unittest.TestCase):
     def test_imperial_speed(self):
         storm = insights(context(imperial=True, codes={2: 95}, windspeed={2: 30}))["storm"]
         self.assertIn("30 mph", storm.message)
+
+
+class TestStormChance(unittest.TestCase):
+    """A storm later says its own hour's chance of rain."""
+
+    def storm(self, **forecast) -> Insight:
+        return insights(context(**forecast))["storm"]
+
+    def test_likely(self):
+        storm = self.storm(codes={2: 95}, precip_probability={2: 80})
+        self.assertEqual(storm.key, "storm.likely")
+        self.assertIn("80%", storm.message)
+        self.assertIn("12:00", storm.message)
+
+    def test_possible_below_the_rain_threshold(self):
+        storm = self.storm(codes={2: 95}, precip_probability={2: 30})
+        self.assertEqual(storm.key, "storm.possible")
+        self.assertIn("30%", storm.message)
+
+    def test_no_chance_in_the_data(self):
+        storm = self.storm(codes={2: 95}, precip_probability={2: None})
+        self.assertEqual(storm.key, "storm.later")
+        self.assertNotIn("%", storm.message)
+
+    def test_now_says_no_chance(self):
+        storm = self.storm(codes={0: 95}, precip_probability={0: 90})
+        self.assertEqual(storm.key, "storm.now")
+        self.assertNotIn("%", storm.message)
+
+    def test_the_pairs_say_no_chance(self):
+        storm = self.storm(codes={2: 95}, precip_probability={2: 80}, windspeed={2: 45})
+        self.assertEqual(storm.key, "storm_wind.later")
+        self.assertNotIn("%", storm.message)
+
+    def test_crossing_the_threshold_is_news_the_chance_alone_is_not(self):
+        def fingerprint(chance):
+            return self.storm(codes={2: 95}, precip_probability={2: chance}).fingerprint
+        self.assertEqual(fingerprint(60), fingerprint(85))
+        self.assertNotEqual(fingerprint(30), fingerprint(60))
+
+
+class TestTurningStormy(unittest.TestCase):
+    """Rain now (or starting) and a storm later in the same wet spell: one
+    sentence, the rain first, without the storm's hour."""
+
+    # Rain from 11:00 to 15:00 (dry from 15:00), a storm at 13:00
+    RAIN_THEN_STORM = dict(precip_probability={1: 70, 2: 70, 3: 70, 4: 70}, codes={3: 95})
+
+    def test_rain_starting_then_a_storm(self):
+        found = insights(context(**self.RAIN_THEN_STORM))
+        self.assertNotIn("precipitation", found)
+        turned = found["storm"]
+        self.assertEqual((turned.key, turned.level, turned.topic), ("rain_stormy.start", "extreme", "storm"))
+        self.assertIn("11:00", turned.message)
+        self.assertIn("70%", turned.message)
+        self.assertNotIn("13:00", turned.message)  # no time for the storm
+        self.assertEqual(turned.topics, ("storm", "rain"))
+        self.assertEqual(len(turned.parts), 2)
+        self.assertEqual(turned.valid_until, at_hour(1))  # then the rain is now
+
+    def test_rain_now_turning_stormy_then_easing(self):
+        found = insights(context(precip_probability={0: 70, 1: 70, 2: 70, 3: 70}, codes={2: 95}))
+        turned = found["storm"]
+        self.assertEqual(turned.key, "rain_stormy.easing")
+        self.assertIn("14:00", turned.message)  # the first dry hour
+        self.assertNotIn("12:00", turned.message)
+        self.assertEqual(turned.valid_until, at_hour(2))  # then the storm is now
+
+    def test_rain_all_through_the_window(self):
+        wet = {k: 70 for k in range(-1, HOURS - 1)}
+        turned = insights(context(precip_probability=wet, codes={2: 95}))["storm"]
+        self.assertEqual(turned.key, "rain_stormy.through")
+
+    def test_in_the_same_hour_it_is_still_the_fold(self):
+        found = insights(context(precip_probability={2: 70, 3: 70}, codes={2: 95}))
+        self.assertNotIn("precipitation", found)
+        self.assertEqual(found["storm"].key, "storm.likely")
+
+    def test_a_storm_before_the_rain_is_folded(self):
+        found = insights(context(precip_probability={2: 70, 3: 70}, codes={1: 95}))
+        self.assertNotIn("precipitation", found)
+        self.assertEqual(found["storm"].key, "storm.possible")  # 0% at 11:00
+
+    def test_a_storm_after_the_rain_eases_is_its_own(self):
+        found = insights(context(precip_probability={0: 70, 1: 70}, codes={3: 95}))
+        self.assertEqual(found["precipitation"].key, "rain.easing")
+        self.assertEqual(found["storm"].key, "storm.possible")
+
+    def test_the_storm_moving_within_the_spell_is_not_news(self):
+        memory = AnnounceMemory()
+        memory.note_said(insights(context(**self.RAIN_THEN_STORM))["storm"], NOW)
+        later_storm = dict(self.RAIN_THEN_STORM, codes={2: 95})
+        self.assertFalse(memory.is_new(insights(context(**later_storm))["storm"]))
+
+    def test_the_rain_moving_is_news(self):
+        memory = AnnounceMemory()
+        memory.note_said(insights(context(**self.RAIN_THEN_STORM))["storm"], NOW)
+        later_rain = dict(self.RAIN_THEN_STORM, precip_probability={2: 70, 3: 70, 4: 70})
+        self.assertTrue(memory.is_new(insights(context(**later_rain))["storm"]))
+
+    def test_the_wind_keeps_its_own_turn(self):
+        found = insights(context(windspeed={3: 45}, **self.RAIN_THEN_STORM))
+        self.assertEqual(found["storm"].key, "rain_stormy.start")
+        self.assertIn("wind", found)
+
+    def test_heavy_rain_keeps_its_own_turn(self):
+        found = insights(context(precipitation={2: 9}, **self.RAIN_THEN_STORM))
+        self.assertEqual(found["storm"].key, "rain_stormy.start")
+        self.assertEqual(found["heavy_precipitation"].key, "heavy_rain.later")
+
+    def test_snow_doesnt_turn_stormy(self):
+        snow = dict(self.RAIN_THEN_STORM, codes={1: 71, 2: 71, 3: 95, 4: 71})
+        found = insights(context(**snow))
+        self.assertEqual(found["storm"].key, "storm.likely")
+        self.assertEqual(found["precipitation"].topic, "snow")
+
+    def test_wordings_fit_the_pill(self):
+        messages = overview_messages()
+        keys = ("storm.likely", "storm.possible", "rain_stormy.easing", "rain_stormy.through",
+                "rain_stormy.start")
+        for key in keys:
+            for wording in messages[key]:
+                text = wording.format(time="12:30 PM", chance=100)
+                self.assertLess(len(text), 90, text)
 
 
 class TestTurningHeavy(unittest.TestCase):

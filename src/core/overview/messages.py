@@ -37,6 +37,37 @@ def overview_messages() -> Dict[str, List[Wording]]:
             # Translators: {time} is a rounded time of day, like "6:30 PM"
             _("Expect thunderstorms around {time}. Plan to be indoors by then."),
         ],
+        "storm.likely": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Thunderstorms are likely around {time} with {chance}% chance of rain. Be indoors by then."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Expect thunderstorms around {time}, with {chance}% chance of rain. Be indoors by then."),
+        ],
+        "storm.possible": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
+            _("Thunderstorms are possible around {time}, with {chance}% chance of rain."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
+            _("Thunderstorms may come around {time}, with {chance}% chance of rain."),
+        ],
+        # ---------- Rain turning stormy (TURNING_STORMY in rules.py) ----------
+        "rain_stormy.easing": [
+            # Translators: {time} is when the rain eases off, a rounded time of day, like "6:30 PM"
+            _("Rain right now, turning stormy before it eases off around {time}."),
+            # Translators: {time} is when the rain eases off, a rounded time of day, like "6:30 PM"
+            _("Rain for now, with thunderstorms before it clears around {time}."),
+        ],
+        "rain_stormy.through": [
+            # Translators: {time} is when the rain ends, a rounded time of day, like "6:30 PM"
+            _("Rain right now, turning stormy later and lasting until about {time}."),
+            # Translators: {time} is when the rain ends, a rounded time of day, like "6:30 PM"
+            _("Expect rain until about {time}, with thunderstorms later on."),
+        ],
+        "rain_stormy.start": [
+            # Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Rain from around {time} with {chance}% chance, turning stormy later."),
+            # Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Expect rain from around {time} with {chance}% chance, and thunderstorms later on."),
+        ],
         # ---------- Two things at once (combined, see COMBINATIONS in rules.py) ----------
         "storm_wind.now": [
             # Translators: {speed} is a wind speed with its unit, like "45 km/h"
