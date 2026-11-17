@@ -382,6 +382,18 @@ class TestPlanner(unittest.TestCase):
         # Then the highest priority × time since shown
         self.assertEqual(self.decide(both, self.planner.next_announce), ("precipitation", True))
 
+    def test_turn_order(self):
+        both = [self.rain, self.wind]
+        # Never shown: by priority
+        self.assertEqual(self.planner.turn_order(both, NOW), [self.rain, self.wind])
+        self.decide(both, NOW)  # rain shown
+        # Wind never shown, so it is next; the first is always whose_turn's
+        order = self.planner.turn_order(both, NOW + MIN)
+        self.assertEqual(order, [self.wind, self.rain])
+        self.assertIs(order[0], self.planner.whose_turn(both, NOW + MIN))
+        self.assertEqual(self.planner.turn(self.rain, NOW + MIN),
+                         (0, self.rain.priority * 1.0))
+
     def test_escalation_opens_at_once(self):
         self.decide([self.rain], NOW)
         self.assertEqual(self.decide([self.storm, self.rain], NOW + 10 * MIN), ("storm", True))

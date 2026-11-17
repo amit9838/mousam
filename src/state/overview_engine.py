@@ -32,6 +32,7 @@ Publish / subscribe: the engine emits "overview-changed" with `announce`
 `overview_engine.current()` and `overview_engine.heading`.
 """
 
+import logging
 import random
 import time
 from typing import List, Optional, Tuple
@@ -152,6 +153,8 @@ class OverviewEngine(GObject.Object):
         insights, window_heading = self._insights(now)
         showing = self.insight.kind if self.current() is not None else None
         insight, announce = self._planner.decide(insights, showing, now)
+        if logger.isEnabledFor(logging.DEBUG):
+            self._log_turns(insights, insight, announce, now)
         if insight is None:
             self._set(None, None, announce=False)
             return GLib.SOURCE_REMOVE
@@ -173,6 +176,37 @@ class OverviewEngine(GObject.Object):
         # Run again before the message stops being true, or to open it again
         self._run_in(min(insight.valid_until, self._planner.next_announce) - now)
         return GLib.SOURCE_REMOVE
+
+    def _log_turns(self, insights: List[Insight], chosen: Optional[Insight],
+                   announce: bool, now: float) -> None:
+        """Debug log: every insight with its priority and turn, the score,
+        the one chosen now and the one in line for the next opening."""
+        planner = self._planner
+        pending = planner.worth_saying(insights)
+        next_at = planner.next_announce
+        logger.debug(
+            f"Overview: {len(insights)} insights, {len(pending)} taking turns, "
+            f"score {planner.score(pending):.2f}"
+        )
+        # The turns as they stand now, after decide() noted any opening;
+        # the ones not taking turns (calm beside something else) go last
+        resting = [i for i in insights if i not in pending]
+        for insight in planner.turn_order(pending, now) + resting:
+            never_shown, value = planner.turn(insight, now)
+            turn = "never shown" if never_shown else f"turn {value:.0f}"
+            taking_turns = "" if insight in pending else ", not taking turns"
+            logger.debug(
+                f"  {insight.kind}: priority {insight.priority}, "
+                f"{insight.severity}, {turn}{taking_turns}"
+            )
+        if chosen is None:
+            return
+        winner = f"{chosen.kind} ({'opens' if announce else 'silent update'})"
+        following = planner.turn_order(pending, next_at)
+        logger.debug(
+            f"Overview winner: {winner}; next: {following[0].kind} "
+            f"at the next opening in {int(next_at - now)}s"
+        )
 
     def _insights(self, now: float) -> Tuple[List[Insight], Optional[str]]:
         """(every insight true now, most important first; the window's

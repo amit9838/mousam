@@ -909,13 +909,21 @@ class AnnouncePlanner:
         minutes *= 1 + spread * OVERVIEW_ANNOUNCE_SPREAD
         return min(max(minutes, OVERVIEW_ANNOUNCE_MIN_MINUTES), OVERVIEW_ANNOUNCE_MAX_MINUTES)
 
+    def turn(self, insight: Insight, now: float) -> Tuple[int, float]:
+        """How strongly `insight` wants the next opening: (1, priority) if
+        never shown, else (0, priority × minutes since it was last shown)."""
+        last = self.last_shown.get(insight.kind)
+        if last is None:
+            return (1, insight.priority)  # never shown: first, by priority
+        return (0, insight.priority * (now - last) / 60)
+
+    def turn_order(self, insights: List[Insight], now: float) -> List[Insight]:
+        """The insights in the order they would get an opening at `now`."""
+        # sorted() keeps ties in their order, so the first is whose_turn's
+        return sorted(insights, key=lambda i: self.turn(i, now), reverse=True)
+
     def whose_turn(self, insights: List[Insight], now: float) -> Insight:
-        def turn(insight: Insight):
-            last = self.last_shown.get(insight.kind)
-            if last is None:
-                return (1, insight.priority)  # never shown: first, by priority
-            return (0, insight.priority * (now - last) / 60)
-        return max(insights, key=turn)
+        return max(insights, key=lambda i: self.turn(i, now))
 
     def decide(self, insights: List[Insight], showing: Optional[str], now: float,
                rng: Optional[random.Random] = None) -> Tuple[Optional[Insight], bool]:
