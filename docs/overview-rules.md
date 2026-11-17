@@ -211,7 +211,7 @@ A notification is **withdrawn** when it is no longer right or needed:
 - its topic has no insight any more (it stopped being true, or the forecast
   changed: rain turning to snow withdraws rain)
 - the location changes
-- notifications or the overview are turned off
+- notifications are turned off (or the overview and notifications both are)
 - the main window comes into view: the overview shows it there
 
 Either can be turned off in Preferences: *Weather Overview* and *Show
