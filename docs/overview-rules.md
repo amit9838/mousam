@@ -29,6 +29,9 @@ silent. When it speaks, it gives one **insight**:
 - **what it is about**: the forecast hour or the event it describes, or
   "now". With the rule, the message and the level, this tells whether it
   is news (see "The same insight, or a new one")
+- **when it happens**: the hour it starts, or now. Usually the same as what
+  it is about; rain easing around 4 PM is about 4 PM but happens now.
+  Combining uses it (see "Several things at once")
 - an optional **icon**, shown before the message
 - an optional **heading**, like *Tomorrow*; otherwise the window's heading is used
 - **valid until**: the moment the message stops being true
@@ -92,9 +95,10 @@ failure is logged in debug mode only.
 ### Which insights are there
 
 Every rule runs. Insights that are no longer true are dropped, and the rest
-are sorted by priority, highest first. The calm rule always speaks, so there
-is always at least one insight. Nothing is thrown away: the insights take
-turns (below).
+are sorted by priority, highest first. Then things that happen together are
+combined or folded into one (see "Several things at once"). The calm rule
+always speaks, so there is always at least one insight. Nothing is thrown
+away: the insights take turns (below).
 
 ### When the overview opens, and with what
 
@@ -147,29 +151,55 @@ something more urgent turning up (a storm) opens first, at once.
 **The gap.** Nothing opens within **5 minutes** of the last opening; an
 insight that is due opens as soon as those 5 minutes are up.
 
-**Several urgent things at once: a group.** Rain often comes with
-thunderstorms or strong wind around the same time. So that one doesn't hide
-the other, the insight that opens **leads a group**, and up to two more join
-it when they:
+**Several things at once: combine, fold, or the next turn.** Every
+opening shows **one sentence**. Two things that happen together become one
+sentence only when a natural one exists; otherwise the second one gets the
+next turn. A single insight is always shown as it is: rain with no storm or
+wind is the plain rain sentence.
 
-- are **medium or above** (low and calm never join)
-- happen within **60 minutes** of the lead: the hour or event they are
-  about, or now for "right now"
-- are about the coming hours (tomorrow never joins)
-- don't share a topic with one already in it (heavy rain beats rain)
+*Combine.* A known pair becomes one sentence, with its own message, when
+both happen within **60 minutes** of each other, and both now or both
+later (one now and one later is not combined: "right now" would be wrong
+for one of them, "from around" for the other):
 
-The most urgent join first (level, then priority). Each member keeps its
-own whole sentence, so every time and value stays right:
+| Pair | Message |
+| --- | --- |
+| storm + wind | "Thunderstorms with strong wind, around 45 km/h, are likely from around 4:00 PM." |
+| storm + heavy rain | "Thunderstorms with heavy rain are likely from around 4:00 PM." |
+| heavy rain + wind | "Heavy rain and strong wind, around 45 km/h, are likely from around 4:00 PM." |
+| heavy snow + wind | "Heavy snow and strong wind, around 45 km/h, are likely from around 4:00 PM." |
+| rain + wind | "Rain and strong wind, around 45 km/h, are likely from around 4:00 PM." |
+| snow + wind | "Snow and strong wind, around 45 km/h, are likely from around 4:00 PM." |
 
-- in the window, the members take turns in the overview, the lead first
-  for its open time, then each other one for 10 seconds, with "1 of 3"
-  beside it; the heading has the lead's colour
-- in a notification, their sentences are on separate lines, the lead first
+Each also has a "right now" message ("Thunderstorms with strong wind,
+around 45 km/h, are likely right now."). The pairs are tried in this order,
+each insight used once, so storm + heavy rain + wind becomes storm + wind,
+and the heavy rain gets the next turn. The combined insight:
 
-Opening a group counts as announcing every member, so none opens on its own
-minutes later. The group is news when any member is. A member that stops
-being true leaves the group, without opening. One that didn't join (too far
-apart, below medium, or a fourth) is not lost: it keeps its own turn.
+- says the earlier of the two times, as "from around", so it is true for
+  both; it is true until the earlier of the two stops being true
+- has the higher level of the two, and the rule, topic and priority of the
+  more important one (storm, then heavy rain or snow, then rain or snow,
+  then wind)
+- covers both: announcing it counts as saying each of them, so when the
+  wind drops later, the storm alone is not news again
+
+*Fold.* Some insights already say another one, within the same 60 minutes
+(and both now or both later):
+
+| Kept | Folded into it |
+| --- | --- |
+| storm | rain or snow |
+| heavy rain | rain |
+| heavy snow | snow |
+
+The folded insight isn't shown, but it counts as said with the one it is
+folded into. Folding comes before combining.
+
+*The next turn.* Anything not combined or folded stays its own insight:
+a storm now and UV three hours later, a third urgent thing, one now and
+one later. It is news, so it opens on its own once the 5-minute gap is
+over. Nothing is lost, and nothing is shown at once.
 
 **Between openings** the text on screen is kept up to date without opening
 (the values change, the wording stays). When the shown insight stops being
@@ -181,14 +211,16 @@ true, the most important remaining one takes its place, also without opening.
   and reminders.
 - While the window is minimized, hidden by compact mode, or otherwise out of
   sight, it is sent as a desktop notification instead (the city as its
-  title, the message as its body; clicking it opens the main window). Only
+  title, the sentence as its body; clicking it opens the main window). Only
   news of medium or above is sent, plus reminders of extreme ones (storms).
   Low and calm are never sent.
 
 **One notification per topic.** Each topic has its own notification, so
 air quality and rain can be there side by side. A new message replaces only
 the one on the same topic: heavy rain shares the rain topic, so "Heavy rain
-around 5:00 PM" replaces "Rain is likely around 4:00 PM".
+around 5:00 PM" replaces "Rain is likely around 4:00 PM". A combined insight
+is sent under the more important topic and covers the other: "storm + wind"
+withdraws the wind notification.
 
 | Topic | Rules |
 | --- | --- |
@@ -209,7 +241,8 @@ around 5:00 PM" replaces "Rain is likely around 4:00 PM".
 A notification is **withdrawn** when it is no longer right or needed:
 
 - its topic has no insight any more (it stopped being true, or the forecast
-  changed: rain turning to snow withdraws rain)
+  changed: rain turning to snow withdraws rain); a combined one as soon as
+  either of its parts stops being true, since its sentence names both
 - the location changes
 - notifications are turned off (or the overview and notifications both are)
 - the main window comes into view: the overview shows it there
