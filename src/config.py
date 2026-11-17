@@ -133,6 +133,9 @@ THRESHOLDS = {
 OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stays fast
 OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
 OVERVIEW_HOURS = 12  # how far ahead the overview looks
+# Auto refresh used when the overview or notifications are on and it is off:
+# without it they would never see a changed forecast.
+OVERVIEW_AUTO_REFRESH_MINUTES = 15
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
 # When the overview opens by itself (core/overview/announce.py): something
 # new at once, then reminders of it that wait longer each time.

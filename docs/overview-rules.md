@@ -119,6 +119,12 @@ later refresh (`OVERVIEW_FIRST_DELAY`, `OVERVIEW_REFRESH_DELAY`). After that
 it runs again only when something changes: an insight stops being true, a
 reminder is due, or the gap after an opening ends.
 
+**Auto refresh is required.** The overview only sees a changed forecast
+after the data is refreshed, so while the overview or notifications are on,
+auto refresh can't be off. Turning either on while auto refresh is off sets
+it to **every 15 minutes** (`OVERVIEW_AUTO_REFRESH_MINUTES`), and Preferences
+doesn't offer "Off" until both are off again.
+
 **The same insight, or a new one.** Two insights are the same when they
 come from the same rule, with the same message, the same level, and
 about the same forecast hour or event. Time passing doesn't change that

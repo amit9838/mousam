@@ -64,6 +64,11 @@ class WeatherApplication(Adw.Application):
         overview_engine.connect("overview-changed", self._on_overview_changed)
         settings.connect("changed::show-notifications", self._on_show_notifications_changed)
 
+        # The overview and notifications need auto refresh, however the keys
+        # are changed (Preferences, Reset, or gsettings on the command line)
+        for key in ("show-overview", "show-notifications", "auto-refresh-interval"):
+            settings.connect(f"changed::{key}", self._on_auto_refresh_needs_changed)
+
     def do_shutdown(self):
         self.auto_refresh.stop()
         Adw.Application.do_shutdown(self)
@@ -111,6 +116,7 @@ class WeatherApplication(Adw.Application):
             self.main_window.maximize()
 
         self.main_window.present()
+        settings.require_auto_refresh()
         self.auto_refresh.setup()
 
     def _on_overview_changed(self, engine, announce: bool) -> None:
@@ -159,6 +165,11 @@ class WeatherApplication(Adw.Application):
     def _on_show_notifications_changed(self, *_args) -> None:
         if self.overview_notifications is not None and not settings.show_notifications:
             self.overview_notifications.withdraw_all("notifications turned off")
+
+    def _on_auto_refresh_needs_changed(self, *_args) -> None:
+        # Turns auto refresh back on if it was turned off while needed; the
+        # main window restarts the timer on changed::auto-refresh-interval
+        settings.require_auto_refresh()
 
     def _on_auto_refresh_tick(self):
         # The windows show the result: they listen to the store's status
