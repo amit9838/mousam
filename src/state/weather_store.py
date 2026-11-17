@@ -25,7 +25,7 @@ from ..services.selected_city import get_time_difference
 from ..services.network import check_internet_connection
 from ..core.locations import parse_coords_key
 from ..core.log import get_logger
-from ..config import TIMEOUT
+from ..config import CONNECT_TIMEOUT, TIMEOUT
 
 logger = get_logger("data_manager")
 
@@ -250,7 +250,8 @@ def build_air_pollution(raw: dict) -> AirPollutionData:
 def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
     """Run each task on its own thread and return {name: result}.
 
-    Each gets TIMEOUT seconds; the first one still running after that, or
+    Each gets CONNECT_TIMEOUT + TIMEOUT seconds, as long as its request may
+    take to connect and answer; the first one still running after that, or
     the first error, is raised.
     """
     results, errors = {}, []
@@ -271,7 +272,7 @@ def _run_all(tasks: Dict[str, Callable], timeout_message: str = "") -> dict:
     for thread in threads:
         thread.start()
     for thread in threads:
-        thread.join(timeout=TIMEOUT)
+        thread.join(timeout=CONNECT_TIMEOUT + TIMEOUT)
         if thread.is_alive():
             raise TimeoutError(timeout_message or f"{thread.name} fetch timed out")
     if errors:

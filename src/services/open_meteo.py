@@ -12,7 +12,7 @@ import requests
 
 from ..core.cache import cached
 from ..core.log import get_logger
-from ..config import HPA_TO_INHG, OPEN_METEO_BASE_URL, TIMEOUT
+from ..config import HPA_TO_INHG, OPEN_METEO_BASE_URL, REQUEST_TIMEOUT
 
 logger = get_logger("API_Weather")
 
@@ -71,7 +71,7 @@ def unit_params(unit: str) -> str:
 def _get_json(url: str, what: str):
     """The JSON at url, or None (logged) when the request fails."""
     try:
-        response = requests.get(url, timeout=TIMEOUT)
+        response = requests.get(url, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

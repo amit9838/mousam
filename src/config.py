@@ -22,7 +22,12 @@ METEOCONS_URL = "https://github.com/basmilius/meteocons"
 GOOGLE_WEATHER_ICONS_URL = "https://github.com/mrdarrengriffin/google-weather-icons"
 
 # --- Networking & Timeout ---
-TIMEOUT = 15
+TIMEOUT = 15  # seconds to wait for a server's answer
+# Seconds to connect to one of a server's addresses. Short, so a network
+# with a broken IPv6 route falls back to IPv4 quickly: requests tries the
+# addresses one after the other, each with this timeout.
+CONNECT_TIMEOUT = 5
+REQUEST_TIMEOUT = (CONNECT_TIMEOUT, TIMEOUT)  # for requests: (connect, read)
 INTERNET_CACHE_TTL = 120
 DEFAULT_TIMEZONE = "UTC"
 

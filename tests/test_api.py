@@ -28,7 +28,7 @@ sys.modules.setdefault("mousam", package)
 
 from mousam.services import air_quality, geocoding, open_meteo  # noqa: E402
 from mousam.core.forecast_client import ForecastClient  # noqa: E402
-from mousam.config import HPA_TO_INHG, TIMEOUT  # noqa: E402
+from mousam.config import HPA_TO_INHG, REQUEST_TIMEOUT  # noqa: E402
 
 
 class ApiTestCase(unittest.TestCase):
@@ -65,7 +65,7 @@ class Current(ApiTestCase):
         self.assertIn("&current=" + ",".join(open_meteo.CURRENT_FIELDS), url)
         self.assertTrue(url.endswith("&timeformat=unixtime"))
         self.assertNotIn("fahrenheit", url)
-        self.assertEqual(requests.calls[0]["timeout"], TIMEOUT)
+        self.assertEqual(requests.calls[0]["timeout"], REQUEST_TIMEOUT)
 
     def test_imperial_pressure_in_inhg(self):
         requests.response = FakeResponse(

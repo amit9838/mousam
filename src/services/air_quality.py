@@ -10,7 +10,7 @@ import requests
 
 from ..core.cache import cached
 from ..core.log import get_logger
-from ..config import AIR_QUALITY_BASE_URL, TIMEOUT
+from ..config import AIR_QUALITY_BASE_URL, REQUEST_TIMEOUT
 
 logger = get_logger("API_AirPollution")
 
@@ -46,7 +46,7 @@ def fetch_air_quality(latitude: float, longitude: float) -> Optional[dict]:
         + "&timeformat=unixtime&past_days=3&forecast_days=3&timezone=auto"
     )
     try:
-        response = requests.get(url, timeout=TIMEOUT)
+        response = requests.get(url, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

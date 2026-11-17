@@ -6,7 +6,7 @@ seconds unless asked with force.
 import time
 import socket
 import requests
-from ..config import TIMEOUT, INTERNET_CACHE_TTL, DOMAINS
+from ..config import TIMEOUT, REQUEST_TIMEOUT, INTERNET_CACHE_TTL, DOMAINS
 from ..core.log import get_logger
 
 logger = get_logger("network")
@@ -39,7 +39,7 @@ def check_internet_socket():
 
 def check_internet_domain(url):
     try:
-        requests.get(url, timeout=TIMEOUT)
+        requests.get(url, timeout=REQUEST_TIMEOUT)
         return True
     except (requests.ConnectionError, requests.Timeout):
         return False
