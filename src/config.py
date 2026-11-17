@@ -1,5 +1,3 @@
-from gettext import gettext as _
-
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
 # Filled in by Meson from the project version in meson.build
@@ -104,14 +102,10 @@ PRESSURE_GAUGE_SPAN = 50
 PRESSURE_LOW = 1000
 PRESSURE_HIGH = 1026
 
-# --- Application Preferences ---
-AUTO_REFRESH_OPTIONS = [
-    (0, _("Off")),
-    (15, _("Every 15 minutes")),
-    (30, _("Every 30 minutes")),
-    (60, _("Every hour")),
-    (120, _("Every 2 hours")),
-]
+# --- Refreshing ---
+# How often the weather refreshes by itself, always (no setting): the
+# overview and notifications only see a changed forecast after a refresh.
+AUTO_REFRESH_MINUTES = 10
 
 
 # Thresholds based on WHO Global Air Quality Guidelines 2021 (in µg/m³)
@@ -138,9 +132,6 @@ THRESHOLDS = {
 OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stays fast
 OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
 OVERVIEW_HOURS = 12  # how far ahead the overview looks
-# Auto refresh used when the overview or notifications are on and it is off:
-# without it they would never see a changed forecast.
-OVERVIEW_AUTO_REFRESH_MINUTES = 15
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
 # When the overview opens by itself (core/overview/announce.py): something
 # new at once, then reminders of it that wait longer each time.

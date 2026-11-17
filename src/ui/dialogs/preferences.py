@@ -7,7 +7,6 @@ from gettext import gettext as _
 
 from ...services.settings import settings
 from ..gtk_utils import create_toast
-from ...config import AUTO_REFRESH_OPTIONS
 from ...core.log import log_manager
 
 gi.require_version("Gtk", "4.0")
@@ -131,8 +130,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         self._notification_switch.set_active(settings.show_notifications)
         self._notification_switch.connect("notify::active", self._on_notifications_toggled)
         group.add(self._notification_switch)
-
-        self._add_auto_refresh_row(group)
         return group
 
     def _build_debug_group(self) -> Adw.PreferencesGroup:
@@ -223,33 +220,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         """Show a symbolic icon at the start of a row."""
         row.add_prefix(Gtk.Image(icon_name=icon_name))
 
-    def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
-        row = Adw.ComboRow(title=_("Auto Refresh"))
-        self._add_prefix_icon(row, "view-refresh-symbolic")
-        self._auto_refresh_row = row
-        self._auto_refresh_options = AUTO_REFRESH_OPTIONS
-        self._auto_refresh_handler = row.connect("notify::selected", self._on_auto_refresh_changed)
-        self._update_auto_refresh_row()
-        parent.add(row)
-
-    def _update_auto_refresh_row(self) -> None:
-        """Show the saved interval, offering "Off" only while the overview and
-        notifications are both off: they need auto refresh."""
-        required = settings.auto_refresh_required
-        self._auto_refresh_options = [
-            option for option in AUTO_REFRESH_OPTIONS if option[0] > 0 or not required
-        ]
-        values = [option[0] for option in self._auto_refresh_options]
-        current = settings.auto_refresh_interval
-        selected_idx = values.index(current) if current in values else 0
-
-        # A new model moves the selection; that isn't the user choosing an interval
-        row = self._auto_refresh_row
-        with row.handler_block(self._auto_refresh_handler):
-            row.set_model(Gtk.StringList.new([option[1] for option in self._auto_refresh_options]))
-            row.set_selected(selected_idx)
-        row.set_subtitle(_("Needed by the overview and notifications") if required else "")
-
     # ------------------------------------------------------------------
     # UI Binding & Initial State
     # ------------------------------------------------------------------
@@ -316,14 +286,10 @@ class WeatherPreferences(Adw.PreferencesDialog):
 
     def _on_notifications_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         settings.show_notifications = row.get_active()
-        settings.require_auto_refresh()
-        self._update_auto_refresh_row()
 
     def _on_overview_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         # The overview engine and section follow the setting themselves
         settings.show_overview = row.get_active()
-        settings.require_auto_refresh()
-        self._update_auto_refresh_row()
 
     def _on_run_in_background_toggled(self, row: Adw.SwitchRow, _pspec) -> None:
         # The main window follows the setting itself
@@ -341,12 +307,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
             self.add_toast(create_toast(_("Logs cleared"), 1))
         else:
             self.add_toast(create_toast(_("Failed to clear logs"), 1))
-
-    def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
-        idx = combo.get_selected()
-        if idx >= len(self._auto_refresh_options):
-            return
-        settings.auto_refresh_interval = self._auto_refresh_options[idx][0]
 
     def _on_reset_clicked(self, _button: Gtk.Button) -> None:
         dialog = Adw.AlertDialog.new(
@@ -378,8 +338,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         self._overview_switch.set_active(settings.show_overview)
         self._background_switch.set_active(settings.run_in_background)
         self._debug_switch.set_active(settings.debug_mode)
-        settings.require_auto_refresh()
-        self._update_auto_refresh_row()
         self._set_toggle_buttons()
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))

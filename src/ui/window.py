@@ -58,10 +58,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         
         # Settings setup
         settings.connect(
-            "changed::auto-refresh-interval",
-            lambda *_: self.get_application().auto_refresh.setup(),
-        )
-        settings.connect(
             "changed::debug-mode",
             self._on_debug_mode_changed,
         )

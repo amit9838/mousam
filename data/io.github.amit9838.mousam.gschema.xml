@@ -37,11 +37,6 @@
       <default>false</default>
       <summary>Launch the app in maximized mode.</summary>
     </key>
-    <key name="auto-refresh-interval" type="i">
-      <default>0</default>
-      <summary>Auto-refresh interval in minutes</summary>
-      <description>Interval for automatic weather refresh. 0 means disabled, which is not allowed while the overview or notifications are on.</description>
-    </key>
     <key name="unit" type="s">
       <default>"metric"</default>
       <summary>Measurement system to use - metric,imperial</summary>

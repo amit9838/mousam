@@ -1,7 +1,5 @@
 from gi.repository import Gio
 
-from ..config import OVERVIEW_AUTO_REFRESH_MINUTES
-
 
 class Settings:
     _instance = None
@@ -92,28 +90,6 @@ class Settings:
     @window_maximized.setter
     def window_maximized(self, value):
         self.settings.set_boolean("window-maximized", value)
-
-    @property
-    def auto_refresh_interval(self):
-        return self.settings.get_int("auto-refresh-interval")
-
-    @auto_refresh_interval.setter
-    def auto_refresh_interval(self, value):
-        self.settings.set_int("auto-refresh-interval", value)
-
-    @property
-    def auto_refresh_required(self) -> bool:
-        """Whether the overview or notifications are on: they need auto refresh."""
-        return self.show_overview or self.show_notifications
-
-    def require_auto_refresh(self) -> None:
-        """Turn auto refresh on while the overview or notifications need it.
-
-        They only see a changed forecast after a refresh, so auto refresh
-        can't be off while either is on.
-        """
-        if self.auto_refresh_required and self.auto_refresh_interval == 0:
-            self.auto_refresh_interval = OVERVIEW_AUTO_REFRESH_MINUTES
 
     @property
     def unit(self):

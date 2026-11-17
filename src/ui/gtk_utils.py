@@ -6,7 +6,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("PangoCairo", "1.0")
 gi.require_version("Adw", "1")
 from gi.repository import Adw, GLib, GObject, Gtk, PangoCairo  # noqa: E402
-from ..services.settings import settings  # noqa: E402
+from ..config import AUTO_REFRESH_MINUTES  # noqa: E402
 from ..core.log import get_logger  # noqa: E402
 
 logger = get_logger("utils")
@@ -17,10 +17,9 @@ class AutoRefreshTimer:
         self._callback = callback
 
     def setup(self):
+        """(Re)start the timer: every AUTO_REFRESH_MINUTES, always."""
         self.stop()
-        interval = settings.auto_refresh_interval
-        if interval > 0:
-            self._timer_id = GLib.timeout_add_seconds(interval * 60, self._on_tick)
+        self._timer_id = GLib.timeout_add_seconds(AUTO_REFRESH_MINUTES * 60, self._on_tick)
 
     def stop(self):
         if self._timer_id is not None:
