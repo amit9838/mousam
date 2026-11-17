@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/weather.png";
+import logo from "../assets/mousam.svg";
 import Button from "./Button";
 
 const MENU_ITEMS = ["home", "installation", "contribute", "about"];

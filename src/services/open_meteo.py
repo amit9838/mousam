@@ -12,7 +12,7 @@ import requests
 
 from ..core.cache import cached
 from ..core.log import get_logger
-from ..config import HPA_TO_INHG, OPEN_METEO_BASE_URL, TIMEOUT
+from ..config import HPA_TO_INHG, OPEN_METEO_BASE_URL, REQUEST_TIMEOUT
 
 logger = get_logger("API_Weather")
 
@@ -71,7 +71,7 @@ def unit_params(unit: str) -> str:
 def _get_json(url: str, what: str):
     """The JSON at url, or None (logged) when the request fails."""
     try:
-        response = requests.get(url, timeout=TIMEOUT)
+        response = requests.get(url, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -149,9 +149,10 @@ def fetch_daily(latitude: float, longitude: float, unit: str) -> Optional[dict]:
     return _get_json(url, "daily forecast")
 
 
-def clear_cache() -> None:
-    """Forget the selected city's cached responses, so the next fetch goes
-    to the network. fetch_many (the Locations list) keeps its cache."""
-    fetch_current.cache_clear()
-    fetch_hourly.cache_clear()
-    fetch_daily.cache_clear()
+def clear_cache(latitude: Optional[float] = None, longitude: Optional[float] = None) -> None:
+    """Forget cached forecasts, so the next fetch goes to the network: all
+    of them, or with a latitude and longitude only that place's (in every
+    unit). fetch_many (the Locations list) keeps its cache."""
+    place = () if latitude is None else (latitude, longitude)
+    for fetch in (fetch_current, fetch_hourly, fetch_daily):
+        fetch.cache_clear(*place)

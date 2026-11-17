@@ -37,6 +37,145 @@ def overview_messages() -> Dict[str, List[Wording]]:
             # Translators: {time} is a rounded time of day, like "6:30 PM"
             _("Expect thunderstorms around {time}. Plan to be indoors by then."),
         ],
+        "storm.likely": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Thunderstorms are likely around {time} with {chance}% chance of rain. Be indoors by then."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Expect thunderstorms around {time}, with {chance}% chance of rain. Be indoors by then."),
+        ],
+        "storm.possible": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
+            _("Thunderstorms are possible around {time}, with {chance}% chance of rain."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
+            _("Thunderstorms may come around {time}, with {chance}% chance of rain."),
+        ],
+        # ---------- Rain turning stormy (TURNING_STORMY in rules.py) ----------
+        "rain_stormy.easing": [
+            # Translators: {time} is when the rain eases off, a rounded time of day, like "6:30 PM"
+            _("Rain right now, turning stormy before it eases off around {time}."),
+            # Translators: {time} is when the rain eases off, a rounded time of day, like "6:30 PM"
+            _("Rain for now, with thunderstorms before it clears around {time}."),
+        ],
+        "rain_stormy.through": [
+            # Translators: {time} is when the rain ends, a rounded time of day, like "6:30 PM"
+            _("Rain right now, turning stormy later and lasting until about {time}."),
+            # Translators: {time} is when the rain ends, a rounded time of day, like "6:30 PM"
+            _("Expect rain until about {time}, with thunderstorms later on."),
+        ],
+        "rain_stormy.start": [
+            # Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Rain from around {time} with {chance}% chance, turning stormy later."),
+            # Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
+            _("Expect rain from around {time} with {chance}% chance, and thunderstorms later on."),
+        ],
+        # ---------- Two things at once (combined, see COMBINATIONS in rules.py) ----------
+        "storm_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Thunderstorms with strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect thunderstorms with strong wind, around {speed}, right now."),
+        ],
+        "storm_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms with strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect thunderstorms with strong wind, around {speed}, from around {time}."),
+        ],
+        "storm_heavy_rain.now": [
+            _("Thunderstorms with heavy rain are likely right now."),
+            _("Expect thunderstorms with heavy rain right now."),
+        ],
+        "storm_heavy_rain.later": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms with heavy rain are likely from around {time}."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Expect thunderstorms with heavy rain from around {time}."),
+        ],
+        "heavy_rain_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Heavy rain and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect heavy rain and strong wind, around {speed}, right now."),
+        ],
+        "heavy_rain_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Heavy rain and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect heavy rain and strong wind, around {speed}, from around {time}."),
+        ],
+        "heavy_snow_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Heavy snow and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect heavy snow and strong wind, around {speed}, right now."),
+        ],
+        "heavy_snow_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Heavy snow and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect heavy snow and strong wind, around {speed}, from around {time}."),
+        ],
+        "rain_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Rain and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect rain and strong wind, around {speed}, right now."),
+        ],
+        "rain_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Rain and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect rain and strong wind, around {speed}, from around {time}."),
+        ],
+        "snow_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Snow and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect snow and strong wind, around {speed}, right now."),
+        ],
+        "snow_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Snow and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect snow and strong wind, around {speed}, from around {time}."),
+        ],
+        # ---------- Rain or snow turning heavy (TURNING_HEAVY in rules.py) ----------
+        "rain_heavier.easing": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("Rain right now, turning heavy around {heavy_time} and easing off around {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("It's raining now, heavier around {heavy_time}, easing off around {time}."),
+        ],
+        "rain_heavier.through": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("Rain right now, turning heavy around {heavy_time} and lasting until about {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("It's raining now, heavier around {heavy_time}, until about {time}."),
+        ],
+        "rain_heavier.start": [
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Rain from around {time}, turning heavy around {heavy_time}."),
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Expect rain from around {time}, heavier around {heavy_time}."),
+        ],
+        "snow_heavier.easing": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("Snow right now, turning heavy around {heavy_time} and easing off around {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("It's snowing now, heavier around {heavy_time}, easing off around {time}."),
+        ],
+        "snow_heavier.through": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("Snow right now, turning heavy around {heavy_time} and lasting until about {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("It's snowing now, heavier around {heavy_time}, until about {time}."),
+        ],
+        "snow_heavier.start": [
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Snow from around {time}, turning heavy around {heavy_time}."),
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Expect snow from around {time}, heavier around {heavy_time}."),
+        ],
         "freezing.now": [
             _("Freezing rain is likely right now. Roads and paths may be icy."),
             _("Expect freezing rain right now. Watch for icy roads and paths."),
@@ -374,6 +513,127 @@ def overview_messages() -> Dict[str, List[Wording]]:
                 "The sun comes up at {time}, in about {n} hours.",
                 n,
             ),
+        ],
+        # ---------- Sunset and sunrise, with the weather (SunRule.CONDITIONS in rules.py) ----------
+        "sunset.storm": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms at sunset, around {time}, best watched from indoors."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A stormy sunset around {time}. Enjoy the view from inside."),
+        ],
+        "sunset.snow": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Snow at sunset, around {time}, for a quiet, wintry evening."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} comes with falling snow. A peaceful one!"),
+        ],
+        "sunset.rain": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A rainy sunset around {time}. Watch for a rainbow if the sun peeks through!"),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Rain at sunset, around {time}, a cozy evening in the making."),
+        ],
+        "sunset.fog": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A misty sunset around {time}, with soft, hazy light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Fog at sunset, around {time}, for a soft, hazy view."),
+        ],
+        "sunset.very_windy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A very windy sunset around {time}, best enjoyed from a sheltered spot."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Very strong wind at sunset, around {time}; enjoy it from shelter."),
+        ],
+        "sunset.windy_clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear and windy for sunset around {time}, with crisp, fresh air."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A bright, windy sunset around {time}. Hold on to your hat!"),
+        ],
+        "sunset.windy_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A windy sunset around {time}, with a few clouds."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks windy, with clouds about."),
+        ],
+        "sunset.cloudy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A cloudy sunset around {time}, with soft, even light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks cloudy and calm."),
+        ],
+        "sunset.some_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A few clouds at sunset, around {time}, could bring some color."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} brings scattered clouds, often the most colorful kind."),
+        ],
+        "sunset.clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear skies for sunset around {time}, a great evening to catch it."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunset around {time} looks clear and bright. Worth a look!"),
+        ],
+        "sunrise.storm": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms at sunrise, around {time}, best watched from indoors."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A stormy sunrise around {time}. Enjoy the view from inside."),
+        ],
+        "sunrise.snow": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Snow at sunrise, around {time}, for a quiet, wintry morning."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} comes with falling snow. A peaceful one!"),
+        ],
+        "sunrise.rain": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A rainy sunrise around {time}. Watch for a rainbow if the sun peeks through!"),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Rain at sunrise, around {time}, a cozy start to the day."),
+        ],
+        "sunrise.fog": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A misty sunrise around {time}, with soft, hazy light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Fog at sunrise, around {time}, for a soft, hazy view."),
+        ],
+        "sunrise.very_windy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A very windy sunrise around {time}, best enjoyed from a sheltered spot."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Very strong wind at sunrise, around {time}; enjoy it from shelter."),
+        ],
+        "sunrise.windy_clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear and windy for sunrise around {time}, with crisp, fresh air."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A bright, windy sunrise around {time}. Hold on to your hat!"),
+        ],
+        "sunrise.windy_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A windy sunrise around {time}, with a few clouds."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks windy, with clouds about."),
+        ],
+        "sunrise.cloudy": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A cloudy sunrise around {time}, with soft, even light."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks cloudy and calm."),
+        ],
+        "sunrise.some_clouds": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("A few clouds at sunrise, around {time}, could bring some color."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} brings scattered clouds, often the most colorful kind."),
+        ],
+        "sunrise.clear": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Clear skies for sunrise around {time}, a great morning to catch it."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Sunrise around {time} looks clear and bright. Worth a look!"),
         ],
         # ---------- Calm ----------
         "calm": [

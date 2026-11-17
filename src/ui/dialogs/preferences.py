@@ -7,7 +7,6 @@ from gettext import gettext as _
 
 from ...services.settings import settings
 from ..gtk_utils import create_toast
-from ...config import AUTO_REFRESH_OPTIONS
 from ...core.log import log_manager
 
 gi.require_version("Gtk", "4.0")
@@ -78,8 +77,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
             self._on_24h_clock_toggled,
             (True, False),
         )
-        self._add_auto_refresh_row(group)
-
         self._background_switch = Adw.SwitchRow(
             title=_("Run in Background"),
             subtitle=_("Keep Mousam running when its window is closed"),
@@ -223,24 +220,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         """Show a symbolic icon at the start of a row."""
         row.add_prefix(Gtk.Image(icon_name=icon_name))
 
-    def _add_auto_refresh_row(self, parent: Adw.PreferencesGroup) -> None:
-        labels = Gtk.StringList.new([opt[1] for opt in AUTO_REFRESH_OPTIONS])
-        row = Adw.ComboRow(
-            title=_("Auto Refresh"),
-            model=labels,
-        )
-        self._add_prefix_icon(row, "view-refresh-symbolic")
-        current = settings.auto_refresh_interval
-        selected_idx = 0
-        for i, (val, label) in enumerate(AUTO_REFRESH_OPTIONS):
-            if val == current:
-                selected_idx = i
-                break
-        row.set_selected(selected_idx)
-        row.connect("notify::selected", self._on_auto_refresh_changed)
-        self._auto_refresh_row = row
-        parent.add(row)
-
     # ------------------------------------------------------------------
     # UI Binding & Initial State
     # ------------------------------------------------------------------
@@ -329,12 +308,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         else:
             self.add_toast(create_toast(_("Failed to clear logs"), 1))
 
-    def _on_auto_refresh_changed(self, combo: Adw.ComboRow, _pspec) -> None:
-        idx = combo.get_selected()
-        if idx >= len(AUTO_REFRESH_OPTIONS):
-            return
-        settings.auto_refresh_interval = AUTO_REFRESH_OPTIONS[idx][0]
-
     def _on_reset_clicked(self, _button: Gtk.Button) -> None:
         dialog = Adw.AlertDialog.new(
             _("Reset Settings?"),
@@ -365,7 +338,6 @@ class WeatherPreferences(Adw.PreferencesDialog):
         self._overview_switch.set_active(settings.show_overview)
         self._background_switch.set_active(settings.run_in_background)
         self._debug_switch.set_active(settings.debug_mode)
-        self._auto_refresh_row.set_selected(0)  # 0 is always OFF in our list
         self._set_toggle_buttons()
 
         self.add_toast(create_toast(_("Preferences have been reset"), 1))

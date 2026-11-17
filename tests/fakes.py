@@ -88,6 +88,9 @@ class FakeForecastClient:
     def fetch_many(self, coords, unit):
         return self._answer("fetch_many", coords, unit)
 
+    def clear_cache(self, latitude=None, longitude=None):
+        self.calls.append(("clear_cache", latitude, longitude))
+
 
 class FakeSettings:
     """The settings the store reads, as plain attributes."""

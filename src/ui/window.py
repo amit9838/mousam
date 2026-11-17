@@ -58,10 +58,6 @@ class WeatherMainWindow(Adw.ApplicationWindow):
         
         # Settings setup
         settings.connect(
-            "changed::auto-refresh-interval",
-            lambda *_: self.get_application().auto_refresh.setup(),
-        )
-        settings.connect(
             "changed::debug-mode",
             self._on_debug_mode_changed,
         )
@@ -158,6 +154,7 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
         actions = [
             ("refresh", self._on_action_refresh, ["<Control>r"]),
+            ("hard-refresh", self._on_action_hard_refresh, ["<Control><Shift>r"]),
             ("locations", self._on_action_locations, ["<Control>l"]),
             ("compact", self._on_action_compact, ["<Control>m"]),
             ("preferences", self._on_action_preferences, ["<Control>comma"]),
@@ -182,15 +179,16 @@ class WeatherMainWindow(Adw.ApplicationWindow):
 
     # ================= Data Handling =================
 
-    def _start_data_refresh(self):
-        """Show the loader and fetch; _on_store_status shows the result."""
+    def _start_data_refresh(self, hard: bool = False):
+        """Show the loader and fetch; _on_store_status shows the result. A
+        hard refresh skips the selected city's cached data."""
         if not self.added_cities:
             self._update_view_state("welcome")
             return
 
         self._update_view_state("loader")
         from ..state.weather_store import weather_store
-        weather_store.refresh()
+        weather_store.refresh(hard=hard)
 
     def _on_store_status(self, store, _pspec):
         """Show what the last fetch brought (status changes on the main loop)."""
@@ -400,6 +398,9 @@ class WeatherMainWindow(Adw.ApplicationWindow):
     # --- Callbacks ---
     def _on_action_refresh(self, action, param):
         self._start_data_refresh()
+
+    def _on_action_hard_refresh(self, action, param):
+        self._start_data_refresh(hard=True)
 
     def _on_action_locations(self, action, param):
         WeatherLocations(self).present(self)

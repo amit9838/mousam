@@ -26,6 +26,7 @@ from .config import APP_ID
 from .core.log import get_logger, log_manager
 
 logger = get_logger("main")
+overview_logger = get_logger("overview")
 
 gi.require_version('Adw', '1')
 gi.require_version('Gtk', '4.0')
@@ -56,9 +57,12 @@ class WeatherApplication(Adw.Application):
         self.connect("window-removed", self._on_window_removed)
 
         # Overview announcements: shown in the main window's overview while it
-        # can be seen, otherwise sent as a notification (never both)
+        # can be seen, otherwise sent as a notification (never both). The
+        # notifications are set up on activation, once the app is registered.
+        self.overview_notifications = None
         from .state.overview_engine import overview_engine
         overview_engine.connect("overview-changed", self._on_overview_changed)
+        settings.connect("changed::show-notifications", self._on_show_notifications_changed)
 
     def do_shutdown(self):
         self.auto_refresh.stop()
@@ -91,6 +95,12 @@ class WeatherApplication(Adw.Application):
             Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
 
             self.main_window = WeatherMainWindow(application=self)
+            # Back in view, the window's overview shows what the notifications said
+            self.main_window.connect("notify::visible", self._on_main_window_seen)
+            self.main_window.connect("notify::suspended", self._on_main_window_seen)
+
+            from .ui.notifications import OverviewNotifications
+            self.overview_notifications = OverviewNotifications(self)
 
         # Launched again while in compact mode: bring the compact window back
         if self.compact_window and self.compact_window.get_visible():
@@ -104,16 +114,51 @@ class WeatherApplication(Adw.Application):
         self.auto_refresh.setup()
 
     def _on_overview_changed(self, engine, announce: bool) -> None:
-        """Send the announcement as a notification when the main window can't
-        be seen (minimized, or compact mode); otherwise its overview shows it."""
-        from .ui.gtk_utils import is_on_screen, show_overview_notification
+        """Keep the notifications right, and send the announcement as one when
+        the main window can't be seen (minimized, or compact mode); otherwise
+        its overview shows it."""
+        notifications = self.overview_notifications
+        if notifications is None:
+            return
+        # Withdraw what is no longer true (an expired topic, another city)
+        notifications.withdraw_gone(engine.topics)
 
         insight = engine.current()
-        if not announce or insight is None or not settings.show_notifications:
+        if not announce or insight is None:
             return
+        channel = self._announce(insight, engine.reason)
+        overview_logger.debug(
+            f"Overview channel: {insight.kind} ({engine.reason}, {insight.level}) -> {channel}"
+        )
+
+    def _announce(self, insight, reason) -> str:
+        """Send `insight` where it goes, one place at a time, and say where:
+        the window's overview, a notification, or nowhere and why."""
+        from .core.overview.announce import should_notify
+        from .ui.gtk_utils import is_on_screen
+        from .ui.notifications import notification_id
+
         if is_on_screen(self.main_window):
-            return
-        show_overview_notification(self, insight)
+            if settings.show_overview:
+                return "window"
+            return "nowhere (window in view, overview off)"
+        if not settings.show_notifications:
+            return "nowhere (window out of sight, notifications off)"
+        # Only news (medium or above, and tomorrow) and reminders of extreme ones
+        if not should_notify(reason, insight):
+            return f"nowhere (window out of sight, {reason} of a {insight.level} insight isn't notified)"
+        self.overview_notifications.send(insight)
+        return f"notification {notification_id(insight.topic)}"
+
+    def _on_main_window_seen(self, window, _pspec) -> None:
+        from .ui.gtk_utils import is_on_screen
+
+        if self.overview_notifications is not None and is_on_screen(window):
+            self.overview_notifications.withdraw_all("the window is in view")
+
+    def _on_show_notifications_changed(self, *_args) -> None:
+        if self.overview_notifications is not None and not settings.show_notifications:
+            self.overview_notifications.withdraw_all("notifications turned off")
 
     def _on_auto_refresh_tick(self):
         # The windows show the result: they listen to the store's status

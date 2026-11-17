@@ -4,7 +4,6 @@ data/io.github.amit9838.mousam.gschema.xml
 src/services/air_quality.py
 src/services/geocoding.py
 src/services/open_meteo.py
-src/config.py
 src/services/settings.py
 src/core/cache.py
 src/ui/gtk_utils.py
@@ -14,6 +13,7 @@ src/core/levels.py
 src/core/log.py
 src/core/models.py
 src/state/overview_engine.py
+src/core/overview/context.py
 src/core/overview/messages.py
 src/core/overview/rules.py
 src/core/units.py

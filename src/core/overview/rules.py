@@ -5,52 +5,38 @@ one and the numbers in config.py to match.
 
 Built by composition, with no GTK, so everything can be tested on made-up data:
 
-- OverviewContext: the forecast as the rules see it, made of small parts
-  (Clock, Units, HourlySeries, SunTimes, DailyOutlook, AirSeries) and the
-  Window worked out from them.
-- HourTest: a yes/no question about one hour (HasCode, AtLeast, Below,
-  AnyOf), combined to describe what a rule looks for.
+- OverviewContext (context.py): the forecast as the rules see it.
+- HourTest (hour_tests.py): a yes/no question about one hour (HasCode,
+  AtLeast, Below, AnyOf), combined to describe what a rule looks for.
+- Insight (insight.py): what a rule returns.
 - Phrasing: the "now" and "later" message keys of a rule, rendered with the
   right valid_until. The wordings, several per message, are in
   core/overview/messages.py; the context's MessageBook picks one.
 - Rule: one rule, `evaluate(ctx) -> Optional[Insight]`.
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
-  and is still true, most important first.
-- AnnouncePlanner: which of those insights to show, and when the overview
-  opens by itself. The engine (state/overview_engine.py) runs the timers around it.
+  and is still true, most important first, with the ones that happen together
+  turned (TURNING_STORMY, TURNING_HEAVY), folded (FOLDS) or combined
+  (COMBINATIONS) into one.
+Which of those insights to show, and when the overview opens by itself, is
+up to announce.py; the engine (state/overview_engine.py) runs the timers.
 """
 
 import math
-import random
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field, fields
-from datetime import datetime, timedelta, timezone
+from dataclasses import dataclass, field, replace
 from gettext import pgettext as C_
-from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple
-from zoneinfo import ZoneInfo
+from typing import Dict, List, Optional, Sequence
 
 from ...config import (
-    OVERVIEW_ANNOUNCE_BASE_MINUTES,
-    OVERVIEW_ANNOUNCE_MAX_MINUTES,
-    OVERVIEW_ANNOUNCE_MIN_MINUTES,
-    OVERVIEW_ANNOUNCE_SPREAD,
     COLD_FEELS_LIKE_C,
     EXTREME_WIND_KMH,
     FOG_SUNRISE_MINUTES,
-    FOG_VISIBILITY_M,
     HEAT_FEELS_LIKE_C,
     HEAVY_PRECIPITATION_MM,
-    OVERVIEW_DAY_MIN_HOURS,
-    OVERVIEW_HOURS,
-    OVERVIEW_PRIORITIES,
+    OVERVIEW_COMBINE_MINUTES,
     OVERVIEW_RELATIVE_TOLERANCE,
-    OVERVIEW_ROUND_FAR_MINUTES,
-    OVERVIEW_ROUNDING,
-    OVERVIEW_SHOW_BASE_SECONDS,
-    OVERVIEW_SHOW_EXTRA_SECONDS,
     OVERVIEW_TOMORROW_FROM_HOUR,
     RAIN_LIKELY_PROBABILITY,
-    STRONG_WIND_KMH,
     SUN_ROUND_MINUTES,
     SUNRISE_SOON_MINUTES,
     SUNSET_SOON_MINUTES,
@@ -60,20 +46,30 @@ from ...config import (
     VERY_HIGH_UV,
 )
 from ..log import get_logger
-from .messages import MessageBook
+from .context import HOUR, MINUTE, OverviewContext, hours_between, value_at
+from .hour_tests import (
+    CLEAR_CODES,
+    FREEZING_CODES,
+    HEAVY_RAIN_CODES,
+    HEAVY_SNOW_CODES,
+    IS_DRY,
+    IS_FOGGY,
+    IS_VERY_WINDY,
+    IS_SNOW,
+    IS_WET,
+    IS_WINDY,
+    OVERCAST_CODES,
+    SOME_CLOUDS_CODES,
+    STORM_CODES,
+    AllOf,
+    AnyOf,
+    AtLeast,
+    HasCode,
+    HourTest,
+)
+from .insight import LEVELS, Insight
 
 logger = get_logger("overview")
-
-HOUR = 3600
-MINUTE = 60
-
-# WMO weather codes
-STORM_CODES = {95, 96, 99}
-FREEZING_CODES = {56, 57, 66, 67}
-SNOW_CODES = {71, 73, 75, 77, 85, 86}
-HEAVY_RAIN_CODES = {65, 82}
-HEAVY_SNOW_CODES = {75, 86}
-FOG_CODES = {45, 48}
 
 # Symbolic icons shown before a message
 ICON_STORM = "weather-storm-symbolic"
@@ -86,349 +82,27 @@ ICON_SUNSET = "daytime-sunset-symbolic"
 ICON_SUNRISE = "daytime-sunrise-symbolic"
 
 
-def hours_between(times: List[int], start: float, end: float) -> List[int]:
-    """Indices of the hours that overlap [start, end): the current one first."""
-    return [i for i, ts in enumerate(times) if ts + HOUR > start and ts < end]
-
-
-def _at(values: list, i: int) -> Optional[Any]:
-    """values[i], or None when the list is short."""
-    return values[i] if 0 <= i < len(values) else None
-
-
 def degrees(value: float) -> str:
     return "{0:.0f}°".format(value)
 
 
 # =====================================================================
-# Insight
-# =====================================================================
-
-@dataclass
-class Insight:
-    """One thing worth saying about the coming hours."""
-
-    kind: str  # a key of OVERVIEW_PRIORITIES
-    message: str  # one whole translated sentence
-    valid_until: float  # unix time from which the message is no longer true
-    severity: str = "info"  # "info", "warning" or "error"
-    icon: Optional[str] = None  # symbolic icon shown before the message
-    heading: Optional[str] = None  # None: the window's heading (Today / Tonight)
-    priority: int = field(init=False)
-    show_seconds: int = field(init=False)  # how long the message stays open
-
-    def __post_init__(self):
-        self.priority = OVERVIEW_PRIORITIES[self.kind]
-        self.show_seconds = OVERVIEW_SHOW_BASE_SECONDS + OVERVIEW_SHOW_EXTRA_SECONDS[self.severity]
-
-
-# =====================================================================
-# The context, and the parts it is made of
-# =====================================================================
-
-@dataclass
-class Clock:
-    """Now, and how times are written: the city's time zone, 12 or 24 h."""
-
-    now: float
-    tz: Optional[ZoneInfo] = None
-    use_24h: bool = False
-
-    def local(self, ts: Optional[float] = None) -> datetime:
-        return datetime.fromtimestamp(self.now if ts is None else ts, tz=self.tz)
-
-    def _format(self, dt: datetime) -> str:
-        return dt.strftime("%H:%M" if self.use_24h else "%-I:%M %p")
-
-    def time(self, ts: float) -> str:
-        """The exact time ("6:12 PM", "18:12")."""
-        return self._format(self.local(ts))
-
-    def approx_time(self, ts: float) -> str:
-        """A rounded time ("6:40 AM", "06:40") for every predicted time: a
-        forecast is never minute-exact. Messages always hedge it ("about",
-        "around", "by around"). Only sunrise and sunset use `time()`.
-
-        The further ahead, the rounder (OVERVIEW_ROUNDING): to 10 minutes up
-        to 3 hours ahead, to 30 minutes up to 5 hours, to the hour beyond.
-        """
-        hours_ahead = (ts - self.now) / HOUR
-        step = next(
-            (minutes for limit, minutes in OVERVIEW_ROUNDING if hours_ahead <= limit),
-            OVERVIEW_ROUND_FAR_MINUTES,
-        )
-        # Round in local time: some time zones are half an hour off UTC
-        local = self.local(ts).replace(second=0, microsecond=0)
-        minutes = local.hour * 60 + local.minute
-        rounded = math.floor(minutes / step + 0.5) * step
-        return self._format(local.replace(hour=0, minute=0) + timedelta(minutes=rounded))
-
-    @property
-    def next_hour(self) -> float:
-        return (int(self.now) // HOUR + 1) * HOUR
-
-    @property
-    def next_midnight(self) -> float:
-        tomorrow = self.local().date() + timedelta(days=1)
-        return datetime.combine(tomorrow, datetime.min.time(), tzinfo=self.tz).timestamp()
-
-
-@dataclass
-class Units:
-    """Data comes in the user's units; thresholds are metric."""
-
-    imperial: bool = False
-
-    def celsius(self, value: float) -> float:
-        return (value - 32) * 5 / 9 if self.imperial else value
-
-    def kmh(self, value: float) -> float:
-        return value * 1.609344 if self.imperial else value
-
-
-@dataclass
-class HourlySeries:
-    """The hourly forecast: lists that share `times`, in the user's units.
-    Precipitation (mm) and visibility (m) are metric in both systems."""
-
-    times: List[int]
-    codes: List[Optional[int]] = field(default_factory=list)
-    temperature: List[Optional[float]] = field(default_factory=list)
-    feels_like: List[Optional[float]] = field(default_factory=list)
-    precip_probability: List[Optional[float]] = field(default_factory=list)
-    precipitation: List[Optional[float]] = field(default_factory=list)
-    windspeed: List[Optional[float]] = field(default_factory=list)
-    visibility: List[Optional[float]] = field(default_factory=list)
-    uv: List[Optional[float]] = field(default_factory=list)
-    wind_unit: str = ""
-
-    @classmethod
-    def has_series(cls, series: str) -> bool:
-        return series in {f.name for f in fields(cls)}
-
-    def value(self, series: str, i: int) -> Optional[Any]:
-        """One hour's value of a series, or None when it is missing. Read
-        hours this way; index a list directly only for an hour a test has
-        just passed (so its value is there)."""
-        return _at(getattr(self, series), i)
-
-
-@dataclass
-class SunTimes:
-    """The next sunrise and sunset after now (None in polar day or night)."""
-
-    next_sunrise: Optional[int] = None
-    next_sunset: Optional[int] = None
-
-    @property
-    def is_day(self) -> bool:
-        """Day when the next sunset comes before the next sunrise."""
-        if self.next_sunset is None:
-            return False
-        return self.next_sunrise is None or self.next_sunset < self.next_sunrise
-
-
-@dataclass
-class DailyOutlook:
-    """Today's and tomorrow's daily values, in the user's units."""
-
-    today_high: Optional[float] = None
-    tomorrow_high: Optional[float] = None
-    tomorrow_rain_chance: Optional[float] = None
-
-
-@dataclass
-class AirSeries:
-    """Hourly US AQI, with its own timestamps."""
-
-    times: List[int] = field(default_factory=list)
-    us_aqi: List[Optional[float]] = field(default_factory=list)
-
-
-class Window:
-    """The hours the rules look at, following the part of the day.
-
-    By day: now until sunset, but at least OVERVIEW_DAY_MIN_HOURS ahead.
-    At night: now until the next sunrise. With no sunrise or sunset: the next
-    OVERVIEW_HOURS. The current hour comes first.
-    """
-
-    def __init__(self, hourly: HourlySeries, clock: Clock, sun: SunTimes):
-        self.is_day = sun.is_day
-        if self.is_day:
-            self.end = max(sun.next_sunset, clock.now + OVERVIEW_DAY_MIN_HOURS * HOUR)
-        elif sun.next_sunrise is not None:
-            self.end = sun.next_sunrise
-        else:
-            self.end = clock.now + OVERVIEW_HOURS * HOUR
-        self.hours = hours_between(hourly.times, clock.now, self.end)
-
-    @property
-    def heading(self) -> str:
-        if self.is_day:
-            return C_("overview heading", "Today")
-        return C_("overview heading", "Tonight")
-
-    def first(self, test: Callable[[int], bool]) -> Optional[int]:
-        """The first hour that passes `test`."""
-        return next((i for i in self.hours if test(i)), None)
-
-    def is_now(self, i: int) -> bool:
-        return bool(self.hours) and i == self.hours[0]
-
-
-@dataclass
-class OverviewContext:
-    """The forecast as the rules see it."""
-
-    clock: Clock
-    units: Units
-    hourly: HourlySeries
-    sun: SunTimes = field(default_factory=SunTimes)
-    daily: DailyOutlook = field(default_factory=DailyOutlook)
-    air: AirSeries = field(default_factory=AirSeries)
-    messages: MessageBook = field(default_factory=MessageBook)
-    window: Window = field(init=False)
-
-    def __post_init__(self):
-        self.window = Window(self.hourly, self.clock, self.sun)
-
-    @property
-    def now(self) -> float:
-        return self.clock.now
-
-    def first(self, test: "HourTest") -> Optional[int]:
-        """The first hour of the window that passes `test`."""
-        return self.window.first(lambda i: test(self, i))
-
-    @classmethod
-    def from_models(cls, hourly, daily, air, now: float, tz: Optional[ZoneInfo],
-                    imperial: bool, use_24h: bool, seed: int = 0) -> "OverviewContext":
-        """Build the context from HourlyWeather, DailyWeather and
-        AirPollutionData (daily and air may be None). `seed` picks the
-        wordings (see MessageBook)."""
-        clock = Clock(now, tz, use_24h)
-        today = clock.local().date()
-        tomorrow = today + timedelta(days=1)
-        wind = getattr(hourly, "windspeed_10m", None)
-        sunrises = [ts for ts in _series(daily, "sunrise") if ts and ts > now]
-        sunsets = [ts for ts in _series(daily, "sunset") if ts and ts > now]
-
-        return cls(
-            clock=clock,
-            units=Units(imperial),
-            hourly=HourlySeries(
-                times=_series(hourly, "time"),
-                codes=_series(hourly, "weathercode"),
-                temperature=_series(hourly, "temperature_2m"),
-                feels_like=_series(hourly, "apparent_temperature"),
-                precip_probability=_series(hourly, "precipitation_probability"),
-                precipitation=_series(hourly, "precipitation"),
-                windspeed=_series(hourly, "windspeed_10m"),
-                visibility=_series(hourly, "visibility"),
-                uv=_series(hourly, "uv_index"),
-                wind_unit=wind.unit if wind is not None else "",
-            ),
-            sun=SunTimes(
-                next_sunrise=min(sunrises) if sunrises else None,
-                next_sunset=min(sunsets) if sunsets else None,
-            ),
-            daily=DailyOutlook(
-                today_high=_daily_value(daily, "temperature_2m_max", today),
-                tomorrow_high=_daily_value(daily, "temperature_2m_max", tomorrow),
-                tomorrow_rain_chance=_daily_value(daily, "precipitation_probability_max", tomorrow),
-            ),
-            air=AirSeries(times=_series(air, "time"), us_aqi=_series(air, "us_aqi")),
-            messages=MessageBook(seed),
-        )
-
-
-def _series(model, name: str) -> list:
-    """A model field's data as a list, or [] when it is missing."""
-    weather_field = getattr(model, name, None) if model is not None else None
-    if weather_field is None or weather_field.data is None:
-        return []
-    return list(weather_field.data)
-
-
-def _daily_value(daily, name: str, day) -> Optional[float]:
-    """A daily value for a date. Daily data is requested in GMT, so each
-    day's timestamp is its midnight in UTC: compare UTC dates."""
-    for i, ts in enumerate(_series(daily, "time")):
-        if datetime.fromtimestamp(ts, tz=timezone.utc).date() == day:
-            return _at(_series(daily, name), i)
-    return None
-
-
-# =====================================================================
-# Hour tests: yes/no questions about one hour, combined by composition
-# =====================================================================
-
-class HourTest(ABC):
-    @abstractmethod
-    def __call__(self, ctx: OverviewContext, i: int) -> bool:
-        """Does hour i pass?"""
-
-
-class HasCode(HourTest):
-    """The hour's weather code is one of `codes`."""
-
-    def __init__(self, codes: Iterable[int]):
-        self.codes = set(codes)
-
-    def __call__(self, ctx: OverviewContext, i: int) -> bool:
-        return ctx.hourly.value("codes", i) in self.codes
-
-
-class AtLeast(HourTest):
-    """The hour's value of `series` is `threshold` or more. `to_metric`
-    (Units.celsius, Units.kmh) converts imperial data first."""
-
-    def __init__(self, series: str, threshold: float,
-                 to_metric: Optional[Callable[[Units, float], float]] = None):
-        if not HourlySeries.has_series(series):
-            raise ValueError(f"HourlySeries has no series {series!r}")
-        self.series = series
-        self.threshold = threshold
-        self.to_metric = to_metric
-
-    def metric_value(self, ctx: OverviewContext, i: int) -> Optional[float]:
-        value = ctx.hourly.value(self.series, i)
-        if value is None or self.to_metric is None:
-            return value
-        return self.to_metric(ctx.units, value)
-
-    def __call__(self, ctx: OverviewContext, i: int) -> bool:
-        value = self.metric_value(ctx, i)
-        return value is not None and value >= self.threshold
-
-
-class Below(AtLeast):
-    """The hour's value of `series` is under `threshold`."""
-
-    def __call__(self, ctx: OverviewContext, i: int) -> bool:
-        value = self.metric_value(ctx, i)
-        return value is not None and value < self.threshold
-
-
-class AnyOf(HourTest):
-    """At least one of `tests` passes."""
-
-    def __init__(self, *tests: HourTest):
-        self.tests = tests
-
-    def __call__(self, ctx: OverviewContext, i: int) -> bool:
-        return any(test(ctx, i) for test in self.tests)
-
-
-IS_SNOW = HasCode(SNOW_CODES)
-IS_WET = AtLeast("precip_probability", RAIN_LIKELY_PROBABILITY)
-IS_DRY = Below("precip_probability", RAIN_LIKELY_PROBABILITY)  # an hour with no data is neither
-
-
-# =====================================================================
 # Phrasing: a rule's "now" and "later" messages
 # =====================================================================
+
+@dataclass(frozen=True)
+class Sentence:
+    """A message as a rule said it: its key, the text, until when it is
+    true, the hour or event it is about and when it happens (None for
+    "now"), and what its placeholders were filled with."""
+
+    key: str
+    message: str
+    valid_until: float
+    about: Optional[float] = None
+    when: Optional[float] = None
+    values: Dict[str, object] = field(default_factory=dict)
+
 
 @dataclass
 class Phrasing:
@@ -443,16 +117,27 @@ class Phrasing:
     later: str
     icon: Optional[str] = None
 
-    def render(self, ctx: OverviewContext, i: int, **values) -> Tuple[str, float]:
-        """(message, valid_until) for hourly hour i."""
+    def render(self, ctx: OverviewContext, i: int, **values) -> Sentence:
+        """The sentence for hourly hour i."""
         return self.render_at(ctx, ctx.hourly.times[i], ctx.window.is_now(i), **values)
 
-    def render_at(self, ctx: OverviewContext, ts: float, is_now: bool, **values) -> Tuple[str, float]:
-        """(message, valid_until) for the hour starting at `ts`, for data
-        with its own timestamps (air quality)."""
+    def render_at(self, ctx: OverviewContext, ts: float, is_now: bool, **values) -> Sentence:
+        """The sentence for the hour starting at `ts`, for data with its own
+        timestamps (air quality)."""
         if is_now:
-            return ctx.messages.say(self.now, **values), ctx.clock.next_hour
-        return ctx.messages.say(self.later, time=ctx.clock.approx_time(ts), **values), ts
+            message = ctx.messages.say(self.now, **values)
+            return Sentence(self.now, message, ctx.clock.next_hour, values=values)
+        message = ctx.messages.say(self.later, time=ctx.clock.approx_time(ts), **values)
+        return Sentence(self.later, message, ts, ts, ts, values)
+
+
+def say(ctx: OverviewContext, key: str, valid_until: float, about: Optional[float] = None,
+        happens_now: bool = False, **values) -> Sentence:
+    """A sentence for one message key, for rules that don't use a Phrasing.
+    It happens at `about` (None: now), unless `happens_now`: rain easing at
+    4 PM is about 4 PM, but falling now."""
+    when = None if happens_now else about
+    return Sentence(key, ctx.messages.say(key, **values), valid_until, about, when, values)
 
 
 # =====================================================================
@@ -464,34 +149,41 @@ class Rule(ABC):
     to say. The plain-English description is in docs/overview-rules.md, the
     wordings in core/overview/messages.py."""
 
-    def __init__(self, kind: str, severity: str = "info", icon: Optional[str] = None):
+    def __init__(self, kind: str, level: str, topic: str, icon: Optional[str] = None):
         self.kind = kind
-        self.severity = severity
+        self.level = level
+        self.topic = topic
         self.icon = icon
 
     @abstractmethod
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         """The insight for this forecast, or None."""
 
-    def insight(self, message: str, valid_until: float, *, severity: Optional[str] = None,
-                icon: Optional[str] = None, heading: Optional[str] = None) -> Insight:
+    def insight(self, sentence: Sentence, *, level: Optional[str] = None,
+                icon: Optional[str] = None, heading: Optional[str] = None,
+                topic: Optional[str] = None) -> Insight:
         return Insight(
             self.kind,
-            message,
-            valid_until,
-            severity or self.severity,
+            sentence.message,
+            sentence.valid_until,
+            level or self.level,
             icon or self.icon,
             heading,
+            topic=topic or self.topic,
+            key=sentence.key,
+            about=sentence.about,
+            when=sentence.when,
+            values=sentence.values,
         )
 
 
 class FirstHourRule(Rule):
     """The first hour that passes `test`, said with `phrasing` (or
-    `snow_phrasing` when that hour has a snow code)."""
+    `snow_phrasing`, on the snow topic, when that hour has a snow code)."""
 
-    def __init__(self, kind: str, test: HourTest, phrasing: Phrasing, severity: str = "info",
+    def __init__(self, kind: str, test: HourTest, phrasing: Phrasing, level: str, topic: str,
                  snow_phrasing: Optional[Phrasing] = None):
-        super().__init__(kind, severity)
+        super().__init__(kind, level, topic)
         self.test = test
         self.phrasing = phrasing
         self.snow_phrasing = snow_phrasing
@@ -500,11 +192,34 @@ class FirstHourRule(Rule):
         i = ctx.first(self.test)
         if i is None:
             return None
-        phrasing = self.phrasing
+        phrasing, topic = self.phrasing, self.topic
         if self.snow_phrasing is not None and IS_SNOW(ctx, i):
-            phrasing = self.snow_phrasing
-        message, valid_until = phrasing.render(ctx, i)
-        return self.insight(message, valid_until, icon=phrasing.icon)
+            phrasing, topic = self.snow_phrasing, "snow"
+        return self.insight(phrasing.render(ctx, i), icon=phrasing.icon, topic=topic)
+
+
+class StormRule(Rule):
+    """The first hour with a thunderstorm code. Later, it says that hour's
+    chance of rain: "likely" from RAIN_LIKELY_PROBABILITY, "possible" below
+    it, and no chance when the data has none for that hour."""
+
+    LIKELY = Phrasing("storm.now", "storm.likely")
+    POSSIBLE = Phrasing("storm.now", "storm.possible")
+    NO_CHANCE = Phrasing("storm.now", "storm.later")
+
+    def __init__(self):
+        super().__init__("storm", "extreme", "storm", ICON_STORM)
+        self.test = HasCode(STORM_CODES)
+
+    def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
+        i = ctx.first(self.test)
+        if i is None:
+            return None
+        chance = value_at(ctx.hourly.precip_probability, i)
+        if chance is None:
+            return self.insight(self.NO_CHANCE.render(ctx, i))
+        phrasing = self.LIKELY if chance >= RAIN_LIKELY_PROBABILITY else self.POSSIBLE
+        return self.insight(phrasing.render(ctx, i, chance=round(chance)))
 
 
 class ExtremeFeelsRule(Rule):
@@ -515,11 +230,11 @@ class ExtremeFeelsRule(Rule):
     COLD = Phrasing("cold.now", "cold.later")
 
     def __init__(self):
-        super().__init__("extreme_feels", "warning")
+        super().__init__("extreme_feels", "high", "feels_like")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         feels = ctx.hourly.feels_like
-        hours = [i for i in ctx.window.hours if _at(feels, i) is not None]
+        hours = [i for i in ctx.window.hours if value_at(feels, i) is not None]
         if not hours:
             return None
         hottest = max(hours, key=lambda i: feels[i])
@@ -530,8 +245,7 @@ class ExtremeFeelsRule(Rule):
             i, phrasing = coldest, self.COLD
         else:
             return None
-        message, valid_until = phrasing.render(ctx, i, temp=degrees(feels[i]))
-        return self.insight(message, valid_until)
+        return self.insight(phrasing.render(ctx, i, temp=degrees(feels[i])))
 
 
 class AirQualityRule(Rule):
@@ -540,14 +254,14 @@ class AirQualityRule(Rule):
     PHRASING = Phrasing("air.now", "air.later")
 
     def __init__(self):
-        super().__init__("air_quality", "warning")
+        super().__init__("air_quality", "high", "air")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         hours = hours_between(ctx.air.times, ctx.now, ctx.window.end)
-        j = next((j for j in hours if (_at(ctx.air.us_aqi, j) or 0) >= UNHEALTHY_US_AQI), None)
+        j = next((j for j in hours if (value_at(ctx.air.us_aqi, j) or 0) >= UNHEALTHY_US_AQI), None)
         if j is None:
             return None
-        return self.insight(*self.PHRASING.render_at(ctx, ctx.air.times[j], j == hours[0]))
+        return self.insight(self.PHRASING.render_at(ctx, ctx.air.times[j], j == hours[0]))
 
 
 class UvRule(Rule):
@@ -555,7 +269,7 @@ class UvRule(Rule):
     already is."""
 
     def __init__(self):
-        super().__init__("uv", "warning", ICON_SUN)
+        super().__init__("uv", "high", "uv", ICON_SUN)
         self.test = AtLeast("uv", VERY_HIGH_UV)
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
@@ -572,10 +286,11 @@ class UvRule(Rule):
         end_str = ctx.clock.approx_time(ctx.hourly.times[last] + HOUR)
 
         if ctx.window.is_now(start):
-            return self.insight(ctx.messages.say("uv.now", time=end_str), ctx.clock.next_hour)
+            return self.insight(say(ctx, "uv.now", ctx.clock.next_hour, time=end_str))
         start_ts = ctx.hourly.times[start]
-        message = ctx.messages.say("uv.later", start=ctx.clock.approx_time(start_ts), end=end_str)
-        return self.insight(message, start_ts)
+        sentence = say(ctx, "uv.later", start_ts, start_ts,
+                       start=ctx.clock.approx_time(start_ts), end=end_str)
+        return self.insight(sentence)
 
 
 class PrecipitationRule(Rule):
@@ -583,7 +298,7 @@ class PrecipitationRule(Rule):
     lasting through, or starting at a time."""
 
     def __init__(self):
-        super().__init__("precipitation")
+        super().__init__("precipitation", "medium", "rain")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         window = ctx.window
@@ -598,39 +313,47 @@ class PrecipitationRule(Rule):
             return None
         snow = IS_SNOW(ctx, start)
         ts = ctx.hourly.times[start]
-        message = ctx.messages.say(
+        sentence = say(
+            ctx,
             "snow.start" if snow else "rain.start",
+            ts,
+            ts,
             time=ctx.clock.approx_time(ts),
             chance=round(ctx.hourly.precip_probability[start]),
         )
-        return self.insight(message, ts, icon=ICON_SNOW if snow else ICON_RAIN)
+        return self._insight(sentence, snow)
 
     def _wet_now(self, ctx: OverviewContext, snow: bool) -> Insight:
-        icon = ICON_SNOW if snow else ICON_RAIN
         dry = ctx.first(IS_DRY)
         if dry is None:
-            message = ctx.messages.say(
+            sentence = say(
+                ctx,
                 "snow.through" if snow else "rain.through",
+                ctx.clock.next_hour,
                 time=ctx.clock.approx_time(ctx.window.end),
             )
-            return self.insight(message, ctx.clock.next_hour, icon=icon)
+            return self._insight(sentence, snow)
 
         ts = ctx.hourly.times[dry]
-        message = ctx.messages.say(
-            "snow.easing" if snow else "rain.easing", time=ctx.clock.approx_time(ts)
-        )
-        return self.insight(message, ts, icon=icon)
+        sentence = say(ctx, "snow.easing" if snow else "rain.easing", ts, ts, happens_now=True,
+                       time=ctx.clock.approx_time(ts))
+        return self._insight(sentence, snow)
+
+    def _insight(self, sentence: Sentence, snow: bool) -> Insight:
+        if snow:
+            return self.insight(sentence, icon=ICON_SNOW, topic="snow")
+        return self.insight(sentence, icon=ICON_RAIN)
 
 
 class WindRule(Rule):
-    """Wind reaching STRONG_WIND_KMH: how fast and when; a warning from
+    """Wind reaching STRONG_WIND_KMH: how fast and when; high from
     EXTREME_WIND_KMH."""
 
     PHRASING = Phrasing("wind.now", "wind.later")
 
     def __init__(self):
-        super().__init__("wind", icon=ICON_WIND)
-        self.test = AtLeast("windspeed", STRONG_WIND_KMH, to_metric=Units.kmh)
+        super().__init__("wind", "medium", "wind", ICON_WIND)
+        self.test = IS_WINDY
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         i = ctx.first(self.test)
@@ -638,9 +361,8 @@ class WindRule(Rule):
             return None
         speed = ctx.hourly.windspeed[i]
         speed_str = "{0:.0f} {1}".format(speed, ctx.hourly.wind_unit)
-        message, valid_until = self.PHRASING.render(ctx, i, speed=speed_str)
-        severity = "warning" if ctx.units.kmh(speed) >= EXTREME_WIND_KMH else "info"
-        return self.insight(message, valid_until, severity=severity)
+        level = "high" if ctx.units.kmh(speed) >= EXTREME_WIND_KMH else "medium"
+        return self.insight(self.PHRASING.render(ctx, i, speed=speed_str), level=level)
 
 
 class FogRule(Rule):
@@ -650,8 +372,8 @@ class FogRule(Rule):
     PHRASING = Phrasing("fog.now", "fog.later")
 
     def __init__(self):
-        super().__init__("fog", icon=ICON_FOG)
-        self.test = AnyOf(Below("visibility", FOG_VISIBILITY_M), HasCode(FOG_CODES))
+        super().__init__("fog", "medium", "fog", ICON_FOG)
+        self.test = IS_FOGGY
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         i = ctx.first(self.test)
@@ -660,8 +382,8 @@ class FogRule(Rule):
         ts = ctx.hourly.times[i]
         sunrise = ctx.sun.next_sunrise
         if not ctx.window.is_now(i) and sunrise is not None and abs(ts - sunrise) <= FOG_SUNRISE_MINUTES * MINUTE:
-            return self.insight(ctx.messages.say("fog.sunrise"), ts)
-        return self.insight(*self.PHRASING.render(ctx, i))
+            return self.insight(say(ctx, "fog.sunrise", ts, ts))
+        return self.insight(self.PHRASING.render(ctx, i))
 
 
 class TemperatureSwingRule(Rule):
@@ -669,11 +391,11 @@ class TemperatureSwingRule(Rule):
     change wins): say the temperature and when."""
 
     def __init__(self):
-        super().__init__("temperature_swing")
+        super().__init__("temperature_swing", "low", "temperature")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         temps = ctx.hourly.temperature
-        hours = [i for i in ctx.window.hours if _at(temps, i) is not None]
+        hours = [i for i in ctx.window.hours if value_at(temps, i) is not None]
         if len(hours) < 2:
             return None
         celsius = ctx.units.celsius
@@ -687,8 +409,7 @@ class TemperatureSwingRule(Rule):
             return None
         i, key = (warmest, "temperature.warming") if rise >= drop else (coldest, "temperature.cooling")
         ts = ctx.hourly.times[i]
-        message = ctx.messages.say(key, temp=degrees(temps[i]), time=ctx.clock.approx_time(ts))
-        return self.insight(message, ts)
+        return self.insight(say(ctx, key, ts, ts, temp=degrees(temps[i]), time=ctx.clock.approx_time(ts)))
 
 
 class TomorrowRule(Rule):
@@ -696,7 +417,7 @@ class TomorrowRule(Rule):
     TOMORROW_DIFFERENCE_C warmer or cooler than today's. True until midnight."""
 
     def __init__(self):
-        super().__init__("tomorrow")
+        super().__init__("tomorrow", "low", "tomorrow")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         if ctx.clock.local().hour < OVERVIEW_TOMORROW_FROM_HOUR:
@@ -707,8 +428,8 @@ class TomorrowRule(Rule):
         heading = C_("overview heading", "Tomorrow")
 
         if (daily.tomorrow_rain_chance or 0) >= RAIN_LIKELY_PROBABILITY:
-            message = ctx.messages.say("tomorrow.rain", chance=round(daily.tomorrow_rain_chance))
-            return self.insight(message, valid_until, icon=ICON_RAIN, heading=heading)
+            sentence = say(ctx, "tomorrow.rain", valid_until, chance=round(daily.tomorrow_rain_chance))
+            return self.insight(sentence, icon=ICON_RAIN, heading=heading)
 
         if daily.today_high is None or daily.tomorrow_high is None:
             return None
@@ -719,17 +440,34 @@ class TomorrowRule(Rule):
             key = "tomorrow.cooler"
         else:
             return None
-        message = ctx.messages.say(key, temp=degrees(daily.tomorrow_high))
-        return self.insight(message, valid_until, heading=heading)
+        sentence = say(ctx, key, valid_until, temp=degrees(daily.tomorrow_high))
+        return self.insight(sentence, heading=heading)
 
 
 class SunRule(Rule):
     """Sunset within SUNSET_SOON_MINUTES by day, or sunrise within
-    SUNRISE_SOON_MINUTES at night: say how soon, never more than
+    SUNRISE_SOON_MINUTES at night: say how the weather at the sun's hour
+    affects it (CONDITIONS, the first that applies), around a time rounded
+    like any other. Without one, say how soon, never more than
     OVERVIEW_RELATIVE_TOLERANCE off."""
 
+    # From what changes the sunset most; each is a message key part
+    # ("sunset.rain"). The thresholds are the other rules' own.
+    CONDITIONS = (
+        ("storm", HasCode(STORM_CODES)),
+        ("snow", AllOf(IS_WET, IS_SNOW)),
+        ("rain", AnyOf(IS_WET, HasCode(FREEZING_CODES))),
+        ("fog", IS_FOGGY),
+        ("very_windy", IS_VERY_WINDY),
+        ("windy_clear", AllOf(IS_WINDY, HasCode(CLEAR_CODES))),
+        ("windy_clouds", AllOf(IS_WINDY, HasCode(SOME_CLOUDS_CODES | OVERCAST_CODES))),
+        ("cloudy", HasCode(OVERCAST_CODES)),
+        ("some_clouds", HasCode(SOME_CLOUDS_CODES)),
+        ("clear", HasCode(CLEAR_CODES)),
+    )
+
     def __init__(self):
-        super().__init__("sun")
+        super().__init__("sun", "low", "sun")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         sun = ctx.sun
@@ -741,14 +479,27 @@ class SunRule(Rule):
             icon = ICON_SUNRISE
         if event is None or event - ctx.now > soon * MINUTE:
             return None
-        result = self.phrase(ctx, event, sunset)
-        if result is None:
+        sentence = self.weather_sentence(ctx, event, sunset) or self.phrase(ctx, event, sunset)
+        if sentence is None:
             return None
-        return self.insight(*result, icon=icon)
+        return self.insight(sentence, icon=icon)
+
+    def weather_sentence(self, ctx: OverviewContext, event: float, sunset: bool) -> Optional[Sentence]:
+        """How the weather at the sun's hour (the hour nearest the event)
+        affects it, or None without data or a condition. The time is
+        rounded, and the event doesn't move, so it is true until the event."""
+        i = ctx.hourly.hour_near(event)
+        if i is None:
+            return None
+        condition = next((name for name, test in self.CONDITIONS if test(ctx, i)), None)
+        if condition is None:
+            return None
+        key = f"{'sunset' if sunset else 'sunrise'}.{condition}"
+        return say(ctx, key, event, event, happens_now=True, time=ctx.clock.approx_time(event))
 
     @staticmethod
-    def phrase(ctx: OverviewContext, event: float, sunset: bool) -> Optional[Tuple[str, float]]:
-        """(message, valid_until) for "The sun sets in …", or None.
+    def phrase(ctx: OverviewContext, event: float, sunset: bool) -> Optional[Sentence]:
+        """The sentence for "The sun sets in …" (about the event), or None.
 
         Under an hour: minutes to the nearest SUN_ROUND_MINUTES (halves
         down), true while no more than the tolerance off. Longer: "about N
@@ -764,25 +515,283 @@ class SunRule(Rule):
         if n <= 0:
             return None
         if n < 60:
+            key = f"{name}.minutes"
             valid_until = min(event - n * MINUTE + OVERVIEW_RELATIVE_TOLERANCE, event - last_half_step)
-            return ctx.messages.say_count(f"{name}.minutes", n), valid_until
+            return Sentence(key, ctx.messages.say_count(key, n), valid_until, event)
 
         n = math.ceil(minutes / 60 - 0.5)
         # Until n - ½ hours are left; from 57½ minutes (an hour less half a
         # step) the minutes form takes over
+        key = f"{name}.hours"
         valid_until = event - max((n - 0.5) * HOUR, HOUR - last_half_step)
-        return ctx.messages.say_count(f"{name}.hours", n, time=ctx.clock.time(event)), valid_until
+        message = ctx.messages.say_count(key, n, time=ctx.clock.time(event))
+        return Sentence(key, message, valid_until, event)
 
 
 class CalmRule(Rule):
     """Always applies: the fallback when nothing else is worth saying."""
 
     def __init__(self):
-        super().__init__("calm")
+        super().__init__("calm", "calm", "calm")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         end = ctx.window.end
-        return self.insight(ctx.messages.say("calm", time=ctx.clock.approx_time(end)), end)
+        return self.insight(say(ctx, "calm", end, time=ctx.clock.approx_time(end)))
+
+
+# =====================================================================
+# Several things at once: combine, or fold
+# =====================================================================
+
+@dataclass(frozen=True)
+class Combination:
+    """Two insights that become one sentence, `key` + ".now" or ".later".
+    `first` is the more important: it gives the rule, topic and icon."""
+
+    first: str
+    second: str
+    key: str
+
+
+@dataclass(frozen=True)
+class Fold:
+    """`kept` already says `folded`: the folded one isn't shown."""
+
+    kept: str
+    folded: str
+
+
+@dataclass(frozen=True)
+class Turning:
+    """Rain (`light`) and something `later` in the same wet spell (heavy
+    rain, a storm): one sentence, `key` + the rain message's form
+    (".easing", ".through" or ".start"). `time_name` is the placeholder for
+    the later one's time; None when the sentence doesn't say it."""
+
+    light: str
+    later: str
+    key: str
+    time_name: Optional[str] = None
+
+
+# Tried in this order, each insight used once (docs/overview-rules.md,
+# "Several things at once"): turning stormy, folds, turning heavy, the pairs
+TURNING_STORMY = (
+    Turning("rain", "storm", "rain_stormy"),
+)
+FOLDS = (
+    Fold("storm", "rain"),
+    Fold("storm", "snow"),
+    Fold("heavy_rain", "rain"),
+    Fold("heavy_snow", "snow"),
+)
+TURNING_HEAVY = (
+    Turning("rain", "heavy_rain", "rain_heavier", time_name="heavy_time"),
+    Turning("snow", "heavy_snow", "snow_heavier", time_name="heavy_time"),
+)
+COMBINATIONS = (
+    Combination("storm", "wind", "storm_wind"),
+    Combination("storm", "heavy_rain", "storm_heavy_rain"),
+    Combination("heavy_rain", "wind", "heavy_rain_wind"),
+    Combination("heavy_snow", "wind", "heavy_snow_wind"),
+    Combination("rain", "wind", "rain_wind"),
+    Combination("snow", "wind", "snow_wind"),
+)
+
+
+def what(insight: Insight) -> str:
+    """The name an insight has in FOLDS and COMBINATIONS ("heavy_rain")."""
+    if insight.kind == "heavy_precipitation":
+        return f"heavy_{insight.topic}"
+    if insight.kind == "precipitation":
+        return insight.topic
+    return insight.kind
+
+
+def not_together(a: Insight, b: Insight) -> Optional[str]:
+    """Why `a` and `b` don't happen together, or None when they do: both now,
+    or both later and within OVERVIEW_COMBINE_MINUTES."""
+    if (a.when is None) != (b.when is None):
+        return "one now, one later"
+    if a.when is None:
+        return None
+    apart_minutes = abs(a.when - b.when) / MINUTE
+    if apart_minutes > OVERVIEW_COMBINE_MINUTES:
+        return f"{apart_minutes:.0f} min apart"
+    return None
+
+
+def combine(insights: Sequence[Insight], ctx: OverviewContext,
+            log_steps: bool = True) -> List[Insight]:
+    """`insights` with the ones that happen together turned (TURNING_STORMY,
+    TURNING_HEAVY), folded (FOLDS) and combined (COMBINATIONS) into one;
+    everything else as it is. Each step is logged (debug) unless `log_steps`
+    is off."""
+    result = list(insights)
+
+    def note(message: str) -> None:
+        if log_steps:
+            logger.debug(message)
+
+    combined_ones = []  # each insight is combined once: these are out of the running
+
+    def find(name: str) -> Optional[Insight]:
+        return next((i for i in result if what(i) == name and not _is_in(i, combined_ones)), None)
+
+    def turn(turnings: Sequence[Turning], how: str) -> None:
+        for turning in turnings:
+            light, later = find(turning.light), find(turning.later)
+            if light is None or later is None:
+                continue
+            why = not_in_the_same_spell(light, later, ctx)
+            if why:
+                note(f"Overview not turning {how}: {later.kind} with {light.kind} ({light.key}): {why}")
+                continue
+            turned = _turned(light, later, turning, ctx)
+            note(f"Overview turning {how}: {light.kind} ({light.key}) + {later.kind} "
+                 f"({_hh_mm(ctx, later.when)}) -> {turned.key}")
+            result[result.index(later)] = turned
+            result.remove(light)
+            combined_ones.append(turned)
+
+    # First, so a rain that leads a storm isn't folded into it
+    turn(TURNING_STORMY, "stormy")
+
+    for fold in FOLDS:
+        kept, folded = find(fold.kept), find(fold.folded)
+        if kept is None or folded is None:
+            continue
+        why = not_together(kept, folded)
+        if why:
+            note(f"Overview not folded: {folded.kind} into {kept.kind}: {why}")
+            continue
+        note(f"Overview folded: {folded.kind} ({folded.key}) into {kept.kind}")
+        result.remove(folded)
+        result[result.index(kept)] = replace(
+            kept, parts=kept.parts + folded.parts, covers=kept.covers + folded.covers
+        )
+
+    turn(TURNING_HEAVY, "heavy")
+
+    for combination in COMBINATIONS:
+        first, second = find(combination.first), find(combination.second)
+        if first is None or second is None:
+            continue
+        why = not_together(first, second)
+        if why:
+            note(f"Overview not combined: {first.kind} + {second.kind}: {why}")
+            continue
+        combined = _combined(first, second, combination.key, ctx)
+        note(f"Overview combined: {first.kind} + {second.kind} -> {combined.key}")
+        result[result.index(first)] = combined
+        result.remove(second)
+        combined_ones.append(combined)
+    return result
+
+
+def not_in_the_same_spell(light: Insight, later: Insight, ctx: OverviewContext) -> Optional[str]:
+    """Why `later` (heavy rain, a storm) is not part of the rain that is
+    falling (or starting), or None when it is: it comes after the rain
+    starts and before its first dry hour."""
+    form = light.key.split(".")[-1]
+    if form not in ("easing", "through", "start"):
+        return f"no sentence for {light.key}"
+    if later.when is None:
+        return "it is now"
+    starts = light.when if light.when is not None else ctx.now
+    if later.when <= starts:
+        return "it comes with or before the rain"
+    if form == "easing":
+        ends = light.about
+    elif form == "through":
+        ends = ctx.window.end
+    else:
+        ends = _wet_until(ctx, starts)
+    if later.when >= ends:
+        return f"it comes after the rain eases ({_hh_mm(ctx, ends)})"
+    return None
+
+
+def _wet_until(ctx: OverviewContext, starts: float) -> float:
+    """The first dry hour after `starts`, or the window's end."""
+    return next(
+        (ctx.hourly.times[i] for i in ctx.window.hours
+         if ctx.hourly.times[i] > starts and IS_DRY(ctx, i)),
+        ctx.window.end,
+    )
+
+
+def _turned(light: Insight, later: Insight, turning: Turning, ctx: OverviewContext) -> Insight:
+    """One insight for rain turning heavy or stormy: the later one's rule,
+    level and topic, the rain's times, true until the later one's hour (or
+    the rain's end, if sooner), counting as both.
+
+    A part is about the hour the sentence says. Without the later one's time
+    in it, the later one's parts are about the rain's hour, so a storm moving
+    within the spell isn't news: the sentence stays the same.
+    """
+    key = f"{turning.key}.{light.key.split('.')[-1]}"
+    values = dict(light.values)
+    later_parts = later.parts
+    if turning.time_name:
+        values[turning.time_name] = ctx.clock.approx_time(later.when)
+    else:
+        later_parts = tuple((kind, key, level, light.about) for kind, _key, level, _about in later.parts)
+    return Insight(
+        later.kind,
+        ctx.messages.say(key, **values),
+        min(light.valid_until, later.valid_until),
+        later.level,
+        later.icon,
+        later.heading,
+        topic=later.topic,
+        key=key,
+        about=light.about,
+        when=light.when,
+        values=values,
+        parts=light.parts + later_parts,
+        topics=later.topics + tuple(t for t in light.topics if t not in later.topics),
+        covers=light.covers + later.covers,
+    )
+
+
+def _hh_mm(ctx: OverviewContext, ts: Optional[float]) -> str:
+    """A time for the debug log, in the city's time zone."""
+    return "now" if ts is None else ctx.clock.local(ts).strftime("%H:%M")
+
+
+def _is_in(insight: Insight, insights: Sequence[Insight]) -> bool:
+    """Whether this very insight object is in `insights` (equal ones don't count)."""
+    return any(insight is other for other in insights)
+
+
+def _combined(first: Insight, second: Insight, key: str, ctx: OverviewContext) -> Insight:
+    """One insight saying both: from the earlier time, true until either
+    stops being true, at the higher level, and counting as both."""
+    whens = [i.when for i in (first, second) if i.when is not None]
+    when = min(whens) if whens else None
+    values = {**second.values, **first.values}
+    if when is None:
+        key, message = f"{key}.now", ctx.messages.say(f"{key}.now", **values)
+    else:
+        values["time"] = ctx.clock.approx_time(when)
+        key, message = f"{key}.later", ctx.messages.say(f"{key}.later", **values)
+    return Insight(
+        first.kind,
+        message,
+        min(first.valid_until, second.valid_until),
+        max(first.level, second.level, key=LEVELS.index),
+        first.icon,
+        first.heading,
+        topic=first.topic,
+        key=key,
+        about=when,
+        when=when,
+        values=values,
+        parts=first.parts + second.parts,
+        topics=first.topics + second.topics,
+        covers=first.covers + second.covers,
+    )
 
 
 # =====================================================================
@@ -799,17 +808,13 @@ class RuleBook:
     def default(cls) -> "RuleBook":
         """Every rule."""
         return cls([
-            FirstHourRule(
-                "storm",
-                HasCode(STORM_CODES),
-                Phrasing("storm.now", "storm.later", ICON_STORM),
-                severity="error",
-            ),
+            StormRule(),
             FirstHourRule(
                 "freezing",
                 HasCode(FREEZING_CODES),
                 Phrasing("freezing.now", "freezing.later", ICON_RAIN),
-                severity="warning",
+                level="high",
+                topic="freezing",
             ),
             FirstHourRule(
                 "heavy_precipitation",
@@ -818,7 +823,8 @@ class RuleBook:
                     AtLeast("precipitation", HEAVY_PRECIPITATION_MM),
                 ),
                 Phrasing("heavy_rain.now", "heavy_rain.later", ICON_RAIN),
-                severity="warning",
+                level="high",
+                topic="rain",
                 snow_phrasing=Phrasing("heavy_snow.now", "heavy_snow.later", ICON_SNOW),
             ),
             ExtremeFeelsRule(),
@@ -833,12 +839,15 @@ class RuleBook:
             CalmRule(),
         ])
 
-    def run(self, ctx: OverviewContext) -> List[Insight]:
+    def run(self, ctx: OverviewContext, log_steps: bool = True) -> List[Insight]:
         """Every insight that applies and is still true, most important first.
 
         Ignore on fail: a rule that fails, on odd or missing data, simply
         offers nothing. It is logged (debug only) and the other rules still
         run, so one rule can never break the overview.
+
+        `log_steps` off: the folds and pairs aren't logged, for the engine's
+        second run that only draws a fresh wording.
         """
         insights = []
         for rule in self.rules:
@@ -850,115 +859,8 @@ class RuleBook:
             if insight is not None and insight.valid_until > ctx.now:
                 insights.append(insight)
         insights.sort(key=lambda insight: insight.priority, reverse=True)
-        return insights
-
-
-# =====================================================================
-# Announcing: which insight to show, and when to open
-# =====================================================================
-
-SEVERITY_RANK = {"info": 0, "warning": 1, "error": 2}
-
-
-class AnnouncePlanner:
-    """Decides which insight the overview shows and when it opens by itself.
-
-    - **How often**: the score adds up the priorities (÷ 100) of everything
-      worth saying. The next opening is OVERVIEW_ANNOUNCE_BASE_MINUTES ÷
-      (1 + score), between the MIN and MAX minutes, spread at random. A busy
-      forecast opens more often; as insights expire it calms down.
-    - **What**: each opening shows the insight whose turn it is: never shown
-      ones first (most important first), then the highest priority × minutes
-      since it was last shown. Lower insights get their turn too. The first
-      opening is an escalation (below), so it shows the most severe one.
-    - **Escalation**: something more severe than before (a storm appears)
-      opens at once, unless it was shown in the last MAX minutes (so one that
-      comes and goes counts once). Within MIN minutes of the last opening it
-      waits, and opens as soon as those minutes are up.
-    - **Between openings** the shown insight's text is kept up to date
-      silently; if it no longer applies, the most important one takes its
-      place, silently.
-
-    The memory (what was shown when, the next opening) belongs to one
-    location: the engine keeps it across refreshes and calls `forget()` when
-    the location changes or the overview is turned off.
-    """
-
-    def __init__(self):
-        self.forget()
-
-    def forget(self) -> None:
-        self.last_shown: Dict[str, float] = {}  # kind -> when it was last shown
-        self.next_announce = 0.0
-        self.pending_rank = -1  # the highest severity pending at the last run
-
-    @staticmethod
-    def worth_saying(insights: List[Insight]) -> List[Insight]:
-        """The insights that take turns: calm only when there is nothing else."""
-        return [i for i in insights if i.kind != "calm"] or insights[:1]
-
-    @staticmethod
-    def score(insights: List[Insight]) -> float:
-        return sum(i.priority for i in insights) / 100
-
-    @staticmethod
-    def interval_minutes(score: float, spread: float) -> float:
-        """Minutes to the next opening for a score; `spread` from -1 to 1
-        moves it by up to OVERVIEW_ANNOUNCE_SPREAD."""
-        minutes = OVERVIEW_ANNOUNCE_BASE_MINUTES / (1 + score)
-        minutes *= 1 + spread * OVERVIEW_ANNOUNCE_SPREAD
-        return min(max(minutes, OVERVIEW_ANNOUNCE_MIN_MINUTES), OVERVIEW_ANNOUNCE_MAX_MINUTES)
-
-    def whose_turn(self, insights: List[Insight], now: float) -> Insight:
-        def turn(insight: Insight):
-            last = self.last_shown.get(insight.kind)
-            if last is None:
-                return (1, insight.priority)  # never shown: first, by priority
-            return (0, insight.priority * (now - last) / 60)
-        return max(insights, key=turn)
-
-    def decide(self, insights: List[Insight], showing: Optional[str], now: float,
-               rng: Optional[random.Random] = None) -> Tuple[Optional[Insight], bool]:
-        """(the insight to show, whether to open the overview) for the
-        insights true now, most important first. `showing` is the kind on
-        screen, or None when it has expired: then another one takes its
-        place silently, and the overview still waits for its next opening."""
-        if not insights:
-            return None, False
-        pending = self.worth_saying(insights)
-        top = max(pending, key=lambda i: (SEVERITY_RANK[i.severity], i.priority))
-        rank = SEVERITY_RANK[top.severity]
-        # pending_rank starts at -1, so the first opening is an escalation too
-        escalated = rank > self.pending_rank
-
-        # Escalation skips the wait, but only for something not shown lately
-        # (a severe insight that comes and goes counts once), and never
-        # straight after another opening: then it opens once the gap is over
-        last_opening = max(self.last_shown.values(), default=-math.inf)
-        gap_over = last_opening + OVERVIEW_ANNOUNCE_MIN_MINUTES * 60
-        shown_lately = now - self.last_shown.get(top.kind, -math.inf) < OVERVIEW_ANNOUNCE_MAX_MINUTES * 60
-        escalates = escalated and not shown_lately
-        if escalates and now < gap_over:
-            # Stays pending (rank not recorded) until the gap is over
-            self.next_announce = min(self.next_announce, gap_over)
-        else:
-            self.pending_rank = rank
-
-        if escalates and now >= gap_over:
-            chosen = top
-        elif now >= self.next_announce:
-            # Its time has come
-            chosen = self.whose_turn(pending, now)
-        else:
-            # Not time to open: keep the text up to date, silently
-            same = next((i for i in insights if i.kind == showing), None)
-            return same or pending[0], False
-
-        self.last_shown[chosen.kind] = now
-        minutes = self.interval_minutes(self.score(pending), (rng or random).uniform(-1, 1))
-        self.next_announce = now + minutes * 60
-        return chosen, True
-
-    def note_shown(self, kind: str, now: float) -> None:
-        """The user opened the overview on `kind`: that counts as its turn."""
-        self.last_shown[kind] = now
+        try:
+            return combine(insights, ctx, log_steps)
+        except Exception as e:  # noqa: BLE001 - ignore on fail: each insight on its own
+            logger.debug(f"Overview combining skipped: {e!r}")
+            return insights

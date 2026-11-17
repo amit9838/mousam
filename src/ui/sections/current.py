@@ -18,8 +18,9 @@ from ..icons import condition, create_weather_icon  # noqa: E402
 from ...state.overview_engine import overview_engine  # noqa: E402
 from ...services.settings import settings  # noqa: E402
 
-# Heading colour for each insight severity (libadwaita style classes)
-SEVERITY_CSS = {"info": "accent", "warning": "warning", "error": "error"}
+# Heading colour for each insight level (libadwaita style classes); lower
+# levels keep the plain text colour
+LEVEL_CSS = {"medium": "accent", "high": "warning", "extreme": "error"}
 
 
 class CurrentCondition(Gtk.Box):
@@ -255,11 +256,12 @@ class CurrentCondition(Gtk.Box):
             self._close_overview()
             return
 
-        # The heading's colour follows the severity, always with words
+        # The heading's colour follows the level, always with words
         self._overview_heading.set_label((heading or "").upper())
-        self._overview_heading.set_css_classes(
-            ["text-xs", "font-bold", "current-overview-heading", SEVERITY_CSS.get(insight.severity, "accent")]
-        )
+        classes = ["text-xs", "font-bold", "current-overview-heading"]
+        if insight.level in LEVEL_CSS:
+            classes.append(LEVEL_CSS[insight.level])
+        self._overview_heading.set_css_classes(classes)
         self._overview_icon.set_visible(insight.icon is not None)
         if insight.icon:
             self._overview_icon.set_from_icon_name(insight.icon)

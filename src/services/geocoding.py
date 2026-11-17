@@ -3,7 +3,7 @@ from typing import List, Optional
 import requests
 
 from ..core.cache import cached
-from ..config import GEOCODING_BASE_URL, TIMEOUT
+from ..config import GEOCODING_BASE_URL, REQUEST_TIMEOUT
 from ..core.log import get_logger
 
 # Configure logging at the module level
@@ -27,7 +27,7 @@ def find_city(city: str, count: int = 3) -> Optional[List[dict]]:
 
     try:
         # Use a timeout to prevent the thread from hanging indefinitely
-        response = requests.get(GEOCODING_BASE_URL, params=params, timeout=TIMEOUT)
+        response = requests.get(GEOCODING_BASE_URL, params=params, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         payload = response.json()
         results = payload.get("results", [])

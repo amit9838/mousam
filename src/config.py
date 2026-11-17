@@ -1,5 +1,3 @@
-from gettext import gettext as _
-
 # --- Application Info ---
 APP_ID = "io.github.amit9838.mousam"
 # Filled in by Meson from the project version in meson.build
@@ -22,7 +20,12 @@ METEOCONS_URL = "https://github.com/basmilius/meteocons"
 GOOGLE_WEATHER_ICONS_URL = "https://github.com/mrdarrengriffin/google-weather-icons"
 
 # --- Networking & Timeout ---
-TIMEOUT = 15
+TIMEOUT = 15  # seconds to wait for a server's answer
+# Seconds to connect to one of a server's addresses. Short, so a network
+# with a broken IPv6 route falls back to IPv4 quickly: requests tries the
+# addresses one after the other, each with this timeout.
+CONNECT_TIMEOUT = 5
+REQUEST_TIMEOUT = (CONNECT_TIMEOUT, TIMEOUT)  # for requests: (connect, read)
 INTERNET_CACHE_TTL = 120
 DEFAULT_TIMEZONE = "UTC"
 
@@ -99,14 +102,10 @@ PRESSURE_GAUGE_SPAN = 50
 PRESSURE_LOW = 1000
 PRESSURE_HIGH = 1026
 
-# --- Application Preferences ---
-AUTO_REFRESH_OPTIONS = [
-    (0, _("Off")),
-    (15, _("Every 15 minutes")),
-    (30, _("Every 30 minutes")),
-    (60, _("Every hour")),
-    (120, _("Every 2 hours")),
-]
+# --- Refreshing ---
+# How often the weather refreshes by itself, always (no setting): the
+# overview and notifications only see a changed forecast after a refresh.
+AUTO_REFRESH_MINUTES = 10
 
 
 # Thresholds based on WHO Global Air Quality Guidelines 2021 (in µg/m³)
@@ -134,15 +133,18 @@ OVERVIEW_FIRST_DELAY = 10  # seconds after the first data load, so start-up stay
 OVERVIEW_REFRESH_DELAY = 2  # seconds after later refreshes, once the grid is rebuilt
 OVERVIEW_HOURS = 12  # how far ahead the overview looks
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
-# When the overview opens again by itself: BASE ÷ (1 + score), where the
-# score adds up the priorities (÷ 100) of everything worth saying, so a busy
-# forecast opens it more often. Kept between MIN and MAX minutes, then spread
-# at random by ± SPREAD so it does not feel mechanical. MIN is also the
-# shortest gap before something that just turned severe opens it again.
-OVERVIEW_ANNOUNCE_BASE_MINUTES = 40
-OVERVIEW_ANNOUNCE_MIN_MINUTES = 5
-OVERVIEW_ANNOUNCE_MAX_MINUTES = 40
-OVERVIEW_ANNOUNCE_SPREAD = 0.2
+# When the overview opens by itself (core/overview/announce.py): something
+# new at once, then reminders of it that wait longer each time.
+OVERVIEW_MIN_GAP_MINUTES = 5  # nothing opens within this long of the last opening
+# The first reminder, by level; each next one waits BACKOFF times longer, at
+# most MAX minutes. Low and calm are said once, never reminded.
+OVERVIEW_REMIND_MINUTES = {"extreme": 30, "high": 60, "medium": 120}
+OVERVIEW_REMIND_BACKOFF = 2
+OVERVIEW_REMIND_MAX_MINUTES = 240
+OVERVIEW_FORGET_MINUTES = 240  # an insight not true for this long is forgotten
+# Topics whose news is sent as a notification even below medium
+OVERVIEW_NOTIFY_TOPICS = {"tomorrow"}
+OVERVIEW_COMBINE_MINUTES = 60  # two things this close become one sentence (rules.py)
 
 # Overview rules (core/overview/rules.py). All thresholds are metric; rules
 # convert imperial data before comparing.
@@ -162,7 +164,7 @@ VERY_HIGH_UV = 8
 FOG_VISIBILITY_M = 1000
 FOG_SUNRISE_MINUTES = 60  # fog this close to sunrise is "around sunrise"
 STRONG_WIND_KMH = 40  # matches "Strong" in core.levels.classify_wind_speed_level
-EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
+EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes high
 TEMPERATURE_SWING_C = 6  # change across the window worth a mention
 TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention
 SUNSET_SOON_MINUTES = 120
@@ -186,7 +188,7 @@ OVERVIEW_PRIORITIES = {
     "calm": 0,
 }
 
-# How long a message stays open: a base time, plus extra for severe ones
-# (seconds). Info 15 s, warning 22 s, error 30 s.
+# How long a message stays open: a base time, plus extra for urgent ones
+# (seconds). Up to medium 15 s, high 22 s, extreme 30 s.
 OVERVIEW_SHOW_BASE_SECONDS = 15
-OVERVIEW_SHOW_EXTRA_SECONDS = {"info": 0, "warning": 7, "error": 15}
+OVERVIEW_SHOW_EXTRA_SECONDS = {"calm": 0, "low": 0, "medium": 0, "high": 7, "extreme": 15}

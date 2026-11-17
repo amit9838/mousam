@@ -2,6 +2,7 @@ install_data(
   '__init__.py',
   'compact_window.py',
   'gtk_utils.py',
+  'notifications.py',
   'window.py',
   install_dir: moduledir / 'ui',
 )

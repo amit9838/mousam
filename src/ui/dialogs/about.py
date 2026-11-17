@@ -134,7 +134,6 @@ def build_debug_info() -> str:
         f"  Units: {settings.unit}",
         f"  Precipitation in inches: {settings.is_using_inch_for_prec}",
         f"  24-hour clock: {settings.is_using_24h_clock}",
-        f"  Auto refresh: {settings.auto_refresh_interval} min",
         f"  Dynamic background: {settings.is_using_dynamic_bg}",
         f"  Icon theme: {settings.icon_theme}",
         f"  Weather overview: {settings.show_overview}",
