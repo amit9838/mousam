@@ -14,16 +14,17 @@ Built by composition, with no GTK, so everything can be tested on made-up data:
   core/overview/messages.py; the context's MessageBook picks one.
 - Rule: one rule, `evaluate(ctx) -> Optional[Insight]`.
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
-  and is still true, most important first.
+  and is still true, most important first, with the ones that happen together
+  combined (COMBINATIONS) or folded (FOLDS) into one.
 Which of those insights to show, and when the overview opens by itself, is
 up to announce.py; the engine (state/overview_engine.py) runs the timers.
 """
 
 import math
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
 from gettext import pgettext as C_
-from typing import List, Optional
+from typing import Dict, List, Optional, Sequence
 
 from ...config import (
     COLD_FEELS_LIKE_C,
@@ -32,6 +33,7 @@ from ...config import (
     FOG_VISIBILITY_M,
     HEAT_FEELS_LIKE_C,
     HEAVY_PRECIPITATION_MM,
+    OVERVIEW_COMBINE_MINUTES,
     OVERVIEW_RELATIVE_TOLERANCE,
     OVERVIEW_TOMORROW_FROM_HOUR,
     RAIN_LIKELY_PROBABILITY,
@@ -61,7 +63,7 @@ from .hour_tests import (
     HasCode,
     HourTest,
 )
-from .insight import Insight
+from .insight import LEVELS, Insight
 
 logger = get_logger("overview")
 
@@ -87,12 +89,15 @@ def degrees(value: float) -> str:
 @dataclass(frozen=True)
 class Sentence:
     """A message as a rule said it: its key, the text, until when it is
-    true, and the hour or event it is about (None for "now")."""
+    true, the hour or event it is about and when it happens (None for
+    "now"), and what its placeholders were filled with."""
 
     key: str
     message: str
     valid_until: float
     about: Optional[float] = None
+    when: Optional[float] = None
+    values: Dict[str, object] = field(default_factory=dict)
 
 
 @dataclass
@@ -116,15 +121,19 @@ class Phrasing:
         """The sentence for the hour starting at `ts`, for data with its own
         timestamps (air quality)."""
         if is_now:
-            return Sentence(self.now, ctx.messages.say(self.now, **values), ctx.clock.next_hour)
+            message = ctx.messages.say(self.now, **values)
+            return Sentence(self.now, message, ctx.clock.next_hour, values=values)
         message = ctx.messages.say(self.later, time=ctx.clock.approx_time(ts), **values)
-        return Sentence(self.later, message, ts, ts)
+        return Sentence(self.later, message, ts, ts, ts, values)
 
 
 def say(ctx: OverviewContext, key: str, valid_until: float, about: Optional[float] = None,
-        **values) -> Sentence:
-    """A sentence for one message key, for rules that don't use a Phrasing."""
-    return Sentence(key, ctx.messages.say(key, **values), valid_until, about)
+        happens_now: bool = False, **values) -> Sentence:
+    """A sentence for one message key, for rules that don't use a Phrasing.
+    It happens at `about` (None: now), unless `happens_now`: rain easing at
+    4 PM is about 4 PM, but falling now."""
+    when = None if happens_now else about
+    return Sentence(key, ctx.messages.say(key, **values), valid_until, about, when, values)
 
 
 # =====================================================================
@@ -159,6 +168,8 @@ class Rule(ABC):
             topic=topic or self.topic,
             key=sentence.key,
             about=sentence.about,
+            when=sentence.when,
+            values=sentence.values,
         )
 
 
@@ -296,7 +307,7 @@ class PrecipitationRule(Rule):
             return self._insight(sentence, snow)
 
         ts = ctx.hourly.times[dry]
-        sentence = say(ctx, "snow.easing" if snow else "rain.easing", ts, ts,
+        sentence = say(ctx, "snow.easing" if snow else "rain.easing", ts, ts, happens_now=True,
                        time=ctx.clock.approx_time(ts))
         return self._insight(sentence, snow)
 
@@ -471,6 +482,141 @@ class CalmRule(Rule):
 
 
 # =====================================================================
+# Several things at once: combine, or fold
+# =====================================================================
+
+@dataclass(frozen=True)
+class Combination:
+    """Two insights that become one sentence, `key` + ".now" or ".later".
+    `first` is the more important: it gives the rule, topic and icon."""
+
+    first: str
+    second: str
+    key: str
+
+
+@dataclass(frozen=True)
+class Fold:
+    """`kept` already says `folded`: the folded one isn't shown."""
+
+    kept: str
+    folded: str
+
+
+# Tried in this order, each insight used once (docs/overview-rules.md,
+# "Several things at once")
+FOLDS = (
+    Fold("storm", "rain"),
+    Fold("storm", "snow"),
+    Fold("heavy_rain", "rain"),
+    Fold("heavy_snow", "snow"),
+)
+COMBINATIONS = (
+    Combination("storm", "wind", "storm_wind"),
+    Combination("storm", "heavy_rain", "storm_heavy_rain"),
+    Combination("heavy_rain", "wind", "heavy_rain_wind"),
+    Combination("heavy_snow", "wind", "heavy_snow_wind"),
+    Combination("rain", "wind", "rain_wind"),
+    Combination("snow", "wind", "snow_wind"),
+)
+
+
+def what(insight: Insight) -> str:
+    """The name an insight has in FOLDS and COMBINATIONS ("heavy_rain")."""
+    if insight.kind == "heavy_precipitation":
+        return f"heavy_{insight.topic}"
+    if insight.kind == "precipitation":
+        return insight.topic
+    return insight.kind
+
+
+def not_together(a: Insight, b: Insight) -> Optional[str]:
+    """Why `a` and `b` don't happen together, or None when they do: both now,
+    or both later and within OVERVIEW_COMBINE_MINUTES."""
+    if (a.when is None) != (b.when is None):
+        return "one now, one later"
+    if a.when is None:
+        return None
+    apart_minutes = abs(a.when - b.when) / MINUTE
+    if apart_minutes > OVERVIEW_COMBINE_MINUTES:
+        return f"{apart_minutes:.0f} min apart"
+    return None
+
+
+def combine(insights: Sequence[Insight], ctx: OverviewContext) -> List[Insight]:
+    """`insights` with the ones that happen together folded (FOLDS) and
+    combined (COMBINATIONS) into one; everything else as it is."""
+    result = list(insights)
+    combined_ones = []  # each insight is combined once: these are out of the running
+
+    def find(name: str) -> Optional[Insight]:
+        return next((i for i in result if what(i) == name and not _is_in(i, combined_ones)), None)
+
+    for fold in FOLDS:
+        kept, folded = find(fold.kept), find(fold.folded)
+        if kept is None or folded is None:
+            continue
+        why = not_together(kept, folded)
+        if why:
+            logger.debug(f"Overview not folded: {folded.kind} into {kept.kind}: {why}")
+            continue
+        logger.debug(f"Overview folded: {folded.kind} ({folded.key}) into {kept.kind}")
+        result.remove(folded)
+        result[result.index(kept)] = replace(
+            kept, parts=kept.parts + folded.parts, covers=kept.covers + folded.covers
+        )
+
+    for combination in COMBINATIONS:
+        first, second = find(combination.first), find(combination.second)
+        if first is None or second is None:
+            continue
+        why = not_together(first, second)
+        if why:
+            logger.debug(f"Overview not combined: {first.kind} + {second.kind}: {why}")
+            continue
+        combined = _combined(first, second, combination.key, ctx)
+        logger.debug(f"Overview combined: {first.kind} + {second.kind} -> {combined.key}")
+        result[result.index(first)] = combined
+        result.remove(second)
+        combined_ones.append(combined)
+    return result
+
+
+def _is_in(insight: Insight, insights: Sequence[Insight]) -> bool:
+    """Whether this very insight object is in `insights` (equal ones don't count)."""
+    return any(insight is other for other in insights)
+
+
+def _combined(first: Insight, second: Insight, key: str, ctx: OverviewContext) -> Insight:
+    """One insight saying both: from the earlier time, true until either
+    stops being true, at the higher level, and counting as both."""
+    whens = [i.when for i in (first, second) if i.when is not None]
+    when = min(whens) if whens else None
+    values = {**second.values, **first.values}
+    if when is None:
+        key, message = f"{key}.now", ctx.messages.say(f"{key}.now", **values)
+    else:
+        values["time"] = ctx.clock.approx_time(when)
+        key, message = f"{key}.later", ctx.messages.say(f"{key}.later", **values)
+    return Insight(
+        first.kind,
+        message,
+        min(first.valid_until, second.valid_until),
+        max(first.level, second.level, key=LEVELS.index),
+        first.icon,
+        first.heading,
+        topic=first.topic,
+        key=key,
+        about=when,
+        when=when,
+        values=values,
+        parts=first.parts + second.parts,
+        topics=first.topics + second.topics,
+        covers=first.covers + second.covers,
+    )
+
+
+# =====================================================================
 # The rule book
 # =====================================================================
 
@@ -538,4 +684,8 @@ class RuleBook:
             if insight is not None and insight.valid_until > ctx.now:
                 insights.append(insight)
         insights.sort(key=lambda insight: insight.priority, reverse=True)
-        return insights
+        try:
+            return combine(insights, ctx)
+        except Exception as e:  # noqa: BLE001 - ignore on fail: each insight on its own
+            logger.debug(f"Overview combining skipped: {e!r}")
+            return insights

@@ -47,7 +47,9 @@ class Said:
 
 
 class AnnounceMemory:
-    """What has been said for one location, by fingerprint."""
+    """What has been said for one location, by fingerprint. An insight that
+    says several things (combined, or with one folded in) counts as each of
+    its `parts`."""
 
     def __init__(self):
         self.forget()
@@ -57,43 +59,50 @@ class AnnounceMemory:
         self.last_opening = -math.inf
 
     def is_new(self, insight: Insight) -> bool:
-        return insight.fingerprint not in self.said
+        """News: something in it hasn't been said."""
+        return any(part not in self.said for part in insight.parts)
 
     def times_said(self, insight: Insight) -> int:
-        said = self.said.get(insight.fingerprint)
-        return said.times if said else 0
+        """How many times it has been said: the least of its parts."""
+        return min((self.said[part].times if part in self.said else 0) for part in insight.parts)
 
     def due_at(self, insight: Insight) -> Optional[float]:
         """When `insight` may open the overview: -inf when it is news, the
-        time of its next reminder, or None when it is never repeated (low and
-        calm are said once)."""
-        said = self.said.get(insight.fingerprint)
-        if said is None:
+        time of its next reminder (the earliest of its parts'), or None when
+        it is never repeated (low and calm are said once)."""
+        if self.is_new(insight):
             return -math.inf
         first_minutes = OVERVIEW_REMIND_MINUTES.get(insight.level)
         if first_minutes is None:
             return None
-        minutes = first_minutes * OVERVIEW_REMIND_BACKOFF ** (said.times - 1)
-        return said.last + min(minutes, OVERVIEW_REMIND_MAX_MINUTES) * MINUTE
+        due_times = []
+        for part in insight.parts:
+            said = self.said[part]
+            minutes = first_minutes * OVERVIEW_REMIND_BACKOFF ** (said.times - 1)
+            due_times.append(said.last + min(minutes, OVERVIEW_REMIND_MAX_MINUTES) * MINUTE)
+        return min(due_times)
 
     def note_seen(self, insights: Sequence[Insight], now: float) -> None:
         """These insights are true now. One that hasn't been true for
         OVERVIEW_FORGET_MINUTES is forgotten, so the memory stays small. Not
         straight away: a storm that comes and goes still counts once."""
         for insight in insights:
-            said = self.said.get(insight.fingerprint)
-            if said is not None:
-                said.seen = now
+            for part in insight.parts:
+                said = self.said.get(part)
+                if said is not None:
+                    said.seen = now
         too_old = now - OVERVIEW_FORGET_MINUTES * MINUTE
         self.said = {fp: said for fp, said in self.said.items() if said.seen >= too_old}
 
     def note_said(self, insight: Insight, now: float) -> None:
-        """`insight` was just announced (or the user opened the overview on it)."""
-        said = self.said.get(insight.fingerprint)
-        if said is None:
-            self.said[insight.fingerprint] = Said(last=now, times=1, seen=now)
-        else:
-            said.last, said.times, said.seen = now, said.times + 1, now
+        """`insight` was just announced (or the user opened the overview on
+        it): every part of it counts as said."""
+        for part in insight.parts:
+            said = self.said.get(part)
+            if said is None:
+                self.said[part] = Said(last=now, times=1, seen=now)
+            else:
+                said.last, said.times, said.seen = now, said.times + 1, now
 
 
 @dataclass(frozen=True)
@@ -103,7 +112,7 @@ class Decision:
     insight: Optional[Insight]  # what the overview shows; None: nothing
     reason: Optional[str]  # NEWS or REMINDER when it opens; None: a silent update
     wake_at: Optional[float]  # when to run again; None: only after the next refresh
-    topics: frozenset  # the topics of the insights taking turns now
+    topics: frozenset  # the topics true now (of the insights taking turns, folded ones too)
     waiting: Tuple[Insight, ...] = ()  # due too, but not shown now: the next turns
 
 
@@ -143,7 +152,7 @@ def decide(insights: Sequence[Insight], memory: AnnounceMemory, showing: Optiona
         reason = None
 
     waiting = tuple(i for i in ready if i is not chosen)
-    topics = frozenset(i.topic for i in pending)
+    topics = frozenset(topic for i in pending for topic in i.covers)
     return Decision(chosen, reason, _wake_at(pending, memory, now), topics, waiting)
 
 

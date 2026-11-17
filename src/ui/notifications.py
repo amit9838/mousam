@@ -40,27 +40,27 @@ class OverviewNotifications:
 
     def __init__(self, app: Gio.Application):
         self._app = app
-        # notification ID -> the topics it covers, its lead's first
+        # notification ID -> the topics its sentence names, its own first
         self._sent: Dict[str, Tuple[str, ...]] = {}
         # Older versions sent every message under this one ID
         app.withdraw_notification("overview")
 
     def send(self, insight: Insight) -> None:
         """Send `insight` under its topic. Notifications for the topics it
-        covers are withdrawn: it says the same."""
-        covered = (insight.topic,)
+        covers (combined or folded into it) are withdrawn: it says the same."""
         sent_id = self._send(insight)
-        for other_id, other_covered in list(self._sent.items()):
-            if other_id != sent_id and other_covered[0] in covered:
+        for other_id, named in list(self._sent.items()):
+            if other_id != sent_id and named[0] in insight.covers:
                 self._withdraw(other_id, f"covered by {sent_id}")
-        self._sent[sent_id] = covered
+        self._sent[sent_id] = insight.topics
 
     def withdraw_gone(self, topics: frozenset) -> None:
-        """Withdraw the notifications whose message is no longer true: one of
-        the topics it covers isn't among those true now (`topics`)."""
-        for sent_id, covered in list(self._sent.items()):
-            if not set(covered) <= topics:
-                gone = ", ".join(t for t in covered if t not in topics)
+        """Withdraw the notifications that are no longer true: a topic their
+        sentence names isn't among those true now (`topics`). A combined one
+        names two, so it goes as soon as either does."""
+        for sent_id, named in list(self._sent.items()):
+            if not set(named) <= topics:
+                gone = ", ".join(t for t in named if t not in topics)
                 self._withdraw(sent_id, f"{gone} no longer true")
 
     def withdraw_all(self, why: str) -> None:

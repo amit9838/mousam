@@ -5,7 +5,7 @@ Source of truth: docs/overview-rules.md.
 """
 
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Dict, Optional, Tuple
 
 from ...config import OVERVIEW_PRIORITIES, OVERVIEW_SHOW_BASE_SECONDS, OVERVIEW_SHOW_EXTRA_SECONDS
 
@@ -27,6 +27,12 @@ class Insight:
     topic: str = ""  # what it is about, one notification each ("rain", "air"); "" = kind
     key: str = ""  # the message key it was said with ("rain.start")
     about: Optional[float] = None  # the forecast hour or event it is about; None: now
+    when: Optional[float] = None  # when it happens (the hour it starts); None: now
+    values: Dict[str, object] = field(default_factory=dict)  # what its placeholders were filled with
+    # What it says, when it was combined or another was folded into it:
+    parts: Tuple[tuple, ...] = ()  # the fingerprints it counts as saying; () = its own
+    topics: Tuple[str, ...] = ()  # the topics its sentence names; () = its own
+    covers: Tuple[str, ...] = ()  # the topics it makes redundant (folded ones too); () = topics
     priority: int = field(init=False)
     show_seconds: int = field(init=False)  # how long the message stays open
 
@@ -34,6 +40,9 @@ class Insight:
         if self.level not in LEVEL_RANK:
             raise ValueError(f"Unknown overview level {self.level!r}")
         self.topic = self.topic or self.kind
+        self.parts = self.parts or (self.fingerprint,)
+        self.topics = self.topics or (self.topic,)
+        self.covers = self.covers or self.topics
         self.priority = OVERVIEW_PRIORITIES[self.kind]
         self.show_seconds = OVERVIEW_SHOW_BASE_SECONDS + OVERVIEW_SHOW_EXTRA_SECONDS[self.level]
 

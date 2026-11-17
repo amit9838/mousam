@@ -315,11 +315,16 @@ class TestRuleBook(unittest.TestCase):
             self.assertEqual(priorities, sorted(priorities, reverse=True))
 
     def test_busy_forecast(self):
+        # Every rule speaks; the wind (an hour after the storm) is combined into it
+        each = {rule.kind for rule in RuleBook.default().rules if rule.evaluate(context(**self.BUSY))}
         self.assertEqual(
-            set(insights(context(**self.BUSY))),
+            each,
             {"storm", "freezing", "heavy_precipitation", "extreme_feels", "air_quality", "uv",
              "precipitation", "wind", "fog", "temperature_swing", "calm"},
         )
+        found = insights(context(**self.BUSY))
+        self.assertNotIn("wind", found)
+        self.assertEqual(found["storm"].key, "storm_wind.later")
 
     def test_unknown_series_fails_at_once(self):
         with self.assertRaises(ValueError):
@@ -334,7 +339,8 @@ class TestIdentity(unittest.TestCase):
         return insights(context(now, **forecast))[kind]
 
     def test_topics_and_levels(self):
-        busy = insights(context(**TestRuleBook.BUSY))
+        ctx = context(**TestRuleBook.BUSY)
+        busy = {rule.kind: rule.evaluate(ctx) for rule in RuleBook.default().rules}
         expected = {
             "storm": ("storm", "extreme"), "freezing": ("freezing", "high"),
             "heavy_precipitation": ("snow", "high"), "extreme_feels": ("feels_like", "high"),
@@ -367,6 +373,70 @@ class TestIdentity(unittest.TestCase):
         self.assertNotEqual(self.one("wind", windspeed={2: 45}).fingerprint,
                             self.one("wind", windspeed={2: 65}).fingerprint)  # medium, then high
 
+
+
+class TestCombine(unittest.TestCase):
+    """Two things at once: one sentence for a known pair, one folded into
+    another, or each on its own (the next turn)."""
+
+    def test_storm_and_wind_become_one_sentence(self):
+        found = insights(context(codes={2: 95}, windspeed={2: 45}))
+        self.assertNotIn("wind", found)
+        storm = found["storm"]
+        self.assertEqual(storm.key, "storm_wind.later")
+        self.assertIn("45 km/h", storm.message)
+        self.assertIn("12:00", storm.message)
+        self.assertEqual((storm.level, storm.topics, len(storm.parts)), ("extreme", ("storm", "wind"), 2))
+
+    def test_from_the_earlier_time_true_until_the_earlier_ends(self):
+        storm = insights(context(codes={3: 95}, windspeed={2: 45}))["storm"]
+        self.assertIn("12:00", storm.message)  # the wind's hour
+        self.assertEqual(storm.valid_until, at_hour(2))
+
+    def test_both_now(self):
+        storm = insights(context(codes={0: 95}, windspeed={0: 45}))["storm"]
+        self.assertEqual(storm.key, "storm_wind.now")
+        self.assertEqual(storm.valid_until, at_hour(1))
+
+    def test_not_combined_when_far_apart_or_one_now(self):
+        for forecast in (dict(codes={1: 95}, windspeed={3: 45}), dict(codes={0: 95}, windspeed={2: 45})):
+            found = insights(context(**forecast))
+            self.assertEqual(found["storm"].key.split(".")[0], "storm", forecast)
+            self.assertIn("wind", found, forecast)
+
+    def test_each_insight_used_once(self):
+        found = insights(context(codes={2: 95}, precipitation={2: 9}, windspeed={2: 45}))
+        self.assertEqual(found["storm"].key, "storm_wind.later")
+        self.assertEqual(found["heavy_precipitation"].key, "heavy_rain.later")  # the next turn
+
+    def test_rain_is_folded_into_a_storm(self):
+        found = insights(context(codes={2: 95}, precip_probability={2: 70}))
+        self.assertNotIn("precipitation", found)
+        storm = found["storm"]
+        self.assertEqual(storm.key, "storm.later")
+        self.assertEqual(len(storm.parts), 2)
+        self.assertEqual(storm.covers, ("storm", "rain"))
+        self.assertEqual(storm.topics, ("storm",))
+
+    def test_rain_alone_stays_rain(self):
+        self.assertEqual(insights(context(precip_probability={2: 70}))["precipitation"].key, "rain.start")
+
+    def test_rain_and_wind(self):
+        rain = insights(context(precip_probability={2: 70}, windspeed={2: 65}))["precipitation"]
+        self.assertEqual((rain.key, rain.topic, rain.level), ("rain_wind.later", "rain", "high"))
+
+    def test_snow_and_wind(self):
+        snow = insights(context(precip_probability={2: 70}, codes={2: 71}, windspeed={2: 45}))["precipitation"]
+        self.assertEqual((snow.key, snow.topic), ("snow_wind.later", "snow"))
+
+    def test_rain_easing_now_and_wind_later_are_not_together(self):
+        found = insights(context(precip_probability={0: 70, 1: 70}, windspeed={2: 45}))
+        self.assertEqual(found["precipitation"].key, "rain.easing")
+        self.assertIn("wind", found)
+
+    def test_imperial_speed(self):
+        storm = insights(context(imperial=True, codes={2: 95}, windspeed={2: 30}))["storm"]
+        self.assertIn("30 mph", storm.message)
 
 
 class TestAnnounce(unittest.TestCase):
@@ -493,6 +563,26 @@ class TestAnnounce(unittest.TestCase):
         self.assertEqual([i.kind for i in decision.waiting], ["wind"])
         self.assertEqual(decision.wake_at, NOW + 5 * MIN)  # after the gap
         self.assertEqual(self.opened([self.storm, self.wind], decision.wake_at, "storm"), ("wind", NEWS))
+
+    def combined(self, storm, wind):
+        return Insight("storm", "both", NOW + 24 * H, "extreme", topic="storm", key="storm_wind.now",
+                       parts=storm.parts + wind.parts, topics=("storm", "wind"))
+
+    def test_a_combined_insight_counts_as_saying_each_part(self):
+        both = self.combined(self.storm, self.wind)
+        self.assertEqual(self.opened([both], NOW), ("storm", NEWS))
+        # The wind drops: the storm alone is not news, and is due at its reminder
+        self.assertEqual(self.opened([self.storm], NOW + 10 * MIN, "storm"), ("storm", None))
+        self.assertEqual(self.memory.due_at(self.storm), NOW + 30 * MIN)
+
+    def test_a_new_part_makes_it_news(self):
+        self.decide([self.storm], NOW)
+        both = self.combined(self.storm, self.wind)
+        self.assertEqual(self.opened([both], NOW + 10 * MIN, "storm"), ("storm", NEWS))
+
+    def test_topics_include_what_is_folded_in(self):
+        folded = Insight("storm", "storm", NOW + H, "extreme", topic="storm", covers=("storm", "rain"))
+        self.assertEqual(self.decide([folded], NOW).topics, {"storm", "rain"})
 
     def test_should_notify(self):
         self.assertTrue(should_notify(NEWS, "medium"))

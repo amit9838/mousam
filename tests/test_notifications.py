@@ -116,6 +116,24 @@ class TestNotifications(unittest.TestCase):
         self.notes.withdraw_gone(frozenset())  # another city: nothing true yet
         self.assertEqual(self.app.tray, {})
 
+    def test_a_combined_one_covers_its_parts(self):
+        wind = insight("wind", "wind")
+        both = Insight("storm", "storm and wind", LATER, "extreme", topic="storm", topics=("storm", "wind"))
+        self.notes.send(wind)
+        self.notes.send(both)
+        self.assertEqual(set(self.app.tray), {"overview-storm"})
+        # Its sentence names both: gone as soon as either is
+        self.notes.withdraw_gone(frozenset({"storm"}))
+        self.assertEqual(self.app.tray, {})
+
+    def test_a_folded_one_stays_while_its_own_topic_is_true(self):
+        folded = Insight("storm", "storm", LATER, "extreme", topic="storm", covers=("storm", "rain"))
+        self.notes.send(self.rain)
+        self.notes.send(folded)
+        self.assertEqual(set(self.app.tray), {"overview-storm"})
+        self.notes.withdraw_gone(frozenset({"storm"}))  # the rain stopped
+        self.assertEqual(set(self.app.tray), {"overview-storm"})
+
     def test_withdraw_all(self):
         self.notes.send(self.air)
         self.notes.send(self.storm)

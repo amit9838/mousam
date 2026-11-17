@@ -37,6 +37,77 @@ def overview_messages() -> Dict[str, List[Wording]]:
             # Translators: {time} is a rounded time of day, like "6:30 PM"
             _("Expect thunderstorms around {time}. Plan to be indoors by then."),
         ],
+        # ---------- Two things at once (combined, see COMBINATIONS in rules.py) ----------
+        "storm_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Thunderstorms with strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect thunderstorms with strong wind, around {speed}, right now."),
+        ],
+        "storm_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms with strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect thunderstorms with strong wind, around {speed}, from around {time}."),
+        ],
+        "storm_heavy_rain.now": [
+            _("Thunderstorms with heavy rain are likely right now."),
+            _("Expect thunderstorms with heavy rain right now."),
+        ],
+        "storm_heavy_rain.later": [
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Thunderstorms with heavy rain are likely from around {time}."),
+            # Translators: {time} is a rounded time of day, like "6:30 PM"
+            _("Expect thunderstorms with heavy rain from around {time}."),
+        ],
+        "heavy_rain_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Heavy rain and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect heavy rain and strong wind, around {speed}, right now."),
+        ],
+        "heavy_rain_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Heavy rain and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect heavy rain and strong wind, around {speed}, from around {time}."),
+        ],
+        "heavy_snow_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Heavy snow and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect heavy snow and strong wind, around {speed}, right now."),
+        ],
+        "heavy_snow_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Heavy snow and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect heavy snow and strong wind, around {speed}, from around {time}."),
+        ],
+        "rain_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Rain and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect rain and strong wind, around {speed}, right now."),
+        ],
+        "rain_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Rain and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect rain and strong wind, around {speed}, from around {time}."),
+        ],
+        "snow_wind.now": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Snow and strong wind, around {speed}, are likely right now."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"
+            _("Expect snow and strong wind, around {speed}, right now."),
+        ],
+        "snow_wind.later": [
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Snow and strong wind, around {speed}, are likely from around {time}."),
+            # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
+            _("Expect snow and strong wind, around {speed}, from around {time}."),
+        ],
         "freezing.now": [
             _("Freezing rain is likely right now. Roads and paths may be icy."),
             _("Expect freezing rain right now. Watch for icy roads and paths."),
