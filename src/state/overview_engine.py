@@ -2,22 +2,22 @@
 
 What to say comes from the rules (core/overview/rules.py, described in
 docs/overview-rules.md). Which insight to show, and when the overview opens
-by itself, is the AnnouncePlanner's call (same file): a busy forecast opens
-it more often, each opening shows the insight whose turn it is, and
-something turning severe opens it at once.
+by itself, is decide()'s call (core/overview/announce.py): something new
+opens it at once, something already said only as a reminder that waits
+longer each time.
 
 The engine adds the timing around them:
 
 - Lazy: nothing is worked out while the app starts. The first run is
   OVERVIEW_FIRST_DELAY seconds after the first data load, later ones
   OVERVIEW_REFRESH_DELAY seconds after each refresh.
-- Always true: the rules run again before the shown insight stops being
-  true (its valid_until), so "in 40 minutes" or "around 4:00 PM" is never
+- Always true: the rules run again at the decision's wake_at, before any
+  insight stops being true, so "in 40 minutes" or "around 4:00 PM" is never
   shown once it is wrong. These updates are silent.
 - Refreshes don't count: a refresh clears the weather data for a moment, but
-  the engine keeps what it has shown and when it opens next, so Ctrl+R,
-  auto-refresh or a units change neither open the overview nor reset its
-  turns. Only a location change (or turning the overview off) starts over.
+  the engine keeps the memory of what it has said, so Ctrl+R, auto-refresh
+  or a units change neither open the overview nor reset its reminders. Only
+  a location change (or turning the overview off) starts over.
 - Varied wording: each opening draws a new seed, which picks one of the
   message's wordings (core/overview/messages.py). Silent updates keep the
   seed, so the wording stays put while only the values change.
@@ -29,13 +29,14 @@ The engine adds the timing around them:
 
 Publish / subscribe: the engine emits "overview-changed" with `announce`
 (open the overview, or just update its text). Widgets connect to it and read
-`overview_engine.current()` and `overview_engine.heading`.
+`overview_engine.current()`, `heading`, `reason` (why it opened) and
+`topics` (what is true now, for the notifications).
 """
 
 import logging
 import random
 import time
-from typing import List, Optional, Tuple
+from typing import List, Optional, Sequence, Tuple
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 import gi
@@ -49,7 +50,8 @@ from ..services.selected_city import get_timezone_from_selected_city  # noqa: E4
 from ..core.log import get_logger  # noqa: E402
 from ..core.overview.context import OverviewContext  # noqa: E402
 from ..core.overview.insight import Insight  # noqa: E402
-from ..core.overview.rules import AnnouncePlanner, RuleBook  # noqa: E402
+from ..core.overview.announce import AnnounceMemory, Decision, decide  # noqa: E402
+from ..core.overview.rules import RuleBook  # noqa: E402
 from .weather_store import weather_store  # noqa: E402
 from ..services.settings import settings  # noqa: E402
 
@@ -68,11 +70,13 @@ class OverviewEngine(GObject.Object):
         super().__init__()
         self.insight: Optional[Insight] = None
         self.heading: Optional[str] = None
+        self.reason: Optional[str] = None  # why it last opened: "news", "reminder", or None
+        self.topics: frozenset = frozenset()  # the topics of the insights true now
         self._timer_id = 0
         self._first_built = False
         self._scheduled_for = None  # the hourly data a run is scheduled or done for
-        self._planner = AnnouncePlanner()  # what was shown when, and the next opening
-        self._location = None  # the selected city the planner's memory belongs to
+        self._memory = AnnounceMemory()  # what has been said, when and how often
+        self._location = None  # the selected city the memory belongs to
         self._seed = 0  # picks the wordings; new on each opening
         weather_store.connect("notify::is-ready", self._on_ready_changed)
         settings.connect("changed::show-overview", self._on_enabled_changed)
@@ -94,9 +98,10 @@ class OverviewEngine(GObject.Object):
         return settings.show_overview or settings.show_notifications
 
     def note_shown(self) -> None:
-        """The user opened the overview: that counts as the insight's turn."""
-        if self.insight is not None:
-            self._planner.note_shown(self.insight.kind, time.time())
+        """The user opened the overview: that counts as announcing it."""
+        insight = self.current()
+        if insight is not None:
+            self._memory.note_said(insight, time.time())
 
     # ---------- Scheduling ----------
 
@@ -149,66 +154,54 @@ class OverviewEngine(GObject.Object):
 
         now = time.time()
         if settings.selected_city != self._location:
-            self._planner.forget()
+            self._memory.forget()
             self._location = settings.selected_city
 
         insights, window_heading = self._insights(now)
-        showing = self.insight.kind if self.current() is not None else None
-        insight, announce = self._planner.decide(insights, showing, now)
+        showing = [self.insight.kind] if self.current() is not None else []
+        decision = decide(insights, self._memory, showing, now)
         if logger.isEnabledFor(logging.DEBUG):
-            self._log_turns(insights, insight, announce, now)
-        if insight is None:
-            self._set(None, None, announce=False)
-            return GLib.SOURCE_REMOVE
+            self._log_decision(insights, decision, now)
 
-        if announce:
+        insight = decision.insight
+        if insight is not None and decision.reason is not None:
             # A fresh wording for the opening (same insight, same data)
             self._seed = random.getrandbits(32)
             fresh, window_heading = self._insights(now)
             insight = next((i for i in fresh if i.kind == insight.kind), insight)
 
-        heading = insight.heading or window_heading
-        logger.debug(
-            f"Overview {'announced' if announce else 'updated'}: {insight.message} "
-            f"(valid {int(insight.valid_until - now)}s, "
-            f"next opening in {int(self._planner.next_announce - now)}s)"
-        )
-        self._set(insight, heading, announce)
-
-        # Run again before the message stops being true, or to open it again
-        self._run_in(min(insight.valid_until, self._planner.next_announce) - now)
+        heading = (insight.heading or window_heading) if insight is not None else None
+        self._set(insight, heading, decision.reason, decision.topics)
+        if decision.wake_at is not None:
+            self._run_in(decision.wake_at - now)
         return GLib.SOURCE_REMOVE
 
-    def _log_turns(self, insights: List[Insight], chosen: Optional[Insight],
-                   announce: bool, now: float) -> None:
-        """Debug log: every insight with its priority and turn, the score,
-        the one chosen now and the one in line for the next opening."""
-        planner = self._planner
-        pending = planner.worth_saying(insights)
-        next_at = planner.next_announce
-        logger.debug(
-            f"Overview: {len(insights)} insights, {len(pending)} taking turns, "
-            f"score {planner.score(pending):.2f}"
-        )
-        # The turns as they stand now, after decide() noted any opening;
-        # the ones not taking turns (calm beside something else) go last
-        resting = [i for i in insights if i not in pending]
-        for insight in planner.turn_order(pending, now) + resting:
-            never_shown, value = planner.turn(insight, now)
-            turn = "never shown" if never_shown else f"turn {value:.0f}"
-            taking_turns = "" if insight in pending else ", not taking turns"
-            logger.debug(
-                f"  {insight.kind}: priority {insight.priority}, "
-                f"{insight.level}, {turn}{taking_turns}"
-            )
-        if chosen is None:
+    def _log_decision(self, insights: Sequence[Insight], decision: Decision, now: float) -> None:
+        """Debug log: every insight with its level and what the memory knows
+        about it (after this decision), then what is shown and why."""
+        memory = self._memory
+        pending = [i for i in insights if i.topic in decision.topics]
+        logger.debug(f"Overview: {len(insights)} insights, {len(pending)} taking turns")
+        for insight in insights:
+            due = memory.due_at(insight)
+            if insight not in pending:
+                state = "not taking turns"
+            elif memory.is_new(insight):
+                state = "new"
+            elif due is None:
+                state = f"said {memory.times_said(insight)}x, not repeated"
+            else:
+                wait = max(0, int(due - now))
+                state = f"said {memory.times_said(insight)}x, due in {wait}s"
+            logger.debug(f"  {insight.kind} ({insight.topic}): {insight.level}, "
+                         f"priority {insight.priority}, {state}")
+
+        if decision.insight is None:
+            logger.debug("Overview: nothing to show")
             return
-        winner = f"{chosen.kind} ({'opens' if announce else 'silent update'})"
-        following = planner.turn_order(pending, next_at)
-        logger.debug(
-            f"Overview winner: {winner}; next: {following[0].kind} "
-            f"at the next opening in {int(next_at - now)}s"
-        )
+        what = f"opens ({decision.reason})" if decision.reason else "silent update"
+        wake = f"runs again in {int(decision.wake_at - now)}s" if decision.wake_at else "waits for data"
+        logger.debug(f"Overview {what}: {decision.insight.kind}: {decision.insight.message} ({wake})")
 
     def _insights(self, now: float) -> Tuple[List[Insight], Optional[str]]:
         """(every insight true now, most important first; the window's
@@ -235,25 +228,31 @@ class OverviewEngine(GObject.Object):
 
     # ---------- Publishing ----------
 
-    def _set(self, insight: Optional[Insight], heading: Optional[str], announce: bool) -> None:
+    def _set(self, insight: Optional[Insight], heading: Optional[str],
+             reason: Optional[str], topics: frozenset) -> None:
+        """Publish; emit only when something changed (or it opens)."""
+        message = insight.message if insight else None
         unchanged = (
-            not announce
-            and (insight.message if insight else None) == (self.insight.message if self.insight else None)
+            reason is None
+            and message == (self.insight.message if self.insight else None)
             and heading == self.heading
+            and topics == self.topics
         )
         self.insight = insight
         self.heading = heading
+        self.reason = reason
+        self.topics = topics
         if not unchanged:
-            self.emit("overview-changed", announce)
+            self.emit("overview-changed", reason is not None)
 
     def _reset(self) -> None:
         """Start over: another city, or both overview and notifications were
         turned off."""
         self._cancel()
         self._scheduled_for = None
-        self._planner.forget()
+        self._memory.forget()
         self._location = None
-        self._set(None, None, announce=False)
+        self._set(None, None, None, frozenset())
 
     def _cancel(self) -> None:
         if self._timer_id:

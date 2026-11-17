@@ -30,7 +30,8 @@ from mousam.core.overview.context import (  # noqa: E402
 )
 from mousam.core.overview.hour_tests import AtLeast  # noqa: E402
 from mousam.core.overview.insight import Insight  # noqa: E402
-from mousam.core.overview.rules import AnnouncePlanner, RuleBook, SunRule  # noqa: E402
+from mousam.core.overview.announce import NEWS, REMINDER, AnnounceMemory, decide, should_notify  # noqa: E402
+from mousam.core.overview.rules import RuleBook, SunRule  # noqa: E402
 
 UTC = timezone.utc
 H = 3600
@@ -367,103 +368,132 @@ class TestIdentity(unittest.TestCase):
                             self.one("wind", windspeed={2: 65}).fingerprint)  # medium, then high
 
 
-class NoSpread:
-    """An rng that always lands in the middle: no random spread."""
 
-    @staticmethod
-    def uniform(a, b):
-        return 0
+class TestAnnounce(unittest.TestCase):
+    """decide(): news at once, reminders that wait longer, calm and low once."""
 
-
-class TestPlanner(unittest.TestCase):
-    def insight(self, kind: str, level: str = "medium") -> Insight:
-        return Insight(kind, kind, NOW + 10 * H, level)
+    def insight(self, kind: str, level: str = "medium", about=None, valid_hours: float = 24) -> Insight:
+        return Insight(kind, kind, NOW + valid_hours * H, level, topic=kind, key=kind, about=about)
 
     def setUp(self):
-        self.planner = AnnouncePlanner()
+        self.memory = AnnounceMemory()
         self.rain = self.insight("precipitation")
-        self.wind = self.insight("wind")
+        self.wind = self.insight("wind", "high")
         self.calm = self.insight("calm", "calm")
         self.storm = self.insight("storm", "extreme")
+        self.sun = self.insight("sun", "low")
 
-    def decide(self, insights, at, showing=None):
-        chosen, opened = self.planner.decide(insights, showing, at, NoSpread)
-        return (chosen.kind if chosen else None), opened
+    def decide(self, insights, at, showing=()):
+        return decide(insights, self.memory, showing, at)
 
-    def test_interval(self):
-        interval = AnnouncePlanner.interval_minutes
-        self.assertEqual(interval(0, 0), 40)
-        self.assertEqual(interval(0.6, 0), 25)
-        self.assertEqual(interval(1.0, 0), 20)
-        self.assertEqual(interval(10, 0), 5)
-        self.assertEqual(interval(0, 1), 40)  # kept under the maximum
+    def opened(self, insights, at, showing=()):
+        """(kind, reason) of an opening, or (kind, None) for a silent update."""
+        decision = self.decide(insights, at, showing)
+        return (decision.insight.kind if decision.insight else None), decision.reason
 
     def test_nothing_to_say(self):
-        self.assertEqual(self.decide([], NOW), (None, False))
+        decision = self.decide([], NOW)
+        self.assertIsNone(decision.insight)
+        self.assertIsNone(decision.wake_at)
 
-    def test_calm_only_when_alone(self):
-        self.assertEqual(self.decide([self.calm], NOW), ("calm", True))
-        self.assertEqual(AnnouncePlanner.worth_saying([self.rain, self.calm]), [self.rain])
+    def test_first_run_opens_the_most_urgent_as_news(self):
+        self.assertEqual(self.opened([self.rain, self.wind, self.calm], NOW), ("wind", NEWS))
 
-    def test_first_opening_shows_the_most_severe(self):
-        windy = self.insight("wind", "high")
-        self.assertEqual(self.decide([self.rain, windy, self.calm], NOW), ("wind", True))
+    def test_unchanged_reminders_wait_longer_each_time(self):
+        opened = [0]
+        at = NOW
+        self.decide([self.wind], at)
+        for _ in range(5):
+            at = self.decide([self.wind], at).wake_at
+            self.assertEqual(self.opened([self.wind], at), ("wind", REMINDER))
+            opened.append(round((at - NOW) / MIN))
+        self.assertEqual(opened, [0, 60, 180, 420, 660, 900])  # high: 60, 120, 240, then 240
 
-    def test_turns(self):
-        both = [self.rain, self.wind, self.calm]
-        self.assertEqual(self.decide(both, NOW), ("precipitation", True))
-        next_opening = self.planner.next_announce
-        self.assertAlmostEqual(next_opening, NOW + 40 / 2.15 * 60)  # score 1.15
-        # Between openings: the shown one, silently
-        self.assertEqual(self.decide(both, NOW + MIN, "precipitation"), ("precipitation", False))
-        # The shown one expired: the most important takes its place, silently
-        self.assertEqual(self.decide([self.wind, self.calm], NOW + MIN, None), ("wind", False))
-        # The next opening: the one never shown
-        self.assertEqual(self.decide(both, next_opening), ("wind", True))
-        # Then the highest priority × time since shown
-        self.assertEqual(self.decide(both, self.planner.next_announce), ("precipitation", True))
+    def test_between_reminders_only_silent_updates(self):
+        self.decide([self.wind], NOW)
+        self.assertEqual(self.opened([self.wind], NOW + 30 * MIN, ["wind"]), ("wind", None))
 
-    def test_turn_order(self):
-        both = [self.rain, self.wind]
-        # Never shown: by priority
-        self.assertEqual(self.planner.turn_order(both, NOW), [self.rain, self.wind])
-        self.decide(both, NOW)  # rain shown
-        # Wind never shown, so it is next; the first is always whose_turn's
-        order = self.planner.turn_order(both, NOW + MIN)
-        self.assertEqual(order, [self.wind, self.rain])
-        self.assertIs(order[0], self.planner.whose_turn(both, NOW + MIN))
-        self.assertEqual(self.planner.turn(self.rain, NOW + MIN),
-                         (0, self.rain.priority * 1.0))
+    def test_changed_fingerprint_is_news_and_starts_over(self):
+        at_4 = self.insight("precipitation", about=at_hour(4))
+        at_7 = self.insight("precipitation", about=at_hour(7))
+        self.decide([at_4], NOW)
+        self.assertEqual(self.opened([at_7], NOW + 10 * MIN), ("precipitation", NEWS))
+        self.assertEqual(self.memory.times_said(at_7), 1)
 
-    def test_escalation_opens_at_once(self):
-        self.decide([self.rain], NOW)
-        self.assertEqual(self.decide([self.storm, self.rain], NOW + 10 * MIN), ("storm", True))
+    def test_a_refresh_with_the_same_forecast_opens_nothing(self):
+        self.decide([self.rain, self.wind], NOW)
+        self.assertEqual(self.opened([self.rain, self.wind], NOW + 6 * MIN, ["wind"]),
+                         ("precipitation", NEWS))  # rain was never said
+        again = [self.insight("precipitation"), self.insight("wind", "high")]  # rebuilt, equal
+        self.assertEqual(self.opened(again, NOW + 12 * MIN, ["precipitation"]), ("precipitation", None))
 
-    def test_escalation_waits_for_the_gap(self):
+    def test_news_waits_for_the_gap(self):
         self.decide([self.rain], NOW)
         busy = [self.storm, self.rain]
-        self.assertEqual(self.decide(busy, NOW + 2 * MIN, "precipitation"), ("precipitation", False))
-        self.assertEqual(self.planner.next_announce, NOW + 5 * MIN)
-        self.assertEqual(self.decide(busy, NOW + 4 * MIN, "precipitation"), ("precipitation", False))
-        self.assertEqual(self.decide(busy, NOW + 5 * MIN, "precipitation"), ("storm", True))
+        decision = self.decide(busy, NOW + 2 * MIN, ["precipitation"])
+        self.assertIsNone(decision.reason)
+        self.assertEqual(decision.wake_at, NOW + 5 * MIN)
+        self.assertEqual(self.opened(busy, NOW + 5 * MIN, ["precipitation"]), ("storm", NEWS))
 
-    def test_severe_that_comes_and_goes_counts_once(self):
-        self.assertEqual(self.decide([self.storm], NOW), ("storm", True))  # next opening in 20 min
-        self.assertEqual(self.decide([self.rain], NOW + 10 * MIN, None), ("precipitation", False))
-        self.assertEqual(self.decide([self.storm, self.rain], NOW + 15 * MIN, "precipitation"),
-                         ("precipitation", False))
-
-    def test_note_shown_counts_as_a_turn(self):
-        both = [self.rain, self.wind]
-        self.decide(both, NOW)
-        self.planner.note_shown("wind", NOW + MIN)
-        self.assertEqual(self.decide(both, self.planner.next_announce), ("precipitation", True))
-
-    def test_forget(self):
+    def test_news_before_reminders(self):
         self.decide([self.storm], NOW)
-        self.planner.forget()
-        self.assertEqual(self.decide([self.rain], NOW + MIN), ("precipitation", True))
+        later = NOW + 40 * MIN  # the storm's first reminder (30 min) is due too
+        self.assertEqual(self.opened([self.storm, self.rain], later), ("precipitation", NEWS))
+        self.assertEqual(self.opened([self.storm, self.rain], later + 5 * MIN), ("storm", REMINDER))
 
+    def test_a_storm_that_comes_and_goes_counts_once(self):
+        self.decide([self.storm], NOW)
+        self.decide([self.rain], NOW + 10 * MIN)
+        self.assertEqual(self.opened([self.storm, self.rain], NOW + 20 * MIN, ["precipitation"]),
+                         ("precipitation", None))
+
+    def test_forgotten_hours_after_it_was_last_true(self):
+        self.decide([self.storm], NOW)
+        self.decide([self.rain], NOW + 1 * H)
+        self.decide([self.rain], NOW + 6 * H)  # the storm hasn't been true for 5 h
+        self.assertTrue(self.memory.is_new(self.storm))
+
+    def test_calm_and_low_are_said_once(self):
+        self.assertEqual(self.opened([self.calm], NOW), ("calm", NEWS))
+        self.assertEqual(self.opened([self.calm], NOW + 10 * H, ["calm"]), ("calm", None))
+        self.decide([self.sun, self.calm], NOW + 11 * H)
+        self.assertEqual(self.opened([self.sun, self.calm], NOW + 20 * H, ["sun"]), ("sun", None))
+
+    def test_calm_after_the_rain_is_silent(self):
+        self.decide([self.calm], NOW)
+        self.decide([self.rain, self.calm], NOW + 10 * MIN)
+        self.assertEqual(self.opened([self.calm], NOW + 3 * H), ("calm", None))
+
+    def test_silent_updates_keep_the_shown_one(self):
+        self.decide([self.rain, self.wind], NOW)
+        self.decide([self.rain, self.wind], NOW + 6 * MIN)
+        self.assertEqual(self.opened([self.rain, self.wind], NOW + 7 * MIN, ["precipitation"]),
+                         ("precipitation", None))
+        # The shown one stopped being true: the most important takes its place
+        self.assertEqual(self.opened([self.wind], NOW + 8 * MIN, ["precipitation"]), ("wind", None))
+
+    def test_wake_before_anything_stops_being_true(self):
+        short = self.insight("fog", valid_hours=0.5)
+        decision = self.decide([self.wind, short], NOW)
+        self.assertLessEqual(decision.wake_at, short.valid_until)
+
+    def test_topics_are_the_insights_taking_turns(self):
+        self.assertEqual(self.decide([self.rain, self.calm], NOW).topics, {"precipitation"})
+        self.assertEqual(self.decide([self.calm], NOW + 10 * MIN).topics, {"calm"})
+
+    def test_clicking_counts_as_announcing(self):
+        self.decide([self.wind], NOW)
+        self.memory.note_said(self.wind, NOW + 50 * MIN)
+        self.assertEqual(self.opened([self.wind], NOW + 70 * MIN), ("wind", None))  # due at 170
+
+    def test_should_notify(self):
+        self.assertTrue(should_notify(NEWS, "medium"))
+        self.assertTrue(should_notify(NEWS, "extreme"))
+        self.assertFalse(should_notify(NEWS, "low"))
+        self.assertFalse(should_notify(NEWS, "calm"))
+        self.assertTrue(should_notify(REMINDER, "extreme"))
+        self.assertFalse(should_notify(REMINDER, "high"))
+        self.assertFalse(should_notify(None, "extreme"))
 
 if __name__ == "__main__":
     unittest.main()

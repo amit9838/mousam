@@ -15,22 +15,17 @@ Built by composition, with no GTK, so everything can be tested on made-up data:
 - Rule: one rule, `evaluate(ctx) -> Optional[Insight]`.
 - RuleBook: the rules in use; `run(ctx)` returns every insight that applies
   and is still true, most important first.
-- AnnouncePlanner: which of those insights to show, and when the overview
-  opens by itself. The engine (state/overview_engine.py) runs the timers around it.
+Which of those insights to show, and when the overview opens by itself, is
+up to announce.py; the engine (state/overview_engine.py) runs the timers.
 """
 
 import math
-import random
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from gettext import pgettext as C_
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional
 
 from ...config import (
-    OVERVIEW_ANNOUNCE_BASE_MINUTES,
-    OVERVIEW_ANNOUNCE_MAX_MINUTES,
-    OVERVIEW_ANNOUNCE_MIN_MINUTES,
-    OVERVIEW_ANNOUNCE_SPREAD,
     COLD_FEELS_LIKE_C,
     EXTREME_WIND_KMH,
     FOG_SUNRISE_MINUTES,
@@ -66,7 +61,7 @@ from .hour_tests import (
     HasCode,
     HourTest,
 )
-from .insight import LEVEL_RANK, Insight
+from .insight import Insight
 
 logger = get_logger("overview")
 
@@ -544,120 +539,3 @@ class RuleBook:
                 insights.append(insight)
         insights.sort(key=lambda insight: insight.priority, reverse=True)
         return insights
-
-
-# =====================================================================
-# Announcing: which insight to show, and when to open
-# =====================================================================
-
-
-class AnnouncePlanner:
-    """Decides which insight the overview shows and when it opens by itself.
-
-    - **How often**: the score adds up the priorities (÷ 100) of everything
-      worth saying. The next opening is OVERVIEW_ANNOUNCE_BASE_MINUTES ÷
-      (1 + score), between the MIN and MAX minutes, spread at random. A busy
-      forecast opens more often; as insights expire it calms down.
-    - **What**: each opening shows the insight whose turn it is: never shown
-      ones first (most important first), then the highest priority × minutes
-      since it was last shown. Lower insights get their turn too. The first
-      opening is an escalation (below), so it shows the most severe one.
-    - **Escalation**: something more severe than before (a storm appears)
-      opens at once, unless it was shown in the last MAX minutes (so one that
-      comes and goes counts once). Within MIN minutes of the last opening it
-      waits, and opens as soon as those minutes are up.
-    - **Between openings** the shown insight's text is kept up to date
-      silently; if it no longer applies, the most important one takes its
-      place, silently.
-
-    The memory (what was shown when, the next opening) belongs to one
-    location: the engine keeps it across refreshes and calls `forget()` when
-    the location changes or the overview is turned off.
-    """
-
-    def __init__(self):
-        self.forget()
-
-    def forget(self) -> None:
-        self.last_shown: Dict[str, float] = {}  # kind -> when it was last shown
-        self.next_announce = 0.0
-        self.pending_rank = -1  # the highest level pending at the last run
-
-    @staticmethod
-    def worth_saying(insights: List[Insight]) -> List[Insight]:
-        """The insights that take turns: calm only when there is nothing else."""
-        return [i for i in insights if i.kind != "calm"] or insights[:1]
-
-    @staticmethod
-    def score(insights: List[Insight]) -> float:
-        return sum(i.priority for i in insights) / 100
-
-    @staticmethod
-    def interval_minutes(score: float, spread: float) -> float:
-        """Minutes to the next opening for a score; `spread` from -1 to 1
-        moves it by up to OVERVIEW_ANNOUNCE_SPREAD."""
-        minutes = OVERVIEW_ANNOUNCE_BASE_MINUTES / (1 + score)
-        minutes *= 1 + spread * OVERVIEW_ANNOUNCE_SPREAD
-        return min(max(minutes, OVERVIEW_ANNOUNCE_MIN_MINUTES), OVERVIEW_ANNOUNCE_MAX_MINUTES)
-
-    def turn(self, insight: Insight, now: float) -> Tuple[int, float]:
-        """How strongly `insight` wants the next opening: (1, priority) if
-        never shown, else (0, priority × minutes since it was last shown)."""
-        last = self.last_shown.get(insight.kind)
-        if last is None:
-            return (1, insight.priority)  # never shown: first, by priority
-        return (0, insight.priority * (now - last) / 60)
-
-    def turn_order(self, insights: List[Insight], now: float) -> List[Insight]:
-        """The insights in the order they would get an opening at `now`."""
-        # sorted() keeps ties in their order, so the first is whose_turn's
-        return sorted(insights, key=lambda i: self.turn(i, now), reverse=True)
-
-    def whose_turn(self, insights: List[Insight], now: float) -> Insight:
-        return max(insights, key=lambda i: self.turn(i, now))
-
-    def decide(self, insights: List[Insight], showing: Optional[str], now: float,
-               rng: Optional[random.Random] = None) -> Tuple[Optional[Insight], bool]:
-        """(the insight to show, whether to open the overview) for the
-        insights true now, most important first. `showing` is the kind on
-        screen, or None when it has expired: then another one takes its
-        place silently, and the overview still waits for its next opening."""
-        if not insights:
-            return None, False
-        pending = self.worth_saying(insights)
-        top = max(pending, key=lambda i: (LEVEL_RANK[i.level], i.priority))
-        rank = LEVEL_RANK[top.level]
-        # pending_rank starts at -1, so the first opening is an escalation too
-        escalated = rank > self.pending_rank
-
-        # Escalation skips the wait, but only for something not shown lately
-        # (a severe insight that comes and goes counts once), and never
-        # straight after another opening: then it opens once the gap is over
-        last_opening = max(self.last_shown.values(), default=-math.inf)
-        gap_over = last_opening + OVERVIEW_ANNOUNCE_MIN_MINUTES * 60
-        shown_lately = now - self.last_shown.get(top.kind, -math.inf) < OVERVIEW_ANNOUNCE_MAX_MINUTES * 60
-        escalates = escalated and not shown_lately
-        if escalates and now < gap_over:
-            # Stays pending (rank not recorded) until the gap is over
-            self.next_announce = min(self.next_announce, gap_over)
-        else:
-            self.pending_rank = rank
-
-        if escalates and now >= gap_over:
-            chosen = top
-        elif now >= self.next_announce:
-            # Its time has come
-            chosen = self.whose_turn(pending, now)
-        else:
-            # Not time to open: keep the text up to date, silently
-            same = next((i for i in insights if i.kind == showing), None)
-            return same or pending[0], False
-
-        self.last_shown[chosen.kind] = now
-        minutes = self.interval_minutes(self.score(pending), (rng or random).uniform(-1, 1))
-        self.next_announce = now + minutes * 60
-        return chosen, True
-
-    def note_shown(self, kind: str, now: float) -> None:
-        """The user opened the overview on `kind`: that counts as its turn."""
-        self.last_shown[kind] = now

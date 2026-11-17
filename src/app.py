@@ -106,11 +106,15 @@ class WeatherApplication(Adw.Application):
     def _on_overview_changed(self, engine, announce: bool) -> None:
         """Send the announcement as a notification when the main window can't
         be seen (minimized, or compact mode); otherwise its overview shows it."""
+        from .core.overview.announce import should_notify
         from .ui.gtk_utils import is_on_screen
         from .ui.notifications import show_overview_notification
 
         insight = engine.current()
         if not announce or insight is None or not settings.show_notifications:
+            return
+        # Only news (medium or above) and reminders of extreme ones
+        if not should_notify(engine.reason, insight.level):
             return
         if is_on_screen(self.main_window):
             return
