@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-18 01:06+0530\n"
+"POT-Creation-Date: 2026-11-18 01:19+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1874,21 +1874,21 @@ msgid "UV Index"
 msgstr ""
 
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
-#: src/ui/compact_window.py:129 src/ui/window.py:283
+#: src/ui/compact_window.py:129 src/ui/window.py:285
 msgid "No Internet"
 msgstr ""
 
-#: src/ui/compact_window.py:115 src/ui/window.py:325
+#: src/ui/compact_window.py:115 src/ui/window.py:327
 #: src/ui/dialogs/locations.py:154
 msgid "Retry"
 msgstr ""
 
-#: src/ui/compact_window.py:130 src/ui/window.py:283
+#: src/ui/compact_window.py:130 src/ui/window.py:285
 #: src/ui/dialogs/locations.py:161
 msgid "Please check your connection."
 msgstr ""
 
-#: src/ui/compact_window.py:133 src/ui/window.py:288
+#: src/ui/compact_window.py:133 src/ui/window.py:290
 msgid "Fetch Error"
 msgstr ""
 
@@ -1902,7 +1902,7 @@ msgctxt "compact date"
 msgid "%-d %B"
 msgstr ""
 
-#: src/ui/compact_window.py:255 src/ui/templates/shortcuts.ui:69
+#: src/ui/compact_window.py:255 src/ui/templates/shortcuts.ui:81
 msgid "Leave Compact Mode"
 msgstr ""
 
@@ -2088,44 +2088,44 @@ msgid "Refresh weather"
 msgstr ""
 
 #: src/ui/window.py:141 src/ui/dialogs/locations.py:327
-#: src/ui/templates/shortcuts.ui:39
+#: src/ui/templates/shortcuts.ui:45
 msgid "Locations"
 msgstr ""
 
-#: src/ui/window.py:147
+#: src/ui/window.py:147 src/ui/templates/shortcuts.ui:51
 msgid "Compact Mode"
 msgstr ""
 
-#: src/ui/window.py:174 src/ui/dialogs/preferences.py:22
-#: src/ui/templates/shortcuts.ui:45
+#: src/ui/window.py:175 src/ui/dialogs/preferences.py:22
+#: src/ui/templates/shortcuts.ui:57
 msgid "Preferences"
 msgstr ""
 
-#: src/ui/window.py:175 src/ui/templates/shortcuts.ui:63
+#: src/ui/window.py:176 src/ui/templates/shortcuts.ui:75
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/ui/window.py:176
+#: src/ui/window.py:177
 msgid "About Mousam"
 msgstr ""
 
-#: src/ui/window.py:177 src/ui/templates/shortcuts.ui:57
+#: src/ui/window.py:178 src/ui/templates/shortcuts.ui:69
 msgid "Quit"
 msgstr ""
 
-#: src/ui/window.py:302
+#: src/ui/window.py:304
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/ui/window.py:309
+#: src/ui/window.py:311
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/ui/window.py:310
+#: src/ui/window.py:312
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/ui/window.py:311 src/ui/dialogs/locations.py:359
+#: src/ui/window.py:313 src/ui/dialogs/locations.py:359
 msgid "Add Location"
 msgstr ""
 
@@ -2338,7 +2338,7 @@ msgstr ""
 msgid "Already saved"
 msgstr ""
 
-#: src/ui/dialogs/locations.py:356
+#: src/ui/dialogs/locations.py:356 src/ui/templates/shortcuts.ui:88
 msgid "Saved Locations"
 msgstr ""
 
@@ -2533,6 +2533,18 @@ msgstr ""
 msgid "Refresh Weather"
 msgstr ""
 
-#: src/ui/templates/shortcuts.ui:53
+#: src/ui/templates/shortcuts.ui:39
+msgid "Hard Refresh"
+msgstr ""
+
+#: src/ui/templates/shortcuts.ui:65
 msgid "Navigation"
+msgstr ""
+
+#: src/ui/templates/shortcuts.ui:92
+msgid "Move Location Up"
+msgstr ""
+
+#: src/ui/templates/shortcuts.ui:98
+msgid "Move Location Down"
 msgstr ""
