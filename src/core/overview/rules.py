@@ -503,13 +503,28 @@ class Fold:
     folded: str
 
 
+@dataclass(frozen=True)
+class Turning:
+    """Rain (`light`) and heavy rain (`heavy`) later in the same wet spell:
+    one sentence, `key` + the rain message's form (".easing", ".through" or
+    ".start")."""
+
+    light: str
+    heavy: str
+    key: str
+
+
 # Tried in this order, each insight used once (docs/overview-rules.md,
-# "Several things at once")
+# "Several things at once"): folds, then turning heavy, then the pairs
 FOLDS = (
     Fold("storm", "rain"),
     Fold("storm", "snow"),
     Fold("heavy_rain", "rain"),
     Fold("heavy_snow", "snow"),
+)
+TURNING_HEAVY = (
+    Turning("rain", "heavy_rain", "rain_heavier"),
+    Turning("snow", "heavy_snow", "snow_heavier"),
 )
 COMBINATIONS = (
     Combination("storm", "wind", "storm_wind"),
@@ -573,6 +588,21 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext,
             kept, parts=kept.parts + folded.parts, covers=kept.covers + folded.covers
         )
 
+    for turning in TURNING_HEAVY:
+        light, heavy = find(turning.light), find(turning.heavy)
+        if light is None or heavy is None:
+            continue
+        why = not_in_the_same_spell(light, heavy, ctx)
+        if why:
+            note(f"Overview not turning heavy: {heavy.kind} with {light.kind} ({light.key}): {why}")
+            continue
+        turned = _turning_heavy(light, heavy, turning.key, ctx)
+        note(f"Overview turning heavy: {light.kind} ({light.key}) + {heavy.kind} "
+             f"({_hh_mm(ctx, heavy.when)}) -> {turned.key}")
+        result[result.index(heavy)] = turned
+        result.remove(light)
+        combined_ones.append(turned)
+
     for combination in COMBINATIONS:
         first, second = find(combination.first), find(combination.second)
         if first is None or second is None:
@@ -587,6 +617,67 @@ def combine(insights: Sequence[Insight], ctx: OverviewContext,
         result.remove(second)
         combined_ones.append(combined)
     return result
+
+
+def not_in_the_same_spell(light: Insight, heavy: Insight, ctx: OverviewContext) -> Optional[str]:
+    """Why the heavy rain is not part of the rain that is falling (or
+    starting), or None when it is: it comes after the rain starts and before
+    its first dry hour."""
+    form = light.key.split(".")[-1]
+    if form not in ("easing", "through", "start"):
+        return f"no sentence for {light.key}"
+    if heavy.when is None:
+        return "the heavy rain is now"
+    starts = light.when if light.when is not None else ctx.now
+    if heavy.when <= starts:
+        return "the heavy rain comes first"
+    if form == "easing":
+        ends = light.about
+    elif form == "through":
+        ends = ctx.window.end
+    else:
+        ends = _wet_until(ctx, starts)
+    if heavy.when >= ends:
+        return f"it comes after the rain eases ({_hh_mm(ctx, ends)})"
+    return None
+
+
+def _wet_until(ctx: OverviewContext, starts: float) -> float:
+    """The first dry hour after `starts`, or the window's end."""
+    return next(
+        (ctx.hourly.times[i] for i in ctx.window.hours
+         if ctx.hourly.times[i] > starts and IS_DRY(ctx, i)),
+        ctx.window.end,
+    )
+
+
+def _turning_heavy(light: Insight, heavy: Insight, key: str, ctx: OverviewContext) -> Insight:
+    """One insight for rain turning heavy: the heavy one's level and rule,
+    the rain's topic and times, true until the heavy hour (or the rain's end,
+    if sooner), counting as both."""
+    key = f"{key}.{light.key.split('.')[-1]}"
+    values = {**light.values, "heavy_time": ctx.clock.approx_time(heavy.when)}
+    return Insight(
+        heavy.kind,
+        ctx.messages.say(key, **values),
+        min(light.valid_until, heavy.valid_until),
+        heavy.level,
+        heavy.icon,
+        heavy.heading,
+        topic=light.topic,
+        key=key,
+        about=light.about,
+        when=light.when,
+        values=values,
+        parts=light.parts + heavy.parts,
+        topics=light.topics,
+        covers=light.covers + heavy.covers,
+    )
+
+
+def _hh_mm(ctx: OverviewContext, ts: Optional[float]) -> str:
+    """A time for the debug log, in the city's time zone."""
+    return "now" if ts is None else ctx.clock.local(ts).strftime("%H:%M")
 
 
 def _is_in(insight: Insight, insights: Sequence[Insight]) -> bool:

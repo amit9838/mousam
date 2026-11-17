@@ -108,6 +108,43 @@ def overview_messages() -> Dict[str, List[Wording]]:
             # Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
             _("Expect snow and strong wind, around {speed}, from around {time}."),
         ],
+        # ---------- Rain or snow turning heavy (TURNING_HEAVY in rules.py) ----------
+        "rain_heavier.easing": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("Rain right now, turning heavy around {heavy_time} and easing off around {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("It's raining now, heavier around {heavy_time}, easing off around {time}."),
+        ],
+        "rain_heavier.through": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("Rain right now, turning heavy around {heavy_time} and lasting until about {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("It's raining now, heavier around {heavy_time}, until about {time}."),
+        ],
+        "rain_heavier.start": [
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Rain from around {time}, turning heavy around {heavy_time}."),
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Expect rain from around {time}, heavier around {heavy_time}."),
+        ],
+        "snow_heavier.easing": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("Snow right now, turning heavy around {heavy_time} and easing off around {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it eases off; both rounded times of day, like "6:30 PM"
+            _("It's snowing now, heavier around {heavy_time}, easing off around {time}."),
+        ],
+        "snow_heavier.through": [
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("Snow right now, turning heavy around {heavy_time} and lasting until about {time}."),
+            # Translators: {heavy_time} is when it turns heavy, {time} when it ends; both rounded times of day, like "6:30 PM"
+            _("It's snowing now, heavier around {heavy_time}, until about {time}."),
+        ],
+        "snow_heavier.start": [
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Snow from around {time}, turning heavy around {heavy_time}."),
+            # Translators: {time} is when it starts, {heavy_time} when it turns heavy; both rounded times of day, like "6:30 PM"
+            _("Expect snow from around {time}, heavier around {heavy_time}."),
+        ],
         "freezing.now": [
             _("Freezing rain is likely right now. Roads and paths may be icy."),
             _("Expect freezing rain right now. Watch for icy roads and paths."),
