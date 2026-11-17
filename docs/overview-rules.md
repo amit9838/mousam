@@ -99,7 +99,7 @@ failure is logged in debug mode only.
 
 Every rule runs. Insights that are no longer true are dropped, and the rest
 are sorted by priority, highest first. Then things that happen at the same
-time are put together: folded, turned heavy or combined into one sentence
+time are put together: turned stormy, folded, turned heavy or combined into one sentence
 (see "Several things at once"). The calm rule always speaks, so there is
 always at least one insight. Nothing is thrown away: the insights take turns
 (below).
@@ -180,11 +180,34 @@ sentence.
 Two insights **happen together** when both happen now, or both later and
 within **60 minutes** of each other. One now and one later don't: "right
 now" would be wrong for one of them, "from around" for the other. (Turning
-heavy, below, is the one exception.)
+stormy and turning heavy, below, are the exceptions.)
 
-Three steps, in this order, each insight used once:
+Four steps, in this order, each insight used once:
 
-*1. Fold.* Some insights already say another one that happens together with
+*1. Turning stormy.* Rain falling now (or starting later) and a storm later
+in the **same wet spell** become one sentence, with the rain first: the storm
+comes after the rain starts and before its first dry hour (any storm hour
+counts when it rains all through the window). The sentence doesn't say the
+storm's hour; the rain gives the time, and its chance when it starts later:
+
+| The rain message | Becomes |
+| --- | --- |
+| falling now, easing later | "Rain right now, turning stormy before it eases off around 8:00 PM." |
+| falling now, all through the window | "Rain right now, turning stormy later and lasting until about 7:00 AM." |
+| starting later | "Rain from around 4:00 PM with 70% chance, turning stormy later." |
+
+It has the storm's rule, level (extreme), icon and topic, names both topics
+(storm and rain), and is true until the storm's hour (or the rain's end, if
+sooner); then the storm is now, and "Thunderstorms are likely right now"
+takes over with the rain folded in. Since the storm's hour isn't said, the
+storm moving within the same spell (5 PM to 6 PM) is not news: it counts as
+about the rain's hour. A storm in the rain's first hour, a storm before the
+rain, or after the rain has eased is not turned stormy: it is folded or
+combined as below. It runs first, so a rain that leads a storm isn't folded
+away; a wind or heavy rain with that storm then gets its own turn. Only rain
+turns stormy: snow is folded into a storm as below.
+
+*2. Fold.* Some insights already say another one that happens together with
 them:
 
 | Kept | Folded into it |
@@ -196,7 +219,7 @@ them:
 The folded insight isn't shown, but it counts as said with the one it is
 folded into, and its notification is withdrawn when the kept one is sent.
 
-*2. Turning heavy.* Rain falling now (or starting later) and heavy rain later
+*3. Turning heavy.* Rain falling now (or starting later) and heavy rain later
 in the **same wet spell** become one sentence: the heavy hour comes after
 the rain starts and before its first dry hour (any heavy hour counts when it
 rains all through the window). The same for snow and heavy snow. It takes
@@ -215,7 +238,7 @@ over, with the rain folded in). When the easing time or the heavy hour
 moves, it is news again. Heavy rain after the rain has eased is a second
 spell: each keeps its own turn.
 
-*3. Combine.* A known pair that happens together becomes one sentence, with
+*4. Combine.* A known pair that happens together becomes one sentence, with
 its own message:
 
 | Pair | Message |
@@ -230,8 +253,8 @@ its own message:
 Each also has a "right now" message ("Thunderstorms with strong wind,
 around 45 km/h, are likely right now."). The pairs are tried in this order,
 so storm + heavy rain + wind becomes storm + wind, and the heavy rain gets
-the next turn. Something already folded or turned heavy isn't combined
-again. The combined insight:
+the next turn. Something already folded or turned (stormy or heavy) isn't
+combined again. The combined insight:
 
 - says the earlier of the two times, as "from around", so it is true for
   both; it is true until the earlier of the two stops being true
@@ -241,7 +264,7 @@ again. The combined insight:
 - names both topics: its notification replaces the other's, and is
   withdrawn as soon as either part stops being true
 
-*The next turn.* Anything not folded, turned heavy or combined stays its own
+*The next turn.* Anything not turned, folded or combined stays its own
 insight: a storm now and UV three hours later, a third urgent thing, one now
 and one later. It is news, so it opens on its own once the 5-minute gap is
 over. Nothing is lost, and nothing is shown at once.
@@ -335,8 +358,20 @@ From most to least important. "An hour" means an hour inside the window.
 - **Applies when** an hour has a thunderstorm weather code (95, 96 or 99).
 - **Says**, for the first such hour:
   - now: "Thunderstorms are likely right now. Stay indoors if you can."
-  - later: "Thunderstorms are likely around 4:00 PM. Plan to be indoors by then."
-- **Together with**: rain or snow folded in; wind or heavy rain combined.
+  - later, with that hour's chance of rain of **50%** or more:
+    "Thunderstorms are likely around 4:00 PM with 80% chance of rain. Be indoors by then."
+  - later, with less: "Thunderstorms are possible around 4:00 PM, with 30% chance of rain."
+  - later, when that hour has no chance of rain in the data:
+    "Thunderstorms are likely around 4:00 PM. Plan to be indoors by then."
+- **The chance** is the storm hour's own precipitation probability, never
+  one from another hour. It says "chance of rain", not "chance of
+  thunderstorms": the forecast gives the chance of precipitation, not of
+  lightning. The weather code and the chance come from different models, so
+  a storm hour with a low chance is common; "possible" keeps the sentence
+  from contradicting itself. Likely and possible are different messages, so
+  a storm crossing 50% is news; a chance changing on the same side is not.
+- **Together with**: rain leading it (turning stormy); rain or snow folded
+  in; wind or heavy rain combined.
 
 ### 2. Freezing rain
 
@@ -406,8 +441,8 @@ From most to least important. "An hour" means an hour inside the window.
 - **Happens**: now while it rains now (easing or falling through the window),
   even though "easing off around 4:00 PM" is about 4 PM; at its first wet
   hour when it starts later.
-- **Together with**: folded into a storm or heavy rain, turning heavy, or
-  combined with wind.
+- **Together with**: leading a storm (turning stormy), folded into a storm
+  or heavy rain, turning heavy, or combined with wind.
 
 ### 8. Wind
 
@@ -488,8 +523,8 @@ say the same thing, so the overview does not read the same every time:
   sunset and sunrise, calm): **4–5 wordings**.
 - **Rare safety messages** (storm, freezing rain, heavy rain or snow,
   extreme feels like, air quality, UV): **2 wordings**, kept plain.
-- **Two things at once** (the combined pairs, turning heavy): **2
-  wordings**, one sentence with no advice after it.
+- **Two things at once** (the combined pairs, turning stormy, turning
+  heavy): **2 wordings**, one sentence with no advice after it.
 
 The examples in this file are the first wording of each message; the rest
 are in `core/overview/messages.py`.
@@ -580,12 +615,14 @@ Overview: 3 insights, 2 taking turns
   storm (storm): extreme, priority 100, said 1x, due in 1800s
   wind (wind): high, priority 55, new
   calm (calm): calm, priority 0, not taking turns
-Overview opens (news): storm: Thunderstorms are likely around 4:00 PM. … (runs again in 300s)
+Overview opens (news): storm: Thunderstorms are likely around 4:00 PM with 80% chance of rain. … (runs again in 300s)
 Overview next turn: wind (news, after the gap)
 Overview channel: storm (news, extreme) -> notification overview-storm
 ```
 
-- the first lines: what was folded, turned heavy
+- the first lines: what was turned stormy
+  (`Overview turning stormy: precipitation (rain.start) + storm (17:00) -> rain_stormy.start`),
+  folded, turned heavy
   (`Overview turning heavy: precipitation (rain.easing) + heavy_precipitation (23:00) -> rain_heavier.easing`)
   or combined, and why not (logged once per run)
 - one line per insight: its topic, level and priority, and what has been
