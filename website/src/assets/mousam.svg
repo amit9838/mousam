@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="edge" gradientUnits="userSpaceOnUse" x1="12" y1="0" x2="116" y2="0">
+      <stop offset="0" stop-color="#1557a8"/><stop offset="0.1" stop-color="#5aa7f2"/><stop offset="0.22" stop-color="#1a5fb4"/>
+      <stop offset="0.78" stop-color="#1a5fb4"/><stop offset="0.9" stop-color="#5aa7f2"/><stop offset="1" stop-color="#1557a8"/>
+    </linearGradient>
+    <linearGradient id="face" gradientUnits="userSpaceOnUse" x1="0" y1="12" x2="0" y2="112">
+      <stop offset="0" stop-color="#1c71d8"/><stop offset="0.6" stop-color="#3fa8ec"/><stop offset="1" stop-color="#6fe0ea"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.4" cy="0.35" r="0.7">
+      <stop offset="0" stop-color="#fdf6a3"/><stop offset="0.5" stop-color="#f8e45c"/><stop offset="1" stop-color="#f5c211"/>
+    </radialGradient>
+    <linearGradient id="cloud" gradientUnits="userSpaceOnUse" x1="0" y1="96" x2="0" y2="52">
+      <stop offset="0" stop-color="#bcd8fa"/><stop offset="0.45" stop-color="#e3effd"/><stop offset="0.9" stop-color="#ffffff"/>
+    </linearGradient>
+    <clipPath id="faceClip"><rect x="12" y="12" width="104" height="100" rx="24"/></clipPath>
+  </defs>
+  <rect x="12" y="12" width="104" height="104" rx="24" fill="url(#edge)"/>
+  <rect x="12" y="12" width="104" height="100" rx="24" fill="url(#face)"/>
+  <rect x="12.75" y="12.75" width="102.5" height="98.5" rx="23.25" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="1.5"/>
+  <g clip-path="url(#faceClip)" fill="#ffffff">
+    <circle cx="71" cy="60" r="54" opacity="0.05"/>
+    <circle cx="71" cy="60" r="46" opacity="0.07"/>
+    <circle cx="71" cy="60" r="38" opacity="0.1"/>
+    <circle cx="71" cy="60" r="30" opacity="0.14"/>
+  </g>
+  <g stroke="#f6d32d" stroke-width="4.5" stroke-linecap="round">
+    <line x1="71.00" y1="33.00" x2="71.00" y2="26.50"/>
+    <line x1="86.87" y1="38.16" x2="90.69" y2="32.90"/>
+    <line x1="96.68" y1="51.66" x2="102.86" y2="49.65"/>
+    <line x1="96.68" y1="68.34" x2="102.86" y2="70.35"/>
+    <line x1="86.87" y1="81.84" x2="90.69" y2="87.10"/>
+    <line x1="71.00" y1="87.00" x2="71.00" y2="93.50"/>
+    <line x1="55.13" y1="81.84" x2="51.31" y2="87.10"/>
+    <line x1="45.32" y1="68.34" x2="39.14" y2="70.35"/>
+    <line x1="45.32" y1="51.66" x2="39.14" y2="49.65"/>
+    <line x1="55.13" y1="38.16" x2="51.31" y2="32.90"/>
+  </g>
+  <circle cx="71" cy="60" r="22" fill="url(#sun)"/>
+  <g fill="#8cbdf8" transform="translate(0 3)">
+    <rect x="26" y="72" width="66" height="24" rx="12"/>
+    <circle cx="48" cy="74" r="22"/>
+    <circle cx="78" cy="82" r="14"/>
+  </g>
+  <g fill="url(#cloud)">
+    <rect x="26" y="72" width="66" height="24" rx="12"/>
+    <circle cx="48" cy="74" r="22"/>
+    <circle cx="78" cy="82" r="14"/>
+  </g>
+</svg>
