@@ -1,48 +1,62 @@
 # Overview rules
 
-This file is the **source of truth** for the overview: the one-line message
-under the current conditions ("Rain is likely to start around
-5:00 PM with 70% chance."). The code follows it:
+The overview is the one-line message under the current conditions, for
+example *"Rain is likely to start around 5:00 PM with 70% chance."*
 
-- the rules: [`src/core/overview/rules.py`](../src/core/overview/rules.py), one `Rule` per rule, collected in `RuleBook.default()`; `combine()` there puts together the ones that happen at once
-- when it opens: [`src/core/overview/announce.py`](../src/core/overview/announce.py), timed by [`src/state/overview_engine.py`](../src/state/overview_engine.py)
-- the notifications: [`src/ui/notifications.py`](../src/ui/notifications.py), sent by [`src/app.py`](../src/app.py)
-- the numbers: [`src/config.py`](../src/config.py), under "Overview" and "Overview rules"
-- the wordings: [`src/core/overview/messages.py`](../src/core/overview/messages.py), several per message
+This file is the **source of truth**. To change a rule, change this file
+first, then the code and the numbers to match. If the code and this file
+disagree, the code is wrong.
 
-**To change a rule, change this file first**, then the code and the numbers
-to match. If the code and this file disagree, the code is wrong.
+| What | Where |
+| --- | --- |
+| The rules, and merging the ones that happen at once | [`src/core/overview/rules.py`](../src/core/overview/rules.py) (`RuleBook.default()`, `combine()`) |
+| Hour tests shared by the rules | [`src/core/overview/hour_tests.py`](../src/core/overview/hour_tests.py) |
+| When it opens | [`src/core/overview/announce.py`](../src/core/overview/announce.py), timed by [`src/state/overview_engine.py`](../src/state/overview_engine.py) |
+| Notifications | [`src/ui/notifications.py`](../src/ui/notifications.py), sent by [`src/app.py`](../src/app.py) |
+| Numbers | [`src/config.py`](../src/config.py), under "Overview" and "Overview rules" |
+| Wordings | [`src/core/overview/messages.py`](../src/core/overview/messages.py) |
 
 ---
 
-## The basics
+## 1. How it works, in short
 
-### What a rule does
+Each time the overview runs:
 
-A rule looks at the forecast and either has something to say or stays
-silent. When it speaks, it gives one **insight**:
+1. **Pick the window**: the hours to look at (section 3).
+2. **Run every rule.** Each one either stays silent or returns one
+   *insight*. A rule that fails says nothing (section 2.4).
+3. **Drop** insights that are no longer true.
+4. **Sort** the rest by priority, highest first.
+5. **Merge** insights that happen at the same time into one sentence
+   (section 5).
+6. **Decide** which insight to show now, if any (section 6).
+7. **Show it** in the window, or send it as a notification (section 7).
 
-- a **message**: one whole sentence, translated as a whole
-- a **level**: *calm*, *low*, *medium*, *high* or *extreme* (see "Levels")
-- a **priority**: which insight wins when several rules speak
-- a **topic**: what it is about (rain, air, …); each topic has its own
-  notification
-- **what it is about**: the forecast hour or the event it describes, or
-  "now". With the rule, the message and the level, this tells whether it
-  is news (see "The same insight, or a new one")
-- **when it happens**: the hour it starts, or now. Usually the same as what
-  it is about; rain easing around 4 PM is about 4 PM but happens now.
-  Combining uses it (see "Several things at once")
-- an optional **icon**, shown before the message
-- an optional **heading**, like *Tomorrow*; otherwise the window's heading is used
-- **valid until**: the moment the message stops being true
-- **how long it stays open** once shown, set by its level
+The calm rule always speaks, so there is always at least one insight.
+Nothing is thrown away: insights that don't open now wait for their turn.
 
-### Levels
+---
 
-From nothing to say to danger. The level decides how the insight is shown,
-how often it is repeated and whether it is sent as a notification (see
-"When the overview opens"); within one level, the priority orders insights.
+## 2. Terms
+
+### 2.1 Insight
+
+What a rule returns when it has something to say:
+
+| Part | Meaning |
+| --- | --- |
+| message | one whole sentence, translated as a whole |
+| level | how serious it is (2.2) |
+| priority | which insight wins within a level |
+| topic | what it is about (rain, air, …); each topic has its own notification |
+| about | the forecast hour or event it describes, or "now". Used to tell news from a repeat (6.3) |
+| happens | the hour it starts, or now. Usually the same as *about*: rain easing around 4 PM is *about* 4 PM but *happens* now. Used for merging (section 5) |
+| icon | optional, shown before the message |
+| heading | optional (*Tomorrow*); otherwise the window's heading |
+| valid until | the moment the message stops being true (section 4) |
+| open time | how long it stays open, set by its level (8) |
+
+### 2.2 Levels
 
 | Level | Meaning | Heading colour |
 | --- | --- | --- |
@@ -52,166 +66,104 @@ how often it is repeated and whether it is sent as a notification (see
 | low | nice to know | plain |
 | calm | nothing to say | plain |
 
-### The window: which hours the rules look at
+The level decides how an insight is shown, how often it is repeated and
+whether it becomes a notification.
 
-The window follows the part of the day:
+### 2.3 Hours
 
-- **By day**: from now until sunset, but always at least **3 hours** ahead,
-  so late afternoon still looks ahead. Heading: **Today**.
-- **At night**: from now until the next sunrise. Heading: **Tonight**.
-- **No sunrise or sunset** (polar day or night): the next **12 hours**.
-  Heading: **Tonight**.
+- **Now** means the current hour.
+- **A wet hour** has a 50% chance of precipitation or more; **a dry hour**
+  less. An hour with no data is neither.
+- **A wet spell** runs from the first wet hour to the first dry hour after
+  it. If it is wet all through the window, the spell is the whole window.
+- **Snow or rain**: an hour is snow when it has a snow code (71, 73, 75,
+  77, 85, 86), otherwise rain.
+- **Two insights happen together** when both happen now, or both happen
+  later within **60 minutes** of each other. One now and one later never
+  happen together (with two exceptions: turning stormy and turning heavy,
+  section 5).
 
-It is day when the next sunset comes before the next sunrise.
+### 2.4 Ignore on fail
 
-The window includes the current hour. "Now" in a message means the
-current hour.
+If a rule fails (for example on missing or odd data), it says nothing. The
+other rules still run. The failure is logged in debug mode only.
 
-### Units
+### 2.5 Units
 
 All thresholds are **metric**. With imperial units, temperatures (°F) and
-wind speeds (mph) are converted to metric before they are compared.
-Messages show values in the user's own units. Rain (mm) and visibility (m)
-come from the API in metric in both systems.
+wind speeds (mph) are converted to metric before comparing. Rain (mm) and
+visibility (m) come from the API in metric in both systems. Messages show
+values in the user's own units.
 
-### Every message must stay true
+---
 
-Each insight says until when it is right, and is never shown after that:
+## 3. The window
 
-- Something happening **now** is right until the next full hour, when it
-  is checked again.
-- Something happening **around a time** ("around 4:00 PM") is right until
-  that time.
-- Something lasting **until about a time** is right until that time.
-- **Tomorrow** is right until local midnight, when tomorrow becomes today.
-- **Minutes away** ("in 40 minutes") is right while it is no more than
-  **5 minutes** off.
-- **Two things in one sentence** (see "Several things at once") are right
-  until the first of them stops being right.
-- **The weather at sunset or sunrise** ("Clear skies for sunset around
-  6:10 PM") is right until the sun sets or rises.
+The rules only look at hours inside the window. It always includes the
+current hour.
 
-### Ignore on fail
+| Situation | Window | Heading |
+| --- | --- | --- |
+| Day (next sunset comes before next sunrise) | now until sunset, but at least **3 hours** | Today |
+| Night | now until the next sunrise | Tonight |
+| No sunrise or sunset (polar day or night) | the next **12 hours** | Tonight |
 
-If a rule fails, for example on missing or odd data, it says nothing. The
-other rules still run, so one broken rule never breaks the overview. The
-failure is logged in debug mode only.
+---
 
-### Which insights are there
+## 4. Every message must stay true
 
-Every rule runs. Insights that are no longer true are dropped, and the rest
-are sorted by priority, highest first. Then things that happen at the same
-time are put together: turned stormy, folded, turned heavy or combined into one sentence
-(see "Several things at once"). The calm rule always speaks, so there is
-always at least one insight. Nothing is thrown away: the insights take turns
-(below).
+An insight is never shown after its *valid until*:
 
-### When the overview opens, and with what
-
-Code: `core/overview/announce.py`; the numbers are `OVERVIEW_MIN_GAP_MINUTES`,
-the `OVERVIEW_REMIND_*` values, `OVERVIEW_FORGET_MINUTES`,
-`OVERVIEW_COMBINE_MINUTES` and `OVERVIEW_NOTIFY_TOPICS` in `config.py`.
-
-The overview opens when it has **something new to say**, and only now and
-then to **remind** of something it has already said.
-
-**When it runs.** Nothing is worked out while the app starts: the first run
-is **10 seconds** after the first data load, and **2 seconds** after each
-later refresh (`OVERVIEW_FIRST_DELAY`, `OVERVIEW_REFRESH_DELAY`). After that
-it runs again only when something changes: an insight stops being true, a
-reminder is due, or the gap after an opening ends.
-
-**Fresh data.** The overview only sees a changed forecast after the data
-is refreshed. The weather refreshes by itself every **10 minutes**
-(`AUTO_REFRESH_MINUTES`), always: there is no setting for it, so the
-overview and notifications never work from an old forecast. Ctrl+R
-refreshes at once (with responses up to a minute old, `DATA_CACHE_TTL`);
-Ctrl+Shift+R fetches the location again without cached data.
-
-**The same insight, or a new one.** Two insights are the same when they
-come from the same rule, with the same message, the same level, and
-about the same forecast hour or event. Time passing doesn't change that
-("in 40 minutes" becoming "in 35 minutes"). A changed forecast does: rain
-moving from 4 PM to 7 PM, wind rising from medium to high, tomorrow turning
-from warmer to rainy. A change in the chance alone (60% → 85% for the same
-hour) is not news. An insight that says two things (see "Several things at
-once") counts as each of them: it is news when either is, and saying it
-counts as saying both.
-
-**What has been said is remembered** for each location: each insight, when
-it was last announced, and how many times.
-
-- Refreshes keep it, so the same forecast after a refresh is not news.
-- An insight that goes away and comes back (a storm that comes and goes)
-  is still remembered, so it doesn't count as news again. It is forgotten
-  4 hours after it was last true.
-- Clicking the info button counts as announcing the insight it shows.
-- Switching location, or turning off both the overview and notifications,
-  starts over.
-
-**When each insight is due.**
-
-| The insight | Due |
+| The message says | True until |
 | --- | --- |
-| never said | now: it is **news** |
-| said before, medium or above | a **reminder**, after 30 minutes (extreme), 60 (high) or 120 (medium); each next reminder waits twice as long, at most 4 hours |
-| said before, low | never again: low is said once |
-| calm | said once per location; never reminded |
+| something happening **now** | the next full hour (then it is checked again) |
+| something **around a time** ("around 4:00 PM") | that time |
+| something lasting **until about a time** | that time |
+| **tomorrow** | local midnight |
+| **minutes away** ("in 40 minutes") | while it is at most **5 minutes** off |
+| **the weather at sunset or sunrise** | the sunset or sunrise |
+| **two things in one sentence** | the first of them stops being true |
 
-So an unchanged high insight opens at 0, 60, 180 and 420 minutes, then
-every 4 hours; an unchanged storm after 30, 90 and 210 minutes. A busy forecast
-opens more often because it has more news, not because of a timer.
+---
 
-**Calm takes no turn** while anything else is worth saying; it is shown only
-when it is the only insight.
+## 5. Several things at once
 
-**Which one opens.** Among the insights that are due: news before
-reminders, then the highest level, then the highest priority. So
-something more urgent turning up (a storm) opens first, at once. The others
-that are due open one at a time after it, each after the gap: their **next
-turn**.
+Every opening shows **one sentence**. Two insights become one sentence only
+when a natural sentence exists; otherwise the second waits for the next
+turn. A single insight is always shown as it is.
 
-**The gap.** Nothing opens within **5 minutes** of the last opening; an
-insight that is due opens as soon as those 5 minutes are up.
+Four steps run in this order. Each insight is used at most once.
 
-**Several things at once.** Every opening shows **one sentence**. Two
-things that happen together become one sentence only when a natural one
-exists; otherwise the second one gets the next turn. A single insight is
-always shown as it is: rain with no storm or wind is the plain rain
-sentence.
+### 5.1 Turning stormy (rain leads a storm)
 
-Two insights **happen together** when both happen now, or both later and
-within **60 minutes** of each other. One now and one later don't: "right
-now" would be wrong for one of them, "from around" for the other. (Turning
-stormy and turning heavy, below, are the exceptions.)
+**When:** rain now (or starting later), and a storm later **in the same
+wet spell**: after the rain starts and before its first dry hour (any storm
+hour counts if it rains all through the window).
 
-Four steps, in this order, each insight used once:
+**Not when:** the storm is in the rain's first hour, before the rain, or
+after the rain has eased; those are folded or combined instead. Only rain
+turns stormy; snow is folded into a storm.
 
-*1. Turning stormy.* Rain falling now (or starting later) and a storm later
-in the **same wet spell** become one sentence, with the rain first: the storm
-comes after the rain starts and before its first dry hour (any storm hour
-counts when it rains all through the window). The sentence doesn't say the
-storm's hour; the rain gives the time, and its chance when it starts later:
-
-| The rain message | Becomes |
+| Rain message | Becomes |
 | --- | --- |
 | falling now, easing later | "Rain right now, turning stormy before it eases off around 8:00 PM." |
 | falling now, all through the window | "Rain right now, turning stormy later and lasting until about 7:00 AM." |
 | starting later | "Rain from around 4:00 PM with 70% chance, turning stormy later." |
 
-It has the storm's rule, level (extreme), icon and topic, names both topics
-(storm and rain), and is true until the storm's hour (or the rain's end, if
-sooner); then the storm is now, and "Thunderstorms are likely right now"
-takes over with the rain folded in. Since the storm's hour isn't said, the
-storm moving within the same spell (5 PM to 6 PM) is not news: it counts as
-about the rain's hour. A storm in the rain's first hour, a storm before the
-rain, or after the rain has eased is not turned stormy: it is folded or
-combined as below. It runs first, so a rain that leads a storm isn't folded
-away; a wind or heavy rain with that storm then gets its own turn. Only rain
-turns stormy: snow is folded into a storm as below.
+- The storm's hour is not said; the rain gives the time (and its chance
+  when it starts later).
+- Takes the storm's rule, level (extreme), icon and topic; names both
+  topics (storm, rain).
+- True until the storm's hour, or the rain's end if sooner. Then "Thunderstorms
+  are likely right now" takes over, with the rain folded in.
+- It counts as being about the rain's hour, so the storm moving within the
+  same spell (5 PM → 6 PM) is not news.
+- It runs first, so the rain isn't folded away. A wind or heavy rain with
+  that storm then gets its own turn.
 
-*2. Fold.* Some insights already say another one that happens together with
-them:
+### 5.2 Fold (one already says the other)
+
+When they happen together:
 
 | Kept | Folded into it |
 | --- | --- |
@@ -219,30 +171,31 @@ them:
 | heavy rain | rain |
 | heavy snow | snow |
 
-The folded insight isn't shown, but it counts as said with the one it is
-folded into, and its notification is withdrawn when the kept one is sent.
+The folded insight isn't shown, but counts as said with the kept one. Its
+notification is withdrawn when the kept one is sent.
 
-*3. Turning heavy.* Rain falling now (or starting later) and heavy rain later
-in the **same wet spell** become one sentence: the heavy hour comes after
-the rain starts and before its first dry hour (any heavy hour counts when it
-rains all through the window). The same for snow and heavy snow. It takes
-what the fold refused (one now and one later, or more than 60 minutes
-apart), because here one sentence stays true for both:
+### 5.3 Turning heavy (rain becomes heavy rain)
 
-| The rain or snow message | Becomes |
+**When:** rain now (or starting later), and heavy rain later **in the same
+wet spell** (the same for snow and heavy snow). This takes what the fold
+refused: one now and one later, or more than 60 minutes apart.
+
+| Rain or snow message | Becomes |
 | --- | --- |
 | falling now, easing later | "Rain right now, turning heavy around 11:00 PM and easing off around 6:00 AM." |
 | falling now, all through the window | "Rain right now, turning heavy around 11:00 PM and lasting until about 7:00 AM." |
 | starting later | "Rain from around 2:00 PM, turning heavy around 5:00 PM." |
 
-It has the heavy one's rule and level (high) and the rain or snow topic, and
-is true until the heavy hour (then "Heavy rain is likely right now" takes
-over, with the rain folded in). When the easing time or the heavy hour
-moves, it is news again. Heavy rain after the rain has eased is a second
-spell: each keeps its own turn.
+- Takes the heavy one's rule and level (high), and the rain or snow topic.
+- True until the heavy hour. Then "Heavy rain is likely right now" takes
+  over, with the rain folded in.
+- The easing time or the heavy hour moving is news.
+- Heavy rain after the rain has eased is a second spell: each keeps its own
+  turn.
 
-*4. Combine.* A known pair that happens together becomes one sentence, with
-its own message:
+### 5.4 Combine (a known pair)
+
+When they happen together, tried in this order:
 
 | Pair | Message |
 | --- | --- |
@@ -253,50 +206,157 @@ its own message:
 | rain + wind | "Rain and strong wind, around 45 km/h, are likely from around 4:00 PM." |
 | snow + wind | "Snow and strong wind, around 45 km/h, are likely from around 4:00 PM." |
 
-Each also has a "right now" message ("Thunderstorms with strong wind,
-around 45 km/h, are likely right now."). The pairs are tried in this order,
-so storm + heavy rain + wind becomes storm + wind, and the heavy rain gets
-the next turn. Something already folded or turned (stormy or heavy) isn't
-combined again. The combined insight:
+Each pair also has a "right now" message ("Thunderstorms with strong wind,
+around 45 km/h, are likely right now.").
 
-- says the earlier of the two times, as "from around", so it is true for
-  both; it is true until the earlier of the two stops being true
-- has the higher level of the two, and the rule, topic and priority of the
-  more important one (storm, then heavy rain or snow, then rain or snow,
-  then wind)
-- names both topics: its notification replaces the other's, and is
-  withdrawn as soon as either part stops being true
+- Because of the order, storm + heavy rain + wind becomes storm + wind, and
+  the heavy rain gets the next turn.
+- An insight already turned or folded isn't combined again.
+- Says the **earlier** of the two times, as "from around". True until the
+  earlier of the two stops being true.
+- Takes the **higher level** of the two, and the rule, topic and priority of
+  the more important one: storm, then heavy rain or snow, then rain or
+  snow, then wind.
+- Names both topics: its notification replaces the other's, and is
+  withdrawn as soon as either part stops being true.
 
-*The next turn.* Anything not turned, folded or combined stays its own
-insight: a storm now and UV three hours later, a third urgent thing, one now
-and one later. It is news, so it opens on its own once the 5-minute gap is
-over. Nothing is lost, and nothing is shown at once.
+### 5.5 The next turn
 
-**Between openings** the text on screen is kept up to date without opening
-(the values change, the wording stays). When the shown insight stops being
-true, the most important remaining one takes its place, also without opening.
+Anything not merged stays its own insight (a storm now and UV three hours
+later, a third urgent thing, one now and one later). It opens on its own
+after the gap (6.6).
 
-**Where it is shown: one place at a time.**
+---
 
-- While the main window can be seen, the overview opens in it, for news
-  and reminders. Clicking the info button opens it on the insight shown.
-- While the window is minimized, hidden by compact mode, or otherwise out of
-  sight, it is sent as a desktop notification instead (the city as its
-  title, the sentence as its body; clicking it opens the main window). Only
-  news of medium or above is sent, plus news about tomorrow (low, but worth
-  knowing before the evening is over) and reminders of extreme ones
-  (storms). Other low insights and calm are never sent.
+## 6. When the overview opens
 
-**How urgent a notification is** follows the level: low and medium are
-sent at low priority, high at normal, extreme at high. Never "urgent", so
-Do Not Disturb still holds.
+Numbers: `OVERVIEW_MIN_GAP_MINUTES`, `OVERVIEW_REMIND_*`,
+`OVERVIEW_FORGET_MINUTES`, `OVERVIEW_COMBINE_MINUTES`,
+`OVERVIEW_NOTIFY_TOPICS` in `config.py`.
 
-**One notification per topic.** Each topic has its own notification, so
-air quality and rain can be there side by side. A new message replaces only
-the one on the same topic: heavy rain shares the rain topic, so "Heavy rain
-around 5:00 PM" replaces "Rain is likely around 4:00 PM". A combined insight
-is sent under the more important topic and covers the other: "storm + wind"
-withdraws the wind notification.
+The overview opens when it has **something new to say**, and now and then
+to **remind** of something already said.
+
+### 6.1 When it runs
+
+- Nothing runs while the app starts.
+- First run: **10 seconds** after the first data load
+  (`OVERVIEW_FIRST_DELAY`).
+- After each later refresh: **2 seconds** (`OVERVIEW_REFRESH_DELAY`).
+- Otherwise only when something changes: an insight stops being true, a
+  reminder is due, or the gap after an opening ends.
+
+### 6.2 Fresh data
+
+The overview sees a changed forecast only after a refresh.
+
+| Refresh | How |
+| --- | --- |
+| automatic | every **10 minutes** (`AUTO_REFRESH_MINUTES`), always; no setting |
+| Ctrl+R | at once, with responses up to a minute old (`DATA_CACHE_TTL`) |
+| Ctrl+Shift+R | fetches the location again without cached data |
+
+### 6.3 News or a repeat
+
+Two insights are **the same** when they have the same rule, message, level,
+and the same forecast hour or event they are about.
+
+| Change | News? |
+| --- | --- |
+| time passing ("in 40 minutes" → "in 35 minutes") | no |
+| only the chance changes (60% → 85%, same hour) | no |
+| the hour moves (rain 4 PM → 7 PM) | yes |
+| the level changes (wind medium → high) | yes |
+| the message changes (tomorrow warmer → rainy) | yes |
+
+A merged insight counts as each of its parts: it is news when either part
+is, and saying it counts as saying both.
+
+### 6.4 Memory
+
+What has been said is remembered **per location**: each insight, when it
+was last announced, and how many times.
+
+- A refresh keeps the memory: the same forecast after a refresh is not news,
+  and reminders are not reset.
+- An insight that goes away and comes back (a storm that comes and goes) is
+  still remembered. It is forgotten **4 hours** after it was last true.
+- Clicking the info button counts as announcing the insight it shows.
+- Switching location, or turning off both the overview and notifications,
+  starts over.
+
+### 6.5 When each insight is due
+
+| Insight | Due |
+| --- | --- |
+| never said | now: it is **news** |
+| said before, extreme | reminder after 30 min |
+| said before, high | reminder after 60 min |
+| said before, medium | reminder after 120 min |
+| said before, low | never again (said once) |
+| calm | once per location, never reminded |
+
+Each next reminder waits **twice as long**, at most **4 hours**. So an
+unchanged high insight opens at 0, 60, 180 and 420 minutes, then every
+4 hours; an unchanged storm at 0, then 30, 90 and 210 minutes.
+
+**Calm takes no turn** while anything else is worth saying; it is shown only
+when it is the only insight.
+
+### 6.6 Which one opens
+
+Among the insights that are due:
+
+1. news before reminders,
+2. then the highest level,
+3. then the highest priority.
+
+So something more urgent (a storm) opens first, at once.
+
+**The gap:** nothing opens within **5 minutes** of the last opening. The
+others that are due open one at a time, each after the gap.
+
+### 6.7 Between openings
+
+- The text on screen stays up to date without opening: values change, the
+  wording stays.
+- When the shown insight stops being true, the most important remaining one
+  takes its place, also without opening.
+
+---
+
+## 7. Where it is shown
+
+One place at a time.
+
+| Main window | Shown as |
+| --- | --- |
+| can be seen | the overview pill opens in it, for news and reminders. The info button opens it on the insight shown |
+| minimized, hidden by compact mode, or otherwise out of sight | a desktop notification: the city as title, the sentence as body; clicking it opens the main window |
+
+### 7.1 What is sent as a notification
+
+- news of **medium or above**
+- news about **tomorrow** (low, but worth knowing before the evening ends)
+- reminders of **extreme** insights (storms)
+
+Other low insights and calm are never sent.
+
+| Level | Notification priority |
+| --- | --- |
+| low, medium | low |
+| high | normal |
+| extreme | high |
+
+Never "urgent", so Do Not Disturb still holds.
+
+### 7.2 One notification per topic
+
+Each topic has its own notification, so air quality and rain can be there
+side by side. A new message replaces only the one on the same topic: heavy
+rain shares the rain topic, so "Heavy rain around 5:00 PM" replaces "Rain is
+likely around 4:00 PM". A merged insight is sent under its main topic and
+covers the other ("storm + wind" withdraws the wind notification).
 
 | Topic | Rules |
 | --- | --- |
@@ -314,19 +374,19 @@ withdraws the wind notification.
 | sun | sunset and sunrise |
 | calm | calm (never sent) |
 
-A notification is **withdrawn** when it is no longer right or needed:
+### 7.3 When a notification is withdrawn
 
 - its topic has no insight any more (it stopped being true, or the forecast
-  changed: rain turning to snow withdraws rain); a combined one as soon as
-  either of its parts stops being true, since its sentence names both; a
-  folded one stays while its own topic is true
+  changed: rain turning to snow withdraws rain)
+- a combined one: as soon as either part stops being true
+- a folded one: stays while its own topic is true
 - the location changes
-- notifications are turned off (or the overview and notifications both are)
-- the main window comes into view: the overview shows it there
+- notifications are turned off
+- the main window comes into view (the overview shows it there)
 
-Either can be turned off in Preferences, in the *Weather Overview* group:
-*Show Overview* and *Notifications*. The forecast is only worked out while
-at least one is on.
+### 7.4 Settings
+
+Preferences → *Weather Overview*: *Show Overview* and *Notifications*.
 
 | Overview | Notifications | Window in sight | Window out of sight |
 | --- | --- | --- | --- |
@@ -335,338 +395,341 @@ at least one is on.
 | off | on | nothing | notification |
 | off | off | nothing (no processing) | nothing |
 
-**Refreshes don't count.** A refresh keeps what has been said, so it neither opens the overview
-nor resets the reminders. Switching location, or turning off both the
-overview and notifications, starts over.
+---
 
-### How long a message stays open
+## 8. How long a message stays open
 
-A base time of 15 seconds, plus extra for urgent messages:
-
-| Level | Base | Extra | Open for |
-| --- | --- | --- | --- |
-| calm, low, medium | 15 s | 0 s | 15 seconds |
-| high | 15 s | 7 s | 22 seconds |
-| extreme | 15 s | 15 s | 30 seconds |
+| Level | Open for |
+| --- | --- |
+| calm, low, medium | 15 seconds |
+| high | 22 seconds (15 + 7) |
+| extreme | 30 seconds (15 + 15) |
 
 ---
 
-## The rules
+## 9. The rules
 
-From most to least important. "An hour" means an hour inside the window.
+"An hour" means an hour inside the window. Examples are the first wording of
+each message.
 
-### 1. Storm
+### Summary
 
-- **Priority** 100 · **Level** extreme · **Icon** storm · **Topic** storm
-- **Applies when** an hour has a thunderstorm weather code (95, 96 or 99).
-- **Says**, for the first such hour:
-  - now: "Thunderstorms are likely right now. Stay indoors if you can."
-  - later, with that hour's chance of rain of **50%** or more:
-    "Thunderstorms are likely around 4:00 PM with 80% chance of rain. Be indoors by then."
-  - later, with less: "Thunderstorms are possible around 4:00 PM, with 30% chance of rain."
-  - later, when that hour has no chance of rain in the data:
-    "Thunderstorms are likely around 4:00 PM. Plan to be indoors by then."
+| # | Rule | Priority | Level | Topic | Icon | Applies when |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Storm | 100 | extreme | storm | storm | code 95, 96 or 99 |
+| 2 | Freezing rain | 95 | high | freezing | showers | code 56, 57, 66 or 67 |
+| 3 | Heavy rain or snow | 90 | high | rain / snow | showers / snow | code 65, 82, 75, 86, or ≥ 7.6 mm |
+| 4 | Extreme feels like | 85 | high | feels_like | none | feels like ≥ 40 °C, else ≤ −15 °C |
+| 5 | Air quality | 80 | high | air | none | US AQI ≥ 151 |
+| 6 | UV | 75 | high | uv | clear | UV index ≥ 8 |
+| 7 | Rain or snow | 60 | medium | rain / snow | showers / snow | a wet hour |
+| 8 | Wind | 55 | medium, high from 60 km/h | wind | windy | wind ≥ 40 km/h |
+| 9 | Fog | 50 | medium | fog | fog | visibility < 1 km, or code 45 or 48 |
+| 10 | Temperature swing | 40 | low | temperature | none | ≥ 6 °C from now |
+| 11 | Tomorrow | 30 | low | tomorrow | showers / none | from 6 PM; rain or a different high |
+| 12 | Sunset and sunrise | 20 | low | sun | sunset / sunrise | sunset ≤ 2 h, or sunrise ≤ 3 h |
+| 13 | Calm | 0 | calm | calm | none | always |
+
+### 9.1 Storm
+
+**Applies when** an hour has code 95, 96 or 99. Uses the first such hour.
+
+| Case | Says |
+| --- | --- |
+| now | "Thunderstorms are likely right now. Stay indoors if you can." |
+| later, chance ≥ 50% | "Thunderstorms are likely around 4:00 PM with 80% chance of rain. Be indoors by then." |
+| later, chance < 50% | "Thunderstorms are possible around 4:00 PM, with 30% chance of rain." |
+| later, no chance in the data | "Thunderstorms are likely around 4:00 PM. Plan to be indoors by then." |
+
 - **The chance** is the storm hour's own precipitation probability, never
-  one from another hour. It says "chance of rain", not "chance of
-  thunderstorms": the forecast gives the chance of precipitation, not of
-  lightning. The weather code and the chance come from different models, so
-  a storm hour with a low chance is common; "possible" keeps the sentence
-  from contradicting itself. Likely and possible are different messages, so
-  a storm crossing 50% is news; a chance changing on the same side is not.
-- **Together with**: rain leading it (turning stormy); rain or snow folded
-  in; wind or heavy rain combined.
+  another hour's. It says "chance of rain", not "of thunderstorms": the
+  forecast gives the chance of precipitation, not of lightning.
+- The code and the chance come from different models, so a storm with a
+  low chance is common; "possible" keeps the sentence from contradicting
+  itself.
+- *Likely* and *possible* are different messages: crossing 50% is news; a
+  change on the same side is not.
+- **Merges:** rain leads it (turning stormy); rain or snow folded in; wind
+  or heavy rain combined.
 
-### 2. Freezing rain
+### 9.2 Freezing rain
 
-- **Priority** 95 · **Level** high · **Icon** showers · **Topic** freezing
-- **Applies when** an hour has a freezing drizzle or freezing rain code
-  (56, 57, 66 or 67).
-- **Says**, for the first such hour:
-  - now: "Freezing rain is likely right now. Roads and paths may be icy."
-  - later: "Freezing rain is likely around 2:00 AM. Roads and paths may turn icy."
+**Applies when** an hour has code 56, 57, 66 or 67. Uses the first such hour.
 
-### 3. Heavy rain or snow
+| Case | Says |
+| --- | --- |
+| now | "Freezing rain is likely right now. Roads and paths may be icy." |
+| later | "Freezing rain is likely around 2:00 AM. Roads and paths may turn icy." |
 
-- **Priority** 90 · **Level** high · **Icon** showers, or snow · **Topic** rain, or snow
-- **Applies when** an hour has a heavy rain code (65, 82), a heavy snow
-  code (75, 86), or **7.6 mm** of precipitation or more.
-- **Snow or rain**: snow when that hour has any snow code (71, 73, 75, 77,
-  85, 86), otherwise rain.
-- **Says**, for the first such hour:
-  - now: "Heavy rain is likely right now. Expect puddles and slow roads." / "Heavy snow is likely right now. Travel may be slow."
-  - later: "Heavy rain is likely around 3:00 PM. Keep an umbrella close." / "Heavy snow is likely around 3:00 PM. Travel may be slow after that."
-- **Together with**: rain or snow folded in, or turning heavy; a storm or
-  wind combined.
+### 9.3 Heavy rain or snow
 
-### 4. Extreme feels like
+**Applies when** an hour has a heavy rain code (65, 82), a heavy snow code
+(75, 86), or **7.6 mm** of precipitation or more. Uses the first such hour;
+snow if that hour has a snow code, otherwise rain.
 
-- **Priority** 85 · **Level** high · **Icon** none · **Topic** feels_like
-- **Applies when** the hottest hour feels like **40 °C** or more, or (if
-  not) the coldest hour feels like **−15 °C** or less. Heat is checked first.
-- **Says**, for that hottest or coldest hour:
-  - heat, now: "It feels like 41° right now. Stay hydrated and seek shade."
-  - heat, later: "It will feel like 41° by around 2:00 PM. Stay hydrated and seek shade."
-  - cold, now: "It feels like −18° right now. Dress warmly, in layers."
-  - cold, later: "It will feel like −18° by around 6:00 AM. Dress warmly, in layers."
+| Case | Rain | Snow |
+| --- | --- | --- |
+| now | "Heavy rain is likely right now. Expect puddles and slow roads." | "Heavy snow is likely right now. Travel may be slow." |
+| later | "Heavy rain is likely around 3:00 PM. Keep an umbrella close." | "Heavy snow is likely around 3:00 PM. Travel may be slow after that." |
 
-### 5. Air quality
+**Merges:** rain or snow folded in, or turning heavy; storm or wind combined.
 
-- **Priority** 80 · **Level** high · **Icon** none · **Topic** air
-- **Applies when** the **US AQI** reaches **151** (unhealthy) or more in
-  an hour of the window. Without air quality data (it couldn't be fetched;
-  the weather is still shown), it says nothing.
-- **Says**, for the first such hour:
-  - now: "Air quality is unhealthy right now. Limit time outdoors if you can."
-  - later: "Air quality turns unhealthy around 10:00 AM. Consider limiting time outdoors."
+### 9.4 Extreme feels like
 
-### 6. UV
+**Applies when** the hottest hour feels like **40 °C** or more; if not, when
+the coldest hour feels like **−15 °C** or less. Heat is checked first.
 
-- **Priority** 75 · **Level** high · **Icon** clear (sun) · **Topic** uv
-- **Applies when** an hour has a UV index of **8** or more.
-- **Says**, for the first run of such hours, ending at the end of its last hour:
-  - now: "UV is very high until about 3:00 PM. Use sunscreen and cover up."
-  - later: "UV will be very high from about 11:00 AM to 3:00 PM. Use sunscreen outdoors."
+| Case | Says |
+| --- | --- |
+| heat, now | "It feels like 41° right now. Stay hydrated and seek shade." |
+| heat, later | "It will feel like 41° by around 2:00 PM. Stay hydrated and seek shade." |
+| cold, now | "It feels like −18° right now. Dress warmly, in layers." |
+| cold, later | "It will feel like −18° by around 6:00 AM. Dress warmly, in layers." |
 
-### 7. Rain or snow
+### 9.5 Air quality
 
-- **Priority** 60 · **Level** medium · **Icon** showers, or snow · **Topic** rain, or snow
-- **A wet hour** has a **50%** chance of precipitation or more, a **dry
-  hour** less. An hour with no data is neither.
-- **Snow or rain**: snow when that hour has a snow code, otherwise rain.
-- **Says**:
-  - wet now, and a dry hour later in the window:
-    "Rain is likely right now, easing off around 4:00 PM." (the first dry hour)
-  - wet now, and wet all through the window:
-    "Rain is likely to keep falling until about 6:00 PM." (the end of the window, rounded)
-  - dry now, wet later:
-    "Rain is likely to start around 5:00 PM with 70% chance." (the first wet hour and its chance)
-  - dry all through the window: nothing.
-- Snow uses the same sentences with "Snow".
-- **Happens**: now while it rains now (easing or falling through the window),
-  even though "easing off around 4:00 PM" is about 4 PM; at its first wet
-  hour when it starts later.
-- **Together with**: leading a storm (turning stormy), folded into a storm
-  or heavy rain, turning heavy, or combined with wind.
+**Applies when** the US AQI reaches **151** (unhealthy) or more. Uses the
+first such hour. Without air quality data, it says nothing (the weather is
+still shown).
 
-### 8. Wind
+| Case | Says |
+| --- | --- |
+| now | "Air quality is unhealthy right now. Limit time outdoors if you can." |
+| later | "Air quality turns unhealthy around 10:00 AM. Consider limiting time outdoors." |
 
-- **Priority** 55 · **Level** medium, or high from **60 km/h** ·
-  **Icon** windy · **Topic** wind
-- **Applies when** an hour has wind of **40 km/h** or more (strong).
-- **Says**, for the first such hour and its speed:
-  - now: "Strong wind right now, around 45 km/h. Secure loose items outdoors."
-  - later: "Wind picks up to 45 km/h around 3:00 PM. Secure loose items outdoors."
-- **Together with**: combined with a storm, heavy rain or snow, or rain or
-  snow.
+### 9.6 UV
 
-### 9. Fog
+**Applies when** an hour has a UV index of **8** or more. Uses the first run
+of such hours, ending at the end of its last hour.
 
-- **Priority** 50 · **Level** medium · **Icon** fog · **Topic** fog
-- **Applies when** an hour has visibility under **1 km**, or a fog code
-  (45 or 48).
-- **Says**, for the first such hour:
-  - now: "It is foggy right now, with low visibility. Drive with care."
-  - within an hour of the next sunrise: "Fog is likely around sunrise, with low visibility. Drive with care."
-  - otherwise: "Fog is likely around 5:00 AM, with low visibility. Drive with care."
+| Case | Says |
+| --- | --- |
+| now | "UV is very high until about 3:00 PM. Use sunscreen and cover up." |
+| later | "UV will be very high from about 11:00 AM to 3:00 PM. Use sunscreen outdoors." |
 
-### 10. Temperature swing
+### 9.7 Rain or snow
 
-- **Priority** 40 · **Level** low · **Icon** none · **Topic** temperature
-- **Applies when** the window's warmest or coldest hour is **6 °C** or more
-  away from the current hour's temperature. If both are, the bigger change
-  wins.
-- **Says**, for that hour:
-  - warmer: "Expect it to warm up to 29° by around 2:00 PM."
-  - colder: "Expect it to cool down to 14° by around 6:00 AM. Keep a layer handy."
+**Applies when** there is a wet hour (2.3). Snow uses the same sentences
+with "Snow".
 
-### 11. Tomorrow
+| Case | Says | Happens |
+| --- | --- | --- |
+| wet now, a dry hour later | "Rain is likely right now, easing off around 4:00 PM." (the first dry hour) | now |
+| wet now and all through the window | "Rain is likely to keep falling until about 6:00 PM." (end of window) | now |
+| dry now, wet later | "Rain is likely to start around 5:00 PM with 70% chance." (first wet hour, its chance) | first wet hour |
+| dry all through the window | nothing | |
 
-- **Priority** 30 · **Level** low · **Icon** showers, or none ·
-  **Heading** Tomorrow · **Topic** tomorrow
-- **Notification**: sent as news, the only low insight that is
-  (`OVERVIEW_NOTIFY_TOPICS`); never reminded
-- **Applies** only from **6 PM** local time, until midnight.
-- **Says**, checking in this order:
-  - tomorrow's chance of rain is **50%** or more:
-    "Rain is likely tomorrow with 60% chance, so plan ahead."
-  - tomorrow's high is **4 °C** or more above today's:
-    "Tomorrow will be warmer than today, with a high of 31°."
-  - tomorrow's high is **4 °C** or more below today's:
-    "Tomorrow will be cooler than today, with a high of 22°."
-  - otherwise: nothing.
+**Merges:** leads a storm (turning stormy), folded into a storm or heavy
+rain, turning heavy, or combined with wind.
 
-### 12. Sunset and sunrise
+### 9.8 Wind
 
-- **Priority** 20 · **Level** low · **Icon** sunset, or sunrise · **Topic** sun
-- **Applies when**, by day, sunset is within **2 hours**, or, at night,
-  sunrise is within **3 hours**.
-- **Says how the weather affects it.** Sunset and sunrise are news people
-  look forward to, so the sentence says what the weather brings to them,
-  from the weather at **the sun's hour**: the hourly hour nearest the
-  event (a sunset at 6:12 PM looks at 6 PM, one at 6:40 PM at 7 PM; at
-  exactly half past, the later hour). The first that applies:
+**Applies when** an hour has wind of **40 km/h** or more. Uses the first such
+hour and its speed. Level is medium, or high from **60 km/h**.
 
-  | Weather at the sun's hour | Says |
-  | --- | --- |
-  | thunderstorm code | "Thunderstorms at sunset, around 6:10 PM, best watched from indoors." |
-  | snow code, with a chance of 50% or more | "Snow at sunset, around 6:10 PM, for a quiet, wintry evening." |
-  | chance of rain 50% or more, or a freezing rain code | "A rainy sunset around 6:10 PM. Watch for a rainbow if the sun peeks through!" |
-  | fog (visibility under 1 km, or a fog code) | "A misty sunset around 6:10 PM, with soft, hazy light." |
-  | wind of 60 km/h or more | "A very windy sunset around 6:10 PM, best enjoyed from a sheltered spot." |
-  | wind of 40 km/h or more, clear or mainly clear (0, 1) | "Clear and windy for sunset around 6:10 PM, with crisp, fresh air." |
-  | wind of 40 km/h or more, partly cloudy or overcast (2, 3) | "A windy sunset around 6:10 PM, with a few clouds." |
-  | overcast (3) | "A cloudy sunset around 6:10 PM, with soft, even light." |
-  | partly cloudy (2) | "A few clouds at sunset, around 6:10 PM, could bring some color." |
-  | clear or mainly clear (0, 1) | "Clear skies for sunset around 6:10 PM, a great evening to catch it." |
+| Case | Says |
+| --- | --- |
+| now | "Strong wind right now, around 45 km/h. Secure loose items outdoors." |
+| later | "Wind picks up to 45 km/h around 3:00 PM. Secure loose items outdoors." |
 
-  Sunrise says the same with "sunrise" (and "morning" for "evening"). Rain,
-  snow, fog and wind use the same thresholds as their own rules, so the sun
-  sentence never mentions weather no other rule would; the wind sentences
-  start where the wind rule does (40 km/h), and from 60 km/h, where the
-  wind insight becomes high, they point to shelter instead of being
-  playful. The sun sentence doesn't say the wind's speed: the wind's own
-  insight does.
-- **The time** is rounded to 10 minutes and hedged with "around", like
-  every other forecast time: a sunset at 6:12 PM is "around 6:10 PM", one at
-  6:15 PM "around 6:20 PM". The sun's time doesn't move, so the sentence
-  stays the same, and true, until the event.
-- **Without weather data** for the sun's hour (or with another code, such
-  as rain with a low chance), it says the countdown:
-  - under an hour away: "The sun sets in about 40 minutes." The minutes are rounded to
-    the nearest 5 (exact halves round down), and the message is never more
-    than 5 minutes off while shown.
-  - an hour or more away: "The sun rises in about 2 hours, at 6:12 AM." The hours
-    are rounded to the nearest whole hour (halves down), with the exact time
-    alongside.
-  - in the last 2½ minutes: nothing, since "in 5 minutes" would be wrong.
-  - The minutes form takes over from 57½ minutes before the event.
-- **Happens**: now; it is about the event. Each weather has its own
-  message, so a change of weather at the sun's hour ("clear skies" becoming
-  "a cloudy sunset", or the wind picking up) is news, said once (low). Time
-  passing isn't: the sentence doesn't change.
-- **Together with**: nothing. It is about the sunset, not the weather, so
-  rain at sunset gives both the rain's sentence and the sun's; they take
-  turns, the rain first.
+**Merges:** combined with a storm, heavy rain or snow, or rain or snow.
 
-### 13. Calm
+### 9.9 Fog
 
-- **Priority** 0 · **Level** calm · **Icon** none · **Topic** calm
-- **Applies** always. It is the fallback when no other rule speaks.
-- **Says**: "Conditions should stay steady until about 7:00 AM." (the end of the window, rounded)
+**Applies when** an hour has visibility under **1 km**, or code 45 or 48.
+Uses the first such hour.
+
+| Case | Says |
+| --- | --- |
+| now | "It is foggy right now, with low visibility. Drive with care." |
+| within an hour of the next sunrise | "Fog is likely around sunrise, with low visibility. Drive with care." |
+| otherwise | "Fog is likely around 5:00 AM, with low visibility. Drive with care." |
+
+### 9.10 Temperature swing
+
+**Applies when** the window's warmest or coldest hour is **6 °C** or more
+away from the current hour. If both are, the bigger change wins.
+
+| Case | Says |
+| --- | --- |
+| warmer | "Expect it to warm up to 29° by around 2:00 PM." |
+| colder | "Expect it to cool down to 14° by around 6:00 AM. Keep a layer handy." |
+
+### 9.11 Tomorrow
+
+**Applies** only from **6 PM** local time until midnight. Heading:
+**Tomorrow**. The only low insight sent as a notification
+(`OVERVIEW_NOTIFY_TOPICS`), as news only, never reminded.
+
+Checked in this order; the first match wins:
+
+| Case | Says |
+| --- | --- |
+| tomorrow's chance of rain ≥ 50% | "Rain is likely tomorrow with 60% chance, so plan ahead." |
+| tomorrow's high ≥ 4 °C above today's | "Tomorrow will be warmer than today, with a high of 31°." |
+| tomorrow's high ≥ 4 °C below today's | "Tomorrow will be cooler than today, with a high of 22°." |
+| otherwise | nothing |
+
+### 9.12 Sunset and sunrise
+
+**Applies when**, by day, sunset is within **2 hours**, or, at night,
+sunrise is within **3 hours**.
+
+**The sun's hour** is the hourly hour nearest the event (6:12 PM → 6 PM,
+6:40 PM → 7 PM; exactly half past → the later hour). The sentence says what
+the weather at that hour brings. The first row that matches:
+
+| Weather at the sun's hour | Says |
+| --- | --- |
+| thunderstorm code | "Thunderstorms at sunset, around 6:10 PM, best watched from indoors." |
+| snow code, chance ≥ 50% | "Snow at sunset, around 6:10 PM, for a quiet, wintry evening." |
+| chance ≥ 50%, or a freezing rain code | "A rainy sunset around 6:10 PM. Watch for a rainbow if the sun peeks through!" |
+| fog (visibility < 1 km, or a fog code) | "A misty sunset around 6:10 PM, with soft, hazy light." |
+| wind ≥ 60 km/h | "A very windy sunset around 6:10 PM, best enjoyed from a sheltered spot." |
+| wind ≥ 40 km/h, clear or mainly clear (0, 1) | "Clear and windy for sunset around 6:10 PM, with crisp, fresh air." |
+| wind ≥ 40 km/h, partly cloudy or overcast (2, 3) | "A windy sunset around 6:10 PM, with a few clouds." |
+| overcast (3) | "A cloudy sunset around 6:10 PM, with soft, even light." |
+| partly cloudy (2) | "A few clouds at sunset, around 6:10 PM, could bring some color." |
+| clear or mainly clear (0, 1) | "Clear skies for sunset around 6:10 PM, a great evening to catch it." |
+
+Sunrise uses the same sentences with "sunrise" (and "morning" for
+"evening").
+
+- Rain, snow, fog and wind use the same thresholds as their own rules, so
+  the sun sentence never mentions weather no other rule would. From
+  60 km/h, where wind becomes high, the sentences point to shelter. The
+  wind's speed is left to the wind insight.
+- **The time** is rounded to 10 minutes with "around" (6:12 PM → "around
+  6:10 PM", 6:15 PM → "around 6:20 PM"). The sun's time doesn't move, so the
+  sentence stays the same, and true, until the event.
+
+**Without weather data** for the sun's hour (or with another code, such as
+rain with a low chance), it counts down instead:
+
+| Time to the event | Says |
+| --- | --- |
+| 57½ minutes or more | "The sun rises in about 2 hours, at 6:12 AM." (nearest hour, halves down, exact time alongside) |
+| 2½ to 57½ minutes | "The sun sets in about 40 minutes." (nearest 5 minutes, halves down; never more than 5 minutes off) |
+| under 2½ minutes | nothing ("in 5 minutes" would be wrong) |
+
+**About / news:** it is about the event and happens now. A change of
+weather at the sun's hour is news, said once (low); time passing isn't.
+
+**Merges:** nothing. It is about the sun, not the weather, so rain at
+sunset gives both sentences; they take turns, the rain first.
+
+### 9.13 Calm
+
+**Applies** always: the fallback when no other rule speaks.
+
+Says: "Conditions should stay steady until about 7:00 AM." (end of the
+window, rounded)
 
 ---
 
-## Varied wording
+## 10. Writing messages
+
+### 10.1 Varied wording
 
 Each message has a key (`rain.start`, `calm`, …) and several wordings that
-say the same thing, so the overview does not read the same every time:
+say the same thing with the same placeholders:
 
-- **Common messages** (rain and snow, wind, fog, temperature, tomorrow,
-  sunset and sunrise, calm): **4–5 wordings**.
-- **The weather at sunset and sunrise**: **2 wordings** each, since there
-  are 20 of them.
-- **Rare safety messages** (storm, freezing rain, heavy rain or snow,
-  extreme feels like, air quality, UV): **2 wordings**, kept plain.
-- **Two things at once** (the combined pairs, turning stormy, turning
-  heavy): **2 wordings**, one sentence with no advice after it.
+| Messages | Wordings |
+| --- | --- |
+| common: rain and snow, wind, fog, temperature, tomorrow, sunset and sunrise, calm | 4–5 |
+| the weather at sunset and sunrise (20 messages) | 2 each |
+| rare safety: storm, freezing rain, heavy rain or snow, extreme feels like, air quality, UV | 2, kept plain |
+| two things at once: combined pairs, turning stormy, turning heavy | 2, one sentence, no advice after it |
 
-The examples in this file are the first wording of each message; the rest
-are in `core/overview/messages.py`.
+A wording is picked at random **each time the overview opens by itself**.
+Between openings the wording stays and only the values update, so the
+phrasing never changes under the reader.
 
-**When the wording changes.** One wording is picked at random each time the
-overview is announced (opens by itself). Between announcements the wording
-stays the same, and only the values update ("about 40 minutes" becomes
-"about 30 minutes"), so the text never changes its phrasing under the reader.
+### 10.2 Form
 
-**Every wording of a message:**
-
-- says the same thing, with the same placeholders
-- follows "Writing messages" below
-
-## Writing messages
-
-- One whole sentence per message, with placeholders (`{time}`, `{temp}`,
-  `{chance}`, `{speed}`, `{n}`, and `{start}`, `{end}`, `{heavy_time}` where
-  a message has two times). Never build a sentence from pieces: two things
-  at once get their own message key.
+- One whole sentence per message, with placeholders: `{time}`, `{temp}`,
+  `{chance}`, `{speed}`, `{n}`, and `{start}`, `{end}`, `{heavy_time}` for
+  two times. Never build a sentence from pieces: two things at once get
+  their own message key.
 - Counts use plural forms (`ngettext`): "1 minute", "5 minutes".
 - Times follow the user's 12/24-hour setting, in the city's time zone.
-- **Predicted times are rounded and hedged.** A forecast is never
-  minute-exact, so every predicted time is rounded, and the sentence always
-  says so with "about", "around" or "by around": "Rain is likely to start
-  around 5:00 PM", "until about 6:30 AM", "cool down to 14° by around
-  6:00 AM". The further
-  ahead, the rounder:
+- Temperatures show the number and a degree sign ("14°").
+- Keep a message under about **90 characters** (the pill ellipsizes after
+  that; the full text is in its tooltip).
+- No "a"/"an" before a number: write "with 80% chance".
 
-  | How far ahead | Rounded to | Example (6:38 AM) |
-  | --- | --- | --- |
-  | up to 3 hours | 10 minutes | "about 6:40 AM" |
-  | 3 to 5 hours | 30 minutes | "about 6:30 AM" |
-  | more than 5 hours | the hour | "about 7:00 AM" |
+### 10.3 Times are rounded and hedged
 
-  24-hour times round the same way ("06:40"). Counts are hedged too:
-  "The sun sets in about 40 minutes".
-- **Only the sunset and sunrise countdown is exact**, since they are
-  known to the minute: "The sun rises in about 2 hours, at 6:12 AM." The
-  sentences about the weather at sunset round like any other time
-  ("around 6:10 PM").
-- Temperatures show the number and a degree sign ("14°"); the unit is in
-  the current conditions next to it.
-- **About the weather, for everyone.** A message says what the weather does
-  and what follows from it, not what the reader should do with their own
-  plans: no commute, laundry, watering plants or "best time to go out",
-  which don't fit everyone.
-- **Sunset and sunrise are positive.** Their sentences say what each
-  weather brings (color from scattered clouds, soft light under clouds, a
-  rainbow after rain, a quiet snowy evening), not what it takes away: no
-  "hide", "block" or "miss". They hedge what isn't certain ("could",
-  "may", "often") and use plain, everyday words, without dramatic imagery
-  (blankets, racing clouds, painted skies, dreamy light). A thunderstorm or
-  a very strong wind stays safety-first: watched from indoors, or from
-  shelter.
-- **Full, friendly sentences.** Say what happens in a complete sentence
-  and fold details like the chance into it ("Rain is likely to start around
-  5:00 PM with 70% chance."). Add a short second sentence only for advice
-  ("Drive with care."), never to repeat what the first one said. Avoid
-  clipped headline style ("Rain likely 5 PM").
-- Keep a message under about 90 characters: the pill shows that much before
-  it ellipsizes (the full text is in its tooltip).
-- No "a"/"an" before a number ("a 80% chance"): the right article depends
-  on the number. Write "with 80% chance".
-- After changing a message, run `./update-pot`.
+A forecast is never minute-exact, so every predicted time is rounded and
+said with "about", "around" or "by around":
 
-## Adding a rule
+| How far ahead | Rounded to | 6:38 AM becomes |
+| --- | --- | --- |
+| up to 3 hours | 10 minutes | "about 6:40 AM" |
+| 3 to 5 hours | 30 minutes | "about 6:30 AM" |
+| more than 5 hours | the hour | "about 7:00 AM" |
 
-1. Describe it here: priority, level, icon, topic, when it applies, what
-   it says, and what it is about (for "The same insight, or a new one").
-2. Add its wordings to `core/overview/messages.py` under a new key: 4–5 for
-   a common message, 2 for a rare safety one.
-3. Add its priority to `OVERVIEW_PRIORITIES` and any threshold to
-   `config.py` (metric).
-4. In `core/overview/rules.py`, build it from what is there before writing a
-   new class: a `FirstHourRule` with an `HourTest` and a `Phrasing` covers
-   "the first hour that …". Hour tests are in `core/overview/hour_tests.py`:
-   `HasCode`, `AtLeast`, `Below`, `AnyOf`, `AllOf`, and the shared ones the
-   rules agree on (`IS_WET`, `IS_DRY`, `IS_SNOW`, `IS_FOGGY`, `IS_WINDY`,
-   `IS_VERY_WINDY`); reuse a shared one, so two rules never disagree on
-   what counts as rain or wind. Only when it needs more, subclass `Rule`
-   and write `evaluate(ctx)`, as `StormRule` (a wording by the chance) and
-   `SunRule` (a wording by the weather) do. Add it to `RuleBook.default()`,
-   in priority order.
-5. Make sure its `valid_until` follows "Every message must stay true", and
-   that it says what it is about and when it happens (`Sentence.about` and
-   `when`; `Phrasing` fills them in).
-6. If it often happens together with another rule, decide whether one says
-   the other (a fold), both fit one sentence (a pair, with its own message
-   keys), or one leads into the other in the same wet spell (a turning), and
-   add it to `FOLDS`, `COMBINATIONS`, `TURNING_STORMY` or `TURNING_HEAVY` in
-   `rules.py` and to "Several things at once" here.
-7. Run `./update-pot`.
+24-hour times round the same way ("06:40"). Counts are hedged too ("in
+about 40 minutes"). Only the sunrise and sunset countdown gives an exact
+time ("at 6:12 AM").
 
-## Reading the debug log
+### 10.4 Tone
 
-With debug mode on (`gsettings set io.github.amit9838.mousam debug-mode
-true`), each run of the overview logs, in this order:
+- **About the weather, for everyone.** Say what the weather does and what
+  follows from it, not what to do with personal plans: no commute, laundry,
+  watering plants or "best time to go out".
+- **Full, friendly sentences.** Fold details like the chance into the
+  sentence. Add a short second sentence only for advice ("Drive with
+  care."), never to repeat the first. No headline style ("Rain likely 5 PM").
+- **Sunset and sunrise are positive.** Say what each weather brings (color,
+  soft light, a rainbow, a quiet snowy evening), not what it takes away: no
+  "hide", "block" or "miss". Hedge what isn't certain ("could", "may",
+  "often"). Plain words, no dramatic imagery (blankets, racing clouds,
+  painted skies). Thunderstorms and very strong wind stay safety-first.
+
+After changing a message, run `./update-pot`.
+
+---
+
+## 11. Adding a rule
+
+1. **Describe it here**: priority, level, icon, topic, when it applies,
+   what it says, and what it is about (6.3).
+2. **Add its wordings** to `core/overview/messages.py` under a new key:
+   4–5 for a common message, 2 for a rare safety one.
+3. **Add its numbers**: its priority to `OVERVIEW_PRIORITIES`, any threshold
+   to `config.py` (metric).
+4. **Build it** in `core/overview/rules.py` from what exists:
+   - "The first hour that …" is a `FirstHourRule` with an `HourTest` and a
+     `Phrasing`.
+   - Hour tests are in `core/overview/hour_tests.py`: `HasCode`, `AtLeast`,
+     `Below`, `AnyOf`, `AllOf`, and the shared `IS_WET`, `IS_DRY`,
+     `IS_SNOW`, `IS_FOGGY`, `IS_WINDY`, `IS_VERY_WINDY`. Reuse a shared one
+     so two rules never disagree on what counts as rain or wind.
+   - Only when that isn't enough, subclass `Rule` and write
+     `evaluate(ctx)`, as `StormRule` and `SunRule` do.
+   - Add it to `RuleBook.default()`, in priority order.
+5. **Check validity**: its `valid_until` follows section 4, and it sets what
+   it is about and when it happens (`Sentence.about` and `when`; `Phrasing`
+   fills them in).
+6. **Decide how it merges** if it often happens with another rule: a fold,
+   a pair (with its own message keys), or a turning. Add it to `FOLDS`,
+   `COMBINATIONS`, `TURNING_STORMY` or `TURNING_HEAVY` in `rules.py`, and to
+   section 5 here.
+7. **Add a test** in `tests/test_overview_rules.py`.
+8. Run `./update-pot`.
+
+---
+
+## 12. Reading the debug log
+
+Turn it on with:
+
+```
+gsettings set io.github.amit9838.mousam debug-mode true
+```
+
+Each run logs, in this order:
 
 ```
 Overview folded: precipitation (rain.start) into storm
@@ -680,19 +743,11 @@ Overview next turn: wind (news, after the gap)
 Overview channel: storm (news, extreme) -> notification overview-storm
 ```
 
-- the first lines: what was turned stormy
-  (`Overview turning stormy: precipitation (rain.start) + storm (17:00) -> rain_stormy.start`),
-  folded, turned heavy
-  (`Overview turning heavy: precipitation (rain.easing) + heavy_precipitation (23:00) -> rain_heavier.easing`)
-  or combined, and why not (logged once per run)
-- one line per insight: its topic, level and priority, and what has been
-  said: `new`, `said 2x, due in 3600s` (its next reminder), `not repeated`
-  (low and calm), or `not taking turns` (calm next to something else)
-- `opens (news)`, `opens (reminder)` or `silent update`, with the sentence
-  as it is shown, and when the overview runs again
-- `next turn`: due too, opens after the 5-minute gap
-- `channel`: where the opening went: `window`, `notification overview-<topic>`,
-  or `nowhere` and why (overview or notifications off, or not worth a
-  notification)
-- `Notification … sent / withdrawn` (from `mousam.notifications`), with the
-  reason it was withdrawn
+| Line | Means |
+| --- | --- |
+| `turning stormy`, `folded`, `turning heavy`, `combined`, `not combined` | merging, and why not (once per run). E.g. `Overview turning stormy: precipitation (rain.start) + storm (17:00) -> rain_stormy.start` |
+| one line per insight | topic, level, priority, and memory: `new`, `said 2x, due in 3600s`, `not repeated` (low, calm) or `not taking turns` (calm next to something else) |
+| `opens (news)`, `opens (reminder)`, `silent update` | the sentence as shown, and when it runs again |
+| `next turn` | due too; opens after the 5-minute gap |
+| `channel` | where it went: `window`, `notification overview-<topic>`, or `nowhere` and why |
+| `Notification … sent / withdrawn` | from `mousam.notifications`, with the reason for withdrawing |
