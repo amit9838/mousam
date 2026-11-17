@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-17 23:47+0530\n"
+"POT-Creation-Date: 2026-11-18 01:06+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -154,91 +154,61 @@ msgid "Launch the app in maximized mode."
 msgstr ""
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
-msgid "Auto-refresh interval in minutes"
-msgstr ""
-
-#: data/io.github.amit9838.mousam.gschema.xml:43
-msgid ""
-"Interval for automatic weather refresh. 0 means disabled, which is not "
-"allowed while the overview or notifications are on."
-msgstr ""
-
-#: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Measurement system to use - metric,imperial"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:48
+#: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:52
+#: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Show weather update notifications"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:53
+#: data/io.github.amit9838.mousam.gschema.xml:48
 msgid "Show a notification when weather data is updated."
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:57
+#: data/io.github.amit9838.mousam.gschema.xml:52
 msgid "Show the weather overview"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:58
+#: data/io.github.amit9838.mousam.gschema.xml:53
 msgid "Show a short summary of the coming hours under the current conditions."
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:62
+#: data/io.github.amit9838.mousam.gschema.xml:57
 msgid "Run in background"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:63
+#: data/io.github.amit9838.mousam.gschema.xml:58
 msgid "Keep the app running when its window is closed."
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:67
+#: data/io.github.amit9838.mousam.gschema.xml:62
 msgid "Enable debug mode"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:68
+#: data/io.github.amit9838.mousam.gschema.xml:63
 msgid "Enables detailed logging and console output."
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:72
+#: data/io.github.amit9838.mousam.gschema.xml:67
 msgid "Icon theme"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:73
+#: data/io.github.amit9838.mousam.gschema.xml:68
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:81
+#: data/io.github.amit9838.mousam.gschema.xml:76
 msgid "Forecast page"
 msgstr ""
 
-#: data/io.github.amit9838.mousam.gschema.xml:82
+#: data/io.github.amit9838.mousam.gschema.xml:77
 msgid "The page last shown in the forecast card: \"tomorrow\" or \"weekly\"."
-msgstr ""
-
-#: src/config.py:109
-msgid "Off"
-msgstr ""
-
-#: src/config.py:110
-msgid "Every 15 minutes"
-msgstr ""
-
-#: src/config.py:111
-msgid "Every 30 minutes"
-msgstr ""
-
-#: src/config.py:112
-msgid "Every hour"
-msgstr ""
-
-#: src/config.py:113
-msgid "Every 2 hours"
 msgstr ""
 
 #: src/services/selected_city.py:40 src/services/selected_city.py:44
@@ -1865,7 +1835,7 @@ msgstr ""
 
 #. Translators: wind direction is where the wind blows from
 #: src/ui/cards/metric.py:187
-msgid "Direction (from)"
+msgid "From"
 msgstr ""
 
 #. Translators: "North" on the wind direction compass, as short as possible
@@ -1904,21 +1874,21 @@ msgid "UV Index"
 msgstr ""
 
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
-#: src/ui/compact_window.py:129 src/ui/window.py:287
+#: src/ui/compact_window.py:129 src/ui/window.py:283
 msgid "No Internet"
 msgstr ""
 
-#: src/ui/compact_window.py:115 src/ui/window.py:329
+#: src/ui/compact_window.py:115 src/ui/window.py:325
 #: src/ui/dialogs/locations.py:154
 msgid "Retry"
 msgstr ""
 
-#: src/ui/compact_window.py:130 src/ui/window.py:287
+#: src/ui/compact_window.py:130 src/ui/window.py:283
 #: src/ui/dialogs/locations.py:161
 msgid "Please check your connection."
 msgstr ""
 
-#: src/ui/compact_window.py:133 src/ui/window.py:292
+#: src/ui/compact_window.py:133 src/ui/window.py:288
 msgid "Fetch Error"
 msgstr ""
 
@@ -1971,7 +1941,7 @@ msgstr ""
 msgid "Feels like {0}"
 msgstr ""
 
-#: src/ui/sections/current.py:213 src/ui/dialogs/preferences.py:118
+#: src/ui/sections/current.py:213 src/ui/dialogs/preferences.py:117
 msgid "Show Overview"
 msgstr ""
 
@@ -2054,7 +2024,7 @@ msgstr ""
 msgid "Hourly"
 msgstr ""
 
-#: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:64
+#: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
 msgstr ""
 
@@ -2101,61 +2071,61 @@ msgstr ""
 msgid "No rain in sight today!"
 msgstr ""
 
-#: src/ui/window.py:88
+#: src/ui/window.py:84
 msgid "Debug Mode Enabled"
 msgstr ""
 
-#: src/ui/window.py:89
+#: src/ui/window.py:85
 msgid "View Logs"
 msgstr ""
 
-#: src/ui/window.py:93
+#: src/ui/window.py:89
 msgid "Debug Mode Disabled"
 msgstr ""
 
-#: src/ui/window.py:130
+#: src/ui/window.py:126
 msgid "Refresh weather"
 msgstr ""
 
-#: src/ui/window.py:145 src/ui/dialogs/locations.py:327
+#: src/ui/window.py:141 src/ui/dialogs/locations.py:327
 #: src/ui/templates/shortcuts.ui:39
 msgid "Locations"
 msgstr ""
 
-#: src/ui/window.py:151
+#: src/ui/window.py:147
 msgid "Compact Mode"
 msgstr ""
 
-#: src/ui/window.py:178 src/ui/dialogs/preferences.py:23
+#: src/ui/window.py:174 src/ui/dialogs/preferences.py:22
 #: src/ui/templates/shortcuts.ui:45
 msgid "Preferences"
 msgstr ""
 
-#: src/ui/window.py:179 src/ui/templates/shortcuts.ui:63
+#: src/ui/window.py:175 src/ui/templates/shortcuts.ui:63
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: src/ui/window.py:180
+#: src/ui/window.py:176
 msgid "About Mousam"
 msgstr ""
 
-#: src/ui/window.py:181 src/ui/templates/shortcuts.ui:57
+#: src/ui/window.py:177 src/ui/templates/shortcuts.ui:57
 msgid "Quit"
 msgstr ""
 
-#: src/ui/window.py:306
+#: src/ui/window.py:302
 msgid "Getting Weather Data"
 msgstr ""
 
-#: src/ui/window.py:313
+#: src/ui/window.py:309
 msgid "Welcome to Mousam"
 msgstr ""
 
-#: src/ui/window.py:314
+#: src/ui/window.py:310
 msgid "Add a location to get started."
 msgstr ""
 
-#: src/ui/window.py:315 src/ui/dialogs/locations.py:359
+#: src/ui/window.py:311 src/ui/dialogs/locations.py:359
 msgid "Add Location"
 msgstr ""
 
@@ -2310,7 +2280,7 @@ msgid "Weather Data"
 msgstr ""
 
 #: src/ui/dialogs/about.py:52 src/ui/dialogs/about.py:74
-#: src/ui/dialogs/preferences.py:105
+#: src/ui/dialogs/preferences.py:104
 msgid "Weather Icons"
 msgstr ""
 
@@ -2389,181 +2359,173 @@ msgstr ""
 msgid "Switched to {}"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:34 src/ui/dialogs/preferences.py:51
+#: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
 msgid "General"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:43
+#: src/ui/dialogs/preferences.py:42
 msgid "Advanced"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:55
+#: src/ui/dialogs/preferences.py:54
 msgid "Units"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:56
+#: src/ui/dialogs/preferences.py:55
 msgid "Metric (°C, km/h) or Imperial (°F, mph)"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:58
+#: src/ui/dialogs/preferences.py:57
 msgid "Metric"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:58
+#: src/ui/dialogs/preferences.py:57
 msgid "Imperial"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:65
+#: src/ui/dialogs/preferences.py:64
 msgid "Unit of the hourly precipitation graph"
 msgstr ""
 
 #. Translators: short unit names for millimetres and inches
-#: src/ui/dialogs/preferences.py:68
+#: src/ui/dialogs/preferences.py:67
 msgid "mm"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:68
+#: src/ui/dialogs/preferences.py:67
 msgid "in"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:74
+#: src/ui/dialogs/preferences.py:73
 msgid "Time Format"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:77
+#: src/ui/dialogs/preferences.py:76
 msgid "24-hour"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:77
+#: src/ui/dialogs/preferences.py:76
 msgid "AM/PM"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:82
+#: src/ui/dialogs/preferences.py:81
 msgid "Run in Background"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:83
+#: src/ui/dialogs/preferences.py:82
 msgid "Keep Mousam running when its window is closed"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:92
+#: src/ui/dialogs/preferences.py:91
 msgid "Appearance"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:95
+#: src/ui/dialogs/preferences.py:94
 msgid "Dynamic Background"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:96
+#: src/ui/dialogs/preferences.py:95
 msgid "Change the background to match the current weather"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:108
+#: src/ui/dialogs/preferences.py:107
 msgid "Default"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:108
+#: src/ui/dialogs/preferences.py:107
 msgid "Material"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:115
+#: src/ui/dialogs/preferences.py:114
 msgid "Weather Overview"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:119
+#: src/ui/dialogs/preferences.py:118
 msgid "A short summary of the coming hours"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:127
+#: src/ui/dialogs/preferences.py:126
 msgid "Notifications"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:128
+#: src/ui/dialogs/preferences.py:127
 msgid ""
 "Send the overview as a notification while the window is minimized or in "
 "compact mode"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:139
+#: src/ui/dialogs/preferences.py:136
 msgid "Logging and Debugging"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:142
+#: src/ui/dialogs/preferences.py:139
 msgid "Debug Mode"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:143
+#: src/ui/dialogs/preferences.py:140
 msgid "Enable verbose logging and console output"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:151
+#: src/ui/dialogs/preferences.py:148
 msgid "Open Logs Folder"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:160
+#: src/ui/dialogs/preferences.py:157
 msgid "Clear Log File"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:161
+#: src/ui/dialogs/preferences.py:158
 msgid "Delete all contents of the current log file"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:164
+#: src/ui/dialogs/preferences.py:161
 msgid "Clear"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:171
+#: src/ui/dialogs/preferences.py:168
 msgid "Data Management"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:174
+#: src/ui/dialogs/preferences.py:171
 msgid "Reset to Default"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:175
+#: src/ui/dialogs/preferences.py:172
 msgid "Clear all preferences and restore default values"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:178
+#: src/ui/dialogs/preferences.py:175
 msgid "Reset…"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:227
-msgid "Auto Refresh"
-msgstr ""
-
-#: src/ui/dialogs/preferences.py:251
-msgid "Needed by the overview and notifications"
-msgstr ""
-
-#: src/ui/dialogs/preferences.py:341
+#: src/ui/dialogs/preferences.py:307
 msgid "Logs cleared"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:343
+#: src/ui/dialogs/preferences.py:309
 msgid "Failed to clear logs"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:353
+#: src/ui/dialogs/preferences.py:313
 msgid "Reset Settings?"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:355
+#: src/ui/dialogs/preferences.py:315
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:359
+#: src/ui/dialogs/preferences.py:319
 msgid "Cancel"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:360
+#: src/ui/dialogs/preferences.py:320
 msgid "Reset"
 msgstr ""
 
-#: src/ui/dialogs/preferences.py:385
+#: src/ui/dialogs/preferences.py:343
 msgid "Preferences have been reset"
 msgstr ""
 
