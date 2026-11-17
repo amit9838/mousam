@@ -496,7 +496,38 @@ From most to least important. "An hour" means an hour inside the window.
 - **Priority** 20 · **Level** low · **Icon** sunset, or sunrise · **Topic** sun
 - **Applies when**, by day, sunset is within **2 hours**, or, at night,
   sunrise is within **3 hours**.
-- **Says**:
+- **Says how the weather affects it.** Sunset and sunrise are news people
+  look forward to, so the sentence says what the weather brings to them,
+  from the weather at **the sun's hour**: the hourly hour nearest the
+  event (a sunset at 6:12 PM looks at 6 PM, one at 6:40 PM at 7 PM; at
+  exactly half past, the later hour). The first that applies:
+
+  | Weather at the sun's hour | Says |
+  | --- | --- |
+  | thunderstorm code | "Thunderstorms at sunset, around 6:10 PM, best watched from indoors." |
+  | snow code, with a chance of 50% or more | "Snow at sunset, around 6:10 PM, for a quiet, wintry evening." |
+  | chance of rain 50% or more, or a freezing rain code | "A rainy sunset around 6:10 PM. Watch for a rainbow if the sun peeks through!" |
+  | fog (visibility under 1 km, or a fog code) | "A misty sunset around 6:10 PM, with soft, hazy light." |
+  | wind of 60 km/h or more | "A very windy sunset around 6:10 PM, best enjoyed from a sheltered spot." |
+  | wind of 40 km/h or more, clear or mainly clear (0, 1) | "Clear and windy for sunset around 6:10 PM, with crisp, fresh air." |
+  | wind of 40 km/h or more, partly cloudy or overcast (2, 3) | "A windy sunset around 6:10 PM, with a few clouds." |
+  | overcast (3) | "A cloudy sunset around 6:10 PM, with soft, even light." |
+  | partly cloudy (2) | "A few clouds at sunset, around 6:10 PM, could bring some color." |
+  | clear or mainly clear (0, 1) | "Clear skies for sunset around 6:10 PM, a great evening to catch it." |
+
+  Sunrise says the same with "sunrise" (and "morning" for "evening"). Rain,
+  snow, fog and wind use the same thresholds as their own rules, so the sun
+  sentence never mentions weather no other rule would; the wind sentences
+  start where the wind rule does (40 km/h), and from 60 km/h, where the
+  wind insight becomes high, they point to shelter instead of being
+  playful. The sun sentence doesn't say the wind's speed: the wind's own
+  insight does.
+- **The time** is rounded to 10 minutes and hedged with "around", like
+  every other forecast time: a sunset at 6:12 PM is "around 6:10 PM", one at
+  6:15 PM "around 6:20 PM". The sun's time doesn't move, so the sentence
+  stays the same, and true, until the event.
+- **Without weather data** for the sun's hour (or with another code, such
+  as rain with a low chance), it says the countdown:
   - under an hour away: "The sun sets in about 40 minutes." The minutes are rounded to
     the nearest 5 (exact halves round down), and the message is never more
     than 5 minutes off while shown.
@@ -504,7 +535,14 @@ From most to least important. "An hour" means an hour inside the window.
     are rounded to the nearest whole hour (halves down), with the exact time
     alongside.
   - in the last 2½ minutes: nothing, since "in 5 minutes" would be wrong.
-- The minutes form takes over from 57½ minutes before the event.
+  - The minutes form takes over from 57½ minutes before the event.
+- **Happens**: now; it is about the event. Each weather has its own
+  message, so a change of weather at the sun's hour ("clear skies" becoming
+  "a cloudy sunset", or the wind picking up) is news, said once (low). Time
+  passing isn't: the sentence doesn't change.
+- **Together with**: nothing. It is about the sunset, not the weather, so
+  rain at sunset gives both the rain's sentence and the sun's; they take
+  turns, the rain first.
 
 ### 13. Calm
 
@@ -521,6 +559,8 @@ say the same thing, so the overview does not read the same every time:
 
 - **Common messages** (rain and snow, wind, fog, temperature, tomorrow,
   sunset and sunrise, calm): **4–5 wordings**.
+- **The weather at sunset and sunrise**: **2 wordings** each, since there
+  are 20 of them.
 - **Rare safety messages** (storm, freezing rain, heavy rain or snow,
   extreme feels like, air quality, UV): **2 wordings**, kept plain.
 - **Two things at once** (the combined pairs, turning stormy, turning
@@ -562,14 +602,24 @@ stays the same, and only the values update ("about 40 minutes" becomes
 
   24-hour times round the same way ("06:40"). Counts are hedged too:
   "The sun sets in about 40 minutes".
-- **Only sunrise and sunset are exact**, since they are known to the
-  minute: "The sun rises in about 2 hours, at 6:12 AM."
+- **Only the sunset and sunrise countdown is exact**, since they are
+  known to the minute: "The sun rises in about 2 hours, at 6:12 AM." The
+  sentences about the weather at sunset round like any other time
+  ("around 6:10 PM").
 - Temperatures show the number and a degree sign ("14°"); the unit is in
   the current conditions next to it.
 - **About the weather, for everyone.** A message says what the weather does
   and what follows from it, not what the reader should do with their own
   plans: no commute, laundry, watering plants or "best time to go out",
   which don't fit everyone.
+- **Sunset and sunrise are positive.** Their sentences say what each
+  weather brings (color from scattered clouds, soft light under clouds, a
+  rainbow after rain, a quiet snowy evening), not what it takes away: no
+  "hide", "block" or "miss". They hedge what isn't certain ("could",
+  "may", "often") and use plain, everyday words, without dramatic imagery
+  (blankets, racing clouds, painted skies, dreamy light). A thunderstorm or
+  a very strong wind stays safety-first: watched from indoors, or from
+  shelter.
 - **Full, friendly sentences.** Say what happens in a complete sentence
   and fold details like the chance into it ("Rain is likely to start around
   5:00 PM with 70% chance."). Add a short second sentence only for advice
