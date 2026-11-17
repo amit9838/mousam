@@ -148,7 +148,7 @@ src/
     cache.py              @cached: TTL + LRU cache for API calls
     log.py                LogManager (set up once by app.main, given the debug mode) and get_logger
     forecast_client.py    ForecastClient: the Protocol services/open_meteo.py fills and tests fake
-    overview/insight.py   Insight (what a rule returns), SEVERITY_RANK
+    overview/insight.py   Insight (what a rule returns: level, topic, fingerprint), LEVELS, LEVEL_RANK
     overview/context.py   OverviewContext and its parts: Clock, Units, HourlySeries, SunTimes, DailyOutlook, AirSeries, Window
     overview/hour_tests.py  HourTest, HasCode, AtLeast, Below, AnyOf, IS_SNOW / IS_WET / IS_DRY, the WMO code sets
     overview/rules.py     the overview rules: Phrasing, Rule and the rules, RuleBook, AnnouncePlanner
@@ -274,7 +274,7 @@ The overview is the pill under the current conditions. Its rules are written in 
 - **Planner** (`AnnouncePlanner` in `core/overview/rules.py`, no GTK): decides which insight to show and when the pill opens. The next opening is `OVERVIEW_ANNOUNCE_BASE_MINUTES ÷ (1 + score)` (score = sum of priorities ÷ 100), so a busy forecast opens it more often; each opening shows the insight whose turn it is (priority × time since last shown), so none is thrown away; something turning severe opens at once (once, not on every flicker).
 - **Engine** (`state/overview_engine.py`): lazy (first run `OVERVIEW_FIRST_DELAY` s after the first data load), runs again before the shown insight stops being true (silent text update) or when the planner's next opening is due. Its memory survives refreshes (a refresh never opens the pill or resets the turns); only a location change or turning the setting off starts over. Each opening draws a new wording seed; silent updates keep it, so the phrasing never changes under the reader. It only ever uses one-shot `GLib.timeout_add_seconds` timers, and does nothing while the `show-overview` setting is off.
 - **Where it goes** (one place at a time): while the main window can be seen (`is_on_screen`: visible and not suspended), the pill opens; while it is minimized or hidden by compact mode, the app (`app.py`) sends it as a notification (`show_overview_notification` in `ui/notifications.py`, one fixed ID so they replace each other). The engine runs while either `show-overview` or `show-notifications` is on; with both off it does nothing. There is no other notification: don't add one per refresh.
-- **Section** (`ui/sections/current.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by severity), the insight's icon and message, and stays open for `insight.show_seconds`.
+- **Section** (`ui/sections/current.py`): subscribes to `overview-changed` and `changed::show-overview` on `map`, disconnects on `unmap`. It shows the engine's heading (coloured by level), the insight's icon and message, and stays open for `insight.show_seconds`.
 - **Numbers** (thresholds, priorities, open times, republish intervals) live in `config.py` under "Overview", in metric; rules convert imperial data before comparing.
 - Test rules on made-up forecasts: they are plain Python, so build an `OverviewContext` by hand (`Clock`, `Units`, `HourlySeries`, …) and call `RuleBook.default().run(ctx)`. The tests in [tests/test_overview_rules.py](tests/test_overview_rules.py) do this; add a case there when you add or change a rule.
 

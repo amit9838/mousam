@@ -66,7 +66,7 @@ from .hour_tests import (
     HasCode,
     HourTest,
 )
-from .insight import SEVERITY_RANK, Insight
+from .insight import LEVEL_RANK, Insight
 
 logger = get_logger("overview")
 
@@ -89,6 +89,17 @@ def degrees(value: float) -> str:
 # Phrasing: a rule's "now" and "later" messages
 # =====================================================================
 
+@dataclass(frozen=True)
+class Sentence:
+    """A message as a rule said it: its key, the text, until when it is
+    true, and the hour or event it is about (None for "now")."""
+
+    key: str
+    message: str
+    valid_until: float
+    about: Optional[float] = None
+
+
 @dataclass
 class Phrasing:
     """Message keys: `now` for something in the current hour, `later` (its
@@ -102,16 +113,23 @@ class Phrasing:
     later: str
     icon: Optional[str] = None
 
-    def render(self, ctx: OverviewContext, i: int, **values) -> Tuple[str, float]:
-        """(message, valid_until) for hourly hour i."""
+    def render(self, ctx: OverviewContext, i: int, **values) -> Sentence:
+        """The sentence for hourly hour i."""
         return self.render_at(ctx, ctx.hourly.times[i], ctx.window.is_now(i), **values)
 
-    def render_at(self, ctx: OverviewContext, ts: float, is_now: bool, **values) -> Tuple[str, float]:
-        """(message, valid_until) for the hour starting at `ts`, for data
-        with its own timestamps (air quality)."""
+    def render_at(self, ctx: OverviewContext, ts: float, is_now: bool, **values) -> Sentence:
+        """The sentence for the hour starting at `ts`, for data with its own
+        timestamps (air quality)."""
         if is_now:
-            return ctx.messages.say(self.now, **values), ctx.clock.next_hour
-        return ctx.messages.say(self.later, time=ctx.clock.approx_time(ts), **values), ts
+            return Sentence(self.now, ctx.messages.say(self.now, **values), ctx.clock.next_hour)
+        message = ctx.messages.say(self.later, time=ctx.clock.approx_time(ts), **values)
+        return Sentence(self.later, message, ts, ts)
+
+
+def say(ctx: OverviewContext, key: str, valid_until: float, about: Optional[float] = None,
+        **values) -> Sentence:
+    """A sentence for one message key, for rules that don't use a Phrasing."""
+    return Sentence(key, ctx.messages.say(key, **values), valid_until, about)
 
 
 # =====================================================================
@@ -123,34 +141,39 @@ class Rule(ABC):
     to say. The plain-English description is in docs/overview-rules.md, the
     wordings in core/overview/messages.py."""
 
-    def __init__(self, kind: str, severity: str = "info", icon: Optional[str] = None):
+    def __init__(self, kind: str, level: str, topic: str, icon: Optional[str] = None):
         self.kind = kind
-        self.severity = severity
+        self.level = level
+        self.topic = topic
         self.icon = icon
 
     @abstractmethod
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         """The insight for this forecast, or None."""
 
-    def insight(self, message: str, valid_until: float, *, severity: Optional[str] = None,
-                icon: Optional[str] = None, heading: Optional[str] = None) -> Insight:
+    def insight(self, sentence: Sentence, *, level: Optional[str] = None,
+                icon: Optional[str] = None, heading: Optional[str] = None,
+                topic: Optional[str] = None) -> Insight:
         return Insight(
             self.kind,
-            message,
-            valid_until,
-            severity or self.severity,
+            sentence.message,
+            sentence.valid_until,
+            level or self.level,
             icon or self.icon,
             heading,
+            topic=topic or self.topic,
+            key=sentence.key,
+            about=sentence.about,
         )
 
 
 class FirstHourRule(Rule):
     """The first hour that passes `test`, said with `phrasing` (or
-    `snow_phrasing` when that hour has a snow code)."""
+    `snow_phrasing`, on the snow topic, when that hour has a snow code)."""
 
-    def __init__(self, kind: str, test: HourTest, phrasing: Phrasing, severity: str = "info",
+    def __init__(self, kind: str, test: HourTest, phrasing: Phrasing, level: str, topic: str,
                  snow_phrasing: Optional[Phrasing] = None):
-        super().__init__(kind, severity)
+        super().__init__(kind, level, topic)
         self.test = test
         self.phrasing = phrasing
         self.snow_phrasing = snow_phrasing
@@ -159,11 +182,10 @@ class FirstHourRule(Rule):
         i = ctx.first(self.test)
         if i is None:
             return None
-        phrasing = self.phrasing
+        phrasing, topic = self.phrasing, self.topic
         if self.snow_phrasing is not None and IS_SNOW(ctx, i):
-            phrasing = self.snow_phrasing
-        message, valid_until = phrasing.render(ctx, i)
-        return self.insight(message, valid_until, icon=phrasing.icon)
+            phrasing, topic = self.snow_phrasing, "snow"
+        return self.insight(phrasing.render(ctx, i), icon=phrasing.icon, topic=topic)
 
 
 class ExtremeFeelsRule(Rule):
@@ -174,7 +196,7 @@ class ExtremeFeelsRule(Rule):
     COLD = Phrasing("cold.now", "cold.later")
 
     def __init__(self):
-        super().__init__("extreme_feels", "warning")
+        super().__init__("extreme_feels", "high", "feels_like")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         feels = ctx.hourly.feels_like
@@ -189,8 +211,7 @@ class ExtremeFeelsRule(Rule):
             i, phrasing = coldest, self.COLD
         else:
             return None
-        message, valid_until = phrasing.render(ctx, i, temp=degrees(feels[i]))
-        return self.insight(message, valid_until)
+        return self.insight(phrasing.render(ctx, i, temp=degrees(feels[i])))
 
 
 class AirQualityRule(Rule):
@@ -199,14 +220,14 @@ class AirQualityRule(Rule):
     PHRASING = Phrasing("air.now", "air.later")
 
     def __init__(self):
-        super().__init__("air_quality", "warning")
+        super().__init__("air_quality", "high", "air")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         hours = hours_between(ctx.air.times, ctx.now, ctx.window.end)
         j = next((j for j in hours if (value_at(ctx.air.us_aqi, j) or 0) >= UNHEALTHY_US_AQI), None)
         if j is None:
             return None
-        return self.insight(*self.PHRASING.render_at(ctx, ctx.air.times[j], j == hours[0]))
+        return self.insight(self.PHRASING.render_at(ctx, ctx.air.times[j], j == hours[0]))
 
 
 class UvRule(Rule):
@@ -214,7 +235,7 @@ class UvRule(Rule):
     already is."""
 
     def __init__(self):
-        super().__init__("uv", "warning", ICON_SUN)
+        super().__init__("uv", "high", "uv", ICON_SUN)
         self.test = AtLeast("uv", VERY_HIGH_UV)
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
@@ -231,10 +252,11 @@ class UvRule(Rule):
         end_str = ctx.clock.approx_time(ctx.hourly.times[last] + HOUR)
 
         if ctx.window.is_now(start):
-            return self.insight(ctx.messages.say("uv.now", time=end_str), ctx.clock.next_hour)
+            return self.insight(say(ctx, "uv.now", ctx.clock.next_hour, time=end_str))
         start_ts = ctx.hourly.times[start]
-        message = ctx.messages.say("uv.later", start=ctx.clock.approx_time(start_ts), end=end_str)
-        return self.insight(message, start_ts)
+        sentence = say(ctx, "uv.later", start_ts, start_ts,
+                       start=ctx.clock.approx_time(start_ts), end=end_str)
+        return self.insight(sentence)
 
 
 class PrecipitationRule(Rule):
@@ -242,7 +264,7 @@ class PrecipitationRule(Rule):
     lasting through, or starting at a time."""
 
     def __init__(self):
-        super().__init__("precipitation")
+        super().__init__("precipitation", "medium", "rain")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         window = ctx.window
@@ -257,38 +279,46 @@ class PrecipitationRule(Rule):
             return None
         snow = IS_SNOW(ctx, start)
         ts = ctx.hourly.times[start]
-        message = ctx.messages.say(
+        sentence = say(
+            ctx,
             "snow.start" if snow else "rain.start",
+            ts,
+            ts,
             time=ctx.clock.approx_time(ts),
             chance=round(ctx.hourly.precip_probability[start]),
         )
-        return self.insight(message, ts, icon=ICON_SNOW if snow else ICON_RAIN)
+        return self._insight(sentence, snow)
 
     def _wet_now(self, ctx: OverviewContext, snow: bool) -> Insight:
-        icon = ICON_SNOW if snow else ICON_RAIN
         dry = ctx.first(IS_DRY)
         if dry is None:
-            message = ctx.messages.say(
+            sentence = say(
+                ctx,
                 "snow.through" if snow else "rain.through",
+                ctx.clock.next_hour,
                 time=ctx.clock.approx_time(ctx.window.end),
             )
-            return self.insight(message, ctx.clock.next_hour, icon=icon)
+            return self._insight(sentence, snow)
 
         ts = ctx.hourly.times[dry]
-        message = ctx.messages.say(
-            "snow.easing" if snow else "rain.easing", time=ctx.clock.approx_time(ts)
-        )
-        return self.insight(message, ts, icon=icon)
+        sentence = say(ctx, "snow.easing" if snow else "rain.easing", ts, ts,
+                       time=ctx.clock.approx_time(ts))
+        return self._insight(sentence, snow)
+
+    def _insight(self, sentence: Sentence, snow: bool) -> Insight:
+        if snow:
+            return self.insight(sentence, icon=ICON_SNOW, topic="snow")
+        return self.insight(sentence, icon=ICON_RAIN)
 
 
 class WindRule(Rule):
-    """Wind reaching STRONG_WIND_KMH: how fast and when; a warning from
+    """Wind reaching STRONG_WIND_KMH: how fast and when; high from
     EXTREME_WIND_KMH."""
 
     PHRASING = Phrasing("wind.now", "wind.later")
 
     def __init__(self):
-        super().__init__("wind", icon=ICON_WIND)
+        super().__init__("wind", "medium", "wind", ICON_WIND)
         self.test = AtLeast("windspeed", STRONG_WIND_KMH, to_metric=Units.kmh)
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
@@ -297,9 +327,8 @@ class WindRule(Rule):
             return None
         speed = ctx.hourly.windspeed[i]
         speed_str = "{0:.0f} {1}".format(speed, ctx.hourly.wind_unit)
-        message, valid_until = self.PHRASING.render(ctx, i, speed=speed_str)
-        severity = "warning" if ctx.units.kmh(speed) >= EXTREME_WIND_KMH else "info"
-        return self.insight(message, valid_until, severity=severity)
+        level = "high" if ctx.units.kmh(speed) >= EXTREME_WIND_KMH else "medium"
+        return self.insight(self.PHRASING.render(ctx, i, speed=speed_str), level=level)
 
 
 class FogRule(Rule):
@@ -309,7 +338,7 @@ class FogRule(Rule):
     PHRASING = Phrasing("fog.now", "fog.later")
 
     def __init__(self):
-        super().__init__("fog", icon=ICON_FOG)
+        super().__init__("fog", "medium", "fog", ICON_FOG)
         self.test = AnyOf(Below("visibility", FOG_VISIBILITY_M), HasCode(FOG_CODES))
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
@@ -319,8 +348,8 @@ class FogRule(Rule):
         ts = ctx.hourly.times[i]
         sunrise = ctx.sun.next_sunrise
         if not ctx.window.is_now(i) and sunrise is not None and abs(ts - sunrise) <= FOG_SUNRISE_MINUTES * MINUTE:
-            return self.insight(ctx.messages.say("fog.sunrise"), ts)
-        return self.insight(*self.PHRASING.render(ctx, i))
+            return self.insight(say(ctx, "fog.sunrise", ts, ts))
+        return self.insight(self.PHRASING.render(ctx, i))
 
 
 class TemperatureSwingRule(Rule):
@@ -328,7 +357,7 @@ class TemperatureSwingRule(Rule):
     change wins): say the temperature and when."""
 
     def __init__(self):
-        super().__init__("temperature_swing")
+        super().__init__("temperature_swing", "low", "temperature")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         temps = ctx.hourly.temperature
@@ -346,8 +375,7 @@ class TemperatureSwingRule(Rule):
             return None
         i, key = (warmest, "temperature.warming") if rise >= drop else (coldest, "temperature.cooling")
         ts = ctx.hourly.times[i]
-        message = ctx.messages.say(key, temp=degrees(temps[i]), time=ctx.clock.approx_time(ts))
-        return self.insight(message, ts)
+        return self.insight(say(ctx, key, ts, ts, temp=degrees(temps[i]), time=ctx.clock.approx_time(ts)))
 
 
 class TomorrowRule(Rule):
@@ -355,7 +383,7 @@ class TomorrowRule(Rule):
     TOMORROW_DIFFERENCE_C warmer or cooler than today's. True until midnight."""
 
     def __init__(self):
-        super().__init__("tomorrow")
+        super().__init__("tomorrow", "low", "tomorrow")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         if ctx.clock.local().hour < OVERVIEW_TOMORROW_FROM_HOUR:
@@ -366,8 +394,8 @@ class TomorrowRule(Rule):
         heading = C_("overview heading", "Tomorrow")
 
         if (daily.tomorrow_rain_chance or 0) >= RAIN_LIKELY_PROBABILITY:
-            message = ctx.messages.say("tomorrow.rain", chance=round(daily.tomorrow_rain_chance))
-            return self.insight(message, valid_until, icon=ICON_RAIN, heading=heading)
+            sentence = say(ctx, "tomorrow.rain", valid_until, chance=round(daily.tomorrow_rain_chance))
+            return self.insight(sentence, icon=ICON_RAIN, heading=heading)
 
         if daily.today_high is None or daily.tomorrow_high is None:
             return None
@@ -378,8 +406,8 @@ class TomorrowRule(Rule):
             key = "tomorrow.cooler"
         else:
             return None
-        message = ctx.messages.say(key, temp=degrees(daily.tomorrow_high))
-        return self.insight(message, valid_until, heading=heading)
+        sentence = say(ctx, key, valid_until, temp=degrees(daily.tomorrow_high))
+        return self.insight(sentence, heading=heading)
 
 
 class SunRule(Rule):
@@ -388,7 +416,7 @@ class SunRule(Rule):
     OVERVIEW_RELATIVE_TOLERANCE off."""
 
     def __init__(self):
-        super().__init__("sun")
+        super().__init__("sun", "low", "sun")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         sun = ctx.sun
@@ -400,14 +428,14 @@ class SunRule(Rule):
             icon = ICON_SUNRISE
         if event is None or event - ctx.now > soon * MINUTE:
             return None
-        result = self.phrase(ctx, event, sunset)
-        if result is None:
+        sentence = self.phrase(ctx, event, sunset)
+        if sentence is None:
             return None
-        return self.insight(*result, icon=icon)
+        return self.insight(sentence, icon=icon)
 
     @staticmethod
-    def phrase(ctx: OverviewContext, event: float, sunset: bool) -> Optional[Tuple[str, float]]:
-        """(message, valid_until) for "The sun sets in …", or None.
+    def phrase(ctx: OverviewContext, event: float, sunset: bool) -> Optional[Sentence]:
+        """The sentence for "The sun sets in …" (about the event), or None.
 
         Under an hour: minutes to the nearest SUN_ROUND_MINUTES (halves
         down), true while no more than the tolerance off. Longer: "about N
@@ -423,25 +451,28 @@ class SunRule(Rule):
         if n <= 0:
             return None
         if n < 60:
+            key = f"{name}.minutes"
             valid_until = min(event - n * MINUTE + OVERVIEW_RELATIVE_TOLERANCE, event - last_half_step)
-            return ctx.messages.say_count(f"{name}.minutes", n), valid_until
+            return Sentence(key, ctx.messages.say_count(key, n), valid_until, event)
 
         n = math.ceil(minutes / 60 - 0.5)
         # Until n - ½ hours are left; from 57½ minutes (an hour less half a
         # step) the minutes form takes over
+        key = f"{name}.hours"
         valid_until = event - max((n - 0.5) * HOUR, HOUR - last_half_step)
-        return ctx.messages.say_count(f"{name}.hours", n, time=ctx.clock.time(event)), valid_until
+        message = ctx.messages.say_count(key, n, time=ctx.clock.time(event))
+        return Sentence(key, message, valid_until, event)
 
 
 class CalmRule(Rule):
     """Always applies: the fallback when nothing else is worth saying."""
 
     def __init__(self):
-        super().__init__("calm")
+        super().__init__("calm", "calm", "calm")
 
     def evaluate(self, ctx: OverviewContext) -> Optional[Insight]:
         end = ctx.window.end
-        return self.insight(ctx.messages.say("calm", time=ctx.clock.approx_time(end)), end)
+        return self.insight(say(ctx, "calm", end, time=ctx.clock.approx_time(end)))
 
 
 # =====================================================================
@@ -462,13 +493,15 @@ class RuleBook:
                 "storm",
                 HasCode(STORM_CODES),
                 Phrasing("storm.now", "storm.later", ICON_STORM),
-                severity="error",
+                level="extreme",
+                topic="storm",
             ),
             FirstHourRule(
                 "freezing",
                 HasCode(FREEZING_CODES),
                 Phrasing("freezing.now", "freezing.later", ICON_RAIN),
-                severity="warning",
+                level="high",
+                topic="freezing",
             ),
             FirstHourRule(
                 "heavy_precipitation",
@@ -477,7 +510,8 @@ class RuleBook:
                     AtLeast("precipitation", HEAVY_PRECIPITATION_MM),
                 ),
                 Phrasing("heavy_rain.now", "heavy_rain.later", ICON_RAIN),
-                severity="warning",
+                level="high",
+                topic="rain",
                 snow_phrasing=Phrasing("heavy_snow.now", "heavy_snow.later", ICON_SNOW),
             ),
             ExtremeFeelsRule(),
@@ -547,7 +581,7 @@ class AnnouncePlanner:
     def forget(self) -> None:
         self.last_shown: Dict[str, float] = {}  # kind -> when it was last shown
         self.next_announce = 0.0
-        self.pending_rank = -1  # the highest severity pending at the last run
+        self.pending_rank = -1  # the highest level pending at the last run
 
     @staticmethod
     def worth_saying(insights: List[Insight]) -> List[Insight]:
@@ -591,8 +625,8 @@ class AnnouncePlanner:
         if not insights:
             return None, False
         pending = self.worth_saying(insights)
-        top = max(pending, key=lambda i: (SEVERITY_RANK[i.severity], i.priority))
-        rank = SEVERITY_RANK[top.severity]
+        top = max(pending, key=lambda i: (LEVEL_RANK[i.level], i.priority))
+        rank = LEVEL_RANK[top.level]
         # pending_rank starts at -1, so the first opening is an escalation too
         escalated = rank > self.pending_rank
 

@@ -22,17 +22,31 @@ A rule looks at the forecast and either has something to say or stays
 silent. When it speaks, it gives one **insight**:
 
 - a **message**: one whole sentence, translated as a whole
-- a **severity**: *info*, *warning* or *error*
+- a **level**: *calm*, *low*, *medium*, *high* or *extreme* (see "Levels")
 - a **priority**: which insight wins when several rules speak
 - a **topic**: what it is about (rain, air, …); each topic has its own
   notification
 - **what it is about**: the forecast hour or the event it describes, or
-  "now". With the rule, the message and the severity, this tells whether it
+  "now". With the rule, the message and the level, this tells whether it
   is news (see "The same insight, or a new one")
 - an optional **icon**, shown before the message
 - an optional **heading**, like *Tomorrow*; otherwise the window's heading is used
 - **valid until**: the moment the message stops being true
-- **how long it stays open** once shown, set by its severity
+- **how long it stays open** once shown, set by its level
+
+### Levels
+
+From nothing to say to danger. The level decides how the insight is shown,
+how often it is repeated and whether it is sent as a notification (see
+"When the overview opens"); within one level, the priority orders insights.
+
+| Level | Meaning | Heading colour |
+| --- | --- | --- |
+| extreme | danger to people or property | error (red) |
+| high | disrupts plans, or a health risk | warning (yellow) |
+| medium | worth changing plans for | accent |
+| low | nice to know | plain |
+| calm | nothing to say | plain |
 
 ### The window: which hours the rules look at
 
@@ -92,10 +106,10 @@ The overview opens when it has **something new to say**, and only now and
 then to **remind** of something it has already said.
 
 **The same insight, or a new one.** Two insights are the same when they
-come from the same rule, with the same message, the same severity, and
+come from the same rule, with the same message, the same level, and
 about the same forecast hour or event. Time passing doesn't change that
 ("in 40 minutes" becoming "in 35 minutes"). A changed forecast does: rain
-moving from 4 PM to 7 PM, wind turning into a warning, tomorrow turning
+moving from 4 PM to 7 PM, wind rising from medium to high, tomorrow turning
 from warmer to rainy. A change in the chance alone (60% → 85% for the same
 hour) is not news.
 
@@ -115,19 +129,20 @@ it was last announced, and how many times.
 | The insight | Due |
 | --- | --- |
 | never said | now: it is **news** |
-| said before | a **reminder**, after 30 minutes (error), 60 (warning) or 120 (info); each next reminder waits twice as long, at most 4 hours |
+| said before, medium or above | a **reminder**, after 30 minutes (extreme), 60 (high) or 120 (medium); each next reminder waits twice as long, at most 4 hours |
+| said before, low | never again: low is said once |
 | calm | said once per location; never reminded |
 
-So an unchanged warning opens at 0, 60, 180 and 420 minutes, then every
-4 hours; an unchanged storm after 30, 90 and 210 minutes. A busy forecast
+So an unchanged high insight opens at 0, 60, 180 and 420 minutes, then
+every 4 hours; an unchanged storm after 30, 90 and 210 minutes. A busy forecast
 opens more often because it has more news, not because of a timer.
 
 **Calm takes no turn** while anything else is worth saying; it is shown only
 when it is the only insight.
 
 **Which one opens.** Among the insights that are due: news before
-reminders, then the most severe, then the most important. So something
-more severe turning up (a storm) opens first, at once.
+reminders, then the highest level, then the highest priority. So
+something more urgent turning up (a storm) opens first, at once.
 
 **The gap.** Nothing opens within **5 minutes** of the last opening; an
 insight that is due opens as soon as those 5 minutes are up.
@@ -143,7 +158,8 @@ true, the most important remaining one takes its place, also without opening.
 - While the window is minimized, hidden by compact mode, or otherwise out of
   sight, it is sent as a desktop notification instead (the city as its
   title, the message as its body; clicking it opens the main window). Only
-  news is sent, plus reminders of errors (storms). Calm is never sent.
+  news of medium or above is sent, plus reminders of extreme ones (storms).
+  Low and calm are never sent.
 
 **One notification per topic.** Each topic has its own notification, so
 air quality and rain can be there side by side. A new message replaces only
@@ -191,13 +207,13 @@ overview and notifications, starts over.
 
 ### How long a message stays open
 
-A base time of 15 seconds, plus extra for severe messages:
+A base time of 15 seconds, plus extra for urgent messages:
 
-| Severity | Base | Extra | Open for |
+| Level | Base | Extra | Open for |
 | --- | --- | --- | --- |
-| info | 15 s | 0 s | 15 seconds |
-| warning | 15 s | 7 s | 22 seconds |
-| error | 15 s | 15 s | 30 seconds |
+| calm, low, medium | 15 s | 0 s | 15 seconds |
+| high | 15 s | 7 s | 22 seconds |
+| extreme | 15 s | 15 s | 30 seconds |
 
 ---
 
@@ -207,7 +223,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 1. Storm
 
-- **Priority** 100 · **Severity** error · **Icon** storm · **Topic** storm
+- **Priority** 100 · **Level** extreme · **Icon** storm · **Topic** storm
 - **Applies when** an hour has a thunderstorm weather code (95, 96 or 99).
 - **Says**, for the first such hour:
   - now: "Thunderstorms are likely right now. Stay indoors if you can."
@@ -215,7 +231,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 2. Freezing rain
 
-- **Priority** 95 · **Severity** warning · **Icon** showers · **Topic** freezing
+- **Priority** 95 · **Level** high · **Icon** showers · **Topic** freezing
 - **Applies when** an hour has a freezing drizzle or freezing rain code
   (56, 57, 66 or 67).
 - **Says**, for the first such hour:
@@ -224,7 +240,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 3. Heavy rain or snow
 
-- **Priority** 90 · **Severity** warning · **Icon** showers, or snow · **Topic** rain, or snow
+- **Priority** 90 · **Level** high · **Icon** showers, or snow · **Topic** rain, or snow
 - **Applies when** an hour has a heavy rain code (65, 82), a heavy snow
   code (75, 86), or **7.6 mm** of precipitation or more.
 - **Snow or rain**: snow when that hour has any snow code (71, 73, 75, 77,
@@ -235,7 +251,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 4. Extreme feels like
 
-- **Priority** 85 · **Severity** warning · **Icon** none · **Topic** feels_like
+- **Priority** 85 · **Level** high · **Icon** none · **Topic** feels_like
 - **Applies when** the hottest hour feels like **40 °C** or more, or (if
   not) the coldest hour feels like **−15 °C** or less. Heat is checked first.
 - **Says**, for that hottest or coldest hour:
@@ -246,7 +262,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 5. Air quality
 
-- **Priority** 80 · **Severity** warning · **Icon** none · **Topic** air
+- **Priority** 80 · **Level** high · **Icon** none · **Topic** air
 - **Applies when** the **US AQI** reaches **151** (unhealthy) or more in
   an hour of the window.
 - **Says**, for the first such hour:
@@ -255,7 +271,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 6. UV
 
-- **Priority** 75 · **Severity** warning · **Icon** clear (sun) · **Topic** uv
+- **Priority** 75 · **Level** high · **Icon** clear (sun) · **Topic** uv
 - **Applies when** an hour has a UV index of **8** or more.
 - **Says**, for the first run of such hours, ending at the end of its last hour:
   - now: "UV is very high until about 3:00 PM. Use sunscreen and cover up."
@@ -263,7 +279,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 7. Rain or snow
 
-- **Priority** 60 · **Severity** info · **Icon** showers, or snow · **Topic** rain, or snow
+- **Priority** 60 · **Level** medium · **Icon** showers, or snow · **Topic** rain, or snow
 - **A wet hour** has a **50%** chance of precipitation or more, a **dry
   hour** less. An hour with no data is neither.
 - **Snow or rain**: snow when that hour has a snow code, otherwise rain.
@@ -279,7 +295,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 8. Wind
 
-- **Priority** 55 · **Severity** info, or warning from **60 km/h** ·
+- **Priority** 55 · **Level** medium, or high from **60 km/h** ·
   **Icon** windy · **Topic** wind
 - **Applies when** an hour has wind of **40 km/h** or more (strong).
 - **Says**, for the first such hour and its speed:
@@ -288,7 +304,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 9. Fog
 
-- **Priority** 50 · **Severity** info · **Icon** fog · **Topic** fog
+- **Priority** 50 · **Level** medium · **Icon** fog · **Topic** fog
 - **Applies when** an hour has visibility under **1 km**, or a fog code
   (45 or 48).
 - **Says**, for the first such hour:
@@ -298,7 +314,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 10. Temperature swing
 
-- **Priority** 40 · **Severity** info · **Icon** none · **Topic** temperature
+- **Priority** 40 · **Level** low · **Icon** none · **Topic** temperature
 - **Applies when** the window's warmest or coldest hour is **6 °C** or more
   away from the current hour's temperature. If both are, the bigger change
   wins.
@@ -308,7 +324,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 11. Tomorrow
 
-- **Priority** 30 · **Severity** info · **Icon** showers, or none ·
+- **Priority** 30 · **Level** low · **Icon** showers, or none ·
   **Heading** Tomorrow · **Topic** tomorrow
 - **Applies** only from **6 PM** local time, until midnight.
 - **Says**, checking in this order:
@@ -322,7 +338,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 12. Sunset and sunrise
 
-- **Priority** 20 · **Severity** info · **Icon** sunset, or sunrise · **Topic** sun
+- **Priority** 20 · **Level** low · **Icon** sunset, or sunrise · **Topic** sun
 - **Applies when**, by day, sunset is within **2 hours**, or, at night,
   sunrise is within **3 hours**.
 - **Says**:
@@ -337,7 +353,7 @@ From most to least important. "An hour" means an hour inside the window.
 
 ### 13. Calm
 
-- **Priority** 0 · **Severity** info · **Icon** none · **Topic** calm
+- **Priority** 0 · **Level** calm · **Icon** none · **Topic** calm
 - **Applies** always. It is the fallback when no other rule speaks.
 - **Says**: "Conditions should stay steady until about 7:00 AM." (the end of the window, rounded)
 
@@ -404,7 +420,7 @@ stays the same, and only the values update ("about 40 minutes" becomes
 
 ## Adding a rule
 
-1. Describe it here: priority, severity, icon, topic, when it applies, what
+1. Describe it here: priority, level, icon, topic, when it applies, what
    it says, and what it is about (for "The same insight, or a new one").
 2. Add its wordings to `core/overview/messages.py` under a new key: 4–5 for
    a common message, 2 for a rare safety one.

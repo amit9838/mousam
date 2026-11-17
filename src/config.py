@@ -162,7 +162,7 @@ VERY_HIGH_UV = 8
 FOG_VISIBILITY_M = 1000
 FOG_SUNRISE_MINUTES = 60  # fog this close to sunrise is "around sunrise"
 STRONG_WIND_KMH = 40  # matches "Strong" in core.levels.classify_wind_speed_level
-EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes a warning
+EXTREME_WIND_KMH = 60  # matches "Extreme": the wind insight becomes high
 TEMPERATURE_SWING_C = 6  # change across the window worth a mention
 TOMORROW_DIFFERENCE_C = 4  # tomorrow's high vs today's, worth a mention
 SUNSET_SOON_MINUTES = 120
@@ -186,7 +186,7 @@ OVERVIEW_PRIORITIES = {
     "calm": 0,
 }
 
-# How long a message stays open: a base time, plus extra for severe ones
-# (seconds). Info 15 s, warning 22 s, error 30 s.
+# How long a message stays open: a base time, plus extra for urgent ones
+# (seconds). Up to medium 15 s, high 22 s, extreme 30 s.
 OVERVIEW_SHOW_BASE_SECONDS = 15
-OVERVIEW_SHOW_EXTRA_SECONDS = {"info": 0, "warning": 7, "error": 15}
+OVERVIEW_SHOW_EXTRA_SECONDS = {"calm": 0, "low": 0, "medium": 0, "high": 7, "extreme": 15}

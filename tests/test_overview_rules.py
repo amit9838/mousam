@@ -88,15 +88,17 @@ def insights(ctx: OverviewContext) -> dict:
 
 
 class TestRules(unittest.TestCase):
-    def assertSays(self, ctx, kind, valid_until, *parts, severity=None, icon=None):
+    def assertSays(self, ctx, kind, valid_until, *parts, level=None, icon=None, topic=None):
         found = insights(ctx)
         self.assertIn(kind, found)
         insight = found[kind]
         self.assertEqual(insight.valid_until, valid_until)
         for part in parts:
             self.assertIn(part, insight.message)
-        if severity is not None:
-            self.assertEqual(insight.severity, severity)
+        if level is not None:
+            self.assertEqual(insight.level, level)
+        if topic is not None:
+            self.assertEqual(insight.topic, topic)
         if icon is not None:
             self.assertEqual(insight.icon, icon)
         return insight
@@ -111,20 +113,20 @@ class TestRules(unittest.TestCase):
 
     def test_storm(self):
         self.assertSays(context(codes={2: 95}), "storm", at_hour(2), "12:00",
-                        severity="error", icon="weather-storm-symbolic")
+                        level="extreme", icon="weather-storm-symbolic", topic="storm")
         self.assertSays(context(codes={0: 95}), "storm", at_hour(1))
 
     def test_storm_after_the_window_is_silent(self):
         self.assertSilent(context(codes={8: 95}), "storm")
 
     def test_freezing(self):
-        self.assertSays(context(codes={1: 66}), "freezing", at_hour(1), "11:00", severity="warning")
+        self.assertSays(context(codes={1: 66}), "freezing", at_hour(1), "11:00", level="high")
 
     def test_heavy_rain_and_snow(self):
         self.assertSays(context(precipitation={3: 8}), "heavy_precipitation", at_hour(3),
-                        icon="weather-showers-symbolic")
+                        icon="weather-showers-symbolic", topic="rain")
         self.assertSays(context(codes={3: 75}), "heavy_precipitation", at_hour(3),
-                        icon="weather-snow-symbolic")
+                        icon="weather-snow-symbolic", topic="snow")
 
     def test_extreme_feels(self):
         self.assertSays(context(feels_like={2: 41}), "extreme_feels", at_hour(2), "41°", "12:00")
@@ -146,11 +148,11 @@ class TestRules(unittest.TestCase):
 
     def test_rain_starts(self):
         self.assertSays(context(precip_probability={2: 70}), "precipitation", at_hour(2),
-                        "12:00", "70", icon="weather-showers-symbolic")
+                        "12:00", "70", icon="weather-showers-symbolic", level="medium", topic="rain")
 
     def test_snow_starts(self):
         self.assertSays(context(precip_probability={2: 70}, codes={2: 71}), "precipitation",
-                        at_hour(2), icon="weather-snow-symbolic")
+                        at_hour(2), icon="weather-snow-symbolic", topic="snow")
 
     def test_rain_easing(self):
         self.assertSays(context(precip_probability={0: 70, 1: 70, 2: 70}), "precipitation",
@@ -166,8 +168,8 @@ class TestRules(unittest.TestCase):
         self.assertSays(context(precip_probability=wet), "precipitation", at_hour(1), "15:00")
 
     def test_wind(self):
-        self.assertSays(context(windspeed={2: 45}), "wind", at_hour(2), "45 km/h", severity="info")
-        self.assertSays(context(windspeed={2: 65}), "wind", at_hour(2), severity="warning")
+        self.assertSays(context(windspeed={2: 45}), "wind", at_hour(2), "45 km/h", level="medium")
+        self.assertSays(context(windspeed={2: 65}), "wind", at_hour(2), level="high")
         self.assertSilent(context(windspeed={2: 35}), "wind")
 
     def test_wind_imperial(self):
@@ -229,19 +231,19 @@ class TestSunPhrase(unittest.TestCase):
         return SunRule.phrase(ctx, NOW + minutes * MIN, sunset=True)
 
     def test_minutes_round_to_5_halves_down(self):
-        self.assertIn("40 minutes", self.phrase(42.5)[0])
-        self.assertIn("45 minutes", self.phrase(42.6)[0])
+        self.assertIn("40 minutes", self.phrase(42.5).message)
+        self.assertIn("45 minutes", self.phrase(42.6).message)
 
     def test_minutes_form_from_57_and_a_half(self):
-        self.assertIn("55 minutes", self.phrase(57.5)[0])
-        self.assertIn("1 hour", self.phrase(57.6)[0])
+        self.assertIn("55 minutes", self.phrase(57.5).message)
+        self.assertIn("1 hour", self.phrase(57.6).message)
 
     def test_hours_round_halves_down(self):
-        self.assertIn("1 hour", self.phrase(90)[0])
-        self.assertIn("2 hours", self.phrase(91)[0])
+        self.assertIn("1 hour", self.phrase(90).message)
+        self.assertIn("2 hours", self.phrase(91).message)
 
     def test_hours_say_the_exact_time(self):
-        self.assertIn("11:41", self.phrase(91)[0])
+        self.assertIn("11:41", self.phrase(91).message)
 
     def test_nothing_in_the_last_two_and_a_half_minutes(self):
         self.assertIsNone(self.phrase(2.5))
@@ -249,8 +251,7 @@ class TestSunPhrase(unittest.TestCase):
 
     def test_stays_true(self):
         for minutes in (3, 12, 42.5, 57.5, 57.6, 90, 91, 119):
-            message, valid_until = self.phrase(minutes)
-            self.assertGreater(valid_until, NOW, minutes)
+            self.assertGreater(self.phrase(minutes).valid_until, NOW, minutes)
 
 
 class TestClock(unittest.TestCase):
@@ -324,6 +325,48 @@ class TestRuleBook(unittest.TestCase):
             AtLeast("wind_speed", 40)
 
 
+class TestIdentity(unittest.TestCase):
+    """Topics, levels and fingerprints: the same insight while time passes,
+    another one when the forecast changes."""
+
+    def one(self, kind, now=NOW, **forecast):
+        return insights(context(now, **forecast))[kind]
+
+    def test_topics_and_levels(self):
+        busy = insights(context(**TestRuleBook.BUSY))
+        expected = {
+            "storm": ("storm", "extreme"), "freezing": ("freezing", "high"),
+            "heavy_precipitation": ("snow", "high"), "extreme_feels": ("feels_like", "high"),
+            "air_quality": ("air", "high"), "uv": ("uv", "high"), "precipitation": ("rain", "medium"),
+            "wind": ("wind", "high"), "fog": ("fog", "medium"),
+            "temperature_swing": ("temperature", "low"), "calm": ("calm", "calm"),
+        }
+        for kind, (topic, level) in expected.items():
+            self.assertEqual((busy[kind].topic, busy[kind].level), (topic, level), kind)
+
+    def test_later_is_about_its_hour_and_now_about_nothing(self):
+        self.assertEqual(self.one("storm", codes={2: 95}).about, at_hour(2))
+        self.assertIsNone(self.one("storm", codes={0: 95}).about)
+        self.assertEqual(self.one("storm", codes={2: 95}).key, "storm.later")
+
+    def test_same_while_time_passes(self):
+        rain = dict(precip_probability={3: 70})
+        self.assertEqual(self.one("precipitation", **rain).fingerprint,
+                         self.one("precipitation", NOW + 20 * MIN, **rain).fingerprint)
+        sun = SunTimes(next_sunrise=NOW + 15 * H, next_sunset=NOW + 40 * MIN)
+        first = insights(context(sun=sun))["sun"]
+        later = insights(context(NOW + 10 * MIN, sun=sun))["sun"]
+        self.assertNotEqual(first.message, later.message)  # 40, then 30 minutes
+        self.assertEqual(first.fingerprint, later.fingerprint)
+
+    def test_changes_with_the_forecast(self):
+        def rain_at(hour):
+            return self.one("precipitation", precip_probability={hour: 70}).fingerprint
+        self.assertNotEqual(rain_at(2), rain_at(4))
+        self.assertNotEqual(self.one("wind", windspeed={2: 45}).fingerprint,
+                            self.one("wind", windspeed={2: 65}).fingerprint)  # medium, then high
+
+
 class NoSpread:
     """An rng that always lands in the middle: no random spread."""
 
@@ -333,15 +376,15 @@ class NoSpread:
 
 
 class TestPlanner(unittest.TestCase):
-    def insight(self, kind: str, severity: str = "info") -> Insight:
-        return Insight(kind, kind, NOW + 10 * H, severity)
+    def insight(self, kind: str, level: str = "medium") -> Insight:
+        return Insight(kind, kind, NOW + 10 * H, level)
 
     def setUp(self):
         self.planner = AnnouncePlanner()
         self.rain = self.insight("precipitation")
         self.wind = self.insight("wind")
-        self.calm = self.insight("calm")
-        self.storm = self.insight("storm", "error")
+        self.calm = self.insight("calm", "calm")
+        self.storm = self.insight("storm", "extreme")
 
     def decide(self, insights, at, showing=None):
         chosen, opened = self.planner.decide(insights, showing, at, NoSpread)
@@ -363,7 +406,7 @@ class TestPlanner(unittest.TestCase):
         self.assertEqual(AnnouncePlanner.worth_saying([self.rain, self.calm]), [self.rain])
 
     def test_first_opening_shows_the_most_severe(self):
-        windy = self.insight("wind", "warning")
+        windy = self.insight("wind", "high")
         self.assertEqual(self.decide([self.rain, windy, self.calm], NOW), ("wind", True))
 
     def test_turns(self):

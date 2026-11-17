@@ -13,11 +13,12 @@ from ..services.selected_city import get_selected_city_name  # noqa: E402
 logger = get_logger("notifications")
 
 
-# Notification priority for each overview insight severity
+# Notification priority for each overview insight level
 NOTIFICATION_PRIORITY = {
-    "info": Gio.NotificationPriority.LOW,
-    "warning": Gio.NotificationPriority.NORMAL,
-    "error": Gio.NotificationPriority.HIGH,
+    "low": Gio.NotificationPriority.LOW,
+    "medium": Gio.NotificationPriority.LOW,
+    "high": Gio.NotificationPriority.NORMAL,
+    "extreme": Gio.NotificationPriority.HIGH,
 }
 
 
@@ -28,7 +29,7 @@ def show_overview_notification(app, insight) -> None:
     notification = Gio.Notification.new(get_selected_city_name())
     notification.set_body(insight.message)
     notification.set_icon(Gio.ThemedIcon.new(insight.icon or "dialog-information-symbolic"))
-    notification.set_priority(NOTIFICATION_PRIORITY.get(insight.severity, Gio.NotificationPriority.NORMAL))
+    notification.set_priority(NOTIFICATION_PRIORITY.get(insight.level, Gio.NotificationPriority.NORMAL))
     notification.set_default_action("app.show-normal")
     app.send_notification("overview", notification)
     logger.info(f"Overview notification sent: {insight.message}")

@@ -199,7 +199,7 @@ class OverviewEngine(GObject.Object):
             taking_turns = "" if insight in pending else ", not taking turns"
             logger.debug(
                 f"  {insight.kind}: priority {insight.priority}, "
-                f"{insight.severity}, {turn}{taking_turns}"
+                f"{insight.level}, {turn}{taking_turns}"
             )
         if chosen is None:
             return
