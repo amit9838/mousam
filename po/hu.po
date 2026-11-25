@@ -144,7 +144,7 @@ msgstr "Kiválasztott város"
 
 #: data/io.github.amit9838.mousam.gschema.xml:13
 msgid "Selected city cords"
-msgstr "Kiválasztott város koordináták"
+msgstr "Kiválasztott város koordinátái"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
 msgid "Use Gradient Background"
@@ -153,7 +153,7 @@ msgstr "Használjon színátmenetes hátteret"
 #: data/io.github.amit9838.mousam.gschema.xml:18
 msgid ""
 "Apply gradient background on main window corresponding to weather condition"
-msgstr "Aktuális időjáráshoz illeszkedő színátmenetet használjon a főképernyőn"
+msgstr "Az aktuális időjáráshoz illeszkedő színátmenetet használjon a főablakon"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
@@ -165,11 +165,11 @@ msgstr "Használjon 24 órás formátumot"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr "Főképernyő szélesség"
+msgstr "A főablak szélessége"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr "Főképernyő magasság"
+msgstr "A főablak magassága"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
@@ -265,7 +265,7 @@ msgstr "Köd"
 
 #: src/ui/icons.py:272
 msgid "Mist"
-msgstr "Köd"
+msgstr "Enyhe köd"
 
 #: src/ui/icons.py:273
 msgid "Light Drizzle"
@@ -305,7 +305,7 @@ msgstr "Enyhe ónos esőzés"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
-msgstr "Heves ónos esözés"
+msgstr "Heves ónos esőzés"
 
 #: src/ui/icons.py:283
 msgid "Light Snow Fall"
@@ -361,7 +361,7 @@ msgstr "Mérsékelt"
 
 #: src/core/levels.py:17
 msgid "Poor"
-msgstr "Egészségtelen érzékeny csoportok számára"
+msgstr "Rossz"
 
 #: src/core/levels.py:18
 msgid "Unhealthy"
@@ -1931,7 +1931,7 @@ msgstr "A levegőminőségi adatok jelenleg nem érhetők el."
 
 #: src/ui/cards/day_night.py:44
 msgid "Sunrise & Sunset"
-msgstr "Napkelte és Napnyugta"
+msgstr "Napkelte és napnyugta"
 
 #: src/ui/cards/day_night.py:58
 msgid "Sunrise"
@@ -1984,7 +1984,7 @@ msgstr "Légnyomás"
 
 #: src/ui/cards/metric.py:247
 msgid "UV Index"
-msgstr "UV erősség"
+msgstr "UV-index"
 
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
 #: src/ui/compact_window.py:129 src/ui/window.py:285
@@ -2144,17 +2144,17 @@ msgstr "Csapadék"
 #: src/ui/sections/hourly.py:136
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Napi maximum"
+msgstr "Napi maximum •"
 
 #: src/ui/sections/hourly.py:142
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Napi csúcs"
+msgstr "Napi csúcs •"
 
 #: src/ui/sections/hourly.py:153
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Napi maximum"
+msgstr "Napi maximum •"
 
 #: src/ui/sections/hourly.py:231
 msgid "Now"
@@ -2174,11 +2174,11 @@ msgstr "Csapadékmentes napra számíthat!"
 
 #: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
-msgstr "Élvezzen az esőmentes napot ma!"
+msgstr "Élvezze az esőmentes napot ma!"
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "Esernyő állapot: pihenő. Csapadék nem várható!"
+msgstr "Az esernyő állapota: pihenő. Csapadék nem várható!"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
@@ -2228,11 +2228,11 @@ msgstr "Kilépés"
 
 #: src/ui/window.py:304
 msgid "Getting Weather Data"
-msgstr "Időjárás adatok beszerzése"
+msgstr "Időjárási adatok beszerzése"
 
 #: src/ui/window.py:311
 msgid "Welcome to Mousam"
-msgstr "Üdvözöljük a Mousam-ban"
+msgstr "Üdvözöljük a Mousamban"
 
 #: src/ui/window.py:312
 msgid "Add a location to get started."
@@ -2473,7 +2473,7 @@ msgstr "A helyszín már létezik"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Átváltott {}-ra/re"
+msgstr "Átváltva erre: {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2515,7 +2515,7 @@ msgstr "in"
 
 #: src/ui/dialogs/preferences.py:73
 msgid "Time Format"
-msgstr "Idő formátum"
+msgstr "Időformátum"
 
 #: src/ui/dialogs/preferences.py:76
 msgid "24-hour"
