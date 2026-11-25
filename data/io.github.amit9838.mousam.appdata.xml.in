@@ -62,6 +62,20 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="3.1.0" date="2026-11-25">
+      <description translate="no">
+        <p>Improved weather overview and fixes</p>
+        <ul>
+          <li>Improved weather overview: combines related events, reminds less often, and describes the weather at sunrise and sunset.</li>
+          <li>Notifications are on by default, one per topic.</li>
+          <li>New app icon.</li>
+          <li>Ctrl+Shift+R refreshes without cached data.</li>
+          <li>Faster loading on networks with broken IPv6.</li>
+          <li>Fixed sunrise and sunset times west of UTC, precipitation bars in inches, and the hourly list.</li>
+          <li>Updated translations.</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.0.0" date="2026-11-14">
       <description translate="no">
         <p>A redesigned Mousam that tells you what the next hours bring</p>
