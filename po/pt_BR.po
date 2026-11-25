@@ -176,11 +176,11 @@ msgstr "Altura da janela principal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr "Lançar o aplicativo em tela cheia."
+msgstr "Iniciar o aplicativo maximizado."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
-msgstr "Sistema de medias para utilizar - métrico,imperial"
+msgstr "Sistema de medidas para utilizar - métrico,imperial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
@@ -226,9 +226,7 @@ msgstr "Tema de ícones"
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
-msgstr ""
-"Conjunto de ícones de clima: \"padrão\" (ícones padrão do mousam) ou "
-"\"material\" (ícones material design do Google)"
+msgstr "Conjunto de ícones de clima: \"default\" (ícones padrão do Mousam) ou \"material\" (ícones Material Design do Google)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:76
 msgid "Forecast page"
@@ -277,7 +275,7 @@ msgstr "Chuvisco Moderado"
 
 #: src/ui/icons.py:275
 msgid "Heavy Intensity Drizzle"
-msgstr "Chuva de Alta Intensidade"
+msgstr "Chuvisco Intenso"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
@@ -285,7 +283,7 @@ msgstr "Chuvisco Leve Congelante"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Chuva Congelante Forte"
+msgstr "Chuvisco Forte Congelante"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -297,11 +295,11 @@ msgstr "Chuva Moderada"
 
 #: src/ui/icons.py:280
 msgid "Heavy Rain"
-msgstr "Chuva Pesada"
+msgstr "Chuva Forte"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
-msgstr "Chuva Leve e Congelante"
+msgstr "Chuva Leve Congelante"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
@@ -317,31 +315,31 @@ msgstr "Queda de Neve Moderada"
 
 #: src/ui/icons.py:285
 msgid "Heavy Snow Fall"
-msgstr "Queda de Neve Pesada"
+msgstr "Queda de Neve Forte"
 
 #: src/ui/icons.py:286
 msgid "Snow grains"
-msgstr "Flocos de neve"
+msgstr "Grãos de Neve"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "Chuvas Leves"
+msgstr "Pancadas de Chuva Leves"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
-msgstr "Chuvas Moderadas"
+msgstr "Pancadas de Chuva Moderadas"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
-msgstr "Chuvas Torrenciais"
+msgstr "Pancadas de Chuva Fortes"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Chuvas Leves de Neve"
+msgstr "Pancadas Leves de Neve"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Chuvas de Neve Pesadas "
+msgstr "Pancadas Fortes de Neve "
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -1220,9 +1218,7 @@ msgstr "A neve pode chegar por volta de {time}, com {chance}% de chance."
 #: src/core/overview/messages.py:276
 #, python-brace-format
 msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
-msgstr ""
-"A nevasca pode começar por volta de {time}, com {chance}% de chance. Vista-"
-"se bem."
+msgstr "Pode começar a nevar por volta de {time}, com {chance}% de chance. Vista-se bem."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:280
@@ -2047,11 +2043,11 @@ msgstr "N"
 
 #: src/ui/cards/metric.py:207 src/ui/compact_window.py:208
 msgid "Humidity"
-msgstr "Humidade"
+msgstr "Umidade"
 
 #: src/ui/cards/metric.py:211
 msgid "Dewpoint"
-msgstr "Ponto de Condensação"
+msgstr "Ponto de Orvalho"
 
 #. Translators: the high and low ends of the humidity, UV index and pressure gauges
 #: src/ui/cards/metric.py:214 src/ui/cards/metric.py:251
@@ -2082,7 +2078,7 @@ msgstr "Sem Internet"
 #: src/ui/compact_window.py:115 src/ui/window.py:327
 #: src/ui/dialogs/locations.py:154
 msgid "Retry"
-msgstr "Repetir"
+msgstr "Tentar Novamente"
 
 #: src/ui/compact_window.py:130 src/ui/window.py:285
 #: src/ui/dialogs/locations.py:161
@@ -2223,7 +2219,7 @@ msgstr "Chuva violenta: {amount}"
 
 #: src/ui/sections/hourly.py:55
 msgid "Hourly"
-msgstr "24 Horas"
+msgstr "Por Hora"
 
 #: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
@@ -2250,7 +2246,7 @@ msgstr "Agora"
 
 #: src/ui/sections/hourly.py:274
 msgid "No precipitation today !"
-msgstr "Sem precipitação para hoje !"
+msgstr "Sem precipitação para hoje!"
 
 #: src/ui/sections/hourly.py:275
 msgid "No precipitation expected today!"
@@ -2258,7 +2254,7 @@ msgstr "Sem precipitação prevista para hoje!"
 
 #: src/ui/sections/hourly.py:276
 msgid "Anticipate a precipitation-free day !"
-msgstr "Antecipe um dia livre de precipitação !"
+msgstr "Antecipe um dia livre de precipitação!"
 
 #: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
@@ -2266,7 +2262,7 @@ msgstr "Hoje aproveite um dia livre de chuva!"
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "Status de guarda chuva: em descanso. Sem precipitação em vista !"
+msgstr "Status do guarda-chuva: em descanso. Sem precipitação em vista!"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
@@ -2316,7 +2312,7 @@ msgstr "Sair"
 
 #: src/ui/window.py:304
 msgid "Getting Weather Data"
-msgstr "Adquirindo Dados Meteorológicos"
+msgstr "Obtendo Dados Meteorológicos"
 
 #: src/ui/window.py:311
 msgid "Welcome to Mousam"
@@ -2562,7 +2558,7 @@ msgstr "Localidade já existe"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Trocou para {}"
+msgstr "Alterado para {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2722,9 +2718,7 @@ msgstr "Reiniciar Configurações?"
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
-msgstr ""
-"Isto vai repor todas as configurações para o padrão e irá apagar suas "
-"cidades salvas. Esta ação não pode ser desfeita."
+msgstr "Isto restaurará todas as configurações para o padrão e apagará suas cidades salvas. Esta ação não pode ser desfeita."
 
 #: src/ui/dialogs/preferences.py:319
 msgid "Cancel"
