@@ -220,8 +220,8 @@ msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
 msgstr ""
-"Nastavení ikon počasí: „výchozí“ (výchozí ikony mousam) nebo „material“ "
-"(ikony materiálního designu od Google)"
+"Sada ikon počasí: „default“ (výchozí ikony Mousam) nebo „material“ (ikony "
+"Material Design od Google)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:76
 msgid "Forecast page"
@@ -362,7 +362,7 @@ msgstr "Nezdravé"
 
 #: src/core/levels.py:19
 msgid "Severe"
-msgstr "Těžké"
+msgstr "Vážné"
 
 #: src/core/levels.py:20
 msgid "Hazardous"
@@ -2065,7 +2065,7 @@ msgstr "Zítra"
 
 #: src/ui/sections/forecast.py:163
 msgid "Weekly"
-msgstr "Týden"
+msgstr "Týdenní"
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
