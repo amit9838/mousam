@@ -33,7 +33,7 @@ msgstr "Mousam"
 #: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/ui/dialogs/about.py:35
 msgid "Weather at a glance"
-msgstr "Погода в одно мгновение"
+msgstr "Погода с первого взгляда"
 
 #: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
@@ -165,7 +165,7 @@ msgstr "Использовать дюймы для осадков"
 
 #: data/io.github.amit9838.mousam.gschema.xml:26
 msgid "Use 24h hour clock"
-msgstr "Использовать 24 часовой формат"
+msgstr "Использовать 24-часовой формат"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
@@ -177,7 +177,7 @@ msgstr "Высота главного окна"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr "Запустите приложение в режиме полного экрана"
+msgstr "Запускать приложение в развёрнутом окне."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
@@ -283,11 +283,11 @@ msgstr "Сильная морось"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Легкая изморозь"
+msgstr "Слабая ледяная морось"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Сильная изморозь"
+msgstr "Сильная ледяная морось"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -335,7 +335,7 @@ msgstr "Периодический умеренный дождь"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
-msgstr "Продолжительный сильный дождь"
+msgstr "Кратковременный сильный дождь"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
@@ -343,7 +343,7 @@ msgstr "Кратковременный слабый снег"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Продолжительный сильный снег"
+msgstr "Кратковременный сильный снег"
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -541,7 +541,7 @@ msgstr "Спокойно"
 
 #: src/core/levels.py:136
 msgid "Light"
-msgstr "Легкий"
+msgstr "Лёгкий"
 
 #: src/core/levels.py:137
 msgctxt "wind"
@@ -1025,7 +1025,7 @@ msgstr ""
 msgid ""
 "Expect it to feel like {temp} by around {time}. Drink water and stay cool."
 msgstr ""
-"Примерно к {time} ожидается ощущение {temp}. Пейте воду и охлаждайтесь."
+"Примерно к {time} ожидается, что будет ощущаться как {temp}. Пейте воду и охлаждайтесь."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:223
@@ -1051,7 +1051,7 @@ msgstr ""
 #: src/core/overview/messages.py:231
 #, python-brace-format
 msgid "Expect it to feel like {temp} by around {time}. Bundle up."
-msgstr "Примерно к {time} ожидается ощущение {temp}. Утеплитесь."
+msgstr "Примерно к {time} ожидается, что будет ощущаться как {temp}. Утеплитесь."
 
 #: src/core/overview/messages.py:234
 msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
@@ -1924,7 +1924,7 @@ msgstr "мили"
 
 #: src/ui/cards/air_quality.py:32
 msgid "Air Pollution"
-msgstr "Качество воздуха"
+msgstr "Загрязнение воздуха"
 
 #: src/ui/cards/air_quality.py:47
 msgid "Air Quality Details"
@@ -2149,17 +2149,17 @@ msgstr "Осадки"
 #: src/ui/sections/hourly.py:136
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Дневной пик"
+msgstr "Дневной пик •"
 
 #: src/ui/sections/hourly.py:142
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Дневной максимум"
+msgstr "Дневной максимум •"
 
 #: src/ui/sections/hourly.py:153
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Дневной максимум"
+msgstr "Дневной максимум •"
 
 #: src/ui/sections/hourly.py:231
 msgid "Now"
