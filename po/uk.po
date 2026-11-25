@@ -108,7 +108,7 @@ msgid ""
 "Dynamic backgrounds that follow the weather, and a choice of default or "
 "Material icons"
 msgstr ""
-"Динамічні тла, що відповідають погоді, і вибір між типовими значками та "
+"Динамічні фони, що відповідають погоді, і вибір між типовими значками та "
 "Material"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:22
@@ -260,7 +260,7 @@ msgstr "Туман"
 
 #: src/ui/icons.py:272
 msgid "Mist"
-msgstr "Морось"
+msgstr "Серпанок"
 
 #: src/ui/icons.py:273
 msgid "Light Drizzle"
@@ -276,11 +276,11 @@ msgstr "Сильна морось"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Легка обледеніла морось"
+msgstr "Легка крижана морось"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Сильна обледеніла морось"
+msgstr "Сильна крижана морось"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -296,11 +296,11 @@ msgstr "Сильний дощ"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
-msgstr "Легкий обледенілий дощ"
+msgstr "Легкий крижаний дощ"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
-msgstr "Сильний обледенілий дощ"
+msgstr "Сильний крижаний дощ"
 
 #: src/ui/icons.py:283
 msgid "Light Snow Fall"
@@ -555,7 +555,7 @@ msgstr "Північний"
 
 #: src/core/levels.py:147
 msgid "Northeast"
-msgstr "Північно східний"
+msgstr "Північно-східний"
 
 #: src/core/levels.py:148
 msgid "East"
@@ -563,15 +563,15 @@ msgstr "Східний"
 
 #: src/core/levels.py:149
 msgid "Southeast"
-msgstr "Південно східний"
+msgstr "Південно-східний"
 
 #: src/core/levels.py:150
 msgid "South"
-msgstr "Південь"
+msgstr "Південний"
 
 #: src/core/levels.py:151
 msgid "Southwest"
-msgstr "Південно західний"
+msgstr "Південно-західний"
 
 #: src/core/levels.py:152
 msgid "West"
@@ -579,7 +579,7 @@ msgstr "Західний"
 
 #: src/core/levels.py:153
 msgid "Northwest"
-msgstr "Північно західний"
+msgstr "Північно-західний"
 
 #: src/core/overview/context.py:188
 msgctxt "overview heading"
@@ -1015,7 +1015,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Expect it to feel like {temp} by around {time}. Drink water and stay cool."
-msgstr "Близько {time} очікується відчуття {temp}. Пийте воду й охолоджуйтеся."
+msgstr "Близько {time} очікується, що відчуватиметься як {temp}. Пийте воду й охолоджуйтеся."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:223
@@ -1040,7 +1040,7 @@ msgstr ""
 #: src/core/overview/messages.py:231
 #, python-brace-format
 msgid "Expect it to feel like {temp} by around {time}. Bundle up."
-msgstr "Близько {time} очікується відчуття {temp}. Тепло вдягніться."
+msgstr "Близько {time} очікується, що відчуватиметься як {temp}. Тепло вдягніться."
 
 #: src/core/overview/messages.py:234
 msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
@@ -2205,7 +2205,7 @@ msgstr "Оновити погоду"
 #: src/ui/window.py:141 src/ui/dialogs/locations.py:327
 #: src/ui/templates/shortcuts.ui:45
 msgid "Locations"
-msgstr "Локації"
+msgstr "Місця"
 
 #: src/ui/window.py:147 src/ui/templates/shortcuts.ui:51
 msgid "Compact Mode"
@@ -2474,7 +2474,7 @@ msgstr "Це місце вже додано"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Перемкнувся на {}"
+msgstr "Перемкнено на {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2544,7 +2544,7 @@ msgstr "Динамічний фон"
 
 #: src/ui/dialogs/preferences.py:95
 msgid "Change the background to match the current weather"
-msgstr "Змінювати тло відповідно до поточної погоди"
+msgstr "Змінювати фон відповідно до поточної погоди"
 
 #: src/ui/dialogs/preferences.py:107
 msgid "Default"
