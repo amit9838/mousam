@@ -16,6 +16,12 @@ jobs:
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-51
       options: --privileged
+      volumes:
+        # Updating a runtime renames its old deployment aside. On runners
+        # whose Docker overlayfs can't rename directories from an image
+        # layer, that fails with "Invalid cross-device link". A volume is
+        # not overlay; Docker fills it from the image when the job starts.
+        - /var/lib/flatpak
     strategy:
       matrix:
         arch: [x86_64]
