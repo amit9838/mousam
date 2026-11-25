@@ -165,11 +165,11 @@ msgstr "Używaj 24-godzinnego zegara"
 
 #: data/io.github.amit9838.mousam.gschema.xml:30
 msgid "Main window width"
-msgstr "Maksymalna szerokość okna"
+msgstr "Szerokość głównego okna"
 
 #: data/io.github.amit9838.mousam.gschema.xml:34
 msgid "Main window height"
-msgstr "Maksymalna wysokość okna"
+msgstr "Wysokość głównego okna"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
@@ -262,7 +262,7 @@ msgstr "Mgła"
 
 #: src/ui/icons.py:272
 msgid "Mist"
-msgstr "Mgła"
+msgstr "Zamglenie"
 
 #: src/ui/icons.py:273
 msgid "Light Drizzle"
@@ -2295,7 +2295,7 @@ msgstr "O programie"
 
 #: src/ui/window.py:178 src/ui/templates/shortcuts.ui:69
 msgid "Quit"
-msgstr "Wyjście"
+msgstr "Zakończ"
 
 #: src/ui/window.py:304
 msgid "Getting Weather Data"
@@ -2721,7 +2721,7 @@ msgstr "Preferencje zostały zresetowane"
 
 #: src/ui/templates/shortcuts.ui:33
 msgid "Refresh Weather"
-msgstr "Odświeża pogodę"
+msgstr "Odśwież pogodę"
 
 #: src/ui/templates/shortcuts.ui:39
 msgid "Hard Refresh"
