@@ -58,6 +58,14 @@ class AnnounceMemory:
     def forget(self) -> None:
         self.said: Dict[tuple, Said] = {}
         self.last_opening = -math.inf
+        self.last_opening_extreme = False
+
+    def skips_gap(self, insight: Insight) -> bool:
+        """Urgent news (extreme, not said before) opens even inside the gap,
+        unless the last opening was extreme too: then they take turns, so
+        one doesn't replace the other a moment after it opened."""
+        return (insight.level == "extreme" and self.is_new(insight)
+                and not self.last_opening_extreme)
 
     def is_new(self, insight: Insight) -> bool:
         """News: something in it hasn't been said."""
@@ -139,14 +147,16 @@ def decide(insights: Sequence[Insight], memory: AnnounceMemory, showing: Optiona
     pending = worth_saying(insights)
     gap_over = now >= memory.last_opening + OVERVIEW_MIN_GAP_MINUTES * MINUTE
     ready = [i for i in pending if _is_due(memory, i, now)]
+    can_open = ready if gap_over else [i for i in ready if memory.skips_gap(i)]
 
-    if ready and gap_over:
+    if can_open:
         # News before reminders, then the most important; the others that
         # are due get the next turns, one opening each
-        chosen = max(ready, key=lambda i: (memory.is_new(i),) + importance(i))
+        chosen = max(can_open, key=lambda i: (memory.is_new(i),) + importance(i))
         reason = NEWS if memory.is_new(chosen) else REMINDER
         memory.note_said(chosen, now)
         memory.last_opening = now
+        memory.last_opening_extreme = chosen.level == "extreme"
     else:
         same = next((i for i in insights if i.kind == showing), None)
         chosen = same or max(pending, key=importance)
@@ -182,5 +192,5 @@ def _wake_at(pending: Sequence[Insight], memory: AnnounceMemory, now: float) -> 
     for insight in pending:
         due = memory.due_at(insight)
         if due is not None:
-            moments.append(max(due, gap_end))
+            moments.append(due if memory.skips_gap(insight) else max(due, gap_end))
     return max(min(moments), now + 1)

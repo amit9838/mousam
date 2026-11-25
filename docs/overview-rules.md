@@ -313,8 +313,14 @@ Among the insights that are due:
 
 So something more urgent (a storm) opens first, at once.
 
-**The gap:** nothing opens within **5 minutes** of the last opening. The
+**The gap:** nothing opens within **15 minutes** of the last opening. The
 others that are due open one at a time, each after the gap.
+
+**Except urgent news:** extreme news (a storm, freezing rain, dangerous heat
+or cold) opens at once, even inside the gap, so a safety warning never waits
+behind a UV note. Not when the last opening was extreme too: two extreme
+things still take turns, each after the gap, so one never replaces the
+other a moment after it opened.
 
 ### 6.7 Between openings
 
@@ -738,7 +744,7 @@ Overview: 3 insights, 2 taking turns
   storm (storm): extreme, priority 100, said 1x, due in 1800s
   wind (wind): high, priority 55, new
   calm (calm): calm, priority 0, not taking turns
-Overview opens (news): storm: Thunderstorms are likely around 4:00 PM with 80% chance of rain. … (runs again in 300s)
+Overview opens (news): storm: Thunderstorms are likely around 4:00 PM with 80% chance of rain. … (runs again in 900s)
 Overview next turn: wind (news, after the gap)
 Overview channel: storm (news, extreme) -> notification overview-storm
 ```
@@ -748,6 +754,6 @@ Overview channel: storm (news, extreme) -> notification overview-storm
 | `turning stormy`, `folded`, `turning heavy`, `combined`, `not combined` | merging, and why not (once per run). E.g. `Overview turning stormy: precipitation (rain.start) + storm (17:00) -> rain_stormy.start` |
 | one line per insight | topic, level, priority, and memory: `new`, `said 2x, due in 3600s`, `not repeated` (low, calm) or `not taking turns` (calm next to something else) |
 | `opens (news)`, `opens (reminder)`, `silent update` | the sentence as shown, and when it runs again |
-| `next turn` | due too; opens after the 5-minute gap |
+| `next turn` | due too; opens after the 15-minute gap |
 | `channel` | where it went: `window`, `notification overview-<topic>`, or `nowhere` and why |
 | `Notification … sent / withdrawn` | from `mousam.notifications`, with the reason for withdrawing |

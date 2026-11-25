@@ -500,9 +500,10 @@ translated pieces into a sentence.**
   **reminder**, after `OVERVIEW_REMIND_MINUTES` for its level, each next one
   `OVERVIEW_REMIND_BACKOFF` times later, at most
   `OVERVIEW_REMIND_MAX_MINUTES`. Low and calm are said once.
-- Nothing opens within `OVERVIEW_MIN_GAP_MINUTES` of the last opening. Each
-  opening shows one insight; the others due wait their turn
-  (`Decision.waiting`).
+- Nothing opens within `OVERVIEW_MIN_GAP_MINUTES` of the last opening,
+  except new extreme news (`AnnounceMemory.skips_gap`), unless the last
+  opening was extreme too. Each opening shows one insight; the others due
+  wait their turn (`Decision.waiting`).
 - `AnnounceMemory` remembers what was said per location and per part, so a
   storm that comes and goes counts once, and a merged insight counts as
   saying each thing in it.
