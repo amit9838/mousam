@@ -63,6 +63,7 @@ class WeatherApplication(Adw.Application):
         from .state.overview_engine import overview_engine
         overview_engine.connect("overview-changed", self._on_overview_changed)
         settings.connect("changed::show-notifications", self._on_show_notifications_changed)
+        settings.connect("changed::use-gradient-bg", self._on_dynamic_bg_changed)
 
     def do_shutdown(self):
         self.auto_refresh.stop()
@@ -93,6 +94,7 @@ class WeatherApplication(Adw.Application):
                 css = bytes(css_file.read(), 'utf-8')
             css_provider.load_from_data(css,len(css))
             Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Priority)
+            self._apply_color_scheme()
 
             self.main_window = WeatherMainWindow(application=self)
             # Back in view, the window's overview shows what the notifications said
@@ -159,6 +161,18 @@ class WeatherApplication(Adw.Application):
     def _on_show_notifications_changed(self, *_args) -> None:
         if self.overview_notifications is not None and not settings.show_notifications:
             self.overview_notifications.withdraw_all("notifications turned off")
+
+    def _on_dynamic_bg_changed(self, *_args) -> None:
+        self._apply_color_scheme()
+
+    def _apply_color_scheme(self) -> None:
+        """Dark while dynamic backgrounds are on, the system's choice otherwise.
+
+        The weather gradients are dark, so light-style text and cards on them
+        would be hard to read.
+        """
+        scheme = Adw.ColorScheme.FORCE_DARK if settings.is_using_dynamic_bg else Adw.ColorScheme.DEFAULT
+        Adw.StyleManager.get_default().set_color_scheme(scheme)
 
     def _on_auto_refresh_tick(self):
         # The windows show the result: they listen to the store's status
