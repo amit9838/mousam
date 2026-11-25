@@ -132,14 +132,12 @@ msgstr "Vista in modalità notte"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr "Elenco delle città e le loro coordinate"
+msgstr "Elenco delle città e delle loro coordinate."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr ""
-"Memorizza le località aggiunte dall'utente in formato json stringato in "
-"stringa"
+msgstr "Memorizza le località aggiunte dall'utente come stringa in formato JSON"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -186,7 +184,7 @@ msgstr "Sistema di misura da usare: metrico, imperiale"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "metrico(km, °C), imperiale(miglio,°F)"
+msgstr "metrico (km, °C), imperiale (miglia, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Show weather update notifications"
@@ -261,7 +259,7 @@ msgstr "Parzialmente nuvoloso"
 
 #: src/ui/icons.py:270
 msgid "Overcast"
-msgstr "Nuvoloso"
+msgstr "Coperto"
 
 #: src/ui/icons.py:271
 msgid "Fog"
@@ -281,15 +279,15 @@ msgstr "Pioggerella moderata"
 
 #: src/ui/icons.py:275
 msgid "Heavy Intensity Drizzle"
-msgstr "Pioggerella ad alta intensità "
+msgstr "Pioggerella intensa"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Pioggerella leggera e gelida"
+msgstr "Pioggerella leggera e gelata"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Pioggerella intensa e gelida"
+msgstr "Pioggerella intensa e gelata"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -329,23 +327,23 @@ msgstr "Granelli di neve"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "Doccia di pioggia leggera"
+msgstr "Rovesci di pioggia leggeri"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
-msgstr "Doccia di pioggia moderata"
+msgstr "Rovesci di pioggia moderati"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
-msgstr "Doccia di pioggia intensa"
+msgstr "Rovesci di pioggia intensi"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Doccia di neve leggera"
+msgstr "Rovesci di neve leggeri"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Doccia di neve intensa"
+msgstr "Rovesci di neve intensi"
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -2061,7 +2059,7 @@ msgstr "miglia"
 
 #: src/ui/cards/air_quality.py:32
 msgid "Air Pollution"
-msgstr "Qualità dell'aria"
+msgstr "Inquinamento atmosferico"
 
 #: src/ui/cards/air_quality.py:47
 msgid "Air Quality Details"
@@ -2212,7 +2210,7 @@ msgstr "Domani"
 
 #: src/ui/sections/forecast.py:163
 msgid "Weekly"
-msgstr "Settimana"
+msgstr "Settimanale"
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
@@ -2277,7 +2275,7 @@ msgstr "Pioggia torrenziale: {amount}"
 
 #: src/ui/sections/hourly.py:55
 msgid "Hourly"
-msgstr "Orario"
+msgstr "Ogni ora"
 
 #: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
@@ -2358,7 +2356,7 @@ msgstr "Preferenze"
 
 #: src/ui/window.py:176 src/ui/templates/shortcuts.ui:75
 msgid "Keyboard Shortcuts"
-msgstr "Scorcatoie da tastiera"
+msgstr "Scorciatoie da tastiera"
 
 #: src/ui/window.py:177
 msgid "About Mousam"
@@ -2613,7 +2611,7 @@ msgstr "La posizione esiste già"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Cambiato a {}"
+msgstr "Passato a {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
