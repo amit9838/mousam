@@ -1913,7 +1913,7 @@ msgstr "낮음"
 
 #: src/ui/cards/metric.py:231 src/ui/compact_window.py:209
 msgid "Pressure"
-msgstr "압력"
+msgstr "기압"
 
 #: src/ui/cards/metric.py:247
 msgid "UV Index"
