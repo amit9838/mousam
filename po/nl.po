@@ -255,7 +255,7 @@ msgstr "Weinig bewolking"
 
 #: src/ui/icons.py:269
 msgid "Partly Cloudy"
-msgstr "Gedeeltelijke bewolkt"
+msgstr "Gedeeltelijk bewolkt"
 
 #: src/ui/icons.py:270
 msgid "Overcast"
@@ -263,11 +263,11 @@ msgstr "Bewolkt"
 
 #: src/ui/icons.py:271
 msgid "Fog"
-msgstr "Nevel"
+msgstr "Mist"
 
 #: src/ui/icons.py:272
 msgid "Mist"
-msgstr "Mist"
+msgstr "Nevel"
 
 #: src/ui/icons.py:273
 msgid "Light Drizzle"
@@ -291,23 +291,23 @@ msgstr "Hevige ijsmotregen"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
-msgstr "Lichte regenbui"
+msgstr "Lichte regen"
 
 #: src/ui/icons.py:279
 msgid "Moderate Rain"
-msgstr "Regenbui"
+msgstr "Regen"
 
 #: src/ui/icons.py:280
 msgid "Heavy Rain"
-msgstr "Zware regenbui"
+msgstr "Zware regen"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
-msgstr "IJsregenbui"
+msgstr "Lichte ijzel"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
-msgstr "Zware ijsregenbui"
+msgstr "Zware ijzel"
 
 #: src/ui/icons.py:283
 msgid "Light Snow Fall"
@@ -327,11 +327,11 @@ msgstr "Stuifsneeuw"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "Lichte stortregenbui"
+msgstr "Lichte regenbui"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
-msgstr "Stortregenbui"
+msgstr "Regenbui"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
@@ -339,11 +339,11 @@ msgstr "Hevige stortregenbui"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Lichte sneeuwstorm"
+msgstr "Lichte sneeuwbui"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Hevige sneeuwstorm"
+msgstr "Hevige sneeuwbui"
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -546,7 +546,7 @@ msgstr "Licht"
 #: src/core/levels.py:137
 msgctxt "wind"
 msgid "Moderate"
-msgstr "Gemiddeld"
+msgstr "Matig"
 
 #: src/core/levels.py:138
 msgid "Strong"
@@ -2162,11 +2162,11 @@ msgstr "Dagmaximum •"
 
 #: src/ui/sections/hourly.py:231
 msgid "Now"
-msgstr "Zojuist"
+msgstr "Nu"
 
 #: src/ui/sections/hourly.py:274
 msgid "No precipitation today !"
-msgstr "Er is geen neerslag!"
+msgstr "Vandaag geen neerslag!"
 
 #: src/ui/sections/hourly.py:275
 msgid "No precipitation expected today!"
@@ -2174,7 +2174,7 @@ msgstr "Er wordt vandaag geen neerslag verwacht!"
 
 #: src/ui/sections/hourly.py:276
 msgid "Anticipate a precipitation-free day !"
-msgstr "Bereid u voor op een dag zonder neerslag!"
+msgstr "Bereid je voor op een dag zonder neerslag!"
 
 #: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
