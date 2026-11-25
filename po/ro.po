@@ -256,7 +256,7 @@ msgstr "Parțial noros"
 
 #: src/ui/icons.py:270
 msgid "Overcast"
-msgstr "înnorat"
+msgstr "Înnorat"
 
 #: src/ui/icons.py:271
 msgid "Fog"
@@ -320,11 +320,11 @@ msgstr "Ninsoare abundentă"
 
 #: src/ui/icons.py:286
 msgid "Snow grains"
-msgstr "Grindină"
+msgstr "Zăpadă granulară"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "Averse de ploaie uşoară"
+msgstr "Averse de ploaie ușoară"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
@@ -336,7 +336,7 @@ msgstr "Averse puternice de ploaie"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Averse uşoare de zăpadă"
+msgstr "Averse ușoare de zăpadă"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
@@ -2625,7 +2625,7 @@ msgstr "Locația există deja"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Schimbat cu {}"
+msgstr "Comutat la {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
