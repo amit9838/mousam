@@ -986,8 +986,8 @@ msgstr ""
 #: src/core/overview/messages.py:180
 msgid "Freezing rain is likely right now. Roads and paths may be icy."
 msgstr ""
-"Ahora mismo es probable que llueva con temperaturas bajo cero. Las "
-"carreteras y los caminos pueden estar helados."
+"Ahora mismo es probable que haya lluvia helada. Puede haber hielo en "
+"carreteras y caminos."
 
 #: src/core/overview/messages.py:181
 msgid "Expect freezing rain right now. Watch for icy roads and paths."
@@ -1013,8 +1013,7 @@ msgstr ""
 #: src/core/overview/messages.py:190
 msgid "Heavy rain is likely right now. Expect puddles and slow roads."
 msgstr ""
-"Ahora mismo es probable que llueva con fuerza. Espera charcos y tráfico "
-"lento."
+"Ahora mismo es probable que llueva con fuerza. Habrá charcos y tráfico lento."
 
 #: src/core/overview/messages.py:191
 msgid "Expect heavy rain right now. Allow extra travel time."
@@ -1077,7 +1076,7 @@ msgstr ""
 #, python-brace-format
 msgid "It feels as hot as {temp} right now. Drink water and stay cool."
 msgstr ""
-"Ahora mismo hace un calor que parece de {temp}. Bebe agua y mantente fresco."
+"Ahora mismo la sensación térmica llega a {temp}. Bebe agua y mantente fresco."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:217
@@ -1108,7 +1107,7 @@ msgstr ""
 #: src/core/overview/messages.py:225
 #, python-brace-format
 msgid "It feels as cold as {temp} right now. Bundle up."
-msgstr "Ahora mismo hace un frío que parece de {temp}. Abrígate bien."
+msgstr "Ahora mismo la sensación térmica baja hasta {temp}. Abrígate bien."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:229
@@ -1175,16 +1174,16 @@ msgstr ""
 msgid ""
 "UV will be very high from about {start} to {end}. Use sunscreen outdoors."
 msgstr ""
-"El índice UV será muy alto aproximadamente de {start} a {end}. Usa protector "
-"solar al aire libre."
+"El índice UV será muy alto aproximadamente de las {start} a las {end}. Usa "
+"protector solar al aire libre."
 
 #. Translators: {start} and {end} are rounded times of day, like "11:00 AM" and "3:00 PM"
 #: src/core/overview/messages.py:253
 #, python-brace-format
 msgid "Expect very high UV from about {start} to {end}. Cover up outdoors."
 msgstr ""
-"Se espera un índice UV muy alto aproximadamente de {start} a {end}. Cúbrete "
-"al aire libre."
+"Se espera un índice UV muy alto aproximadamente de las {start} a las {end}. "
+"Cúbrete al aire libre."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:258
@@ -1277,7 +1276,7 @@ msgstr "De momento se espera lluvia, que despejará hacia las {time}."
 #: src/core/overview/messages.py:286
 #, python-brace-format
 msgid "It is wet for now, but the rain should stop around {time}."
-msgstr "De momento está mojado, pero la lluvia debería parar hacia las {time}."
+msgstr "De momento llueve, pero debería parar hacia las {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:290
@@ -1484,13 +1483,13 @@ msgstr "Las temperaturas suben hasta {temp} hacia las {time}."
 #: src/core/overview/messages.py:367
 #, python-brace-format
 msgid "It should reach {temp} by around {time}."
-msgstr "Debería llegar a {temp} hacia las {time}."
+msgstr "La temperatura debería llegar a {temp} hacia las {time}."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:369
 #, python-brace-format
 msgid "Warming up to {temp} by around {time}."
-msgstr "Subida hasta {temp} hacia las {time}."
+msgstr "La temperatura subirá hasta {temp} hacia las {time}."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:373
@@ -1511,13 +1510,14 @@ msgstr "Las temperaturas bajan hasta {temp} hacia las {time}."
 #, python-brace-format
 msgid "It should cool to {temp} by around {time}. A jacket may help."
 msgstr ""
-"Debería bajar hasta {temp} hacia las {time}. Una chaqueta puede venir bien."
+"La temperatura debería bajar hasta {temp} hacia las {time}. Una chaqueta "
+"puede venir bien."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:379
 #, python-brace-format
 msgid "Cooling down to {temp} by around {time}."
-msgstr "Bajada hasta {temp} hacia las {time}."
+msgstr "La temperatura bajará hasta {temp} hacia las {time}."
 
 #. Translators: {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:384
@@ -1570,7 +1570,7 @@ msgstr "Mañana sube la temperatura, con una máxima de {temp}."
 #: src/core/overview/messages.py:400
 #, python-brace-format
 msgid "Expect a warmer tomorrow, up to {temp}."
-msgstr "Se espera un mañana más cálido, de hasta {temp}."
+msgstr "Mañana se espera un día más cálido, de hasta {temp}."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:404
@@ -1594,7 +1594,7 @@ msgstr "Mañana refresca, con una máxima de {temp}."
 #: src/core/overview/messages.py:410
 #, python-brace-format
 msgid "Expect a cooler tomorrow, topping out at {temp}."
-msgstr "Se espera un mañana más fresco, con una máxima de {temp}."
+msgstr "Mañana se espera un día más fresco, con una máxima de {temp}."
 
 #: src/core/overview/messages.py:416
 #, python-brace-format
@@ -2010,7 +2010,7 @@ msgstr "No se esperan grandes cambios hasta las {time} aproximadamente."
 #, python-brace-format
 msgid "A quiet spell ahead, with little change until about {time}."
 msgstr ""
-"Se acerca un rato tranquilo, con pocos cambios hasta las {time} "
+"Se avecina un periodo tranquilo, con pocos cambios hasta las {time} "
 "aproximadamente."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
@@ -2183,7 +2183,7 @@ msgstr "Mostrar resumen"
 #: src/ui/sections/current.py:364
 msgctxt "current date"
 msgid "%A, %-d %b"
-msgstr "%A, %-d %b"
+msgstr "%A, %-d de %b"
 
 #: src/ui/sections/forecast.py:155 src/ui/sections/forecast.py:398
 msgid "Tomorrow"
@@ -2256,7 +2256,7 @@ msgstr "Lluvia torrencial: {amount}"
 
 #: src/ui/sections/hourly.py:55
 msgid "Hourly"
-msgstr "Por hora"
+msgstr "Por horas"
 
 #: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
@@ -2291,7 +2291,7 @@ msgstr "¡No se esperan precipitaciones para hoy!"
 
 #: src/ui/sections/hourly.py:276
 msgid "Anticipate a precipitation-free day !"
-msgstr "Prepárate para un día sin precipitaciones."
+msgstr "¡Prepárate para un día sin precipitaciones!"
 
 #: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
@@ -2706,7 +2706,7 @@ msgstr "Modo de depuración"
 
 #: src/ui/dialogs/preferences.py:140
 msgid "Enable verbose logging and console output"
-msgstr "Habilita el registro detallado y la salida por consola"
+msgstr "Activa el registro detallado y la salida por consola"
 
 #: src/ui/dialogs/preferences.py:148
 msgid "Open Logs Folder"
