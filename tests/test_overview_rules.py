@@ -30,6 +30,7 @@ from mousam.core.overview.context import (  # noqa: E402
 )
 from mousam.core.overview.hour_tests import AtLeast  # noqa: E402
 from mousam.core.overview.insight import Insight  # noqa: E402
+from mousam.config import OVERVIEW_MIN_GAP_MINUTES  # noqa: E402
 from mousam.core.overview.announce import NEWS, REMINDER, AnnounceMemory, decide, should_notify  # noqa: E402
 from mousam.core.overview.messages import overview_messages  # noqa: E402
 from mousam.core.overview.rules import RuleBook, SunRule  # noqa: E402
@@ -37,6 +38,7 @@ from mousam.core.overview.rules import RuleBook, SunRule  # noqa: E402
 UTC = timezone.utc
 H = 3600
 MIN = 60
+GAP = OVERVIEW_MIN_GAP_MINUTES * MIN  # between two openings
 HOURS = 30  # hours of data, from the hour before now
 
 # 15 January 2026, 10:10 UTC: the current hour is 10:00
@@ -803,34 +805,47 @@ class TestAnnounce(unittest.TestCase):
         at_4 = self.insight("precipitation", about=at_hour(4))
         at_7 = self.insight("precipitation", about=at_hour(7))
         self.decide([at_4], NOW)
-        self.assertEqual(self.opened([at_7], NOW + 10 * MIN), ("precipitation", NEWS))
+        self.assertEqual(self.opened([at_7], NOW + GAP), ("precipitation", NEWS))
         self.assertEqual(self.memory.times_said(at_7), 1)
 
     def test_a_refresh_with_the_same_forecast_opens_nothing(self):
         self.decide([self.rain, self.wind], NOW)
-        self.assertEqual(self.opened([self.rain, self.wind], NOW + 6 * MIN, "wind"),
+        self.assertEqual(self.opened([self.rain, self.wind], NOW + GAP, "wind"),
                          ("precipitation", NEWS))  # rain was never said
         again = [self.insight("precipitation", about=at_hour(5)), self.insight("wind", "high")]  # rebuilt, equal
-        self.assertEqual(self.opened(again, NOW + 12 * MIN, "precipitation"), ("precipitation", None))
+        self.assertEqual(self.opened(again, NOW + GAP + 5 * MIN, "precipitation"), ("precipitation", None))
 
     def test_news_waits_for_the_gap(self):
         self.decide([self.rain], NOW)
-        busy = [self.storm, self.rain]
+        busy = [self.wind, self.rain]
         decision = self.decide(busy, NOW + 2 * MIN, "precipitation")
         self.assertIsNone(decision.reason)
-        self.assertEqual(decision.wake_at, NOW + 5 * MIN)
-        self.assertEqual(self.opened(busy, NOW + 5 * MIN, "precipitation"), ("storm", NEWS))
+        self.assertEqual(decision.wake_at, NOW + GAP)
+        self.assertEqual(self.opened(busy, NOW + GAP, "precipitation"), ("wind", NEWS))
+
+    def test_urgent_news_skips_the_gap(self):
+        self.decide([self.rain], NOW)
+        busy = [self.storm, self.rain]
+        self.assertEqual(self.opened(busy, NOW + 2 * MIN, "precipitation"), ("storm", NEWS))
+
+    def test_two_extreme_things_still_take_turns(self):
+        freezing = self.insight("freezing", "extreme")
+        decision = self.decide([self.storm, freezing], NOW)
+        self.assertEqual(decision.insight.kind, "storm")
+        self.assertEqual(decision.wake_at, NOW + GAP)  # not straight away
+        self.assertEqual(self.opened([self.storm, freezing], NOW + 2 * MIN, "storm"), ("storm", None))
+        self.assertEqual(self.opened([self.storm, freezing], NOW + GAP, "storm"), ("freezing", NEWS))
 
     def test_news_before_reminders(self):
         self.decide([self.storm], NOW)
         later = NOW + 40 * MIN  # the storm's first reminder (30 min) is due too
         self.assertEqual(self.opened([self.storm, self.rain], later), ("precipitation", NEWS))
-        self.assertEqual(self.opened([self.storm, self.rain], later + 5 * MIN), ("storm", REMINDER))
+        self.assertEqual(self.opened([self.storm, self.rain], later + GAP), ("storm", REMINDER))
 
     def test_a_storm_that_comes_and_goes_counts_once(self):
         self.decide([self.storm], NOW)
-        self.decide([self.rain], NOW + 10 * MIN)
-        self.assertEqual(self.opened([self.storm, self.rain], NOW + 20 * MIN, "precipitation"),
+        self.decide([self.rain], NOW + GAP)
+        self.assertEqual(self.opened([self.storm, self.rain], NOW + GAP + 10 * MIN, "precipitation"),
                          ("precipitation", None))
 
     def test_forgotten_hours_after_it_was_last_true(self):
@@ -876,7 +891,7 @@ class TestAnnounce(unittest.TestCase):
         decision = self.decide([self.storm, self.wind], NOW)
         self.assertEqual(decision.insight.kind, "storm")
         self.assertEqual([i.kind for i in decision.waiting], ["wind"])
-        self.assertEqual(decision.wake_at, NOW + 5 * MIN)  # after the gap
+        self.assertEqual(decision.wake_at, NOW + GAP)  # after the gap
         self.assertEqual(self.opened([self.storm, self.wind], decision.wake_at, "storm"), ("wind", NEWS))
 
     def combined(self, storm, wind):
@@ -893,7 +908,7 @@ class TestAnnounce(unittest.TestCase):
     def test_a_new_part_makes_it_news(self):
         self.decide([self.storm], NOW)
         both = self.combined(self.storm, self.wind)
-        self.assertEqual(self.opened([both], NOW + 10 * MIN, "storm"), ("storm", NEWS))
+        self.assertEqual(self.opened([both], NOW + GAP, "storm"), ("storm", NEWS))  # after the gap: the storm was extreme too
 
     def test_topics_include_what_is_folded_in(self):
         folded = Insight("storm", "storm", NOW + H, "extreme", topic="storm", covers=("storm", "rain"))

@@ -135,7 +135,7 @@ OVERVIEW_HOURS = 12  # how far ahead the overview looks
 RAIN_LIKELY_PROBABILITY = 50  # % chance from which an hour counts as rainy
 # When the overview opens by itself (core/overview/announce.py): something
 # new at once, then reminders of it that wait longer each time.
-OVERVIEW_MIN_GAP_MINUTES = 5  # nothing opens within this long of the last opening
+OVERVIEW_MIN_GAP_MINUTES = 15  # only urgent news opens within this long of the last opening
 # The first reminder, by level; each next one waits BACKOFF times longer, at
 # most MAX minutes. Low and calm are said once, never reminded.
 OVERVIEW_REMIND_MINUTES = {"extreme": 30, "high": 60, "medium": 120}
