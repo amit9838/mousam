@@ -111,7 +111,7 @@ msgstr ""
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:22
 msgid "Metric and imperial units, and 12- or 24-hour clock"
-msgstr "Metrik ve imparatorluk birimleri, 12 veya 24 saatlik saat"
+msgstr "Metrik ve emperyal birimleri, 12 veya 24 saatlik saat"
 
 #: data/io.github.amit9838.mousam.appdata.xml.in:28
 msgid "Main dashboard showing current weather and hourly forecast"
@@ -133,8 +133,7 @@ msgstr "Şehir listesi ve koordinatları"
 msgid ""
 "Stores locations added by user in json stringified string format in string"
 msgstr ""
-"Kullanıcı tarafından eklenen konumları json metin alanı betin biçimindeki "
-"dizgede saklar"
+"Kullanıcı tarafından eklenen konumları JSON dizesi biçiminde saklar"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -152,7 +151,7 @@ msgstr "Arka Plan Renk Geçişi Kullan"
 msgid ""
 "Apply gradient background on main window corresponding to weather condition"
 msgstr ""
-"Hava durumuna karşılık gelen ana pencerede renk geçili arka plan uygula"
+"Hava durumuna karşılık gelen ana pencerede renk geçişli arka plan uygula"
 
 #: data/io.github.amit9838.mousam.gschema.xml:22
 msgid "Use Inch for precipitation"
@@ -176,11 +175,11 @@ msgstr "Uygulamayı büyütülmüş kipte başlat."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
-msgstr "Kullanılacak ölçüm sistemi - metrik, imparatorluk"
+msgstr "Kullanılacak ölçüm sistemi - metrik, emperyal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "metrik(km, °C), imparatorluk(mil, °F)"
+msgstr "metrik(km, °C), emperyal(mil, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Show weather update notifications"
@@ -2553,7 +2552,7 @@ msgstr "Konum zaten mevcut"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Geçilen konum: {}"
+msgstr "{} konumuna geçildi"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2570,7 +2569,7 @@ msgstr "Birimler"
 
 #: src/ui/dialogs/preferences.py:55
 msgid "Metric (°C, km/h) or Imperial (°F, mph)"
-msgstr "Metrik (°C, km/sa) veya İmparatorluk (°F, mph)"
+msgstr "Metrik (°C, km/sa) veya Emperyal (°F, mph)"
 
 #: src/ui/dialogs/preferences.py:57
 msgid "Metric"
@@ -2578,7 +2577,7 @@ msgstr "Metrik"
 
 #: src/ui/dialogs/preferences.py:57
 msgid "Imperial"
-msgstr "İmparatorluk"
+msgstr "Emperyal"
 
 #: src/ui/dialogs/preferences.py:64
 msgid "Unit of the hourly precipitation graph"
