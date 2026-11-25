@@ -310,23 +310,23 @@ msgstr "เม็ดหิมะ"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "ฝนตกปรอยๆ"
+msgstr "ฝนซู่เล็กน้อย"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
-msgstr "ฝนตกปานกลาง"
+msgstr "ฝนซู่ปานกลาง"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
-msgstr "ฝนตกหนัก"
+msgstr "ฝนซู่หนัก"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "หิมะตกปรอยๆ"
+msgstr "หิมะตกเป็นช่วงๆ เล็กน้อย"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "หิมะตกหนัก"
+msgstr "หิมะตกเป็นช่วงๆ หนัก"
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -478,7 +478,7 @@ msgstr "สูงมาก"
 #: src/core/levels.py:114
 msgctxt "uvindex"
 msgid "Extreme"
-msgstr "สูงมากๆ"
+msgstr "รุนแรงที่สุด"
 
 #: src/core/levels.py:118
 msgctxt "humidity"
@@ -1845,7 +1845,7 @@ msgstr "N"
 
 #: src/ui/cards/metric.py:207 src/ui/compact_window.py:208
 msgid "Humidity"
-msgstr "ความชื่น"
+msgstr "ความชื้น"
 
 #: src/ui/cards/metric.py:211
 msgid "Dewpoint"
@@ -2064,7 +2064,7 @@ msgstr "เพลิดเพลินกับวันที่ไม่มี
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "สถานะร่ม: กำลังพักพักผ่อน ไม่มีฝนให้เห็น!"
+msgstr "สถานะร่ม: กำลังพักผ่อน ไม่มีฝนให้เห็น!"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
