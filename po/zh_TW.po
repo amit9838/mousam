@@ -24,7 +24,7 @@ msgstr ""
 #: data/io.github.amit9838.mousam.desktop.in:2
 #: data/io.github.amit9838.mousam.appdata.xml.in:6
 msgid "Mousam"
-msgstr "天氣"
+msgstr "Mousam"
 
 #: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/ui/dialogs/about.py:35
@@ -115,12 +115,12 @@ msgstr "夜間模式檢視"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr "城市及其坐標列表。"
+msgstr "城市及其座標列表。"
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr "以JSON字串格式儲存使用者新增的位置"
+msgstr "以 JSON 字串格式儲存使用者新增的地點"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -128,7 +128,7 @@ msgstr "已選城市"
 
 #: data/io.github.amit9838.mousam.gschema.xml:13
 msgid "Selected city cords"
-msgstr "已選城市坐標"
+msgstr "已選城市座標"
 
 #: data/io.github.amit9838.mousam.gschema.xml:17
 msgid "Use Gradient Background"
@@ -253,7 +253,7 @@ msgstr "小毛毛雨"
 
 #: src/ui/icons.py:274
 msgid "Moderate Drizzle"
-msgstr "中度毛毛雨"
+msgstr "中毛毛雨"
 
 #: src/ui/icons.py:275
 msgid "Heavy Intensity Drizzle"
@@ -301,7 +301,7 @@ msgstr "大雪"
 
 #: src/ui/icons.py:286
 msgid "Snow grains"
-msgstr "粒雪"
+msgstr "米雪"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
@@ -468,7 +468,7 @@ msgstr "高"
 #: src/core/levels.py:113
 msgctxt "uvindex"
 msgid "Very High"
-msgstr "很高"
+msgstr "非常高"
 
 #: src/core/levels.py:114
 msgctxt "uvindex"
@@ -507,7 +507,7 @@ msgstr "高"
 
 #: src/core/levels.py:135
 msgid "Calm"
-msgstr "平靜"
+msgstr "靜風"
 
 #: src/core/levels.py:136
 msgid "Light"
@@ -525,7 +525,7 @@ msgstr "強風"
 #: src/core/levels.py:139
 msgctxt "wind"
 msgid "Extreme"
-msgstr "極端"
+msgstr "狂風"
 
 #: src/core/levels.py:146
 msgid "North"
@@ -575,7 +575,7 @@ msgstr "目前很可能有雷暴。如果可以，請待在室內。"
 
 #: src/core/overview/messages.py:32
 msgid "Expect thunderstorms right now. Stay indoors if you can."
-msgstr "目前將有雷暴。如果可以，請待在室內。"
+msgstr "目前預計有雷暴。如果可以，請待在室內。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:36
@@ -666,7 +666,7 @@ msgstr "目前很可能有雷暴並伴隨強風，風速約 {speed}。"
 #: src/core/overview/messages.py:76
 #, python-brace-format
 msgid "Expect thunderstorms with strong wind, around {speed}, right now."
-msgstr "目前將有雷暴並伴隨強風，風速約 {speed}。"
+msgstr "目前預計有雷暴並伴隨強風，風速約 {speed}。"
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:80
@@ -689,7 +689,7 @@ msgstr "目前很可能有雷暴並伴隨大雨。"
 
 #: src/core/overview/messages.py:86
 msgid "Expect thunderstorms with heavy rain right now."
-msgstr "目前將有雷暴並伴隨大雨。"
+msgstr "目前預計有雷暴並伴隨大雨。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:90
@@ -713,7 +713,7 @@ msgstr "目前很可能有大雨和強風，風速約 {speed}。"
 #: src/core/overview/messages.py:98
 #, python-brace-format
 msgid "Expect heavy rain and strong wind, around {speed}, right now."
-msgstr "目前將有大雨和強風，風速約 {speed}。"
+msgstr "目前預計有大雨和強風，風速約 {speed}。"
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:102
@@ -738,7 +738,7 @@ msgstr "目前很可能有大雪和強風，風速約 {speed}。"
 #: src/core/overview/messages.py:110
 #, python-brace-format
 msgid "Expect heavy snow and strong wind, around {speed}, right now."
-msgstr "目前將有大雪和強風，風速約 {speed}。"
+msgstr "目前預計有大雪和強風，風速約 {speed}。"
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:114
@@ -763,7 +763,7 @@ msgstr "目前很可能有雨和強風，風速約 {speed}。"
 #: src/core/overview/messages.py:122
 #, python-brace-format
 msgid "Expect rain and strong wind, around {speed}, right now."
-msgstr "目前將有雨和強風，風速約 {speed}。"
+msgstr "目前預計有雨和強風，風速約 {speed}。"
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:126
@@ -787,7 +787,7 @@ msgstr "目前很可能有雪和強風，風速約 {speed}。"
 #: src/core/overview/messages.py:134
 #, python-brace-format
 msgid "Expect snow and strong wind, around {speed}, right now."
-msgstr "目前將有雪和強風，風速約 {speed}。"
+msgstr "目前預計有雪和強風，風速約 {speed}。"
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:138
@@ -889,7 +889,7 @@ msgstr "目前很可能有凍雨。道路與步道可能結冰。"
 
 #: src/core/overview/messages.py:181
 msgid "Expect freezing rain right now. Watch for icy roads and paths."
-msgstr "目前將有凍雨。請留意結冰的道路與步道。"
+msgstr "目前預計有凍雨。請留意結冰的道路與步道。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:185
@@ -909,7 +909,7 @@ msgstr "目前很可能有大雨。預期會有積水且路況緩慢。"
 
 #: src/core/overview/messages.py:191
 msgid "Expect heavy rain right now. Allow extra travel time."
-msgstr "目前將有大雨。請預留額外的行車時間。"
+msgstr "目前預計有大雨。請預留額外的行車時間。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:195
@@ -929,7 +929,7 @@ msgstr "目前很可能有大雪。交通可能變慢。"
 
 #: src/core/overview/messages.py:201
 msgid "Expect heavy snow right now. Allow extra travel time."
-msgstr "目前將有大雪。請預留額外的行車時間。"
+msgstr "目前預計有大雪。請預留額外的行車時間。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:205
@@ -995,7 +995,7 @@ msgstr "預計 {time} 左右體感溫度將達 {temp}。請做好保暖。"
 
 #: src/core/overview/messages.py:234
 msgid "Air quality is unhealthy right now. Limit time outdoors if you can."
-msgstr "目前空氣品質不佳。如果可以，請減少戶外活動時間。"
+msgstr "目前空氣品質不健康。如果可以，請減少戶外活動時間。"
 
 #: src/core/overview/messages.py:235
 msgid "The air is unhealthy right now. Consider staying indoors."
@@ -1006,7 +1006,7 @@ msgstr "目前空氣對健康不利。請考慮待在室內。"
 #, python-brace-format
 msgid ""
 "Air quality turns unhealthy around {time}. Consider limiting time outdoors."
-msgstr "{time} 左右空氣品質將轉為不佳。請考慮減少戶外活動時間。"
+msgstr "{time} 左右空氣品質將轉為不健康。請考慮減少戶外活動時間。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:241
@@ -1118,7 +1118,7 @@ msgstr "目前仍會下雨，{time} 左右轉晴。"
 #: src/core/overview/messages.py:286
 #, python-brace-format
 msgid "It is wet for now, but the rain should stop around {time}."
-msgstr "目前雨濕，但雨應會在 {time} 左右停止。"
+msgstr "目前正在下雨，但雨應會在 {time} 左右停止。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:290
@@ -1154,13 +1154,13 @@ msgstr "雨很可能持續下到 {time} 左右。"
 #: src/core/overview/messages.py:302
 #, python-brace-format
 msgid "Expect rain on and off until about {time}."
-msgstr "預計 {time} 左右前會時有降雨。"
+msgstr "預計到 {time} 左右會間歇性降雨。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:304
 #, python-brace-format
 msgid "It looks wet until about {time}. Keep an umbrella close."
-msgstr "{time} 左右前看起來都會是雨天。請把雨傘帶在身邊。"
+msgstr "到 {time} 左右都可能下雨。請把雨傘帶在身邊。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:306
@@ -1178,13 +1178,13 @@ msgstr "雪很可能持續下到 {time} 左右。"
 #: src/core/overview/messages.py:312
 #, python-brace-format
 msgid "Expect snow on and off until about {time}."
-msgstr "預計 {time} 左右前會時有降雪。"
+msgstr "預計到 {time} 左右會間歇性降雪。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:314
 #, python-brace-format
 msgid "It looks snowy until about {time}. Travel may be slow."
-msgstr "{time} 左右前看起來都會下雪。交通可能變慢。"
+msgstr "到 {time} 左右都可能下雪。交通可能變慢。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:316
@@ -1287,7 +1287,7 @@ msgstr "日出前後將有霧。能見度可能下降。"
 
 #: src/core/overview/messages.py:357
 msgid "A foggy start is likely around sunrise. Take care on the roads."
-msgstr "日出前後很可能是個多霧的開始。請留意路況。"
+msgstr "日出前後很可能起霧。請留意路況。"
 
 #: src/core/overview/messages.py:358
 msgid "Fog may form around sunrise, cutting visibility."
@@ -1453,7 +1453,7 @@ msgstr[0] "距離日出約 {n} 分鐘。"
 #, python-brace-format
 msgid "Daylight returns in about {n} minute."
 msgid_plural "Daylight returns in about {n} minutes."
-msgstr[0] "日光約在 {n} 分鐘後回來。"
+msgstr[0] "約 {n} 分鐘後天亮。"
 
 #: src/core/overview/messages.py:460
 #, python-brace-format
@@ -1501,7 +1501,7 @@ msgstr[0] "距離日出約 {n} 小時，時間為 {time}。"
 #, python-brace-format
 msgid "Daylight returns at {time}, in about {n} hour."
 msgid_plural "Daylight returns at {time}, in about {n} hours."
-msgstr[0] "日光將在 {time} 回來，約 {n} 小時後。"
+msgstr[0] "天亮時間為 {time}，約 {n} 小時後。"
 
 #: src/core/overview/messages.py:512
 #, python-brace-format
@@ -1763,19 +1763,19 @@ msgstr "天氣狀況應會穩定到 {time} 左右。"
 #: src/core/overview/messages.py:643
 #, python-brace-format
 msgid "No big changes expected until about {time}."
-msgstr "預計 {time} 左右前不會有大的變化。"
+msgstr "預計到 {time} 左右都不會有大的變化。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:645
 #, python-brace-format
 msgid "A quiet spell ahead, with little change until about {time}."
-msgstr "接下來一段時間平靜，{time} 左右前變化不大。"
+msgstr "接下來一段時間平靜，到 {time} 左右變化不大。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:647
 #, python-brace-format
 msgid "Things look settled until about {time}."
-msgstr "{time} 左右前看起來都很穩定。"
+msgstr "到 {time} 左右看起來都很穩定。"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:649
@@ -1868,7 +1868,7 @@ msgstr "紫外線指數"
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
 #: src/ui/compact_window.py:129 src/ui/window.py:285
 msgid "No Internet"
-msgstr "無網路連接"
+msgstr "無網路連線"
 
 #: src/ui/compact_window.py:115 src/ui/window.py:327
 #: src/ui/dialogs/locations.py:154
@@ -1882,7 +1882,7 @@ msgstr "請檢查你的網路連線。"
 
 #: src/ui/compact_window.py:133 src/ui/window.py:290
 msgid "Fetch Error"
-msgstr "擷取錯誤"
+msgstr "取得資料失敗"
 
 #: src/ui/compact_window.py:211
 msgid "AQI"
@@ -1900,7 +1900,7 @@ msgstr "離開精簡模式"
 
 #: src/ui/compact_window.py:286
 msgid "Mousam Compact"
-msgstr "Mousam 精簡版"
+msgstr "Mousam 精簡模式"
 
 #. Translators: the line in the sun's path where the sun rises and sets
 #: src/ui/drawing/day_night.py:124
@@ -1909,7 +1909,7 @@ msgstr "地平線"
 
 #: src/ui/drawing/day_night.py:187
 msgid "Day"
-msgstr "日"
+msgstr "日間"
 
 #: src/ui/drawing/day_night.py:187
 msgid "Night"
@@ -1949,7 +1949,7 @@ msgstr "明天"
 
 #: src/ui/sections/forecast.py:163
 msgid "Weekly"
-msgstr "每週"
+msgstr "7 天"
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
@@ -2014,7 +2014,7 @@ msgstr "豪雨：{amount}"
 
 #: src/ui/sections/hourly.py:55
 msgid "Hourly"
-msgstr "每小時"
+msgstr "逐時"
 
 #: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
@@ -2053,7 +2053,7 @@ msgstr "預期今天無降水！"
 
 #: src/ui/sections/hourly.py:277
 msgid "Enjoy a rain-free day today!"
-msgstr "今天享受無雨天！"
+msgstr "享受今天的無雨天吧！"
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
@@ -2082,7 +2082,7 @@ msgstr "重新整理天氣"
 #: src/ui/window.py:141 src/ui/dialogs/locations.py:327
 #: src/ui/templates/shortcuts.ui:45
 msgid "Locations"
-msgstr "位置"
+msgstr "地點"
 
 #: src/ui/window.py:147 src/ui/templates/shortcuts.ui:51
 msgid "Compact Mode"
@@ -2099,15 +2099,15 @@ msgstr "鍵盤快捷鍵"
 
 #: src/ui/window.py:177
 msgid "About Mousam"
-msgstr "關於天氣"
+msgstr "關於 Mousam"
 
 #: src/ui/window.py:178 src/ui/templates/shortcuts.ui:69
 msgid "Quit"
-msgstr "退出"
+msgstr "結束"
 
 #: src/ui/window.py:304
 msgid "Getting Weather Data"
-msgstr "正在獲取天氣資料"
+msgstr "正在取得天氣資料"
 
 #: src/ui/window.py:311
 msgid "Welcome to Mousam"
@@ -2244,12 +2244,12 @@ msgstr "WHO 限值 {limit} {unit}"
 
 #: src/ui/dialogs/about.py:37
 msgid "Copyright © 2023–2026 Mousam Developers"
-msgstr "版權所有 © 2023–2026 Mousam Developers"
+msgstr "版權所有 © 2023–2026 Mousam 開發者"
 
 #. Translators: replace with your name (and email or link), one per line
 #: src/ui/dialogs/about.py:39
 msgid "translator-credits"
-msgstr "翻譯者名單"
+msgstr "lipcut <cratemover9001@proton.me>"
 
 #: src/ui/dialogs/about.py:43
 msgid "Source Code"
@@ -2300,7 +2300,7 @@ msgstr "所有權利歸 Google 所有。由 Darren Griffin 蒐集。"
 
 #: src/ui/dialogs/locations.py:67
 msgid "Add New Location"
-msgstr "新增位置"
+msgstr "新增地點"
 
 #: src/ui/dialogs/locations.py:103
 msgid "Search cities, e.g. Kochi"
