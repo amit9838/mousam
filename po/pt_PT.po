@@ -180,7 +180,7 @@ msgstr "Altura da janela principal"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr "Iniciar a aplicação em ecrã inteiro."
+msgstr "Iniciar a aplicação maximizada."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
@@ -221,7 +221,7 @@ msgstr "Ativar modo de depuração"
 
 #: data/io.github.amit9838.mousam.gschema.xml:63
 msgid "Enables detailed logging and console output."
-msgstr "Ativa registo detalhado e 'output' para o terminal."
+msgstr "Ativa o registo detalhado e a saída da consola."
 
 #: data/io.github.amit9838.mousam.gschema.xml:67
 msgid "Icon theme"
@@ -231,9 +231,7 @@ msgstr "Tema de ícones"
 msgid ""
 "Weather icon set: \"default\" (mousam default icons) or \"material\" (Google "
 "material design icons)"
-msgstr ""
-"Conjunto de ícones meteorológicos: \"padrão\" (ícones padrão do Mousam) ou "
-"\"material\" (ícones do Material Design da Google)"
+msgstr "Conjunto de ícones meteorológicos: \"default\" (ícones predefinidos do Mousam) ou \"material\" (ícones do Material Design da Google)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:76
 msgid "Forecast page"
@@ -286,11 +284,11 @@ msgstr "Chuvisco intenso"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Chuvisco ligeiro e frio"
+msgstr "Chuvisco ligeiro congelante"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Chuvisco intenso e frio"
+msgstr "Chuvisco intenso congelante"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -306,11 +304,11 @@ msgstr "Chuva intensa"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
-msgstr "Chuva ligeiro e fria"
+msgstr "Chuva ligeira congelante"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
-msgstr "Chuva intensa e fria"
+msgstr "Chuva intensa congelante"
 
 #: src/ui/icons.py:283
 msgid "Light Snow Fall"
@@ -326,7 +324,7 @@ msgstr "Queda intensa de neve"
 
 #: src/ui/icons.py:286
 msgid "Snow grains"
-msgstr "Flocos de neve"
+msgstr "Grãos de neve"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
@@ -342,11 +340,11 @@ msgstr "Aguaceiros intensos"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Chuvas de neve ligeiras"
+msgstr "Aguaceiros de neve ligeiros"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Chuvas de neve intensas "
+msgstr "Aguaceiros de neve intensos "
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -366,7 +364,7 @@ msgstr "Moderado"
 
 #: src/core/levels.py:17
 msgid "Poor"
-msgstr "Pobre"
+msgstr "Fraco"
 
 #: src/core/levels.py:18
 msgid "Unhealthy"
@@ -570,7 +568,7 @@ msgstr "Nordeste"
 
 #: src/core/levels.py:148
 msgid "East"
-msgstr "Leste"
+msgstr "Este"
 
 #: src/core/levels.py:149
 msgid "Southeast"
@@ -2107,7 +2105,7 @@ msgstr "A qualidade do ar não está disponível neste momento."
 
 #: src/ui/cards/day_night.py:44
 msgid "Sunrise & Sunset"
-msgstr "Amanhecer e pôr-do-sol"
+msgstr "Amanhecer e pôr do Sol"
 
 #: src/ui/cards/day_night.py:58
 msgid "Sunrise"
@@ -2115,7 +2113,7 @@ msgstr "Amanhecer"
 
 #: src/ui/cards/day_night.py:58
 msgid "Sunset"
-msgstr "Pôr-do-sol"
+msgstr "Pôr do Sol"
 
 #: src/ui/cards/metric.py:182 src/ui/compact_window.py:207
 #: src/ui/sections/hourly.py:56
@@ -2222,7 +2220,7 @@ msgstr "Máx. {max} · Mín. {min}"
 #: src/ui/sections/current.py:130
 #, python-brace-format
 msgid "H {high} · L {low}"
-msgstr "M {high} · m {low}"
+msgstr "Máx. {high} · Mín. {low}"
 
 #. Translators: {0} is a temperature, like "22°"
 #: src/ui/sections/current.py:148
@@ -2311,7 +2309,7 @@ msgstr "Chuva violenta: {amount}"
 
 #: src/ui/sections/hourly.py:55
 msgid "Hourly"
-msgstr "Por Hora"
+msgstr "Por hora"
 
 #: src/ui/sections/hourly.py:57 src/ui/dialogs/preferences.py:63
 msgid "Precipitation"
@@ -2354,7 +2352,7 @@ msgstr "Aproveite um dia livre de chuva!"
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "Estado do guarda-chuva: em descanso. Sem precipitação à vista !"
+msgstr "Estado do guarda-chuva: em descanso. Sem precipitação à vista!"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
@@ -2650,7 +2648,7 @@ msgstr "Localização já adicionada"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Trocou para {}"
+msgstr "Alterado para {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2671,7 +2669,7 @@ msgstr "Métrico (°C, km/h) ou imperial (°F, mph)"
 
 #: src/ui/dialogs/preferences.py:57
 msgid "Metric"
-msgstr "Métrica"
+msgstr "Métrico"
 
 #: src/ui/dialogs/preferences.py:57
 msgid "Imperial"
@@ -2724,7 +2722,7 @@ msgstr "Altera o fundo para corresponder ao tempo atual"
 
 #: src/ui/dialogs/preferences.py:107
 msgid "Default"
-msgstr "Padrão"
+msgstr "Predefinido"
 
 #: src/ui/dialogs/preferences.py:107
 msgid "Material"
@@ -2768,7 +2766,7 @@ msgstr "Abrir pasta de registos"
 
 #: src/ui/dialogs/preferences.py:157
 msgid "Clear Log File"
-msgstr "Limpar ficheiros de registo"
+msgstr "Limpar ficheiro de registo"
 
 #: src/ui/dialogs/preferences.py:158
 msgid "Delete all contents of the current log file"
@@ -2788,7 +2786,7 @@ msgstr "Repor predefinições"
 
 #: src/ui/dialogs/preferences.py:172
 msgid "Clear all preferences and restore default values"
-msgstr "Remove todas as preferências e restaura os valores padrão"
+msgstr "Remove todas as preferências e restaura os valores predefinidos"
 
 #: src/ui/dialogs/preferences.py:175
 msgid "Reset…"
@@ -2810,9 +2808,7 @@ msgstr "Repor definições?"
 msgid ""
 "This will restore all settings to default and will clear your saved cities. "
 "This action cannot be undone."
-msgstr ""
-"Isto irá repor todas as definições para os valores padrão e remover as suas "
-"cidades guardadas. Esta ação é irreversível."
+msgstr "Isto irá repor todas as definições para os valores predefinidos e remover as suas cidades guardadas. Esta ação é irreversível."
 
 #: src/ui/dialogs/preferences.py:319
 msgid "Cancel"
