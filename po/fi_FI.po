@@ -267,55 +267,55 @@ msgstr "Utua"
 
 #: src/ui/icons.py:273
 msgid "Light Drizzle"
-msgstr "Kevyt Tihkusade"
+msgstr "Kevyt tihkusade"
 
 #: src/ui/icons.py:274
 msgid "Moderate Drizzle"
-msgstr "Kohtalainen Tihkusade"
+msgstr "Kohtalainen tihkusade"
 
 #: src/ui/icons.py:275
 msgid "Heavy Intensity Drizzle"
-msgstr "Voimakas Tihkusade"
+msgstr "Voimakas tihkusade"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Kevyt Jäätävä Tihkusade"
+msgstr "Kevyt jäätävä tihkusade"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Voimakas Jäätävä Tihkusade"
+msgstr "Voimakas jäätävä tihkusade"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
-msgstr "Kevyt Sade"
+msgstr "Kevyt sade"
 
 #: src/ui/icons.py:279
 msgid "Moderate Rain"
-msgstr "Kohtalainen Sade"
+msgstr "Kohtalainen sade"
 
 #: src/ui/icons.py:280
 msgid "Heavy Rain"
-msgstr "Voimakas Sade"
+msgstr "Voimakas sade"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
-msgstr "Kevyt Jäätävä Sade"
+msgstr "Kevyt jäätävä sade"
 
 #: src/ui/icons.py:282
 msgid "Heavy Freezing Rain"
-msgstr "Voimakas Jäätävä Sade"
+msgstr "Voimakas jäätävä sade"
 
 #: src/ui/icons.py:283
 msgid "Light Snow Fall"
-msgstr "Kevyt Lumisade"
+msgstr "Kevyt lumisade"
 
 #: src/ui/icons.py:284
 msgid "Moderate Snow Fall"
-msgstr "Kohtalainen Lumisade"
+msgstr "Kohtalainen lumisade"
 
 #: src/ui/icons.py:285
 msgid "Heavy Snow Fall"
-msgstr "Voimakas Lumisade"
+msgstr "Voimakas lumisade"
 
 #: src/ui/icons.py:286
 msgid "Snow grains"
@@ -323,23 +323,23 @@ msgstr "Lumijyväsiä"
 
 #: src/ui/icons.py:287
 msgid "Light Rain Showers"
-msgstr "Kevyitä Sadekuuroja"
+msgstr "Kevyitä sadekuuroja"
 
 #: src/ui/icons.py:288
 msgid "Moderate Rain Showers"
-msgstr "Kohtalaisia Sadekuuroja"
+msgstr "Kohtalaisia sadekuuroja"
 
 #: src/ui/icons.py:289
 msgid "Heavy Rain Showers"
-msgstr "Voimakkaita Sadekuuroja"
+msgstr "Voimakkaita sadekuuroja"
 
 #: src/ui/icons.py:290
 msgid "Light Snow Showers"
-msgstr "Kevyitä Lumikuuroja"
+msgstr "Kevyitä lumikuuroja"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Voimakkaita Lumikuuroja "
+msgstr "Voimakkaita lumikuuroja "
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -493,7 +493,7 @@ msgstr "Korkea"
 #: src/core/levels.py:113
 msgctxt "uvindex"
 msgid "Very High"
-msgstr "Erittäin Korkea"
+msgstr "Erittäin korkea"
 
 #: src/core/levels.py:114
 msgctxt "uvindex"
@@ -2008,7 +2008,7 @@ msgstr "mailia"
 
 #: src/ui/cards/air_quality.py:32
 msgid "Air Pollution"
-msgstr "Ilmanlaatu"
+msgstr "Ilmansaasteet"
 
 #: src/ui/cards/air_quality.py:47
 msgid "Air Quality Details"
@@ -2073,12 +2073,12 @@ msgstr "Ilmanpaine"
 
 #: src/ui/cards/metric.py:247
 msgid "UV Index"
-msgstr "UV Indeksi"
+msgstr "UV-indeksi"
 
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
 #: src/ui/compact_window.py:129 src/ui/window.py:285
 msgid "No Internet"
-msgstr "Ei Internet yhteyttä"
+msgstr "Ei internetyhteyttä"
 
 #: src/ui/compact_window.py:115 src/ui/window.py:327
 #: src/ui/dialogs/locations.py:154
@@ -2233,17 +2233,17 @@ msgstr "Sademäärä"
 #: src/ui/sections/hourly.py:136
 msgctxt "temperature"
 msgid "Day Max •"
-msgstr "Päivän Korkein •"
+msgstr "Päivän korkein •"
 
 #: src/ui/sections/hourly.py:142
 msgctxt "wind"
 msgid "Day High •"
-msgstr "Päivän Korkein •"
+msgstr "Päivän korkein •"
 
 #: src/ui/sections/hourly.py:153
 msgctxt "precipitation"
 msgid "Day High •"
-msgstr "Päivän Korkein •"
+msgstr "Päivän korkein •"
 
 #: src/ui/sections/hourly.py:231
 msgid "Now"
@@ -2317,7 +2317,7 @@ msgstr "Lopeta"
 
 #: src/ui/window.py:304
 msgid "Getting Weather Data"
-msgstr "Haetaan Säätietoja"
+msgstr "Haetaan säätietoja"
 
 #: src/ui/window.py:311
 msgid "Welcome to Mousam"
@@ -2512,7 +2512,7 @@ msgstr "Google omistaa kaikki oikeudet. Koonnut Darren Griffin."
 
 #: src/ui/dialogs/locations.py:67
 msgid "Add New Location"
-msgstr "Lisää Uusi Paikka"
+msgstr "Lisää uusi paikka"
 
 #: src/ui/dialogs/locations.py:103
 msgid "Search cities, e.g. Kochi"
@@ -2603,7 +2603,7 @@ msgstr "in"
 
 #: src/ui/dialogs/preferences.py:73
 msgid "Time Format"
-msgstr "Aika Formaatti"
+msgstr "Aikamuoto"
 
 #: src/ui/dialogs/preferences.py:76
 msgid "24-hour"
@@ -2627,7 +2627,7 @@ msgstr "Ulkoasu"
 
 #: src/ui/dialogs/preferences.py:94
 msgid "Dynamic Background"
-msgstr "Dynaaminen Tausta"
+msgstr "Dynaaminen tausta"
 
 #: src/ui/dialogs/preferences.py:95
 msgid "Change the background to match the current weather"
@@ -2739,7 +2739,7 @@ msgstr "Asetukset on palautettu"
 
 #: src/ui/templates/shortcuts.ui:33
 msgid "Refresh Weather"
-msgstr "Päivitä Sää"
+msgstr "Päivitä sää"
 
 #: src/ui/templates/shortcuts.ui:39
 msgid "Hard Refresh"
@@ -2747,7 +2747,7 @@ msgstr "Pakotettu päivitys"
 
 #: src/ui/templates/shortcuts.ui:65
 msgid "Navigation"
-msgstr "Valikko"
+msgstr "Navigointi"
 
 #: src/ui/templates/shortcuts.ui:92
 msgid "Move Location Up"
