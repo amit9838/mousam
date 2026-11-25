@@ -625,7 +625,7 @@ msgid ""
 "indoors by then."
 msgstr ""
 "És probable que hi hagi tempestes cap a les {time}, amb una probabilitat de "
-"pluja del {chance}%. Mireu d'estar a cobert abans."
+"pluja del {chance} %. Mireu d'estar a cobert abans."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:44
@@ -635,7 +635,7 @@ msgid ""
 "indoors by then."
 msgstr ""
 "S'esperen tempestes cap a les {time}, amb una probabilitat de pluja del "
-"{chance}%. Mireu d'estar a cobert abans."
+"{chance} %. Mireu d'estar a cobert abans."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
 #: src/core/overview/messages.py:48
@@ -644,7 +644,7 @@ msgid ""
 "Thunderstorms are possible around {time}, with {chance}% chance of rain."
 msgstr ""
 "Es poden produir tempestes cap a les {time}, amb una probabilitat de pluja "
-"del {chance}%."
+"del {chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "30"
 #: src/core/overview/messages.py:50
@@ -652,7 +652,7 @@ msgstr ""
 msgid "Thunderstorms may come around {time}, with {chance}% chance of rain."
 msgstr ""
 "Podrien arribar tempestes cap a les {time}, amb una probabilitat de pluja "
-"del {chance}%."
+"del {chance} %."
 
 #. Translators: {time} is when the rain eases off, a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:55
@@ -688,8 +688,8 @@ msgstr ""
 #, python-brace-format
 msgid "Rain from around {time} with {chance}% chance, turning stormy later."
 msgstr ""
-"Pluja a partir de les {time}, amb una probabilitat del {chance}%, i tempesta "
-"més tard."
+"Pluja a partir de les {time}, amb una probabilitat del {chance} %, i "
+"tempesta més tard."
 
 #. Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:69
@@ -698,8 +698,8 @@ msgid ""
 "Expect rain from around {time} with {chance}% chance, and thunderstorms "
 "later on."
 msgstr ""
-"S'espera pluja a partir de les {time}, amb una probabilitat del {chance}%, i "
-"tempestes més tard."
+"S'espera pluja a partir de les {time}, amb una probabilitat del {chance} %, "
+"i tempestes més tard."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"
 #: src/core/overview/messages.py:74
@@ -1169,21 +1169,21 @@ msgstr ""
 msgid "Rain is likely to start around {time} with {chance}% chance."
 msgstr ""
 "És probable que comenci a ploure cap a les {time}, amb una probabilitat del "
-"{chance}%."
+"{chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:260
 #, python-brace-format
 msgid "Expect rain from around {time}, with {chance}% chance."
 msgstr ""
-"S'espera pluja a partir de les {time}, amb una probabilitat del {chance}%."
+"S'espera pluja a partir de les {time}, amb una probabilitat del {chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:262
 #, python-brace-format
 msgid "Rain may move in around {time} with {chance}% chance."
 msgstr ""
-"La pluja pot arribar cap a les {time}, amb una probabilitat del {chance}%."
+"La pluja pot arribar cap a les {time}, amb una probabilitat del {chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:264
@@ -1193,14 +1193,14 @@ msgid ""
 "handy."
 msgstr ""
 "Els ruixats podrien començar cap a les {time}, amb una probabilitat del "
-"{chance}%. Tingueu el paraigua a mà."
+"{chance} %. Tingueu el paraigua a mà."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:266
 #, python-brace-format
 msgid "There is {chance}% chance of rain starting around {time}."
 msgstr ""
-"Hi ha una probabilitat del {chance}% que comenci a ploure cap a les {time}."
+"Hi ha una probabilitat del {chance} % que comenci a ploure cap a les {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:270
@@ -1208,29 +1208,29 @@ msgstr ""
 msgid "Snow is likely to start around {time} with {chance}% chance."
 msgstr ""
 "És probable que comenci a nevar cap a les {time}, amb una probabilitat del "
-"{chance}%."
+"{chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:272
 #, python-brace-format
 msgid "Expect snow from around {time}, with {chance}% chance."
 msgstr ""
-"S'espera neu a partir de les {time}, amb una probabilitat del {chance}%."
+"S'espera neu a partir de les {time}, amb una probabilitat del {chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:274
 #, python-brace-format
 msgid "Snow may move in around {time} with {chance}% chance."
 msgstr ""
-"La neu pot arribar cap a les {time}, amb una probabilitat del {chance}%."
+"La neu pot arribar cap a les {time}, amb una probabilitat del {chance} %."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:276
 #, python-brace-format
 msgid "Snowfall could begin around {time} with {chance}% chance. Dress warmly."
 msgstr ""
-"La nevada podria començar cap a les {time}, amb una probabilitat del {chance}"
-"%. Abrigueu-vos bé."
+"La nevada podria començar cap a les {time}, amb una probabilitat del "
+"{chance} %. Abrigueu-vos bé."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:280
@@ -1503,7 +1503,7 @@ msgstr "Baixada fins a {temp} cap a les {time}."
 #, python-brace-format
 msgid "Rain is likely tomorrow with {chance}% chance, so plan ahead."
 msgstr ""
-"Demà és probable que plogui, amb una probabilitat del {chance}%; tingueu-ho "
+"Demà és probable que plogui, amb una probabilitat del {chance} %; tingueu-ho "
 "en compte."
 
 #. Translators: {chance} is a percentage, like "70"
@@ -1511,21 +1511,21 @@ msgstr ""
 #, python-brace-format
 msgid "Tomorrow looks wet, with {chance}% chance of rain."
 msgstr ""
-"Demà sembla un dia plujós, amb una probabilitat de pluja del {chance}%."
+"Demà sembla un dia plujós, amb una probabilitat de pluja del {chance} %."
 
 #. Translators: {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:388
 #, python-brace-format
 msgid "Expect rain tomorrow, with {chance}% chance. Keep an umbrella ready."
 msgstr ""
-"S'espera pluja per a demà, amb una probabilitat del {chance}%. Tingueu el "
+"S'espera pluja per a demà, amb una probabilitat del {chance} %. Tingueu el "
 "paraigua a punt."
 
 #. Translators: {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:390
 #, python-brace-format
 msgid "There is {chance}% chance of rain tomorrow."
-msgstr "Hi ha una probabilitat de pluja del {chance}% per a demà."
+msgstr "Hi ha una probabilitat de pluja del {chance} % per a demà."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:394
@@ -2212,12 +2212,12 @@ msgstr "Avui"
 #: src/ui/sections/forecast.py:420
 #, python-brace-format
 msgid "Chance of snow: {percent}%"
-msgstr "Probabilitat de neu: {percent}%"
+msgstr "Probabilitat de neu: {percent} %"
 
 #: src/ui/sections/forecast.py:422
 #, python-brace-format
 msgid "Chance of rain: {percent}%"
-msgstr "Probabilitat de pluja: {percent}%"
+msgstr "Probabilitat de pluja: {percent} %"
 
 #: src/ui/sections/forecast.py:455
 #, python-brace-format
