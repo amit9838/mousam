@@ -126,7 +126,7 @@ msgstr "शहरों की सूची और उनके निर्द�
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
-msgstr "उपयोगकर्ता द्वारा जोड़े गए शहरों को json stringified स्ट्रिंग प्रारूप में सहेजता है"
+msgstr "उपयोगकर्ता द्वारा जोड़े गए शहरों को स्ट्रिंग के रूप में JSON प्रारूप में सहेजता है"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -545,7 +545,7 @@ msgstr "उत्तर"
 
 #: src/core/levels.py:147
 msgid "Northeast"
-msgstr "उत्तरपूर्व"
+msgstr "उत्तर-पूर्व"
 
 #: src/core/levels.py:148
 msgid "East"
@@ -553,7 +553,7 @@ msgstr "पूर्व"
 
 #: src/core/levels.py:149
 msgid "Southeast"
-msgstr "दक्षिणपूर्व"
+msgstr "दक्षिण-पूर्व"
 
 #: src/core/levels.py:150
 msgid "South"
@@ -561,7 +561,7 @@ msgstr "दक्षिण"
 
 #: src/core/levels.py:151
 msgid "Southwest"
-msgstr "दक्षिणपश्चिम"
+msgstr "दक्षिण-पश्चिम"
 
 #: src/core/levels.py:152
 msgid "West"
@@ -569,7 +569,7 @@ msgstr "पश्चिम"
 
 #: src/core/levels.py:153
 msgid "Northwest"
-msgstr "उत्तरपश्चिम"
+msgstr "उत्तर-पश्चिम"
 
 #: src/core/overview/context.py:188
 msgctxt "overview heading"
@@ -664,7 +664,7 @@ msgstr "लगभग {time} तक बारिश का अनुमान ह
 #: src/core/overview/messages.py:67
 #, python-brace-format
 msgid "Rain from around {time} with {chance}% chance, turning stormy later."
-msgstr "लगभग {time} से बारिश, संभावना {chance}%, बाद में तूफानी होगी।"
+msgstr "लगभग {time} से बारिश की {chance}% संभावना, बाद में मौसम तूफानी होगा।"
 
 #. Translators: {time} is when the rain starts, a rounded time of day, like "6:30 PM"; {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:69
@@ -1002,7 +1002,7 @@ msgstr ""
 #: src/core/overview/messages.py:223
 #, python-brace-format
 msgid "It feels like {temp} right now. Dress warmly, in layers."
-msgstr "अभी {temp} जैसा महसूस हो रहा है। गर्म कपड़े पहनें, कई परतों में।"
+msgstr "अभी {temp} जैसा महसूस हो रहा है। कई परतों में गर्म कपड़े पहनें।"
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:225
@@ -1014,7 +1014,7 @@ msgstr "अभी {temp} जितनी ठंड महसूस हो रह
 #: src/core/overview/messages.py:229
 #, python-brace-format
 msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
-msgstr "{time} के आसपास {temp} जैसा महसूस होगा। गर्म कपड़े पहनें, कई परतों में।"
+msgstr "{time} के आसपास {temp} जैसा महसूस होगा। कई परतों में गर्म कपड़े पहनें।"
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:231
@@ -1048,7 +1048,7 @@ msgstr "लगभग {time} से हवा के अस्वास्थ्�
 #: src/core/overview/messages.py:245
 #, python-brace-format
 msgid "UV is very high until about {time}. Use sunscreen and cover up."
-msgstr "लगभग {time} तक UV बहुत अधिक है। सनस्क्रीन लगाएं और शरीर को ढककर रखें।"
+msgstr "लगभग {time} तक UV बहुत अधिक रहेगा। सनस्क्रीन लगाएं और शरीर को ढककर रखें।"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:247
@@ -1346,14 +1346,14 @@ msgstr "{time} के आसपास तापमान के {temp} तक �
 #: src/core/overview/messages.py:369
 #, python-brace-format
 msgid "Warming up to {temp} by around {time}."
-msgstr "{time} के आसपास {temp} तक गर्मी बढ़ेगी।"
+msgstr "लगभग {time} तक तापमान बढ़कर {temp} हो जाएगा।"
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:373
 #, python-brace-format
 msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
 msgstr ""
-"{time} के आसपास तापमान घटकर {temp} होने का अनुमान है। एक अतिरिक्त परत पास रखें।"
+"{time} के आसपास तापमान घटकर {temp} होने का अनुमान है। एक अतिरिक्त गर्म कपड़ा पास रखें।"
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:375
@@ -1371,7 +1371,7 @@ msgstr "{time} के आसपास तापमान के घटकर {te
 #: src/core/overview/messages.py:379
 #, python-brace-format
 msgid "Cooling down to {temp} by around {time}."
-msgstr "{time} के आसपास {temp} तक ठंड बढ़ेगी।"
+msgstr "लगभग {time} तक तापमान गिरकर {temp} हो जाएगा।"
 
 #. Translators: {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:384
@@ -1383,7 +1383,7 @@ msgstr "कल बारिश की संभावना {chance}% है, �
 #: src/core/overview/messages.py:386
 #, python-brace-format
 msgid "Tomorrow looks wet, with {chance}% chance of rain."
-msgstr "कल बारिश वाला दिन रहेगा, बारिश की {chance}% संभावना के साथ।"
+msgstr "कल बारिश के आसार हैं, बारिश की संभावना {chance}%।"
 
 #. Translators: {chance} is a percentage, like "70"
 #: src/core/overview/messages.py:388
@@ -1598,7 +1598,7 @@ msgstr "{time} के आसपास सूर्यास्त के सम�
 #: src/core/overview/messages.py:538
 #, python-brace-format
 msgid "A misty sunset around {time}, with soft, hazy light."
-msgstr "{time} के आसपास धुंधला सूर्यास्त, कोमल, धुंधली रोशनी के साथ।"
+msgstr "{time} के आसपास धुंध भरा सूर्यास्त, हल्की, धुंधली रोशनी के साथ।"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:540
@@ -1641,7 +1641,7 @@ msgstr "{time} के आसपास हवादार सूर्यास�
 #: src/core/overview/messages.py:558
 #, python-brace-format
 msgid "Sunset around {time} looks windy, with clouds about."
-msgstr "{time} के आसपास सूर्यास्त हवादार लग रहा है, आसपास बादल रहेंगे।"
+msgstr "{time} के आसपास सूर्यास्त हवादार लग रहा है, कुछ बादल भी रहेंगे।"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:562
@@ -1721,7 +1721,7 @@ msgstr "{time} के आसपास सूर्योदय के समय 
 #: src/core/overview/messages.py:598
 #, python-brace-format
 msgid "A misty sunrise around {time}, with soft, hazy light."
-msgstr "{time} के आसपास धुंधला सूर्योदय, कोमल, धुंधली रोशनी के साथ।"
+msgstr "{time} के आसपास धुंध भरा सूर्योदय, हल्की, धुंधली रोशनी के साथ।"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:600
@@ -1764,7 +1764,7 @@ msgstr "{time} के आसपास हवादार सूर्योद�
 #: src/core/overview/messages.py:618
 #, python-brace-format
 msgid "Sunrise around {time} looks windy, with clouds about."
-msgstr "{time} के आसपास सूर्योदय हवादार लग रहा है, आसपास बादल रहेंगे।"
+msgstr "{time} के आसपास सूर्योदय हवादार लग रहा है, कुछ बादल भी रहेंगे।"
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:622
@@ -2107,7 +2107,7 @@ msgstr "आज वर्षा-मुक्त दिन का आनंद ल
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "छाता स्थिति: आराम कर रहा है। वर्षा नहीं दिख रही!"
+msgstr "छाते की स्थिति: आराम पर। वर्षा के कोई आसार नहीं!"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
