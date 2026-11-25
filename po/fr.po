@@ -29,7 +29,7 @@ msgstr "Mousam"
 #: data/io.github.amit9838.mousam.desktop.in:4
 #: data/io.github.amit9838.mousam.appdata.xml.in:7 src/ui/dialogs/about.py:35
 msgid "Weather at a glance"
-msgstr "La Météo en un coup d'oeil"
+msgstr "La météo en un coup d'œil"
 
 #: data/io.github.amit9838.mousam.desktop.in:9
 msgid "Weather;Forecast;Temperature;Rain;Wind;Air QualityGTK4;Python;Mousam;"
@@ -134,14 +134,14 @@ msgstr "Vue en mode nuit"
 
 #: data/io.github.amit9838.mousam.gschema.xml:7
 msgid "List of cities and their coordinates."
-msgstr "Liste et coordonnées des villes ."
+msgstr "Liste des villes et de leurs coordonnées."
 
 #: data/io.github.amit9838.mousam.gschema.xml:8
 msgid ""
 "Stores locations added by user in json stringified string format in string"
 msgstr ""
-"Stocke les emplacements ajoutés par l'utilisateur dans un fichier texte au "
-"format JSON"
+"Stocke les emplacements ajoutés par l'utilisateur sous forme de chaîne de "
+"caractères au format JSON"
 
 #: data/io.github.amit9838.mousam.gschema.xml:12
 msgid "Selected city"
@@ -180,7 +180,7 @@ msgstr "Hauteur de la fenêtre principale"
 
 #: data/io.github.amit9838.mousam.gschema.xml:38
 msgid "Launch the app in maximized mode."
-msgstr "Lancer l'application en plein écran."
+msgstr "Lancer l'application en mode maximisé."
 
 #: data/io.github.amit9838.mousam.gschema.xml:42
 msgid "Measurement system to use - metric,imperial"
@@ -188,7 +188,7 @@ msgstr "Système de mesure à utiliser : métrique, impérial"
 
 #: data/io.github.amit9838.mousam.gschema.xml:43
 msgid "metric(km, °C), imperial(mile, °F)"
-msgstr "métrique(km, °C), impérial(mile, °F)"
+msgstr "métrique (km, °C), impérial (mile, °F)"
 
 #: data/io.github.amit9838.mousam.gschema.xml:47
 msgid "Show weather update notifications"
@@ -285,15 +285,15 @@ msgstr "Bruine modérée"
 
 #: src/ui/icons.py:275
 msgid "Heavy Intensity Drizzle"
-msgstr "Forte Bruine"
+msgstr "Forte bruine"
 
 #: src/ui/icons.py:276
 msgid "Light Freezing Drizzle"
-msgstr "Pluie verglaçante"
+msgstr "Légère bruine verglaçante"
 
 #: src/ui/icons.py:277
 msgid "Heavy Freezing Drizzle"
-msgstr "Forte Pluie verglaçante"
+msgstr "Forte bruine verglaçante"
 
 #: src/ui/icons.py:278
 msgid "Light Rain"
@@ -305,7 +305,7 @@ msgstr "Pluie modérée"
 
 #: src/ui/icons.py:280
 msgid "Heavy Rain"
-msgstr "Forte Pluie"
+msgstr "Forte pluie"
 
 #: src/ui/icons.py:281
 msgid "Light Freezing Rain"
@@ -321,7 +321,7 @@ msgstr "Légères chutes de neige"
 
 #: src/ui/icons.py:284
 msgid "Moderate Snow Fall"
-msgstr "Chutes de neige modérée"
+msgstr "Chutes de neige modérées"
 
 #: src/ui/icons.py:285
 msgid "Heavy Snow Fall"
@@ -349,7 +349,7 @@ msgstr "Averses de neige légères"
 
 #: src/ui/icons.py:291
 msgid "Heavy Snow Showers "
-msgstr "Lourdes averses de neige"
+msgstr "Fortes averses de neige"
 
 #: src/ui/icons.py:292
 msgid "Thunderstorm"
@@ -377,11 +377,11 @@ msgstr "Nocif"
 
 #: src/core/levels.py:19
 msgid "Severe"
-msgstr "Sévère"
+msgstr "Très mauvais"
 
 #: src/core/levels.py:20
 msgid "Hazardous"
-msgstr "Toxique"
+msgstr "Dangereux"
 
 #: src/core/levels.py:35
 msgid "Air quality is good. A fine time to be outside."
@@ -614,7 +614,7 @@ msgstr ""
 #: src/core/overview/messages.py:32
 msgid "Expect thunderstorms right now. Stay indoors if you can."
 msgstr ""
-"Attendez-vous à des orages en ce moment. Restez à l'intérieur si vous le "
+"Des orages sont attendus en ce moment. Restez à l'intérieur si vous le "
 "pouvez."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
@@ -728,8 +728,7 @@ msgstr ""
 #, python-brace-format
 msgid "Expect thunderstorms with strong wind, around {speed}, right now."
 msgstr ""
-"Attendez-vous à des orages avec un vent fort, d'environ {speed}, en ce "
-"moment."
+"Des orages avec un vent fort, d'environ {speed}, sont attendus en ce moment."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:80
@@ -756,7 +755,7 @@ msgstr "Des orages avec de fortes pluies sont probables en ce moment."
 
 #: src/core/overview/messages.py:86
 msgid "Expect thunderstorms with heavy rain right now."
-msgstr "Attendez-vous à des orages avec de fortes pluies en ce moment."
+msgstr "Des orages avec de fortes pluies sont attendus en ce moment."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:90
@@ -785,7 +784,7 @@ msgstr ""
 #, python-brace-format
 msgid "Expect heavy rain and strong wind, around {speed}, right now."
 msgstr ""
-"Attendez-vous à de fortes pluies et à un vent fort, d'environ {speed}, en ce "
+"De fortes pluies et un vent fort, d'environ {speed}, sont attendus en ce "
 "moment."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
@@ -818,8 +817,8 @@ msgstr ""
 #, python-brace-format
 msgid "Expect heavy snow and strong wind, around {speed}, right now."
 msgstr ""
-"Attendez-vous à de fortes chutes de neige et à un vent fort, d'environ "
-"{speed}, en ce moment."
+"De fortes chutes de neige et un vent fort, d'environ {speed}, sont attendus "
+"en ce moment."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:114
@@ -850,8 +849,7 @@ msgstr ""
 #, python-brace-format
 msgid "Expect rain and strong wind, around {speed}, right now."
 msgstr ""
-"Attendez-vous à de la pluie et à un vent fort, d'environ {speed}, en ce "
-"moment."
+"De la pluie et un vent fort, d'environ {speed}, sont attendus en ce moment."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:126
@@ -881,8 +879,7 @@ msgstr ""
 #, python-brace-format
 msgid "Expect snow and strong wind, around {speed}, right now."
 msgstr ""
-"Attendez-vous à de la neige et à un vent fort, d'environ {speed}, en ce "
-"moment."
+"De la neige et un vent fort, d'environ {speed}, sont attendus en ce moment."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:138
@@ -1009,8 +1006,8 @@ msgstr ""
 #: src/core/overview/messages.py:181
 msgid "Expect freezing rain right now. Watch for icy roads and paths."
 msgstr ""
-"Attendez-vous à de la pluie verglaçante en ce moment. Attention aux routes "
-"et aux chemins verglacés."
+"De la pluie verglaçante est attendue en ce moment. Attention aux routes et "
+"aux chemins verglacés."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:185
@@ -1037,7 +1034,7 @@ msgstr ""
 #: src/core/overview/messages.py:191
 msgid "Expect heavy rain right now. Allow extra travel time."
 msgstr ""
-"Attendez-vous à de fortes pluies en ce moment. Prévoyez plus de temps pour "
+"De fortes pluies sont attendues en ce moment. Prévoyez plus de temps pour "
 "vos trajets."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
@@ -1065,7 +1062,7 @@ msgstr ""
 #: src/core/overview/messages.py:201
 msgid "Expect heavy snow right now. Allow extra travel time."
 msgstr ""
-"Attendez-vous à de fortes chutes de neige en ce moment. Prévoyez plus de "
+"De fortes chutes de neige sont attendues en ce moment. Prévoyez plus de "
 "temps pour vos trajets."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
@@ -1123,7 +1120,7 @@ msgstr ""
 msgid "It feels like {temp} right now. Dress warmly, in layers."
 msgstr ""
 "Il fait {temp} en ressenti en ce moment. Habillez-vous chaudement, en "
-"couches."
+"superposant les couches."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:225
@@ -1136,7 +1133,8 @@ msgstr "Il fait un froid ressenti de {temp} en ce moment. Couvrez-vous bien."
 #, python-brace-format
 msgid "It will feel like {temp} by around {time}. Dress warmly, in layers."
 msgstr ""
-"Il fera {temp} en ressenti vers {time}. Habillez-vous chaudement, en couches."
+"Il fera {temp} en ressenti vers {time}. Habillez-vous chaudement, en "
+"superposant les couches."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:231
@@ -1277,7 +1275,7 @@ msgstr ""
 #: src/core/overview/messages.py:280
 #, python-brace-format
 msgid "Rain is likely right now, easing off around {time}."
-msgstr "Il pleut probablement en ce moment, la pluie s'atténue vers {time}."
+msgstr "Pluie probable en ce moment, qui s'atténuera vers {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:282
@@ -1289,21 +1287,19 @@ msgstr "La pluie devrait s'atténuer vers {time}."
 #: src/core/overview/messages.py:284
 #, python-brace-format
 msgid "Expect rain for now, clearing around {time}."
-msgstr ""
-"Attendez-vous à de la pluie pour l'instant, avec une éclaircie vers {time}."
+msgstr "De la pluie pour l'instant, avant une éclaircie vers {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:286
 #, python-brace-format
 msgid "It is wet for now, but the rain should stop around {time}."
-msgstr ""
-"Il fait humide pour l'instant, mais la pluie devrait s'arrêter vers {time}."
+msgstr "Il pleut pour l'instant, mais la pluie devrait s'arrêter vers {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:290
 #, python-brace-format
 msgid "Snow is likely right now, easing off around {time}."
-msgstr "Il neige probablement en ce moment, la neige s'atténue vers {time}."
+msgstr "Neige probable en ce moment, qui s'atténuera vers {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:292
@@ -1315,8 +1311,7 @@ msgstr "La neige devrait s'atténuer vers {time}."
 #: src/core/overview/messages.py:294
 #, python-brace-format
 msgid "Expect snow for now, clearing around {time}."
-msgstr ""
-"Attendez-vous à de la neige pour l'instant, avec une éclaircie vers {time}."
+msgstr "De la neige pour l'instant, avant une éclaircie vers {time}."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:296
@@ -1341,7 +1336,7 @@ msgstr "Attendez-vous à de la pluie par intermittence jusqu'à {time} environ."
 #, python-brace-format
 msgid "It looks wet until about {time}. Keep an umbrella close."
 msgstr ""
-"Le temps reste humide jusqu'à {time} environ. Gardez un parapluie à portée "
+"Le temps reste pluvieux jusqu'à {time} environ. Gardez un parapluie à portée "
 "de main."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
@@ -1403,8 +1398,8 @@ msgstr "Le vent est fort en ce moment, d'environ {speed}."
 msgid ""
 "Expect strong wind for now, around {speed}. Secure loose items outdoors."
 msgstr ""
-"Attendez-vous à un vent fort pour l'instant, d'environ {speed}. Mettez à "
-"l'abri les objets non fixés dehors."
+"Vent fort attendu pour l'instant, d'environ {speed}. Mettez à l'abri les "
+"objets non fixés dehors."
 
 #. Translators: {speed} is a wind speed with its unit, like "45 km/h"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:331
@@ -1466,7 +1461,7 @@ msgstr "Attendez-vous à du brouillard vers {time}. La visibilité peut baisser.
 #: src/core/overview/messages.py:350
 #, python-brace-format
 msgid "Fog may roll in around {time}. Take care on the roads."
-msgstr "Du brouillard peut se lever vers {time}. Soyez prudent sur la route."
+msgstr "Du brouillard peut se former vers {time}. Soyez prudent sur la route."
 
 #. Translators: {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:352
@@ -1489,8 +1484,8 @@ msgstr ""
 #: src/core/overview/messages.py:357
 msgid "A foggy start is likely around sunrise. Take care on the roads."
 msgstr ""
-"Un début de journée brumeux est probable vers le lever du soleil. Soyez "
-"prudent sur la route."
+"Un début de journée dans le brouillard est probable vers le lever du soleil. "
+"Soyez prudent sur la route."
 
 #: src/core/overview/messages.py:358
 msgid "Fog may form around sunrise, cutting visibility."
@@ -1527,8 +1522,8 @@ msgstr "Réchauffement jusqu'à {temp} vers {time}."
 #, python-brace-format
 msgid "Expect it to cool down to {temp} by around {time}. Keep a layer handy."
 msgstr ""
-"Attendez-vous à un refroidissement jusqu'à {temp} vers {time}. Gardez une "
-"couche de plus à portée de main."
+"Attendez-vous à un refroidissement jusqu'à {temp} vers {time}. Prévoyez une "
+"couche supplémentaire."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:375
@@ -1541,7 +1536,8 @@ msgstr "Les températures baissent jusqu'à {temp} vers {time}."
 #, python-brace-format
 msgid "It should cool to {temp} by around {time}. A jacket may help."
 msgstr ""
-"Il devrait se rafraîchir jusqu'à {temp} vers {time}. Une veste peut aider."
+"La température devrait descendre à {temp} vers {time}. Une veste peut être "
+"utile."
 
 #. Translators: {temp} is a temperature, like "14°"; {time} is a rounded time of day, like "6:30 PM"
 #: src/core/overview/messages.py:379
@@ -1587,7 +1583,7 @@ msgstr "Demain, il fera plus chaud qu'aujourd'hui, avec un maximum de {temp}."
 #: src/core/overview/messages.py:396
 #, python-brace-format
 msgid "A warmer day tomorrow, reaching {temp}."
-msgstr "Demain sera une journée plus chaude, qui atteindra {temp}."
+msgstr "Journée plus chaude demain, jusqu'à {temp}."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:398
@@ -1599,7 +1595,7 @@ msgstr "Demain, la température monte, avec un maximum de {temp}."
 #: src/core/overview/messages.py:400
 #, python-brace-format
 msgid "Expect a warmer tomorrow, up to {temp}."
-msgstr "Attendez-vous à un demain plus chaud, jusqu'à {temp}."
+msgstr "Attendez-vous à une journée plus chaude demain, jusqu'à {temp}."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:404
@@ -1611,7 +1607,7 @@ msgstr "Demain, il fera plus frais qu'aujourd'hui, avec un maximum de {temp}."
 #: src/core/overview/messages.py:406
 #, python-brace-format
 msgid "A cooler day tomorrow, reaching only {temp}."
-msgstr "Demain sera une journée plus fraîche, qui n'atteindra que {temp}."
+msgstr "Journée plus fraîche demain, avec seulement {temp}."
 
 #. Translators: {temp} is a temperature, like "14°"
 #: src/core/overview/messages.py:408
@@ -1623,7 +1619,8 @@ msgstr "Demain, la température baisse, avec un maximum de {temp}."
 #: src/core/overview/messages.py:410
 #, python-brace-format
 msgid "Expect a cooler tomorrow, topping out at {temp}."
-msgstr "Attendez-vous à un demain plus frais, avec un maximum de {temp}."
+msgstr ""
+"Attendez-vous à une journée plus fraîche demain, avec un maximum de {temp}."
 
 #: src/core/overview/messages.py:416
 #, python-brace-format
@@ -2093,7 +2090,7 @@ msgstr "La qualité de l'air n'est pas disponible pour le moment."
 
 #: src/ui/cards/day_night.py:44
 msgid "Sunrise & Sunset"
-msgstr "Lever & coucher du soleil"
+msgstr "Lever et coucher du soleil"
 
 #: src/ui/cards/day_night.py:58
 msgid "Sunrise"
@@ -2151,21 +2148,21 @@ msgstr "Indice UV"
 #: src/ui/compact_window.py:102 src/ui/compact_window.py:127
 #: src/ui/compact_window.py:129 src/ui/window.py:285
 msgid "No Internet"
-msgstr "Pas d'internet"
+msgstr "Pas de connexion Internet"
 
 #: src/ui/compact_window.py:115 src/ui/window.py:327
 #: src/ui/dialogs/locations.py:154
 msgid "Retry"
-msgstr "Essayez à nouveau"
+msgstr "Réessayer"
 
 #: src/ui/compact_window.py:130 src/ui/window.py:285
 #: src/ui/dialogs/locations.py:161
 msgid "Please check your connection."
-msgstr "Veuillez vérifier votre connexion internet"
+msgstr "Veuillez vérifier votre connexion."
 
 #: src/ui/compact_window.py:133 src/ui/window.py:290
 msgid "Fetch Error"
-msgstr "Erreur de récupération"
+msgstr "Erreur de récupération des données"
 
 #: src/ui/compact_window.py:211
 msgid "AQI"
@@ -2232,7 +2229,7 @@ msgstr "Demain"
 
 #: src/ui/sections/forecast.py:163
 msgid "Weekly"
-msgstr "Hebdomadaire"
+msgstr "7 jours"
 
 #. Translators: tooltip on the day's temperature range bar; {low} and
 #. {high} are temperatures with their unit sign, like "15°"
@@ -2340,7 +2337,7 @@ msgstr "Profitez d'une journée sans pluie !"
 
 #: src/ui/sections/hourly.py:278
 msgid "Umbrella status: resting. No precipitation in sight !"
-msgstr "État du parapluie: repos. Pas de précipitation à l'horizon !"
+msgstr "État du parapluie : repos. Pas de précipitation à l'horizon !"
 
 #: src/ui/sections/hourly.py:279
 msgid "No rain in sight today!"
@@ -2348,7 +2345,7 @@ msgstr "Aujourd'hui, pas de pluie à l'horizon !"
 
 #: src/ui/window.py:84
 msgid "Debug Mode Enabled"
-msgstr "Mode Débogage Activé"
+msgstr "Mode débogage activé"
 
 #: src/ui/window.py:85
 msgid "View Logs"
@@ -2356,7 +2353,7 @@ msgstr "Voir les journaux"
 
 #: src/ui/window.py:89
 msgid "Debug Mode Disabled"
-msgstr "Mode Débogage Désactivé"
+msgstr "Mode débogage désactivé"
 
 #: src/ui/window.py:126
 msgid "Refresh weather"
@@ -2365,11 +2362,11 @@ msgstr "Actualiser la météo"
 #: src/ui/window.py:141 src/ui/dialogs/locations.py:327
 #: src/ui/templates/shortcuts.ui:45
 msgid "Locations"
-msgstr "Emplacements"
+msgstr "Lieux"
 
 #: src/ui/window.py:147 src/ui/templates/shortcuts.ui:51
 msgid "Compact Mode"
-msgstr "Mode Compacte"
+msgstr "Mode compact"
 
 #: src/ui/window.py:175 src/ui/dialogs/preferences.py:22
 #: src/ui/templates/shortcuts.ui:57
@@ -2378,7 +2375,7 @@ msgstr "Préférences"
 
 #: src/ui/window.py:176 src/ui/templates/shortcuts.ui:75
 msgid "Keyboard Shortcuts"
-msgstr "Raccourcis claviers"
+msgstr "Raccourcis clavier"
 
 #: src/ui/window.py:177
 msgid "About Mousam"
@@ -2581,7 +2578,7 @@ msgstr "Icônes Material : {name}"
 
 #: src/ui/dialogs/about.py:93
 msgid "All rights belong to Google. Collected by Darren Griffin."
-msgstr "Tous droits réservés à Google. Collectées par Darren Griffin."
+msgstr "Tous droits réservés à Google. Icônes rassemblées par Darren Griffin."
 
 #: src/ui/dialogs/locations.py:67
 msgid "Add New Location"
@@ -2634,7 +2631,7 @@ msgstr "Ce lieu existe déjà"
 #: src/ui/dialogs/locations.py:567
 #, python-brace-format
 msgid "Switched to {}"
-msgstr "Changé pour {}"
+msgstr "Passage à {}"
 
 #: src/ui/dialogs/preferences.py:33 src/ui/dialogs/preferences.py:50
 #: src/ui/templates/shortcuts.ui:29
@@ -2700,7 +2697,7 @@ msgstr "Apparence"
 
 #: src/ui/dialogs/preferences.py:94
 msgid "Dynamic Background"
-msgstr "Utiliser un arrière-plan dynamique"
+msgstr "Arrière-plan dynamique"
 
 #: src/ui/dialogs/preferences.py:95
 msgid "Change the background to match the current weather"
@@ -2740,7 +2737,7 @@ msgstr "Journalisation et débogage"
 
 #: src/ui/dialogs/preferences.py:139
 msgid "Debug Mode"
-msgstr "Mode Débogage"
+msgstr "Mode débogage"
 
 #: src/ui/dialogs/preferences.py:140
 msgid "Enable verbose logging and console output"
@@ -2748,7 +2745,7 @@ msgstr "Activer la journalisation détaillée et l'affichage sur la console"
 
 #: src/ui/dialogs/preferences.py:148
 msgid "Open Logs Folder"
-msgstr "Ouvrir le répertoire des journaux"
+msgstr "Ouvrir le dossier des journaux"
 
 #: src/ui/dialogs/preferences.py:157
 msgid "Clear Log File"
@@ -2768,7 +2765,7 @@ msgstr "Gestion des données"
 
 #: src/ui/dialogs/preferences.py:171
 msgid "Reset to Default"
-msgstr "Remettre par défaut"
+msgstr "Rétablir les valeurs par défaut"
 
 #: src/ui/dialogs/preferences.py:172
 msgid "Clear all preferences and restore default values"
@@ -2776,15 +2773,15 @@ msgstr "Effacer toutes les préférences et rétablir les valeurs par défaut"
 
 #: src/ui/dialogs/preferences.py:175
 msgid "Reset…"
-msgstr "Réinitialiser"
+msgstr "Réinitialiser…"
 
 #: src/ui/dialogs/preferences.py:307
 msgid "Logs cleared"
-msgstr "Journaux supprimés"
+msgstr "Journaux effacés"
 
 #: src/ui/dialogs/preferences.py:309
 msgid "Failed to clear logs"
-msgstr "Suppression des journaux échouée"
+msgstr "Impossible d'effacer les journaux"
 
 #: src/ui/dialogs/preferences.py:313
 msgid "Reset Settings?"
@@ -2796,7 +2793,7 @@ msgid ""
 "This action cannot be undone."
 msgstr ""
 "Cette action réinitialisera tous les paramètres à leur valeur par défaut et "
-"effacera vos villes enregistrées.Cette action est irréversible"
+"effacera vos villes enregistrées. Cette action est irréversible."
 
 #: src/ui/dialogs/preferences.py:319
 msgid "Cancel"
@@ -2812,7 +2809,7 @@ msgstr "Les préférences ont été réinitialisées"
 
 #: src/ui/templates/shortcuts.ui:33
 msgid "Refresh Weather"
-msgstr "Actualiser la Météo"
+msgstr "Actualiser la météo"
 
 #: src/ui/templates/shortcuts.ui:39
 msgid "Hard Refresh"
